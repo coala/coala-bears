@@ -1,0 +1,38 @@
+[Default]
+files = *.py, bears/**/*.py
+ignore =
+    bears/tests/python/test_files/pylint_test.py
+
+max_line_length = 80
+use_spaces = True
+
+[python]
+# Patches may conflict with autopep8 so putting them in own section so they
+# will be executed sequentially; also we need the LineLengthBear to double
+# check the line length because PEP8Bear sometimes isn't able to correct the
+# linelength.
+bears = SpaceConsistencyBear, PyUnusedCodeBear
+default_actions =
+    SpaceConsistencyBear: ApplyPatchAction,
+    PyUnusedCodeBear: ApplyPatchAction
+
+[autopep8]
+bears = PEP8Bear
+default_actions = PEP8Bear: ApplyPatchAction
+
+[linelength]  # Sometimes autopep8 makes too long lines, need to check after!
+bears = LineLengthBear
+
+[commit]
+bears = GitCommitBear
+
+[LineCounting]
+enabled = False
+bears = LineCountBear
+
+[TODOS]
+enabled = False
+bears = KeywordBear
+
+ci_keywords = \#TODO, \# TODO, \#FIXME, \# FIXME
+cs_keywords =
