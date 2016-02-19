@@ -2,6 +2,9 @@
 
 import locale
 import sys
+from os.path import exists
+from shutil import copyfileobj
+from urllib.request import urlopen
 
 # Start ignoring PyImportSortBear as imports below may yield syntax errors
 from bears import assert_supported_version
@@ -18,6 +21,26 @@ try:
     locale.getlocale()
 except (ValueError, UnicodeError):
     locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+
+
+def download(url, filename, overwrite=False):
+    """
+    Downloads the given URL to the given filename. If the file exists, it won't
+    be downloaded.
+
+    :param url:       A URL to download.
+    :param filename:  The file to store the downloaded file to.
+    :param overwrite: Set to True if the file should be downloaded even if it
+                      already exists.
+    :return:          The filename.
+    """
+    if not exists(filename) or overwrite:
+        print("Downloading", filename + "...")
+        with urlopen(url) as response, open(filename, 'wb') as out_file:
+            copyfileobj(response, out_file)
+        print("DONE.")
+
+    return filename
 
 
 class PyTestCommand(TestCommand):
@@ -37,6 +60,10 @@ with open('test-requirements.txt') as requirements:
 
 
 if __name__ == "__main__":
+    download('http://sourceforge.net/projects/checkstyle/files/checkstyle/'
+             '6.15/checkstyle-6.15-all.jar',
+             'bears/java/checkstyle.jar')
+
     setup(name='coala-bears',
           version=Constants.VERSION,
           description='Bears for coala (Code Analysis Application)',
@@ -50,7 +77,8 @@ if __name__ == "__main__":
           packages=find_packages(exclude=["build.*"]),
           install_requires=required,
           tests_require=test_required,
-          package_data={'bears': ["VERSION"]},
+          package_data={'bears': ["VERSION"],
+                        'bears.java': ['checkstyle.jar', 'google_checks.xml']},
           license="AGPL-3.0",
           long_description="coala-bears is a set of supported bears for "
                            "coala - the COde AnaLysis Application.",
