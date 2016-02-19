@@ -1,5 +1,6 @@
 [Default]
 files = *.py, bears/**/*.py
+ignore = bears/tests/python/test_files/pylint_test.py
 
 max_line_length = 80
 use_spaces = True
