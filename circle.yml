@@ -13,5 +13,11 @@ dependencies:
 
 test:
   override:
+    - bash .ci/tests.sh:
+        parallel: true
+    - python setup.py install:
+        parallel: true
     - coala-ci -S=autoapply=false:
+        parallel: true
+    - bash .ci/deploy.coverage.sh:
         parallel: true
