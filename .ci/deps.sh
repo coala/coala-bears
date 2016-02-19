@@ -34,3 +34,5 @@ for dep_version in "${dep_versions[@]}" ; do
   pip install -q -r test-requirements.txt
   pip install -q -r requirements.txt
 done
+
+python setup.py --help
