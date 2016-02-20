@@ -82,6 +82,7 @@ if __name__ == "__main__":
           license="AGPL-3.0",
           long_description="coala-bears is a set of supported bears for "
                            "coala - the COde AnaLysis Application.",
+          entry_points={"coalabears": ["coala_official_bears = bears"]},
           # from http://pypi.python.org/pypi?%3Aaction=list_classifiers
           classifiers=[
               'Development Status :: 4 - Beta',
