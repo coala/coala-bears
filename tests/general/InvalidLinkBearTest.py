@@ -38,3 +38,9 @@ MarkdownLinks = verify_local_bear(InvalidLinkBear,
                                         ["https://en.wikipedia.org/wiki/"
                                          "Hello_(Adele_song)"]),
                                   invalid_files=())
+
+SphinxLinks = verify_local_bear(InvalidLinkBear,
+                                valid_files=(
+                                    ["|https://github.com/coala-analyzer/"
+                                     "coala-bears|"]),
+                                invalid_files=())
