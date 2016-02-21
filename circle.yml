@@ -6,6 +6,7 @@ dependencies:
     - ~/coala-bears/node_modules
   pre:
     - echo 'export PATH=$PATH:~/coala-bears/node_modules/.bin' >> ~/.circlerc
+    - echo 'eval $(goop env)' >> ~/.circlerc
     - sed -i '/source \/home\/ubuntu\/virtualenvs\//d' ~/.circlerc
     - nvm alias default node
   override:
