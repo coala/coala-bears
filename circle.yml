@@ -5,9 +5,11 @@ dependencies:
     - ~/.pyenv/versions/3.5.1
     - ~/coala-bears/node_modules
     - ~/.cabal
+    - /usr/local
   pre:
     - echo 'export PATH=$PATH:~/coala-bears/node_modules/.bin' >> ~/.circlerc
     - echo 'export PATH=$PATH:~/.cabal/bin' >> ~/.circlerc
+    - echo 'export PATH=$PATH:/usr/local/lib/R/site-library/lintr/R' >> ~./circlerc
     - sed -i '/source \/home\/ubuntu\/virtualenvs\//d' ~/.circlerc
     - nvm alias default node
   override:
