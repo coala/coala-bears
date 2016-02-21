@@ -10,8 +10,9 @@ case $CIRCLE_NODE_INDEX in
 esac
 
 # apt-get commands
+sudo add-apt-repository -y ppa:marutter/rdev
 sudo apt-get -qq update
-deps="espeak libclang1-3.4 indent mono-mcs chktex hlint"
+deps="espeak libclang1-3.4 indent mono-mcs chktex hlint r-base"
 deps_python_dbus="libdbus-glib-1-dev libdbus-1-dev"
 deps_python_gi="glib2.0-dev gobject-introspection libgirepository1.0-dev python3-cairo-dev"
 deps_perl="perl libperl-critic-perl"
@@ -24,6 +25,12 @@ sudo dpkg -i hlint_1.9.26-1_amd64.deb
 # NPM commands
 sudo rm -rf /opt/alex # Delete ghc-alex as it clashes with npm deps
 npm install
+
+# R commands
+mkdir -p ~/.RLibrary
+echo '.libPaths( c( "~/.RLibrary", .libPaths()) )' >> .Rprofile
+echo 'options(repos=structure(c(CRAN="http://cran.rstudio.com")))' >> .Rprofile
+R -q -e "install.packages('lintr', dependencies=TRUE, quiet=TRUE, verbose=FALSE)"
 
 # GO commands
 go get -u github.com/golang/lint/golint
