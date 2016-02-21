@@ -17,6 +17,10 @@ deps_python_gi="glib2.0-dev gobject-introspection libgirepository1.0-dev python3
 deps_perl="perl libperl-critic-perl"
 sudo apt-get -qq install $deps $deps_python_gi $deps_python_dbus $deps_perl
 
+# cabal commands
+cabal update --verbose=0
+cabal install --verbose=0 hlint
+
 # NPM commands
 sudo rm -rf /opt/alex # Delete ghc-alex as it clashes with npm deps
 npm install
