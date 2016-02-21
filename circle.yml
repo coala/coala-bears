@@ -11,6 +11,8 @@ dependencies:
     - nvm alias default node
   override:
     - bash .ci/deps.sh
+    - which goimports
+    - which golint
 
 test:
   override:

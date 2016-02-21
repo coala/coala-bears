@@ -24,6 +24,7 @@ npm install
 # GO commands
 go get -u github.com/karmakaze/goop
 goop install
+source ~/.circlerc
 
 for dep_version in "${dep_versions[@]}" ; do
   pyenv install -ks $dep_version
