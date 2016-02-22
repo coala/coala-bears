@@ -15,7 +15,7 @@ deps="espeak libclang1-3.4 indent mono-mcs chktex hlint"
 deps_python_dbus="libdbus-glib-1-dev libdbus-1-dev"
 deps_python_gi="glib2.0-dev gobject-introspection libgirepository1.0-dev python3-cairo-dev"
 deps_perl="perl libperl-critic-perl"
-sudo apt-get -qq install $deps $deps_python_gi $deps_python_dbus $deps_perl
+sudo apt-get -qq install $deps $deps_python_gi $deps_python_dbus $deps_perl > /dev/null
 
 # Update hlint to latest version (not available in apt)
 wget -q https://launchpad.net/ubuntu/+source/hlint/1.9.26-1/+build/8831318/+files/hlint_1.9.26-1_amd64.deb
