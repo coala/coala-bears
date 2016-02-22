@@ -4,6 +4,7 @@ dependencies:
     - ~/.pyenv/versions/3.4.3
     - ~/.pyenv/versions/3.5.1
     - ~/coala-bears/node_modules
+    - ~/.rvm/gems/ruby-2.1.5/gems/
   pre:
     - echo 'export PATH=$PATH:~/coala-bears/node_modules/.bin' >> ~/.circlerc
     - sed -i '/source \/home\/ubuntu\/virtualenvs\//d' ~/.circlerc
