@@ -1,24 +1,39 @@
+import collections
 import queue
 import unittest
+from contextlib import contextmanager
 
 from tests.BearTestHelper import generate_skip_decorator
+from coalib.bearlib.abstractions.Lint import Lint
 from coalib.bears.LocalBear import LocalBear
 from coalib.misc.ContextManagers import prepare_file
+from coalib.output.printers.LOG_LEVEL import LOG_LEVEL
 from coalib.results.Result import Result
 from coalib.settings.Section import Section
 from coalib.settings.Setting import Setting
 
 
+@contextmanager
 def execute_bear(bear, *args, **kwargs):
     try:
         bear_output_generator = bear.execute(*args, **kwargs)
-        assert bear_output_generator is not None
-    except AssertionError:
+        assert bear_output_generator is not None, \
+            "Bear returned None on execution\n"
+        yield bear_output_generator
+    except Exception as err:
+        if isinstance(bear, Lint):  # Give extra debug info for Lint.
+            if hasattr(bear, 'command'):
+                bear.debug("Command:", bear.command)
+            if (hasattr(bear, 'stdout_output') and
+                    isinstance(bear.stdout_output, collections.Iterable)):
+                bear.debug("Stdout:\n", "".join(bear.stdout_output))
+            if (hasattr(bear, 'stderr_output') and
+                    isinstance(bear.stderr_output, collections.Iterable)):
+                bear.debug("Stderr:\n", "".join(bear.stderr_output))
         msg = []
         while not bear.message_queue.empty():
             msg.append(bear.message_queue.get().message)
-        raise AssertionError("Bear returned None on execution \n" +
-                             "\n".join(msg))
+        raise AssertionError(str(err) + " \n" + "\n".join(msg))
     return list(bear_output_generator)
 
 
@@ -65,13 +80,11 @@ class LocalBearTestHelper(unittest.TestCase):  # pragma: no cover
                               (list, tuple),
                               msg="The given lines are not a list.")
 
-        with prepare_file(lines,
-                          filename,
+        with prepare_file(lines, filename,
                           force_linebreaks=force_linebreaks,
                           create_tempfile=create_tempfile,
-                          tempfile_kwargs=tempfile_kwargs) as (lines, filename):
-
-            bear_output = execute_bear(local_bear, filename, lines)
+                          tempfile_kwargs=tempfile_kwargs) as (file, fname), \
+                execute_bear(local_bear, fname, file) as bear_output:
             if valid:
                 msg = ("The local bear '{}' yields a result although it "
                        "shouldn't.".format(local_bear.__class__.__name__))
@@ -120,13 +133,11 @@ class LocalBearTestHelper(unittest.TestCase):  # pragma: no cover
                               list,
                               msg="The given results are not a list.")
 
-        with prepare_file(lines,
-                          filename,
+        with prepare_file(lines, filename,
                           force_linebreaks=force_linebreaks,
                           create_tempfile=create_tempfile,
-                          tempfile_kwargs=tempfile_kwargs) as (lines, filename):
-
-            bear_output = execute_bear(local_bear, filename, lines)
+                          tempfile_kwargs=tempfile_kwargs) as (file, fname), \
+                execute_bear(local_bear, fname, file) as bear_output:
             msg = ("The local bear '{}' doesn't yield the right results. Or the"
                    " order may be wrong.".format(local_bear.__class__.__name__))
             if not check_order:
