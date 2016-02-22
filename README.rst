@@ -60,7 +60,7 @@ Project Status
 
 |Linux Build Status| |Windows Build status| |OSX Build status|
 
-|Documentation Status|
+|Documentation Status| |codecov.io|
 
 GETTING INVOLVED
 ================
@@ -98,6 +98,8 @@ information.
    :target: https://travis-ci.org/coala-analyzer/coala-bears
 .. |Documentation Status| image:: https://readthedocs.org/projects/coala/badge/?version=latest
    :target: http://coala.rtfd.org/
+.. |codecov.io| image:: https://img.shields.io/codecov/c/github/coala-analyzer/coala-bears/master.svg?label=branch%20coverage
+   :target: https://codecov.io/github/coala-analyzer/coala-bears
 .. |https://gitter.im/coala-analyzer/coala| image:: https://img.shields.io/badge/gitter-join%20chat%20%E2%86%92-brightgreen.svg
    :target: https://gitter.im/coala-analyzer/coala
 .. |AGPL| image:: https://img.shields.io/github/license/coala-analyzer/coala.svg
