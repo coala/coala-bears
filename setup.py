@@ -64,6 +64,10 @@ if __name__ == "__main__":
              '6.15/checkstyle-6.15-all.jar',
              'bears/java/checkstyle.jar')
 
+    download('https://oss.sonatype.org/content/repositories/releases/org/'
+             'scalastyle/scalastyle_2.10/0.8.0/scalastyle_2.10-0.8.0-batch.jar',
+             'bears/scala/scalastyle.jar')
+
     setup(name='coala-bears',
           version=Constants.VERSION,
           description='Bears for coala (Code Analysis Application)',
@@ -78,7 +82,9 @@ if __name__ == "__main__":
           install_requires=required,
           tests_require=test_required,
           package_data={'bears': ["VERSION"],
-                        'bears.java': ['checkstyle.jar', 'google_checks.xml']},
+                        'bears.java': ['checkstyle.jar', 'google_checks.xml'],
+                        'bears.scala': ['scalastyle.jar',
+                                        'scalastyle_config.xml']},
           license="AGPL-3.0",
           long_description="coala-bears is a set of supported bears for "
                            "coala - the COde AnaLysis Application.",

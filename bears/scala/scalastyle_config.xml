@@ -1,0 +1,7 @@
+<scalastyle commentFilter="enabled">
+    <name>Scalastyle standard configuration</name>
+    <check
+        level="warning"
+        class="org.scalastyle.scalariform.MagicNumberChecker"
+        enabled="true" />
+</scalastyle>
