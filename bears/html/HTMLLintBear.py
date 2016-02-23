@@ -8,6 +8,7 @@ from coalib.settings.Setting import typed_list
 
 class HTMLLintBear(LocalBear, Lint):
     executable = 'html_lint.py'
+    shell = True
     output_regex = re.compile(
         r'(?P<line>\d+):(?P<column>\d+):\s'
         r'(?P<severity>Error|Warning|Info):\s(?P<message>.+)'
