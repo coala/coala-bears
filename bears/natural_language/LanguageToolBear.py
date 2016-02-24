@@ -34,7 +34,7 @@ class LanguageToolBear(LocalBear):
         locale = guess_language(joined_text) if locale == 'auto' else locale
         locale = 'en-US' if not locale else locale
 
-        tool = LanguageTool(locale)
+        tool = LanguageTool(locale, motherTongue="en_US")
         matches = tool.check(joined_text)
         for match in matches:
             if not match.replacements:
