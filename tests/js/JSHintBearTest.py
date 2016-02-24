@@ -31,6 +31,6 @@ with prepare_file(config_file,
                   force_linebreaks=True,
                   create_tempfile=True) as (conf_lines, conf_file):
     JSHintBear2Test = verify_local_bear(JSHintBear,
-                                        valid_files=(test_file1),
+                                        valid_files=(test_file1,),
                                         invalid_files=(),
                                         settings={"jshint_config": conf_file})

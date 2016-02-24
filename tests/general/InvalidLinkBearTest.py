@@ -3,24 +3,24 @@ from tests.LocalBearTestHelper import verify_local_bear
 
 LinkRedirect = verify_local_bear(InvalidLinkBear,
                                  valid_files=(
-                                    ["http://httpbin.org/status/200"]),
+                                    ["http://httpbin.org/status/200"],),
                                  invalid_files=(
                                     ["http://httpbin.org/status/301"],
-                                    ["http://coala.rtfd.org"]),)
+                                    ["http://coala.rtfd.org"]))
 
 InvalidLinkNotFound = verify_local_bear(InvalidLinkBear,
                                         valid_files=(
-                                            ["http://httpbin.org/status/202"]),
+                                            ["http://httpbin.org/status/202"],),
                                         invalid_files=(
                                             ["http://httpbin.org/status/404"],
-                                            ["http://httpbin.org/status/401"]),)
+                                            ["http://httpbin.org/status/401"]))
 
 InvalidLinkServerError = verify_local_bear(InvalidLinkBear,
                                            valid_files=(
-                                            ["http://httpbin.org/status/202"]),
+                                            ["http://httpbin.org/status/202"],),
                                            invalid_files=(
                                             ["http://httpbin.org/status/500"],
-                                            ["http://httpbin.org/status/503"],))
+                                            ["http://httpbin.org/status/503"]))
 
 LinkDoesNotExist = verify_local_bear(InvalidLinkBear,
                                      valid_files=(
@@ -42,5 +42,5 @@ MarkdownLinks = verify_local_bear(InvalidLinkBear,
 SphinxLinks = verify_local_bear(InvalidLinkBear,
                                 valid_files=(
                                     ["|https://github.com/coala-analyzer/"
-                                     "coala-bears|"]),
+                                     "coala-bears|"],),
                                 invalid_files=())
