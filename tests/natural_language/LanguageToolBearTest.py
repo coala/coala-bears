@@ -29,6 +29,15 @@ LanguageToolBearLocaleTest = verify_local_bear(
     settings={'locale': 'en-US'})
 
 
+LanguageToolBearDisableRulesTest = verify_local_bear(
+    LanguageToolBear,
+    valid_files=(["Line without unnecessary spaces at the start."],
+                 ["a line beginning with lowercase."],
+                 ["A line beginning with uppercase."]),
+    invalid_files=(["  Line with unnecessary spaces at the start."],),
+    settings={'languagetool_disable_rules': 'UPPERCASE_SENTENCE_START'})
+
+
 @generate_skip_decorator(LanguageToolBear)
 class LanguageToolBearPrerequisitesTest(unittest.TestCase):
 
