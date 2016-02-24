@@ -15,7 +15,7 @@ items:
       price:     1.47
       quantity:  4
 ...
-""".split("\n")
+""".splitlines(keepends=True)
 
 YAMLLintBear1Test = verify_local_bear(YAMLLintBear,
                                       valid_files=(),

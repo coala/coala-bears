@@ -7,7 +7,7 @@ test_file = """
     <h1>Hello, world!</h1>
   </body>
 </html>
-""".split("\n")
+""".splitlines(keepends=True)
 
 HTMLLintBear1Test = verify_local_bear(HTMLLintBear,
                                       valid_files=(),

@@ -10,7 +10,7 @@ class HelloWorld
         puts "Hello #{@name}!"
     end
 end
-""".split("\n")
+""".splitlines(keepends=True)
 
 
 bad_file = """
@@ -22,7 +22,7 @@ class HelloWorld
         x = 1 # unused variables invoke a warning
         puts "Hello #{@name}!"
     end
-""".split("\n")
+""".splitlines(keepends=True)
 
 
 RubyLintBearTest = verify_local_bear(RubyLintBear,

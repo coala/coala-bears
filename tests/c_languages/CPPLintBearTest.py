@@ -5,7 +5,7 @@ test_file = """
 int main() {
     return 0;
 }
-""".split("\n")
+""".splitlines(keepends=True)
 
 CPPLintBear1Test = verify_local_bear(CPPLintBear,
                                      valid_files=(),

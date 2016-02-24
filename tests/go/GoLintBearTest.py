@@ -16,7 +16,7 @@ import (
 )
 
 var _ os.File // for "os"
-""".split("\n")
+""".splitlines(keepends=True)
 
 
 bad_file = """
@@ -31,7 +31,7 @@ func subOneInLoop(y int) {
   for ; y > 0; y -= 1 {
   }
 }
-""".split("\n")
+""".splitlines(keepends=True)
 
 
 GoLintBear1Test = verify_local_bear(GoLintBear,

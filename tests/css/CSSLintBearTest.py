@@ -6,7 +6,7 @@ good_file = """
   font-weight: 400;
   font-size: 5px;
 }
-""".split("\n")
+""".splitlines(keepends=True)
 
 
 bad_file = """
@@ -14,7 +14,7 @@ bad_file = """
   font-weight: 400
   font-size: 5px;
 }
-""".split("\n")
+""".splitlines(keepends=True)
 
 
 CSSLintBear1Test = verify_local_bear(CSSLintBear,

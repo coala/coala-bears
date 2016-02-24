@@ -4,23 +4,23 @@ from tests.LocalBearTestHelper import verify_local_bear
 test_file1 = """{
     "a": 5,
     "b": 5
-}""".split("\n")
+}""".splitlines(keepends=True)
 
 
 test_file2 = """{
     "b": 5,
     "a": 5
-}""".split("\n")
+}""".splitlines(keepends=True)
 
 test_file3 = """{
    "b": 5,
    "a": 5
-}""".split("\n")
+}""".splitlines(keepends=True)
 
 
 unicode_file = """{
     "⌘": 5
-}""".split("\n")
+}""".splitlines(keepends=True)
 
 
 JSONFormatBear1Test = verify_local_bear(JSONFormatBear,

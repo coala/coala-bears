@@ -4,13 +4,13 @@ from tests.LocalBearTestHelper import verify_local_bear
 test_file1 = """
 def simple():
     pass
-""".splitlines()
+""".splitlines(keepends=True)
 
 
 test_file2 = """
 class class1():
     pass
-""".splitlines()
+""".splitlines(keepends=True)
 
 
 RadonBear1Test = verify_local_bear(RadonBear,
