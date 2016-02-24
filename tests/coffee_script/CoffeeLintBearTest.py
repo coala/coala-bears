@@ -32,8 +32,8 @@ var test
 """.splitlines(keepends=True)
 
 
-CoffeeLintBear1Test = verify_local_bear(CoffeeLintBear,
-                                        valid_files=(good_file,),
-                                        invalid_files=(warning_file,
-                                                       error_file,
-                                                       invalid_file))
+CoffeeLintBearTest = verify_local_bear(CoffeeLintBear,
+                                       valid_files=(good_file,),
+                                       invalid_files=(warning_file,
+                                                      error_file,
+                                                      invalid_file))

@@ -21,16 +21,17 @@ config_file = """
 """.splitlines(keepends=True)
 
 
-JSHintBear1Test = verify_local_bear(JSHintBear,
-                                    valid_files=(),
-                                    invalid_files=(test_file1, test_file2))
+JSHintBearTest = verify_local_bear(JSHintBear,
+                                   valid_files=(),
+                                   invalid_files=(test_file1, test_file2))
 
 
 with prepare_file(config_file,
                   filename=None,
                   force_linebreaks=True,
                   create_tempfile=True) as (conf_lines, conf_file):
-    JSHintBear2Test = verify_local_bear(JSHintBear,
-                                        valid_files=(test_file1,),
-                                        invalid_files=(),
-                                        settings={"jshint_config": conf_file})
+    JSHintBearConfigFileTest = verify_local_bear(
+        JSHintBear,
+        valid_files=(test_file1, test_file2),
+        invalid_files=(),
+        settings={"jshint_config": conf_file})

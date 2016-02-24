@@ -9,20 +9,21 @@ test_file = """
 </html>
 """.splitlines(keepends=True)
 
-HTMLLintBear1Test = verify_local_bear(HTMLLintBear,
-                                      valid_files=(),
-                                      invalid_files=(test_file,),
-                                      tempfile_kwargs={"suffix": ".html"})
+HTMLLintBearTest = verify_local_bear(HTMLLintBear,
+                                     valid_files=(),
+                                     invalid_files=(test_file,),
+                                     tempfile_kwargs={"suffix": ".html"})
 
-HTMLLintBear2Test = verify_local_bear(HTMLLintBear,
-                                      valid_files=(test_file,),
-                                      invalid_files=(),
-                                      settings={
-                                          'htmllint_ignore': 'optional_tag'},
-                                      tempfile_kwargs={"suffix": ".html"})
+HTMLLintBearIgnoreTest = verify_local_bear(
+    HTMLLintBear,
+    valid_files=(test_file,),
+    invalid_files=(),
+    settings={'htmllint_ignore': 'optional_tag'},
+    tempfile_kwargs={"suffix": ".html"})
 
-HTMLLintBear3Test = verify_local_bear(HTMLLintBear,
-                                      valid_files=(),
-                                      invalid_files=(test_file,),
-                                      settings={'htmllint_ignore': 'quotation'},
-                                      tempfile_kwargs={"suffix": ".html"})
+HTMLLintBearIgnoreQuotationTest = verify_local_bear(
+    HTMLLintBear,
+    valid_files=(),
+    invalid_files=(test_file,),
+    settings={'htmllint_ignore': 'quotation'},
+    tempfile_kwargs={"suffix": ".html"})

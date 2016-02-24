@@ -23,25 +23,25 @@ unicode_file = """{
 }""".splitlines(keepends=True)
 
 
-JSONFormatBear1Test = verify_local_bear(JSONFormatBear,
-                                        valid_files=(test_file1, test_file2),
-                                        invalid_files=(test_file3,
-                                                       unicode_file,
-                                                       [""],
-                                                       ["random stuff"],
-                                                       ['{"a":5,"b":5}']))
+JSONFormatBearTest = verify_local_bear(JSONFormatBear,
+                                       valid_files=(test_file1, test_file2),
+                                       invalid_files=(test_file3,
+                                                      unicode_file,
+                                                      [""],
+                                                      ["random stuff"],
+                                                      ['{"a":5,"b":5}']))
 
 
-JSONFormatBear2Test = verify_local_bear(JSONFormatBear,
-                                        valid_files=(test_file1,),
-                                        invalid_files=(test_file2,),
-                                        settings={"json_sort": "true"})
+JSONFormatBearSortTest = verify_local_bear(JSONFormatBear,
+                                           valid_files=(test_file1,),
+                                           invalid_files=(test_file2,),
+                                           settings={"json_sort": "true"})
 
 
-JSONFormatBear3Test = verify_local_bear(JSONFormatBear,
-                                        valid_files=(test_file3,),
-                                        invalid_files=(test_file2,),
-                                        settings={"tab_width": "3"})
+JSONFormatBearTabWidthTest = verify_local_bear(JSONFormatBear,
+                                               valid_files=(test_file3,),
+                                               invalid_files=(test_file2,),
+                                               settings={"tab_width": "3"})
 
 
 JSONFormatBearUnicodeTest = verify_local_bear(JSONFormatBear,

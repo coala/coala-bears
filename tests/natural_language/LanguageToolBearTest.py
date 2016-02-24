@@ -13,7 +13,7 @@ except ImportError as err:
     raise SkipTest(str(err))
 
 
-LanguageToolBear1Test = verify_local_bear(
+LanguageToolBearTest = verify_local_bear(
     LanguageToolBear,
     valid_files=(["A correct English sentence sounds nice in everyone."],
                  ["Eine korrekte englische Satz klingt nett zu jedermann."]),
@@ -22,7 +22,7 @@ LanguageToolBear1Test = verify_local_bear(
                    ['"quoted"']))
 
 
-LanguageToolBear2Test = verify_local_bear(
+LanguageToolBearLocaleTest = verify_local_bear(
     LanguageToolBear,
     valid_files=(["A correct English sentence sounds nice in everyone."],),
     invalid_files=(["Eine korrekte englische Satz klingt nett zu jedermann."],),
@@ -30,7 +30,7 @@ LanguageToolBear2Test = verify_local_bear(
 
 
 @generate_skip_decorator(LanguageToolBear)
-class LanguageToolBearTest(unittest.TestCase):
+class LanguageToolBearPrerequisitesTest(unittest.TestCase):
 
     def test_check_prerequisites(self):
         _shutil_which = shutil.which

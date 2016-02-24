@@ -11,12 +11,12 @@ test_file2 = """1. abc
 """.splitlines(keepends=True)
 
 
-MarkdownBear1Test = verify_local_bear(MarkdownBear,
-                                      valid_files=(test_file2,),
-                                      invalid_files=(test_file1,))
+MarkdownBearTest = verify_local_bear(MarkdownBear,
+                                     valid_files=(test_file2,),
+                                     invalid_files=(test_file1,))
 
-MarkdownBear2Test = verify_local_bear(MarkdownBear,
-                                      valid_files=(test_file1,),
-                                      invalid_files=(test_file2,),
-                                      settings={
-                                          "markdown_list_increment": False})
+MarkdownBearConfigsTest = verify_local_bear(
+    MarkdownBear,
+    valid_files=(test_file1,),
+    invalid_files=(test_file2,),
+    settings={"markdown_list_increment": False})

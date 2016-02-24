@@ -34,12 +34,12 @@ func subOneInLoop(y int) {
 """.splitlines(keepends=True)
 
 
-GoLintBear1Test = verify_local_bear(GoLintBear,
-                                    valid_files=(good_file,),
-                                    invalid_files=(bad_file,))
+GoLintBearTest = verify_local_bear(GoLintBear,
+                                   valid_files=(good_file,),
+                                   invalid_files=(bad_file,))
 
 
-GoLintBear2Test = verify_local_bear(
+GoLintBearWithSettingsTest = verify_local_bear(
     GoLintBear,
     valid_files=(bad_file, good_file),
     invalid_files=(),

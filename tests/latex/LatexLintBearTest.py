@@ -14,6 +14,6 @@ bad_file = """
 """.splitlines(keepends=True)
 
 
-LatexLintBear1Test = verify_local_bear(LatexLintBear,
-                                       valid_files=(good_file,),
-                                       invalid_files=(bad_file,))
+LatexLintBearTest = verify_local_bear(LatexLintBear,
+                                      valid_files=(good_file,),
+                                      invalid_files=(bad_file,))
