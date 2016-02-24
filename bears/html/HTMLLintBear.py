@@ -8,7 +8,6 @@ from coalib.settings.Setting import typed_list
 
 class HTMLLintBear(LocalBear, Lint):
     executable = 'html_lint.py'
-    shell = True
     output_regex = re.compile(
         r'(?P<line>\d+):(?P<column>\d+):\s'
         r'(?P<severity>Error|Warning|Info):\s(?P<message>.+)'
@@ -29,6 +28,4 @@ class HTMLLintBear(LocalBear, Lint):
         :param htmllint_include: List of checkers to ignore.
         '''
         ignore = ','.join(part.strip() for part in htmllint_ignore)
-        self.arguments = '--disable=' + ignore
-        self.arguments += " {filename}"
-        return self.lint(filename)
+        return self.lint(('--disable=' + ignore, filename))

@@ -12,4 +12,4 @@ class GoImportsBear(Lint, LocalBear):
         """
         Adds/Removes imports to Go code for missing imports.
         """
-        return self.lint(filename, file)
+        return self.lint(file=file)
