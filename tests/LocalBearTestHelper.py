@@ -60,8 +60,7 @@ class LocalBearTestHelper(unittest.TestCase):  # pragma: no cover
         either yields or does not yield any results.
 
         :param local_bear:       The local bear to check with.
-        :param lines:            The lines to check. (string if single line
-                                 or List of strings)
+        :param lines:            The lines to check. (List of strings)
         :param filename:         The filename, if it matters.
         :param valid:            Whether the lines are valid or not.
         :param force_linebreaks: Whether to append newlines at each line
@@ -69,9 +68,6 @@ class LocalBearTestHelper(unittest.TestCase):  # pragma: no cover
         :param create_tempfile:  Whether to save lines in tempfile if needed.
         :param tempfile_kwargs:  Kwargs passed to tempfile.mkstemp().
         """
-        if isinstance(lines, str):
-            lines = [lines]
-
         assert isinstance(self, unittest.TestCase)
         self.assertIsInstance(local_bear,
                               LocalBear,
@@ -108,20 +104,14 @@ class LocalBearTestHelper(unittest.TestCase):  # pragma: no cover
         yield exactly the given results.
 
         :param local_bear:       The local bear to check with.
-        :param lines:            The lines to check. (string if single line
-                                 or List of strings)
-        :param results:          The expected result or list of results.
+        :param lines:            The lines to check. (List of strings)
+        :param results:          The expected list of results.
         :param filename:         The filename, if it matters.
         :param force_linebreaks: Whether to append newlines at each line
                                  if needed. (Bears expect a \\n for every line)
         :param create_tempfile:  Whether to save lines in tempfile if needed.
         :param tempfile_kwargs:  Kwargs passed to tempfile.mkstemp().
         """
-        if isinstance(lines, str):
-            lines = [lines]
-        if isinstance(results, Result):
-            results = [results]
-
         assert isinstance(self, unittest.TestCase)
         self.assertIsInstance(local_bear,
                               LocalBear,
@@ -188,6 +178,7 @@ def verify_local_bear(bear,
                 self.section.append(Setting(name, value))
 
         def test_valid_files(self):
+            self.assertIsInstance(valid_files, (list, tuple))
             for file in valid_files:
                 self.check_validity(self.uut,
                                     file,
@@ -198,6 +189,7 @@ def verify_local_bear(bear,
                                     tempfile_kwargs=tempfile_kwargs)
 
         def test_invalid_files(self):
+            self.assertIsInstance(invalid_files, (list, tuple))
             for file in invalid_files:
                 self.check_validity(self.uut,
                                     file,

@@ -15,18 +15,16 @@ class LineCountBearTest(LocalBearTestHelper):
         self.check_results(
             self.uut,
             ["1", "2", "3"],
-            Result.from_values(
-                "LineCountBear",
-                "This file has {count} lines.".format(count=3),
-                severity=RESULT_SEVERITY.INFO,
-                file="default"),
+            [Result.from_values("LineCountBear",
+                                "This file has {count} lines.".format(count=3),
+                                severity=RESULT_SEVERITY.INFO,
+                                file="default")],
             filename="default")
         self.check_results(
             self.uut,
             [],
-            Result.from_values(
-                "LineCountBear",
-                "This file has {count} lines.".format(count=0),
-                severity=RESULT_SEVERITY.INFO,
-                file="default"),
+            [Result.from_values("LineCountBear",
+                                "This file has {count} lines.".format(count=0),
+                                severity=RESULT_SEVERITY.INFO,
+                                file="default")],
             filename="default")

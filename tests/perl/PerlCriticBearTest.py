@@ -47,7 +47,7 @@ with prepare_file(config_file,
                   force_linebreaks=True,
                   create_tempfile=True) as (conf_lines, conf_file):
     PerlCriticBear2Test = verify_local_bear(PerlCriticBear,
-                                            valid_files=(bad_file),
+                                            valid_files=(bad_file,),
                                             invalid_files=(),
                                             settings={
                                                 "perlcritic_config": conf_file})

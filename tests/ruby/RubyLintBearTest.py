@@ -22,7 +22,7 @@ class HelloWorld
         x = 1 # unused variables invoke a warning
         puts "Hello #{@name}!"
     end
-"""
+""".split("\n")
 
 
 RubyLintBearTest = verify_local_bear(RubyLintBear,
