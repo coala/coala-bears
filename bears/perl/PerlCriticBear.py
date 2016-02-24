@@ -23,12 +23,12 @@ class PerlCriticBear(LocalBear, Lint):
             filename,
             file,
             perlcritic_config: str=""):
-        '''
+        """
         Checks the code with perlcritic. This will run perlcritic over
         each of the files seperately
 
         :param perlcritic_config: Location of the perlcriticrc config file.
-        '''
+        """
         self.arguments = '--no-color --verbose "%l|%c|%s|%p|%m (%e)"'
         if perlcritic_config:
             self.arguments += (" --config "
