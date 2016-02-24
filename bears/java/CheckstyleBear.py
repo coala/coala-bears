@@ -10,6 +10,7 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 class CheckstyleBear(LocalBear, Lint):
     executable = 'java'
+    shell = True
     google_checks = join(dirname(abspath(__file__)), 'google_checks.xml')
     jar = join(dirname(abspath(__file__)), 'checkstyle.jar')
 
