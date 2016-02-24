@@ -43,7 +43,8 @@ class InvalidLinkBear(LocalBear):
             if code is None:
                 yield Result.from_values(
                     origin=self,
-                    message='Broken link - unable to connect to this url.',
+                    message=('Broken link - unable to connect to '
+                             '{url}').format(url=link),
                     file=filename,
                     line=line_number,
                     severity=RESULT_SEVERITY.MAJOR)
@@ -51,8 +52,9 @@ class InvalidLinkBear(LocalBear):
                 if 400 <= code < 600:  # HTTP status 40x or 50x
                     yield Result.from_values(
                         origin=self,
-                        message='Broken link - unable to connect to this url.' +
-                                ' (HTTP Error: {code})'.format(code=code),
+                        message=('Broken link - unable to connect to {url} '
+                                 '(HTTP Error: {code})'
+                                 ).format(url=link, code=code),
                         file=filename,
                         line=line_number,
                         severity=RESULT_SEVERITY.NORMAL)
