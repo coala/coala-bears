@@ -17,6 +17,6 @@ bad_file = """
 """.splitlines(keepends=True)
 
 
-CSSLintBear1Test = verify_local_bear(CSSLintBear,
-                                     valid_files=(good_file,),
-                                     invalid_files=(bad_file,))
+CSSLintBearTest = verify_local_bear(CSSLintBear,
+                                    valid_files=(good_file,),
+                                    invalid_files=(bad_file,))

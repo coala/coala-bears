@@ -17,12 +17,12 @@ items:
 ...
 """.splitlines(keepends=True)
 
-YAMLLintBear1Test = verify_local_bear(YAMLLintBear,
-                                      valid_files=(),
-                                      invalid_files=(test_file,))
+YAMLLintBearTest = verify_local_bear(YAMLLintBear,
+                                     valid_files=(),
+                                     invalid_files=(test_file,))
 
-YAMLLintBear2Test = verify_local_bear(YAMLLintBear,
-                                      valid_files=(test_file,),
-                                      invalid_files=(),
-                                      settings={
-                                          'yamllint_config': 'config.yml'})
+YAMLLintBearConfigTest = verify_local_bear(YAMLLintBear,
+                                           valid_files=(test_file,),
+                                           invalid_files=(),
+                                           settings={
+                                               'yamllint_config': 'config.yml'})

@@ -37,17 +37,17 @@ severity  = 5
 """.splitlines(keepends=True)
 
 
-PerlCriticBear1Test = verify_local_bear(PerlCriticBear,
-                                        valid_files=(good_file,),
-                                        invalid_files=(bad_file,))
+PerlCriticBearTest = verify_local_bear(PerlCriticBear,
+                                       valid_files=(good_file,),
+                                       invalid_files=(bad_file,))
 
 
 with prepare_file(config_file,
                   filename=None,
                   force_linebreaks=True,
                   create_tempfile=True) as (conf_lines, conf_file):
-    PerlCriticBear2Test = verify_local_bear(PerlCriticBear,
-                                            valid_files=(bad_file,),
-                                            invalid_files=(),
-                                            settings={
-                                                "perlcritic_config": conf_file})
+    PerlCriticBearConfigTest = verify_local_bear(
+        PerlCriticBear,
+        valid_files=(bad_file, good_file),
+        invalid_files=(),
+        settings={"perlcritic_config": conf_file})

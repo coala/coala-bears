@@ -19,6 +19,6 @@ apt-get -y -qq upgrade
 """.splitlines(keepends=True)
 
 
-DockerfileLintBear1Test = verify_local_bear(DockerfileLintBear,
-                                            valid_files=(good_file,),
-                                            invalid_files=(bad_file,))
+DockerfileLintBearTest = verify_local_bear(DockerfileLintBear,
+                                           valid_files=(good_file,),
+                                           invalid_files=(bad_file,))

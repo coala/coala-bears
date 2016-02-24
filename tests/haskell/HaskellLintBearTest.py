@@ -9,7 +9,7 @@ bad_file = """
 myconcat a b = ((++) a b)
 """.splitlines(keepends=True)
 
-HaskellLintBear1Test = verify_local_bear(HaskellLintBear,
-                                         valid_files=(good_file,),
-                                         invalid_files=(bad_file,),
-                                         tempfile_kwargs={"suffix": ".hs"})
+HaskellLintBearTest = verify_local_bear(HaskellLintBear,
+                                        valid_files=(good_file,),
+                                        invalid_files=(bad_file,),
+                                        tempfile_kwargs={"suffix": ".hs"})
