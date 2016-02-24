@@ -1,4 +1,5 @@
 from bears.yaml.YAMLLintBear import YAMLLintBear
+from coalib.misc.ContextManagers import prepare_file
 from tests.LocalBearTestHelper import verify_local_bear
 
 test_file = """
@@ -17,12 +18,27 @@ items:
 ...
 """.splitlines(keepends=True)
 
-YAMLLintBearTest = verify_local_bear(YAMLLintBear,
-                                     valid_files=(),
-                                     invalid_files=(test_file,))
+config_file = """
+extends:
+    default
+rules:
+    colons:
+      max-spaces-after: -1
+    indentation: disable
+    empty-lines: disable
+""".splitlines(keepends=True)
 
-YAMLLintBearConfigTest = verify_local_bear(YAMLLintBear,
-                                           valid_files=(test_file,),
-                                           invalid_files=(),
-                                           settings={
-                                               'yamllint_config': 'config.yml'})
+
+YAMLLintBear1Test = verify_local_bear(YAMLLintBear,
+                                      valid_files=(),
+                                      invalid_files=(test_file,))
+
+with prepare_file(config_file,
+                  filename=None,
+                  force_linebreaks=True,
+                  create_tempfile=True) as (conf_lines, conf_file):
+    YAMLLintBear2Test = verify_local_bear(YAMLLintBear,
+                                          valid_files=(test_file,),
+                                          invalid_files=(),
+                                          settings={
+                                              'yamllint_config': conf_file})
