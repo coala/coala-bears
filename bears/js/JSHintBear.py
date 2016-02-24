@@ -2,7 +2,6 @@ import re
 
 from coalib.bearlib.abstractions.Lint import Lint
 from coalib.bears.LocalBear import LocalBear
-from coalib.misc.Shell import escape_path_argument
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
@@ -26,9 +25,8 @@ class JSHintBear(LocalBear, Lint):
 
         :param jshint_config: The location of the jshintrc config file.
         '''
-        self.arguments = '--verbose {filename}'
+        arguments = ('--verbose', filename)
         if jshint_config:
-            self.arguments += (" --config "
-                               + escape_path_argument(jshint_config))
+            arguments += ("--config", jshint_config)
 
-        return self.lint(filename)
+        return self.lint(arguments)

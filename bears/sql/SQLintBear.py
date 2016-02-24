@@ -20,4 +20,4 @@ class SQLintBear(LocalBear, Lint):
         '''
         Checks the given file using `sqlint`.
         '''
-        return self.lint(filename, file)
+        return self.lint(file=file)

@@ -25,8 +25,7 @@ class YAMLLintBear(LocalBear, Lint):
 
         :param yamllint_config: Path to a custom configuration file.
         '''
-        self.arguments += ' -f parsable'
-        self.arguments += ' {filename}'
+        arguments = ('-f', 'parsable', filename)
         if yamllint_config:
-            self.arguments += ' --config=' + yamllint_config
-        return self.lint(filename)
+            arguments += ('--config=' + yamllint_config,)
+        return self.lint(arguments)

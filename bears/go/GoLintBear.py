@@ -8,7 +8,6 @@ class GoLintBear(LocalBear, Lint):
     executable = 'golint'
     output_regex = re.compile(
             r'(?P<path>.*?)\:(?P<line>\d+)\:(?P<column>\d+)\: (?P<message>.*)')
-    #use_stdout = True
 
     def run(self,
             filename,

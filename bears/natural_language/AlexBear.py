@@ -10,11 +10,10 @@ class AlexBear(LocalBear, Lint):
         r'\s+(?P<line>\d+):(?P<column>\d+)\-'
         r'(?P<end_line>\d+):(?P<end_column>\d+)'
         r'\s+(?:(?P<warning>warning))\s+(?P<message>.+)')
-    arguments = "{filename}"
 
     def run(self, filename, file):
         '''
         Checks the markdown file with Alex - Catch insensitive,
         inconsiderate writing.
         '''
-        return self.lint(filename)
+        return self.lint((filename,))

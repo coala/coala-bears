@@ -45,7 +45,8 @@ class JSONFormatBear(Lint, LocalBear):
 
         :param json_sort:    Whether or not keys should be sorted.
         :param tab_width:    Number of spaces to indent.
-        :param keep_unicode: Wether or not to escape unicode values using ASCII.
+        :param keep_unicode: Whether or not to escape unicode values using
+                             ASCII.
         """
         return self.lint(filename,
                          file,
