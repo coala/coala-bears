@@ -3,12 +3,12 @@ from tests.LocalBearTestHelper import verify_local_bear
 
 test_file1 = """1. abc
 1. def
-""".splitlines()
+""".splitlines(keepends=True)
 
 
 test_file2 = """1. abc
 2. def
-""".splitlines()
+""".splitlines(keepends=True)
 
 
 MarkdownBear1Test = verify_local_bear(MarkdownBear,

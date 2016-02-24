@@ -16,14 +16,14 @@ use vars qw/ $VERSION /;
 $VERSION = '1.00';
 
 exit 1 if !print "Hello, world!\n";
-""".split("\n")
+""".splitlines(keepends=True)
 
 
 bad_file = """
 #!/usr/bin/perl
 
 print "Hello World\n";
-""".split("\n")
+""".splitlines(keepends=True)
 
 
 config_file = """
@@ -34,7 +34,7 @@ severity  = 5
 [TestingAndDebugging::RequireUseStrict]
 
 [TestingAndDebugging::RequireUseWarnings]
-""".split("\n")
+""".splitlines(keepends=True)
 
 
 PerlCriticBear1Test = verify_local_bear(PerlCriticBear,

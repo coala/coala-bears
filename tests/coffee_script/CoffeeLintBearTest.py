@@ -8,13 +8,13 @@ class Gangster
 
   wasItAGoodDay : () ->
     yes
-""".split("\n")
+""".splitlines(keepends=True)
 
 
 warning_file = """
 # Nested string interpolation
 str = "Book by #{"#{firstName} #{lastName}".toUpperCase()}"
-""".split("\n")
+""".splitlines(keepends=True)
 
 
 error_file = """
@@ -23,13 +23,13 @@ class theGangster
 
   wasItAGoodDay : () ->
     yes
-""".split("\n")
+""".splitlines(keepends=True)
 
 
 invalid_file = """
 # Coffeelint is buggy here and will generate an error with invalid CSV on this
 var test
-""".split("\n")
+""".splitlines(keepends=True)
 
 
 CoffeeLintBear1Test = verify_local_bear(CoffeeLintBear,

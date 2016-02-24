@@ -7,7 +7,7 @@ FROM ubuntu:14.04
 # Install basic tools
 RUN apt-get -y -qq update
 RUN apt-get -y -qq upgrade
-""".split("\n")
+""".splitlines(keepends=True)
 
 
 bad_file = """
@@ -16,7 +16,7 @@ FROM ubuntu:14.04
 # Install basic tools
 apt-get -y -qq update
 apt-get -y -qq upgrade
-""".split("\n")
+""".splitlines(keepends=True)
 
 
 DockerfileLintBear1Test = verify_local_bear(DockerfileLintBear,

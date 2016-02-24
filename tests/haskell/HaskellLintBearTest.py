@@ -3,11 +3,11 @@ from tests.LocalBearTestHelper import verify_local_bear
 
 good_file = """
 myconcat = (++)
-""".split("\n")
+""".splitlines(keepends=True)
 
 bad_file = """
 myconcat a b = ((++) a b)
-""".split("\n")
+""".splitlines(keepends=True)
 
 HaskellLintBear1Test = verify_local_bear(HaskellLintBear,
                                          valid_files=(good_file,),

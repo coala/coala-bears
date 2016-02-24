@@ -5,7 +5,7 @@ test_file = """
 test line fix me
 to do
 error fixme
-""".split("\n")
+""".splitlines(keepends=True)
 
 
 KeywordBearTest = verify_local_bear(KeywordBear,

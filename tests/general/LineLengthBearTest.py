@@ -6,7 +6,7 @@ test
 too
 er
 e
-""".split("\n")
+""".splitlines(keepends=True)
 
 
 LineLengthBear1Test = verify_local_bear(LineLengthBear,

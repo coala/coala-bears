@@ -4,13 +4,13 @@ from coalib.misc.ContextManagers import prepare_file
 
 test_file1 = """
 var name = (function() { return 'Anton' }());
-""".split("\n")
+""".splitlines(keepends=True)
 
 
 test_file2 = """
 function () {
 }()
-""".split("\n")
+""".splitlines(keepends=True)
 
 
 config_file = """
@@ -18,7 +18,7 @@ config_file = """
   "lastsemic": true,
   "maxlen": 80
 }
-""".split("\n")
+""".splitlines(keepends=True)
 
 
 JSHintBear1Test = verify_local_bear(JSHintBear,

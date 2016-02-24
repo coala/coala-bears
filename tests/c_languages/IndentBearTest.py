@@ -6,14 +6,14 @@ int
 main ()
 {
     return 0;
-}""".split("\n")
+}""".splitlines(keepends=True)
 
 test_file2 = """
 int
 main ()
 {
   return 0;
-}""".split("\n")
+}""".splitlines(keepends=True)
 
 
 test_file3 = """
@@ -21,13 +21,13 @@ int
 main ()
 {
 \treturn 0;
-}""".split("\n")
+}""".splitlines(keepends=True)
 
 
 test_file4 = """
 int main() {
   return 0;
-}""".split("\n")
+}""".splitlines(keepends=True)
 
 
 IndentBear1Test = verify_local_bear(IndentBear,

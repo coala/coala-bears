@@ -4,7 +4,7 @@ from tests.LocalBearTestHelper import verify_local_bear
 good_file1 = """import "errors"
 
 func F() (*MyType, int, error) { return nil, 0, errors.New("foo") }"""\
-.split('\n')
+.splitlines(keepends=True)
 
 good_file2 = """package main
 
@@ -12,11 +12,11 @@ import "os"
 
 func main() {
 \tf, _ := os.Open("foo")
-}""".split('\n')
+}""".splitlines(keepends=True)
 
 bad_file1 = """
 func F() (*MyType, int, error) { return errors.New("foo") }
-""".split('\n')
+""".splitlines(keepends=True)
 
 bad_file2 = """
 package main
@@ -26,7 +26,7 @@ func main() {
     return nil, 0, errors.New("foo")
 }
 
-""".split('\n')
+""".splitlines(keepends=True)
 
 a = ['import "errors"', '',
      'func F() (*MyType, int, error) { return nil, 0, errors.New("foo") }']
