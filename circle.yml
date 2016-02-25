@@ -6,9 +6,11 @@ dependencies:
     - ~/coala-bears/node_modules
     - ~/.rvm/gems/ruby-2.1.5/gems/
     - ~/.RLibrary
+    - ~/dart-sdk/bin
   pre:
     - echo 'export PATH=$PATH:~/coala-bears/node_modules/.bin' >> ~/.circlerc
     - echo 'export LINTR_COMMENT_BOT=false' >> ~/.circlerc
+    - echo 'export PATH=$PATH:~/dart-sdk/bin' >> ~/.circlerc
     - sed -i '/source \/home\/ubuntu\/virtualenvs\//d' ~/.circlerc
     - nvm alias default node
   override:

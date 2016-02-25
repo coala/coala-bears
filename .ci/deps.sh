@@ -51,3 +51,7 @@ for dep_version in "${dep_versions[@]}" ; do
 done
 
 python setup.py --help
+
+# Dart Lint commands
+wget -nc -O ~/dart-sdk.zip https://storage.googleapis.com/dart-archive/channels/stable/release/1.14.2/sdk/dartsdk-linux-x64-release.zip
+unzip -n ~/dart-sdk.zip -d ~/
