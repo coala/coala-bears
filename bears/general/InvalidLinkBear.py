@@ -18,7 +18,8 @@ class InvalidLinkBear(LocalBear):
     @staticmethod
     def get_status_code_or_error(url):
         try:
-            code = requests.head(url, allow_redirects=False).status_code
+            code = requests.head(url, allow_redirects=False,
+                                 timeout=1).status_code
             return code
         except requests.exceptions.RequestException:
             pass
