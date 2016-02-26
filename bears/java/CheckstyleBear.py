@@ -1,11 +1,10 @@
 from os.path import abspath, dirname, join
 import re
-import shutil
-import subprocess
 
 from coalib.bearlib.abstractions.Lint import Lint
 from coalib.bears.LocalBear import LocalBear
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
+from bears.CheckPrerequisites import check_linter_prerequisites_builder
 
 
 class CheckstyleBear(LocalBear, Lint):
@@ -17,17 +16,14 @@ class CheckstyleBear(LocalBear, Lint):
         "INFO": RESULT_SEVERITY.INFO,
         "WARN": RESULT_SEVERITY.NORMAL}
 
-    @classmethod
-    def check_prerequisites(cls):  # pragma: no cover
-        if shutil.which("java") is None:
-            return "java is not installed."
-        else:
-            exitcode = subprocess.call(["java", "-jar", cls.jar, "-v"])
-            if exitcode != 0:
-                return ("jar file {} is invalid and cannot be used"
-                        .format(cls.jar))
-            else:
-                return True
+    check_prerequisites = classmethod(
+                        check_linter_prerequisites_builder(
+                            executable,
+                            ["java", "-jar", jar, "-v"],
+                            "jar file {} is invalid and cannot be used".format(
+                                jar)
+                            )
+                        )
 
     def run(self, filename, file):
         """
