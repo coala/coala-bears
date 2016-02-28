@@ -3,6 +3,8 @@ import queue
 import unittest
 from contextlib import contextmanager
 
+import pytest
+
 from tests.BearTestHelper import generate_skip_decorator
 from coalib.bearlib.abstractions.Lint import Lint
 from coalib.bears.LocalBear import LocalBear
@@ -143,6 +145,7 @@ def verify_local_bear(bear,
                       settings={},
                       force_linebreaks=True,
                       create_tempfile=True,
+                      timeout=None,
                       tempfile_kwargs={}):
     """
     Generates a test for a local bear by checking the given valid and invalid
@@ -163,10 +166,12 @@ def verify_local_bear(bear,
     :param force_linebreaks: Whether to append newlines at each line
                              if needed. (Bears expect a \\n for every line)
     :param create_tempfile:  Whether to save lines in tempfile if needed.
+    :param timeout:          The total time to run the test for.
     :param tempfile_kwargs:  Kwargs passed to tempfile.mkstemp() if tempfile
                              needs to be created.
     :return:                 A unittest.TestCase object.
     """
+    @pytest.mark.timeout(timeout)
     @generate_skip_decorator(bear)
     class LocalBearTest(LocalBearTestHelper):
 
