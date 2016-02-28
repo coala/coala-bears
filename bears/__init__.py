@@ -1,4 +1,7 @@
 import sys
+from bears import Constants
+
+__version__ = Constants.VERSION
 
 
 def assert_supported_version():  # pragma: no cover
