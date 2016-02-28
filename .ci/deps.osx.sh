@@ -17,6 +17,8 @@ brew install sqlite && brew link sqlite --force
 brew install openssl && brew link openssl --force
 brew install gnu-indent
 brew install go
+brew tap staticfloat/julia
+brew install julia
 
 # Install required go libraries
 go get -u github.com/golang/lint/golint
@@ -34,3 +36,6 @@ pip install -q -r requirements.txt
 
 # Calling setup.py will download checkstyle automatically so tests may succeed
 python setup.py --help
+
+# julia
+julia -e "Pkg.add(\"Lint\")"
