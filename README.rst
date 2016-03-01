@@ -25,13 +25,13 @@ README
 INSTALLATION
 ============
 
-coala-bears can be installed with ``pip install coala-bears``. If you need more
+coala-bears can be installed with ``pip3 install coala-bears``. If you need more
 information about the installation and dependencies, take a look at our
 `installation documentation
 <http://coala.rtfd.org/en/latest/Users/Install.html>`__.
 
 The latest code from master is automatically deployed to PyPI as a
-development version. Get it with ``pip install coala-bears --pre``.
+development version. Get it with ``pip3 install coala-bears --pre``.
 
 |PyPI|
 
