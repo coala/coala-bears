@@ -36,3 +36,4 @@ Goopfile.lock
 Gemfile.lock
 .Rhistory
 .Rprofile
+*.swp
