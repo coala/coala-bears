@@ -3,26 +3,26 @@ from tests.LocalBearTestHelper import verify_local_bear
 
 LinkRedirect = verify_local_bear(InvalidLinkBear,
                                  valid_files=(
-                                    ["http://httpbin.org/status/200"],),
+                                    ["http://httpstat.us/200"],),
                                  invalid_files=(
-                                    ["http://httpbin.org/status/301"],
+                                    ["http://httpstat.us/301"],
                                     ["http://coala.rtfd.org"]),
                                  force_linebreaks=False)
 
 InvalidLinkNotFound = verify_local_bear(InvalidLinkBear,
                                         valid_files=(
-                                            ["http://httpbin.org/status/202"],),
+                                            ["http://httpstat.us/202"],),
                                         invalid_files=(
-                                            ["http://httpbin.org/status/404"],
-                                            ["http://httpbin.org/status/401"]),
+                                            ["http://httpstat.us/404"],
+                                            ["http://httpstat.us/401"]),
                                         force_linebreaks=False)
 
 InvalidLinkServerError = verify_local_bear(InvalidLinkBear,
                                            valid_files=(
-                                            ["http://httpbin.org/status/202"],),
+                                            ["http://httpstat.us/202"],),
                                            invalid_files=(
-                                            ["http://httpbin.org/status/500"],
-                                            ["http://httpbin.org/status/503"]),
+                                            ["http://httpstat.us/500"],
+                                            ["http://httpstat.us/503"]),
                                            force_linebreaks=False)
 
 LinkDoesNotExist = verify_local_bear(InvalidLinkBear,
