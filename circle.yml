@@ -7,13 +7,16 @@ dependencies:
     - ~/.rvm/gems/ruby-2.1.5/gems/
     - ~/.RLibrary
     - ~/dart-sdk/bin
+    - ~/.cabal
   pre:
     - echo 'export PATH=$PATH:~/coala-bears/node_modules/.bin' >> ~/.circlerc
     - echo 'export LINTR_COMMENT_BOT=false' >> ~/.circlerc
     - echo 'export PATH=$PATH:~/dart-sdk/bin' >> ~/.circlerc
+    - echo 'export PATH=$PATH:~/.cabal/bin' >> ~/.circlerc
     - sed -i '/source \/home\/ubuntu\/virtualenvs\//d' ~/.circlerc
     - nvm alias default node
   override:
+    - bash .ci/deps.shellcheck.sh
     - bash .ci/deps.sh
 
 test:
