@@ -18,7 +18,7 @@ class GitCommitBear(GlobalBear):
 
     def run(self,
             shortlog_length: int=50,
-            body_line_length: int=73,
+            body_line_length: int=72,
             force_body: bool=False,
             allow_empty_commit_message: bool=False):
         """
