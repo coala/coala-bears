@@ -13,6 +13,13 @@ function () {
 """.splitlines(keepends=True)
 
 
+test_file3 = """
+var a = (function() {
+  return 0;
+}());
+""".splitlines(keepends=True)
+
+
 config_file = """
 {
   "lastsemic": true,
@@ -21,9 +28,20 @@ config_file = """
 """.splitlines(keepends=True)
 
 
+settings = {
+  "maxstatements": "False",
+  "maxparams": 10,
+  "prohibit_unused": "False",
+  "shadow": "False",
+  "allow_last_semicolon": "True",
+  "es_version": 3,
+  "allow_latedef": "no_func"}
+
+
 JSHintBearTest = verify_local_bear(JSHintBear,
                                    valid_files=(),
-                                   invalid_files=(test_file1, test_file2))
+                                   invalid_files=(test_file1, test_file2,
+                                                  test_file3))
 
 
 with prepare_file(config_file,
@@ -35,3 +53,10 @@ with prepare_file(config_file,
         valid_files=(test_file1, test_file2),
         invalid_files=(),
         settings={"jshint_config": conf_file})
+
+
+JSHintBearCoafileTest = verify_local_bear(
+    JSHintBear,
+    invalid_files=(),
+    valid_files=(test_file3, ),
+    settings=settings)
