@@ -62,3 +62,7 @@ fi
 
 # Julia commands
 julia -e "Pkg.add(\"Lint\")"
+
+# Lua commands
+sudo apt-get install -y luarocks
+sudo luarocks install luacheck --deps-mode=none
