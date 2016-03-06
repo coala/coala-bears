@@ -12,7 +12,6 @@ from bears import assert_supported_version
 assert_supported_version()
 # Stop ignoring
 
-import setuptools.command.build_py
 from bears import Constants
 from setuptools import find_packages, setup
 from setuptools.command.test import test as TestCommand
