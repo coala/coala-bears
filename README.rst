@@ -92,8 +92,8 @@ information.
    :target: https://pypi.python.org/pypi/coala-bears
 .. |Linux Build Status| image:: https://img.shields.io/circleci/project/coala-analyzer/coala-bears/master.svg?label=linux%20build
    :target: https://circleci.com/gh/coala-analyzer/coala-bears
-.. |Windows Build status| image:: https://img.shields.io/appveyor/ci/sils1297/coala-bears/master.svg?label=windows%20build
-   :target: https://ci.appveyor.com/project/sils1297/coala-bears/branch/master
+.. |Windows Build status| image:: https://img.shields.io/appveyor/ci/coala/coala-bears/master.svg?label=windows%20build
+   :target: https://ci.appveyor.com/project/coala/coala-bears/branch/master
 .. |OSX Build status| image:: https://img.shields.io/travis/coala-analyzer/coala/master.svg?label=osx%20build
    :target: https://travis-ci.org/coala-analyzer/coala-bears
 .. |Documentation Status| image:: https://readthedocs.org/projects/coala/badge/?version=latest
