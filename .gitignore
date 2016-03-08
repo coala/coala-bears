@@ -37,3 +37,4 @@ Gemfile.lock
 .Rhistory
 .Rprofile
 *.swp
+venv
