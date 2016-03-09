@@ -5,6 +5,7 @@
     "coffeelint": "~1.14.2",
     "csslint": "~0.10.0",
     "dockerfile_lint": "~0.0.9",
+    "eslint": "~2.3.0",
     "jshint": "~2.9.1",
     "remark": "~3.2.3"
   }
