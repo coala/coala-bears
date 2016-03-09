@@ -57,6 +57,9 @@ with open('requirements.txt') as requirements:
 with open('test-requirements.txt') as requirements:
     test_required = requirements.read().splitlines()
 
+with open("README.rst") as readme:
+    long_description = readme.read()
+
 
 if __name__ == "__main__":
     download('http://sourceforge.net/projects/checkstyle/files/checkstyle/'
@@ -85,8 +88,7 @@ if __name__ == "__main__":
                         'bears.scala': ['scalastyle.jar',
                                         'scalastyle_config.xml']},
           license="AGPL-3.0",
-          long_description="coala-bears is a set of supported bears for "
-                           "coala - the COde AnaLysis Application.",
+          long_description=long_description,
           entry_points={"coalabears": ["coala_official_bears = bears"]},
           # from http://pypi.python.org/pypi?%3Aaction=list_classifiers
           classifiers=[
