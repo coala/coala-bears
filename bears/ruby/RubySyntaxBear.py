@@ -5,7 +5,7 @@ from coalib.bears.LocalBear import LocalBear
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
-class RubyLintBear(LocalBear, Lint):
+class RubySyntaxBear(LocalBear, Lint):
     executable = 'ruby'
     arguments = '-wc {filename}'
     output_regex = re.compile(
