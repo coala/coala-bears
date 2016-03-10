@@ -7,7 +7,7 @@ from bears.c_languages.codeclone_detection.ClangCountingConditions import (
 from bears.c_languages.codeclone_detection.ClangCountVectorCreator import (
     ClangCountVectorCreator)
 from bears.c_languages.codeclone_detection.CloneDetectionRoutines import (
-    compare_functions, get_count_matrices)
+    CloneDetectionRoutines)
 from coalib.bears.GlobalBear import GlobalBear
 from coalib.collecting.Collectors import collect_dirs
 from coalib.misc.StringConverter import StringConverter
@@ -73,11 +73,12 @@ def get_difference(function_pair,
     function_1, function_2 = function_pair
     return (function_1,
             function_2,
-            compare_functions(count_matrices[function_1],
-                              count_matrices[function_2],
-                              average_calculation,
-                              poly_postprocessing,
-                              exp_postprocessing))
+            CloneDetectionRoutines.compare_functions(
+                count_matrices[function_1],
+                count_matrices[function_2],
+                average_calculation,
+                poly_postprocessing,
+                exp_postprocessing))
 
 
 class ClangFunctionDifferenceBear(GlobalBear):
@@ -132,7 +133,7 @@ class ClangFunctionDifferenceBear(GlobalBear):
             self.debug(" *", key.__name__, "(weighting: {})".format(val))
 
         self.debug("Creating count matrices...")
-        count_matrices = get_count_matrices(
+        count_matrices = CloneDetectionRoutines.get_count_matrices(
             ClangCountVectorCreator(list(counting_conditions.keys()),
                                     list(counting_conditions.values())),
             list(self.file_dict.keys()),
