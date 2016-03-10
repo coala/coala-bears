@@ -30,9 +30,8 @@ class IndentBear(Lint, LocalBear):
                                    understands. They will be simply passed
                                    through.
         """
-        self.arguments = "--no-tabs" if use_spaces else "--use-tabs"
-        self.arguments += (" --line-length {0} --indent-level {1} "
-                           "--tab-size {1} {2}".format(max_line_length,
-                                                       tab_width,
-                                                       indent_cli_options))
-        return self.lint(filename, file)
+        arguments = ("--no-tabs" if use_spaces else "--use-tabs",
+                     "--line-length", str(max_line_length),
+                     "--indent-level", str(tab_width),
+                     "--tab-size", str(tab_width), str(indent_cli_options))
+        return self.lint(arguments, file=file)

@@ -15,10 +15,9 @@ class CSharpLintBear(LocalBear, Lint):
     severity_map = {
         "warning": RESULT_SEVERITY.NORMAL,
         "error": RESULT_SEVERITY.MAJOR}
-    arguments = "{filename}"
 
     def run(self, filename, file):
         '''
         Checks the code with `mcs` on each file separately.
         '''
-        return self.lint(filename)
+        return self.lint((filename,))

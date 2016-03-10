@@ -12,10 +12,9 @@ class LatexLintBear(LocalBear, Lint):
                               r': (?P<message>.*)')
     severity_map = {'Warning': RESULT_SEVERITY.NORMAL,
                     'Error': RESULT_SEVERITY.MAJOR}
-    arguments = "{filename}"
 
     def run(self, filename, file):
         '''
         Checks the code with `chktex`.
         '''
-        return self.lint(filename)
+        return self.lint((filename,))

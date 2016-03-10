@@ -23,7 +23,6 @@ def convert_if_not_empty(value: str, conversion):
 
 class CoffeeLintBear(LocalBear, Lint):
     executable = 'coffeelint'
-    arguments = '--reporter=csv {filename}'
     severity_map = {'warn': RESULT_SEVERITY.NORMAL,
                     'error': RESULT_SEVERITY.MAJOR}
 
@@ -31,7 +30,7 @@ class CoffeeLintBear(LocalBear, Lint):
         """
         Coffeelint's your files!
         """
-        return self.lint(filename)
+        return self.lint(('--reporter=csv', filename))
 
     def _process_issues(self, output, filename):
         reader = DictReader(StringIO("".join(output)))

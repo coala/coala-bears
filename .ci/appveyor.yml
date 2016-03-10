@@ -52,6 +52,15 @@ install:
   # Calling setup.py will download checkstyle automatically so tests may succeed
   - "%CMD_IN_ENV% python setup.py --help"
 
+  # ------- TEMPORARY MANUAL COALA TEST BRANCH INSTALLATION!!! ----------
+  - git clone https://github.com/coala-analyzer/coala TMPCOALA
+  - cd TMPCOALA
+  - git checkout Makman2/anti-bash-injection2
+  - python setup.py install
+  - cd ..
+  - coala --version
+  # ---------------------------------------------------------------------
+
   - ps: "Install-Product node ''"  # Use latest node v5.x.x
   - "npm config set loglevel warn"
   - "npm install"

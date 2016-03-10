@@ -8,7 +8,6 @@ from coalib.bears.LocalBear import LocalBear
 class MarkdownBear(Lint, LocalBear):
     executable = 'remark'
     diff_message = "The text does not comply to the set style."
-    arguments = '--no-color --quiet'
     gives_corrected = True
     use_stdin = True
 
@@ -95,8 +94,7 @@ class MarkdownBear(Lint, LocalBear):
             "ruleSpaces": markdown_horizontal_rule_spaces,      # Bool
             "ruleRepetition": markdown_horizontal_rule_repeat,  # int
         }
-        config_json = json.dumps(self.remark_configs)
-        # Remove { and } (remark adds it on its own) and escape it
-        settings = re.escape(config_json[1:-1])
-        self.arguments += " --setting " + settings
-        return self.lint(filename, file)
+        # Remove { and } as remark adds them on its own.
+        config_json = json.dumps(self.remark_configs)[1:-1]
+        return self.lint(('--no-color', '--quiet', '--setting', config_json),
+                         file=file)

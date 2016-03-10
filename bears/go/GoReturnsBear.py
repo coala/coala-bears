@@ -12,4 +12,4 @@ class GoReturnsBear(Lint, LocalBear):
         """
         Proposes corrections of Go code using gofmt.
         """
-        return self.lint(filename, file)
+        return self.lint(file=file)

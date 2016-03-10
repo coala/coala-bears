@@ -39,19 +39,22 @@ class PyLintBear(LocalBear, Lint):
                                    passed to pylint.
         :param pylint_rcfile:      The rcfile for PyLint.
         '''
-        self.arguments = ('--reports=n --persistent=n '
-                          '--msg-template="{{line}}.{{column}}|{{C}}: '
-                          '{{msg_id}} - {{msg}}"')
-        if pylint_disable:
-            self.arguments += " --disable=" + ",".join(pylint_disable)
-        if pylint_enable:
-            self.arguments += " --enable=" + ",".join(pylint_enable)
-        if pylint_cli_options:
-            self.arguments += " " + pylint_cli_options
-        if pylint_rcfile:
-            self.arguments += " --rcfile=" + escape_path_argument(pylint_rcfile)
-        else:
-            self.arguments += " --rcfile=" + os.devnull
-        self.arguments += " {filename}"
+        arguments = ('--reports=n',
+                     '--persistent=n',
+                     '--msg-template="{{line}}.{{column}}|{{C}}: {{msg_id}} - '
+                     '{{msg}}"')
 
-        return self.lint(filename)
+        if pylint_disable:
+            arguments += ('--disable=' + ",".join(pylint_disable),)
+        if pylint_enable:
+            arguments += ('--enable=' + ",".join(pylint_enable),)
+        if pylint_rcfile:
+            arguments += ('--rcfile=' + pylint_rcfile,)
+        else:
+            arguments += ('--rcfile=' + os.devnull,)
+        if pylint_cli_options:
+            arguments += (pylint_cli_options,)
+
+        arguments += (filename,)
+
+        return self.lint(arguments)

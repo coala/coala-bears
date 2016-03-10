@@ -8,7 +8,6 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 class DockerfileLintBear(LocalBear, Lint):
     executable = 'dockerfile_lint'
-    arguments = '--json -f {filename}'
     severity_map = {
         "error": RESULT_SEVERITY.MAJOR,
         "warn": RESULT_SEVERITY.NORMAL,
@@ -18,7 +17,7 @@ class DockerfileLintBear(LocalBear, Lint):
         '''
         Checks the given file with dockerfile_lint.
         '''
-        return self.lint(filename)
+        return self.lint(('--json', '-f', filename))
 
     def _process_issues(self, output, filename):
         output = json.loads("".join(output))

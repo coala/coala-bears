@@ -9,7 +9,6 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 class HaskellLintBear(LocalBear, Lint):
     executable = 'hlint'
-    arguments = '--json {filename}'
     severity_map = {
         "Error": RESULT_SEVERITY.MAJOR,
         "Warning": RESULT_SEVERITY.NORMAL,
@@ -20,7 +19,7 @@ class HaskellLintBear(LocalBear, Lint):
         '''
         Checks the given file with hlint.
         '''
-        return self.lint(filename=filename, file=file)
+        return self.lint(('--json', filename))
 
     def _process_corrected(self, output, filename, file):
         output = json.loads("".join(output))

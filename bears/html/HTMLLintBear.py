@@ -28,6 +28,4 @@ class HTMLLintBear(LocalBear, Lint):
         :param htmllint_include: List of checkers to ignore.
         '''
         ignore = ','.join(part.strip() for part in htmllint_ignore)
-        self.arguments = '--disable=' + ignore
-        self.arguments += " {filename}"
-        return self.lint(filename)
+        return self.lint(('--disable=' + ignore, filename))

@@ -8,7 +8,6 @@ class GoLintBear(LocalBear, Lint):
     executable = 'golint'
     output_regex = re.compile(
             r'(?P<path>.*?)\:(?P<line>\d+)\:(?P<column>\d+)\: (?P<message>.*)')
-    use_stdout = True
 
     def run(self,
             filename,
@@ -21,9 +20,8 @@ class GoLintBear(LocalBear, Lint):
         :param golint_cli_options: Any other flags you wish to pass to golint
                                    can be passed.
         '''
-        self.arguments = ""
+        arguments = (filename,)
         if golint_cli_options:
-            self.arguments += " " + golint_cli_options
-        self.arguments += " {filename}"
+            arguments = (golint_cli_options,) + arguments
 
-        return self.lint(filename)
+        return self.lint(arguments)
