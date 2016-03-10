@@ -1,4 +1,4 @@
-from bears.ruby.RubyLintBear import RubyLintBear
+from bears.ruby.RubySyntaxBear import RubySyntaxBear
 from tests.LocalBearTestHelper import verify_local_bear
 
 good_file = """
@@ -25,6 +25,6 @@ class HelloWorld
 """.splitlines(keepends=True)
 
 
-RubyLintBearTest = verify_local_bear(RubyLintBear,
-                                     valid_files=(good_file,),
-                                     invalid_files=(bad_file,))
+RubySyntaxBearTest = verify_local_bear(RubySyntaxBear,
+                                       valid_files=(good_file,),
+                                       invalid_files=(bad_file,))
