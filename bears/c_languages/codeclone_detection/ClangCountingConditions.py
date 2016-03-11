@@ -245,7 +245,7 @@ def in_sum(stack):
 def in_product(stack):
     """
     A counting condition returning true if the variable is used in a product
-    statement, i.e. within the operators *, /, % and their associated compound
+    statement, i.e. within the operators \*, /, % and their associated compound
     operators.
     """
     return _stack_contains_operators(stack, ['*', '/', '%', '*=', '/=', '%='])
@@ -254,7 +254,7 @@ def in_product(stack):
 def in_binary_operation(stack):
     """
     A counting condition returning true if the variable is used in a binary
-    operation, i.e. within the operators |, & and their associated compound
+    operation, i.e. within the operators \|, & and their associated compound
     operators.
     """
     return _stack_contains_operators(stack, ['&', '|', '&=', '|='])

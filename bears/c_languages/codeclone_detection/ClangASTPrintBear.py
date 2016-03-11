@@ -11,11 +11,13 @@ class ClangASTPrintBear(GlobalBear):
         '''
         Prints this node and all child nodes recursively in the style of:
 
-        -node
-        |-child
-        `-another child
-         |-child of child
-         `-last child of child
+        ::
+
+            -node
+            |-child
+            `-another child
+            |- child of child
+            `- last child of child
 
         :param cursor:      The node to print. (Clang cursor.)
         :param before:      What to print before the node.
