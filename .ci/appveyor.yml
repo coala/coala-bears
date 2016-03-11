@@ -39,16 +39,16 @@ install:
   - "python --version"
   - "python -c \"import struct; print(struct.calcsize('P') * 8)\""
 
-  - "%CMD_IN_ENV% pip -q install wheel"
+  - "%CMD_IN_ENV% pip install wheel"
   # Create c:/wheels if it does not exist.
   - ps: If ( -not (Test-Path C:\\wheels) )  { mkdir C:\\wheels }
   - ECHO "Cached wheels:"
   - ps: "ls \"C:\\wheels\""
-  - "%CMD_IN_ENV% pip -q wheel --use-wheel --wheel-dir C:\\wheels --find-links C:\\wheels -r test-requirements.txt"
-  - "%CMD_IN_ENV% pip -q wheel --use-wheel --wheel-dir C:\\wheels --find-links C:\\wheels -r requirements.txt"
-  - "%CMD_IN_ENV% pip -q install --find-links=C:\\wheels -r test-requirements.txt"
-  - "%CMD_IN_ENV% pip -q install --find-links=C:\\wheels -r requirements.txt"
-  - "%CMD_IN_ENV% pip -q install --upgrade astroid"
+  - "%CMD_IN_ENV% pip wheel --use-wheel --wheel-dir C:\\wheels --find-links C:\\wheels -r test-requirements.txt"
+  - "%CMD_IN_ENV% pip wheel --use-wheel --wheel-dir C:\\wheels --find-links C:\\wheels -r requirements.txt"
+  - "%CMD_IN_ENV% pip install --find-links=C:\\wheels -r test-requirements.txt"
+  - "%CMD_IN_ENV% pip install --find-links=C:\\wheels -r requirements.txt"
+  - "%CMD_IN_ENV% pip install --upgrade astroid"
   # Calling setup.py will download checkstyle automatically so tests may succeed
   - "%CMD_IN_ENV% python setup.py --help"
 
