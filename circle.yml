@@ -30,4 +30,5 @@ test:
     - bash .ci/deploy.coverage.sh:
         parallel: true
     - rm -rf .ci/docs
-    - sphinx-apidoc -f -o .ci/docs bears
+    - python setup.py docs:
+        parallel: true
