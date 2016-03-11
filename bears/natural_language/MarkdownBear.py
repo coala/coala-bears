@@ -55,13 +55,14 @@ class MarkdownBear(Lint, LocalBear):
         :param markdown_list_indent:            Used to find spacing after
                                                 bullet in lists.
                                                 Can be "1", "tab" or "mixed"
-                                                 - "1" - 1 space after bullet.
-                                                 - "tab" - Use tab stops to
-                                                   begin a sentence after the
-                                                   bullet.
-                                                 - "mixed" - Use "1" when the
-                                                   list item is only 1 line,
-                                                   "tab" if it spans multiple.
+
+                                                - "1" - 1 space after bullet.
+                                                - "tab" - Use tab stops to
+                                                  begin a sentence after the
+                                                  bullet.
+                                                - "mixed" - Use "1" when the
+                                                  list item is only 1 line,
+                                                  "tab" if it spans multiple.
         :param markdown_loose_tables:           Whether to use pipes for the
                                                 outermost borders in a table.
         :param markdown_spaced_tables:          Whether to add space between
