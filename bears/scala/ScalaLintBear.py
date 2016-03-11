@@ -5,7 +5,6 @@ from coalib.bearlib.abstractions.Lint import Lint
 from coalib.bears.LocalBear import LocalBear
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.misc.Shell import escape_path_argument
-from bears.CheckPrerequisites import check_linter_prerequisites_builder
 
 
 class ScalaLintBear(LocalBear, Lint):
@@ -23,19 +22,13 @@ class ScalaLintBear(LocalBear, Lint):
         "warning": RESULT_SEVERITY.NORMAL
     }
 
-    prerequisites_args_list = [
+    prerequisite_command = [
         "java", "-jar", jar, "-c",
         scalastyle_config_file, ".", "-q", "true"
     ]
-    prerequisites_fail_msg = "jar file {} is invalid and cannot be used".format(
-        jar)
 
-    check_linter_prerequisites = check_linter_prerequisites_builder(
-                                     executable,
-                                     prerequisites_args_list,
-                                     prerequisites_fail_msg
-                                     )
-    check_prerequisites = classmethod(check_linter_prerequisites)
+    prerequisite_fail_msg = ("jar file {} is invalid"
+                             "and cannot be used".format(jar))
 
     def run(self,
             filename,

@@ -4,7 +4,6 @@ import re
 from coalib.bearlib.abstractions.Lint import Lint
 from coalib.bears.LocalBear import LocalBear
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
-from bears.CheckPrerequisites import check_linter_prerequisites_builder
 
 
 class CheckstyleBear(LocalBear, Lint):
@@ -16,14 +15,10 @@ class CheckstyleBear(LocalBear, Lint):
         "INFO": RESULT_SEVERITY.INFO,
         "WARN": RESULT_SEVERITY.NORMAL}
 
-    check_prerequisites = classmethod(
-                        check_linter_prerequisites_builder(
-                            executable,
-                            ["java", "-jar", jar, "-v"],
-                            "jar file {} is invalid and cannot be used".format(
-                                jar)
-                            )
-                        )
+    prerequisite_command = ["java", "-jar", jar, "-v"]
+
+    prerequisite_fail_msg = ("jar file {} is invalid"
+                             "and cannot be used".format(jar))
 
     def run(self, filename, file):
         """
