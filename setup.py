@@ -4,6 +4,7 @@ import locale
 import sys
 from os.path import exists
 from shutil import copyfileobj
+from subprocess import call
 from urllib.request import urlopen
 
 # Start ignoring PyImportSortBear as imports below may yield syntax errors
@@ -12,6 +13,7 @@ from bears import assert_supported_version
 assert_supported_version()
 # Stop ignoring
 
+import setuptools.command.build_py
 from bears import Constants
 from setuptools import find_packages, setup
 from setuptools.command.test import test as TestCommand
@@ -49,6 +51,14 @@ class PyTestCommand(TestCommand):
         import pytest
         errno = pytest.main([])
         sys.exit(errno)
+
+
+class BuildDocsCommand(setuptools.command.build_py.build_py):
+    apidoc_command = ('sphinx-apidoc', '-f', '-o', '.ci/docs',
+                      'bears')
+
+    def run(self):
+        call(self.apidoc_command)
 
 
 with open('requirements.txt') as requirements:
@@ -116,4 +126,5 @@ if __name__ == "__main__":
               'Topic :: Scientific/Engineering :: Information Analysis',
               'Topic :: Software Development :: Quality Assurance',
               'Topic :: Text Processing :: Linguistic'],
-          cmdclass={'test': PyTestCommand})
+          cmdclass={'docs': BuildDocsCommand,
+                    'test': PyTestCommand})
