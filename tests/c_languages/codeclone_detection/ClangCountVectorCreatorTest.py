@@ -44,8 +44,8 @@ class ClangCountVectorCreatorTest(unittest.TestCase):
                 "smile": [],
                 "printf": [],
                 # Constants
-                "#5": [],
-                '#"i is %d"': []}}
+                "5": [],
+                '"i is %d"': []}}
 
         self.uut = ClangCountVectorCreator()
         cv_dict = self.uut.get_vectors_for_file(self.testfile)
@@ -79,8 +79,8 @@ class ClangCountVectorCreatorTest(unittest.TestCase):
                 "smile": [1, 1],
                 "printf": [1, 1],
                 # Constants
-                "#5": [1, 0],
-                '#"i is %d"': [1, 1]}}
+                "5": [1, 0],
+                '"i is %d"': [1, 1]}}
 
         self.uut = ClangCountVectorCreator([no_condition, is_call_argument])
         cv_dict = self.uut.get_vectors_for_file(self.testfile)
