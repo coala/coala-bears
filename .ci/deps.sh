@@ -52,9 +52,7 @@ for dep_version in "${dep_versions[@]}" ; do
   pip install -q -r requirements.txt
 done
 
-if [ "$CIRCLE_NODE_INDEX" = "0" ] ; then
-  pip install -r docs-requirements.txt
-fi
+pip install -r docs-requirements.txt
 
 python setup.py --help
 
