@@ -13,15 +13,15 @@ esac
 sudo add-apt-repository -y ppa:marutter/rdev
 sudo add-apt-repository -y ppa:staticfloat/juliareleases
 sudo add-apt-repository -y ppa:staticfloat/julia-deps
-sudo apt-get -qq update
+sudo apt-get update
 deps="espeak libclang1-3.4 indent mono-mcs chktex hlint r-base julia luarocks"
 deps_python_dbus="libdbus-glib-1-dev libdbus-1-dev"
 deps_python_gi="glib2.0-dev gobject-introspection libgirepository1.0-dev python3-cairo-dev"
 deps_perl="perl libperl-critic-perl"
-sudo apt-get -qq install $deps $deps_python_gi $deps_python_dbus $deps_perl > /dev/null
+sudo apt-get install $deps $deps_python_gi $deps_python_dbus $deps_perl > /dev/null
 
 # Update hlint to latest version (not available in apt)
-wget -q https://launchpad.net/ubuntu/+source/hlint/1.9.26-1/+build/8831318/+files/hlint_1.9.26-1_amd64.deb
+wget https://launchpad.net/ubuntu/+source/hlint/1.9.26-1/+build/8831318/+files/hlint_1.9.26-1_amd64.deb
 sudo dpkg -i hlint_1.9.26-1_amd64.deb
 
 # NPM commands
@@ -32,7 +32,7 @@ npm install
 mkdir -p ~/.RLibrary
 echo '.libPaths( c( "~/.RLibrary", .libPaths()) )' >> .Rprofile
 echo 'options(repos=structure(c(CRAN="http://cran.rstudio.com")))' >> .Rprofile
-R -q -e "install.packages('lintr', dependencies=TRUE, quiet=TRUE, verbose=FALSE)"
+R -e "install.packages('lintr', dependencies=TRUE, quiet=TRUE, verbose=FALSE)"
 
 # GO commands
 go get -u github.com/golang/lint/golint
@@ -48,8 +48,8 @@ for dep_version in "${dep_versions[@]}" ; do
   python --version
   source .ci/env_variables.sh
 
-  pip install -q -r test-requirements.txt
-  pip install -q -r requirements.txt
+  pip install -r test-requirements.txt
+  pip install -r requirements.txt
 done
 
 pip install -r docs-requirements.txt
