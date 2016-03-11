@@ -5,6 +5,7 @@ import os
 from munkres import Munkres
 
 from coalib.collecting.Collectors import collect_dirs
+from bears.c_languages.codeclone_detection.CountVector import CountVector
 
 # Instantiate globally since this class is holding stateless public methods.
 munkres = Munkres()
@@ -24,11 +25,12 @@ def exclude_function(count_matrix):
                          variables for a function.
     :return:             True if the function is useless for evaluation.
     """
-    var_count = [cv.name.startswith("#")
-                 for cv in count_matrix.values()].count(False)
-    variable_sum = sum(0 if cv.name.startswith("#") else sum(cv.unweighted)
-                       for cv in count_matrix.values())
-    return (all((cv.name.startswith("#") or sum(cv.unweighted) < 10)
+    var_list = [cv for cv in count_matrix.values()
+                if cv.category is CountVector.Category.reference]
+    var_count = len(var_list)
+    variable_sum = sum(sum(cv.unweighted) for cv in var_list)
+    return (all((cv.category is CountVector.Category.literal or
+                 sum(cv.unweighted) < 10)
                 for cv in count_matrix.values()) or
             variable_sum < 11 or
             var_count < 2)

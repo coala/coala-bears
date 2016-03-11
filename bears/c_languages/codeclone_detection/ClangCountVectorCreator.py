@@ -39,10 +39,10 @@ class ClangCountVectorCreator:
         self.count_vectors = {}
         self.stack = []
 
-    def count_identifier(self, identifier):
+    def count_identifier(self, identifier, category):
         if identifier not in self.count_vectors:
-            self.count_vectors[identifier] = (
-                CountVector(identifier, self.conditions, self.weightings))
+            self.count_vectors[identifier] = CountVector(
+                identifier, category, self.conditions, self.weightings)
 
         self.count_vectors[identifier].count_reference(self.stack)
 
@@ -64,14 +64,13 @@ class ClangCountVectorCreator:
         self.stack.append((cursor, child_num))
 
         if is_reference(cursor):
-            self.count_identifier(get_identifier_name(cursor))
+            self.count_identifier(get_identifier_name(cursor),
+                                  CountVector.Category.reference)
         if is_literal(cursor):
             tokens = list(cursor.get_tokens())
             if tokens:
-                # Mangle constants with $ (-> no valid C identifier), first
-                # token is the constant, semicolon and similar things may
-                # follow, don't want them
-                self.count_identifier("#" + tokens[0].spelling)
+                self.count_identifier(tokens[0].spelling,
+                                      CountVector.Category.literal)
 
         for i, child in enumerate(cursor.get_children()):
             self._get_vector_for_function(child, i)

@@ -14,18 +14,19 @@ class CountVectorTest(unittest.TestCase):
         self.assertRaises(AssertionError,
                           CountVector,
                           "varname",
-                          [],
-                          [2])
+                          conditions=[],
+                          weightings=[2])
 
     def test_len(self):
         uut = CountVector("varname")
         self.assertEqual(len(uut), 0)
 
-        uut = CountVector("varname", [lambda x: x])
+        uut = CountVector("varname", conditions=[lambda x: x])
         self.assertEqual(len(uut), 1)
 
     def test_counting(self):
-        uut = CountVector("varname", [lambda cursor, stack: cursor and stack])
+        uut = CountVector("varname",
+                          conditions=[lambda cursor, stack: cursor and stack])
         self.assertEqual(uut.count_vector, [0])
         uut.count_reference(True, True)
         self.assertEqual(uut.count_vector, [1])
@@ -35,9 +36,9 @@ class CountVectorTest(unittest.TestCase):
 
     def test_weighting(self):
         uut = CountVector("varname",
-                          [lambda cursor, stack: cursor and stack,
-                           lambda cursor, stack: cursor],
-                          [2, 1])
+                          conditions=[lambda cursor, stack: cursor and stack,
+                                      lambda cursor, stack: cursor],
+                          weightings=[2, 1])
         uut.count_reference(True, True)
         self.assertEqual(uut.count_vector, [2, 1])
         self.assertEqual(uut.unweighted, [1, 1])
@@ -47,16 +48,16 @@ class CountVectorTest(unittest.TestCase):
 
     def test_conversions(self):
         uut = CountVector("varname",
-                          [lambda cursor, stack: cursor and stack],
-                          [2])
+                          conditions=[lambda cursor, stack: cursor and stack],
+                          weightings=[2])
         uut.count_reference(True, True)
         self.assertEqual(str(uut), "[2]")
         self.assertEqual(list(uut), [2])
 
     def test_cloning(self):
         uut = CountVector("varname",
-                          [lambda cursor, stack: cursor and stack],
-                          [2])
+                          conditions=[lambda cursor, stack: cursor and stack],
+                          weightings=[2])
         uut.count_reference(True, True)
         clone = uut.create_null_vector("test")
         self.assertEqual(clone.name, "test")
@@ -66,7 +67,7 @@ class CountVectorTest(unittest.TestCase):
 
     def test_abs(self):
         uut = CountVector("varname",
-                          [lambda x: True, lambda x: x])
+                          conditions=[lambda x: True, lambda x: x])
         self.assertEqual(abs(uut), 0)
         uut.count_reference(True)
         self.assertEqual(abs(uut), sqrt(2))
@@ -89,8 +90,10 @@ class CountVectorTest(unittest.TestCase):
                                     (string).
         """
         # Create empty CountVector objects
-        count_vector1 = CountVector("", [lambda: False for i in cv1])
-        count_vector2 = CountVector("", [lambda: False for i in cv2])
+        count_vector1 = CountVector("",
+                                    conditions=[lambda: False for i in cv1])
+        count_vector2 = CountVector("",
+                                    conditions=[lambda: False for i in cv2])
         # Manually hack in the test values
         count_vector1.count_vector = cv1
         count_vector2.count_vector = cv2

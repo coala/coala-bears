@@ -6,11 +6,19 @@ from coalib.misc.Decorators import generate_repr
 @generate_repr()
 class CountVector:
 
-    def __init__(self, name, conditions=None, weightings=None):
+    class Category:
+        """
+        Iternal class to specify the type of the variable in the original code
+        """
+        reference = 0
+        literal = 1
+
+    def __init__(self, name, category=None, conditions=None, weightings=None):
         """
         Creates a new count vector.
 
         :param name:       The name of the variable in the original code.
+        :param category:   The category of the variable.
         :param conditions: The counting conditions as list of function objects,
                            each shall return true when getting data indicating
                            that this occurrence should be counted.
@@ -18,6 +26,7 @@ class CountVector:
                            Defaults to 1 for all conditions.
         """
         self.name = name
+        self.category = category
         self.conditions = conditions if conditions is not None else []
         self.count_vector = [0 for elem in self.conditions]
         self.unweighted = [0 for elem in self.conditions]
@@ -34,7 +43,10 @@ class CountVector:
 
         :return: A CountVector object.
         """
-        return CountVector(name, self.conditions, self.weightings)
+        return CountVector(name,
+                           category=self.category,
+                           conditions=self.conditions,
+                           weightings=self.weightings)
 
     def count_reference(self, *args, **kwargs):
         """
