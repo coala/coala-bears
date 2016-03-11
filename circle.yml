@@ -29,3 +29,6 @@ test:
         parallel: true
     - bash .ci/deploy.coverage.sh:
         parallel: true
+    - rm -rf docs/API && make -C docs clean
+    - python setup.py docs:
+        parallel: true

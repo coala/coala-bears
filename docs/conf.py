@@ -22,7 +22,7 @@ import os
 sys.path.insert(0, os.path.abspath('../'))
 
 # Import for version information
-from coalib.misc.Constants import VERSION
+from bears.Constants import VERSION
 
 # -- General configuration ------------------------------------------------
 
@@ -51,7 +51,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'coala'
+project = 'coala-bears'
 copyright = '2016, The coala Developers'
 author = 'The coala Developers'
 
@@ -205,7 +205,7 @@ html_static_path = []
 #html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'coaladoc'
+htmlhelp_basename = 'coala-bearsdoc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -227,8 +227,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'coala.tex', 'coala Documentation',
-     'The coala Developers', 'manual'),
+    (master_doc, 'coala-bears.tex', 'coala-bears Documentation',
+     'The coala-bears Developers', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -257,7 +257,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'coala', 'coala Documentation',
+    (master_doc, 'coala-bears', 'coala-bears Documentation',
      [author], 1)
 ]
 
@@ -271,8 +271,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'coala', 'coala Documentation',
-     author, 'coala', 'One line description of project.',
+    (master_doc, 'coala-bears', 'coala-bears Documentation',
+     author, 'coala-bears', 'One line description of project.',
      'Miscellaneous'),
 ]
 
