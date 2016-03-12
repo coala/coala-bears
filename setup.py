@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+
+# Start ignoring PyImportSortBear as imports below may yield syntax errors
+from bears import assert_supported_version
 assert_supported_version()
 # Stop ignoring
 
@@ -9,10 +12,6 @@ from os.path import exists
 from shutil import copyfileobj
 from subprocess import call
 from urllib.request import urlopen
-
-# Start ignoring PyImportSortBear as imports below may yield syntax errors
-from bears import assert_supported_version
-
 
 import setuptools.command.build_py
 from bears import Constants
