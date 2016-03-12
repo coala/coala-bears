@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "http://docs.oasis-open.org/dita/v1.0.1/dtd/concept.dtd">
+<concept xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/" xmlns="" id="concept1" ditaarch:DITAArchVersion="1.0" domains="(topic ui-d) (topic hi-d) (topic pr-d) (topic sw-d)                          (topic ut-d)" class="- topic/topic concept/concept ">
+  <title xmlns="" class="- topic/title ">This is a title.</title>
+  <conbody xmlns="" class="- topic/body  concept/conbody ">
+    <p xmlns="" class="- topic/p "/>
+  </conbody>
+</concept>

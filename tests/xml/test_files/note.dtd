@@ -1,0 +1,10 @@
+<!ELEMENT note (to, from, heading, body)>
+<!ATTLIST note xmlns CDATA #IMPLIED>
+<!ATTLIST note xmlns:xsi CDATA #IMPLIED>
+<!ATTLIST note xsi:noNamespaceSchemaLocation CDATA #IMPLIED>
+<!ATTLIST note xsi:schemaLocation CDATA #IMPLIED>
+<!ELEMENT to (#PCDATA)>
+<!ELEMENT from (#PCDATA)>
+<!ELEMENT heading (#PCDATA)>
+<!ELEMENT body (#PCDATA)>
+<!ATTLIST body id CDATA #IMPLIED>
