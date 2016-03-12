@@ -1,6 +1,4 @@
 import re
-import shutil
-import subprocess
 
 from coalib.bearlib.abstractions.Lint import Lint
 from coalib.bears.LocalBear import LocalBear
@@ -18,16 +16,8 @@ class RLintBear(LocalBear, Lint):
         "warning": RESULT_SEVERITY.NORMAL,
         "error": RESULT_SEVERITY.MAJOR}
 
-    @classmethod
-    def check_prerequisites(cls):  # pragma: no cover
-        if shutil.which("Rscript") is None:
-            return "R is not installed."
-        else:
-            try:
-                subprocess.check_call(["Rscript", "-e", "library(lintr)"])
-                return True
-            except subprocess.CalledProcessError:
-                return 'R library "lintr" is not installed.'
+    prerequisite_command = ["Rscript", "-e", "library(lintr)"]
+    prerequisite_fail_msg = 'R library "lintr" is not installed.'
 
     def run(self, filename, file):
         '''
