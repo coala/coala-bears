@@ -3,6 +3,7 @@
     "alex": "~2.0.1",
     "bootlint": "~0.14.2",
     "coffeelint": "~1.14.2",
+    "complexity-report": "~2.0.0-alpha",
     "csslint": "~0.10.0",
     "dockerfile_lint": "~0.0.9",
     "eslint": "~2.3.0",
