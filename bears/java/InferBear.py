@@ -7,7 +7,7 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 class InferBear(LocalBear, Lint):
     executable = 'infer'
-    arguments = '-- javac {filename}'
+    arguments = '-npb -- javac {filename}'
     output_regex = re.compile(
         r'(?P<file_name>.+):'
         r'(?P<line>.+): '
