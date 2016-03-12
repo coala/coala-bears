@@ -20,8 +20,8 @@ class TSLintBear(LocalBear, Lint):
                 file=issue["name"],
                 line=int(issue["startPosition"]["line"]) + 1,
                 end_line=int(issue["endPosition"]["line"]) + 1,
-                column=issue["startPosition"]["character"],
-                end_column=issue["endPosition"]["character"])
+                column=int(issue["startPosition"]["character"]) + 1,
+                end_column=int(issue["endPosition"]["character"]) + 1)
 
     def run(self,
             filename,
