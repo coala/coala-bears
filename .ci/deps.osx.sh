@@ -19,6 +19,8 @@ brew install gnu-indent
 brew install go
 brew tap staticfloat/julia
 brew install julia
+brew install swift
+brew install swiftlint
 
 # Install required go libraries
 go get -u github.com/golang/lint/golint
