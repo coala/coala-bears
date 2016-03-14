@@ -8,24 +8,26 @@ from coalib.results.Result import Result
 
 
 class InvalidLinkBear(LocalBear):
+    DEFAULT_TIMEOUT = 2
 
     @classmethod
     def check_prerequisites(cls):
-        code = InvalidLinkBear.get_status_code_or_error("http://www.google.com")
+        code = cls.get_status_code_or_error(
+            "http://www.google.com", cls.DEFAULT_TIMEOUT)
         return ("You are not connected to the internet."
                 if code is None else True)
 
     @staticmethod
-    def get_status_code_or_error(url):
+    def get_status_code_or_error(url, timeout):
         try:
             code = requests.head(url, allow_redirects=False,
-                                 timeout=1).status_code
+                                 timeout=timeout).status_code
             return code
         except requests.exceptions.RequestException:
             pass
 
     @staticmethod
-    def find_links_in_file(file):
+    def find_links_in_file(file, timeout):
         regex = re.compile(
             r'((ftp|http)s?:\/\/\S+\.(?:[^\s\(\)\'\>\|]+|'
             r'\([^\s\(\)]*\))*)(?<!\.)(?<!\,)')
@@ -33,14 +35,17 @@ class InvalidLinkBear(LocalBear):
             match = regex.search(line)
             if match:
                 link = match.group()
-                code = InvalidLinkBear.get_status_code_or_error(link)
+                code = InvalidLinkBear.get_status_code_or_error(link, timeout)
                 yield line_number + 1, link, code
 
-    def run(self, filename, file):
+    def run(self, filename, file, timeout: int=DEFAULT_TIMEOUT):
         '''
         Yields results for all invalid links in a file.
+
+        :param timeout: Request timeout period.
         '''
-        for line_number, link, code in InvalidLinkBear.find_links_in_file(file):
+        for line_number, link, code in InvalidLinkBear.find_links_in_file(
+                file, timeout):
             if code is None:
                 yield Result.from_values(
                     origin=self,
