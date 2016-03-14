@@ -2,7 +2,6 @@ import os
 
 from bears.js.ESLintBear import ESLintBear
 from tests.LocalBearTestHelper import verify_local_bear
-from coalib.misc.ContextManagers import prepare_file
 
 
 test_good = """function addOne(i) {
