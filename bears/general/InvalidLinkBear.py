@@ -11,10 +11,13 @@ class InvalidLinkBear(LocalBear):
     DEFAULT_TIMEOUT = 2
     LANGUAGES = "All"
 
+    # IP Address of www.google.com
+    check_connection_url = "http://216.58.218.174"
+
     @classmethod
     def check_prerequisites(cls):
         code = cls.get_status_code_or_error(
-            "http://www.google.com", cls.DEFAULT_TIMEOUT)
+            cls.check_connection_url, cls.DEFAULT_TIMEOUT)
         return ("You are not connected to the internet."
                 if code is None else True)
 
