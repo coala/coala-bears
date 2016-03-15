@@ -101,7 +101,7 @@ class GitCommitBearTest(unittest.TestCase):
                          [])
         self.assertTrue(self.msg_queue.empty())
 
-    def test_shortlog_checks(self):
+    def test_shortlog_checks_length(self):
         self.git_commit("Commits messages that nearly exceeds default limit")
 
         self.assertEqual(self.run_uut(), [])
