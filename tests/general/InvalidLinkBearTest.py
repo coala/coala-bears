@@ -10,7 +10,12 @@ from coalib.settings.Section import Section
 def custom_matcher(request):
     change_url = False
     try:
-        status_code = int(request.path_url[-3:])
+        # the connection check url needs to be explicitly
+        # set to 200, to avoid test fails and connection rechecking.
+        if request.url == "http://216.58.218.174/":
+            status_code = 200
+        else:
+            status_code = int(request.path_url[-3:])
         if status_code in range(300, 400):
             change_url = True
             url = "some_url"
