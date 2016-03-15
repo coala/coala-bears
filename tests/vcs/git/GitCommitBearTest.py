@@ -116,6 +116,20 @@ class GitCommitBearTest(unittest.TestCase):
                          ["Shortlog of HEAD commit is too long."])
         self.assertTrue(self.msg_queue.empty())
 
+    def test_shortlog_checks_shortlog_trailing_period(self):
+        self.git_commit("Shortlog with dot.")
+        self.assertEqual(self.run_uut(shortlog_trailing_period=True), [])
+        self.assertEqual(self.run_uut(shortlog_trailing_period=False),
+                         ["Shortlog of HEAD commit contains a period at end."])
+        self.assertEqual(self.run_uut(shortlog_trailing_period=None), [])
+
+        self.git_commit("Shortlog without dot")
+        self.assertEqual(
+            self.run_uut(shortlog_trailing_period=True),
+            ["Shortlog of HEAD commit contains no period at end."])
+        self.assertEqual(self.run_uut(shortlog_trailing_period=False), [])
+        self.assertEqual(self.run_uut(shortlog_trailing_period=None), [])
+
     def test_body_checks(self):
         self.git_commit(
             "Commits message with a body\n\n"

@@ -20,7 +20,8 @@ class GitCommitBear(GlobalBear):
             shortlog_length: int=50,
             body_line_length: int=73,
             force_body: bool=False,
-            allow_empty_commit_message: bool=False):
+            allow_empty_commit_message: bool=False,
+            shortlog_trailing_period: bool=None):
         """
         Checks the current git commit message at HEAD.
 
@@ -38,6 +39,10 @@ class GitCommitBear(GlobalBear):
         :param force_body:                 Whether a body shall exist or not.
         :param allow_empty_commit_message: Whether empty commit messages are
                                            allowed or not.
+        :param shortlog_trailing_period:   Whether a dot shall be enforced at
+                                           the end of the shortlog line.
+                                           Providing ``None`` means
+                                           "doesn't care".
         """
         config_dir = self.get_config_dir()
         old_dir = os.getcwd()
@@ -58,21 +63,36 @@ class GitCommitBear(GlobalBear):
                 yield Result(self, "HEAD commit has no message.")
             return
 
-        yield from self.check_shortlog(shortlog_length, stdout[0])
+        yield from self.check_shortlog(shortlog_length,
+                                       shortlog_trailing_period,
+                                       stdout[0])
         yield from self.check_body(body_line_length, force_body, stdout[1:])
 
         os.chdir(old_dir)
 
-    def check_shortlog(self, shortlog_length, shortlog):
+    def check_shortlog(self,
+                       shortlog_length,
+                       shortlog_trailing_period,
+                       shortlog):
         """
         Checks the given shortlog.
 
-        :param shortlog_length: The maximum length of the shortlog. The newline
-                                character at end does not count to the length.
-        :param shortlog:        The shortlog message string.
+        :param shortlog_length:          The maximum length of the shortlog.
+                                         The newline character at end does not
+                                         count to the length.
+        :param shortlog_trailing_period: Whether a dot shall be enforced at end
+                                         end or not (or ``None`` for "don't
+                                         care").
+        :param shortlog:                 The shortlog message string.
         """
         if len(shortlog) > shortlog_length:
             yield Result(self, "Shortlog of HEAD commit is too long.")
+
+        if (shortlog[-1] != ".") == shortlog_trailing_period:
+            yield Result(self,
+                         "Shortlog of HEAD commit contains no period at end."
+                         if shortlog_trailing_period else
+                         "Shortlog of HEAD commit contains a period at end.")
 
     def check_body(self, body_line_length, force_body, body):
         """
