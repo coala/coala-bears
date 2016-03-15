@@ -130,6 +130,33 @@ class GitCommitBearTest(unittest.TestCase):
         self.assertEqual(self.run_uut(shortlog_trailing_period=False), [])
         self.assertEqual(self.run_uut(shortlog_trailing_period=None), [])
 
+    def test_shortlog_checks_regex(self):
+        pattern = ".*?: .*[^.]"
+
+        self.git_commit("tag: message")
+        self.assertEqual(self.run_uut(shortlog_regex=pattern), [])
+
+        self.git_commit("tag: message invalid.")
+        self.assertEqual(
+            self.run_uut(shortlog_regex=pattern),
+            ["Shortlog of HEAD commit does not match given regex."])
+
+        self.git_commit("SuCkS cOmPleTely")
+        self.assertEqual(
+            self.run_uut(shortlog_regex=pattern),
+            ["Shortlog of HEAD commit does not match given regex."])
+
+        # Check for full-matching.
+        pattern = "abcdefg"
+
+        self.git_commit("abcdefg")
+        self.assertEqual(self.run_uut(shortlog_regex=pattern), [])
+
+        self.git_commit("abcdefgNO MATCH")
+        self.assertEqual(
+            self.run_uut(shortlog_regex=pattern),
+            ["Shortlog of HEAD commit does not match given regex."])
+
     def test_body_checks(self):
         self.git_commit(
             "Commits message with a body\n\n"
