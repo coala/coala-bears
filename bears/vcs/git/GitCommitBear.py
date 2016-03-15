@@ -1,3 +1,4 @@
+import re
 import shutil
 import os
 
@@ -21,6 +22,7 @@ class GitCommitBear(GlobalBear):
             body_line_length: int=73,
             force_body: bool=False,
             allow_empty_commit_message: bool=False,
+            shortlog_regex: str="",
             shortlog_trailing_period: bool=None):
         """
         Checks the current git commit message at HEAD.
@@ -39,6 +41,10 @@ class GitCommitBear(GlobalBear):
         :param force_body:                 Whether a body shall exist or not.
         :param allow_empty_commit_message: Whether empty commit messages are
                                            allowed or not.
+        :param shortlog_regex:             A regex to check the shortlog with.
+                                           A full match of this regex is then
+                                           required. Passing an empty string
+                                           disable the regex-check.
         :param shortlog_trailing_period:   Whether a dot shall be enforced at
                                            the end of the shortlog line.
                                            Providing ``None`` means
@@ -64,6 +70,7 @@ class GitCommitBear(GlobalBear):
             return
 
         yield from self.check_shortlog(shortlog_length,
+                                       shortlog_regex,
                                        shortlog_trailing_period,
                                        stdout[0])
         yield from self.check_body(body_line_length, force_body, stdout[1:])
@@ -72,6 +79,7 @@ class GitCommitBear(GlobalBear):
 
     def check_shortlog(self,
                        shortlog_length,
+                       regex,
                        shortlog_trailing_period,
                        shortlog):
         """
@@ -80,6 +88,7 @@ class GitCommitBear(GlobalBear):
         :param shortlog_length:          The maximum length of the shortlog.
                                          The newline character at end does not
                                          count to the length.
+        :param regex:                    A regex to check the shortlog with.
         :param shortlog_trailing_period: Whether a dot shall be enforced at end
                                          end or not (or ``None`` for "don't
                                          care").
@@ -93,6 +102,16 @@ class GitCommitBear(GlobalBear):
                          "Shortlog of HEAD commit contains no period at end."
                          if shortlog_trailing_period else
                          "Shortlog of HEAD commit contains a period at end.")
+
+        if regex != "":
+            match = re.match(regex, shortlog)
+            # fullmatch() inside re-module exists sadly since 3.4, but we
+            # support 3.3 so we need to check that the regex matched completely
+            # ourselves.
+            if not match or match.end() != len(shortlog):
+                yield Result(
+                    self,
+                    "Shortlog of HEAD commit does not match given regex.")
 
     def check_body(self, body_line_length, force_body, body):
         """
