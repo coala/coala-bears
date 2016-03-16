@@ -21,16 +21,16 @@ class PerlCriticBear(LocalBear, Lint):
     def run(self,
             filename,
             file,
-            perlcritic_config: str=""):
+            perlcritic_profile: str=""):
         '''
         Checks the code with perlcritic. This will run perlcritic over
         each of the files seperately
 
-        :param perlcritic_config: Location of the perlcriticrc config file.
+        :param perlcritic_profile: Location of the perlcriticrc config file.
         '''
         self.arguments = '--no-color --verbose "%l|%c|%s|%p|%m (%e)"'
-        if perlcritic_config:
-            self.arguments += (" --config "
-                               + escape_path_argument(perlcritic_config))
+        if perlcritic_profile:
+            self.arguments += (" --profile "
+                               + escape_path_argument(perlcritic_profile))
         self.arguments += " {filename}"
         return self.lint(filename)

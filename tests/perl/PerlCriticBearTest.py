@@ -1,3 +1,5 @@
+import os
+
 from bears.perl.PerlCriticBear import PerlCriticBear
 from tests.LocalBearTestHelper import verify_local_bear
 from coalib.misc.ContextManagers import prepare_file
@@ -26,28 +28,16 @@ print "Hello World\n";
 """.splitlines(keepends=True)
 
 
-config_file = """
-severity  = 5
-# for signatures
-[-Subroutines::ProhibitSubroutinePrototypes]
-
-[TestingAndDebugging::RequireUseStrict]
-
-[TestingAndDebugging::RequireUseWarnings]
-""".splitlines(keepends=True)
-
+conf_file = os.path.abspath(os.path.join(
+    os.path.dirname(os.path.realpath(__file__)),
+    "testfiles", ".perlcriticrc"))
 
 PerlCriticBearTest = verify_local_bear(PerlCriticBear,
                                        valid_files=(good_file,),
                                        invalid_files=(bad_file,))
 
-
-with prepare_file(config_file,
-                  filename=None,
-                  force_linebreaks=True,
-                  create_tempfile=True) as (conf_lines, conf_file):
-    PerlCriticBearConfigTest = verify_local_bear(
-        PerlCriticBear,
-        valid_files=(bad_file, good_file),
-        invalid_files=(),
-        settings={"perlcritic_config": conf_file})
+PerlCriticBearConfigTest = verify_local_bear(
+    PerlCriticBear,
+    valid_files=(good_file, bad_file),
+    invalid_files=(),
+    settings={"perlcritic_profile": conf_file})
