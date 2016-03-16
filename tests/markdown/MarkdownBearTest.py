@@ -1,4 +1,4 @@
-from bears.natural_language.MarkdownBear import MarkdownBear
+from bears.markdown.MarkdownBear import MarkdownBear
 from tests.LocalBearTestHelper import verify_local_bear
 
 test_file1 = """1. abc
