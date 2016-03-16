@@ -30,7 +30,7 @@ class PerlCriticBear(LocalBear, Lint):
         '''
         self.arguments = '--no-color --verbose "%l|%c|%s|%p|%m (%e)"'
         if perlcritic_config:
-            self.arguments += (" --config "
+            self.arguments += (" --profile "
                                + escape_path_argument(perlcritic_config))
         self.arguments += " {filename}"
         return self.lint(filename)
