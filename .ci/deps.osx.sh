@@ -30,6 +30,9 @@ pyenv install -ks $PYTHON_VERSION
 pyenv global $PYTHON_VERSION
 python --version
 
+# Upgrade pip
+pip install -U pip
+
 # Install packages with pip
 pip install -r test-requirements.txt
 pip install -r requirements.txt
