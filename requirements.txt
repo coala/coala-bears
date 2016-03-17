@@ -21,3 +21,4 @@ cppclean~=0.9
 pydocstyle~=1.0.0
 cmakelint~=1.3.4
 requests_mock~=0.7.0
+vim-vint~=0.3.6
