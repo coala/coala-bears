@@ -1,6 +1,8 @@
 set -e
 set -x
 
+pip install -U pip
+
 # Prerequisites for Go
 mkdir $HOME/Go
 export GOPATH=$HOME/Go

@@ -1,6 +1,8 @@
 set -e
 set -x
 
+pip install -U pip
+
 # Choose the python versions to install deps for
 case $CIRCLE_NODE_INDEX in
  0) dep_versions=( "3.3.6" "3.4.3" "3.5.1" ) ;;
@@ -71,7 +73,7 @@ julia -e "Pkg.add(\"Lint\")"
 sudo luarocks install luacheck --deps-mode=none
 
 # Infer commands
-if [ ! -e ~/infer-linux64-v0.7.0/infer/bin ]; then 
+if [ ! -e ~/infer-linux64-v0.7.0/infer/bin ]; then
 	wget -nc -O ~/infer.tar.xz https://github.com/facebook/infer/releases/download/v0.7.0/infer-linux64-v0.7.0.tar.xz
 	tar xf ~/infer.tar.xz -C ~/
 	cd ~/infer-linux64-v0.7.0
