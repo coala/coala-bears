@@ -1,3 +1,5 @@
+import itertools
+
 from coalib.bearlib.abstractions.Lint import Lint
 from coalib.bears.LocalBear import LocalBear
 from coalib.misc.Shell import escape_path_argument
@@ -22,11 +24,15 @@ class XMLBear(LocalBear, Lint):
     diff_message = "XML can be formatted better."
     output_regex = r'(.*\.xml):(?P<line>\d+): (?P<message>.*)\n.*\n.*'
     gives_corrected = True
+    use_stderr = True
 
     def process_output(self, output, filename, file):
-        if self.stdout_output:  # only yield Result if stdout is not empty
-            return self._process_corrected(self.stdout_output, filename, file)
-        if self.stderr_output:  # pragma: no cover
+        if self.stdout_output:
+            # Return issues from stderr and stdout if stdout is not empty
+            return itertools.chain(
+                self._process_issues(self.stderr_output, filename),
+                self._process_corrected(self.stdout_output, filename, file))
+        else:  # Return issues from stderr if stdout is empty
             return self._process_issues(self.stderr_output, filename)
 
     def run(self, filename, file,
