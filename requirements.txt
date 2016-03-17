@@ -1,4 +1,4 @@
-coala==0.4.2.dev20160316074840
+coala==0.4.2.dev20160317193159
 setuptools>=19.2
 munkres3~=1.0.5.5
 pylint~=1.5.2
