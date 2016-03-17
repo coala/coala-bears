@@ -5,7 +5,7 @@ from coalib.bearlib.spacing.SpacingHelper import SpacingHelper
 from coalib.bears.LocalBear import LocalBear
 
 
-class IndentBear(Lint, LocalBear):
+class GNUIndentBear(Lint, LocalBear):
     executable = "indent" if platform.system() != "Darwin" else "gindent"
     diff_message = "Indentation can be improved."
     use_stdin = True
