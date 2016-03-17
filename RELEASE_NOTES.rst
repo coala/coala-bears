@@ -37,5 +37,6 @@ coala-bears has bears for famous languages, such as:
 - SCSS
 - sh & bash scripts
 - SQL
+- TypeScript
 - XML
 - YAML
