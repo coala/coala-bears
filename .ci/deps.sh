@@ -85,3 +85,9 @@ if [ ! -e ~/infer-linux64-v0.7.0/infer/bin ]; then
 	opam install --deps-only --yes infer
 	./build-infer.sh java
 fi
+
+# PMD commands
+if [ ! -e ~/pmd-bin-5.4.1/bin ]; then
+	wget -nc -O ~/pmd.zip https://github.com/pmd/pmd/releases/download/pmd_releases%2F5.4.1/pmd-bin-5.4.1.zip
+	unzip ~/pmd.zip -d ~/
+fi
