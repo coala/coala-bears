@@ -302,6 +302,8 @@ def is_condition(stack):
     """
     return (_is_nth_child_of_kind(stack, [0], CursorKind.WHILE_STMT) != 0 or
             _is_nth_child_of_kind(stack, [0], CursorKind.IF_STMT) != 0 or
+            _is_nth_child_of_kind(stack, [0], CursorKind.SWITCH_STMT) != 0 or
+            _is_nth_child_of_kind(stack, [0], CursorKind.CASE_STMT) != 0 or
             FOR_POSITION.COND in _get_positions_in_for_loop(stack))
 
 
@@ -311,7 +313,9 @@ def in_condition(stack):
     """
     # In every case the first child of IF_STMT is the condition itself
     # (non-NULL) so the second and third child are in the then/else branch
-    return _is_nth_child_of_kind(stack, [1, 2], CursorKind.IF_STMT) == 1
+    return (_is_nth_child_of_kind(stack, [1, 2], CursorKind.IF_STMT) == 1 or
+            (_is_nth_child_of_kind(stack, [1], CursorKind.SWITCH_STMT) == 1 and
+             _is_nth_child_of_kind(stack, [0], CursorKind.CASE_STMT) == 0))
 
 
 def in_second_level_condition(stack):
