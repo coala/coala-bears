@@ -150,3 +150,17 @@ int structing(struct test_struct a, struct test_struct *b) {
     a.a = 1 + b;
     (b+2)->a = 2;
 }
+
+int switching(int a, int b) {
+    switch (a) {
+        case 1:
+            b++;
+            return b;
+        case 2:
+            a++;
+            return b;
+        default:
+            a++
+            break;
+    }
+}

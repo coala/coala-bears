@@ -239,3 +239,21 @@ class ClangCountingConditionsTest(unittest.TestCase):
              "b": [1],
              "1": [0],
              "2": [1]})
+
+    def test_is_condition_switch(self):
+        self.check_counting_condition(
+            "is_condition",
+            (154, "switching(int, int)"),
+            {"a": [1],
+             "b": [0],
+             "2": [1],
+             "1": [1]})
+
+    def test_in_conditions_switch(self):
+        self.check_counting_condition(
+            "in_condition",
+            (154, "switching(int, int)"),
+            {"a": [2],
+             "b": [3],
+             "2": [0],
+             "1": [0]})
