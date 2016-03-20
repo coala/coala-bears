@@ -94,8 +94,12 @@ class GitCommitBear(GlobalBear):
                                          care").
         :param shortlog:                 The shortlog message string.
         """
-        if len(shortlog) > shortlog_length:
-            yield Result(self, "Shortlog of HEAD commit is too long.")
+        diff = len(shortlog) - shortlog_length
+        if diff > 0:
+            yield Result(self,
+                         "Shortlog of HEAD commit is {} character(s) longer "
+                         "than the limit ({} > {}).".format(
+                             diff, len(shortlog), shortlog_length))
 
         if (shortlog[-1] != ".") == shortlog_trailing_period:
             yield Result(self,
