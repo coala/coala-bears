@@ -108,12 +108,14 @@ class GitCommitBearTest(unittest.TestCase):
         self.assertTrue(self.msg_queue.empty())
 
         self.assertEqual(self.run_uut(shortlog_length=17),
-                         ["Shortlog of HEAD commit is too long."])
+                         ["Shortlog of HEAD commit is 33 character(s) "
+                          "longer than the limit (50 > 17)."])
         self.assertTrue(self.msg_queue.empty())
 
         self.git_commit("A shortlog that is too long is not good for history")
         self.assertEqual(self.run_uut(),
-                         ["Shortlog of HEAD commit is too long."])
+                         ["Shortlog of HEAD commit is 1 character(s) longer "
+                          "than the limit (51 > 50)."])
         self.assertTrue(self.msg_queue.empty())
 
     def test_shortlog_checks_shortlog_trailing_period(self):
@@ -203,7 +205,8 @@ class GitCommitBearTest(unittest.TestCase):
         # when section does have a config setting
         self.section.append(Setting("config", re.escape(self.gitdir)))
         self.assertEqual(self.run_uut(),
-                         ["Shortlog of HEAD commit is too long."])
+                         ["Shortlog of HEAD commit is 1 character(s) longer "
+                          "than the limit (51 > 50)."])
         self.assertEqual(get_config_directory(self.section),
                          self.gitdir)
         os.chdir(self.gitdir)
