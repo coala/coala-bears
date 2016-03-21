@@ -4,6 +4,7 @@ import re
 import shutil
 import stat
 import unittest
+import unittest.mock
 from queue import Queue
 from tempfile import mkdtemp
 
@@ -99,6 +100,12 @@ class GitCommitBearTest(unittest.TestCase):
 
         self.assertEqual(self.run_uut(allow_empty_commit_message=True),
                          [])
+        self.assertTrue(self.msg_queue.empty())
+
+    @unittest.mock.patch("bears.vcs.git.GitCommitBear.run_shell_command",
+                         return_value=("one-liner-message\n", ""))
+    def test_pure_oneliner_message(self, patch):
+        self.assertEqual(self.run_uut(), [])
         self.assertTrue(self.msg_queue.empty())
 
     def test_shortlog_checks_length(self):

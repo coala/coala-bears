@@ -3,12 +3,12 @@ import shutil
 import os
 
 from coalib.bears.GlobalBear import GlobalBear
+from coalib.misc.ContextManagers import change_directory
 from coalib.misc.Shell import run_shell_command
 from coalib.results.Result import Result
 
 
 class GitCommitBear(GlobalBear):
-    _git_command = "git log -1 --pretty=%B"
 
     @classmethod
     def check_prerequisites(cls):
@@ -50,19 +50,14 @@ class GitCommitBear(GlobalBear):
                                            Providing ``None`` means
                                            "doesn't care".
         """
-        config_dir = self.get_config_dir()
-        old_dir = os.getcwd()
-        if config_dir:
-            os.chdir(config_dir)
-        stdout, stderr = run_shell_command(self._git_command)
+        with change_directory(self.get_config_dir() or os.getcwd()):
+            stdout, stderr = run_shell_command("git log -1 --pretty=%B")
 
         if stderr:
             self.err("git:", repr(stderr))
             return
 
-        # git automatically removes trailing whitespaces. Also we need to
-        # remove the last \n printed to align the prompt onto the next line.
-        stdout = stdout.splitlines()[:-1]
+        stdout = stdout.rstrip("\n").splitlines()
 
         if len(stdout) == 0:
             if not allow_empty_commit_message:
@@ -74,8 +69,6 @@ class GitCommitBear(GlobalBear):
                                        shortlog_trailing_period,
                                        stdout[0])
         yield from self.check_body(body_line_length, force_body, stdout[1:])
-
-        os.chdir(old_dir)
 
     def check_shortlog(self,
                        shortlog_length,
