@@ -54,6 +54,7 @@ class GitCommitBear(GlobalBear):
         if config_dir:
             os.chdir(config_dir)
         stdout, stderr = run_shell_command("git log -1 --pretty=%B")
+        os.chdir(old_dir)
 
         if stderr:
             self.err("git:", repr(stderr))
@@ -71,8 +72,6 @@ class GitCommitBear(GlobalBear):
                                        shortlog_trailing_period,
                                        stdout[0])
         yield from self.check_body(body_line_length, force_body, stdout[1:])
-
-        os.chdir(old_dir)
 
     def check_shortlog(self,
                        shortlog_length,
