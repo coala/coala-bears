@@ -60,9 +60,7 @@ class GitCommitBear(GlobalBear):
             self.err("git:", repr(stderr))
             return
 
-        # git automatically removes trailing whitespaces. Also we need to
-        # remove the last \n printed to align the prompt onto the next line.
-        stdout = stdout.splitlines()[:-1]
+        stdout = stdout.rstrip("\n").splitlines()
 
         if len(stdout) == 0:
             if not allow_empty_commit_message:
