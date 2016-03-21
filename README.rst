@@ -1,6 +1,3 @@
-README
-======
-
 .. Start ignoring LineLengthBear
 
 ::
@@ -22,8 +19,16 @@ README
 
 .. Stop ignoring LineLengthBear
 
-INSTALLATION
-============
+About
+-----
+
+coala-bears is a Python package containing all the bears that are used by `coala <http://coala-analyzer.org/>`__.
+
+If you want to learn more about coala-bears, its functionality and its usage,
+please take a look at our `documentation <http://coala.readthedocs.org/en/latest/Users/Tutorials/Writing_Bears.html>`__.
+
+Installation
+------------
 
 coala-bears can be installed with ``pip3 install coala-bears``. If you need more
 information about the installation and dependencies, take a look at our
@@ -35,35 +40,14 @@ development version. Get it with ``pip3 install coala-bears --pre``.
 
 |PyPI|
 
-USAGE
-=====
-
-If you want to learn more about coala-bears, its functionality and its usage,
-please take a look at our
-`tutorial <http://coala.readthedocs.org/en/latest/Users/Tutorials/Writing_Bears.html#what-is-a-bear>`__.
-
-ABOUT
-=====
-
-coala-bears is a Python package containing all the bears that is used by coala.
-
-Read more at our `documentation <http://coala.readthedocs.org/en/latest/Users/Tutorials/Writing_Bears.html#guide-to-write-a-bear>`__.
-
 Authors
 -------
 
 coala-bears is maintained by a growing community. Please take a look at the
 meta information in `setup.py <setup.py>`__ for current maintainers.
 
-Project Status
---------------
-
-|Linux Build Status| |Windows Build status| |OSX Build status|
-
-|Documentation Status| |codecov.io|
-
-GETTING INVOLVED
-================
+Getting Involved
+----------------
 
 If you want to contribute to coala-bears, please take a look at the `Getting
 Involved Information
@@ -73,8 +57,15 @@ We appreciate any help!
 
 |https://gitter.im/coala-analyzer/coala|
 
-LICENSE
-=======
+Project Status
+--------------
+
+|Linux Build Status| |Windows Build status| |OSX Build status|
+
+|Documentation Status| |codecov.io|
+
+License
+-------
 
 |AGPL|
 
