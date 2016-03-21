@@ -58,8 +58,10 @@ class BuildDocsCommand(setuptools.command.build_py.build_py):
     make_command = ('make', '-C', 'docs', 'html', 'SPHINXOPTS=-W')
 
     def run(self):
-        call(self.apidoc_command)
-        call(self.make_command)
+        err_no = call(self.apidoc_command)
+        if not err_no:
+            err_no = call(self.make_command)
+        sys.exit(err_no)
 
 
 with open('requirements.txt') as requirements:
