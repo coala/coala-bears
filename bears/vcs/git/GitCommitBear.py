@@ -8,7 +8,6 @@ from coalib.results.Result import Result
 
 
 class GitCommitBear(GlobalBear):
-    _git_command = "git log -1 --pretty=%B"
 
     @classmethod
     def check_prerequisites(cls):
@@ -54,7 +53,7 @@ class GitCommitBear(GlobalBear):
         old_dir = os.getcwd()
         if config_dir:
             os.chdir(config_dir)
-        stdout, stderr = run_shell_command(self._git_command)
+        stdout, stderr = run_shell_command("git log -1 --pretty=%B")
 
         if stderr:
             self.err("git:", repr(stderr))
