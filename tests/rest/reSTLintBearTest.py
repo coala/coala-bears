@@ -1,4 +1,4 @@
-from bears.natural_language.reSTLintBear import reSTLintBear
+from bears.rest.reSTLintBear import reSTLintBear
 from tests.LocalBearTestHelper import verify_local_bear
 
 good_file = ["test\n====\n"]
