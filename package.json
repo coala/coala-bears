@@ -9,6 +9,7 @@
     "coffeelint": "~1",
     "complexity-report": "~2.0.0-alpha",
     "csslint": "~1",
+    "cssgrace": "~3.0.0 ",
     "dockerfile_lint": "~0",
     "eslint": "~3",
     "eslint-plugin-import": "~1",
