@@ -6,6 +6,8 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 class JuliaLintBear(LocalBear, Lint):
     executable = 'julia'
     arguments = '-e \'import Lint.lintfile; lintfile({filename})\''
+    prerequisite_command = ['julia', '-e', 'import Lint.lintfile']
+    prerequisite_fail_msg = 'Run `Pkg.add("Lint")` from Julia to install Lint.'
     output_regex = r'(^.*\.jl):(?P<line>\d+) (?P<severity>.)\d+ (?P<message>.*)'
     use_stdout = True
     severity_map = {
