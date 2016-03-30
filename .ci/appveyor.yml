@@ -59,5 +59,8 @@ install:
 build: false  # Not a C# project, build stuff at the test step instead.
 
 test_script:
-  - "%CMD_IN_ENV% python -m pytest --cov"
+  # Clang DLLs x64 were nowadays installed, but the x64 version hangs, so we
+  # exclude according tests. See https://github.com/appveyor/ci/issues/495 and
+  # https://github.com/appveyor/ci/issues/688
+  - "%CMD_IN_ENV% python -m pytest --cov -k \"not ClangASTPrintBear and not ClangCloneDetectionBear and not ClangComplexityBear and not ClangCountVectorCreator and not ClangCountingConditions\""
   - "%CMD_IN_ENV% python setup.py install"
