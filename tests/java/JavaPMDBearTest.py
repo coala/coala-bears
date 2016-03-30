@@ -30,6 +30,6 @@ class Hello {
 
 
 JavaPMDBearTest = verify_local_bear(JavaPMDBear,
-                                valid_files=(good_file,),
-                                invalid_files=(bad_file,),
-                                tempfile_kwargs={"suffix": ".java"})
+                                    valid_files=(good_file,),
+                                    invalid_files=(bad_file,),
+                                    tempfile_kwargs={"suffix": ".java"})
