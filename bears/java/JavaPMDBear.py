@@ -16,6 +16,16 @@ class JavaPMDBear:
 
     LANGUAGES = "Java"
 
+    @classmethod
+    def check_prerequisites(cls):  # pragma: no cover
+        if which("bash") is None:
+            return "bash is not installed."
+        elif which("run.sh") is None:
+            return ("PMD is missing. Make sure to install it from "
+                    "<https://pmd.github.io/>")
+        else:
+            return True
+
     @staticmethod
     def create_arguments(filename, file, config_file,
                          check_best_practices: bool = True,
