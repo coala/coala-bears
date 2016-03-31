@@ -52,6 +52,6 @@ class ClangASTPrintBearTest(unittest.TestCase):
         ast = "\n"
         # Only check beginning of AST
         for i in range(expected_ast.count("\n")-1):
-            ast += self.queue.get(timeout=0).message + "\n"
+            ast += self.queue.get(timeout=0.1).message + "\n"
 
         self.assertEqual(ast, expected_ast)
