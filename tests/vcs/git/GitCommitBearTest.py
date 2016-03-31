@@ -170,7 +170,7 @@ class GitCommitBearTest(unittest.TestCase):
         self.git_commit(
             "Commits message with a body\n\n"
             "nearly exceeding the default length of a body, but not quite. "
-            "haaaaaaands")
+            "haaaaaands")
 
         self.assertEqual(self.run_uut(), [])
         self.assertTrue(self.msg_queue.empty())
