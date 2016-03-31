@@ -39,14 +39,37 @@ USAGE
 
 If you want to learn more about coala-bears, its functionality and its usage,
 please take a look at our
-`tutorial <http://coala.readthedocs.org/en/latest/Users/Tutorials/Writing_Bears.html#what-is-a-bear>`__.
+`tutorial <http://coala.readthedocs.org/en/latest/Users/Tutorials/Tutorial.html>`__.
 
 ABOUT
 =====
 
-coala-bears is a Python package containing all the bears that is used by coala.
+coala-bears is a Python package containing all the bears that are officially
+supported by coala. It features more than **65 bears** covering **32 languages**.
+You can see all of them `here <https://github.com/coala-analyzer/coala/wiki/Bears>`_.
 
-Read more at our `documentation <http://coala.readthedocs.org/en/latest/Users/Tutorials/Writing_Bears.html#guide-to-write-a-bear>`__.
+The list of supported languages includes such famous languages, as:
+
+- C++
+- Go
+- Haskell
+- HTML
+- Java
+- JavaScript
+- Natural Language (English)
+- Python
+- R
+- Ruby
+
+For the full list of supported languages, `visit our wiki <https://github.com/coala-analyzer/coala-bears/wiki/Supported-languages>`__.
+
+The number of bears grows every day! If you want to see any particular
+functionality be sure to submit an issue, but please read the `GETTING INVOLVED`_
+section before doing so.
+
+You can read more at our `documentation <http://coala.readthedocs.org/en/latest/Users/Tutorials/Writing_Bears.html#guide-to-write-a-bear>`__.
+There you can learn how to easily write bears yourself! Be sure to let us know
+if you do so, then we'll be able to include it here and spread the word about it.
 
 Authors
 -------
