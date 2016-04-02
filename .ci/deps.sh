@@ -55,6 +55,13 @@ for dep_version in "${dep_versions[@]}" ; do
   pip install -r requirements.txt
 done
 
+pip install appdirs
+git clone https://github.com/coala-analyzer/coala coala-manual-branch-inst
+cd coala-manual-branch-inst
+git checkout Makman2/linter-prequel
+pip install .
+cd ..
+
 pip install -r docs-requirements.txt
 
 # Downloading nltk data that's required for nltk to run 
