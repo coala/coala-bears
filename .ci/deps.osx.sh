@@ -33,6 +33,13 @@ python --version
 # Upgrade pip
 pip install -U pip
 
+pip install appdirs
+git clone https://github.com/coala-analyzer/coala coala-manual-branch-inst
+cd coala-manual-branch-inst
+git checkout Makman2/linter-prequel
+pip install .
+cd ..
+
 # Install packages with pip
 pip install -r test-requirements.txt
 pip install -r requirements.txt
