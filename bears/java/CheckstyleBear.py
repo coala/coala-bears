@@ -1,34 +1,26 @@
 from os.path import abspath, dirname, join
-import re
 
-from coalib.bearlib.abstractions.Lint import Lint
-from coalib.bears.LocalBear import LocalBear
-from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
+from coalib.bearlib.abstractions.Linter import linter
 
 
-class CheckstyleBear(LocalBear, Lint):
-    executable = 'java'
-    google_checks = join(dirname(abspath(__file__)), 'google_checks.xml')
-    jar = join(dirname(abspath(__file__)), 'checkstyle.jar')
+checkstyle_jar_file = join(dirname(abspath(__file__)), 'checkstyle.jar')
+google_checks = join(dirname(abspath(__file__)), 'google_checks.xml')
 
-    severity_map = {
-        "INFO": RESULT_SEVERITY.INFO,
-        "WARN": RESULT_SEVERITY.NORMAL}
 
-    prerequisite_command = ["java", "-jar", jar, "-v"]
+@linter(executable='java',
+        output_format='regex',
+        output_regex=r'\[(?P<severity>WARN|INFO)\] *.+:'
+                     r'(?P<line>\d+)(?::(?P<column>\d+))?: *'
+                     r'(?P<message>.*?) *\[(?P<origin>[a-zA-Z]+?)\]',
+        prerequisite_check_command=('java', '-jar', checkstyle_jar_file, '-v'),
+        prerequisite_check_fail_message='jar file ' + checkstyle_jar_file +
+                                        ' not found.')
+class CheckstyleBear:
+    """
+    Checks the code with ``checkstyle`` using the Google codestyle
+    specification.
+    """
 
-    prerequisite_fail_msg = ("jar file {} is invalid"
-                             "and cannot be used".format(jar))
-
-    def run(self, filename, file):
-        """
-        Checks the code using `checkstyle` using the Google codestyle
-        specification.
-        """
-        self.output_regex = re.compile(
-            r'\[(?P<severity>WARN|INFO)\]\s*' + re.escape(abspath(filename)) +
-            r':(?P<line>\d+)(:(?P<col>\d+))?:\s*'
-            r'(?P<message>.*?)\s*\[(?P<origin>[a-zA-Z]+?)\]')
-        self.arguments = '-jar ' + self.jar + ' -c ' + self.google_checks
-        self.arguments += " {filename}"
-        return self.lint(filename)
+    @staticmethod
+    def create_arguments(filename, file, config_file):
+        return '-jar', checkstyle_jar_file, '-c', google_checks, filename
