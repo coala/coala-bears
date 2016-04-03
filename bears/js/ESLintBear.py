@@ -1,39 +1,36 @@
 import json
 
-from coalib.bearlib.abstractions.Lint import Lint
-from coalib.bears.LocalBear import LocalBear
+from coalib.bearlib.abstractions.Linter import linter
 from coalib.results.Diff import Diff
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
-from coalib.misc.Shell import escape_path_argument
 from coalib.results.Result import Result
 
 
-class ESLintBear(LocalBear, Lint):
-    executable = 'eslint'
-    severity_map = {
-        2: RESULT_SEVERITY.MAJOR,
-        1: RESULT_SEVERITY.NORMAL,
-        0: RESULT_SEVERITY.INFO
-    }
-    use_stdin = True
-    gives_corrected = True
+@linter(executable='eslint',
+        use_stdin=True)
+class ESLintBear:
+    """
+    Checks the code with ``eslint``. This will run eslint over each of the
+    files separately.
+    """
 
-    def run(self, filename, file, eslint_config: str=""):
-        '''
-        Checks the code with eslint. This will run eslint over each of the files
-        seperately.
+    severity_map = {2: RESULT_SEVERITY.MAJOR,
+                    1: RESULT_SEVERITY.NORMAL,
+                    0: RESULT_SEVERITY.INFO}
 
+    @staticmethod
+    def create_arguments(filename, file, config_file,
+                         eslint_config: str=""):
+        """
         :param eslint_config: The location of the .eslintrc config file.
-        '''
-        self.arguments = '--no-ignore --no-color -f=json --stdin'
+        """
+        args = '--no-ignore', '--no-color', '-f=json', '--stdin'
         if eslint_config:
-            self.arguments += (" --config "
-                               + escape_path_argument(eslint_config))
+            args += ('--config', eslint_config)
+        return args
 
-        return self.lint(filename, file)
-
-    def _process_corrected(self, output, filename, file):
-        output = json.loads("".join(output))
+    def process_output(self, output, filename, file):
+        output = json.loads(output)
         lines = "".join(file)
 
         assert len(output) == 1
@@ -51,7 +48,7 @@ class ESLintBear(LocalBear, Lint):
 
             yield Result.from_values(
                 origin="{class_name} ({rule})".format(
-                    class_name=self.__class__.__name__, rule=result['ruleId']),
+                    class_name=type(self).__name__, rule=result['ruleId']),
                 message=result['message'],
                 file=filename,
                 diffs=diffs,
