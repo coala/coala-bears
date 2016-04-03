@@ -1,20 +1,18 @@
-import re
-
-from coalib.bearlib.abstractions.Lint import Lint
-from coalib.bears.LocalBear import LocalBear
+from coalib.bearlib.abstractions.Linter import linter
 
 
-class GoTypeBear(LocalBear, Lint):
-    executable = 'gotype'
-    arguments = "-e {filename}"
-    use_stderr = True
-    output_regex = re.compile(
-        r'(?P<file_name>.*):(?P<line>\d+):(?P<column>\d+):\s*(?P<message>.*)')
+@linter(executable='gotype',
+        use_stdout=False,
+        use_stderr=True,
+        output_format='regex',
+        output_regex=r'.+:(?P<line>\d+):(?P<column>\d+): *(?P<message>.*)')
+class GoTypeBear:
+    """
+    Checks the code using ``gotype``. This will run ``gotype`` over each file
+    separately.
+    """
     LANGUAGES = "Go"
 
-    def run(self, filename, file):
-        '''
-        Checks the code using ``gotype``. This will run gotype over each file
-        seperately.
-        '''
-        return self.lint(filename)
+    @staticmethod
+    def create_arguments(filename, file, config_file):
+        return '-e', filename
