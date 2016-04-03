@@ -1,36 +1,29 @@
-import re
-
-from coalib.bearlib.abstractions.Lint import Lint
-from coalib.bears.LocalBear import LocalBear
-from coalib.misc.Shell import escape_path_argument
+from coalib.bearlib.abstractions.Linter import linter
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
-class PerlCriticBear(LocalBear, Lint):
-    executable = 'perlcritic'
-    output_regex = re.compile(
-            r'(?P<line>\d+)\|(?P<column>\d+)\|(?P<severity>\d+)\|'
-            r'(?P<origin>.*?)\|(?P<message>.*)')
-    severity_map = {
-        "1": RESULT_SEVERITY.MAJOR,
-        "2": RESULT_SEVERITY.MAJOR,
-        "3": RESULT_SEVERITY.NORMAL,
-        "4": RESULT_SEVERITY.NORMAL,
-        "5": RESULT_SEVERITY.INFO}
+@linter(executable='perlcritic',
+        output_format='regex',
+        output_regex=r'(?P<line>\d+)\|(?P<column>\d+)\|(?P<severity>\d+)\|'
+                     r'(?P<origin>.*?)\|(?P<message>.*)',
+        severity_map={"1": RESULT_SEVERITY.MAJOR,
+                      "2": RESULT_SEVERITY.MAJOR,
+                      "3": RESULT_SEVERITY.NORMAL,
+                      "4": RESULT_SEVERITY.NORMAL,
+                      "5": RESULT_SEVERITY.INFO})
+class PerlCriticBear:
+    """
+    Checks the code with perlcritic. This will run perlcritic over each of the
+    files separately.
+    """
 
-    def run(self,
-            filename,
-            file,
-            perlcritic_profile: str=""):
-        '''
-        Checks the code with perlcritic. This will run perlcritic over
-        each of the files seperately
-
+    @staticmethod
+    def create_arguments(filename, file, config_file,
+                         perlcritic_profile: str=""):
+        """
         :param perlcritic_profile: Location of the perlcriticrc config file.
-        '''
-        self.arguments = '--no-color --verbose "%l|%c|%s|%p|%m (%e)"'
+        """
+        args = ('--no-color', '--verbose', '%l|%c|%s|%p|%m (%e)')
         if perlcritic_profile:
-            self.arguments += (" --profile "
-                               + escape_path_argument(perlcritic_profile))
-        self.arguments += " {filename}"
-        return self.lint(filename)
+            args += ('--profile', perlcritic_profile)
+        return args + (filename,)
