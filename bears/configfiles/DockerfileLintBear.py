@@ -1,27 +1,26 @@
 import json
 
-from coalib.bearlib.abstractions.Lint import Lint
-from coalib.bears.LocalBear import LocalBear
-from coalib.results.Result import Result
+from coalib.bearlib.abstractions.Linter import linter
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
+from coalib.results.Result import Result
 
 
-class DockerfileLintBear(LocalBear, Lint):
-    executable = 'dockerfile_lint'
-    arguments = '--json -f {filename}'
+@linter(executable='dockerfile_lint')
+class DockerfileLintBear:
+    """
+    Checks the given file with ``dockerfile_lint``.
+    """
+
     severity_map = {
         "error": RESULT_SEVERITY.MAJOR,
         "warn": RESULT_SEVERITY.NORMAL,
         "info": RESULT_SEVERITY.INFO}
+    @staticmethod
+    def create_arguments(filename, file, config_file):
+        return '--json', '-f', filename
 
-    def run(self, filename, file):
-        '''
-        Checks the given file with dockerfile_lint.
-        '''
-        return self.lint(filename)
-
-    def _process_issues(self, output, filename):
-        output = json.loads("".join(output))
+    def process_output(self, output, filename, file):
+        output = json.loads(output)
 
         for severity in output:
             if severity == "summary":
