@@ -1,32 +1,30 @@
 import json
 
-from coalib.bearlib.abstractions.Lint import Lint
-from coalib.bears.LocalBear import LocalBear
+from coalib.bearlib.abstractions.Linter import linter
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.results.Result import Result
 
 
-class RuboCopBear(LocalBear, Lint):
-    executable = 'rubocop'
-    # Need both stdin and filename. Explained in the comment:
-    # https://github.com/bbatsov/rubocop/pull/2146#issuecomment-131403694
-    arguments = '{filename} --stdin --format=json'
-    severity_map = {
-        "error": RESULT_SEVERITY.MAJOR,
-        "warning": RESULT_SEVERITY.NORMAL,
-        "convention": RESULT_SEVERITY.INFO
-    }
-    use_stdin = True
+@linter(executable='rubocop',
+        use_stdin=True)
+class RuboCopBear:
+    """
+    Checks the code with ``rubocop``. This will run ``rubocop`` over each of
+    the files separately.
+    """
 
-    def run(self, filename, file):
-        '''
-        Checks the code with ``rubocop``. This will run ``rubocop``
-        over each of the files separately.
-        '''
-        return self.lint(filename, file)
+    severity_map = {"error": RESULT_SEVERITY.MAJOR,
+                    "warning": RESULT_SEVERITY.NORMAL,
+                    "convention": RESULT_SEVERITY.INFO}
 
-    def _process_issues(self, output, filename):
-        output = json.loads("".join(output))
+    @staticmethod
+    def create_arguments(filename, file, config_file):
+        # Need both stdin and filename. Explained in this comment:
+        # https://github.com/bbatsov/rubocop/pull/2146#issuecomment-131403694
+        return filename, '--stdin', '--format=json'
+
+    def process_output(self, output, filename, file):
+        output = json.loads(output)
         assert len(output['files']) == 1
         for result in output['files'][0]['offenses']:
             # TODO: Add condition for auto-correct, when rubocop is updated.
