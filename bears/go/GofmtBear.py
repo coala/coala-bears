@@ -1,15 +1,15 @@
-from coalib.bearlib.abstractions.Lint import Lint
-from coalib.bears.LocalBear import LocalBear
+from coalib.bearlib.abstractions.Linter import linter
 
 
-class GofmtBear(Lint, LocalBear):
-    executable = 'gofmt'
-    diff_message = "Formatting can be improved."
-    use_stdin = True
-    gives_corrected = True
+@linter(executable='gofmt',
+        use_stdin=True,
+        output_format='corrected',
+        diff_message='Formatting can be improved.')
+class GofmtBear:
+    """
+    Proposes corrections of Go code using gofmt.
+    """
 
-    def run(self, filename, file):
-        """
-        Proposes corrections of Go code using gofmt.
-        """
-        return self.lint(filename, file)
+    @staticmethod
+    def create_arguments(filename, file, config_file):
+        return ()
