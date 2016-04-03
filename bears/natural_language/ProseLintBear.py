@@ -1,19 +1,15 @@
-import re
-
-from coalib.bearlib.abstractions.Lint import Lint
-from coalib.bears.LocalBear import LocalBear
+from coalib.bearlib.abstractions.Linter import linter
 
 
-class ProseLintBear(LocalBear, Lint):
-    executable = 'proselint'
-    output_regex = re.compile(
-        r'.+?:(?P<line>\d+):(?P<column>\d+): (?P<code>\S*) (?P<message>.+)')
-    arguments = "{filename}"
+@linter(executable='proselint',
+        output_format='regex',
+        output_regex=r'.+?:(?P<line>\d+):(?P<column>\d+): \S* (?P<message>.+)')
+class ProseLintBear:
+    """
+    Lints the file using ``proselint``.
+    """
     LANGUAGES = "Natural Language"
 
-    def run(self, filename, file):
-        '''
-        Checks the markdown file with Alex - Catch insensitive,
-        inconsiderate writing.
-        '''
-        return self.lint(filename)
+    @staticmethod
+    def create_arguments(filename, file, config_file):
+        return filename,
