@@ -1,19 +1,14 @@
-import re
-
-from coalib.bearlib.abstractions.Lint import Lint
-from coalib.bears.LocalBear import LocalBear
-from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
+from coalib.bearlib.abstractions.Linter import linter
 
 
-class LuaLintBear(LocalBear, Lint):
-    executable = 'luacheck'
-    output_regex = re.compile(
-        r'\s*(?P<filename>.+):(?P<line>\d+):'
-        r'(?P<column>\d+):\s(?P<message>.+)')
+@linter(executable='luacheck',
+        output_format='regex',
+        output_regex=r'.+:(?P<line>\d+):(?P<column>\d+): (?P<message>.+)')
+class LuaLintBear:
+    """
+    Checks the code with ``luacheck``.
+    """
 
-    def run(self, filename, file):
-        '''
-        Checks the code with ``luacheck``.
-        '''
-        self.arguments = '{filename}'
-        return self.lint(filename)
+    @staticmethod
+    def create_arguments(filename, file, config_file):
+        return filename,
