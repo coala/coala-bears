@@ -1,26 +1,17 @@
-import re
-
-from coalib.bearlib.abstractions.Lint import Lint
-from coalib.bears.LocalBear import LocalBear
-from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
+from coalib.bearlib.abstractions.Linter import linter
 
 
-class ShellCheckBear(LocalBear, Lint):
-    executable = 'shellcheck'
-    severity_map = {
-        "error": RESULT_SEVERITY.MAJOR,
-        "warning": RESULT_SEVERITY.NORMAL,
-        "info": RESULT_SEVERITY.INFO}
-    output_regex = re.compile(
-        r'(?P<file>(.+)):(?P<line>\d+):(?P<column>\d+):.'
-        r'(?P<severity>error|warning|info):.(?P<message>(.+))')
+@linter(executable='shellcheck', output_format="regex",
+        output_regex=r'.+:(?P<line>\d+):(?P<column>\d+): '
+                     r'(?P<severity>error|warning|info): (?P<message>.+)')
+class ShellCheckBear:
+    """
+    Checks the given code with ``shellcheck``.
+    """
 
-    def run(self, filename, file, shell: str='sh'):
-        '''
-        Checks the given code with ``shellcheck``
-
-        :param shell:  Target shell being used. Default is ``sh``.
-        '''
-        self.arguments = '--f gcc -s {shell} {filename}'.format(
-            shell=shell, filename=filename)
-        return self.lint(filename=filename)
+    @staticmethod
+    def create_arguments(filename, file, config_file, shell: str='sh'):
+        """
+        :param shell: Target shell being used.
+        """
+        return '--f', 'gcc', '-s', shell, filename
