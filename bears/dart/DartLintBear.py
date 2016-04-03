@@ -1,27 +1,19 @@
-import re
-
-from coalib.bearlib.abstractions.Lint import Lint
-from coalib.bears.LocalBear import LocalBear
-from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
+from coalib.bearlib.abstractions.Linter import linter
 
 
-class DartLintBear(LocalBear, Lint):
-    executable = 'dartanalyzer'
-    output_regex = re.compile(
-        r'\[(?P<severity>error|warning)\] (?P<message>.+)\('
-        r'(?P<file_name>.+), line (?P<line>\d+),'
-        r' col (?P<column>\d+)\)')
-    severity_map = {
-        "error": RESULT_SEVERITY.MAJOR,
-        "warning": RESULT_SEVERITY.NORMAL}
+@linter(executable='dartanalyzer',
+        output_format='regex',
+        output_regex=r'\[(?P<severity>error|warning)\] (?P<message>.+)\('
+                     r'.+, line (?P<line>\d+), col (?P<column>\d+)\)')
+class DartLintBear:
+    """
+    Checks the code with ``dart-linter``.
+
+    This bear expects dart commands to be on your ``PATH``. Please ensure
+    /path/to/dart-sdk/bin is in your ``PATH``.
+    """
     LANGUAGES = "Dart"
 
-    def run(self, filename, file):
-        '''
-        Checks the code with ``dart-linter``.
-
-        This bear expects dart commands to be on your ``PATH``. Please ensure
-        /path/to/dart-sdk/bin is in your ``PATH``.
-        '''
-        self.arguments = '{filename}'
-        return self.lint(filename)
+    @staticmethod
+    def create_arguments(filename, file, config_file):
+        return filename,
