@@ -1,16 +1,16 @@
-from coalib.bearlib.abstractions.Lint import Lint
-from coalib.bears.LocalBear import LocalBear
+from coalib.bearlib.abstractions.Linter import linter
 
 
-class GoReturnsBear(Lint, LocalBear):
-    executable = 'goreturns'
-    diff_message = "Imports or returns need to be added/removed."
-    use_stdin = True
-    gives_corrected = True
+@linter(executable='goreturns',
+        use_stdin=True,
+        output_format='corrected',
+        diff_message='Imports or returns need to be added/removed.')
+class GoReturnsBear:
+    """
+    Proposes corrections of Go code using ``goreturns``.
+    """
     LANGUAGES = "Go"
 
-    def run(self, filename, file):
-        """
-        Proposes corrections of Go code using gofmt.
-        """
-        return self.lint(filename, file)
+    @staticmethod
+    def create_arguments(filename, file, config_file):
+        return ()
