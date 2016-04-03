@@ -1,32 +1,21 @@
-import re
-
-from coalib.bearlib.abstractions.Lint import Lint
-from coalib.bears.LocalBear import LocalBear
-from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
+from coalib.bearlib.abstractions.Linter import linter
 
 
-class YAMLLintBear(LocalBear, Lint):
-    executable = 'yamllint'
-    output_regex = re.compile(
-        r'(.+):(?P<line>\d+):(?P<column>\d+):\s'
-        r'\[(?P<severity>error|warning)\]\s(?P<message>.+)'
-    )
-    severity_map = {
-        "warning": RESULT_SEVERITY.NORMAL,
-        "error": RESULT_SEVERITY.MAJOR
-    }
+@linter(executable='yamllint',
+        output_format="regex",
+        output_regex=r'.+:(?P<line>\d+):(?P<column>\d+): '
+                     r'\[(?P<severity>error|warning)\] (?P<message>.+)')
+class YAMLLintBear:
+    """
+    Checks the code with ``yamllint`` on each file separately.
+    """
 
-    def run(self,
-            filename,
-            file,
-            yamllint_config: str=""):
-        '''
-        Checks the code with `yamllint` on each file separately.
-
+    @staticmethod
+    def create_arguments(filename, file, config_file, yamllint_config: str=''):
+        """
         :param yamllint_config: Path to a custom configuration file.
-        '''
-        self.arguments += ' -f parsable'
-        self.arguments += ' {filename}'
+        """
+        args = ('-f', 'parsable', filename)
         if yamllint_config:
-            self.arguments += ' --config=' + yamllint_config
-        return self.lint(filename)
+            args += ('--config=' + yamllint_config,)
+        return args
