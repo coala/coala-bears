@@ -1,16 +1,16 @@
-from coalib.bearlib.abstractions.Lint import Lint
-from coalib.bears.LocalBear import LocalBear
+from coalib.bearlib.abstractions.Linter import linter
 
 
-class GoImportsBear(Lint, LocalBear):
-    executable = 'goimports'
-    diff_message = "Imports need to be added/removed."
-    use_stdin = True
-    gives_corrected = True
+@linter(executable='goimports',
+        use_stdin=True,
+        output_format='corrected',
+        diff_message='Imports need to be added/removed.')
+class GoImportsBear:
+    """
+    Adds/Removes imports to Go code for missing imports.
+    """
     LANGUAGES = "Go"
 
-    def run(self, filename, file):
-        """
-        Adds/Removes imports to Go code for missing imports.
-        """
-        return self.lint(filename, file)
+    @staticmethod
+    def create_arguments(filename, file, config_file):
+        return ()
