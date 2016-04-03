@@ -7,7 +7,7 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 class RLintBear(LocalBear, Lint):
     executable = 'Rscript'
-    arguments = "-e 'library(lintr)' -e 'lintr::lint({filename})'"
+    arguments = "-e 'library(lintr)' -e 'lintr::lint(\"{filename}\")'"
     output_regex = re.compile(
         r'(?P<file_name>.*?):(?P<line>\d+):(?P<column>\d+):'
         r' (?P<severity>\S+): (?P<message>.*)')
