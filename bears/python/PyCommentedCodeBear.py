@@ -1,19 +1,20 @@
 import eradicate
 
-from coalib.bearlib.abstractions.Lint import Lint
 from coalib.bears.LocalBear import LocalBear
+from coalib.results.Diff import Diff
+from coalib.results.Result import Result
 
 
-class PyCommentedCodeBear(Lint, LocalBear):
-    gives_corrected = True
-    diff_message = "This file contains commented out source code."
-
-    def lint(self, filename, file):
-        output = list(eradicate.filter_commented_out_code(''.join(file)))
-        return self.process_output(output, filename, file)
+class PyCommentedCodeBear(LocalBear):
 
     def run(self, filename, file):
         """
         Detects commented out source code in Python.
         """
-        return self.lint(filename, file)
+        corrected = list(eradicate.filter_commented_out_code(''.join(file)))
+
+        for diff in Diff.from_string_arrays(file, corrected).split_diff():
+            yield Result(self,
+                         "This file contains commented out source code.",
+                         affected_code=(diff.range(filename),),
+                         diffs={filename: diff})
