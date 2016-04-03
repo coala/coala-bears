@@ -1,18 +1,14 @@
-import re
-
-from coalib.bearlib.abstractions.Lint import Lint
-from coalib.bears.LocalBear import LocalBear
+from coalib.bearlib.abstractions.Linter import linter
 
 
-class CPPCleanBear(LocalBear, Lint):
-    executable = 'cppclean'
-    output_regex = re.compile(
-        r'(?P<file_name>[^,:]+):(?P<line>\d+):(?P<message>.*)')
-    use_stdout = True
-    arguments = '{filename}'
+@linter(executable='cppclean',
+        output_format='regex',
+        output_regex=r'.+:(?P<line>\d+):(?P<message>.*)')
+class CPPCleanBear:
+    """
+    Checks code with ``cppclean``.
+    """
 
-    def run(self, filename, file):
-        '''
-        Checks code with `cppclean`.
-        '''
-        return self.lint(filename)
+    @staticmethod
+    def create_arguments(filename, file, config_file):
+        return filename,
