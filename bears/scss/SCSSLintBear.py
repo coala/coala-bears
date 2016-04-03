@@ -1,25 +1,18 @@
-import re
-
-from coalib.bearlib.abstractions.Lint import Lint
-from coalib.bears.LocalBear import LocalBear
+from coalib.bearlib.abstractions.Linter import linter
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
-class SCSSLintBear(LocalBear, Lint):
-    executable = 'scss-lint'
-    arguments = '{filename}'
-    output_regex = re.compile(
-                r'(?P<file_name>.+):(?P<line>\d+)\s*'
-                r'(\[(?P<severity>.*?)\])\s*'
-                r'(?P<message>.*)')
-    severity_map = {
-        "I": RESULT_SEVERITY.INFO,
-        "W": RESULT_SEVERITY.NORMAL,
-        "E": RESULT_SEVERITY.MAJOR
-    }
+@linter(executable='scss-lint', output_format="regex",
+        output_regex=r'.+:(?P<line>\d+)\s+(\[(?P<severity>.)\])\s*'
+                     r'(?P<message>.*)',
+        severity_map={'I': RESULT_SEVERITY.INFO,
+                      'W': RESULT_SEVERITY.NORMAL,
+                      'E': RESULT_SEVERITY.MAJOR})
+class SCSSLintBear:
+    """
+    Checks the code with ``scss-lint`` on each file separately.
+    """
 
-    def run(self, filename, file):
-        '''
-        Checks the code with `scss-lint` on each file separately.
-        '''
-        return self.lint(filename)
+    @staticmethod
+    def create_arguments(filename, file, config_file):
+        return filename,
