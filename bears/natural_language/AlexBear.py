@@ -1,26 +1,23 @@
-import re
-
-from coalib.bearlib.abstractions.Lint import Lint
+from coalib.bearlib.abstractions.Linter import linter
 from coalib.bears.requirements.NpmRequirement import NpmRequirement
-from coalib.bears.LocalBear import LocalBear
 
 
-class AlexBear(LocalBear, Lint):
-    executable = 'alex'
-    output_regex = re.compile(
-        r'\s+(?P<line>\d+):(?P<column>\d+)\-'
-        r'(?P<end_line>\d+):(?P<end_column>\d+)'
-        r'\s+(?:(warning))\s+(?P<message>.+)')
-    arguments = "{filename}"
+@linter(executable='alex',
+        output_format='regex',
+        output_regex=r'(?P<line>\d+):(?P<column>\d+)-(?P<end_line>\d+):'
+                     r'(?P<end_column>\d+)\s+(?P<severity>warning)\s+'
+                     r'(?P<message>.+)')
+class AlexBear:
+    """
+    Checks the markdown file with Alex - Catch insensitive, inconsiderate
+    writing.
+    """
     LANGUAGES = {"Natural Language"}
     REQUIREMENTS = {NpmRequirement('alex', '2')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
 
-    def run(self, filename, file):
-        '''
-        Checks the markdown file with Alex - Catch insensitive,
-        inconsiderate writing.
-        '''
-        return self.lint(filename)
+    @staticmethod
+    def create_arguments(filename, file, config_file):
+        return filename,
