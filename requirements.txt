@@ -1,5 +1,5 @@
 # Use >= for development versions so that source builds always work
-coala>=0.6.0.dev20160325124842,<=0.6.0.dev20160407174959
+coala>=0.6.0.dev20160408103250
 setuptools>=19.2
 munkres3~=1.0.5.5
 pylint~=1.5.2
