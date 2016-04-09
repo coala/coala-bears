@@ -1,6 +1,3 @@
-README
-======
-
 .. Start ignoring LineLengthBear
 
 ::
@@ -22,28 +19,8 @@ README
 
 .. Stop ignoring LineLengthBear
 
-INSTALLATION
-============
-
-coala-bears can be installed with ``pip3 install coala-bears``. If you need more
-information about the installation and dependencies, take a look at our
-`installation documentation
-<http://coala.rtfd.org/en/latest/Users/Install.html>`__.
-
-The latest code from master is automatically deployed to PyPI as a
-development version. Get it with ``pip3 install coala-bears --pre``.
-
-|PyPI|
-
-USAGE
-=====
-
-If you want to learn more about coala-bears, its functionality and its usage,
-please take a look at our
-`tutorial <http://coala.readthedocs.org/en/latest/Users/Tutorials/Tutorial.html>`__.
-
-ABOUT
-=====
+About
+-----
 
 coala-bears is a Python package containing all the bears that are officially
 supported by coala. It features more than **65 bears** covering **32 languages**.
@@ -72,21 +49,34 @@ You can read more at our `documentation <http://coala.readthedocs.org/en/latest/
 There you can learn how to easily write bears yourself! Be sure to let us know
 if you do so, then we'll be able to include it here and spread the word about it.
 
+Installation
+-------------
+
+coala-bears can be installed with ``pip3 install coala-bears``. If you need more
+information about the installation and dependencies, take a look at our
+`installation documentation
+<http://coala.rtfd.org/en/latest/Users/Install.html>`__.
+
+The latest code from master is automatically deployed to PyPI as a
+development version. Get it with ``pip3 install coala-bears --pre``.
+
+|PyPI|
+
+Usage
+-----
+
+If you want to learn more about **coala-bears**, its functionality and its usage,
+please take a look at our
+`tutorial <http://coala.readthedocs.org/en/latest/Users/Tutorials/Tutorial.html>`__.
+
 Authors
 -------
 
 coala-bears is maintained by a growing community. Please take a look at the
 meta information in `setup.py <setup.py>`__ for current maintainers.
 
-Project Status
---------------
-
-|Linux Build Status| |Windows Build status| |OSX Build status|
-
-|Documentation Status| |codecov.io|
-
-GETTING INVOLVED
-================
+Getting Involved
+----------------
 
 If you want to contribute to coala-bears, please take a look at the `Getting
 Involved Information
@@ -96,8 +86,15 @@ We appreciate any help!
 
 |https://gitter.im/coala-analyzer/coala|
 
-LICENSE
-=======
+Project Status
+--------------
+
+|Linux Build Status| |Windows Build status| |OSX Build status|
+
+|Documentation Status| |codecov.io|
+
+License
+--------
 
 |AGPL|
 
