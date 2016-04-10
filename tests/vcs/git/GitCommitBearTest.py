@@ -109,7 +109,7 @@ class GitCommitBearTest(unittest.TestCase):
         self.assertTrue(self.msg_queue.empty())
 
     def test_shortlog_checks_length(self):
-        self.git_commit("Commits messages that nearly exceeds default limit")
+        self.git_commit("Commit messages that nearly exceed default limit..")
 
         self.assertEqual(self.run_uut(), [])
         self.assertTrue(self.msg_queue.empty())
@@ -119,7 +119,7 @@ class GitCommitBearTest(unittest.TestCase):
                           "longer than the limit (50 > 17)."])
         self.assertTrue(self.msg_queue.empty())
 
-        self.git_commit("A shortlog that is too long is not good for history")
+        self.git_commit("Add a very long shortlog for a bad project history.")
         self.assertEqual(self.run_uut(),
                          ["Shortlog of HEAD commit is 1 character(s) longer "
                           "than the limit (51 > 50)."])
@@ -138,6 +138,24 @@ class GitCommitBearTest(unittest.TestCase):
             ["Shortlog of HEAD commit contains no period at end."])
         self.assertEqual(self.run_uut(shortlog_trailing_period=False), [])
         self.assertEqual(self.run_uut(shortlog_trailing_period=None), [])
+
+    def test_shortlog_checks_imperative(self):
+        self.git_commit("tag: Add shortlog in imperative")
+        self.assertNotIn("Shortlog of HEAD commit isn't imperative mood, "
+                         "bad words are 'Add'",
+                         self.run_uut())
+        self.git_commit("Added invalid shortlog")
+        self.assertIn("Shortlog of HEAD commit isn't imperative mood, "
+                      "bad words are 'Added'",
+                      self.run_uut())
+        self.git_commit("Adding another invalid shortlog")
+        self.assertIn("Shortlog of HEAD commit isn't imperative mood, "
+                      "bad words are 'Adding'",
+                      self.run_uut())
+        self.git_commit("Added another invalid shortlog")
+        self.assertNotIn("Shortlog of HEAD commit isn't imperative mood, "
+                         "bad words are 'Added'",
+                         self.run_uut(shortlog_imperative_check=False))
 
     def test_shortlog_checks_regex(self):
         pattern = ".*?: .*[^.]"
@@ -203,7 +221,7 @@ class GitCommitBearTest(unittest.TestCase):
 
     def test_different_path(self):
         no_git_dir = mkdtemp()
-        self.git_commit("A shortlog that is too long is not good for history")
+        self.git_commit("Add a very long shortlog for a bad project history.")
         os.chdir(no_git_dir)
         # When section doesn't have a config setting
         self.assertEqual(self.run_uut(), [])

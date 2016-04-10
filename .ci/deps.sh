@@ -57,6 +57,9 @@ done
 
 pip install -r docs-requirements.txt
 
+# Downloading nltk data that's required for nltk to run 
+bash .ci/deps.nltk.sh
+
 python setup.py --help
 
 # Dart Lint commands

@@ -37,6 +37,9 @@ pip install -U pip
 pip install -r test-requirements.txt
 pip install -r requirements.txt
 
+# Downloading nltk data that's required for nltk to run 
+bash .ci/deps.nltk.sh
+
 # Calling setup.py will download checkstyle automatically so tests may succeed
 python setup.py --help
 
