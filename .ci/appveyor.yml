@@ -49,6 +49,10 @@ install:
   - "%CMD_IN_ENV% pip install --find-links=C:\\wheels -r test-requirements.txt"
   - "%CMD_IN_ENV% pip install --find-links=C:\\wheels -r requirements.txt"
   - "%CMD_IN_ENV% pip install --upgrade astroid"
+  # Download required nltk data
+  - "python -m nltk.downloader punkt"
+  - "python -m nltk.downloader maxent_treebank_pos_tagger"
+  - "python -m nltk.downloader averaged_perceptron_tagger"
   # Calling setup.py will download checkstyle automatically so tests may succeed
   - "%CMD_IN_ENV% python setup.py --help"
 

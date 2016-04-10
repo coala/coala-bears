@@ -1,3 +1,4 @@
+import nltk
 import re
 import shutil
 import os
@@ -23,7 +24,8 @@ class GitCommitBear(GlobalBear):
             force_body: bool=False,
             allow_empty_commit_message: bool=False,
             shortlog_regex: str="",
-            shortlog_trailing_period: bool=None):
+            shortlog_trailing_period: bool=None,
+            shortlog_imperative_check: bool=True):
         """
         Checks the current git commit message at HEAD.
 
@@ -49,6 +51,9 @@ class GitCommitBear(GlobalBear):
                                            the end of the shortlog line.
                                            Providing ``None`` means
                                            "doesn't care".
+        :param shortlog_imperative_check:
+            Whether an imperative check shall be applied to shortlog and
+            providing ``False`` would prohibit the check.
         """
         with change_directory(self.get_config_dir() or os.getcwd()):
             stdout, stderr = run_shell_command("git log -1 --pretty=%B")
@@ -67,6 +72,7 @@ class GitCommitBear(GlobalBear):
         yield from self.check_shortlog(shortlog_length,
                                        shortlog_regex,
                                        shortlog_trailing_period,
+                                       shortlog_imperative_check,
                                        stdout[0])
         yield from self.check_body(body_line_length, force_body, stdout[1:])
 
@@ -74,6 +80,7 @@ class GitCommitBear(GlobalBear):
                        shortlog_length,
                        regex,
                        shortlog_trailing_period,
+                       shortlog_imperative_check,
                        shortlog):
         """
         Checks the given shortlog.
@@ -109,6 +116,45 @@ class GitCommitBear(GlobalBear):
                 yield Result(
                     self,
                     "Shortlog of HEAD commit does not match given regex.")
+
+        if shortlog_imperative_check:
+            colon_pos = shortlog.find(':')
+            shortlog = shortlog[colon_pos + 1:] if colon_pos != -1 else shortlog
+            has_flaws = self.check_imperative(shortlog)
+            if has_flaws:
+                bad_word = has_flaws[0]
+                yield Result(self,
+                             "Shortlog of HEAD commit isn't imperative mood, "
+                             "bad words are '{}'".format(bad_word))
+
+    def check_imperative(self, paragraph):
+        """
+        Check the given sentence/s for Imperatives.
+
+        :param paragraph:
+            The input paragraph to be tested.
+        :returns:
+            A list of tuples having 2 elements (invalid word, parts of speech)
+            or an empty list if no invalid words are found.
+        """
+        try:
+            words = nltk.word_tokenize(nltk.sent_tokenize(paragraph)[0])
+            # VBZ : Verb, 3rd person singular present, like 'adds', 'writes' etc
+            # VBD : Verb, Past tense , like 'added', 'wrote' etc
+            # VBG : Verb, Present participle, like 'adding', 'writing'
+            word, tag = nltk.pos_tag(['I'] + words)[1:2][0]
+            if(tag.startswith('VBZ') or
+               tag.startswith('VBD') or
+               tag.startswith('VBG') or
+               word.endswith('ing')):  # Handle special case for VBG
+                return (word, tag)
+            else:
+                return None
+        except LookupError as error:  # pragma: no cover
+            self.err("NLTK data missing, install by running following commands "
+                     "`python -m nltk.downloader punkt"
+                     " maxent_treebank_pos_tagger averaged_perceptron_tagger`")
+            return
 
     def check_body(self, body_line_length, force_body, body):
         """
