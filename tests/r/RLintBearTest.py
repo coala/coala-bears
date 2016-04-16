@@ -4,7 +4,7 @@ from tests.LocalBearTestHelper import verify_local_bear
 good_file = """
 fun <- function(one){
   one_plus_one <- one + 1
-  four <- matrix(1:10, nrow =2)
+  four <- matrix(1:10, nrow = 2)
   print(one_plus_one, four)
 }""".splitlines(keepends=True)
 
