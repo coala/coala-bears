@@ -1,12 +1,13 @@
 import os
 import unittest
 from queue import Queue
-from clang.cindex import Index
 
-from coalib.settings.Section import Section
+from clang.cindex import Index
 from coalib.results.Result import Result
 from coalib.results.SourceRange import SourceRange
-from bears.c_languages.codeclone_detection.ClangComplexityBear import (
+from coalib.settings.Section import Section
+
+from bears.c_languages.ClangComplexityBear import (
     ClangComplexityBear)
 from tests.BearTestHelper import generate_skip_decorator
 from tests.LocalBearTestHelper import execute_bear
@@ -17,6 +18,7 @@ class ClangComplexityBearTest(unittest.TestCase):
 
     def setUp(self):
         self.filename = os.path.abspath(os.path.join(os.path.dirname(__file__),
+                                                     "codeclone_detection",
                                                      "conditions_samples.c"))
         self.file = "fake"
         self.queue = Queue()
@@ -69,6 +71,7 @@ class ClangComplexityBearTest(unittest.TestCase):
         Should not take into account and display empty function declarations.
         """
         self.filename = os.path.abspath(os.path.join(os.path.dirname(__file__),
+                                                     "test_files",
                                                      "empty_declarations.c"))
         expected = [('with_body(int *)', 1)]
 
