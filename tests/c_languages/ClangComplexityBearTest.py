@@ -59,11 +59,13 @@ class ClangComplexityBearTest(unittest.TestCase):
             end_column=2),)
         expected_result = Result(
             self.bear,
-            "The cyclomatic complexity of function levels(int, int, int) is "
-            "10 which exceeded maximal recommended value of 8.",
+            "The function 'levels(int, int, int)' should be simplified. Its "
+            "cyclomatic complexity is 10 which exceeds maximal recommended "
+            "value of 8.",
             affected_code=affected_code)
         with execute_bear(self.bear, self.filename, self.file, 8) as out:
             self.assertEqual(len(out), 1)
+        out[0].additional_info = ""  # Let's not test this, static and huge
         self.assertEqual(out[0], expected_result)
 
     def test_empty_declared_function(self):
