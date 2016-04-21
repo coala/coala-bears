@@ -26,8 +26,9 @@ bears = LineLengthBear
 bears = GitCommitBear
 
 [LineCounting]
-enabled = False
+enabled = false
 bears = LineCountBear
+max_lines_per_file = 1000
 
 [TODOS]
 enabled = False
