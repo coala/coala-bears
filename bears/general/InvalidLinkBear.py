@@ -39,11 +39,15 @@ class InvalidLinkBear(LocalBear):
                 yield line_number + 1, link, code
 
     def run(self, filename, file, timeout: int=DEFAULT_TIMEOUT):
-        '''
-        Yields results for all invalid links in a file.
+        """
+        Find links in any text file and check if they are valid.
+
+        A link is considered valid if the server responds with a 2xx code.
+
+        This bear can automatically fix redirects.
 
         :param timeout: Request timeout period.
-        '''
+        """
         for line_number, link, code in InvalidLinkBear.find_links_in_file(
                 file, timeout):
             if code is None:
