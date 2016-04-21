@@ -40,7 +40,10 @@ class InvalidLinkBear(LocalBear):
 
     def run(self, filename, file, timeout: int=DEFAULT_TIMEOUT):
         '''
-        Yields results for all invalid links in a file.
+        Finds links in any text file and checks if they are valid.
+
+        The bear will check if the page exists and propose an automatic fix if
+        it is a redirect.
 
         :param timeout: Request timeout period.
         '''
