@@ -14,7 +14,9 @@ class SpaceConsistencyBear(LocalBear):
             tab_width: int=SpacingHelper.DEFAULT_TAB_WIDTH,
             enforce_newline_at_EOF: bool=True):
         '''
-        Checks the space consistency for each line.
+        Check and correct spacing for all textual data. This includes usage of
+        tabs vs. spaces, trailing whitespace and (missing) newlines before
+        the end of the file.
 
         :param use_spaces:                True if spaces are to be used instead
                                           of tabs.
