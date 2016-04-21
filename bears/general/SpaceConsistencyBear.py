@@ -29,6 +29,7 @@ class SpaceConsistencyBear(LocalBear):
         '''
         spacing_helper = SpacingHelper(tab_width)
         result_texts = []
+        additional_info_texts = []
 
         for line_number, line in enumerate(file, start=1):
             replacement = line
@@ -41,11 +42,20 @@ class SpaceConsistencyBear(LocalBear):
                 if replacement[-1] != "\n":
                     replacement += "\n"
                     result_texts.append("No newline at EOF.")
+                    additional_info_texts.append(
+                        "A trailing newline character ('\\n') is missing from "
+                        "your file. "
+                        "<http://stackoverflow.com/a/5813359/3212182> gives "
+                        "more information about why you might need one.")
 
             if not allow_trailing_whitespace:
                 replacement = replacement.rstrip(" \t\n") + "\n"
                 if replacement != line.rstrip("\n") + "\n":
                     result_texts.append("Trailing whitespaces.")
+                    additional_info_texts.append(
+                        "Your source code contains trailing whitespaces. Those "
+                        "usually have no meaning. Please consider removing "
+                        "them.")
 
             if use_spaces:
                 pre_replacement = replacement
@@ -71,5 +81,7 @@ class SpaceConsistencyBear(LocalBear):
                     + inconsistencies,
                     diffs={filename: diff},
                     file=filename,
-                    line=line_number)
+                    line=line_number,
+                    additional_info="\n\n".join(additional_info_texts))
                 result_texts = []
+                additional_info_texts = []
