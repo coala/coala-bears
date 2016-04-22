@@ -27,7 +27,7 @@ class GitCommitBear(GlobalBear):
             shortlog_trailing_period: bool=None,
             shortlog_imperative_check: bool=True):
         """
-        Checks the current git commit message at HEAD.
+        Check the current git commit message at HEAD.
 
         This bear ensures that the shortlog and body do not exceed a given
         line-length and that a newline lies between them.
