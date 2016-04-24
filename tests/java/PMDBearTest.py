@@ -1,4 +1,4 @@
-from bears.java.PMDBear import PMDBear
+from bears.java.JavaPMDBear import PMDBear
 from tests.LocalBearTestHelper import verify_local_bear
 
 
