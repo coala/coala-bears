@@ -1,6 +1,5 @@
 import os
 import platform
-import re
 import shutil
 import stat
 import unittest
@@ -14,6 +13,7 @@ from coalib.misc.Shell import run_shell_command
 from coalib.settings.ConfigurationGathering import get_config_directory
 from coalib.settings.Section import Section
 from coalib.settings.Setting import Setting
+from coalib.parsing.StringProcessing import escape
 
 
 @generate_skip_decorator(GitCommitBear)
@@ -223,12 +223,12 @@ class GitCommitBearTest(unittest.TestCase):
         no_git_dir = mkdtemp()
         self.git_commit("Add a very long shortlog for a bad project history.")
         os.chdir(no_git_dir)
-        # When section doesn't have a config setting
+        # When section doesn't have a project_dir
         self.assertEqual(self.run_uut(), [])
         git_error = self.msg_queue.get().message
         self.assertEqual(git_error[:4], "git:")
-        # when section does have a config setting
-        self.section.append(Setting("config", re.escape(self.gitdir)))
+        # when section does have a project_dir
+        self.section.append(Setting("project_dir", escape(self.gitdir, '\\')))
         self.assertEqual(self.run_uut(),
                          ["Shortlog of HEAD commit is 1 character(s) longer "
                           "than the limit (51 > 50)."])
