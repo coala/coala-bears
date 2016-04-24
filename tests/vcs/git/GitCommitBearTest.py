@@ -1,6 +1,5 @@
 import os
 import platform
-import re
 import shutil
 import stat
 import unittest
@@ -228,7 +227,7 @@ class GitCommitBearTest(unittest.TestCase):
         git_error = self.msg_queue.get().message
         self.assertEqual(git_error[:4], "git:")
         # when section does have a config setting
-        self.section.append(Setting("config", re.escape(self.gitdir)))
+        self.section.append(Setting("project_dir", self.gitdir))
         self.assertEqual(self.run_uut(),
                          ["Shortlog of HEAD commit is 1 character(s) longer "
                           "than the limit (51 > 50)."])
