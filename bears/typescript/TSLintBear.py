@@ -8,8 +8,14 @@ from coalib.settings.Setting import path
 @linter(executable='tslint')
 class TSLintBear:
     """
-    Checks the code with ``tslint`` on each file separately.
+    Check TypeScript code for style violations and possible semantical
+    problems.
+
+    Read more about the capabilities at
+    <https://github.com/palantir/tslint#core-rules>.
     """
+
+    LANGUAGES = ("TypeScript",)
 
     @staticmethod
     def create_arguments(filename, file, config_file,
