@@ -9,8 +9,14 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 @linter(executable='hlint')
 class HaskellLintBear:
     """
-    Checks the given file with ``hlint``.
+    Check Haskell code for possible problems. Fixes include ideas such as using
+    alternative functions, simplifying code and removing redundancies.
+
+    See <http://community.haskell.org/~ndm/darcs/hlint/hlint.htm> for more
+    information.
     """
+
+    LANGUAGES = ("Haskell",)
 
     severity_map = {"Error": RESULT_SEVERITY.MAJOR,
                     "Warning": RESULT_SEVERITY.NORMAL,
