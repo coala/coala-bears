@@ -10,8 +10,12 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
                       'E': RESULT_SEVERITY.MAJOR})
 class SCSSLintBear:
     """
-    Checks the code with ``scss-lint`` on each file separately.
+    Check SCSS code to keep it clean and readable.
+
+    More information is available at <https://github.com/brigade/scss-lint>.
     """
+
+    LANGUAGES = ("SCSS",)
 
     @staticmethod
     def create_arguments(filename, file, config_file):
