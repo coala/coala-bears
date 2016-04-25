@@ -1,0 +1,12 @@
+codecov: 
+  comment: false
+  coverage: 
+    status: 
+      change: 
+        enabled: false
+      patch: 
+        enabled: false
+      project: 
+        enabled: true
+        target: auto
+        threshold: 100%
