@@ -9,8 +9,8 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 @linter(executable='hlint')
 class HaskellLintBear:
     """
-    Check Haskell code for possible problems. Fixes include ideas such as using
-    alternative functions, simplifying code and removing redundancies.
+    Check Haskell code for possible problems. This bear can propose patches for
+    using alternative functions, simplifying code and removing redundancies.
 
     See <http://community.haskell.org/~ndm/darcs/hlint/hlint.htm> for more
     information.
