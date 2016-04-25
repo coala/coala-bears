@@ -5,7 +5,9 @@ from coalib.bearlib.abstractions.Linter import linter
         output_regex=r'.+:(?P<line>\d+):(?P<column>\d+): (?P<message>.+)')
 class VintBear:
     """
-    Checks vimscript code for possible problems using ``vint-linter``.
+    Check vimscript code for possible style problems.
+
+    See <https://github.com/Kuniwak/vint> for more information.
     """
 
     @staticmethod
