@@ -13,6 +13,8 @@ class YAMLLintBear:
     <http://yamllint.readthedocs.org/en/latest/rules.html>.
     """
 
+    LANGUAGES = ("YAML",)
+
     @staticmethod
     def create_arguments(filename, file, config_file, yamllint_config: str=''):
         """
