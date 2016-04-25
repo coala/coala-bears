@@ -12,6 +12,8 @@ class CSharpLintBear:
     Checks the code with ``mcs`` on each file separately.
     """
 
+    LANGUAGES = ("C#",)
+
     @staticmethod
     def create_arguments(filename, file, config_file):
         return filename,
