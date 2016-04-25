@@ -12,8 +12,12 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
                       'E': RESULT_SEVERITY.MAJOR})
 class LuaLintBear:
     """
-    Checks the code with ``luacheck``.
+    Check Lua code for possible semantic problems, like unused code.
+
+    Read more at <https://github.com/mpeterv/luacheck>.
     """
+
+    LANGUAGES = ("Lua",)
 
     @staticmethod
     def create_arguments(filename, file, config_file):
