@@ -9,8 +9,13 @@ from coalib.bearlib.abstractions.Linter import linter
         diff_message='The text does not comply to the set style.')
 class MarkdownBear:
     """
-    Raises issues against style violations on markdown files.
+    Check and correct Markdown style violations automatically.
+
+    See <https://github.com/wooorm/remark-lint> for details about the tool
+    below.
     """
+
+    LANGUAGES = ("Markdown",)
 
     @staticmethod
     def create_arguments(filename, file, config_file,
