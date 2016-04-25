@@ -12,9 +12,12 @@ from coalib.bearlib.spacing.SpacingHelper import SpacingHelper
 class GNUIndentBear:
     """
     This bear checks and corrects spacing and indentation via the well known
-    Indent utility. It is designed to work with the C programming language but
-    may work reasonably with syntactically similar languages.
+    Indent utility.
+
+    C++ support is considered experimental.
     """
+
+    LANGUAGES = ("C", "C++")
 
     @staticmethod
     def create_arguments(filename, file, config_file,
