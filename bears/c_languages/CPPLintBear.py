@@ -19,8 +19,8 @@ class CPPLintBear:
     @staticmethod
     def create_arguments(filename, file, config_file,
                          max_line_length: int=80,
-                         cpplint_ignore: typed_list(str)=[],
-                         cpplint_include: typed_list(str)=[]):
+                         cpplint_ignore: typed_list(str)=(),
+                         cpplint_include: typed_list(str)=()):
         """
         :param max_line_length: Maximum number of characters for a line.
         :param cpplint_ignore:  List of checkers to ignore.
