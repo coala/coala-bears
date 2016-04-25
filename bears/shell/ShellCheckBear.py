@@ -6,8 +6,14 @@ from coalib.bearlib.abstractions.Linter import linter
                      r'(?P<severity>error|warning|info): (?P<message>.+)')
 class ShellCheckBear:
     """
-    Checks the given code with ``shellcheck``.
+    Check bash/shell scripts for syntactical problems (with understandable
+    messages), semantical problems as well as subtle caveats and pitfalls.
+
+    A gallery of bad code that can be detected is available at
+    <https://github.com/koalaman/shellcheck/blob/master/README.md>.
     """
+
+    LANGUAGES = ("sh", "bash", "ksh", "dash")
 
     @staticmethod
     def create_arguments(filename, file, config_file, shell: str='sh'):
