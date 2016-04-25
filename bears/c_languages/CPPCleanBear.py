@@ -13,6 +13,8 @@ class CPPCleanBear:
     <https://github.com/myint/cppclean#features>.
     """
 
+    LANGUAGES = ("C++",)
+
     @staticmethod
     def create_arguments(filename, file, config_file):
         return filename,
