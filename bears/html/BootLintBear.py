@@ -11,7 +11,14 @@ from coalib.settings.Setting import typed_list
                       "E": RESULT_SEVERITY.MAJOR})
 class BootLintBear:
     """
-    Checks the code with ``bootlint`` on each file separately.
+    Raise several common HTML mistakes in html files that are using
+    Bootstrap in a fairly "vanilla" way. Vanilla Bootstrap's components/widgets
+    require their parts of the DOM to conform to certain structures that is
+    checked. Also, raises issues about certain <meta> tags, HTML5 doctype
+    declaration, etc. to use bootstrap properly.
+
+    For more about the analysis, check Bootlint
+    <https://github.com/twbs/bootlint#bootlint>.
     """
 
     @staticmethod
