@@ -18,8 +18,11 @@ scalastyle_config_file = join(dirname(abspath(__file__)),
                                         ' not found.')
 class ScalaLintBear:
     """
-    Checks the code with ``scalastyle`` on each file separately.
+    Check Scala code for codestyle, but also semantical problems,
+    e.g. cyclomatic complexity.
     """
+
+    LANGUAGES = ("Scala",)
 
     @staticmethod
     def create_arguments(filename, file, config_file,
