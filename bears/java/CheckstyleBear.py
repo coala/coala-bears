@@ -17,9 +17,13 @@ google_checks = join(dirname(abspath(__file__)), 'google_checks.xml')
                                         ' not found.')
 class CheckstyleBear:
     """
-    Checks the code with ``checkstyle`` using the Google codestyle
-    specification.
+    Check Java code for possible style, semantic and design issues.
+
+    For more information, consult
+    <http://checkstyle.sourceforge.net/checks.html>.
     """
+
+    LANGUAGES = ("Java",)
 
     @staticmethod
     def create_arguments(filename, file, config_file):
