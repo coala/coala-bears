@@ -10,9 +10,12 @@ from coalib.results.Result import Result
         use_stdin=True)
 class ESLintBear:
     """
-    Checks the code with ``eslint``. This will run eslint over each of the
-    files separately.
+    Check JavaScript and JSX code for style issues and semantic errors.
+
+    Find out more at <http://eslint.org/docs/rules/>.
     """
+
+    LANGUAGES = ("JavaScript", "JSX")
 
     severity_map = {2: RESULT_SEVERITY.MAJOR,
                     1: RESULT_SEVERITY.NORMAL,
