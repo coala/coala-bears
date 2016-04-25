@@ -12,4 +12,4 @@ class LuaLintBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file):
-        return "-",
+        return "-", "--formatter=plain"
