@@ -9,7 +9,7 @@ from coalib.bearlib.abstractions.Linter import linter
                      r'(?P<severity>error|warning) \w+: (?P<message>.+)')
 class CSharpLintBear:
     """
-    Checks the code with ``mcs`` on each file separately.
+    Checks C# code for syntactical correctness using the ``mcs`` compiler.
     """
 
     LANGUAGES = ("C#",)
