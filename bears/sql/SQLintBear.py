@@ -6,8 +6,13 @@ from coalib.bearlib.abstractions.Linter import linter
                      r'(?P<severity>ERROR|WARNING) (?P<message>(?:\s*.+)*)')
 class SQLintBear:
     """
-    Checks the given file using ``sqlint``.
+    Check the given SQL files for syntax errors or warnings.
+
+    This bear supports ANSI syntax. Check out
+    <https://github.com/purcell/sqlint> for more detailed information.
     """
+
+    LANGUAGES = ("SQL",)
 
     @staticmethod
     def create_arguments(filename, file, config_file):
