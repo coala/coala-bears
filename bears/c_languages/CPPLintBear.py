@@ -9,7 +9,9 @@ from coalib.settings.Setting import typed_list
         output_regex=r'.+:(?P<line>\d+): (?P<message>.+)')
 class CPPLintBear:
     """
-    Checks the code with ``cpplint`` on each file separately.
+    Check C++ code for Google's C++ style guide.
+
+    For more information, consult <https://github.com/theandrewdavis/cpplint>.
     """
 
     @staticmethod
