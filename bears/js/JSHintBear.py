@@ -110,241 +110,188 @@ class JSHintBear(LocalBear, Lint):
         Checks the code with jshint. This will run jshint over each file
         separately.
 
-        :param prohibit_bitwise:                 This option prohibits the use
-                                                 of bitwise operators.
-        :param prohibit_prototype_overwrite:     This options prohibits
-                                                 overwriting prototypes of
-                                                 native objects such as
-                                                 ``Array``.
-        :param force_braces:                     This option requires you to
-                                                 always put curly braces around
-                                                 blocks in loops and
-                                                 conditionals.
-        :param prohibit_type_coercion:           This options prohibits the use
-                                                 of ``==`` and ``!=`` in favor
-                                                 of ``===`` and ``!==``.
-        :param future_hostile:                   This option enables warnings
-                                                 about the use of identifiers
-                                                 which are defined in future
-                                                 versions of JavaScript.
-        :param prohibit_typeof:                  This option suppresses
-                                                 warnings about invalid
-                                                 ``typeof`` operator values.
-        :param es3:                              This option tells JSHint that
-                                                 your code needs to adhere to
-                                                 ECMAScript 3 specification.
-        :param force_filter_forin:               This option requires all
-                                                 ``for in`` loops to filter
-                                                 object's items.
-        :param iterator:                         This option suppresses
-                                                 warnings about the
-                                                 ``__iterator__`` property.
-        :param allow_funcscope:                  This option suppresses warnings
-                                                 about declaring variables
-                                                 inside of control structures
-                                                 while accessing them later
-                                                 from outside.
-        :param prohibit_arg:                     This option prohibits the use
-                                                 of ``arguments.caller`` and
-                                                 ``arguments.callee``.
-        :param prohibit_comma:                   This option prohibits the use
-                                                 of the comma operator.
-        :param prohibit_non_breaking_whitespace: This option warns about "non-
-                                                 breaking whitespace
-                                                 characters".
-        :param prohibit_new:                     This option prohibits the use
-                                                 of constructor functions for
-                                                 side-effects.
-        :param prohibit_undefined:               This option prohibits the use
-                                                 of explicitly undeclared
-                                                 variables.
-        :param prohibit_groups:                  This option prohibits the use
-                                                 of the grouping operator when
-                                                 it is not strictly required.
-        :param prohibit_variable_statements:     This option forbids the use of
-                                                 VariableStatements.
-        :param allow_missing_semicol:            This option suppresses
-                                                 warnings about missing
-                                                 semicolons.
-        :param allow_debugger:                   This option suppresses
-                                                 warnings about the
-                                                 ``debugger`` statements.
-        :param allow_assignment_comparisions:    This option suppresses
-                                                 warnings about the use of
-                                                 assignments in cases where
-                                                 comparisons are expected.
-        :param allow_eval:                       This options suppresses
-                                                 warnings about the use of
-                                                 ``eval`` function.
-        :param allow_global_strict:              This option suppresses
-                                                 warnings about the use of
-                                                 global strict mode.
-        :param allow_increment:                  This option suppresses
-                                                 warnings about the use of
-                                                 unary increment and decrement
-                                                 operators.
-        :param allow_proto:                      This option suppresses
-                                                 warnings about the
-                                                 ``__proto__`` property.
-        :param allow_scripturls:                 This option suppresses
-                                                 warnings about the use of
-                                                 script-targeted URLs.
-        :param allow_singleton:                  This option suppresses
-                                                 warnings about constructions
-                                                 like ``new function ()
-                                                 { ... }`` and ``new Object;``
-                                                 sometimes used to produce
-                                                 singletons.
-        :param allow_this_stmt:                  This option suppresses
-                                                 warnings about possible strict
-                                                 violations when the code is
-                                                 running in strict mode and
-                                                 ``this`` is used in a non-
-                                                 constructor function.
-        :param allow_with_stmt:                  This option suppresses
-                                                 warnings about the use of the
-                                                 ``with`` statement.
-        :param using_mozilla:                    This options tells JSHint that
-                                                 your code uses Mozilla
-                                                 JavaScript extensions.
-        :param allow_noyield:                    This option suppresses
-                                                 warnings about generator
-                                                 functions with no ``yield``
-                                                 statement in them.
-        :param allow_eqnull:                     This option suppresses
-                                                 warnings about ``== null``
-                                                 comparisons.
-        :param allow_last_semicolon:             This option suppresses
-                                                 warnings about missing
-                                                 semicolons for the last
-                                                 statement.
-        :param allow_func_in_loop:               This option suppresses
-                                                 warnings about functions
-                                                 inside of loops.
-        :param allow_expr_in_assignments:        This option suppresses
-                                                 warnings about the use of
-                                                 expressions where normally
-                                                 assignments or function calls
-                                                 are expected.
-        :param use_es3_array:                    This option tells JSHintBear
-                                                 ES3 array elision elements,
-                                                 or empty elements are used.
-        :param use_es3_array:                    This option tells JSHint
-                                                 ECMAScript 6 specific syntax
-                                                 is used.
-        :param environment_mootools:             This option defines globals
-                                                 exposed by the Mootools.
-        :param environment_couch:                This option defines globals
-                                                 exposed by CouchDB.
-        :param environment_jasmine:              This option defines globals
-                                                 exposed by Jasmine.
-        :param environment_jquery:               This option defines globals
-                                                 exposed by Jquery.
-        :param environment_node:                 This option defines globals
-                                                 exposed by Node.
-        :param environment_qunit:                This option defines globals
-                                                 exposed by Qunit.
-        :param environment_rhino:                This option defines globals
-                                                 exposed when the code is
-                                                 running inside rhino runtime
-                                                 environment.
-        :param environment_shelljs:              This option defines globals
-                                                 exposed by the ShellJS.
-        :param environment_prototypejs:          This option defines globals
-                                                 exposed by the Prototype.
-        :param environment_yui:                  This option defines globals
-                                                 exposed by the YUI JavaScript
-                                                 Framework.
-        :param environment_mocha:                This option defines globals
-                                                 exposed by the "BDD" and "TDD"
-                                                 UIs of the Mocha unit testing
-                                                 framework.
-        :param environment_module:               This option informs JSHintBear
-                                                 that the input code describes
-                                                 an ECMAScript 6 module.
-        :param environment_wsh:                  This option defines globals
-                                                 available when the code is
-                                                 running as a script for the
-                                                 Windows Script Host.
-        :param environment_worker:               This option defines globals
-                                                 available when the code is
-                                                 running inside of a Web
-                                                 Worker.
-        :param environment_nonstandard:          This option defines non-
-                                                 standard but widely adopted
-                                                 globals such as ``escape`` and
-                                                 ``unescape``.
-        :param environment_browser:              This option defines globals
-                                                 exposed by modern browsers.
-        :param environment_browserify:           This option defines globals
-                                                 available when using the
-                                                 Browserify.
-        :param environment_devel:                This option defines globals
-                                                 that are usually used for
-                                                 debugging: ``console``,
-                                                 ``alert``, etc.
-        :param environment_dojo:                 This option defines globals
-                                                 exposed by the Dojo Toolkit.
-        :param environment_typed:                This option defines globals
-                                                 for typed array constructors.
-        :param environment_phantom:              This option defines globals
-                                                 available when your core is
-                                                 running inside of the
-                                                 PhantomJS runtime environment.
-        :param maxerr:                           This options allows you to set
-                                                 the maximum amount of warnings
-                                                 JSHintBear will produce before
-                                                 giving up. Default is 50.
-        :param maxstatements:                    Maximum number of statements
-                                                 allowed per function.
-        :param maxdepth:                         This option lets you control
-                                                 how nested do you want your
-                                                 blocks to be.
-        :param maxparams:                        Maximum number of formal
-                                                 parameters allowed per
-                                                 function.
-        :param maxcomplexity:                    Maximum cyclomatic complexity
-                                                 in the code.
-        :param shadow:                           This option suppresses
-                                                 warnings about variable
-                                                 shadowing i.e. declaring a
-                                                 variable that had been
-                                                 already declared somewhere
-                                                 in the outer scope.
+        :param prohibit_bitwise:
+            This option prohibits the use of bitwise operators.
+        :param prohibit_prototype_overwrite:
+            This options prohibits overwriting prototypes of native objects
+            such as ``Array``.
+        :param force_braces:
+            This option requires you to always put curly braces around blocks
+            in loops and conditionals.
+        :param prohibit_type_coercion:
+            This options prohibits the use of ``==`` and ``!=`` in favor of
+            ``===`` and ``!==``.
+        :param future_hostile:
+            This option enables warnings about the use of identifiers which are
+            defined in future versions of JavaScript.
+        :param prohibit_typeof:
+            This option suppresses warnings about invalid ``typeof`` operator
+            values.
+        :param es3:
+            This option tells JSHint that your code needs to adhere to
+            ECMAScript 3 specification.
+        :param force_filter_forin:
+            This option requires all ``for in`` loops to filter object's items.
+        :param iterator:
+            This option suppresses warnings about the ``__iterator__``
+            property.
+        :param allow_funcscope:
+            This option suppresses warnings about declaring variables inside of
+            control structures while accessing them later from outside.
+        :param prohibit_arg:
+            This option prohibits the use of ``arguments.caller`` and
+            ``arguments.callee``.
+        :param prohibit_comma:
+            This option prohibits the use of the comma operator.
+        :param prohibit_non_breaking_whitespace:
+            This option warns about "non-breaking whitespace characters".
+        :param prohibit_new:
+            This option prohibits the use of constructor functions for
+            side-effects.
+        :param prohibit_undefined:
+            This option prohibits the use of explicitly undeclared variables.
+        :param prohibit_groups:
+            This option prohibits the use of the grouping operator when it is
+            not strictly required.
+        :param prohibit_variable_statements:
+            This option forbids the use of VariableStatements.
+        :param allow_missing_semicol:
+            This option suppresses warnings about missing semicolons.
+        :param allow_debugger:
+            This option suppresses warnings about the ``debugger`` statements.
+        :param allow_assignment_comparisions:
+            This option suppresses warnings about the use of assignments in
+            cases where comparisons are expected.
+        :param allow_eval:
+            This options suppresses warnings about the use of ``eval``
+            function.
+        :param allow_global_strict:
+            This option suppresses warnings about the use of global strict
+            mode.
+        :param allow_increment:
+            This option suppresses warnings about the use of unary increment
+            and decrement operators.
+        :param allow_proto:
+            This option suppresses warnings about the ``__proto__`` property.
+        :param allow_scripturls:
+            This option suppresses warnings about the use of script-targeted
+            URLs.
+        :param allow_singleton:
+            This option suppresses warnings about constructions like
+            ``new function () { ... }`` and ``new Object;`` sometimes used to
+            produce singletons.
+        :param allow_this_stmt:
+            This option suppresses warnings about possible strict violations
+            when the code is running in strict mode and ``this`` is used in a
+            non-constructor function.
+        :param allow_with_stmt:
+            This option suppresses warnings about the use of the ``with``
+            statement.
+        :param using_mozilla:
+            This options tells JSHint that your code uses Mozilla JavaScript
+            extensions.
+        :param allow_noyield:
+            This option suppresses warnings about generator functions with no
+            ``yield`` statement in them.
+        :param allow_eqnull:
+            This option suppresses warnings about ``== null`` comparisons.
+        :param allow_last_semicolon:
+            This option suppresses warnings about missing semicolons for the
+            last statement.
+        :param allow_func_in_loop:
+            This option suppresses warnings about functions inside of loops.
+        :param allow_expr_in_assignments:
+            This option suppresses warnings about the use of expressions where
+            normally assignments or function calls are expected.
+        :param use_es3_array:
+            This option tells JSHintBear ES3 array elision elements, or empty
+            elements are used.
+        :param use_es3_array:
+            This option tells JSHint ECMAScript 6 specific syntax is used.
+        :param environment_mootools:
+            This option defines globals exposed by the Mootools.
+        :param environment_couch:
+            This option defines globals exposed by CouchDB.
+        :param environment_jasmine:
+            This option defines globals exposed by Jasmine.
+        :param environment_jquery:
+            This option defines globals exposed by Jquery.
+        :param environment_node:
+            This option defines globals exposed by Node.
+        :param environment_qunit:
+            This option defines globals exposed by Qunit.
+        :param environment_rhino:
+            This option defines globals exposed when the code is running inside
+            rhino runtime environment.
+        :param environment_shelljs:
+            This option defines globals exposed by the ShellJS.
+        :param environment_prototypejs:
+            This option defines globals exposed by the Prototype.
+        :param environment_yui:
+            This option defines globals exposed by the YUI JavaScript
+            Framework.
+        :param environment_mocha:
+            This option defines globals exposed by the "BDD" and "TDD" UIs of
+            the Mocha unit testing framework.
+        :param environment_module:
+            This option informs JSHintBear that the input code describes an
+            ECMAScript 6 module.
+        :param environment_wsh:
+            This option defines globals available when the code is running as a
+            script for the Windows Script Host.
+        :param environment_worker:
+            This option defines globals available when the code is running
+            inside of a Web Worker.
+        :param environment_nonstandard:
+            This option defines non- standard but widely adopted globals such
+            as ``escape`` and ``unescape``.
+        :param environment_browser:
+            This option defines globals exposed by modern browsers.
+        :param environment_browserify:
+            This option defines globals available when using the Browserify.
+        :param environment_devel:
+            This option defines globals that are usually used for debugging:
+            ``console``, ``alert``, etc.
+        :param environment_dojo:
+            This option defines globals exposed by the Dojo Toolkit.
+        :param environment_typed:
+            This option defines globals for typed array constructors.
+        :param environment_phantom:
+            This option defines globals available when your core is running
+            inside of the PhantomJS runtime environment.
+        :param maxerr:
+            This options allows you to set the maximum amount of warnings
+            JSHintBear will produce before giving up. Default is 50.
+        :param maxstatements:
+            Maximum number of statements allowed per function.
+        :param maxdepth:
+            This option lets you control how nested do you want your blocks to
+            be.
+        :param maxparams:
+            Maximum number of formal parameters allowed per function.
+        :param maxcomplexity:
+            Maximum cyclomatic complexity in the code.
+        :param shadow:
+            This option suppresses warnings about variable shadowing i.e.
+            declaring a variable that had been already declared somewhere in
+            the outer scope.
 
-                                                  - "inner" - check for
-                                                     variables defined in the
-                                                     same scope only
-                                                  - "outer" - check for
-                                                     variables defined in outer
-                                                     scopes as well
-                                                  - False - same as inner
-                                                  - True  - allow variable
-                                                    shadowing
-        :param prohibit_unused:                  This option generates warnings
-                                                 when variables are defined but
-                                                 never used. This can be set to
-                                                 ""vars"" to only check for
-                                                 variables, not function
-                                                 parameters,or ""strict"" to
-                                                 check all variables and
-                                                 parameters.
-        :param allow_latedef:                    This option prohibits the use
-                                                 of a variable before it was
-                                                 defined.
-                                                 Setting this option to
-                                                 "nofunc" will allow
-                                                 function declarations
-                                                 to be ignored.
-        :param es_version:                       This option is used to specify
-                                                 the ECMAScript version to
-                                                 which the code must adhere to.
-        :param jshint_config:                    The location of the jshintrc
-                                                 config file. If this option is
-                                                 present all the above options
-                                                 are not used. Instead the
-                                                 .jshintrc file is used as the
-                                                 configuration file.
+            - "inner" - check for variables defined in the same scope only
+            - "outer" - check for variables defined in outer scopes as well
+            - False - same as inner
+            - True  - allow variable shadowing
+        :param prohibit_unused:
+            This option generates warnings when variables are defined but never
+            used. This can be set to ""vars"" to only check for variables, not
+            function parameters, or ""strict"" to check all variables and
+            parameters.
+        :param allow_latedef:
+            This option prohibits the use of a variable before it was defined.
+            Setting this option to "nofunc" will allow function declarations to
+            be ignored.
+        :param es_version:
+            This option is used to specify the ECMAScript version to which the
+            code must adhere to.
         '''
         self.arguments = '--verbose {filename}'
 
