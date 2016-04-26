@@ -23,3 +23,9 @@ class CheckstyleBearTest(LocalBearTestHelper):
     def test_run(self):
         self.check_validity(self.uut, [], self.good_file)
         self.check_validity(self.uut, [], self.bad_file, valid=False)
+
+    def test_run_with_custom_configfile(self):
+        # emptyconfig.xml disables all checks, every file should pass now.
+        self.section["checkstyle_config"] = "test_files/emptyconfig.xml"
+        self.check_validity(self.uut, [], self.good_file)
+        self.check_validity(self.uut, [], self.bad_file)

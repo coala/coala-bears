@@ -1,5 +1,6 @@
 from os.path import abspath, dirname, join
 
+from coalib.settings.Setting import path
 from coalib.bearlib.abstractions.Linter import linter
 
 
@@ -19,6 +20,8 @@ class CheckstyleBear:
     """
     Check Java code for possible style, semantic and design issues.
 
+    By default the Google Java Style coding conventions are used.
+
     For more information, consult
     <http://checkstyle.sourceforge.net/checks.html>.
     """
@@ -26,5 +29,10 @@ class CheckstyleBear:
     LANGUAGES = "Java"
 
     @staticmethod
-    def create_arguments(filename, file, config_file):
-        return '-jar', checkstyle_jar_file, '-c', google_checks, filename
+    def create_arguments(filename, file, config_file,
+                         checkstyle_config: path=google_checks):
+        """
+        :param checkstyle_config:
+            The checkstyle configuration file to use.
+        """
+        return '-jar', checkstyle_jar_file, '-c', checkstyle_config, filename
