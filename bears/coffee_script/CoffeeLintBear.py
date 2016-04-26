@@ -1,23 +1,8 @@
-from csv import DictReader
-from io import StringIO
+import json
 
 from coalib.bearlib.abstractions.Linter import linter
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.results.Result import Result
-
-
-def convert_if_not_empty(value: str, conversion):
-    """
-    Returns the value converted if it is not None or empty.
-
-    :param value:      The value to convert.
-    :param conversion: The conversion callable.
-    :return:           None or the converted value.
-    """
-    if value is not None and value != '':
-        return conversion(value)
-
-    return None
 
 
 @linter(executable='coffeelint')
@@ -35,19 +20,19 @@ class CoffeeLintBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file):
-        return '--reporter=csv', filename
+        return '--reporter=raw', filename
 
     def process_output(self, output, filename, file):
-        reader = DictReader(StringIO(output))
+        output = json.loads(output)
 
-        for row in reader:
-            try:
-                yield Result.from_values(
-                    origin=self,
-                    message=row['message'],
-                    file=filename,
-                    line=convert_if_not_empty(row['lineNumber'], int),
-                    end_line=convert_if_not_empty(row['lineNumberEnd'], int),
-                    severity=self.severity_map[row['level']])
-            except KeyError:  # Invalid CSV line, ignore
-                pass
+        assert len(output) == 1, "More than 1 file parsed, something went wrong"
+        for item in tuple(output.values())[0]:
+            yield Result.from_values(
+                origin="{} ({})".format(self.name, item['rule']),
+                message=item['message'],
+                file=filename,
+                line=item.get('lineNumber', None),
+                end_line=item.get('lineNumberEnd', None),
+                severity=self.severity_map[item['level']],
+                additional_info=item.get('description',
+                                         item.get('context', "")))
