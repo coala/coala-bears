@@ -8,6 +8,8 @@ from coalib.results.Result import Result
 
 class PyImportSortBear(LocalBear):
 
+    LANGUAGES = "Python"
+
     def run(self,
             filename,
             file,
