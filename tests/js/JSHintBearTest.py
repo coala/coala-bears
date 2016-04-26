@@ -1,3 +1,5 @@
+import os
+
 from bears.js.JSHintBear import JSHintBear
 from tests.LocalBearTestHelper import verify_local_bear
 from coalib.misc.ContextManagers import prepare_file
@@ -20,12 +22,9 @@ var a = (function() {
 """.splitlines(keepends=True)
 
 
-config_file = """
-{
-  "lastsemic": true,
-  "maxlen": 80
-}
-""".splitlines(keepends=True)
+jshintconfig = os.path.join(os.path.dirname(__file__),
+                            "test_files",
+                            "jshintconfig.json")
 
 
 settings = {
@@ -44,15 +43,11 @@ JSHintBearTest = verify_local_bear(JSHintBear,
                                                   test_file3))
 
 
-with prepare_file(config_file,
-                  filename=None,
-                  force_linebreaks=True,
-                  create_tempfile=True) as (conf_lines, conf_file):
-    JSHintBearConfigFileTest = verify_local_bear(
-        JSHintBear,
-        valid_files=(test_file1, test_file2),
-        invalid_files=(),
-        settings={"jshint_config": conf_file})
+JSHintBearConfigFileTest = verify_local_bear(
+    JSHintBear,
+    valid_files=(test_file1,),
+    invalid_files=(test_file2,),
+    settings={"jshint_config": jshintconfig})
 
 
 JSHintBearCoafileTest = verify_local_bear(
