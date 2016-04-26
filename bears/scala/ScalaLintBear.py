@@ -22,7 +22,7 @@ class ScalaLintBear:
     e.g. cyclomatic complexity.
     """
 
-    LANGUAGES = ("Scala",)
+    LANGUAGES = "Scala"
 
     @staticmethod
     def create_arguments(filename, file, config_file,

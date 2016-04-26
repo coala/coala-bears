@@ -23,7 +23,7 @@ class CheckstyleBear:
     <http://checkstyle.sourceforge.net/checks.html>.
     """
 
-    LANGUAGES = ("Java",)
+    LANGUAGES = "Java"
 
     @staticmethod
     def create_arguments(filename, file, config_file):

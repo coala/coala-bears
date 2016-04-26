@@ -17,7 +17,7 @@ class LuaLintBear:
     Read more at <https://github.com/mpeterv/luacheck>.
     """
 
-    LANGUAGES = ("Lua",)
+    LANGUAGES = "Lua"
 
     @staticmethod
     def create_arguments(filename, file, config_file):
