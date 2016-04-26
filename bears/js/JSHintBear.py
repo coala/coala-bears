@@ -45,7 +45,6 @@ class JSHintBear:
                         prohibit_type_coercion: bool=True,
                         future_hostile: bool=False,
                         prohibit_typeof: bool=False,
-                        es3: bool=False,
                         force_filter_forin: bool=True,
                         allow_funcscope: bool=False,
                         iterator: bool=False,
@@ -124,9 +123,6 @@ class JSHintBear:
         :param prohibit_typeof:
             This option suppresses warnings about invalid ``typeof`` operator
             values.
-        :param es3:
-            This option tells JSHint that your code needs to adhere to
-            ECMAScript 3 specification.
         :param force_filter_forin:
             This option requires all ``for in`` loops to filter object's items.
         :param iterator:
@@ -297,7 +293,6 @@ class JSHintBear:
                        "eqeqeq": prohibit_type_coercion,
                        "futurehostile": future_hostile,
                        "notypeof": prohibit_typeof,
-                       "es3": es3,
                        "forin": force_filter_forin,
                        "funcscope": allow_funcscope,
                        "iterator": iterator,
