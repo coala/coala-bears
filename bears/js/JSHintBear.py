@@ -31,6 +31,8 @@ class JSHintBear:
     separately.
     """
 
+    LANGUAGES = "JavaScript"
+
     @staticmethod
     def generate_config(filename, file,
                         prohibit_bitwise: bool=True,
