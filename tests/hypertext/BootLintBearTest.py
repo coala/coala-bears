@@ -1,4 +1,4 @@
-from bears.html.BootLintBear import BootLintBear
+from bears.hypertext.BootLintBear import BootLintBear
 from tests.LocalBearTestHelper import verify_local_bear
 
 
