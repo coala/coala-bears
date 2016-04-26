@@ -23,7 +23,9 @@ def convert_if_not_empty(value: str, conversion):
 @linter(executable='coffeelint')
 class CoffeeLintBear:
     """
-    Coffeelint's your files!
+    Check CoffeeScript code for a clean and consistent style.
+
+    For more information about coffeelint, visit <http://www.coffeelint.org/>.
     """
 
     LANGUAGES = "CoffeeScript"
