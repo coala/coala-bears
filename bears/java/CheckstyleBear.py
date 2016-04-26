@@ -1,10 +1,22 @@
-from os.path import abspath, dirname, join
+import os
 
 from coalib.bearlib.abstractions.Linter import linter
+from coalib.settings.Setting import path
 
 
-checkstyle_jar_file = join(dirname(abspath(__file__)), 'checkstyle.jar')
-google_checks = join(dirname(abspath(__file__)), 'google_checks.xml')
+DIR_PATH = os.path.dirname(os.path.abspath(__file__))
+
+checkstyle_jar_file = os.path.join(DIR_PATH, 'checkstyle.jar')
+
+known_checkstyles = {
+    "google": os.path.join(DIR_PATH, 'google_checks.xml')}
+
+
+def known_checkstyle_or_path(setting):
+    if str(setting) in known_checkstyles.keys():
+        return str(setting)
+    else:
+        return path(setting)
 
 
 @linter(executable='java',
@@ -25,6 +37,18 @@ class CheckstyleBear:
 
     LANGUAGES = "Java"
 
-    @staticmethod
-    def create_arguments(filename, file, config_file):
-        return '-jar', checkstyle_jar_file, '-c', google_checks, filename
+    def create_arguments(
+            self, filename, file, config_file,
+            checkstyle_configs: known_checkstyle_or_path="google"):
+        """
+        :param checkstyle_configs:
+            A file containing configs to use in ``checkstyle``. It can also
+            have the special values:
+
+            - google - To follow Google's Java configurations. More info at
+              <http://checkstyle.sourceforge.net/style_configs.html>.
+        """
+        checkstyle_configs = known_checkstyles.get(checkstyle_configs,
+                                                   checkstyle_configs)
+
+        return ('-jar', checkstyle_jar_file, '-c', checkstyle_configs, filename)
