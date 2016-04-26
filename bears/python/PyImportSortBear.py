@@ -20,7 +20,12 @@ class PyImportSortBear(LocalBear):
             sort_imports_by_length: bool=False,
             isort_multi_line_output: int=4):
         """
-        Sorts imports for python.
+        Raise issues related to sorting imports, segregating imports into
+        various sections, and also adding comments on top of each import
+        section based on the configurations provided.
+
+        You can read more about ``isort`` at
+        <https://isort.readthedocs.org/en/latest/>.
 
         :param use_spaces:
             True if spaces are to be used instead of tabs.
