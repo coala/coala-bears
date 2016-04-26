@@ -12,7 +12,7 @@ class CSharpLintBear:
     Checks C# code for syntactical correctness using the ``mcs`` compiler.
     """
 
-    LANGUAGES = ("C#",)
+    LANGUAGES = "C#"
 
     @staticmethod
     def create_arguments(filename, file, config_file):

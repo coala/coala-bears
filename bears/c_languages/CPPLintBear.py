@@ -14,7 +14,7 @@ class CPPLintBear:
     For more information, consult <https://github.com/theandrewdavis/cpplint>.
     """
 
-    LANGUAGES = ("C++",)
+    LANGUAGES = "C++"
 
     @staticmethod
     def create_arguments(filename, file, config_file,

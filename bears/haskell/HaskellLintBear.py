@@ -16,7 +16,7 @@ class HaskellLintBear:
     information.
     """
 
-    LANGUAGES = ("Haskell",)
+    LANGUAGES = "Haskell"
 
     severity_map = {"Error": RESULT_SEVERITY.MAJOR,
                     "Warning": RESULT_SEVERITY.NORMAL,

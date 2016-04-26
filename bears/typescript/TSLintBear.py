@@ -15,7 +15,7 @@ class TSLintBear:
     <https://github.com/palantir/tslint#core-rules>.
     """
 
-    LANGUAGES = ("TypeScript",)
+    LANGUAGES = "TypeScript"
 
     @staticmethod
     def create_arguments(filename, file, config_file,

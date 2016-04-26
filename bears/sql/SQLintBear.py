@@ -12,7 +12,7 @@ class SQLintBear:
     <https://github.com/purcell/sqlint> for more detailed information.
     """
 
-    LANGUAGES = ("SQL",)
+    LANGUAGES = "SQL"
 
     @staticmethod
     def create_arguments(filename, file, config_file):
