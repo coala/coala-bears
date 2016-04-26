@@ -26,6 +26,8 @@ class CoffeeLintBear:
     Coffeelint's your files!
     """
 
+    LANGUAGES = "CoffeeScript"
+
     severity_map = {'warn': RESULT_SEVERITY.NORMAL,
                     'error': RESULT_SEVERITY.MAJOR}
 
