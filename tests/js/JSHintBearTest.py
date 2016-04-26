@@ -28,13 +28,13 @@ jshintconfig = os.path.join(os.path.dirname(__file__),
 
 
 settings = {
-  "maxstatements": "False",
-  "maxparams": 10,
-  "prohibit_unused": "False",
-  "shadow": "False",
-  "allow_last_semicolon": "True",
-  "es_version": 3,
-  "allow_latedef": "no_func"}
+    "maxstatements": "False",
+    "maxparams": 10,
+    "prohibit_unused": "False",
+    "shadow": "False",
+    "allow_last_semicolon": "True",
+    "es_version": 3,
+    "allow_latedef": "no_func"}
 
 
 JSHintBearTest = verify_local_bear(JSHintBear,
