@@ -1,4 +1,4 @@
-from bears.html.HTMLLintBear import HTMLLintBear
+from bears.hypertext.HTMLLintBear import HTMLLintBear
 from tests.LocalBearTestHelper import verify_local_bear
 
 test_file = """
