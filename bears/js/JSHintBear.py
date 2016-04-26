@@ -1,9 +1,6 @@
-import re
 import json
 
-from coalib.bearlib.abstractions.Lint import Lint
-from coalib.bears.LocalBear import LocalBear
-from coalib.misc.Shell import escape_path_argument
+from coalib.bearlib.abstractions.Linter import linter
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
@@ -21,95 +18,89 @@ def bool_or_int(value):
         return int(value)
 
 
-class JSHintBear(LocalBear, Lint):
-    executable = 'jshint'
-    output_regex = re.compile(
-        r'.+?: line (?P<line>\d+), col (?P<col>\d+), '
-        r'(?P<message>.+) \((?P<severity>\S)\d+\)')
-    severity_map = {
-        "E": RESULT_SEVERITY.MAJOR,
-        "W": RESULT_SEVERITY.NORMAL,
-        "I": RESULT_SEVERITY.NORMAL}
+@linter(executable='jshint',
+        output_format='regex',
+        output_regex=r'.+?: line (?P<line>\d+), col (?P<column>\d+), '
+                     r'(?P<message>.+) \((?P<severity>[EWI])\d+\)',
+        severity_map={'E': RESULT_SEVERITY.MAJOR,
+                      'W': RESULT_SEVERITY.NORMAL,
+                      'I': RESULT_SEVERITY.INFO})
+class JSHintBear:
+    """
+    Checks the code with jshint. This will run jshint over each file
+    separately.
+    """
 
-    def config_file(self):
-        if self.config_options is None:
-            return None
-        return self.config_options.splitlines()
-
-    def run(self,
-            filename,
-            file,
-            prohibit_bitwise: bool=True,
-            prohibit_prototype_overwrite: bool=True,
-            force_braces: bool=True,
-            prohibit_type_coercion: bool=True,
-            future_hostile: bool=False,
-            prohibit_typeof: bool=False,
-            es3: bool=False,
-            force_filter_forin: bool=True,
-            allow_funcscope: bool=False,
-            iterator: bool=False,
-            prohibit_arg: bool=True,
-            prohibit_comma: bool=False,
-            prohibit_non_breaking_whitespace: bool=True,
-            prohibit_new: bool=False,
-            prohibit_undefined: bool=True,
-            prohibit_groups: bool=False,
-            prohibit_variable_statements: bool=False,
-            allow_missing_semicol: bool=False,
-            allow_debugger: bool=False,
-            allow_assignment_comparisions: bool=False,
-            allow_eval: bool=False,
-            allow_global_strict: bool=False,
-            allow_increment: bool=False,
-            allow_proto: bool=False,
-            allow_scripturls: bool=False,
-            allow_singleton: bool=False,
-            allow_this_stmt: bool=False,
-            allow_with_stmt: bool=False,
-            using_mozilla: bool=False,
-            allow_noyield: bool=False,
-            allow_eqnull: bool=False,
-            allow_last_semicolon: bool=False,
-            allow_func_in_loop: bool=False,
-            allow_expr_in_assignments: bool=False,
-            use_es6_syntax: bool=False,
-            use_es3_array: bool=False,
-            environment_mootools: bool=False,
-            environment_couch: bool=False,
-            environment_jasmine: bool=False,
-            environment_jquery: bool=False,
-            environment_node: bool=False,
-            environment_qunit: bool=False,
-            environment_rhino: bool=False,
-            environment_shelljs: bool=False,
-            environment_prototypejs: bool=False,
-            environment_yui: bool=False,
-            environment_mocha: bool=True,
-            environment_module: bool=False,
-            environment_wsh: bool=False,
-            environment_worker: bool=False,
-            environment_nonstandard: bool=False,
-            environment_browser: bool=True,
-            environment_browserify: bool=False,
-            environment_devel: bool=True,
-            environment_dojo: bool=False,
-            environment_typed: bool=False,
-            environment_phantom: bool=False,
-            maxerr: int=50,
-            maxstatements: bool_or_int=False,
-            maxdepth: bool_or_int=False,
-            maxparams: bool_or_int=False,
-            maxcomplexity: bool_or_int=False,
-            shadow: bool_or_str=False,
-            prohibit_unused: bool_or_str=True,
-            allow_latedef: bool_or_str=False,
-            es_version: int=5,
-            jshint_config: str=""):
-        '''
-        Checks the code with jshint. This will run jshint over each file
-        separately.
-
+    @staticmethod
+    def generate_config(filename, file,
+                        prohibit_bitwise: bool=True,
+                        prohibit_prototype_overwrite: bool=True,
+                        force_braces: bool=True,
+                        prohibit_type_coercion: bool=True,
+                        future_hostile: bool=False,
+                        prohibit_typeof: bool=False,
+                        es3: bool=False,
+                        force_filter_forin: bool=True,
+                        allow_funcscope: bool=False,
+                        iterator: bool=False,
+                        prohibit_arg: bool=True,
+                        prohibit_comma: bool=False,
+                        prohibit_non_breaking_whitespace: bool=True,
+                        prohibit_new: bool=False,
+                        prohibit_undefined: bool=True,
+                        prohibit_groups: bool=False,
+                        prohibit_variable_statements: bool=False,
+                        allow_missing_semicol: bool=False,
+                        allow_debugger: bool=False,
+                        allow_assignment_comparisions: bool=False,
+                        allow_eval: bool=False,
+                        allow_global_strict: bool=False,
+                        allow_increment: bool=False,
+                        allow_proto: bool=False,
+                        allow_scripturls: bool=False,
+                        allow_singleton: bool=False,
+                        allow_this_stmt: bool=False,
+                        allow_with_stmt: bool=False,
+                        using_mozilla: bool=False,
+                        allow_noyield: bool=False,
+                        allow_eqnull: bool=False,
+                        allow_last_semicolon: bool=False,
+                        allow_func_in_loop: bool=False,
+                        allow_expr_in_assignments: bool=False,
+                        use_es6_syntax: bool=False,
+                        use_es3_array: bool=False,
+                        environment_mootools: bool=False,
+                        environment_couch: bool=False,
+                        environment_jasmine: bool=False,
+                        environment_jquery: bool=False,
+                        environment_node: bool=False,
+                        environment_qunit: bool=False,
+                        environment_rhino: bool=False,
+                        environment_shelljs: bool=False,
+                        environment_prototypejs: bool=False,
+                        environment_yui: bool=False,
+                        environment_mocha: bool=True,
+                        environment_module: bool=False,
+                        environment_wsh: bool=False,
+                        environment_worker: bool=False,
+                        environment_nonstandard: bool=False,
+                        environment_browser: bool=True,
+                        environment_browserify: bool=False,
+                        environment_devel: bool=True,
+                        environment_dojo: bool=False,
+                        environment_typed: bool=False,
+                        environment_phantom: bool=False,
+                        maxerr: int=50,
+                        maxstatements: bool_or_int=False,
+                        maxdepth: bool_or_int=False,
+                        maxparams: bool_or_int=False,
+                        maxcomplexity: bool_or_int=False,
+                        shadow: bool_or_str=False,
+                        prohibit_unused: bool_or_str=True,
+                        allow_latedef: bool_or_str=False,
+                        es_version: int=5,
+                        jshint_config: str=""):
+        """
         :param prohibit_bitwise:
             This option prohibits the use of bitwise operators.
         :param prohibit_prototype_overwrite:
@@ -292,83 +283,90 @@ class JSHintBear(LocalBear, Lint):
         :param es_version:
             This option is used to specify the ECMAScript version to which the
             code must adhere to.
-        '''
-        self.arguments = '--verbose {filename}'
+        """
+        if not jshint_config:
+            options = {"bitwise": prohibit_bitwise,
+                       "freeze": prohibit_prototype_overwrite,
+                       "curly": force_braces,
+                       "eqeqeq": prohibit_type_coercion,
+                       "futurehostile": future_hostile,
+                       "notypeof": prohibit_typeof,
+                       "es3": es3,
+                       "forin": force_filter_forin,
+                       "funcscope": allow_funcscope,
+                       "iterator": iterator,
+                       "noarg": prohibit_arg,
+                       "nocomma": prohibit_comma,
+                       "nonbsp": prohibit_non_breaking_whitespace,
+                       "nonew": prohibit_new,
+                       "undef": prohibit_undefined,
+                       "singleGroups": prohibit_groups,
+                       "varstmt": prohibit_variable_statements,
+                       "asi": allow_missing_semicol,
+                       "debug": allow_debugger,
+                       "boss": allow_assignment_comparisions,
+                       "evil": allow_eval,
+                       "globalstrict": allow_global_strict,
+                       "plusplus": allow_increment,
+                       "proto": allow_proto,
+                       "scripturl": allow_scripturls,
+                       "supernew": allow_singleton,
+                       "validthis": allow_this_stmt,
+                       "withstmt": allow_with_stmt,
+                       "moz": using_mozilla,
+                       "noyield": allow_noyield,
+                       "eqnull": allow_eqnull,
+                       "lastsemic": allow_last_semicolon,
+                       "loopfunc": allow_func_in_loop,
+                       "expr": allow_expr_in_assignments,
+                       "esnext": use_es6_syntax,
+                       "elision": use_es3_array,
+                       "mootools": environment_mootools,
+                       "couch": environment_couch,
+                       "jasmine": environment_jasmine,
+                       "jquery": environment_jquery,
+                       "node": environment_node,
+                       "qunit": environment_qunit,
+                       "rhino": environment_rhino,
+                       "shelljs": environment_shelljs,
+                       "prototypejs": environment_prototypejs,
+                       "yui": environment_yui,
+                       "mocha": environment_mocha,
+                       "module": environment_module,
+                       "wsh": environment_wsh,
+                       "worker": environment_worker,
+                       "nonstandard": environment_nonstandard,
+                       "browser": environment_browser,
+                       "browserify": environment_browserify,
+                       "devel": environment_devel,
+                       "dojo": environment_dojo,
+                       "typed": environment_typed,
+                       "phantom": environment_phantom,
+                       "maxerr": maxerr,
+                       "maxcomplexity": maxcomplexity,
+                       "maxdepth": maxdepth,
+                       "maxparams": maxparams,
+                       "maxstatements": maxstatements,
+                       "shadow": shadow,
+                       "unused": prohibit_unused,
+                       "latedef": allow_latedef,
+                       "esversion": es_version}
 
-        if jshint_config:
-            self.config_options = None
-            self.arguments += (" --config "
-                               + escape_path_argument(jshint_config))
+            return json.dumps(options)
         else:
-            options = {
-                "bitwise": prohibit_bitwise,
-                "freeze": prohibit_prototype_overwrite,
-                "curly": force_braces,
-                "eqeqeq": prohibit_type_coercion,
-                "futurehostile": future_hostile,
-                "notypeof": prohibit_typeof,
-                "es3": es3,
-                "forin": force_filter_forin,
-                "funcscope": allow_funcscope,
-                "iterator": iterator,
-                "noarg": prohibit_arg,
-                "nocomma": prohibit_comma,
-                "nonbsp": prohibit_non_breaking_whitespace,
-                "nonew": prohibit_new,
-                "undef": prohibit_undefined,
-                "singleGroups": prohibit_groups,
-                "varstmt": prohibit_variable_statements,
-                "asi": allow_missing_semicol,
-                "debug": allow_debugger,
-                "boss": allow_assignment_comparisions,
-                "evil": allow_eval,
-                "globalstrict": allow_global_strict,
-                "plusplus": allow_increment,
-                "proto": allow_proto,
-                "scripturl": allow_scripturls,
-                "supernew": allow_singleton,
-                "validthis": allow_this_stmt,
-                "withstmt": allow_with_stmt,
-                "moz": using_mozilla,
-                "noyield": allow_noyield,
-                "eqnull": allow_eqnull,
-                "lastsemic": allow_last_semicolon,
-                "loopfunc": allow_func_in_loop,
-                "expr": allow_expr_in_assignments,
-                "esnext": use_es6_syntax,
-                "elision": use_es3_array,
-                "mootools": environment_mootools,
-                "couch": environment_couch,
-                "jasmine": environment_jasmine,
-                "jquery": environment_jquery,
-                "node": environment_node,
-                "qunit": environment_qunit,
-                "rhino": environment_rhino,
-                "shelljs": environment_shelljs,
-                "prototypejs": environment_prototypejs,
-                "yui": environment_yui,
-                "mocha": environment_mocha,
-                "module": environment_module,
-                "wsh": environment_wsh,
-                "worker": environment_worker,
-                "nonstandard": environment_nonstandard,
-                "browser": environment_browser,
-                "browserify": environment_browserify,
-                "devel": environment_devel,
-                "dojo": environment_dojo,
-                "typed": environment_typed,
-                "phantom": environment_phantom,
-                "maxerr": maxerr,
-                "maxcomplexity": maxcomplexity,
-                "maxdepth": maxdepth,
-                "maxparams": maxparams,
-                "maxstatements": maxstatements,
-                "shadow": shadow,
-                "unused": prohibit_unused,
-                "latedef": allow_latedef,
-                "esversion": es_version}
+            return None
 
-            self.config_options = json.dumps(options)
-            self.arguments += " --config {config_file}"
-
-        return self.lint(filename)
+    @staticmethod
+    def create_arguments(filename, file, config_file, jshint_config: str=""):
+        """
+        :param jshint_config:
+            The location of the jshintrc config file. If this option is present
+            all the above options are not used. Instead the .jshintrc file is
+            used as the configuration file.
+        """
+        args = ('--verbose', filename, '--config')
+        if jshint_config:
+            args += (jshint_config,)
+        else:
+            args += (config_file,)
+        return args
