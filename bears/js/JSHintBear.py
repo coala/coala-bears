@@ -27,8 +27,12 @@ def bool_or_int(value):
                       'I': RESULT_SEVERITY.INFO})
 class JSHintBear:
     """
-    Checks the code with jshint. This will run jshint over each file
-    separately.
+    Detect errors and potential problems in JavaScript code and to enforce
+    appropriate coding conventions. For example, problems like syntax errors,
+    bugs due to implicit type conversion, leaking variables and much more
+    can be detected.
+
+    For more information on the analysis visit <http://jshint.com/>
     """
 
     LANGUAGES = "JavaScript"
