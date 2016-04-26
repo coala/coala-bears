@@ -20,19 +20,19 @@ class PyImportSortBear(LocalBear):
         """
         Sorts imports for python.
 
-        :param use_spaces:                True if spaces are to be used
-                                          instead of tabs.
-        :param tab_width:                 Number of spaces per indent level.
-        :param max_line_length:           Maximum number of characters for
-                                          a line.
-        :param use_parentheses_in_import: True if parenthesis are to be used
-                                          in import statements.
-        :param sort_imports_by_length:    Set to true to sort imports by length
-                                          instead of alphabetically.
-        :param isort_multi_line_output:   The type of formatting to be used by
-                                          isort when indenting imports. This
-                                          value if passed to isort as the
-                                          `multi_line_output` setting.
+        :param use_spaces:
+            True if spaces are to be used instead of tabs.
+        :param tab_width:
+            Number of spaces per indent level.
+        :param max_line_length:
+            Maximum number of characters for a line.
+        :param use_parentheses_in_import:
+            True if parenthesis are to be used in import statements.
+        :param sort_imports_by_length:
+            Set to true to sort imports by length instead of alphabetically.
+        :param isort_multi_line_output:
+            The type of formatting to be used by isort when indenting imports.
+            This value if passed to isort as the `multi_line_output` setting.
         """
         indent = "Tab" if use_spaces == False else tab_width
         new_file = tuple(SortImports(
