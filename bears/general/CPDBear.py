@@ -75,8 +75,8 @@ class CPDBear(GlobalBear):
                      "--files", files,
                      "--format", "xml")
 
-        for option in options:
-            if options[option] is True:
+        for option, enable in options.items():
+            if enable is True:
                 arguments += option,
 
         stdout_output, _ = run_shell_command(" ".join(map(str, arguments)))
@@ -91,7 +91,7 @@ class CPDBear(GlobalBear):
                 for file in duplication.findall('file'):
                     filename = file.attrib['path']
                     start_line = int(file.attrib['line'])
-                    end_line = start_line + length
+                    end_line = start_line + length - 1
 
                     affected_code.append(
                         SourceRange.from_values(filename,
