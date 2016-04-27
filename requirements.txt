@@ -26,3 +26,4 @@ vim-vint~=0.3.6
 # Stable version 3.2 is problematic in Windows.
 # Use >=3.3 once nltk-3.3 is released. 
 nltk~=3.1.0
+appdirs~=1.4.0
