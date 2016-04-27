@@ -6,6 +6,9 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
 class CSSLintBear(LocalBear, Lint):
+
+    LANGUAGES = "CSS"
+
     executable = 'csslint'
     arguments = '--format=compact {filename}'
     output_regex = re.compile(
@@ -17,7 +20,8 @@ class CSSLintBear(LocalBear, Lint):
         "Warning": RESULT_SEVERITY.NORMAL}
 
     def run(self, filename, file):
-        '''
-        Checks the code with `csslint`.
-        '''
+        """
+        Check code for syntactical or semantical problems that might lead to
+        problems or inefficiencies.
+        """
         return self.lint(filename)
