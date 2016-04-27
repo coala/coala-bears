@@ -139,6 +139,15 @@ class GitCommitBearTest(unittest.TestCase):
         self.assertEqual(self.run_uut(shortlog_trailing_period=False), [])
         self.assertEqual(self.run_uut(shortlog_trailing_period=None), [])
 
+    def test_shortlog_wip_check(self):
+        self.git_commit("[wip] Shortlog")
+        self.assertEqual(self.run_uut(shortlog_wip_check=False), [])
+        self.assertEqual(self.run_uut(shortlog_wip_check=True),
+                         ["This commit seems to be marked as work in "
+                             "progress and should not be used in production. "
+                             "Tread carefully."])
+        self.assertEqual(self.run_uut(shortlog_wip_check=None), [])
+
     def test_shortlog_checks_imperative(self):
         self.git_commit("tag: Add shortlog in imperative")
         self.assertNotIn("Shortlog of HEAD commit isn't imperative mood, "
