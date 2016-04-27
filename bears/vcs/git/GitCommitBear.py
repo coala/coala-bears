@@ -7,6 +7,7 @@ from coalib.bears.GlobalBear import GlobalBear
 from coalib.misc.ContextManagers import change_directory
 from coalib.misc.Shell import run_shell_command
 from coalib.results.Result import Result
+from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
 class GitCommitBear(GlobalBear):
@@ -25,7 +26,8 @@ class GitCommitBear(GlobalBear):
             allow_empty_commit_message: bool=False,
             shortlog_regex: str="",
             shortlog_trailing_period: bool=None,
-            shortlog_imperative_check: bool=True):
+            shortlog_imperative_check: bool=True,
+            shortlog_wip_check: bool=False):
         """
         Check the current git commit message at HEAD.
 
@@ -54,6 +56,9 @@ class GitCommitBear(GlobalBear):
         :param shortlog_imperative_check:
             Whether an imperative check shall be applied to shortlog and
             providing ``False`` would prohibit the check.
+        :param shortlog_wip_check:
+            Whether a wip in the shortlog should yield a major result
+            or not.
         """
         with change_directory(self.get_config_dir() or os.getcwd()):
             stdout, stderr = run_shell_command("git log -1 --pretty=%B")
@@ -73,6 +78,7 @@ class GitCommitBear(GlobalBear):
                                        shortlog_regex,
                                        shortlog_trailing_period,
                                        shortlog_imperative_check,
+                                       shortlog_wip_check,
                                        stdout[0])
         yield from self.check_body(body_line_length, force_body, stdout[1:])
 
@@ -81,6 +87,7 @@ class GitCommitBear(GlobalBear):
                        regex,
                        shortlog_trailing_period,
                        shortlog_imperative_check,
+                       shortlog_wip_check,
                        shortlog):
         """
         Checks the given shortlog.
@@ -92,6 +99,8 @@ class GitCommitBear(GlobalBear):
         :param shortlog_trailing_period: Whether a dot shall be enforced at end
                                          end or not (or ``None`` for "don't
                                          care").
+        :param shortlog_wip_check:       Whether a wip in the shortlog should
+                                         yield a major result or not.
         :param shortlog:                 The shortlog message string.
         """
         diff = len(shortlog) - shortlog_length
@@ -126,6 +135,12 @@ class GitCommitBear(GlobalBear):
                 yield Result(self,
                              "Shortlog of HEAD commit isn't imperative mood, "
                              "bad words are '{}'".format(bad_word))
+        if shortlog_wip_check:
+            if "wip" in shortlog.lower()[:4]:
+                yield Result(self,
+                             "This commit seems to be marked as work in "
+                             "progress and should not be used in production. "
+                             "Tread carefully.", severity=RESULT_SEVERITY.MAJOR)
 
     def check_imperative(self, paragraph):
         """
