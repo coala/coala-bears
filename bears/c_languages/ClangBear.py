@@ -22,11 +22,15 @@ def clang_available(cls):
 
 
 class ClangBear(LocalBear):
+    LANGUAGES = 'C', 'C++', 'Objective C', 'Objective C++'
+
     check_prerequisites = classmethod(clang_available)
 
     def run(self, filename, file, clang_cli_options: typed_list(str)=None):
         """
-        Runs Clang over the given files and raises/fixes any upcoming issues.
+        Check code for syntactical or semantical problems using Clang.
+
+        This bear supports automatic fixes.
 
         :param clang_cli_options: Any options that will be passed through to
                                   Clang.
