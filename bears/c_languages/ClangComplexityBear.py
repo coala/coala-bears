@@ -3,7 +3,7 @@ from clang.cindex import Index, CursorKind
 from coalib.bears.LocalBear import LocalBear
 from coalib.results.Result import Result
 from coalib.results.SourceRange import SourceRange
-from bears.c_languages.ClangBear import clang_available
+from bears.c_languages.ClangBear import clang_available, ClangBear
 
 
 class ClangComplexityBear(LocalBear):
@@ -11,6 +11,9 @@ class ClangComplexityBear(LocalBear):
     Calculates cyclomatic complexity of each function and displays it to the
     user.
     """
+
+    LANGUAGES = ClangBear.LANGUAGES
+
     check_prerequisites = classmethod(clang_available)
     decisive_cursor_kinds = {
         CursorKind.IF_STMT, CursorKind.WHILE_STMT, CursorKind.FOR_STMT,
@@ -68,7 +71,11 @@ class ClangComplexityBear(LocalBear):
 
     def run(self, filename, file, max_complexity: int=8):
         """
-        Calculates cyclomatic complexity of functions in file.
+        Check for all functions if they are too complicated using the cyclomatic
+        complexity metric.
+
+        You can read more about this metric at
+        <https://www.wikiwand.com/en/Cyclomatic_complexity>.
 
         :param max_complexity:  Maximum cyclomatic complexity that is
                                 considered to be normal. The value of 10 had
