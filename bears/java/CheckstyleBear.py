@@ -13,7 +13,11 @@ DIR_PATH = os.path.dirname(os.path.abspath(__file__))
 checkstyle_jar_file = os.path.join(DIR_PATH, 'checkstyle.jar')
 
 known_checkstyles = {
-    "google": "https://raw.githubusercontent.com/checkstyle/checkstyle/master/src/main/resources/google_checks.xml"}
+    "google": "https://raw.githubusercontent.com/checkstyle/checkstyle/master/src/main/resources/google_checks.xml",
+    "sun": 'https://raw.githubusercontent.com/checkstyle/checkstyle/master/src/main/resources/sun_checks.xml',
+    "android-check-easy": "https://raw.githubusercontent.com/noveogroup/android-check/master/android-check-plugin/src/main/resources/checkstyle/checkstyle-easy.xml",
+    "android-check-hard": "https://raw.githubusercontent.com/noveogroup/android-check/master/android-check-plugin/src/main/resources/checkstyle/checkstyle-hard.xml",
+    "geosoft": "http://geosoft.no/development/geosoft_checks.xml"}
 
 
 def known_checkstyle_or_path(setting):
@@ -49,8 +53,19 @@ class CheckstyleBear:
             A file containing configs to use in ``checkstyle``. It can also
             have the special values:
 
-            - google - To follow Google's Java configurations. More info at
+            - google - Google's Java style. More info at
               <http://checkstyle.sourceforge.net/style_configs.html>.
+            - sun - Sun's Java style. These are the same
+              as the default Eclipse checks. More info at
+              <http://checkstyle.sourceforge.net/style_configs.html>.
+            - android-check-easy - The easy Android configs provided by the
+              android-check eclipse plugin. More info at
+              <https://github.com/noveogroup/android-check>.
+            - android-check-hard - The hard Android confis provided by the
+              android-check eclipse plugin. More info at
+              <https://github.com/noveogroup/android-check>.
+            - geosoft - The Java style followed by GeoSoft. More info at
+              <http://geosoft.no/development/javastyle.html>
         """
         checkstyle_configs = self.known_configs(checkstyle_configs)
 
