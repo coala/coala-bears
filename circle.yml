@@ -10,12 +10,14 @@ dependencies:
     - ~/.cabal
     - ~/infer-linux64-v0.7.0
     - ~/nltk_data
+    - ~/pmd-bin-5.4.1
   pre:
     - echo 'export PATH=$PATH:~/coala-bears/node_modules/.bin' >> ~/.circlerc
     - echo 'export LINTR_COMMENT_BOT=false' >> ~/.circlerc
     - echo 'export PATH=$PATH:~/dart-sdk/bin' >> ~/.circlerc
     - echo 'export PATH=$PATH:~/.cabal/bin' >> ~/.circlerc
     - echo 'export PATH=$PATH:~/infer-linux64-v0.7.0/infer/bin' >> ~/.circlerc
+    - echo 'export PATH=$PATH:~/pmd-bin-5.4.1/bin' >> ~/.circlerc
     - sed -i '/source \/home\/ubuntu\/virtualenvs\//d' ~/.circlerc
     - nvm alias default node
   override:
