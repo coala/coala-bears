@@ -28,11 +28,11 @@ class CPDBear(GlobalBear):
             ignore_literals: bool=False, ignore_usings: bool=False,
             skip_duplicate_files: bool=True):
         """
-        Checks duplicate code with ``CPD``.
-        CPD offers support for:
-        - C++, C#, Objective C
-        - Java, JavaScript, JSP
-        - Python, Ruby, Go, PHP, Scala, Fortran
+        Checks for similar code that looks as it could be replaced to reduce
+        redundancy.
+
+        For more details see:
+        <https://pmd.github.io/pmd-5.4.1/usage/cpd-usage.html>
 
         :param language:
             One of "cpp", "cs", "js", "f", "go", "jsp", "m", "php", "py",
@@ -63,11 +63,11 @@ class CPDBear(GlobalBear):
             "py": "python",
             "rb": "ruby",
             "scala": "scala",
-            "java": "java"
-        }
+            "java": "java"}
+
         if language not in language_args:  # pragma: no cover
-            self.err("This bear does not support files with the extension '{"
-                     "}'.".format(language))
+            self.err("This bear does not support files with the extension "
+                     "'{}'.".format(language))
             return
 
         options = {
@@ -75,21 +75,20 @@ class CPDBear(GlobalBear):
             "--ignore-identifiers": ignore_identifiers,
             "--ignore-literals": ignore_literals,
             "--ignore-usings": ignore_usings,
-            "--skip-duplicate-files": skip_duplicate_files,
-        }
+            "--skip-duplicate-files": skip_duplicate_files}
 
         files = ",".join(self.file_dict.keys())
         arguments = ("bash", which("run.sh"), "cpd", "--skip-lexical-errors",
-                     "--minimum-tokens", minimum_tokens,
+                     "--minimum-tokens", str(minimum_tokens),
                      "--language", language_args[language],
                      "--files", files,
                      "--format", "xml")
 
-        for option, enable in options.items():
-            if enable is True:
-                arguments += option,
+        arguments += tuple(option
+                           for option, enable in options.items()
+                           if enable is True)
 
-        stdout_output, _ = run_shell_command(" ".join(map(str, arguments)))
+        stdout_output, _ = run_shell_command(arguments)
 
         if stdout_output:
             root = ET.fromstring(stdout_output)
@@ -108,4 +107,11 @@ class CPDBear(GlobalBear):
                                                 start_line=start_line,
                                                 end_line=end_line))
 
-                yield Result(self, "Duplicate code found.", affected_code)
+                yield Result(
+                    self, "Duplicate code found.", affected_code,
+                    additional_info=(
+                        "Duplicate code is an indicator "
+                        "that you have more code than you need. Consider"
+                        " refactor your code to remove one of the"
+                        " occurrences. For more information go here:"
+                        "http://tinyurl.com/coala-clone"))
