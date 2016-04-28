@@ -130,7 +130,7 @@ class GitCommitBear(GlobalBear):
                 yield Result(self,
                              "This commit seems to be marked as work in "
                              "progress and should not be used in production. "
-                             "Tread carefully.", severity=RESULT_SEVERITY.MAJOR)
+                             "Treat carefully.", severity=RESULT_SEVERITY.MAJOR)
 
     def check_imperative(self, paragraph):
         """
