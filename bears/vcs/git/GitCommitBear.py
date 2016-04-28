@@ -8,6 +8,7 @@ from coalib.misc.ContextManagers import change_directory
 from coalib.misc.Shell import run_shell_command
 from coalib.results.Result import Result
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
+from coalib.settings.FunctionMetadata import FunctionMetadata
 
 
 class GitCommitBear(GlobalBear):
@@ -20,46 +21,36 @@ class GitCommitBear(GlobalBear):
         else:
             return True
 
-    def run(self,
-            shortlog_length: int=50,
-            body_line_length: int=72,
-            force_body: bool=False,
-            allow_empty_commit_message: bool=False,
-            shortlog_regex: str="",
-            shortlog_trailing_period: bool=None,
-            shortlog_imperative_check: bool=True,
-            shortlog_wip_check: bool=False):
+    @classmethod
+    def get_shortlog_checks_metadata(cls):
+        return FunctionMetadata.from_function(
+            cls.check_shortlog,
+            omit={"self", "shortlog"})
+
+    @classmethod
+    def get_body_checks_metadata(cls):
+        return FunctionMetadata.from_function(
+            cls.check_body,
+            omit={"self", "body"})
+
+    @classmethod
+    def get_metadata(cls):
+        return FunctionMetadata.merge(
+            FunctionMetadata.from_function(
+                cls.run,
+                omit={"self", "dependency_results"}),
+            cls.get_shortlog_checks_metadata(),
+            cls.get_body_checks_metadata())
+
+    def run(self, allow_empty_commit_message: bool = False, **kwargs):
         """
         Check the current git commit message at HEAD.
 
-        This bear ensures that the shortlog and body do not exceed a given
-        line-length and that a newline lies between them.
+        This bear ensures automatically that the shortlog and body do not
+        exceed a given line-length and that a newline lies between them.
 
-        :param shortlog_length:            The maximum length of the shortlog.
-                                           The shortlog is the first line of
-                                           the commit message. The newline
-                                           character at end does not count to
-                                           the length.
-        :param body_line_length:           The maximum line-length of the body.
-                                           The newline character at each line
-                                           end does not count to the length.
-        :param force_body:                 Whether a body shall exist or not.
         :param allow_empty_commit_message: Whether empty commit messages are
                                            allowed or not.
-        :param shortlog_regex:             A regex to check the shortlog with.
-                                           A full match of this regex is then
-                                           required. Passing an empty string
-                                           disable the regex-check.
-        :param shortlog_trailing_period:   Whether a dot shall be enforced at
-                                           the end of the shortlog line.
-                                           Providing ``None`` means
-                                           "doesn't care".
-        :param shortlog_imperative_check:
-            Whether an imperative check shall be applied to shortlog and
-            providing ``False`` would prohibit the check.
-        :param shortlog_wip_check:
-            Whether a wip in the shortlog should yield a major result
-            or not.
         """
         with change_directory(self.get_config_dir() or os.getcwd()):
             stdout, stderr = run_shell_command("git log -1 --pretty=%B")
@@ -75,24 +66,23 @@ class GitCommitBear(GlobalBear):
                 yield Result(self, "HEAD commit has no message.")
             return
 
-        yield from self.check_shortlog(shortlog_length,
-                                       shortlog_regex,
-                                       shortlog_trailing_period,
-                                       shortlog_imperative_check,
-                                       shortlog_wip_check,
-                                       stdout[0])
-        yield from self.check_body(body_line_length, force_body, stdout[1:])
+        yield from self.check_shortlog(
+            stdout[0],
+            **self.get_shortlog_checks_metadata().filter_parameters(kwargs))
+        yield from self.check_body(
+            stdout[1:],
+            **self.get_body_checks_metadata().filter_parameters(kwargs))
 
-    def check_shortlog(self,
-                       shortlog_length,
-                       regex,
-                       shortlog_trailing_period,
-                       shortlog_imperative_check,
-                       shortlog_wip_check,
-                       shortlog):
+    def check_shortlog(self, shortlog,
+                       shortlog_length: int=50,
+                       shortlog_regex: str="",
+                       shortlog_trailing_period: bool=None,
+                       shortlog_imperative_check: bool=True,
+                       shortlog_wip_check: bool=True):
         """
         Checks the given shortlog.
 
+        :param shortlog:                 The shortlog message string.
         :param shortlog_length:          The maximum length of the shortlog.
                                          The newline character at end does not
                                          count to the length.
@@ -102,7 +92,6 @@ class GitCommitBear(GlobalBear):
                                          care").
         :param shortlog_wip_check:       Whether a wip in the shortlog should
                                          yield a major result or not.
-        :param shortlog:                 The shortlog message string.
         """
         diff = len(shortlog) - shortlog_length
         if diff > 0:
@@ -117,8 +106,8 @@ class GitCommitBear(GlobalBear):
                          if shortlog_trailing_period else
                          "Shortlog of HEAD commit contains a period at end.")
 
-        if regex != "":
-            match = re.match(regex, shortlog)
+        if shortlog_regex:
+            match = re.match(shortlog_regex, shortlog)
             # fullmatch() inside re-module exists sadly since 3.4, but we
             # support 3.3 so we need to check that the regex matched completely
             # ourselves.
@@ -172,15 +161,17 @@ class GitCommitBear(GlobalBear):
                      " maxent_treebank_pos_tagger averaged_perceptron_tagger`")
             return
 
-    def check_body(self, body_line_length, force_body, body):
+    def check_body(self, body,
+                   body_line_length: int=72,
+                   force_body: bool=False):
         """
         Checks the given commit body.
 
+        :param body:             The commit body splitted by lines.
         :param body_line_length: The maximum line-length of the body. The
                                  newline character at each line end does not
                                  count to the length.
         :param force_body:       Whether a body shall exist or not.
-        :param body:             The commit body splitted by lines.
         """
         if len(body) == 0:
             if force_body:
