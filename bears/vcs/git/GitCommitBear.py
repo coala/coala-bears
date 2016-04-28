@@ -127,10 +127,10 @@ class GitCommitBear(GlobalBear):
                              "bad words are '{}'".format(bad_word))
         if shortlog_wip_check:
             if "wip" in shortlog.lower()[:4]:
-                yield Result(self,
-                             "This commit seems to be marked as work in "
-                             "progress and should not be used in production. "
-                             "Treat carefully.", severity=RESULT_SEVERITY.MAJOR)
+                yield Result(
+                    self,
+                    "This commit seems to be marked as work in progress and "
+                    "should not be used in production. Treat carefully.")
 
     def check_imperative(self, paragraph):
         """
