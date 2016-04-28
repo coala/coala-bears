@@ -13,6 +13,7 @@ class LatexLintBear(LocalBear, Lint):
     severity_map = {'Warning': RESULT_SEVERITY.NORMAL,
                     'Error': RESULT_SEVERITY.MAJOR}
     arguments = "{filename}"
+    LANGUAGES = "Tex"
 
     def run(self, filename, file):
         '''

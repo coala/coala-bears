@@ -9,6 +9,7 @@ from coalib.results.Result import Result
 
 class InvalidLinkBear(LocalBear):
     DEFAULT_TIMEOUT = 2
+    LANGUAGES = "All"
 
     @classmethod
     def check_prerequisites(cls):

@@ -7,6 +7,7 @@ from coalib.bears.LocalBear import LocalBear
 class PyCommentedCodeBear(Lint, LocalBear):
     gives_corrected = True
     diff_message = "This file contains commented out source code."
+    LANGUAGES = ("Python", "Python 2", "Python 3")
 
     def lint(self, filename, file):
         output = list(eradicate.filter_commented_out_code(''.join(file)))

@@ -7,6 +7,7 @@ from coalib.bears.LocalBear import LocalBear
 class PyUnusedCodeBear(Lint, LocalBear):
     diff_message = "This file contains unused source code."
     gives_corrected = True
+    LANGUAGES = ("Python", "Python 2", "Python 3")
 
     def lint(self, filename, file):
         output = autoflake.fix_code(''.join(file)).splitlines(True)

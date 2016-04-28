@@ -10,6 +10,7 @@ class FormatRBear(Lint, LocalBear):
     prerequisite_fail_msg = "Please install formatR for this bear to work."
     diff_message = "Formatting can be improved."
     gives_corrected = True
+    LANGUAGES = "R"
 
     def process_output(self, output, filename, file):
         output = output[:-1] + (output[-1].strip()+"\n",)

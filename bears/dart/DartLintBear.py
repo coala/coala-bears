@@ -14,6 +14,7 @@ class DartLintBear(LocalBear, Lint):
     severity_map = {
         "error": RESULT_SEVERITY.MAJOR,
         "warning": RESULT_SEVERITY.NORMAL}
+    LANGUAGES = "Dart"
 
     def run(self, filename, file):
         '''

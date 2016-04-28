@@ -16,6 +16,7 @@ class JSONFormatBear(Lint, LocalBear):
     diff_message = ("This file can be reformatted by sorting keys and "
                     "following indentation.")
     gives_corrected = True
+    LANGUAGES = "JSON"
 
     def lint(self, filename, file, **kwargs):
         try:

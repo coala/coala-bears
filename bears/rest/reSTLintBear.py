@@ -6,6 +6,7 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
 class reSTLintBear(LocalBear):
+    LANGUAGES = "reStructuredText"
 
     def run(self, filename, file):
         """

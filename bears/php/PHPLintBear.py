@@ -14,6 +14,7 @@ class PHPLintBear(LocalBear, Lint):
     severity_map = {
         "Parse": RESULT_SEVERITY.MAJOR,
         "Fatal": RESULT_SEVERITY.MAJOR}
+    LANGUAGES = "PHP"
 
     def run(self, filename, file):
         '''

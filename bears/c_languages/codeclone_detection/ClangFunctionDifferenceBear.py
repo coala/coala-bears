@@ -1,7 +1,7 @@
 import functools
 from itertools import combinations
 
-from bears.c_languages.ClangBear import clang_available
+from bears.c_languages.ClangBear import clang_available, ClangBear
 from bears.c_languages.codeclone_detection.ClangCountingConditions import (
     condition_dict)
 from bears.c_languages.codeclone_detection.ClangCountVectorCreator import (
@@ -82,6 +82,7 @@ def get_difference(function_pair,
 
 class ClangFunctionDifferenceBear(GlobalBear):
     check_prerequisites = classmethod(clang_available)
+    LANGUAGES = ClangBear.LANGUAGES
 
     def run(self,
             counting_conditions: counting_condition_dict=default_cc_dict,

@@ -7,6 +7,7 @@ class GoReturnsBear(Lint, LocalBear):
     diff_message = "Imports or returns need to be added/removed."
     use_stdin = True
     gives_corrected = True
+    LANGUAGES = "Go"
 
     def run(self, filename, file):
         """

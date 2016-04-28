@@ -9,6 +9,7 @@ class ProseLintBear(LocalBear, Lint):
     output_regex = re.compile(
         r'.+?:(?P<line>\d+):(?P<column>\d+): (?P<code>\S*) (?P<message>.+)')
     arguments = "{filename}"
+    LANGUAGES = "Natural Language"
 
     def run(self, filename, file):
         '''
