@@ -81,6 +81,17 @@ class GitCommitBearTest(unittest.TestCase):
         finally:
             shutil.which = _shutil_which
 
+    def test_get_metadata(self):
+        metadata = GitCommitBear.get_metadata()
+        self.assertEqual(
+            metadata.name,
+            "<Merged signature of 'run', 'check_shortlog', 'check_body'>")
+
+        # Test if at least one parameter of each signature is used.
+        self.assertIn("allow_empty_commit_message", metadata.optional_params)
+        self.assertIn("shortlog_length", metadata.optional_params)
+        self.assertIn("body_line_length", metadata.optional_params)
+
     def test_git_failure(self):
         # In this case use a reference to a non-existing commit, so just try
         # to log all commits on a newly created repository.
