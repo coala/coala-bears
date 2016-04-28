@@ -1,11 +1,12 @@
 from clang.cindex import Index, TranslationUnit
 
-from bears.c_languages.ClangBear import clang_available
+from bears.c_languages.ClangBear import clang_available, ClangBear
 from coalib.bears.GlobalBear import GlobalBear
 
 
 class ClangASTPrintBear(GlobalBear):
     check_prerequisites = classmethod(clang_available)
+    LANGUAGES = ClangBear.LANGUAGES
 
     def print_node(self, cursor, filename, before="", spec_before=""):
         '''

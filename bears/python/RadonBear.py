@@ -9,6 +9,7 @@ from coalib.settings.Setting import typed_list
 
 
 class RadonBear(LocalBear):
+    LANGUAGES = ("Python", "Python 2", "Python 3")
 
     def run(self, filename, file,
             radon_ranks_info: typed_list(str)=(),

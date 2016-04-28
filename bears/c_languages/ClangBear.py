@@ -22,7 +22,8 @@ def clang_available(cls):
 
 
 class ClangBear(LocalBear):
-    LANGUAGES = 'C', 'C++', 'Objective C', 'Objective C++'
+    LANGUAGES = ("C", "C++", "Objective-C", "Objective-C++", "OpenMP",
+                 "OpenCL", "CUDA")
 
     check_prerequisites = classmethod(clang_available)
 

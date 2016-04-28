@@ -17,6 +17,7 @@ class PerlCriticBear(LocalBear, Lint):
         "3": RESULT_SEVERITY.NORMAL,
         "4": RESULT_SEVERITY.NORMAL,
         "5": RESULT_SEVERITY.INFO}
+    LANGUAGES = "Perl"
 
     def run(self,
             filename,

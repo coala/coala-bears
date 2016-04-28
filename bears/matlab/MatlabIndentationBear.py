@@ -7,6 +7,7 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
 class MatlabIndentationBear(LocalBear):
+    LANGUAGES = ("Matlab", "Octave")
 
     def run(self, filename, file, tab_width: int=2):
         """

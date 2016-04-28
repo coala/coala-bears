@@ -7,6 +7,7 @@ from coalib.settings.Setting import typed_list
 
 
 class LineLengthBear(LocalBear):
+    LANGUAGES = "All"
 
     def run(self,
             filename,

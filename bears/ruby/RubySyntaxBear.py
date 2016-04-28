@@ -16,6 +16,7 @@ class RubySyntaxBear(LocalBear, Lint):
     severity_map = {
         "warning": RESULT_SEVERITY.NORMAL,
         "error": RESULT_SEVERITY.MAJOR}
+    LANGUAGES = "Ruby"
 
     def run(self, filename, file):
         '''

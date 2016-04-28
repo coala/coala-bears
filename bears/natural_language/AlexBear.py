@@ -11,6 +11,7 @@ class AlexBear(LocalBear, Lint):
         r'(?P<end_line>\d+):(?P<end_column>\d+)'
         r'\s+(?:(?P<warning>warning))\s+(?P<message>.+)')
     arguments = "{filename}"
+    LANGUAGES = "Natural Language"
 
     def run(self, filename, file):
         '''

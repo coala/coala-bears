@@ -10,6 +10,7 @@ class GoTypeBear(LocalBear, Lint):
     use_stderr = True
     output_regex = re.compile(
         r'(?P<file_name>.*):(?P<line>\d+):(?P<column>\d+):\s*(?P<message>.*)')
+    LANGUAGES = "Go"
 
     def run(self, filename, file):
         '''

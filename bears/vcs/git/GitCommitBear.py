@@ -11,6 +11,7 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
 class GitCommitBear(GlobalBear):
+    LANGUAGES = "Git"
 
     @classmethod
     def check_prerequisites(cls):

@@ -11,6 +11,7 @@ from coalib.settings.Setting import typed_list
 
 
 class LanguageToolBear(LocalBear):
+    LANGUAGES = "Natural Language"
 
     @classmethod
     def check_prerequisites(cls):

@@ -15,6 +15,7 @@ class RLintBear(LocalBear, Lint):
         "style": RESULT_SEVERITY.NORMAL,
         "warning": RESULT_SEVERITY.NORMAL,
         "error": RESULT_SEVERITY.MAJOR}
+    LANGUAGES = "R"
 
     prerequisite_command = ["Rscript", "-e", "library(lintr)"]
     prerequisite_fail_msg = 'R library "lintr" is not installed.'

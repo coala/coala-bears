@@ -9,6 +9,7 @@ from coalib.settings.Setting import typed_list
 class PEP8Bear(Lint, LocalBear):
     diff_message = "The code does not comply to PEP8."
     gives_corrected = True
+    LANGUAGES = ("Python", "Python 2", "Python 3")
 
     def lint(self, filename, file, apply_config, **kwargs):
         new_file = autopep8.fix_code(''.join(file), options=kwargs,

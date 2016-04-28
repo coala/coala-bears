@@ -20,6 +20,7 @@ class BootLintBear:
     For more about the analysis, check Bootlint
     <https://github.com/twbs/bootlint#bootlint>.
     """
+    LANGUAGES = "HTML"
 
     @staticmethod
     def create_arguments(filename, file, config_file,

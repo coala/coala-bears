@@ -19,6 +19,7 @@ class PyLintBear(LocalBear, Lint):
         "C": RESULT_SEVERITY.INFO,
         "R": RESULT_SEVERITY.INFO,
         "I": RESULT_SEVERITY.INFO}
+    LANGUAGES = ("Python", "Python 2", "Python 3")
 
     def run(self,
             filename,

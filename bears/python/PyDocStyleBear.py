@@ -7,6 +7,7 @@ class PyDocStyleBear(LocalBear, Lint):
     executable = 'pydocstyle'
     output_regex = r'(.*\.py):(?P<line>\d+) (.+):\n\s+(?P<message>.*)'
     use_stderr = True
+    LANGUAGES = ("Python", "Python 2", "Python 3")
 
     def run(self,
             filename,

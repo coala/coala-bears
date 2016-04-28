@@ -7,6 +7,7 @@ from coalib.results.Result import Result
 
 class JSComplexityBear(LocalBear, Lint):
     executable = "cr"
+    LANGUAGES = "Javascript"
 
     def process_output(self, output, filename, file):
         message = "{} has a cyclomatic complexity of {}."

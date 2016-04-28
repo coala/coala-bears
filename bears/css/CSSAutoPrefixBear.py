@@ -9,6 +9,7 @@ class CSSAutoPrefixBear(Lint, LocalBear):
     prerequisite_fail_msg = "Autoprefixer is not installed."
     diff_message = "Add vendor prefixes to CSS rules."
     gives_corrected = True
+    LANGUAGES = "CSS"
 
     def run(self, filename, file):
         '''

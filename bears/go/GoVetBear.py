@@ -16,6 +16,7 @@ class GoVetBear:
     This is done using the ``vet`` command. For more information visit
     <https://golang.org/cmd/vet/>.
     """
+    LANGUAGES = "Go"
 
     @staticmethod
     def create_arguments(filename, file, config_file):
