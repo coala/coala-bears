@@ -1,22 +1,16 @@
-import re
-
-from coalib.bearlib.abstractions.Lint import Lint
-from coalib.bears.LocalBear import LocalBear
-from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
+from coalib.bearlib.abstractions.Linter import linter
 
 
-class LatexLintBear(LocalBear, Lint):
-    executable = 'chktex'
-    output_regex = re.compile(r'(?P<severity>Error|Warning) (?P<num>[0-9]+)'
-                              r' in (?P<file_name>\S+) line (?P<line>[0-9]+)'
-                              r': (?P<message>.*)')
-    severity_map = {'Warning': RESULT_SEVERITY.NORMAL,
-                    'Error': RESULT_SEVERITY.MAJOR}
-    arguments = "{filename}"
+@linter(executable='chktex',
+        output_format='regex',
+        output_regex=r'(?P<severity>Error|Warning) \d+ in .+ line '
+                     r'(?P<line>\d+): (?P<message>.*)')
+class LatexLintBear:
+    """
+    Checks the code with ``chktex``.
+    """
     LANGUAGES = "Tex"
 
-    def run(self, filename, file):
-        '''
-        Checks the code with `chktex`.
-        '''
-        return self.lint(filename)
+    @staticmethod
+    def create_arguments(filename, file, config_file):
+        return filename,
