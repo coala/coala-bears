@@ -1,6 +1,7 @@
 from bears.js.JSONFormatBear import JSONFormatBear
 from tests.LocalBearTestHelper import verify_local_bear
 
+
 test_file1 = """{
     "a": 5,
     "b": 5
@@ -11,6 +12,7 @@ test_file2 = """{
     "b": 5,
     "a": 5
 }""".splitlines(keepends=True)
+
 
 test_file3 = """{
    "b": 5,
