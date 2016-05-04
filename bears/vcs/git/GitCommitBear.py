@@ -90,8 +90,8 @@ class GitCommitBear(GlobalBear):
         :param shortlog_trailing_period: Whether a dot shall be enforced at end
                                          end or not (or ``None`` for "don't
                                          care").
-        :param shortlog_wip_check:       Whether a wip in the shortlog should
-                                         yield a major result or not.
+        :param shortlog_wip_check:       Whether a "WIP" in the shortlog text
+                                         should yield a result or not.
         """
         diff = len(shortlog) - shortlog_length
         if diff > 0:
