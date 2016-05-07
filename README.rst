@@ -24,7 +24,7 @@ About
 
 coala-bears is a Python package containing all the bears that are officially
 supported by coala. It features more than **65 bears** covering **35 languages**.
-You can see all of them `here <https://github.com/coala-analyzer/coala/wiki/Bears>`_.
+You can see all of them `here <https://github.com/coala-analyzer/coala-bears/wiki/Available-bears>`_.
 
 +----------------------------+----------------------------+----------------------------+
 |                        Languages coala provides algorithms for                       |
