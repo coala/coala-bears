@@ -23,23 +23,42 @@ About
 -----
 
 coala-bears is a Python package containing all the bears that are officially
-supported by coala. It features more than **65 bears** covering **32 languages**.
+supported by coala. It features more than **65 bears** covering **35 languages**.
 You can see all of them `here <https://github.com/coala-analyzer/coala/wiki/Bears>`_.
 
-The list of supported languages includes such famous languages, as:
-
-- C++
-- Go
-- Haskell
-- HTML
-- Java
-- JavaScript
-- Natural Language (English)
-- Python
-- R
-- Ruby
-
-For the full list of supported languages, `visit our wiki <https://github.com/coala-analyzer/coala-bears/wiki/Supported-languages>`__.
++----------------------------+----------------------------+----------------------------+
+|                        Languages coala provides algorithms for                       |
++============================+============================+============================+
+| C++                        | Lua                        | TypeScript                 |
++----------------------------+----------------------------+----------------------------+
+| C#                         | Markdown                   | VHDL                       |
++----------------------------+----------------------------+----------------------------+
+| CMake                      | Matlab/Octave              | Vimscript                  |
++----------------------------+----------------------------+----------------------------+
+| CoffeeScript               | Natural Language (English) | XML                        |
++----------------------------+----------------------------+----------------------------+
+| CSS                        | Perl                       | YAML                       |
++----------------------------+----------------------------+----------------------------+
+| Dart                       | PHP                        |                            |
++----------------------------+----------------------------+----------------------------+
+| Fortran                    | Python 2                   |                            |
++----------------------------+----------------------------+----------------------------+
+| Go                         | Python 3                   |                            |
++----------------------------+----------------------------+----------------------------+
+| Haskell                    | R                          |                            |
++----------------------------+----------------------------+----------------------------+
+| HTML                       | reStructured Text          |                            |
++----------------------------+----------------------------+----------------------------+
+| Java                       | Ruby                       |                            |
++----------------------------+----------------------------+----------------------------+
+| JavaScript                 | Scala                      |                            |
++----------------------------+----------------------------+----------------------------+
+| JSP                        | SCSS                       |                            |
++----------------------------+----------------------------+----------------------------+
+| Julia                      | sh & bash scripts          |                            |
++----------------------------+----------------------------+----------------------------+
+| Latex                      | SQL                        |                            |
++----------------------------+----------------------------+----------------------------+
 
 The number of bears grows every day! If you want to see any particular
 functionality be sure to submit an issue, but please read the `GETTING INVOLVED`_
