@@ -49,11 +49,11 @@ class ESLintBear:
                 diffs = {filename: Diff.from_string_arrays(
                     lines.splitlines(True), new_output.splitlines(True))}
 
+            origin = (
+                "{class_name} ({rule})".format(class_name=type(self).__name__,
+                                               rule=result['ruleId'])
+                if result['ruleId'] is not None else self)
             yield Result.from_values(
-                origin="{class_name} ({rule})".format(
-                    class_name=type(self).__name__, rule=result['ruleId']),
-                message=result['message'],
-                file=filename,
-                diffs=diffs,
-                severity=self.severity_map[result['severity']],
-                line=result['line'])
+                origin=origin, message=result['message'],
+                file=filename, line=result['line'], diffs=diffs,
+                severity=self.severity_map[result['severity']])
