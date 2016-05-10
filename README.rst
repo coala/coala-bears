@@ -121,9 +121,14 @@ If you want to contribute to coala-bears, please take a look at the `Getting
 Involved Information
 <http://coala.readthedocs.org/en/latest/Getting_Involved/README.html>`__.
 
-We appreciate any help!
+We appreciate any help! Join us on one of:
 
-|https://gitter.im/coala-analyzer/coala|
+- `gitter <https://gitter.im/coala-analyzer/coala/>`
+- `#coala at freenode <webchat.freenode.net/?channels=coala>`
+- `Telegram <https://telegram.me/joinchat/AuL-lwKZ8JLFZiI6SbtQVw>`
+
+(All channels are linked with gitter. Approach @sils1297 if the link doesn't
+work properly.)
 
 Project Status
 --------------
