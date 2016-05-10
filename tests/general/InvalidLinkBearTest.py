@@ -93,6 +93,7 @@ class InvalidLinkBearTest(unittest.TestCase):
         valid_file = """
             [coala](http://coala-analyzer.org/200)
             https://en.wikipedia.org/wiki/Hello_(Adele_song)/200
+            "https://github.com/coala-analyzer/coala-bears/issues/200"
         """.splitlines()
         invalid_file = """
             http://coalaisthebest.com/
