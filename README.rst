@@ -89,10 +89,20 @@ in this case.
 Usage
 -----
 
+Basic analysis:
+
 ::
 
     echo "print('Hi!') " >> hw.py
     coala --files hw.py --bears SpaceConsistencyBear
+
+Finding out what analysis routines exist:
+
+::
+
+    coala -l JavaScript  # Shows bears for JS
+    coala -A  # Shows all bears
+    coala -B -b SpaceConsistencyBear  # Shows full bear documentation
 
 If you want to learn more about **coala-bears**, its functionality and its usage,
 please take a look at our
