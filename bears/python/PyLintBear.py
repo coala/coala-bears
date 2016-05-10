@@ -10,7 +10,7 @@ from coalib.settings.Setting import typed_list
 
 class PyLintBear(LocalBear, Lint):
     executable = 'pylint'
-    output_regex = re.compile(r'(?P<line>\d+)\.(?P<column>\d+): '
+    output_regex = re.compile(r'L(?P<line>\d+)C(?P<column>\d+): '
                               r'(?P<message>(?P<severity>[WFECRI]).*)')
     severity_map = {
         "F": RESULT_SEVERITY.MAJOR,
@@ -41,7 +41,7 @@ class PyLintBear(LocalBear, Lint):
         :param pylint_rcfile:      The rcfile for PyLint.
         '''
         self.arguments = ('--reports=n --persistent=n '
-                          '--msg-template="{{line}}.{{column}}: '
+                          '--msg-template="L{{line}}C{{column}}: '
                           '{{msg_id}} - {{msg}}"')
         if pylint_disable:
             self.arguments += " --disable=" + ",".join(pylint_disable)
