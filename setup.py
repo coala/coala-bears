@@ -93,7 +93,7 @@ if __name__ == "__main__":
                             'makman@alice.de'),
           url='http://coala.rtfd.org/',
           platforms='any',
-          packages=find_packages(exclude=["build.*", "*.tests.*", "*.tests"]),
+          packages=find_packages(exclude=("build.*", "tests", "tests.*")),
           install_requires=required,
           tests_require=test_required,
           package_data={'bears': ["VERSION"],
