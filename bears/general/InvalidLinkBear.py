@@ -30,7 +30,7 @@ class InvalidLinkBear(LocalBear):
     @staticmethod
     def find_links_in_file(file, timeout):
         regex = re.compile(
-            r'((ftp|http)s?:\/\/\S+\.(?:[^\s\(\)\'\>\|]+|'
+            r'((ftp|http)s?:\/\/\S+\.(?:[^\s\(\)\'\"\>\|]+|'
             r'\([^\s\(\)]*\))*)(?<!\.)(?<!\,)')
         for line_number, line in enumerate(file):
             match = regex.search(line)
