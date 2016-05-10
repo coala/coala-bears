@@ -1,16 +1,16 @@
 {
   "dependencies": {
-    "alex": "~2.0.1",
-    "autoprefixer": "~6.3.4", 
-    "bootlint": "~0.14.2",
-    "coffeelint": "~1.14.2",
+    "alex": "~2",
+    "autoprefixer": "~6",
+    "bootlint": "~0",
+    "coffeelint": "~1",
     "complexity-report": "~2.0.0-alpha",
-    "csslint": "~0.10.0",
-    "dockerfile_lint": "~0.0.9",
-    "eslint": "~2.3.0",
-    "jshint": "~2.9.1",
-    "postcss-cli": "~2.5.1",
-    "remark": "~3.2.3",
-    "tslint": "~3.5.0"
+    "csslint": "~0",
+    "dockerfile_lint": "~0",
+    "eslint": "~2",
+    "jshint": "~2",
+    "postcss-cli": "~2",
+    "remark": "~3",
+    "tslint": "~3"
   }
 }
