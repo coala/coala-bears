@@ -89,6 +89,11 @@ in this case.
 Usage
 -----
 
+::
+
+    echo "print('Hi!') " >> hw.py
+    coala --files hw.py --bears SpaceConsistencyBear
+
 If you want to learn more about **coala-bears**, its functionality and its usage,
 please take a look at our
 `tutorial <http://coala.readthedocs.org/en/latest/Users/Tutorials/Tutorial.html>`__.
