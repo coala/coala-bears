@@ -23,7 +23,7 @@ class CPDBear(GlobalBear):
         else:
             return True
 
-    def run(self, language: str, minimum_tokens: int=10,
+    def run(self, language: str, minimum_tokens: int=20,
             ignore_annotations: bool=False, ignore_identifiers: bool=True,
             ignore_literals: bool=False, ignore_usings: bool=False,
             skip_duplicate_files: bool=True):
