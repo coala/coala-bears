@@ -24,6 +24,8 @@ test_bad = """function addOne(i) {
 };
 """.splitlines(True)
 
+test_syntax_error = ('{<!@3@^ yeah!/\n',)
+
 eslintconfig = os.path.join(os.path.dirname(__file__),
                             "test_files",
                             "eslintconfig.json")
@@ -36,4 +38,4 @@ ESLintBearTestWithConfig = verify_local_bear(ESLintBear,
 
 ESLintBearWithoutConfig = verify_local_bear(ESLintBear,
                                             valid_files=(test_good, test_bad),
-                                            invalid_files=())
+                                            invalid_files=(test_syntax_error,))
