@@ -79,6 +79,11 @@ information about the installation and dependencies, take a look at our
 The latest code from master is automatically deployed to PyPI as a
 development version. Get it with ``pip3 install coala-bears --pre``.
 
+Be sure to use the latest pip, the default pip from Debian doesn't support our
+dependency version number specifiers. You will have to use a
+`virtualenv <https://github.com/coala-analyzer/coala/wiki/FAQ#installation-is-failing-help>`__
+in this case.
+
 |PyPI|
 
 Usage
