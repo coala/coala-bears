@@ -2,6 +2,10 @@
 
 ::
 
+.. image:: https://badges.gitter.im/coala-analyzer/coala-bears.svg
+   :alt: Join the chat at https://gitter.im/coala-analyzer/coala-bears
+   :target: https://gitter.im/coala-analyzer/coala-bears?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
+
                                                          .o88Oo._
                                                         d8P         .ooOO8bo._
                                                         88                  '*Y8bo.
