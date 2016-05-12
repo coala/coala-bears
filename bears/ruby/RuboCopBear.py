@@ -1,4 +1,5 @@
 import json
+import yaml
 
 from coalib.bearlib.abstractions.Linter import linter
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
@@ -21,10 +22,13 @@ class RuboCopBear:
                     "convention": RESULT_SEVERITY.INFO}
 
     @staticmethod
-    def create_arguments(filename, file, config_file):
+    def create_arguments(filename, file, config_file, rubocop_config: str=""):
         # Need both stdin and filename. Explained in this comment:
         # https://github.com/bbatsov/rubocop/pull/2146#issuecomment-131403694
-        return filename, '--stdin', '--format=json'
+        args = (filename, '--stdin', '--format=json')
+        if rubocop_config:
+            args += ('--config', rubocop_config)
+        return args
 
     def process_output(self, output, filename, file):
         output = json.loads(output)
