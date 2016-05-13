@@ -158,8 +158,6 @@ information.
    :target: https://circleci.com/gh/coala-analyzer/coala-bears
 .. |Windows Build status| image:: https://img.shields.io/appveyor/ci/coala/coala-bears/master.svg?label=windows%20build
    :target: https://ci.appveyor.com/project/coala/coala-bears/branch/master
-.. |OSX Build status| image:: https://img.shields.io/travis/coala-analyzer/coala-bears/master.svg?label=osx%20build
-   :target: https://travis-ci.org/coala-analyzer/coala-bears
 .. |Documentation Status| image:: https://readthedocs.org/projects/coala/badge/?version=latest
    :target: http://coala.rtfd.org/
 .. |codecov.io| image:: https://img.shields.io/codecov/c/github/coala-analyzer/coala-bears/master.svg?label=branch%20coverage
