@@ -10,8 +10,8 @@ from coalib.settings.Setting import typed_list
 
 class PyLintBear(LocalBear, Lint):
     executable = 'pylint'
-    output_regex = re.compile(r'L(?P<line>\d+)C(?P<column>\d+): '
-                              r'(?P<message>(?P<severity>[WFECRI]).*)')
+    output_regex = re.compile(r'L(?P<line>\d+)C(?P<column>\d+): (?P<message>'
+                              r'(?P<origin>(?P<severity>[WFECRI])\d+) - .*)')
     severity_map = {
         "F": RESULT_SEVERITY.MAJOR,
         "E": RESULT_SEVERITY.MAJOR,
