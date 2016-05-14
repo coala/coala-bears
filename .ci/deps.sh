@@ -95,3 +95,7 @@ if [ ! -e ~/pmd-bin-5.4.1/bin ]; then
 	wget -nc -O ~/pmd.zip https://github.com/pmd/pmd/releases/download/pmd_releases%2F5.4.1/pmd-bin-5.4.1.zip
 	unzip ~/pmd.zip -d ~/
 fi
+
+# Tailor (Swift) commands
+curl -fsSL https://tailor.sh/install.sh | sed 's/read -r CONTINUE < \/dev\/tty/CONTINUE=y/' > install.sh
+sudo bash install.sh

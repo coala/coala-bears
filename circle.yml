@@ -25,6 +25,10 @@ dependencies:
     - bash .ci/deps.shellcheck.sh
     - bash .ci/deps.sh
 
+machine:
+  java:
+    version: oraclejdk8
+
 test:
   override:
     - bash .ci/tests.sh:
