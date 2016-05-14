@@ -100,7 +100,7 @@ class CPDBear(GlobalBear):
                 for file in duplication.findall('file'):
                     filename = file.attrib['path']
                     start_line = int(file.attrib['line'])
-                    end_line = start_line + length - 1
+                    end_line = min(start_line + length - 1, len(file))
 
                     affected_code.append(
                         SourceRange.from_values(filename,
