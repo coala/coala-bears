@@ -58,7 +58,7 @@ done
 pip install appdirs
 git clone https://github.com/coala-analyzer/coala coala-manual-branch-inst
 cd coala-manual-branch-inst
-git checkout Makman2/linter-prequel
+git checkout Makman2/lintself
 pip install .
 cd ..
 
