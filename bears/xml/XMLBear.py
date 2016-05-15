@@ -1,8 +1,7 @@
 import itertools
 
-from coalib.bearlib.abstractions.Lint import Lint
+from coalib.bearlib.abstractions.Lint import Lint, escape_path_argument
 from coalib.bears.LocalBear import LocalBear
-from coalib.misc.Shell import escape_path_argument
 from coalib.settings.Setting import path, url
 
 
