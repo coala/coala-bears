@@ -75,10 +75,6 @@ with open("README.rst") as readme:
 
 
 if __name__ == "__main__":
-    download('http://sourceforge.net/projects/checkstyle/files/checkstyle/'
-             '6.15/checkstyle-6.15-all.jar',
-             'bears/java/checkstyle.jar')
-
     download('https://oss.sonatype.org/content/repositories/releases/org/'
              'scalastyle/scalastyle_2.10/0.8.0/scalastyle_2.10-0.8.0-batch.jar',
              'bears/scala/scalastyle.jar')

@@ -1,12 +1,6 @@
-import os
-
 from coalib.bearlib.abstractions.Linter import linter
 from coalib.settings.Setting import path
 
-
-DIR_PATH = os.path.dirname(os.path.abspath(__file__))
-
-checkstyle_jar_file = os.path.join(DIR_PATH, 'checkstyle.jar')
 
 known_checkstyles = {
     "google": "https://raw.githubusercontent.com/checkstyle/checkstyle/master/src/main/resources/google_checks.xml",
@@ -27,10 +21,7 @@ def known_checkstyle_or_path(setting):
         output_format='regex',
         output_regex=r'\[(?P<severity>WARN|INFO)\] *.+:'
                      r'(?P<line>\d+)(?::(?P<column>\d+))?: *'
-                     r'(?P<message>.*?) *\[(?P<origin>[a-zA-Z]+?)\]',
-        prerequisite_check_command=('java', '-jar', checkstyle_jar_file, '-v'),
-        prerequisite_check_fail_message='jar file ' + checkstyle_jar_file +
-                                        ' not found.')
+                     r'(?P<message>.*?) *\[(?P<origin>[a-zA-Z]+?)\]')
 class CheckstyleBear:
     """
     Check Java code for possible style, semantic and design issues.
@@ -40,6 +31,12 @@ class CheckstyleBear:
     """
 
     LANGUAGES = "Java"
+
+    def setup_dependencies(self):
+        type(self).checkstyle_jar_file = self.download_cached_file(
+            'http://sourceforge.net/projects/checkstyle/files/checkstyle/6.15'
+            '/checkstyle-6.15-all.jar',
+            "checkstyle.jar")
 
     def create_arguments(
             self, filename, file, config_file,
@@ -68,4 +65,5 @@ class CheckstyleBear:
                 known_checkstyles[checkstyle_configs],
                 checkstyle_configs + ".xml")
 
-        return '-jar', checkstyle_jar_file, '-c', checkstyle_configs, filename
+        return ('-jar', self.checkstyle_jar_file, '-c',
+                checkstyle_configs, filename)
