@@ -2,7 +2,7 @@ import os
 
 from bears.perl.PerlCriticBear import PerlCriticBear
 from tests.LocalBearTestHelper import verify_local_bear
-from coalib.misc.ContextManagers import prepare_file
+
 
 good_file = """
 #!/usr/bin/perl
