@@ -62,7 +62,7 @@ class ClangBear(LocalBear):
                     affected_code = diffs[filename].affected_code(filename)
 
             # Still no affected code? Position is the best we can get...
-            if len(affected_code) == 0:
+            if len(affected_code) == 0 and diag.location.file is not None:
                 affected_code = (SourceRange.from_values(
                     diag.location.file.name,
                     diag.location.line,
