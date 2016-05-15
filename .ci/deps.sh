@@ -15,7 +15,7 @@ sudo add-apt-repository -y ppa:staticfloat/juliareleases
 sudo add-apt-repository -y ppa:staticfloat/julia-deps
 sudo add-apt-repository -y ppa:avsm/ppa
 sudo apt-get -y update
-deps="espeak libclang1-3.4 indent mono-mcs chktex hlint r-base julia luarocks verilator cppcheck"
+deps="espeak libclang1-3.4 indent mono-mcs chktex hlint r-base julia luarocks verilator cppcheck flawfinder"
 deps_python_dbus="libdbus-glib-1-dev libdbus-1-dev"
 deps_python_gi="glib2.0-dev gobject-introspection libgirepository1.0-dev python3-cairo-dev"
 deps_perl="perl libperl-critic-perl"
