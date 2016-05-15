@@ -7,10 +7,7 @@ assert_supported_version()
 
 import locale
 import sys
-from os.path import exists
-from shutil import copyfileobj
 from subprocess import call
-from urllib.request import urlopen
 
 import setuptools.command.build_py
 from bears import Constants
@@ -21,26 +18,6 @@ try:
     locale.getlocale()
 except (ValueError, UnicodeError):
     locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
-
-
-def download(url, filename, overwrite=False):
-    """
-    Downloads the given URL to the given filename. If the file exists, it won't
-    be downloaded.
-
-    :param url:       A URL to download.
-    :param filename:  The file to store the downloaded file to.
-    :param overwrite: Set to True if the file should be downloaded even if it
-                      already exists.
-    :return:          The filename.
-    """
-    if not exists(filename) or overwrite:
-        print("Downloading", filename + "...")
-        with urlopen(url) as response, open(filename, 'wb') as out_file:
-            copyfileobj(response, out_file)
-        print("DONE.")
-
-    return filename
 
 
 class PyTestCommand(TestCommand):
@@ -75,10 +52,6 @@ with open("README.rst") as readme:
 
 
 if __name__ == "__main__":
-    download('https://oss.sonatype.org/content/repositories/releases/org/'
-             'scalastyle/scalastyle_2.10/0.8.0/scalastyle_2.10-0.8.0-batch.jar',
-             'bears/scala/scalastyle.jar')
-
     setup(name='coala-bears',
           version=Constants.VERSION,
           description='Bears for coala (Code Analysis Application)',
