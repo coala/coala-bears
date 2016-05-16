@@ -1,4 +1,4 @@
-from bears.yaml.YAMLLintBear import YAMLLintBear
+from bears.yml.YAMLLintBear import YAMLLintBear
 from coalib.misc.ContextManagers import prepare_file
 from tests.LocalBearTestHelper import verify_local_bear
 
