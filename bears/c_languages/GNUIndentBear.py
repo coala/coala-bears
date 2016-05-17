@@ -8,7 +8,7 @@ from coalib.bearlib.spacing.SpacingHelper import SpacingHelper
 @linter(executable="indent" if platform.system() != "Darwin" else "gindent",
         use_stdin=True,
         output_format='corrected',
-        diff_message="Indentation can be improved.")
+        result_message="Indentation can be improved.")
 class GNUIndentBear:
     """
     This bear checks and corrects spacing and indentation via the well known
