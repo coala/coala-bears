@@ -4,7 +4,7 @@ from coalib.bearlib.abstractions.Linter import linter
 @linter(executable='gofmt',
         use_stdin=True,
         output_format='corrected',
-        diff_message='Formatting can be improved.')
+        result_message='Formatting can be improved.')
 class GofmtBear:
     """
     Suggest better formatting options in Go code. Basic checks like alignment,

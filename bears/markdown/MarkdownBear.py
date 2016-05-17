@@ -6,7 +6,7 @@ from coalib.bearlib.abstractions.Linter import linter
 @linter(executable='remark',
         use_stdin=True,
         output_format='corrected',
-        diff_message='The text does not comply to the set style.')
+        result_message='The text does not comply to the set style.')
 class MarkdownBear:
     """
     Check and correct Markdown style violations automatically.
