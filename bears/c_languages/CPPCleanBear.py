@@ -2,6 +2,8 @@ from coalib.bearlib.abstractions.Linter import linter
 
 
 @linter(executable='cppclean',
+        executable_check_fail_info='Please see https://github.com/myint/cppclean#installation '
+                                   'for more information about this.',
         output_format='regex',
         output_regex=r'.+:(?P<line>\d+):(?P<message>.*)')
 class CPPCleanBear:
