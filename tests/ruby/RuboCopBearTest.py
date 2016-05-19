@@ -30,3 +30,28 @@ RuboCopBearConfigFileTest = verify_local_bear(
                                 valid_files=(bad_file,),
                                 invalid_files=(good_file,),
                                 settings={"rubocop_config": rubocop_config})
+
+# Testing settings
+another_good_file = """
+def goodindent
+ # 1 space indent
+end
+""".splitlines(keepends=True)
+
+another_bad_file = """
+def badindent
+  # 2 spaces indent
+end
+""".splitlines(keepends=False)
+
+RuboCopBearSettingsTest = verify_local_bear(
+                              RuboCopBear,
+                              valid_files=(another_good_file,),
+                              invalid_files=(another_bad_file,),
+                              settings={"indentation_width": 1})
+
+RuboCopBearSettingsTest = verify_local_bear(
+                              RuboCopBear,
+                              valid_files=(bad_file,),
+                              invalid_files=(good_file,),
+                              settings={"method_name_case": "camelCase"})
