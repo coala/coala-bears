@@ -133,7 +133,7 @@ work properly.)
 Project Status
 --------------
 
-|Linux Build Status| |Windows Build status| |OSX Build status|
+|Linux Build Status| |Windows Build status|
 
 |Documentation Status| |codecov.io|
 
