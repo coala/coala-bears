@@ -27,3 +27,4 @@ vim-vint~=0.3.6
 # Use >=3.3 once nltk-3.3 is released.
 nltk~=3.1.0
 appdirs~=1.4.0
+pyyaml~=3.11
