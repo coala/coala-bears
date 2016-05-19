@@ -19,8 +19,8 @@ def known_checkstyle_or_path(setting):
 
 @linter(executable='java',
         output_format='regex',
-        output_regex=r'\[(?P<severity>WARN|INFO)\] *.+:'
-                     r'(?P<line>\d+)(?::(?P<column>\d+))?: *'
+        output_regex=r'\[(?P<severity>WARN|INFO)\].*?'
+                     r'(?P<line>\d+):?(?P<column>\d+)?. '
                      r'(?P<message>.*?) *\[(?P<origin>[a-zA-Z]+?)\]')
 class CheckstyleBear:
     """
