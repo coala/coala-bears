@@ -11,6 +11,7 @@
     "jshint": "~2",
     "postcss-cli": "~2",
     "remark": "~3",
-    "tslint": "~3"
+    "tslint": "~3",
+    "ramllint": "~1.2.2"
   }
 }
