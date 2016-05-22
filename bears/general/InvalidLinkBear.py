@@ -33,7 +33,8 @@ class InvalidLinkBear(LocalBear):
             pass
 
     @staticmethod
-    def find_links_in_file(file, timeout):
+    def find_links_in_file(file, timeout, ignore_regex):
+        ignore_regex = re.compile(ignore_regex)
         regex = re.compile(
             r'((ftp|http)s?:\/\/\S+\.(?:[^\s\(\)\'\"\>\|]+|'
             r'\([^\s\(\)]*\))*)(?<!\.)(?<!\,)')
@@ -41,10 +42,13 @@ class InvalidLinkBear(LocalBear):
             match = regex.search(line)
             if match:
                 link = match.group()
-                code = InvalidLinkBear.get_status_code(link, timeout)
-                yield line_number + 1, link, code
+                if not ignore_regex.search(link):
+                    code = InvalidLinkBear.get_status_code(link, timeout)
+                    yield line_number + 1, link, code
 
-    def run(self, filename, file, timeout: int=DEFAULT_TIMEOUT):
+    def run(self, filename, file,
+            timeout: int=DEFAULT_TIMEOUT,
+            ignore_regex: str="[.\/]example\.com"):
         """
         Find links in any text file and check if they are valid.
 
@@ -53,10 +57,11 @@ class InvalidLinkBear(LocalBear):
         This bear can automatically fix redirects, but ignores redirect
         URLs that have a huge difference with the original URL.
 
-        :param timeout: Request timeout period.
+        :param timeout:      Request timeout period.
+        :param ignore_regex: A regex for urls to ignore.
         """
         for line_number, link, code in InvalidLinkBear.find_links_in_file(
-                file, timeout):
+                file, timeout, ignore_regex):
             if code is None:
                 yield Result.from_values(
                     origin=self,
