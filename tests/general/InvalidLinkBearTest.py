@@ -65,12 +65,15 @@ class InvalidLinkBearTest(unittest.TestCase):
         self.assertResult(invalid_file=invalid_file)
 
         # Invalid Link Not Found
+        valid_file = """
+        http://httpbin.org/status/401
+        """
         invalid_file = """
         http://httpbin.org/status/404
-        http://httpbin.org/status/401
+        http://httpbin.org/status/410
         """.splitlines()
 
-        self.assertResult(invalid_file=invalid_file)
+        self.assertResult(valid_file=valid_file, invalid_file=invalid_file)
 
         # Invalid Link ServerError
         invalid_file = """
