@@ -8,6 +8,10 @@ from coalib.settings.Section import Section
 
 
 def custom_matcher(request):
+    redirect_long_url = ("https://confluence.atlassian.com/bitbucket"
+                         "/use-the-bitbucket-cloud-rest-apis-222724129.html")
+    redirect_urls = ("https://bitbucket.org/api/301",
+                     "https://bitbucket.org/api/302")
     change_url = False
     # the connection check url needs to be explicitly
     # set to 200
@@ -20,7 +24,8 @@ def custom_matcher(request):
             raise requests.exceptions.RequestException
     if status_code in range(300, 400):
         change_url = True
-        url = "some_url"
+        url = (redirect_long_url if request.url in redirect_urls else
+               "http://httpbin.org/get")
     resp = requests.Response()
     if change_url:
         resp.url = url
@@ -122,3 +127,17 @@ class InvalidLinkBearTest(unittest.TestCase):
         with requests_mock.Mocker() as m:
             m.add_matcher(custom_matcher)
             self.assertTrue(InvalidLinkBear.check_prerequisites())
+
+    def test_redirect_threshold(self):
+
+        long_url_redirect = """
+        https://bitbucket.org/api/301
+        https://bitbucket.org/api/302
+        """.splitlines()
+
+        short_url_redirect = """
+        http://httpbin.org/status/301
+        """.splitlines()
+
+        self.assertResult(valid_file=long_url_redirect,
+                          invalid_file=short_url_redirect)

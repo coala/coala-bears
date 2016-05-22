@@ -1,6 +1,8 @@
 import re
 import requests
 
+from difflib import SequenceMatcher
+
 from coalib.results.Diff import Diff
 from coalib.bears.LocalBear import LocalBear
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
@@ -48,7 +50,8 @@ class InvalidLinkBear(LocalBear):
 
         A link is considered valid if the server responds with a 2xx code.
 
-        This bear can automatically fix redirects.
+        This bear can automatically fix redirects, but ignores redirect
+        URLs that have a huge difference with the original URL.
 
         :param timeout: Request timeout period.
         """
@@ -75,18 +78,22 @@ class InvalidLinkBear(LocalBear):
                         severity=RESULT_SEVERITY.NORMAL)
                 if 300 <= code < 400:  # HTTP status 30x
                     redirect_url = requests.head(link, allow_redirects=True).url
-                    diff = Diff(file)
-                    current_line = file[line_number - 1]
-                    start = current_line.find(link)
-                    end = start + len(link)
-                    replacement = current_line[:start] + \
-                        redirect_url + current_line[end:]
-                    diff.change_line(line_number, current_line, replacement)
+                    matcher = SequenceMatcher(
+                        None, redirect_url, link)
+                    if (matcher.real_quick_ratio() > 0.7 and
+                            matcher.ratio()) > 0.7:
+                        diff = Diff(file)
+                        current_line = file[line_number - 1]
+                        start = current_line.find(link)
+                        end = start + len(link)
+                        replacement = current_line[:start] + \
+                            redirect_url + current_line[end:]
+                        diff.change_line(line_number, current_line, replacement)
 
-                    yield Result.from_values(
-                        self,
-                        'This link redirects to ' + redirect_url,
-                        diffs={filename: diff},
-                        file=filename,
-                        line=line_number,
-                        severity=RESULT_SEVERITY.NORMAL)
+                        yield Result.from_values(
+                            self,
+                            'This link redirects to ' + redirect_url,
+                            diffs={filename: diff},
+                            file=filename,
+                            line=line_number,
+                            severity=RESULT_SEVERITY.NORMAL)
