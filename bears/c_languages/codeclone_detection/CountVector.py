@@ -1,6 +1,6 @@
 from math import sqrt
 
-from coalib.misc.Decorators import generate_repr
+from coala_decorators.decorators import generate_repr
 
 
 @generate_repr()

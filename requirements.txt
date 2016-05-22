@@ -28,3 +28,4 @@ vim-vint~=0.3.6
 nltk~=3.1.0
 appdirs~=1.4.0
 pyyaml~=3.11
+coala_decorators~=0.2.1
