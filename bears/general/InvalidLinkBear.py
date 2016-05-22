@@ -18,13 +18,13 @@ class InvalidLinkBear(LocalBear):
 
     @classmethod
     def check_prerequisites(cls):
-        code = cls.get_status_code_or_error(
+        code = cls.get_status_code(
             cls.check_connection_url, cls.DEFAULT_TIMEOUT)
         return ("You are not connected to the internet."
                 if code is None else True)
 
     @staticmethod
-    def get_status_code_or_error(url, timeout):
+    def get_status_code(url, timeout):
         try:
             code = requests.head(url, allow_redirects=False,
                                  timeout=timeout).status_code
@@ -41,7 +41,7 @@ class InvalidLinkBear(LocalBear):
             match = regex.search(line)
             if match:
                 link = match.group()
-                code = InvalidLinkBear.get_status_code_or_error(link, timeout)
+                code = InvalidLinkBear.get_status_code(link, timeout)
                 yield line_number + 1, link, code
 
     def run(self, filename, file, timeout: int=DEFAULT_TIMEOUT):
