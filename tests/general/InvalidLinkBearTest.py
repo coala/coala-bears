@@ -9,10 +9,25 @@ from coalib.settings.Setting import Setting
 
 
 def custom_matcher(request):
+    """
+    Mock the status codes for every request by taking the last three characters
+    of the request URL.
+
+    For connection checking url, it always passes 200 (prerequisite checking).
+
+    For URLs with no status codes appended, a ``RequestException`` is raised.
+
+    To test for URLs that redirect to URLs with a much larger length, the
+    ``redirect_long_url`` is returned.
+
+    :param request: The ``request`` that the mocker recieves.
+    :return:        A mocked ``Response`` object.
+    """
     redirect_long_url = ("https://confluence.atlassian.com/bitbucket"
                          "/use-the-bitbucket-cloud-rest-apis-222724129.html")
     redirect_urls = ("https://bitbucket.org/api/301",
                      "https://bitbucket.org/api/302")
+
     change_url = False
     # the connection check url needs to be explicitly
     # set to 200
