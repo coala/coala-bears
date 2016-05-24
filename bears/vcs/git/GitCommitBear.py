@@ -157,7 +157,7 @@ class GitCommitBear(GlobalBear):
                 return None
         except LookupError as error:  # pragma: no cover
             self.err("NLTK data missing, install by running following commands "
-                     "`python -m nltk.downloader punkt"
+                     "`python3 -m nltk.downloader punkt"
                      " maxent_treebank_pos_tagger averaged_perceptron_tagger`")
             return
 
