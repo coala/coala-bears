@@ -1,24 +1,23 @@
-from coalib.bearlib.abstractions.Lint import Lint
-from coalib.bears.LocalBear import LocalBear
+from coalib.bearlib.abstractions.Linter import linter
+from coalib.bearlib.spacing.SpacingHelper import SpacingHelper
+from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
-class FormatRBear(Lint, LocalBear):
-    executable = "Rscript"
-    arguments = ("-e 'library(formatR)' "
-                 "-e 'formatR::tidy_source(\"{filename}\")'")
-    prerequisite_command = ['Rscript', '-e', "'library(formatR)'"]
-    prerequisite_fail_msg = "Please install formatR for this bear to work."
-    diff_message = "Formatting can be improved."
-    gives_corrected = True
+@linter(executable='Rscript',
+        output_format='corrected',
+        prerequisite_check_command=('Rscript', '-e',
+                                    "\'library(formatR)\'"),
+        prerequisite_check_fail_message='Please install formatR for this bear '
+                                        'to work.')
+class FormatRBear:
+    """
+    This bear checks and corrects formatting of R Code using known formatR
+    utility.
+    """
     LANGUAGES = "R"
 
-    def process_output(self, output, filename, file):
-        output = output[:-1] + (output[-1].strip()+"\n",)
-        return Lint.process_output(self, output, filename, file)
-
-    def run(self, filename, file):
-        '''
-        This bear checks and corrects formatting of R Code using
-        known formatR utility.
-        '''
-        return self.lint(filename, file)
+    @staticmethod
+    def create_arguments(filename, file, config_file):
+        rcode = ("formatR::tidy_source(source=" + "\""+filename+"\")")
+        args = ('-e', "library(formatR)", '-e',)
+        return args + (rcode,)
