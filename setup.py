@@ -76,7 +76,7 @@ if __name__ == "__main__":
           classifiers=[
               'Development Status :: 4 - Beta',
 
-              'Environment :: Console',
+              'Environment :: Plugins',
               'Environment :: MacOS X',
               'Environment :: Win32 (MS Windows)',
               'Environment :: X11 Applications :: Gnome',
