@@ -1,5 +1,4 @@
 from coalib.bearlib.abstractions.Linter import linter
-from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
 @linter(executable='verilator',
@@ -7,9 +6,7 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
         use_stderr=True,
         output_regex=r'\%(?:(?P<severity>Error|Warning.*?).*?):'
         r'.+?:(?P<line>.+?): '
-        r'(?P<message>.+)',
-        severity_map={'Error': RESULT_SEVERITY.MAJOR,
-                      'Warning': RESULT_SEVERITY.NORMAL})
+        r'(?P<message>.+)')
 class VerilogLintBear:
     """
     Analyze Verilog code using ``verilator`` and checks for all lint

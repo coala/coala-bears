@@ -1,14 +1,11 @@
 from coalib.bearlib.abstractions.Linter import linter
-from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.settings.Setting import typed_list
 
 
 @linter(executable='bootlint',
         output_format='regex',
         output_regex=r'.+:(?P<line>\d*):(?P<column>\d*) (?P<severity>.)\d+ '
-                     r'(?P<message>.+)',
-        severity_map={"W": RESULT_SEVERITY.NORMAL,
-                      "E": RESULT_SEVERITY.MAJOR})
+                     r'(?P<message>.+)')
 class BootLintBear:
     """
     Raise several common HTML mistakes in html files that are using

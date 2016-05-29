@@ -1,7 +1,6 @@
 import json
 
 from coalib.bearlib.abstractions.Linter import linter
-from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
 def bool_or_str(value):
@@ -21,10 +20,7 @@ def bool_or_int(value):
 @linter(executable='jshint',
         output_format='regex',
         output_regex=r'.+?: line (?P<line>\d+), col (?P<column>\d+), '
-                     r'(?P<message>.+) \((?P<severity>[EWI])\d+\)',
-        severity_map={'E': RESULT_SEVERITY.MAJOR,
-                      'W': RESULT_SEVERITY.NORMAL,
-                      'I': RESULT_SEVERITY.INFO})
+                     r'(?P<message>.+) \((?P<severity>[EWI])\d+\)')
 class JSHintBear:
     """
     Detect errors and potential problems in JavaScript code and to enforce
