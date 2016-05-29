@@ -1,5 +1,4 @@
 from coalib.bearlib.abstractions.Linter import linter
-from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
 @linter(executable='luacheck',
@@ -7,9 +6,7 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
         output_format='regex',
         output_regex=r'stdin:(?P<line>\d+):(?P<column>\d+)-'
                      r'(?P<end_column>\d+): '
-                     r'\((?P<severity>[WE])(?P<origin>\d+)\) (?P<message>.+)',
-        severity_map={'W': RESULT_SEVERITY.NORMAL,
-                      'E': RESULT_SEVERITY.MAJOR})
+                     r'\((?P<severity>[WE])(?P<origin>\d+)\) (?P<message>.+)')
 class LuaLintBear:
     """
     Check Lua code for possible semantic problems, like unused code.
