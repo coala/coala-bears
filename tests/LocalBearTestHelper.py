@@ -9,8 +9,6 @@ from tests.BearTestHelper import generate_skip_decorator
 from coalib.bearlib.abstractions.Lint import Lint
 from coalib.bears.LocalBear import LocalBear
 from coalib.misc.ContextManagers import prepare_file
-from coalib.output.printers.LOG_LEVEL import LOG_LEVEL
-from coalib.results.Result import Result
 from coalib.settings.Section import Section
 from coalib.settings.Setting import Setting
 
