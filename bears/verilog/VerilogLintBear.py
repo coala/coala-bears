@@ -5,8 +5,7 @@ from coalib.bearlib.abstractions.Linter import linter
         output_format='regex',
         use_stderr=True,
         output_regex=r'\%(?:(?P<severity>Error|Warning.*?).*?):'
-        r'.+?:(?P<line>.+?): '
-        r'(?P<message>.+)')
+                     r'.+?:(?P<line>.+?): (?P<message>.+)')
 class VerilogLintBear:
     """
     Analyze Verilog code using ``verilator`` and checks for all lint
