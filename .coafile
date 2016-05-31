@@ -1,6 +1,6 @@
 [Default]
 files = *.py, bears/**/*.py, tests/**/*.py, bears/*.py.in
-ignore = tests/python/test_files/pylint_test.py
+ignore = tests/python/test_files/pylint_test.py, tests/python/bandit_test_files/*
 
 max_line_length = 79
 use_spaces = True
