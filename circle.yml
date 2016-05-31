@@ -23,7 +23,8 @@ dependencies:
     - nvm alias default node
   override:
     - bash .ci/deps.shellcheck.sh
-    - bash .ci/deps.sh
+    - bash .ci/deps.sh:
+        timeout: 900  # Allow 15 mins before timing out due to "no output"
 
 machine:
   java:
