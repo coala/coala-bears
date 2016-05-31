@@ -1,10 +1,12 @@
-import shutil
+import platform
 
 from coalib.bearlib.abstractions.Linter import linter
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
-@linter(executable=shutil.which("perlcritic"),
+@linter(executable=("perlcritic.bat"
+                    if platform.system() == "Windows" else
+                    "perlcritic"),
         output_format='regex',
         output_regex=r'(?P<message>.+) at '
                      r'line (?P<line>\d+), '
