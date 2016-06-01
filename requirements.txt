@@ -21,7 +21,6 @@ yamllint==1.*
 cppclean==0.9.*
 pydocstyle==1.*
 cmakelint==1.*
-requests_mock==0.7.*
 vim-vint==0.3.*
 # Stable version 3.2 is problematic in Windows.
 # Use >=3.3,==3.* once nltk-3.3 is released.
