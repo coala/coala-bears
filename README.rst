@@ -61,7 +61,7 @@ You can see all of them `here <https://github.com/coala-analyzer/coala-bears/wik
 +----------------------------+----------------------------+----------------------------+
 
 The number of bears grows every day! If you want to see any particular
-functionality be sure to submit an issue, but please read the `GETTING INVOLVED`_
+functionality be sure to submit an issue, but please read the `Getting Involved`_
 section before doing so.
 
 You can read more at our `documentation <http://coala.readthedocs.org/en/latest/Users/Tutorials/Writing_Bears.html#guide-to-write-a-bear>`__.
