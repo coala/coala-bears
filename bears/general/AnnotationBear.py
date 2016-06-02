@@ -9,7 +9,7 @@ from coalib.results.AbsolutePosition import AbsolutePosition
 
 class AnnotationBear(LocalBear):
 
-    def run(self, filename, file, language: str, language_family: str):
+    def run(self, filename, file, language: str):
         """
         Finds out all the positions of strings and comments in a file.
         The Bear searches for valid comments and strings and yields their
@@ -17,15 +17,13 @@ class AnnotationBear(LocalBear):
 
         :param language:        Language to be whose annotations are to be
                                 searched.
-        :param language_family: Language family whose annotations are to be
-                                searched.
         :return:                HiddenResults containing a dictionary with
                                 keys as 'strings' or 'comments' and values as
                                 a tuple of SourceRanges of strings and
                                 a tuple of SourceRanges of comments
                                 respectively.
         """
-        lang_dict = LanguageDefinition(language, language_family)
+        lang_dict = LanguageDefinition(language)
         # Strings
         # TODO treat single-line and multiline strings differently
         strings = dict(lang_dict["string_delimiters"])

@@ -15,11 +15,9 @@ class AnnotationBearTest(unittest.TestCase):
     def setUp(self):
         self.section1 = Section("")
         self.section1.append(Setting('language', 'python3'))
-        self.section1.append(Setting('language_family', 'python3'))
         self.python_uut = AnnotationBear(self.section1, Queue())
         self.section2 = Section("")
         self.section2.append(Setting('language', 'c'))
-        self.section2.append(Setting('language_family', 'c'))
         self.c_uut = AnnotationBear(self.section2, Queue())
 
     def test_single_line_string(self):
