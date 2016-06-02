@@ -1,5 +1,5 @@
 import platform
-from shlex import split
+import shlex
 
 from coalib.bearlib.abstractions.Linter import linter
 from coalib.bearlib.spacing.SpacingHelper import SpacingHelper
@@ -33,7 +33,8 @@ class GNUIndentBear:
                                    understands. They will be simply passed
                                    through.
         """
-        return ("--no-tabs" if use_spaces else "--use-tabs",
+        args = ("--no-tabs" if use_spaces else "--use-tabs",
                 "--line-length", str(max_line_length),
                 "--indent-level", str(tab_width),
-                "--tab-size", str(tab_width)) + tuple(split(indent_cli_options))
+                "--tab-size", str(tab_width))
+        return args + tuple(shlex.split(indent_cli_options))
