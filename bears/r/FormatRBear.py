@@ -1,24 +1,54 @@
-from coalib.bearlib.abstractions.Lint import Lint
-from coalib.bears.LocalBear import LocalBear
+from coalib.bearlib.abstractions.Linter import linter
+from coalib.bearlib.spacing.SpacingHelper import SpacingHelper
 
 
-class FormatRBear(Lint, LocalBear):
-    executable = "Rscript"
-    arguments = ("-e 'library(formatR)' "
-                 "-e 'formatR::tidy_source(\"{filename}\")'")
-    prerequisite_command = ['Rscript', '-e', "'library(formatR)'"]
-    prerequisite_fail_msg = "Please install formatR for this bear to work."
-    diff_message = "Formatting can be improved."
-    gives_corrected = True
+@linter(executable='Rscript',
+        output_format='corrected',
+        prerequisite_check_command=('Rscript', '-e', "library(formatR)"),
+        prerequisite_check_fail_message='Please install formatR for this bear '
+                                        'to work.')
+class FormatRBear:
+    """
+    This bear checks and corrects formatting of R Code using known formatR
+    utility.
+    """
     LANGUAGES = "R"
 
-    def process_output(self, output, filename, file):
-        output = output[:-1] + (output[-1].strip()+"\n",)
-        return Lint.process_output(self, output, filename, file)
-
-    def run(self, filename, file):
-        '''
-        This bear checks and corrects formatting of R Code using
-        known formatR utility.
-        '''
-        return self.lint(filename, file)
+    @staticmethod
+    def create_arguments(filename, file, config_file,
+                         comment: str="TRUE",
+                         blank: str="TRUE",
+                         brace: str="FALSE",
+                         arrow: str="FALSE",
+                         tab_width: int=SpacingHelper.DEFAULT_TAB_WIDTH,
+                         max_line_length: int=80,
+                         output: str="TRUE",
+                         output_file: str=""):
+        """
+        :param comment:         Use to determine whether comments are
+                                kept or not
+        :param blank:           Use to determine whether blank lines
+                                are kept or not
+        :param brace:           Whether to put the left brace
+        :param arrow:           Whether to replace the assign operator = with <-
+        :param tab_width:       Number of space for indentation
+        :param max_line_length: Maximum number of characters for a line.
+        :param output:          Use to output to the console or a file
+        :output_file:           The file to which the resulting is written
+        """
+        rcode = ("formatR::tidy_source("
+                 "source=\"{filename}\","
+                 "comment={comment},"
+                 "blank={blank},"
+                 "arrow={arrow},"
+                 "width.cutoff={max_line_length},"
+                 "brace.newline={brace},"
+                 "indent={tab_width},"
+                 "output={output},"
+                 "file=\"{output_file}\""
+                 ")".format(filename=filename, comment=comment, blank=blank,
+                            arrow=arrow, brace=brace, output=output,
+                            max_line_length=max_line_length,
+                            tab_width=tab_width, output_file=output_file))
+        args = ('-e', "library(formatR)", '-e',)
+        return args + (rcode,)
