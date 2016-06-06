@@ -21,7 +21,7 @@ class RubySmellBear:
         return '--format', 'json', '-c', config_file
 
     def process_output(self, output, filename, file):
-        output = json.loads(output) if output else []
+        output = json.loads(output) if output else ()
         for issue in output:
             sourceranges = []
             for line in issue['lines']:
