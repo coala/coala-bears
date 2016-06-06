@@ -28,12 +28,16 @@ class RubySmellBear:
                 sourceranges.append(SourceRange.from_values(
                     file=filename, start_line=line))
 
+            if 'name' in issue:
+                message = "'{}' (in '{}') {}.".format(
+                    issue['name'], issue['context'], issue['message'])
+            else:
+                message = "'{}' {}".format(issue['context'], issue['message'])
+
             yield Result(
                 origin="{} ({})".format(self.__class__.__name__,
                                         issue['smell_type']),
-                message="{} (in context {}) {}.".format(issue['name'],
-                                                        issue['context'],
-                                                        issue['message']),
+                message=message,
                 affected_code=sourceranges,
                 additional_info="More information is available at {}"
                                 ".".format(issue["wiki_link"]))
