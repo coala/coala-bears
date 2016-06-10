@@ -9,9 +9,29 @@ from coalib.results.SourceRange import SourceRange
 
 class CPDBear(GlobalBear):
 
-    LANGUAGES = ('C++', 'C#', 'Objective C', 'Java', 'JavaScript', 'Fortran',
-                 'Go', 'JSP', 'Python 2', 'Python 3', 'Python', 'Ruby',
-                 'PHP', 'Scala')
+    language_dict = {"C#": "cs",
+                     "C++": "cpp",
+                     "JavaScript": "ecmascript",
+                     "Fortran": "fortran",
+                     "Go": "go",
+                     "Java": "java",
+                     "JSP": "jsp",
+                     "Matlab": "matlab",
+                     "Octave": "matlab",
+                     "Objective C": "objectivec",
+                     "PHP": "php",
+                     "PL/SQL": "plsql",
+                     "Python": "python",
+                     "Python 2": "python",
+                     "Python 3": "python",
+                     "Ruby": "ruby",
+                     "Scala": "scala",
+                     "Swift": "swift"}
+
+    lowered_lang_dict = {key.lower(): value
+                         for key, value in language_dict.items()}
+
+    LANGUAGES = tuple(language_dict.keys())
 
     @classmethod
     def check_prerequisites(cls):  # pragma: no cover
@@ -35,8 +55,7 @@ class CPDBear(GlobalBear):
         <https://pmd.github.io/pmd-5.4.1/usage/cpd-usage.html>
 
         :param language:
-            One of "cpp", "cs", "js", "f", "go", "jsp", "m", "php", "py",
-            "rb", "scala", "java" (i.e. the file ending of your language).
+            One of the supported languages of this bear.
         :param minimum_tokens:
             The minimum token length which should be reported as a duplicate.
         :param ignore_annotations:
@@ -51,21 +70,9 @@ class CPDBear(GlobalBear):
             Ignore multiple copies of files of the same name and length in
             omparison.
         """
-        language_args = {
-            "cpp": "cpp",
-            "cs": "cs",
-            "js": "ecmascript",
-            "f": "fortran",
-            "go": "go",
-            "jsp": "jsp",
-            "m": "objectivec",
-            "php": "php",
-            "py": "python",
-            "rb": "ruby",
-            "scala": "scala",
-            "java": "java"}
+        language = language.lower()
 
-        if language not in language_args:  # pragma: no cover
+        if language not in self.lowered_lang_dict:  # pragma: no cover
             self.err("This bear does not support files with the extension "
                      "'{}'.".format(language))
             return
@@ -80,7 +87,7 @@ class CPDBear(GlobalBear):
         files = ",".join(self.file_dict.keys())
         arguments = ("bash", which("run.sh"), "cpd", "--skip-lexical-errors",
                      "--minimum-tokens", str(minimum_tokens),
-                     "--language", language_args[language],
+                     "--language", self.lowered_lang_dict[language],
                      "--files", files,
                      "--format", "xml")
 
