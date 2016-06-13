@@ -18,7 +18,7 @@ class CPDBear(GlobalBear):
                      "JSP": "jsp",
                      "Matlab": "matlab",
                      "Octave": "matlab",
-                     "Objective C": "objectivec",
+                     "Objective-C": "objectivec",
                      "PHP": "php",
                      "PL/SQL": "plsql",
                      "Python": "python",
