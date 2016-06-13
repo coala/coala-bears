@@ -8,6 +8,7 @@ main ()
     return 0;
 }""".splitlines(keepends=True)
 
+
 test_file2 = """
 int
 main ()
@@ -30,6 +31,25 @@ int main() {
 }""".splitlines(keepends=True)
 
 
+test_file5 = """
+int
+main ()
+{
+  int a;
+  return 0;
+}""".splitlines(keepends=True)
+
+
+test_file6 = """
+int
+main ()
+{
+    int a;
+
+    return 0;
+}""".splitlines(keepends=True)
+
+
 GNUIndentBearTest = verify_local_bear(
     GNUIndentBear,
     valid_files=(test_file1,),
@@ -44,8 +64,15 @@ GNUIndentBearWithTabTest = verify_local_bear(
     settings={"use_spaces": "nope", "max_line_length": "80"})
 
 
-GNUIndentBearGNUIndentWidthTest = verify_local_bear(
+GNUIndentBearWidthTest = verify_local_bear(
     GNUIndentBear,
     valid_files=(test_file2,),
     invalid_files=(test_file1, test_file3, test_file4),
     settings={"use_spaces": "true", "max_line_length": "80", "tab_width": "2"})
+
+
+GNUIndentBearBlankLineAfterDeclarationsTest = verify_local_bear(
+    GNUIndentBear,
+    valid_files=(test_file6,),
+    invalid_files=(test_file5,),
+    settings={"blank_lines_after_declarations": "true"})
