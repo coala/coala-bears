@@ -9,7 +9,7 @@ class JSComplexityBear:
     """
     Calculates cyclomatic complexity using ``cr``.
     """
-    LANGUAGES = "Javascript"
+    LANGUAGES = "JavaScript"
 
     @staticmethod
     def create_arguments(filename, file, config_file):
