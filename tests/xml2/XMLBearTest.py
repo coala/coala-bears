@@ -1,6 +1,6 @@
 import os
 
-from bears.xml.XMLBear import XMLBear
+from bears.xml2.XMLBear import XMLBear
 from tests.LocalBearTestHelper import verify_local_bear
 
 
