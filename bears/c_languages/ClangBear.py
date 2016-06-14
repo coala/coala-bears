@@ -24,6 +24,9 @@ def clang_available(cls):
 class ClangBear(LocalBear):
     LANGUAGES = {"C", "C++", "Objective-C", "Objective-C++", "OpenMP",
                  "OpenCL", "CUDA"}
+    AUTHORS = {'The coala developers'}
+    AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
+    LICENSE = 'AGPL-3.0'
 
     check_prerequisites = classmethod(clang_available)
 

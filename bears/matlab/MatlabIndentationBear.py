@@ -8,6 +8,9 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 class MatlabIndentationBear(LocalBear):
     LANGUAGES = {"Matlab", "Octave"}
+    AUTHORS = {'The coala developers'}
+    AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
+    LICENSE = 'AGPL-3.0'
 
     def run(self, filename, file, tab_width: int=2):
         """

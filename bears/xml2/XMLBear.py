@@ -25,6 +25,9 @@ class XMLBear(LocalBear, Lint):
     gives_corrected = True
     use_stderr = True
     LANGUAGES = {"XML"}
+    AUTHORS = {'The coala developers'}
+    AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
+    LICENSE = 'AGPL-3.0'
 
     def process_output(self, output, filename, file):
         if self.stdout_output:

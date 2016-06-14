@@ -13,6 +13,9 @@ class ClangComplexityBear(LocalBear):
     """
 
     LANGUAGES = ClangBear.LANGUAGES
+    AUTHORS = {'The coala developers'}
+    AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
+    LICENSE = 'AGPL-3.0'
 
     check_prerequisites = classmethod(clang_available)
     decisive_cursor_kinds = {

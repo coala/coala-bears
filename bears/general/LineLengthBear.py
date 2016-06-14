@@ -8,6 +8,9 @@ from coalib.settings.Setting import typed_list
 
 class LineLengthBear(LocalBear):
     LANGUAGES = {"All"}
+    AUTHORS = {'The coala developers'}
+    AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
+    LICENSE = 'AGPL-3.0'
 
     def run(self,
             filename,

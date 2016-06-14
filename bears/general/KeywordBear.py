@@ -4,6 +4,9 @@ from coalib.results.Result import RESULT_SEVERITY, Result
 
 class KeywordBear(LocalBear):
     LANGUAGES = {"All"}
+    AUTHORS = {'The coala developers'}
+    AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
+    LICENSE = 'AGPL-3.0'
 
     def run(self,
             filename,

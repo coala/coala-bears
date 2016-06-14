@@ -30,6 +30,9 @@ class VHDLLintBear:
     """
 
     LANGUAGES = {"VHDL"}
+    AUTHORS = {'The coala developers'}
+    AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
+    LICENSE = 'AGPL-3.0'
 
     @classmethod
     def check_prerequisites(cls):  # pragma: no cover

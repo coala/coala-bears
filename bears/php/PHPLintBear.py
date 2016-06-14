@@ -13,6 +13,9 @@ class PHPLintBear:
     Checks the code with ``php -l``. This runs it on each file separately.
     """
     LANGUAGES = {"PHP"}
+    AUTHORS = {'The coala developers'}
+    AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
+    LICENSE = 'AGPL-3.0'
 
     @staticmethod
     def create_arguments(filename, file, config_file):

@@ -7,6 +7,9 @@ from coalib.results.Result import Result
 
 class PyUnusedCodeBear(LocalBear):
     LANGUAGES = {"Python", "Python 2", "Python 3"}
+    AUTHORS = {'The coala developers'}
+    AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
+    LICENSE = 'AGPL-3.0'
 
     def run(self, filename, file):
         """

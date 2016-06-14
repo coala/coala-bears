@@ -19,6 +19,9 @@ class TailorBear:
     For more information on the analysis visit <https://tailor.sh/>
     """
     LANGUAGES = {"Swift"}
+    AUTHORS = {'The coala developers'}
+    AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
+    LICENSE = 'AGPL-3.0'
 
     severity_map = {"warning": RESULT_SEVERITY.NORMAL,
                     "error": RESULT_SEVERITY.MAJOR}

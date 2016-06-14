@@ -16,6 +16,9 @@ class RuboCopBear:
     """
 
     LANGUAGES = {"Ruby"}
+    AUTHORS = {'The coala developers'}
+    AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
+    LICENSE = 'AGPL-3.0'
 
     severity_map = {"error": RESULT_SEVERITY.MAJOR,
                     "warning": RESULT_SEVERITY.NORMAL,

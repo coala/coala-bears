@@ -17,6 +17,9 @@ class HaskellLintBear:
     """
 
     LANGUAGES = {"Haskell"}
+    AUTHORS = {'The coala developers'}
+    AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
+    LICENSE = 'AGPL-3.0'
 
     severity_map = {"Error": RESULT_SEVERITY.MAJOR,
                     "Warning": RESULT_SEVERITY.NORMAL,

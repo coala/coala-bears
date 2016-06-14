@@ -14,6 +14,9 @@ class JSONFormatBear(LocalBear):
         DecodeError = ValueError
 
     LANGUAGES = {"JSON"}
+    AUTHORS = {'The coala developers'}
+    AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
+    LICENSE = 'AGPL-3.0'
 
     def run(self, filename, file,
             json_sort: bool=False,

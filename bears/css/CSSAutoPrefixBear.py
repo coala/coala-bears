@@ -11,6 +11,9 @@ class CSSAutoPrefixBear:
     This bear adds vendor prefixes to CSS rules using ``autoprefixer`` utility.
     """
     LANGUAGES = {"CSS"}
+    AUTHORS = {'The coala developers'}
+    AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
+    LICENSE = 'AGPL-3.0'
 
     @staticmethod
     def create_arguments(filename, file, config_file):
