@@ -15,7 +15,7 @@ class ESLintBear:
     Find out more at <http://eslint.org/docs/rules/>.
     """
 
-    LANGUAGES = ("JavaScript", "JSX")
+    LANGUAGES = {"JavaScript", "JSX"}
 
     severity_map = {2: RESULT_SEVERITY.MAJOR,
                     1: RESULT_SEVERITY.NORMAL,

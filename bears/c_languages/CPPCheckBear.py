@@ -18,7 +18,7 @@ class CPPCheckBear:
     For more information, consult <https://github.com/danmar/cppcheck>.
     """
 
-    LANGUAGES = "C", "C++"
+    LANGUAGES = {"C", "C++"}
 
     @staticmethod
     def create_arguments(filename, file, config_file,

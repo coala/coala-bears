@@ -9,7 +9,7 @@ class GoImportsBear:
     """
     Adds/Removes imports to Go code for missing imports.
     """
-    LANGUAGES = "Go"
+    LANGUAGES = {"Go"}
 
     @staticmethod
     def create_arguments(filename, file, config_file):

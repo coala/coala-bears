@@ -31,7 +31,7 @@ class JSHintBear:
     For more information on the analysis visit <http://jshint.com/>
     """
 
-    LANGUAGES = "JavaScript"
+    LANGUAGES = {"JavaScript"}
 
     @staticmethod
     def generate_config(filename, file,

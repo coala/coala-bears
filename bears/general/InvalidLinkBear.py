@@ -11,7 +11,7 @@ from coalib.results.Result import Result
 
 class InvalidLinkBear(LocalBear):
     DEFAULT_TIMEOUT = 2
-    LANGUAGES = "All"
+    LANGUAGES = {"All"}
 
     # IP Address of www.google.com
     check_connection_url = "http://216.58.218.174"

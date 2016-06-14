@@ -18,7 +18,7 @@ class HTMLLintBear:
 
     _html_lint = which('html_lint.py')
 
-    LANGUAGES = "HTML"
+    LANGUAGES = {"HTML"}
 
     @staticmethod
     def create_arguments(filename, file, config_file,

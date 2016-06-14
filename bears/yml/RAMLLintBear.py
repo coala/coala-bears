@@ -13,7 +13,7 @@ class RAMLLintBear:
     identify the problems correctly.
     """
 
-    LANGUAGES = "RAML"
+    LANGUAGES = {"RAML"}
 
     @staticmethod
     def create_arguments(filename, file, config_file):

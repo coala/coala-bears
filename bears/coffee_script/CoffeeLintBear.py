@@ -13,7 +13,7 @@ class CoffeeLintBear:
     For more information about coffeelint, visit <http://www.coffeelint.org/>.
     """
 
-    LANGUAGES = "CoffeeScript"
+    LANGUAGES = {"CoffeeScript"}
 
     severity_map = {'warn': RESULT_SEVERITY.NORMAL,
                     'error': RESULT_SEVERITY.MAJOR}

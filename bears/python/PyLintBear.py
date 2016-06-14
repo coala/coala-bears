@@ -21,7 +21,7 @@ class PyLintBear:
     Checks the code with pylint. This will run pylint over each file
     separately.
     """
-    LANGUAGES = ("Python", "Python 2", "Python 3")
+    LANGUAGES = {"Python", "Python 2", "Python 3"}
 
     @staticmethod
     def create_arguments(filename, file, config_file,

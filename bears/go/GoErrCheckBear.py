@@ -15,7 +15,7 @@ class GoErrCheckBear:
 
     For more information on the analysis visit <https://github.com/kisielk/errcheck>.
     """
-    LANGUAGES = "Go"
+    LANGUAGES = {"Go"}
 
     @staticmethod
     def create_arguments(filename, file, config_file,

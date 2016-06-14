@@ -16,7 +16,7 @@ class InferBear(LocalBear, Lint):
     severity_map = {
         "error": RESULT_SEVERITY.MAJOR,
         "warning": RESULT_SEVERITY.NORMAL}
-    LANGUAGES = "Java"
+    LANGUAGES = {"Java"}
 
     def run(self, filename, file):
         '''

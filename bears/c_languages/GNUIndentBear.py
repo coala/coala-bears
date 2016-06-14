@@ -17,7 +17,7 @@ class GNUIndentBear:
     C++ support is considered experimental.
     """
 
-    LANGUAGES = ("C", "C++")
+    LANGUAGES = {"C", "C++"}
 
     @staticmethod
     def create_arguments(filename, file, config_file,

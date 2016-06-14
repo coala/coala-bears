@@ -12,7 +12,7 @@ class DartLintBear:
     This bear expects dart commands to be on your ``PATH``. Please ensure
     /path/to/dart-sdk/bin is in your ``PATH``.
     """
-    LANGUAGES = "Dart"
+    LANGUAGES = {"Dart"}
 
     @staticmethod
     def create_arguments(filename, file, config_file):

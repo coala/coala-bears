@@ -24,7 +24,7 @@ class XMLBear(LocalBear, Lint):
     output_regex = r'(.*\.xml):(?P<line>\d+): (?P<message>.*)\n.*\n.*'
     gives_corrected = True
     use_stderr = True
-    LANGUAGES = "XML"
+    LANGUAGES = {"XML"}
 
     def process_output(self, output, filename, file):
         if self.stdout_output:

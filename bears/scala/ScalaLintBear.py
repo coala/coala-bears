@@ -17,7 +17,7 @@ class ScalaLintBear:
     e.g. cyclomatic complexity.
     """
 
-    LANGUAGES = "Scala"
+    LANGUAGES = {"Scala"}
 
     def setup_dependencies(self):
         type(self).jar = self.download_cached_file(

@@ -11,7 +11,7 @@ class SCSSLintBear:
     More information is available at <https://github.com/brigade/scss-lint>.
     """
 
-    LANGUAGES = "SCSS"
+    LANGUAGES = {"SCSS"}
 
     @staticmethod
     def create_arguments(filename, file, config_file):

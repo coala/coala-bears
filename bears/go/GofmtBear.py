@@ -13,7 +13,7 @@ class GofmtBear:
     This is done using the ``gofmt`` utility. For more information visit
     <https://golang.org/cmd/gofmt/>.
     """
-    LANGUAGES = "Go"
+    LANGUAGES = {"Go"}
 
     @staticmethod
     def create_arguments(filename, file, config_file):

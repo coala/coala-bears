@@ -11,7 +11,7 @@ class GoLintBear:
     Checks the code using ``golint``. This will run golint over each file
     separately.
     """
-    LANGUAGES = "Go"
+    LANGUAGES = {"Go"}
 
     @staticmethod
     def create_arguments(filename, file, config_file,

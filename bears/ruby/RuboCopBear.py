@@ -15,7 +15,7 @@ class RuboCopBear:
     See <https://github.com/bbatsov/rubocop#cops> for more information.
     """
 
-    LANGUAGES = "Ruby"
+    LANGUAGES = {"Ruby"}
 
     severity_map = {"error": RESULT_SEVERITY.MAJOR,
                     "warning": RESULT_SEVERITY.NORMAL,

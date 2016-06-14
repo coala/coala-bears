@@ -14,7 +14,7 @@ class RubySmellBear:
     <https://github.com/troessner/reek/blob/master/docs/Code-Smells.md>.
     """
 
-    LANGUAGES = "Ruby"
+    LANGUAGES = {"Ruby"}
 
     @staticmethod
     def create_arguments(filename, file, config_file):

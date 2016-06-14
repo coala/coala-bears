@@ -29,7 +29,7 @@ class VHDLLintBear:
     information.
     """
 
-    LANGUAGES = "VHDL"
+    LANGUAGES = {"VHDL"}
 
     @classmethod
     def check_prerequisites(cls):  # pragma: no cover

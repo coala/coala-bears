@@ -16,7 +16,7 @@ class FormatRBear:
     """
     Check and correct formatting of R Code using known formatR utility.
     """
-    LANGUAGES = "R"
+    LANGUAGES = {"R"}
 
     @staticmethod
     def create_arguments(filename, file, config_file,

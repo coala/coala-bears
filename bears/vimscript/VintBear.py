@@ -10,7 +10,7 @@ class VintBear:
     See <https://github.com/Kuniwak/vint> for more information.
     """
 
-    LANGUAGES = "VimScript"
+    LANGUAGES = {"VimScript"}
 
     @staticmethod
     def create_arguments(filename, file, config_file):
