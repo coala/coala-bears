@@ -24,7 +24,7 @@ class PerlCriticBear:
     each of the files seperately.
     """
 
-    LANGUAGES = "Perl"
+    LANGUAGES = {"Perl"}
 
     @staticmethod
     def create_arguments(filename, file, config_file,

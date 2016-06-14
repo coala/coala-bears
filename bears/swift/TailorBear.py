@@ -18,7 +18,7 @@ class TailorBear:
 
     For more information on the analysis visit <https://tailor.sh/>
     """
-    LANGUAGES = "Swift"
+    LANGUAGES = {"Swift"}
 
     severity_map = {"warning": RESULT_SEVERITY.NORMAL,
                     "error": RESULT_SEVERITY.MAJOR}

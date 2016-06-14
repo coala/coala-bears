@@ -9,7 +9,7 @@ class LatexLintBear:
     """
     Checks the code with ``chktex``.
     """
-    LANGUAGES = "Tex"
+    LANGUAGES = {"Tex"}
 
     @staticmethod
     def create_arguments(filename, file, config_file):

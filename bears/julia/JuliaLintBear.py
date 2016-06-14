@@ -23,7 +23,7 @@ class JuliaLintBear:
     See <https://lintjl.readthedocs.org/en/stable/> for more information
     on the analysis provided.
     """
-    LANGUAGES = "Julia"
+    LANGUAGES = {"Julia"}
 
     @staticmethod
     def create_arguments(filename, file, config_file):

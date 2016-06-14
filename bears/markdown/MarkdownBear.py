@@ -15,7 +15,7 @@ class MarkdownBear:
     below.
     """
 
-    LANGUAGES = "Markdown"
+    LANGUAGES = {"Markdown"}
 
     @staticmethod
     def create_arguments(filename, file, config_file,

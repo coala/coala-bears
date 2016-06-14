@@ -10,7 +10,7 @@ class CSSAutoPrefixBear:
     """
     This bear adds vendor prefixes to CSS rules using ``autoprefixer`` utility.
     """
-    LANGUAGES = "CSS"
+    LANGUAGES = {"CSS"}
 
     @staticmethod
     def create_arguments(filename, file, config_file):

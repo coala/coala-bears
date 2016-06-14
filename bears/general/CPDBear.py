@@ -31,7 +31,7 @@ class CPDBear(GlobalBear):
     lowered_lang_dict = {key.lower(): value
                          for key, value in language_dict.items()}
 
-    LANGUAGES = tuple(language_dict.keys())
+    LANGUAGES = set(language_dict.keys())
 
     @classmethod
     def check_prerequisites(cls):  # pragma: no cover

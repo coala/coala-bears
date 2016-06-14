@@ -11,7 +11,7 @@ class CSSLintBear:
     Check code for syntactical or semantical problems that might lead to
     problems or inefficiencies.
     """
-    LANGUAGES = "CSS"
+    LANGUAGES = {"CSS"}
 
     @staticmethod
     def create_arguments(filename, file, config_file):

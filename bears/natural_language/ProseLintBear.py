@@ -8,7 +8,7 @@ class ProseLintBear:
     """
     Lints the file using ``proselint``.
     """
-    LANGUAGES = "Natural Language"
+    LANGUAGES = {"Natural Language"}
 
     @staticmethod
     def create_arguments(filename, file, config_file):

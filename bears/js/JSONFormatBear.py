@@ -13,7 +13,7 @@ class JSONFormatBear(LocalBear):
     except AttributeError:
         DecodeError = ValueError
 
-    LANGUAGES = "JSON"
+    LANGUAGES = {"JSON"}
 
     def run(self, filename, file,
             json_sort: bool=False,

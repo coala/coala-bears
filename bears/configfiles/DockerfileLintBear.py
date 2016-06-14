@@ -15,7 +15,7 @@ class DockerfileLintBear:
     See <https://github.com/projectatomic/dockerfile_lint#dockerfile-lint> for
     more information .
     """
-    LANGUAGES = "Dockerfile"
+    LANGUAGES = {"Dockerfile"}
 
     severity_map = {
         "error": RESULT_SEVERITY.MAJOR,

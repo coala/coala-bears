@@ -14,7 +14,7 @@ class JavaPMDBear:
     <http://pmd.github.io/pmd-5.4.1/pmd-java/rules/index.html>.
     """
 
-    LANGUAGES = "Java"
+    LANGUAGES = {"Java"}
 
     @classmethod
     def check_prerequisites(cls):  # pragma: no cover

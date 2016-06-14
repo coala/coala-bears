@@ -5,7 +5,7 @@ from coalib.results.Result import Result
 
 
 class SpaceConsistencyBear(LocalBear):
-    LANGUAGES = "All"
+    LANGUAGES = {"All"}
 
     def run(self,
             filename,

@@ -12,7 +12,7 @@ from coalib.settings.FunctionMetadata import FunctionMetadata
 
 
 class GitCommitBear(GlobalBear):
-    LANGUAGES = "Git"
+    LANGUAGES = {"Git"}
 
     @classmethod
     def check_prerequisites(cls):

@@ -9,7 +9,7 @@ class GoReturnsBear:
     """
     Proposes corrections of Go code using ``goreturns``.
     """
-    LANGUAGES = "Go"
+    LANGUAGES = {"Go"}
 
     @staticmethod
     def create_arguments(filename, file, config_file):

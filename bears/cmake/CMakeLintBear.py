@@ -9,7 +9,7 @@ class CMakeLintBear:
     """
     Checks the code with ``cmakelint``.
     """
-    LANGUAGES = 'CMake'
+    LANGUAGES = {'CMake'}
 
     @staticmethod
     def create_arguments(filename, file, config_file,

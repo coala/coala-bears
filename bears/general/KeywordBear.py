@@ -3,7 +3,7 @@ from coalib.results.Result import RESULT_SEVERITY, Result
 
 
 class KeywordBear(LocalBear):
-    LANGUAGES = "All"
+    LANGUAGES = {"All"}
 
     def run(self,
             filename,

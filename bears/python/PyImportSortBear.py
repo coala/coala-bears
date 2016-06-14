@@ -9,7 +9,7 @@ from coalib.settings.Setting import typed_list
 
 class PyImportSortBear(LocalBear):
 
-    LANGUAGES = ("Python", "Python 3", "Python 2")
+    LANGUAGES = {"Python", "Python 3", "Python 2"}
 
     def run(self, filename, file,
             use_parentheses_in_import: bool=True,

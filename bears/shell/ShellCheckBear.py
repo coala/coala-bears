@@ -13,7 +13,7 @@ class ShellCheckBear:
     <https://github.com/koalaman/shellcheck/blob/master/README.md>.
     """
 
-    LANGUAGES = ("sh", "bash", "ksh", "dash")
+    LANGUAGES = {"sh", "bash", "ksh", "dash"}
 
     @staticmethod
     def create_arguments(filename, file, config_file, shell: str='sh'):

@@ -6,7 +6,7 @@ from coalib.results.Result import Result
 
 
 class PyUnusedCodeBear(LocalBear):
-    LANGUAGES = ("Python", "Python 2", "Python 3")
+    LANGUAGES = {"Python", "Python 2", "Python 3"}
 
     def run(self, filename, file):
         """

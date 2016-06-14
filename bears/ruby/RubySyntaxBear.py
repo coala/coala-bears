@@ -12,7 +12,7 @@ class RubySyntaxBear:
     """
     Checks the code with ``ruby -wc`` on each file separately.
     """
-    LANGUAGES = "Ruby"
+    LANGUAGES = {"Ruby"}
 
     @staticmethod
     def create_arguments(filename, file, config_file):

@@ -8,7 +8,7 @@ from coalib.bearlib.naming_conventions import (
 
 
 class FilenameBear(LocalBear):
-    LANGUAGES = "All"
+    LANGUAGES = {"All"}
 
     _naming_convention = {"camel": to_camelcase,
                           "pascal": to_pascalcase,

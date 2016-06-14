@@ -12,7 +12,7 @@ class PHPLintBear:
     """
     Checks the code with ``php -l``. This runs it on each file separately.
     """
-    LANGUAGES = "PHP"
+    LANGUAGES = {"PHP"}
 
     @staticmethod
     def create_arguments(filename, file, config_file):

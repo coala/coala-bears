@@ -8,7 +8,7 @@ from coalib.settings.Setting import typed_list
 
 
 class PEP8Bear(LocalBear):
-    LANGUAGES = ("Python", "Python 2", "Python 3")
+    LANGUAGES = {"Python", "Python 2", "Python 3"}
 
     def run(self, filename, file,
             max_line_length: int=80,

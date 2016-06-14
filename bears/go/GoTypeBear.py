@@ -11,7 +11,7 @@ class GoTypeBear:
     Checks the code using ``gotype``. This will run ``gotype`` over each file
     separately.
     """
-    LANGUAGES = "Go"
+    LANGUAGES = {"Go"}
 
     @staticmethod
     def create_arguments(filename, file, config_file):

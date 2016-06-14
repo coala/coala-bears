@@ -30,7 +30,7 @@ class CheckstyleBear:
     <http://checkstyle.sourceforge.net/checks.html>.
     """
 
-    LANGUAGES = "Java"
+    LANGUAGES = {"Java"}
 
     def setup_dependencies(self):
         type(self).checkstyle_jar_file = self.download_cached_file(
