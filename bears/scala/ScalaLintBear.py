@@ -18,6 +18,10 @@ class ScalaLintBear:
     """
 
     LANGUAGES = {"Scala"}
+    AUTHORS = {'The coala developers'}
+    AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
+    LICENSE = 'AGPL-3.0'
+    INCLUDE_LOCAL_FILES = {'scalastyle.jar', 'scalalint_config.xml'}
 
     def setup_dependencies(self):
         type(self).jar = self.download_cached_file(

@@ -17,6 +17,9 @@ class InferBear(LocalBear, Lint):
         "error": RESULT_SEVERITY.MAJOR,
         "warning": RESULT_SEVERITY.NORMAL}
     LANGUAGES = {"Java"}
+    AUTHORS = {'The coala developers'}
+    AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
+    LICENSE = 'AGPL-3.0'
 
     def run(self, filename, file):
         '''

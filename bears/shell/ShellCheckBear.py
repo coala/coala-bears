@@ -14,6 +14,9 @@ class ShellCheckBear:
     """
 
     LANGUAGES = {"sh", "bash", "ksh", "dash"}
+    AUTHORS = {'The coala developers'}
+    AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
+    LICENSE = 'AGPL-3.0'
 
     @staticmethod
     def create_arguments(filename, file, config_file, shell: str='sh'):

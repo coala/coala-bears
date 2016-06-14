@@ -32,6 +32,9 @@ class JSHintBear:
     """
 
     LANGUAGES = {"JavaScript"}
+    AUTHORS = {'The coala developers'}
+    AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
+    LICENSE = 'AGPL-3.0'
 
     @staticmethod
     def generate_config(filename, file,

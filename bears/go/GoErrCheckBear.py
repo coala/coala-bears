@@ -16,6 +16,9 @@ class GoErrCheckBear:
     For more information on the analysis visit <https://github.com/kisielk/errcheck>.
     """
     LANGUAGES = {"Go"}
+    AUTHORS = {'The coala developers'}
+    AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
+    LICENSE = 'AGPL-3.0'
 
     @staticmethod
     def create_arguments(filename, file, config_file,

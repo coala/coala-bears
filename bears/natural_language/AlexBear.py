@@ -12,6 +12,9 @@ class AlexBear(LocalBear, Lint):
         r'\s+(?:(?P<warning>warning))\s+(?P<message>.+)')
     arguments = "{filename}"
     LANGUAGES = {"Natural Language"}
+    AUTHORS = {'The coala developers'}
+    AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
+    LICENSE = 'AGPL-3.0'
 
     def run(self, filename, file):
         '''

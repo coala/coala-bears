@@ -9,6 +9,9 @@ from coalib.bearlib.naming_conventions import (
 
 class FilenameBear(LocalBear):
     LANGUAGES = {"All"}
+    AUTHORS = {'The coala developers'}
+    AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
+    LICENSE = 'AGPL-3.0'
 
     _naming_convention = {"camel": to_camelcase,
                           "pascal": to_pascalcase,

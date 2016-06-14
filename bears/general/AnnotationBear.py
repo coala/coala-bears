@@ -8,6 +8,9 @@ from coalib.results.AbsolutePosition import AbsolutePosition
 
 
 class AnnotationBear(LocalBear):
+    AUTHORS = {'The coala developers'}
+    AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
+    LICENSE = 'AGPL-3.0'
 
     def run(self, filename, file, language: str, coalang_dir: str = None):
         """

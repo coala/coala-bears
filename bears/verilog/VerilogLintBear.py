@@ -21,6 +21,9 @@ class VerilogLintBear:
     <http://www.veripool.org/projects/verilator/wiki/Manual-verilator>.
     """
     LANGUAGES = {"Verilog"}
+    AUTHORS = {'The coala developers'}
+    AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
+    LICENSE = 'AGPL-3.0'
 
     @staticmethod
     def create_arguments(filename, file, config_file):

@@ -7,6 +7,9 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 class reSTLintBear(LocalBear):
     LANGUAGES = {"reStructuredText"}
+    AUTHORS = {'The coala developers'}
+    AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
+    LICENSE = 'AGPL-3.0'
 
     def run(self, filename, file):
         """

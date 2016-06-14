@@ -31,6 +31,9 @@ class CheckstyleBear:
     """
 
     LANGUAGES = {"Java"}
+    AUTHORS = {'The coala developers'}
+    AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
+    LICENSE = 'AGPL-3.0'
 
     def setup_dependencies(self):
         type(self).checkstyle_jar_file = self.download_cached_file(

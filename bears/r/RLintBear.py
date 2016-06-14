@@ -16,6 +16,9 @@ class RLintBear(LocalBear, Lint):
         "warning": RESULT_SEVERITY.NORMAL,
         "error": RESULT_SEVERITY.MAJOR}
     LANGUAGES = {"R"}
+    AUTHORS = {'The coala developers'}
+    AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
+    LICENSE = 'AGPL-3.0'
 
     prerequisite_command = ["Rscript", "-e", "library(lintr)"]
     prerequisite_fail_msg = 'R library "lintr" is not installed.'

@@ -16,6 +16,9 @@ class ESLintBear:
     """
 
     LANGUAGES = {"JavaScript", "JSX"}
+    AUTHORS = {'The coala developers'}
+    AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
+    LICENSE = 'AGPL-3.0'
 
     severity_map = {2: RESULT_SEVERITY.MAJOR,
                     1: RESULT_SEVERITY.NORMAL,
