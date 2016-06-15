@@ -1,0 +1,4 @@
+string_delimiters = " : " , ' : '
+multiline_string_delimiters = """ : """, R(" : ")
+multiline_comment_delimiters = /* : */
+comment_delimiter = //, #
