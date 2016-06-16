@@ -5,6 +5,7 @@ from difflib import SequenceMatcher
 
 from coalib.results.Diff import Diff
 from coalib.bears.LocalBear import LocalBear
+from coalib.bears.requirements.PythonRequirement import PythonRequirement
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.results.Result import Result
 
@@ -12,6 +13,7 @@ from coalib.results.Result import Result
 class InvalidLinkBear(LocalBear):
     DEFAULT_TIMEOUT = 2
     LANGUAGES = {"All"}
+    REQUIREMENTS = PythonRequirement('requests', '2.*')
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

@@ -2,6 +2,7 @@ from shutil import which
 import sys
 
 from coalib.bearlib.abstractions.Linter import linter
+from coalib.bears.requirements.PythonRequirement import PythonRequirement
 from coalib.settings.Setting import typed_list
 
 
@@ -19,6 +20,7 @@ class HTMLLintBear:
     _html_lint = which('html_lint.py')
 
     LANGUAGES = {"HTML"}
+    REQUIREMENTS = PythonRequirement('html-linter', '0.3.*')
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

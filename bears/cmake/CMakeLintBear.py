@@ -1,4 +1,5 @@
 from coalib.bearlib.abstractions.Linter import linter
+from coalib.bears.requirements.PythonRequirement import PythonRequirement
 from coalib.settings.Setting import path
 
 
@@ -10,6 +11,7 @@ class CMakeLintBear:
     Checks the code with ``cmakelint``.
     """
     LANGUAGES = {'CMake'}
+    REQUIREMENTS = PythonRequirement('cmakelint', '1.*')
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
