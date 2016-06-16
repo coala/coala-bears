@@ -1,5 +1,6 @@
 from coalib.bearlib.abstractions.Lint import Lint
 from coalib.bears.LocalBear import LocalBear
+from coalib.bears.requirements.PythonRequirement import PythonRequirement
 from coalib.settings.Setting import typed_list
 
 
@@ -8,6 +9,7 @@ class PyDocStyleBear(LocalBear, Lint):
     output_regex = r'(.*\.py):(?P<line>\d+) (.+):\n\s+(?P<message>.*)'
     use_stderr = True
     LANGUAGES = {"Python", "Python 2", "Python 3"}
+    REQUIREMENTS = PythonRequirement('pydocstyle', '1.*')
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

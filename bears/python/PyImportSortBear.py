@@ -2,6 +2,7 @@ from isort import SortImports
 
 from coalib.bearlib.spacing.SpacingHelper import SpacingHelper
 from coalib.bears.LocalBear import LocalBear
+from coalib.bears.requirements.PythonRequirement import PythonRequirement
 from coalib.results.Diff import Diff
 from coalib.results.Result import Result
 from coalib.settings.Setting import typed_list
@@ -10,6 +11,7 @@ from coalib.settings.Setting import typed_list
 class PyImportSortBear(LocalBear):
 
     LANGUAGES = {"Python", "Python 3", "Python 2"}
+    REQUIREMENTS = PythonRequirement('isort', '4.*')
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
