@@ -100,7 +100,7 @@ GNUIndentBearWithTabTest = verify_local_bear(
     settings={"use_spaces": "nope", "max_line_length": "80"})
 
 
-GNUIndentBearGNUIndentWidthTest = verify_local_bear(
+GNUIndentBearWidthTest = verify_local_bear(
     GNUIndentBear,
     valid_files=(test_file2,),
     invalid_files=(test_file1, test_file3, test_file4),
