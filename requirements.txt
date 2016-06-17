@@ -24,7 +24,7 @@ cmakelint==1.*
 vim-vint==0.3.*
 # Stable version 3.2 is problematic in Windows.
 # Use >=3.3,==3.* once nltk-3.3 is released.
-nltk==3.1.*
+nltk==3.2.*
 appdirs==1.*
 pyyaml==3.*
 coala_decorators>=0.2.1,==0.2.*
