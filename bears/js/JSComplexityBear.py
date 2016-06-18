@@ -1,6 +1,7 @@
 import json
 
 from coalib.bearlib.abstractions.Linter import linter
+from coalib.bears.requirements.NpmRequirement import NpmRequirement
 from coalib.results.Result import Result
 
 
@@ -10,6 +11,7 @@ class JSComplexityBear:
     Calculates cyclomatic complexity using ``cr``.
     """
     LANGUAGES = {"JavaScript"}
+    REQUIREMENTS = {NpmRequirement('complexity-report', '2.0.0-alpha')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

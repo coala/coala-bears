@@ -1,6 +1,7 @@
 import json
 
 from coalib.bearlib.abstractions.Linter import linter
+from coalib.bears.requirements.NpmRequirement import NpmRequirement
 
 
 @linter(executable='remark',
@@ -16,6 +17,7 @@ class MarkdownBear:
     """
 
     LANGUAGES = {"Markdown"}
+    REQUIREMENTS = {NpmRequirement('remark', '3')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

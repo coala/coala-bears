@@ -1,6 +1,7 @@
 import json
 
 from coalib.bearlib.abstractions.Linter import linter
+from coalib.bears.requirements.NpmRequirement import NpmRequirement
 
 
 def bool_or_str(value):
@@ -32,6 +33,7 @@ class JSHintBear:
     """
 
     LANGUAGES = {"JavaScript"}
+    REQUIREMENTS = {NpmRequirement('jshint', '2')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

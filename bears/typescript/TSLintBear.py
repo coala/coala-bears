@@ -1,6 +1,7 @@
 import json
 
 from coalib.bearlib.abstractions.Linter import linter
+from coalib.bears.requirements.NpmRequirement import NpmRequirement
 from coalib.results.Result import Result
 from coalib.settings.Setting import path
 
@@ -16,6 +17,7 @@ class TSLintBear:
     """
 
     LANGUAGES = {"TypeScript"}
+    REQUIREMENTS = {NpmRequirement('tslint', '3')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

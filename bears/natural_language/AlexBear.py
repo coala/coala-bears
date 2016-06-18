@@ -1,6 +1,7 @@
 import re
 
 from coalib.bearlib.abstractions.Lint import Lint
+from coalib.bears.requirements.NpmRequirement import NpmRequirement
 from coalib.bears.LocalBear import LocalBear
 
 
@@ -12,6 +13,7 @@ class AlexBear(LocalBear, Lint):
         r'\s+(?:(?P<warning>warning))\s+(?P<message>.+)')
     arguments = "{filename}"
     LANGUAGES = {"Natural Language"}
+    REQUIREMENTS = {NpmRequirement('alex', '2')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
