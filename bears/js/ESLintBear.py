@@ -1,6 +1,7 @@
 import json
 
 from coalib.bearlib.abstractions.Linter import linter
+from coalib.bears.requirements.NpmRequirement import NpmRequirement
 from coalib.results.Diff import Diff
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.results.Result import Result
@@ -16,6 +17,7 @@ class ESLintBear:
     """
 
     LANGUAGES = {"JavaScript", "JSX"}
+    REQUIREMENTS = {NpmRequirement('eslint', '2')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

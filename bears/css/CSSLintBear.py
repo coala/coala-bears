@@ -1,4 +1,5 @@
 from coalib.bearlib.abstractions.Linter import linter
+from coalib.bears.requirements.NpmRequirement import NpmRequirement
 
 
 @linter(executable='csslint',
@@ -12,6 +13,7 @@ class CSSLintBear:
     problems or inefficiencies.
     """
     LANGUAGES = {"CSS"}
+    REQUIREMENTS = {NpmRequirement('csslint', '0')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
