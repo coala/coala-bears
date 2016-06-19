@@ -21,6 +21,8 @@ class RuboCopBear:
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
+    CAN_DETECT = {'Simplification'}
+    CAN_FIX = {'Syntax', 'Formatting'}
 
     severity_map = {"error": RESULT_SEVERITY.MAJOR,
                     "warning": RESULT_SEVERITY.NORMAL,
