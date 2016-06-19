@@ -19,6 +19,7 @@ class CoffeeLintBear:
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
+    CAN_DETECT = {'Syntax', 'Formatting', 'Smell'}
 
     severity_map = {'warn': RESULT_SEVERITY.NORMAL,
                     'error': RESULT_SEVERITY.MAJOR}
