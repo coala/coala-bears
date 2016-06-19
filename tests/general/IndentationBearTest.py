@@ -166,3 +166,47 @@ class IndentationBearTest(unittest.TestCase):
                         '\t<\n',
                         '\t not giving indentation>}\n')
         self.verify_bear(valid_file, invalid_file)
+
+    def test_unspecified_unindents(self):
+        valid_file = ('switch(expression) {\n',
+                      '\tcase constant-expression  :\n',
+                      '\t\tstatement(s);\n',
+                      '\t\tbreak;\n',
+                      '\tcase constant-expression  :\n',
+                      '\t\tstatement(s);\n',
+                      '\t\tbreak;\n',
+                      '\tdefault :\n',
+                      '\t\tstatement(s);\n',
+                      '}\n')
+        invalid_file = ('switch(expression){\n',
+                        '\tcase expr:\n',
+                        '\tstatement(s);\n',
+                        '}')
+        self.verify_bear(valid_file, invalid_file)
+
+        valid_file = ('def func(x,\n',
+                      # TODO correct indentation of test after support for
+                      # absolute indentation
+                      'y,\n',
+                      'z):\n',
+                      '\tsome line\n',
+                      '\tsome line 2\n')
+        invalid_file = ('def func(x):\n',
+                        '\t\tsome line\n',
+                        '\tsome line\n')
+        self.verify_bear(valid_file, invalid_file)
+
+        invalid_file = ('def func(x):\n',
+                        '\tline 1\n',
+                        '# A comment')
+        self.verify_bear(invalid_file=invalid_file)
+
+        invalid_file = ('def func(x):\n',
+                        '\ta = [1, 2,\n',
+                        '3, 4]\n')
+        self.verify_bear(invalid_file=invalid_file)
+
+        invalid_file = ('def func(x):\n',
+                        '\t/* multiline comment\n',
+                        'unindent*/')
+        self.verify_bear(invalid_file=invalid_file)
