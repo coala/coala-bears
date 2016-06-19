@@ -15,6 +15,7 @@ class PyImportSortBear(LocalBear):
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
+    CAN_FIX = {'Formatting', 'Simplification'}
 
     def run(self, filename, file,
             use_parentheses_in_import: bool=True,
