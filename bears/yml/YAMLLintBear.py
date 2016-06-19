@@ -1,5 +1,5 @@
 from coalib.bearlib.abstractions.Linter import linter
-from coalib.bears.requirements.PythonRequirement import PythonRequirement
+from coalib.bears.requirements.PipRequirement import PipRequirement
 
 
 @linter(executable='yamllint',
@@ -15,7 +15,7 @@ class YAMLLintBear:
     """
 
     LANGUAGES = {"YAML"}
-    REQUIREMENTS = PythonRequirement('yamllint', '1.*')
+    REQUIREMENTS = {PipRequirement('yamllint', '1.*')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

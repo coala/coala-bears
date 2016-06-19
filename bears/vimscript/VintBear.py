@@ -1,5 +1,5 @@
 from coalib.bearlib.abstractions.Linter import linter
-from coalib.bears.requirements.PythonRequirement import PythonRequirement
+from coalib.bears.requirements.PipRequirement import PipRequirement
 
 
 @linter(executable='vint', output_format="regex",
@@ -12,7 +12,7 @@ class VintBear:
     """
 
     LANGUAGES = {"VimScript"}
-    REQUIREMENTS = PythonRequirement('vim-vint', '0.3.*')
+    REQUIREMENTS = {PipRequirement('vim-vint', '0.3.*')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
