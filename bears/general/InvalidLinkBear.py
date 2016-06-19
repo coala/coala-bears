@@ -17,6 +17,7 @@ class InvalidLinkBear(LocalBear):
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
+    CAN_DETECT = {'Documentation'}
 
     # IP Address of www.google.com
     check_connection_url = "http://216.58.218.174"
