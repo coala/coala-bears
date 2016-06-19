@@ -1,5 +1,5 @@
 from coalib.bearlib.abstractions.Linter import linter
-from coalib.bears.requirements.PythonRequirement import PythonRequirement
+from coalib.bears.requirements.PipRequirement import PipRequirement
 
 
 @linter(executable='proselint',
@@ -10,7 +10,7 @@ class ProseLintBear:
     Lints the file using ``proselint``.
     """
     LANGUAGES = {"Natural Language"}
-    REQUIREMENTS = PythonRequirement('proselint', '0.3.*')
+    REQUIREMENTS = {PipRequirement('proselint', '0.3.*')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

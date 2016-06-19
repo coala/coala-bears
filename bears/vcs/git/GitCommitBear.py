@@ -4,7 +4,7 @@ import shutil
 import os
 
 from coalib.bears.GlobalBear import GlobalBear
-from coalib.bears.requirements.PythonRequirement import PythonRequirement
+from coalib.bears.requirements.PipRequirement import PipRequirement
 from coalib.misc.ContextManagers import change_directory
 from coalib.misc.Shell import run_shell_command
 from coalib.results.Result import Result
@@ -14,7 +14,7 @@ from coalib.settings.FunctionMetadata import FunctionMetadata
 
 class GitCommitBear(GlobalBear):
     LANGUAGES = {"Git"}
-    REQUIREMENTS = PythonRequirement('nltk', '3.1.*')
+    REQUIREMENTS = {PipRequirement('nltk', '3.1.*')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

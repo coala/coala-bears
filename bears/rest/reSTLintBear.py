@@ -1,14 +1,14 @@
 from restructuredtext_lint import lint
 
 from coalib.bears.LocalBear import LocalBear
-from coalib.bears.requirements.PythonRequirement import PythonRequirement
+from coalib.bears.requirements.PipRequirement import PipRequirement
 from coalib.results.Result import Result
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
 class reSTLintBear(LocalBear):
     LANGUAGES = {"reStructuredText"}
-    REQUIREMENTS = PythonRequirement('restructuredtext_lint', '0.14.*')
+    REQUIREMENTS = {PipRequirement('restructuredtext_lint', '0.14.*')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

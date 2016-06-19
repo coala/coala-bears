@@ -1,14 +1,14 @@
 import autoflake
 
 from coalib.bears.LocalBear import LocalBear
-from coalib.bears.requirements.PythonRequirement import PythonRequirement
+from coalib.bears.requirements.PipRequirement import PipRequirement
 from coalib.results.Diff import Diff
 from coalib.results.Result import Result
 
 
 class PyUnusedCodeBear(LocalBear):
     LANGUAGES = {"Python", "Python 2", "Python 3"}
-    REQUIREMENTS = PythonRequirement('autoflake', '0.6.*')
+    REQUIREMENTS = {PipRequirement('autoflake', '0.6.*')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
