@@ -27,6 +27,7 @@ class ClangBear(LocalBear):
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
+    CAN_FIX = {'Variable Misuse', 'Syntax'}
 
     check_prerequisites = classmethod(clang_available)
 
