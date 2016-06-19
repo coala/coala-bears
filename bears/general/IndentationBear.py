@@ -65,14 +65,13 @@ class IndentationBear(LocalBear):
             return
 
         insert = ' '*tab_width if use_spaces else '\t'
+        no_indent_file = [line.lstrip() if line.lstrip() else "\n"
+                          for line_nr, line in enumerate(file)]
+
         new_file = []
-        for line_nr, line in enumerate(file):
-            # Leave out empty lines
-            if line.lstrip() != '':
-                new_file.append(insert*indent_levels[line_nr] +
-                                line.lstrip())
-            else:
-                new_file.append('\n')
+        for line_nr, line in enumerate(no_indent_file):
+            new_file.append(insert*indent_levels[line_nr] + line
+                            if line is not "\n" else "\n")
 
         if new_file != list(file):
             wholediff = Diff.from_string_arrays(file, new_file)
@@ -98,19 +97,27 @@ class IndentationBear(LocalBear):
         :return:                A tuple containing the levels of indentation of
                                 each line.
         """
+        ranges = []
+        for indent_specifier in indent_types:
+            ranges += self.get_specified_block_range(
+                file, filename,
+                indent_specifier, indent_types[indent_specifier],
+                annotation_dict)
+
+        ranges = sorted(ranges, key=lambda x: x.start.line)
         indent_levels = []
-        ranges = self.get_specified_block_range(
-                         file, filename, indent_types, annotation_dict)
         indent, next_indent = 0, 0
         for line in range(0, len(file)):
             indent = next_indent
             for _range in ranges:
                 if _range.start.line == line + 1:
                     next_indent += 1
+
                 if(_range.end.line == line + 1 and
                    (file[line].lstrip()[0] in indent_types.values())):
                     indent -= 1
                     next_indent -= 1
+
                 elif _range.end.line == line + 1:
                     next_indent -= 1
             indent_levels.append(indent)
@@ -120,7 +127,8 @@ class IndentationBear(LocalBear):
     def get_specified_block_range(self,
                                   file,
                                   filename,
-                                  indent_types,
+                                  open_indent,
+                                  close_indent,
                                   annotation_dict):
         """
         Gets a sourceranges of all the indentation blocks present inside the
@@ -141,33 +149,32 @@ class IndentationBear(LocalBear):
                                 first encounter or left to right.
         """
         ranges = []
-        for open_indent in indent_types:
-            close_indent = indent_types[open_indent]
-            open_pos = list(self.get_valid_sequences(
-                                     file, open_indent, annotation_dict))
-            close_pos = list(self.get_valid_sequences(
-                                     file, close_indent, annotation_dict))
 
-            to_match = len(open_pos) - 1
-            while to_match >= 0:
-                close_index = 0
-                while close_index < len(close_pos):
-                    if(open_pos[to_match].position
-                       <= close_pos[close_index].position):
-                        ranges.append(
-                            SourceRange.from_absolute_position(
-                                            filename,
-                                            open_pos[to_match],
-                                            close_pos[close_index]))
-                        close_pos.remove(close_pos[close_index])
-                        open_pos.remove(open_pos[to_match])
-                        to_match -= 1
-                        break
-                    close_index += 1
-                if((len(close_pos) == 0 and to_match != -1) or
-                   (len(close_pos) != 0 and to_match == -1)):
-                    # None to specify unmatched indents
-                    raise UnmatchedIndentError(open_indent, close_indent)
+        open_pos = list(self.get_valid_sequences(
+            file, open_indent, annotation_dict))
+        close_pos = list(self.get_valid_sequences(
+            file, close_indent, annotation_dict))
+
+        to_match = len(open_pos) - 1
+        while to_match >= 0:
+            close_index = 0
+            while close_index < len(close_pos):
+                if(open_pos[to_match].position
+                   <= close_pos[close_index].position):
+                    ranges.append(
+                        SourceRange.from_absolute_position(
+                            filename,
+                            open_pos[to_match],
+                            close_pos[close_index]))
+                    close_pos.remove(close_pos[close_index])
+                    open_pos.remove(open_pos[to_match])
+                    to_match -= 1
+                    break
+                close_index += 1
+            if((len(close_pos) == 0 and to_match != -1) or
+               (len(close_pos) != 0 and to_match == -1)):
+                # None to specify unmatched indents
+                raise UnmatchedIndentError(open_indent, close_indent)
 
         # Ranges are returned in the order of least nested to most nested
         # and also on the basis of which come first

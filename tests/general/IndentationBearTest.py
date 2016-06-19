@@ -1,18 +1,22 @@
 import unittest
 from queue import Queue
+import os
 
 from bears.general.IndentationBear import IndentationBear
 from bears.general.AnnotationBear import AnnotationBear
 from coalib.settings.Section import Section
 from coalib.settings.Setting import Setting
+from coalib.parsing.StringProcessing.Core import escape
 
 
 class IndentationBearTest(unittest.TestCase):
 
     def setUp(self):
         self.section = Section("")
-        self.section.append(Setting('language', 'c'))
+        self.section.append(Setting('language', 'test'))
         self.section.append(Setting('use_spaces', False))
+        self.section.append(Setting('coalang_dir', escape(os.path.join(
+            os.path.dirname(__file__), "test_files"), '\\')))
         self.dep_uut = AnnotationBear(self.section, Queue())
 
     def get_results(self, file, section=None):
@@ -151,3 +155,14 @@ class IndentationBearTest(unittest.TestCase):
 
         invalid_file2 = ('{}}\n',)
         self.verify_bear(valid_file=None, invalid_file=invalid_file2)
+
+    def test_multiple_indent_specifiers(self):
+        valid_file = ('{<\n',
+                      '\t\tdouble indents\n',
+                      '\t>\n',
+                      '\tother specifier closes\n',
+                      '}\n')
+        invalid_file = ('{\n',
+                        '\t<\n',
+                        '\t not giving indentation>}\n')
+        self.verify_bear(valid_file, invalid_file)
