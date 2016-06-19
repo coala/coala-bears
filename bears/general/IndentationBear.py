@@ -18,7 +18,8 @@ class IndentationBear(LocalBear):
             dependency_results: dict,
             language: str,
             use_spaces: bool=True,
-            tab_width: int=4):
+            tab_width: int=4,
+            coalang_dir: str=None):
         """
         It is a generic indent bear, which looks for a start and end
         indent specifier, example: ``{ : }`` where "{" is the start indent
@@ -46,8 +47,12 @@ class IndentationBear(LocalBear):
         :param tab_width:
             No. of spaces to insert for indentation.
             Only Applicable if use_spaces is False.
+        :param coalang_dir:
+            Full path of external directory containing the coalang
+            file for language.
         """
-        lang_settings_dict = LanguageDefinition(language)
+        lang_settings_dict = LanguageDefinition(
+            language, coalang_dir=coalang_dir)
         annotation_dict = dependency_results[AnnotationBear.name][0].contents
         indent_types = dict(lang_settings_dict["indent_types"])
 
