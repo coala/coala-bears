@@ -21,6 +21,8 @@ class ESLintBear:
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
+    CAN_DETECT = {'Syntax'}
+    CAN_FIX = {'Formatting'}
 
     severity_map = {2: RESULT_SEVERITY.MAJOR,
                     1: RESULT_SEVERITY.NORMAL,
