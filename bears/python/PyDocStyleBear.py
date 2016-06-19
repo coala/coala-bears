@@ -13,6 +13,7 @@ class PyDocStyleBear(LocalBear, Lint):
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
+    CAN_DETECT = {'Formatting', 'Documentation'}
 
     def run(self,
             filename,
