@@ -12,6 +12,7 @@ class reSTLintBear(LocalBear):
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
+    CAN_DETECT = {'Formatting', 'Syntax'}
 
     def run(self, filename, file):
         """
