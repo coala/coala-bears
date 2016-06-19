@@ -21,6 +21,7 @@ class TSLintBear:
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
+    CAN_DETECT = {'Syntax', 'Formatting', 'Smell'}
 
     @staticmethod
     def create_arguments(filename, file, config_file,
