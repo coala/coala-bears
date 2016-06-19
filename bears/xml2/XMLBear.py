@@ -28,6 +28,7 @@ class XMLBear(LocalBear, Lint):
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
+    CAN_DETECT = {'Formatting', 'Syntax'}
 
     def process_output(self, output, filename, file):
         if self.stdout_output:
