@@ -130,6 +130,12 @@ class IndentationBearTest(unittest.TestCase):
                         "should've Indented after blank line}")
         self.verify_bear(valid_file, invalid_file)
 
+        valid_file = ('def func(x):\n',
+                      '\tlevel1\n',
+                      '\n',
+                      'level0\n')
+        self.verify_bear(valid_file)
+
     def test_settings(self):
         section = Section("")
         section.append(Setting('language', 'c'))
