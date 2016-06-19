@@ -14,6 +14,7 @@ class PEP8Bear(LocalBear):
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
+    CAN_FIX = {'Formatting'}
 
     def run(self, filename, file,
             max_line_length: int=80,
