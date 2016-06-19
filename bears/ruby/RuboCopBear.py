@@ -2,6 +2,7 @@ import json
 import yaml
 
 from coalib.bearlib.abstractions.Linter import linter
+from coalib.bears.requirements.GemRequirement import GemRequirement
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.results.Result import Result
 
@@ -16,6 +17,7 @@ class RuboCopBear:
     """
 
     LANGUAGES = {"Ruby"}
+    REQUIREMENTS = {GemRequirement('rubocop')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

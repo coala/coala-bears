@@ -1,6 +1,7 @@
 import json
 
 from coalib.bearlib.abstractions.Linter import linter
+from coalib.bears.requirements.GemRequirement import GemRequirement
 from coalib.results.Result import Result
 from coalib.results.SourceRange import SourceRange
 
@@ -15,6 +16,7 @@ class RubySmellBear:
     """
 
     LANGUAGES = {"Ruby"}
+    REQUIREMENTS = {GemRequirement('reek')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
