@@ -22,6 +22,7 @@ class TailorBear:
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
+    CAN_DETECT = {'Formatting'}
 
     severity_map = {"warning": RESULT_SEVERITY.NORMAL,
                     "error": RESULT_SEVERITY.MAJOR}
