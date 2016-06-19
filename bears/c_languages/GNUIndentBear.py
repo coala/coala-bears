@@ -21,6 +21,7 @@ class GNUIndentBear:
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
+    CAN_FIX = {'Formatting'}
 
     @staticmethod
     def create_arguments(filename, file, config_file,
