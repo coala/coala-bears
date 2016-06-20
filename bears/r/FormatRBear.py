@@ -50,8 +50,8 @@ class FormatRBear:
             ```
             If ``False`` the brace is placed on the same line.
         :param r_use_arrows:
-            Determines if either the assign operator ``=`` or the arrow ``<-``
-            should be used.
+            Determines whether the assignment operator ``=`` should be replaced
+            by an arrow ``<-`` or not.
 
             Example: If  ``True``, ``x = 1`` changes to ``x <- 1``.
         :param tab_width:
