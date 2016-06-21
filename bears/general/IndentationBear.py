@@ -36,6 +36,9 @@ class IndentationBear(LocalBear):
 
         undergoes no change.
 
+        WARNING: The IndentationBear is experimental right now, you can report
+        any issues found to https://github.com/coala-analyzer/coala-bears
+
         :param filename:
             Name of the file that needs to be checked.
         :param file:
