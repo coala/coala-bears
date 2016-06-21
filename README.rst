@@ -24,7 +24,10 @@ About
 
 coala-bears is a Python package containing all the bears that are officially
 supported by coala. It features more than **65 bears** covering **35 languages**.
-You can see all of them `here <https://github.com/coala-analyzer/bear-docs>`_.
+Here is a `generated list <https://github.com/coala-analyzer/bear-docs/>`_ that
+contains information about each bear, such as the languages it supports and what fixes
+it can apply to your code.
+
 
 +----------------------------+----------------------------+----------------------------+
 |                        Languages coala provides algorithms for                       |
@@ -71,8 +74,11 @@ if you do so, then we'll be able to include it here and spread the word about it
 Installation
 -------------
 
-coala-bears can be installed with ``pip3 install coala-bears``. If you need more
-information about the installation and dependencies, take a look at our
+To install coala-bears, you first need Python 3 or higher. If you do not have it, it is recommended
+that you install Python3 >= 3.3 from `here <https://www.python.org/downloads/>`__.
+
+Once Python is installed, coala-bears can be installed with ``pip3 install coala-bears``. If you
+need more information about the installation and dependencies, take a look at our
 `installation documentation
 <http://coala.rtfd.org/en/latest/Users/Install.html>`__.
 
@@ -123,9 +129,9 @@ Involved Information
 
 We appreciate any help! Join us on one of:
 
-- `gitter <https://gitter.im/coala-analyzer/coala/>`
-- `#coala at freenode <webchat.freenode.net/?channels=coala>`
-- `Telegram <https://telegram.me/joinchat/AuL-lwKZ8JLFZiI6SbtQVw>`
+- `gitter <https://gitter.im/coala-analyzer/coala/>`_
+- `#coala at freenode <webchat.freenode.net/?channels=coala>`_
+- `Telegram <https://telegram.me/joinchat/AuL-lwKZ8JLFZiI6SbtQVw>`_
 
 (All channels are linked with gitter. Approach @sils1297 if the link doesn't
 work properly.)
