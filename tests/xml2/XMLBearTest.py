@@ -4,21 +4,28 @@ from bears.xml2.XMLBear import XMLBear
 from tests.LocalBearTestHelper import verify_local_bear
 
 
+def load_testdata(filename):
+    path = os.path.join(os.path.dirname(__file__),
+                        "test_files",
+                        filename)
+    with open(path) as f:
+        return f.read()
+
 valid_xml_file = """<?xml version="1.0"?>
 <a/>
-""".splitlines(keepends=True)
+"""
 
 invalid_xml_file = """
 <a>blah</a>
-""".splitlines(keepends=True)
+"""
 
 invalid_xml_chars = """<?xml version="1.0"?>
 <a>hey & hi</a>
-""".splitlines(keepends=True)
+"""
 
 valid_xml_chars = """<?xml version="1.0"?>
 <a>hey and hi</a>
-""".splitlines(keepends=True)
+"""
 
 dtd_file = os.path.join(os.path.dirname(__file__),
                         "test_files",
@@ -28,30 +35,15 @@ schema_file = os.path.join(os.path.dirname(__file__),
                            "test_files",
                            "note.xsd")
 
-valid_xml_path = list(open(os.path.join(
-    os.path.dirname(__file__),
-    "test_files",
-    "note.xml"), 'r'))
+valid_xml_path = load_testdata("note.xml")
 
-valid_xml_url = list(open(os.path.join(
-    os.path.dirname(__file__),
-    "test_files",
-    "concept-valid.xml"), 'r'))
+valid_xml_url = load_testdata("concept-valid.xml")
 
-invalid_xml_schema = list(open(os.path.join(
-    os.path.dirname(__file__),
-    "test_files",
-    "xsd-error.xml"), 'r'))
+invalid_xml_schema = load_testdata("xsd-error.xml")
 
-invalid_xml_dtd = list(open(os.path.join(
-    os.path.dirname(__file__),
-    "test_files",
-    "dtd-error.xml"), 'r'))
+invalid_xml_dtd = load_testdata("dtd-error.xml")
 
-invalid_xml_url = list(open(os.path.join(
-    os.path.dirname(__file__),
-    "test_files",
-    "concept-invalid.xml"), 'r'))
+invalid_xml_url = load_testdata("concept-invalid.xml")
 
 dtd_url = "http://docs.oasis-open.org/dita/v1.0.1/dtd/concept.dtd"
 

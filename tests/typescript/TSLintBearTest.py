@@ -9,7 +9,7 @@ good_file = """function findTitle(title) {
 }
 let t = findTitle("mytitle");
 t.innerHTML = "New title";
-""".splitlines(True)
+"""
 
 bad_file = """function findTitle(title) {
     let titleElement = 'hello';
@@ -17,7 +17,7 @@ bad_file = """function findTitle(title) {
 }
 let t = findTitle('mytitle');
 t.innerHTML = 'New title';
-""".splitlines(True)
+"""
 
 tslintconfig = os.path.join(os.path.dirname(__file__),
                             "test_files",

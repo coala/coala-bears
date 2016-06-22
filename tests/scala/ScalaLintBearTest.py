@@ -10,7 +10,7 @@ object HelloWorld {
     println("Hello, world!")
   }
 }
-""".splitlines(keepends=True)
+"""
 
 bad_file = """
 object HelloWorld {
@@ -19,7 +19,7 @@ object HelloWorld {
     var x = 10
   }
 }
-""".splitlines(keepends=True)
+"""
 
 conf_file = os.path.join(os.path.dirname(__file__),
                          "test_files",

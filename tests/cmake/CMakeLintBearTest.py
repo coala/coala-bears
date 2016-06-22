@@ -5,9 +5,9 @@ from coalib.misc.ContextManagers import prepare_file
 from tests.LocalBearTestHelper import verify_local_bear
 
 
-good_file = ['project(FooBar C)\n', 'set(VERSION 0)\n']
+good_file = 'project(FooBar C)\nset(VERSION 0)\n'
 
-bad_file_mixes_case = ['ProJeCt(FooBar C)\n', 'seT(VERSION 0)\n']
+bad_file_mixes_case = 'ProJeCt(FooBar C)\nseT(VERSION 0)\n'
 
 
 conf_file = os.path.join(os.path.dirname(__file__),

@@ -6,20 +6,20 @@ from coalib.misc.ContextManagers import prepare_file
 
 test_file1 = """
 var name = (function() { return 'Anton' }());
-""".splitlines(keepends=True)
+"""
 
 
 test_file2 = """
 function () {
 }()
-""".splitlines(keepends=True)
+"""
 
 
 test_file3 = """
 var a = (function() {
   return 0;
 }());
-""".splitlines(keepends=True)
+"""
 
 
 jshintconfig = os.path.join(os.path.dirname(__file__),

@@ -6,7 +6,7 @@ fun <- function(one){
   one_plus_one <- one + 1
   four <- matrix(1:10, nrow = 2)
   print(one_plus_one, four)
-}""".splitlines(keepends=True)
+}"""
 
 
 bad_file = """
@@ -16,7 +16,7 @@ fun = function(one)
     four <-  matrix(1:10,nrow =2)
     print(one_plus_one , four)
 }
-""".splitlines(keepends=True)
+"""
 
 
 RLintBearTest = verify_local_bear(RLintBear,

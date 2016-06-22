@@ -10,19 +10,19 @@ tailorconfig = os.path.join(os.path.dirname(__file__),
 good_file = """class UpperCamelCase {
   var x: Int
 }
-""".splitlines(keepends=True)
+"""
 
 bad_file = """class lowerCamelCase {
   var x: Int
 }
-""".splitlines(keepends=True)
+"""
 
 long_class_file = """class LongClass {
   var x: Int
   var y: Int
   var z: Int
 }
-""".splitlines(keepends=True)
+"""
 
 TailorBearWithoutConfig = verify_local_bear(TailorBear,
                                             valid_files=(good_file,),

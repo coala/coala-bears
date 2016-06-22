@@ -5,33 +5,33 @@ from tests.LocalBearTestHelper import verify_local_bear
 test_file1 = """{
     "a": 5,
     "b": 5
-}""".splitlines(keepends=True)
+}"""
 
 
 test_file2 = """{
     "b": 5,
     "a": 5
-}""".splitlines(keepends=True)
+}"""
 
 
 test_file3 = """{
    "b": 5,
    "a": 5
-}""".splitlines(keepends=True)
+}"""
 
 
 unicode_file = """{
     "⌘": 5
-}""".splitlines(keepends=True)
+}"""
 
 
 JSONFormatBearTest = verify_local_bear(JSONFormatBear,
                                        valid_files=(test_file1, test_file2),
                                        invalid_files=(test_file3,
                                                       unicode_file,
-                                                      [""],
-                                                      ["random stuff"],
-                                                      ['{"a":5,"b":5}']))
+                                                      "",
+                                                      "random stuff",
+                                                      '{"a":5,"b":5}'))
 
 
 JSONFormatBearSortTest = verify_local_bear(JSONFormatBear,

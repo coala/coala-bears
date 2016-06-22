@@ -10,7 +10,7 @@ def hello():
     """Print hello world."""
     print("hello world")
 
-'''.splitlines(keepends=True)
+'''
 
 
 bad_file = '''
@@ -21,7 +21,7 @@ example module level docstring
 def hello():
     print("hello world")
 
-'''.splitlines(keepends=True)
+'''
 
 PyDocStyleBearTest = verify_local_bear(
     PyDocStyleBear,

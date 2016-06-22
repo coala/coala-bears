@@ -26,7 +26,7 @@ complexity_12 = """(function () {
     }
   }
 })()
-""".splitlines(True)
+"""
 
 complexity_4 = """(function () {
   var foo = 1 && 1 || 0;
@@ -34,7 +34,7 @@ complexity_4 = """(function () {
     return;
   }
 })()
-""".splitlines(True)
+"""
 
 JSComplexityBearTest = verify_local_bear(JSComplexityBear,
                                          valid_files=(complexity_4,),
