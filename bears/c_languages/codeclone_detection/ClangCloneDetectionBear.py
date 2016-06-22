@@ -9,7 +9,7 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 class ClangCloneDetectionBear(GlobalBear):
     check_prerequisites = classmethod(clang_available)
     LANGUAGES = ClangBear.LANGUAGES
-    CAN_DETECT = {'Redundancy'}
+    CAN_DETECT = {'Duplication'}
 
     def run(self,
             dependency_results: dict,
