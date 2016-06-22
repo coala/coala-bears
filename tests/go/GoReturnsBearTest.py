@@ -28,11 +28,6 @@ func main() {
 
 """.splitlines(keepends=True)
 
-a = ['import "errors"', '',
-     'func F() (*MyType, int, error) { return nil, 0, errors.New("foo") }']
-b = ['package main', '', 'import "os"', '',
-     'func main() {', '\tf, _ := os.Open("foo")', '}']
-
 GoReturnsBearTest = verify_local_bear(
     GoReturnsBear,
     (good_file1,
