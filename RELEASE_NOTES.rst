@@ -1,3 +1,53 @@
+coala-bears 0.7.0
+=================
+
+For this release, 17 contributors have contributed about 200 commits to
+coala-bears only.
+
+We are bumping the version number to 0.7.0 to keep it in sync with the coala
+releases.
+
+New bears:
+
+- ``VerilogLintBear`` (Lints verilog code)
+- ``AnnotationBear`` (Annotates source code language independent for further
+  processing)
+- ``TailorBear`` (Checks Swift code for style compliance)
+- ``CPPCheckBear`` (Checks C/C++ code for security issues)
+- ``RAMLLintBear`` (Checks style of RAML documents)
+- ``GoErrCheckBear`` (Finds unchecked Go function calls)
+- ``RubySmellBear`` (Finds code smells in Ruby)
+- ``FilenameBear`` (Checks and corrects file naming conventions)
+- ``IndentationBear`` (An experimental indentation checker and fixer with a
+  language independent algorithm.)
+
+New features:
+
+- Numerous documentation improvements.
+- GitCommitBear:
+    - The WIP check yields a ``Normal`` Result now.
+- InvalidLinkBear:
+    - Numerous false positive fixes.
+    - An ignore regex can now be passed.
+- RuboCopBear:
+    - About 30 new configuration options were added.
+- GNUIndentBear:
+    - 15 new configuration options were added.
+- FormatRBear:
+    - 6 new configuration options were added.
+
+Bugfixes:
+
+- CPDBear:
+    - A case where results with an invalid line reference were yielded was
+      fixed.
+- CheckstyleBear:
+    - In some cases results were not correctly parsed. This was fixed.
+
+Internal changes:
+
+- Almost all bears use the new ``linter`` now instead of ``Lint``.
+
 coala-bears 0.2.0
 =================
 
