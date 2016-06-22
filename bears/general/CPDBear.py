@@ -1,5 +1,5 @@
 from shutil import which
-import xml.etree.ElementTree as ET
+from xml.etree import ElementTree
 
 from coalib.bears.GlobalBear import GlobalBear
 from coalib.misc.Shell import run_shell_command
@@ -102,7 +102,7 @@ class CPDBear(GlobalBear):
         stdout_output, _ = run_shell_command(arguments)
 
         if stdout_output:
-            root = ET.fromstring(stdout_output)
+            root = ElementTree.fromstring(stdout_output)
 
             for duplication in root.findall('duplication'):
                 length = int(duplication.attrib['lines'])
