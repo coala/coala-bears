@@ -18,9 +18,9 @@ def execute_bear(bear, *args, **kwargs):
     """
     Execute the baer routine.
 
-    :param bear:	The bear instance to run.
-    :param args:	Arguments for the bear class
-    :param kwargs:	Keywords for the bear class
+    :param bear:    The bear instance to run.
+    :param args:    Arguments for the bear class
+    :param kwargs:  Keywords for the bear class
     """
     try:
         bear_output_generator = bear.execute(*args, **kwargs)
