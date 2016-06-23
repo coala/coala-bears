@@ -204,30 +204,43 @@ class IndentationBear(LocalBear):
         close_pos = list(self.get_valid_sequences(
             file, close_specifier, annotation_dict))
 
-        to_match = len(open_pos) - 1
-        while to_match >= 0:
-            close_index = 0
-            while close_index < len(close_pos):
-                if(open_pos[to_match].position
-                   <= close_pos[close_index].position):
-                    ranges.append(
-                        SourceRange.from_absolute_position(
-                            filename,
-                            open_pos[to_match],
-                            close_pos[close_index]))
-                    close_pos.remove(close_pos[close_index])
-                    open_pos.remove(open_pos[to_match])
-                    to_match -= 1
-                    break
-                close_index += 1
-            if((len(close_pos) == 0 and to_match != -1) or
-               (len(close_pos) != 0 and to_match == -1)):
-                # None to specify unmatched indents
-                raise UnmatchedIndentError(open_specifier, close_specifier)
+        number_of_encaps = len(open_pos)
+        if number_of_encaps != len(close_pos):
+            raise UnmatchedIndentError(open_specifier, close_specifier)
 
-        # Ranges are returned in the order of least nested to most nested
-        # and also on the basis of which come first
-        return tuple(ranges)[::-1]
+        if number_of_encaps == 0:
+            return ()
+
+        stack = []
+        text = ''.join(file)
+        open_counter = close_counter = position = 0
+        op_limit = cl_limit = False
+        for position in range(len(text)):
+            if not op_limit:
+                if open_pos[open_counter].position == position:
+                    stack.append(open_pos[open_counter])
+                    open_counter += 1
+                    if open_counter == number_of_encaps:
+                        op_limit = True
+
+            if not cl_limit:
+                if close_pos[close_counter].position == position:
+                    try:
+                        op = stack.pop()
+                    except IndexError:
+                        raise UnmatchedIndentError(open_specifier,
+                                                   close_specifier)
+                    ranges.append(SourceRange.from_values(
+                        filename,
+                        start_line=op.line,
+                        start_column=op.column,
+                        end_line=close_pos[close_counter].line,
+                        end_column=close_pos[close_counter].column))
+                    close_counter += 1
+                    if close_counter == number_of_encaps:
+                        cl_limit = True
+
+        return tuple(ranges)
 
     def get_unspecified_block_range(self,
                                     file,

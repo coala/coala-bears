@@ -121,6 +121,9 @@ class IndentationBearTest(unittest.TestCase):
                         "}")
         self.verify_bear(valid_file, invalid_file)
 
+        invalid_file = ('}}}{{{\n',)
+        self.verify_bear(invalid_file=invalid_file)
+
     def test_blank_lines(self):
         valid_file = ("{ trying indent",
                       "\n",
