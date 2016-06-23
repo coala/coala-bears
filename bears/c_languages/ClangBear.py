@@ -1,6 +1,7 @@
 from clang.cindex import Index, LibclangError
 
 from coalib.bears.LocalBear import LocalBear
+from coalib.bears.requirements.PipRequirement import PipRequirement
 from coalib.results.Diff import Diff
 from coalib.results.Result import Result
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
@@ -24,6 +25,7 @@ def clang_available(cls):
 class ClangBear(LocalBear):
     LANGUAGES = {"C", "C++", "Objective-C", "Objective-C++", "OpenMP",
                  "OpenCL", "CUDA"}
+    REQUIREMENTS = {PipRequirement('libclang-py3', '0.2')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

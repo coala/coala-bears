@@ -13,6 +13,7 @@ class ClangComplexityBear(LocalBear):
     """
 
     LANGUAGES = ClangBear.LANGUAGES
+    REQUIREMENTS = ClangBear.REQUIREMENTS
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

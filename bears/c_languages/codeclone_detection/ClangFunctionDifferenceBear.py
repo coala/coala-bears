@@ -83,6 +83,7 @@ def get_difference(function_pair,
 class ClangFunctionDifferenceBear(GlobalBear):
     check_prerequisites = classmethod(clang_available)
     LANGUAGES = ClangBear.LANGUAGES
+    REQUIREMENTS = ClangBear.REQUIREMENTS
 
     def run(self,
             counting_conditions: counting_condition_dict=default_cc_dict,

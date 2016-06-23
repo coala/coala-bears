@@ -7,6 +7,7 @@ from coalib.bears.GlobalBear import GlobalBear
 class ClangASTPrintBear(GlobalBear):
     check_prerequisites = classmethod(clang_available)
     LANGUAGES = ClangBear.LANGUAGES
+    REQUIREMENTS = ClangBear.REQUIREMENTS
 
     def print_node(self, cursor, filename, before="", spec_before=""):
         '''

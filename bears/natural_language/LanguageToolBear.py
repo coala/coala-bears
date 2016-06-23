@@ -4,6 +4,7 @@ from guess_language import guess_language
 from language_check import LanguageTool, correct
 
 from coalib.bears.LocalBear import LocalBear
+from coalib.bears.requirements.PipRequirement import PipRequirement
 from coalib.results.Diff import Diff
 from coalib.results.Result import Result
 from coalib.results.SourceRange import SourceRange
@@ -12,6 +13,7 @@ from coalib.settings.Setting import typed_list
 
 class LanguageToolBear(LocalBear):
     LANGUAGES = {"Natural Language"}
+    REQUIREMENTS = {PipRequirement('guess-language-spirit', '0.5.*')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
