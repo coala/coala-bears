@@ -296,14 +296,14 @@ class IndentationBear(LocalBear):
 
             # ignore if within string
             for string in annotation_dict['strings']:
-                if(sequence_position >= string.start and
-                   sequence_position <= string.end):
+                if(gt_eq(sequence_position, string.start) and
+                   lt_eq(sequence_position, string.end)):
                     valid = False
 
             # ignore if within comments
             for comment in annotation_dict['comments']:
-                if(sequence_position >= comment.start and
-                   sequence_position <= comment.end):
+                if(gt_eq(sequence_position, comment.start) and
+                   lt_eq(sequence_position, comment.end)):
                     valid = False
 
             if valid:
@@ -382,6 +382,22 @@ def get_first_unindent(indent,
         line_nr += 1
 
     return line_nr
+
+
+# TODO remove these once https://github.com/coala-analyzer/coala/issues/2377
+# gets a fix
+def lt_eq(absolute, source):
+    if absolute.line == source.line:
+        return absolute.column <= source.column
+
+    return absolute.line < source.line
+
+
+def gt_eq(absolute, source):
+    if absolute.line == source.line:
+        return absolute.column >= source.column
+
+    return absolute.line > source.line
 
 
 class ExpectedIndentError(Exception):
