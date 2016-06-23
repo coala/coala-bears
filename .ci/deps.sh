@@ -42,7 +42,7 @@ go get -u github.com/golang/lint/golint
 go get -u golang.org/x/tools/cmd/goimports
 go get -u sourcegraph.com/sqs/goreturns
 go get -u golang.org/x/tools/cmd/gotype
-go get -u github.com/kisielk/errcheck 
+go get -u github.com/kisielk/errcheck
 
 # Ruby commands
 bundle install
@@ -65,10 +65,20 @@ bash .ci/deps.nltk.sh
 python setup.py --help
 
 # Dart Lint commands
-if ! dartanalyzer -v &> /dev/null ; then
-  wget -nc -O ~/dart-sdk.zip https://storage.googleapis.com/dart-archive/channels/stable/release/1.14.2/sdk/dartsdk-linux-x64-release.zip
-  unzip -n ~/dart-sdk.zip -d ~/
-fi
+import shutils
+from requests import get
+import zipfile
+
+def download(url, file_name):
+    with open(file_name, "wb") as file:
+        response = get(url)
+        file.write(response.content)
+
+if not shutil.which('dartanalyzer'):
+  download('https://storage.googleapis.com/dart-archive/channels/stable/release/1.14.2/sdk/dartsdk-linux-x64-release.zip',
+  'dart-sdk.zip')
+  with zipfile.ZipFile("dart-sdk.zip","r") as zip_ref:
+    zip_ref.extractall()
 
 # VHDL Bakalint Installation
 wget "http://downloads.sourceforge.net/project/fpgalibre/bakalint/0.4.0/bakalint-0.4.0.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Ffpgalibre%2Ffiles%2Fbakalint%2F0.4.0%2F&ts=1461844926&use_mirror=netcologne" -O ~/bl.tar.gz
@@ -81,7 +91,7 @@ julia -e "Pkg.add(\"Lint\")"
 sudo luarocks install luacheck --deps-mode=none
 
 # Infer commands
-if [ ! -e ~/infer-linux64-v0.7.0/infer/bin ]; then 
+if [ ! -e ~/infer-linux64-v0.7.0/infer/bin ]; then
 	wget -nc -O ~/infer.tar.xz https://github.com/facebook/infer/releases/download/v0.7.0/infer-linux64-v0.7.0.tar.xz
 	tar xf ~/infer.tar.xz -C ~/
 	cd ~/infer-linux64-v0.7.0
