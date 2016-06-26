@@ -29,7 +29,7 @@ class FormatRBear:
                          r_braces_on_next_line: bool=False,
                          r_use_arrows: bool=False,
                          tab_width: int=SpacingHelper.DEFAULT_TAB_WIDTH,
-                         r_max_expression_length: int=20):
+                         r_max_expression_length: int=0):
         """
         :param r_keep_comments:
             Determines whether comments are kept or not.
