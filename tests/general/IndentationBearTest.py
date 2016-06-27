@@ -74,7 +74,7 @@ class IndentationBearTest(unittest.TestCase):
 
         valid_file2 =\
             ('R("strings can span\n',
-             'multiple lines as well{")\n'
+             'multiple lines as well{")\n',
              'but the bear works correctly\n')
         self.verify_bear(valid_file2)
 
