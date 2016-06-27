@@ -32,8 +32,10 @@ class IndentationBear(LocalBear):
         is not given, this bear looks for unindents within the code to correctly
         figure out indentation.
 
-        It does not however support hanging indents or absolute indents of
-        any sort, also indents based on keywords are not supported yet.
+        It also figures out hanging indents and absolute indentation of function
+        params or list elements.
+
+        It does not however support  indents based on keywords yet.
         for example:
 
             if(something)
@@ -95,6 +97,10 @@ class IndentationBear(LocalBear):
             yield Result(self, str(e), severity=RESULT_SEVERITY.MAJOR)
             return
 
+        absolute_indent_levels = self.get_absolute_indent_of_range(
+            file, filename,
+            encaps_pos, annotation_dict)
+
         insert = ' '*tab_width if use_spaces else '\t'
         no_indent_file = [line.lstrip() if line.lstrip() else "\n"
                           for line_nr, line in enumerate(file)]
@@ -103,6 +109,16 @@ class IndentationBear(LocalBear):
         for line_nr, line in enumerate(no_indent_file):
             new_file.append(insert*indent_levels[line_nr] + line
                             if line is not "\n" else "\n")
+
+        for _range, indent in absolute_indent_levels:
+            prev_indent = get_indent_of_line(new_file, _range.start.line - 1,
+                                             length=False)
+            prev_indent_level = indent_levels[_range.start.line - 1]
+            for line in range(_range.start.line, _range.end.line):
+                new_line = (prev_indent + ' '*indent +
+                            insert*(indent_levels[line] - prev_indent_level) +
+                            new_file[line].lstrip())
+                new_file[line] = new_line if new_line.strip() != "" else "\n"
 
         if new_file != list(file):
             wholediff = Diff.from_string_arrays(file, new_file)
@@ -113,6 +129,32 @@ class IndentationBear(LocalBear):
                     severity=RESULT_SEVERITY.INFO,
                     affected_code=(diff.range(filename),),
                     diffs={filename: diff})
+
+    def get_absolute_indent_of_range(self,
+                                     file,
+                                     filename,
+                                     encaps_pos,
+                                     annotation_dict):
+        """
+        Gets the absolute indentation of all the encapsulators.
+
+        :param file:            A tuple of strings.
+        :param filename:        Name of file.
+        :param encaps_pos:      A tuple ofSourceRanges of code regions
+                                trapped in between a matching pair of
+                                encapsulators.
+        :param annotation_dict: A dictionary containing sourceranges of all the
+                                strings and comments within a file.
+        :return:                A tuple of tuples with first element as the
+                                range of encapsulator and second element as the
+                                indent of its elements.
+        """
+        indent_of_range = []
+        for encaps in encaps_pos:
+            indent = get_element_indent(file, encaps)
+            indent_of_range.append((encaps, indent))
+
+        return tuple(indent_of_range)
 
     def get_indent_levels(self,
                           file,
@@ -411,6 +453,34 @@ def gt_eq(absolute, source):
         return absolute.column >= source.column
 
     return absolute.line > source.line
+
+
+def get_element_indent(file, encaps):
+    """
+    Gets indent of elements inside encapsulator.
+
+    :param file:   A tuple of strings.
+    :param encaps: SourceRange of an encapsulator.
+    :return:       The number of spaces params are indented relative to
+                   the start line of encapsulator.
+    """
+    line_nr = encaps.start.line - 1
+    start_indent = get_indent_of_line(file, line_nr)
+    if len(file[line_nr].rstrip()) <= encaps.start.column:
+        indent = get_indent_of_line(file, line_nr + 1)
+    else:
+        indent = encaps.start.column
+
+    indent = indent - start_indent if indent > start_indent else 0
+    return indent
+
+
+def get_indent_of_line(file, line, length=True):
+    indent = len(file[line]) - len(file[line].lstrip())
+    if length:
+        return indent
+    else:
+        return file[line][:indent]
 
 
 class ExpectedIndentError(Exception):

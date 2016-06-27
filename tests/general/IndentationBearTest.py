@@ -194,10 +194,8 @@ class IndentationBearTest(unittest.TestCase):
         self.verify_bear(valid_file, invalid_file)
 
         valid_file = ('def func(x,\n',
-                      # TODO correct indentation of test after support for
-                      # absolute indentation
-                      'y,\n',
-                      'z):\n',
+                      '         y,\n',
+                      '         z):\n',
                       '\tsome line\n',
                       '\tsome line 2\n')
         invalid_file = ('def func(x):\n',
@@ -219,3 +217,53 @@ class IndentationBearTest(unittest.TestCase):
                         '\t/* multiline comment\n',
                         'unindent*/')
         self.verify_bear(invalid_file=invalid_file)
+
+    def test_absolute_indentation(self):
+        valid_file =\
+            ("some_function(param1,\n",
+             "              second_param,\n",
+             "              third_one)\n",
+             "indent back to normal\n")
+
+        invalid_file =\
+            ("some_function(param1,\n",
+             "              param2)\n",
+             "              wrong_indent\n")
+
+        self.verify_bear(valid_file=valid_file, invalid_file=invalid_file)
+
+        valid_file = \
+            ("branched_function(param1,\n",
+             "                  param2_func(param3,\n",
+             "                              param4)\n",
+             "                  param5)\n",
+             "indent back to original\n")
+
+        invalid_file = \
+            ("some_function(param1\n",
+             "              param2(param3,\n",
+             "                     param4))\n",
+             "              wrong indent\n")
+
+        self.verify_bear(valid_file=valid_file, invalid_file=invalid_file)
+
+        valid_file =\
+            ("some_function(param1{\n",
+             "              \tshould be here\n",
+             "              }\n",
+             "              param2)\n")
+
+        invalid_file =\
+            ("some_function(param1{\n",
+             "                     \tis this right?\n",
+             "                     }\n",
+             "              probably not)\n")
+
+        self.verify_bear(valid_file=valid_file, invalid_file=invalid_file)
+
+        valid_file =\
+            ("some_function(\n",
+             "         does hanging indents\n"
+             "         so can indent like this)\n")
+
+        self.verify_bear(valid_file)
