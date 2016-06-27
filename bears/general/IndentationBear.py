@@ -318,7 +318,7 @@ class IndentationBear(LocalBear):
 
 def get_indent_of_specifier(file, current_line, encapsulators):
     """
-    get indentation of the indent specifer itself.
+    Get indentation of the indent specifer itself.
 
     :param file:          A tuple of strings.
     :param current_line:  Line number of indent specifier (initial 1)
@@ -345,7 +345,7 @@ def get_first_unindent(indent,
                        encapsulators,
                        comments):
     """
-    get the first case of a valid unindentation.
+    Get the first case of a valid unindentation.
 
     :param indent:          No. of spaces to check unindent against.
     :param file:            A tuple of strings.
