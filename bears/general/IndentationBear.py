@@ -292,6 +292,8 @@ class IndentationBear(LocalBear):
                                     encapsulators,
                                     comments):
         """
+        Gets the range of all blocks which do not have an un-indent specifer.
+
         :param file:             File that needs to be checked in the form of
                                  a list of strings.
         :param filename:         Name of the file that needs to be checked.
@@ -303,6 +305,8 @@ class IndentationBear(LocalBear):
                                 a language.
         :param comments:        A dict containing all the types of comments
                                 specifiers in a language.
+        :return:                A tuple of SourceRanges of blocks without
+                                un-indent specifiers.
         """
         specifiers = list(self.get_valid_sequences(
             file, indent_specifier, annotation_dict))
@@ -407,7 +411,8 @@ def get_first_unindent(indent,
     :param start_line:      The line from where to start searching for unindent.
     :param annotation_dict: A dictionary containing sourceranges of all the
                             strings and comments within a file.
-    :param encapsulators:
+    :param encapsulators:   A tuple of SourceRanges of code regions trapped in
+                            between a matching pair of encapsulators.
     :param comments:        A dict containing all the types of comments
                             specifiers in a language.
     :return:                The line where unindent is found (intial 0).
