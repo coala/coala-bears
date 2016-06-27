@@ -20,7 +20,7 @@ class GoVetBear:
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
-    CAN_DETECT = {'Unused code', 'Smell', 'Unreachable Code'}
+    CAN_DETECT = {'Unused Code', 'Smell', 'Unreachable Code'}
 
     @staticmethod
     def create_arguments(filename, file, config_file):
