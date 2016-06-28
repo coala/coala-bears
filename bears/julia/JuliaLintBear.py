@@ -27,7 +27,7 @@ class JuliaLintBear:
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
-    CAN_DETECT = {'Unused Code', 'Syntax', 'Simplification', 'Code Duplication',
+    CAN_DETECT = {'Unused Code', 'Syntax', 'Simplification', 'Duplication',
                   'Unreachable Code', 'Security', 'Formatting'}
 
     @staticmethod
