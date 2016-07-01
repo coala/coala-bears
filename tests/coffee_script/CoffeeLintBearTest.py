@@ -28,6 +28,34 @@ x = !y
 """
 
 
+good_file_no_duplicate_keys = """
+class SomeThing
+  getConfig: ->
+    @config =
+      foo: 1
+  @getConfig: ->
+    config =
+      foo: 1
+"""
+
+
+bad_file_no_duplicate_keys = """
+class SomeThing
+  getConfig: ->
+    one = 1
+    one = 5
+    @config =
+      keyA: one
+      keyB: one
+      keyA: 2
+  getConfig: ->
+    @config =
+      foo: 1
+  @getConfig: ->
+    config =
+      foo: 1"""
+
+
 good_file_tab_width = """
 # Lint your CoffeeScript!
 
@@ -205,6 +233,18 @@ class Bar extends Foo
 """
 
 
+bad_file_cyclomatic_complexity = """
+x = () ->
+  a = () ->
+    1 or 2
+"""
+
+
+good_file_cyclomatic_complexity = """
+x = () -> 1234
+"""
+
+
 warning_file = """
 # Nested string interpolation
 str = "Book by #{"#{firstName} #{lastName}".toUpperCase()}"
@@ -246,6 +286,14 @@ CoffeeLintBearTabWidthTest = verify_local_bear(
     valid_files=(good_file_tab_width,),
     invalid_files=(good_file,),
     settings={"use_spaces": "false", "tab_width": 4})
+
+
+CoffeeLintBearNoDuplicateKeysTest = verify_local_bear(
+    CoffeeLintBear,
+    valid_files=(good_file_no_duplicate_keys,),
+    invalid_files=(bad_file_no_duplicate_keys,),
+    settings={"prevent_duplicate_keys": "true",
+              "enforce_newline_at_EOF": "true"})
 
 
 CoffeeLintBearCamelCaseTest = verify_local_bear(
@@ -321,7 +369,7 @@ CoffeeLintBearDisableThrowingStringsTest = verify_local_bear(
 
 CoffeeLintBearNoStandAloneAtTest = verify_local_bear(
     CoffeeLintBear,
-    valid_files=(good_file_no_stand_alone_at_sign),
+    valid_files=(good_file_no_stand_alone_at_sign, bad_file_no_duplicate_keys),
     invalid_files=(bad_file_no_stand_alone_at_sign,),
     settings={"no_stand_alone_at_sign": "true",
               "space_after_comma": "true",
@@ -351,3 +399,10 @@ CoffeeLintBearNewLinesAfterClassesTest = verify_local_bear(
     valid_files=(good_file_new_lines_after_classes,),
     invalid_files=(bad_file_new_lines_after_classes,),
     settings={"number_of_newlines_after_classes": 1})
+
+
+CoffeeLintBearCyclomaticComplexityTest = verify_local_bear(
+    CoffeeLintBear,
+    valid_files=(good_file_cyclomatic_complexity,),
+    invalid_files=(bad_file_cyclomatic_complexity,),
+    settings={"cyclomatic_complexity": 1})
