@@ -6,7 +6,8 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.results.Result import Result
 
 
-@linter(executable='coffeelint')
+@linter(executable='coffeelint',
+        use_stdin=True)
 class CoffeeLintBear:
     """
     Check CoffeeScript code for a clean and consistent style.
@@ -27,7 +28,7 @@ class CoffeeLintBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file):
-        return '--reporter=raw', '-f', config_file, filename
+        return '--reporter=raw', '--stdin', '-f', config_file
 
     @staticmethod
     def generate_config(filename, file,
