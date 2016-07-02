@@ -21,7 +21,7 @@ class HaskellLintBear:
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
     CAN_DETECT = {'Duplication'}
-    CAN_FIX = {'Unused Code', 'Simplification'}
+    CAN_FIX = {'Unused Code', 'Code Simplification'}
 
     severity_map = {"Error": RESULT_SEVERITY.MAJOR,
                     "Warning": RESULT_SEVERITY.NORMAL,

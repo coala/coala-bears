@@ -8,7 +8,7 @@ class LineCountBear(LocalBear):
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
-    CAN_DETECT = {'Formatting', 'Simplification'}
+    CAN_DETECT = {'Formatting'}
 
     def run(self, filename, file, max_lines_per_file: int):
         """
