@@ -102,24 +102,15 @@ class IndentationBear(LocalBear):
             encaps_pos, annotation_dict)
 
         insert = ' '*tab_width if use_spaces else '\t'
-        no_indent_file = [line.lstrip() if line.lstrip() else "\n"
-                          for line_nr, line in enumerate(file)]
 
-        new_file = []
-        for line_nr, line in enumerate(no_indent_file):
-            new_file.append(insert*indent_levels[line_nr] + line
-                            if line is not "\n" else "\n")
-
-        for _range, indent in absolute_indent_levels:
-            prev_indent = get_indent_of_line(new_file, _range.start.line - 1,
-                                             length=False)
-            prev_indent_level = indent_levels[_range.start.line - 1]
-            for line in range(_range.start.line, _range.end.line):
-                new_line = (prev_indent + ' '*indent +
-                            insert*(indent_levels[line] - prev_indent_level) +
-                            new_file[line].lstrip())
-                new_file[line] = new_line if new_line.strip() != "" else "\n"
-
+        no_indent_file = self._get_no_indent_file(file)
+        new_file = self._get_basic_indent_file(no_indent_file,
+                                               indent_levels,
+                                               insert)
+        new_file = self._get_absolute_indent_file(new_file,
+                                                  absolute_indent_levels,
+                                                  indent_levels,
+                                                  insert)
         if new_file != list(file):
             wholediff = Diff.from_string_arrays(file, new_file)
             for diff in wholediff.split_diff():
@@ -129,6 +120,37 @@ class IndentationBear(LocalBear):
                     severity=RESULT_SEVERITY.INFO,
                     affected_code=(diff.range(filename),),
                     diffs={filename: diff})
+
+    def _get_no_indent_file(self, file):
+        no_indent_file = [line.lstrip() if line.lstrip() else "\n"
+                          for line_nr, line in enumerate(file)]
+        return no_indent_file
+
+    def _get_basic_indent_file(self, no_indent_file, indent_levels, insert):
+        new_file = []
+        for line_nr, line in enumerate(no_indent_file):
+            new_file.append(insert*indent_levels[line_nr] + line
+                            if line is not "\n" else "\n")
+
+        return new_file
+
+    def _get_absolute_indent_file(self,
+                                  indented_file,
+                                  absolute_indent_levels,
+                                  indent_levels,
+                                  insert):
+        for _range, indent in absolute_indent_levels:
+            prev_indent = get_indent_of_line(indented_file,
+                                             _range.start.line - 1,
+                                             length=False)
+            prev_indent_level = indent_levels[_range.start.line - 1]
+            for line in range(_range.start.line, _range.end.line):
+                new_line = (prev_indent + ' '*indent +
+                            insert*(indent_levels[line] - prev_indent_level) +
+                            indented_file[line].lstrip())
+                indented_file[line] = new_line if new_line.strip() != ""\
+                    else "\n"
+        return indented_file
 
     def get_absolute_indent_of_range(self,
                                      file,
