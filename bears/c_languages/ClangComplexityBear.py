@@ -20,7 +20,7 @@ class ClangComplexityBear(LocalBear):
     CAN_DETECT = {'Complexity'}
 
     check_prerequisites = classmethod(clang_available)
-    decisive_cursor_kinds = {
+    _decisive_cursor_kinds = {
         CursorKind.IF_STMT, CursorKind.WHILE_STMT, CursorKind.FOR_STMT,
         CursorKind.DEFAULT_STMT, CursorKind.CASE_STMT}
 
@@ -34,7 +34,7 @@ class ClangComplexityBear(LocalBear):
         decisions, exits = 0, 0
 
         for child in cursor.get_children():
-            if child.kind in self.decisive_cursor_kinds:
+            if child.kind in self._decisive_cursor_kinds:
                 decisions += 1
             elif child.kind == CursorKind.RETURN_STMT:
                 exits += 1
