@@ -22,6 +22,9 @@ deps_perl="perl libperl-critic-perl"
 deps_infer="m4 opam"
 sudo apt-get -y install $deps $deps_python_gi $deps_python_dbus $deps_perl $deps_infer
 
+# Change environment for flawfinder from python to python2
+sudo sed -i '1s/.*/#!\/usr\/bin\/env python2/' /usr/bin/flawfinder
+
 # Update hlint to latest version (not available in apt)
 wget https://launchpad.net/ubuntu/+source/hlint/1.9.26-1/+build/8831318/+files/hlint_1.9.26-1_amd64.deb
 sudo dpkg -i hlint_1.9.26-1_amd64.deb
