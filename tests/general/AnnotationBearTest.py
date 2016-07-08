@@ -32,6 +32,10 @@ class AnnotationBearTest(unittest.TestCase):
             self.assertEqual(result[0].contents['strings'], compare)
             self.assertEqual(result[0].contents['comments'], ())
 
+        text = ["a'\n", "b'\n"]
+        with execute_bear(self.python_uut, "F", text) as result:
+            self.assertEqual(result[0].message, "' has no closure")
+
     def test_multiline_string(self):
         text = ["'''multiline string, #comment within it'''\n"]
         compare = (SourceRange.from_absolute_position(
@@ -61,6 +65,10 @@ class AnnotationBearTest(unittest.TestCase):
         with execute_bear(self.c_uut, "F", text) as result:
             self.assertEqual(result[0].contents['strings'], ())
             self.assertEqual(result[0].contents['comments'], compare)
+
+        text = ['/*Multiline which does not end']
+        with execute_bear(self.c_uut, "F", text) as result:
+            self.assertEqual(result[0].message, '/* has no closure')
 
     def test_string_with_comments(self):
         text = ["some #comment\n", "with 'string' in  next line"]
