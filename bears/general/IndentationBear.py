@@ -7,7 +7,6 @@ from coalib.results.AbsolutePosition import AbsolutePosition
 from coalib.results.Diff import Diff
 
 from bears.general.AnnotationBear import AnnotationBear
-from bears.general.AnnotationBear import starts_within_ranges
 
 
 class IndentationBear(LocalBear):
