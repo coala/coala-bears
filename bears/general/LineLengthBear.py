@@ -16,13 +16,14 @@ class LineLengthBear(LocalBear):
     def run(self,
             filename,
             file,
-            max_line_length: int=80,
+            max_line_length: int=79,
             tab_width: int=SpacingHelper.DEFAULT_TAB_WIDTH,
             ignore_length_regex: typed_list(str)=()):
         '''
         Yields results for all lines longer than the given maximum line length.
 
-        :param max_line_length:     Maximum number of characters for a line.
+        :param max_line_length:     Maximum number of characters for a line, the
+                                    newline character being excluded.
         :param tab_width:           Number of spaces to show for one tab.
         :param ignore_length_regex: Lines matching each of the regular
                                     expressions in this list will be ignored.
