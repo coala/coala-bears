@@ -32,6 +32,6 @@ class JuliaLintBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file):
-        lintcode = ('import Lint.lintfile; lintfile("' +
-                    escape(filename, '"\\') + '")')
+        lintcode = ('import Lint.lintfile; display(lintfile("' +
+                    escape(filename, '"\\') + '"))')
         return '-e', lintcode
