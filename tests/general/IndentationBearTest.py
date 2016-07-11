@@ -117,7 +117,7 @@ class IndentationBearTest(unittest.TestCase):
                       "\tone_indent",
                       "}")
         invalid_file = ("{{{}{}}",
-                        "didn't give indent",
+                        "did not give indent",
                         "}")
         self.verify_bear(valid_file, invalid_file)
 
@@ -130,7 +130,7 @@ class IndentationBearTest(unittest.TestCase):
                       "\tIndents even after blank line}")
         invalid_file = ("{ trying indent",
                         "\n",
-                        "should've Indented after blank line}")
+                        "should have Indented after blank line}")
         self.verify_bear(valid_file, invalid_file)
 
         valid_file = ('def func(x):\n',
