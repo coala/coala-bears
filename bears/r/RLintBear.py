@@ -9,7 +9,7 @@ class RLintBear(LocalBear, Lint):
     executable = 'Rscript'
     arguments = "-e 'library(lintr)' -e 'lintr::lint(\"{filename}\")'"
     output_regex = re.compile(
-        r'(?P<file_name>.*?):(?P<line>\d+):(?P<column>\d+):'
+        r'(.*?):(?P<line>\d+):(?P<column>\d+):'
         r' (?P<severity>\S+): (?P<message>.*)')
     severity_map = {
         "style": RESULT_SEVERITY.NORMAL,
