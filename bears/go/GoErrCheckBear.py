@@ -4,8 +4,8 @@ from coalib.settings.Setting import typed_list
 
 @linter(executable='errcheck',
         output_format='regex',
-        output_regex=r'(?P<filename>[^:]+):(?P<line>\d+):'
-                     r'(?P<col>\d+)\s*(?P<message>.*)',
+        output_regex=r'([^:]+):(?P<line>\d+):'
+                     r'(?P<column>\d+)\s*(?P<message>.*)',
         result_message="This function call has an unchecked error.")
 class GoErrCheckBear:
 
