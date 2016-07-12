@@ -9,7 +9,7 @@ class InferBear(LocalBear, Lint):
     executable = 'infer'
     arguments = '-npb -- javac {filename}'
     output_regex = re.compile(
-        r'(?P<file_name>.+):'
+        r'(.+):'
         r'(?P<line>.+): '
         r'(?P<severity>error|warning): '
         r'(?P<message>.*)')
