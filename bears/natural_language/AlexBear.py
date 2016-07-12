@@ -10,7 +10,7 @@ class AlexBear(LocalBear, Lint):
     output_regex = re.compile(
         r'\s+(?P<line>\d+):(?P<column>\d+)\-'
         r'(?P<end_line>\d+):(?P<end_column>\d+)'
-        r'\s+(?:(?P<warning>warning))\s+(?P<message>.+)')
+        r'\s+(?:(warning))\s+(?P<message>.+)')
     arguments = "{filename}"
     LANGUAGES = {"Natural Language"}
     REQUIREMENTS = {NpmRequirement('alex', '2')}
