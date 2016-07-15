@@ -267,3 +267,19 @@ class IndentationBearTest(unittest.TestCase):
              "         so can indent like this)\n")
 
         self.verify_bear(valid_file)
+
+    def test_invalid_specifiers(self):
+        valid_file = ("not a valid : indent specifier\n",
+                      "does not indent\n")
+        invalid_file = ("not a valid : indent specifier\n",
+                        "\tindents\n")
+        self.verify_bear(valid_file, invalid_file)
+
+        valid_file = ("[a specifier :\n",
+                      " inside an encapsulator]\n",
+                      "is not valid")
+        self.verify_bear(valid_file)
+
+        valid_file = ("This is a valid specifier: # A comment\n",
+                      "\tand so it indents\n")
+        self.verify_bear(valid_file)
