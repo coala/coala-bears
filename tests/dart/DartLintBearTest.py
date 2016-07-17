@@ -11,7 +11,7 @@ main() {
   var answer = 42;          // The meaning of life.
   printNumber(answer);
 }
-""".splitlines(keepends=True)
+"""
 
 
 bad_file = """
@@ -23,7 +23,7 @@ main() {
   var answer = 42;          // The meaning of life.
   printNumber(answer)
 }
-""".splitlines(keepends=True)
+"""
 
 
 DartLintBearTest = verify_local_bear(DartLintBear,

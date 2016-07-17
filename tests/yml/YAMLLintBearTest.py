@@ -16,7 +16,7 @@ items:
       price:     1.47
       quantity:  4
 ...
-""".splitlines(keepends=True)
+"""
 
 config_file = """
 extends:
@@ -26,7 +26,7 @@ rules:
       max-spaces-after: -1
     indentation: disable
     empty-lines: disable
-""".splitlines(keepends=True)
+"""
 
 
 YAMLLintBear1Test = verify_local_bear(YAMLLintBear,

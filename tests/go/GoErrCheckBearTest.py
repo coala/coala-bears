@@ -6,7 +6,7 @@ import "fmt"
 func main() {
     fmt.Println("Hello, Arch!")
 }
-""".splitlines(keepends=True)
+"""
 
 
 bad_file = """package main
@@ -16,7 +16,7 @@ f, _ := os.Open("foo")
 f.Write([]byte("Hello, world."))
 f.Close()
 }
-""".splitlines(keepends=True)
+"""
 
 assert_file = """package main
 
@@ -36,7 +36,7 @@ func main() {
   _, _, _, _ = s1, s2, s3, ok
 
 }
-""".splitlines(keepends=True)
+"""
 
 blank_file = """package main
 import "os"
@@ -45,7 +45,7 @@ import "fmt"
 func main() {
 f, _ := os.Open("random")
     fmt.Println(f)
-}""".splitlines(keepends=True)
+}"""
 
 ignorepkg_file = """package main
 import (
@@ -57,7 +57,7 @@ func main() {
   f, _ := os.Open("foo")
   log.Println("opened file")
   io.Copy(os.Stdout, f)
-}""".splitlines(keepends=True)
+}"""
 
 GoErrCheckBearTest = verify_local_bear(GoErrCheckBear,
                                        valid_files=(

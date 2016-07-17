@@ -15,26 +15,26 @@ except ImportError as err:
 
 LanguageToolBearTest = verify_local_bear(
     LanguageToolBear,
-    valid_files=(["A correct English sentence sounds nice in everyone."],
-                 ["Eine korrekte englische Satz klingt nett zu jedermann."]),
-    invalid_files=(["  "],
-                   ["asdgaasdfgahsadf"],
-                   ['"quoted"']))
+    valid_files=("A correct English sentence sounds nice in everyone.",
+                 "Eine korrekte englische Satz klingt nett zu jedermann."),
+    invalid_files=("  ",
+                   "asdgaasdfgahsadf",
+                   '"quoted"'))
 
 
 LanguageToolBearLocaleTest = verify_local_bear(
     LanguageToolBear,
-    valid_files=(["A correct English sentence sounds nice in everyone."],),
-    invalid_files=(["Eine korrekte englische Satz klingt nett zu jedermann."],),
+    valid_files=("A correct English sentence sounds nice in everyone.",),
+    invalid_files=("Eine korrekte englische Satz klingt nett zu jedermann.",),
     settings={'locale': 'en-US'})
 
 
 LanguageToolBearDisableRulesTest = verify_local_bear(
     LanguageToolBear,
-    valid_files=(["Line without unnecessary spaces at the start."],
-                 ["a line beginning with lowercase."],
-                 ["A line beginning with uppercase."]),
-    invalid_files=(["  Line with unnecessary spaces at the start."],),
+    valid_files=("Line without unnecessary spaces at the start.",
+                 "a line beginning with lowercase.",
+                 "A line beginning with uppercase."),
+    invalid_files=("  Line with unnecessary spaces at the start.",),
     settings={'languagetool_disable_rules': 'UPPERCASE_SENTENCE_START'})
 
 

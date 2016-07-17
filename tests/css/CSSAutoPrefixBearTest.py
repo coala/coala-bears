@@ -9,13 +9,13 @@ good_file = """
     display: -ms-flexbox;
     display: flex;
 }
-""".splitlines(keepends=True)
+"""
 
 bad_file = """
 .example {
     display: flex;
 }
-""".splitlines(keepends=True)
+"""
 
 CSSAutoPrefixBear = verify_local_bear(CSSAutoPrefixBear,
                                       valid_files=(good_file,),

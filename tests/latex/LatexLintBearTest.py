@@ -5,13 +5,13 @@ from tests.LocalBearTestHelper import verify_local_bear
 good_file = """
 {.}
 { sometext }\\
-""".splitlines(keepends=True)
+"""
 
 
 bad_file = """
 { .}
 { Sometext \\
-""".splitlines(keepends=True)
+"""
 
 
 LatexLintBearTest = verify_local_bear(LatexLintBear,

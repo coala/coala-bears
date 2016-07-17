@@ -8,14 +8,14 @@ good_file = """
     background-color: darken($btn-primary-bg, 3%);
   }
 }
-""".splitlines(keepends=True)
+"""
 
 bad_file = """
 .btn-primary {
   &:hover {
     background-color: darken($btn-primary-bg, 3%)
 }
-""".splitlines(keepends=True)
+"""
 
 
 SCSSLintBearTest = verify_local_bear(SCSSLintBear,

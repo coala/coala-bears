@@ -5,9 +5,9 @@ from tests.LocalBearTestHelper import verify_local_bear
 good_file = """# Does something
 class Something;
 end
-""".splitlines(True)
+"""
 
-bad_file1 = ('class Something; end',)
+bad_file1 = 'class Something; end'
 
 bad_file2 = """class Dirty
   # This method smells of :reek:NestedIterators but ignores them
@@ -17,10 +17,10 @@ bad_file2 = """class Dirty
     puts @screen.contents
   end
 end
-""".splitlines(True)
+"""
 
 RubySmellBearTest = verify_local_bear(RubySmellBear,
-                                      valid_files=(good_file, ('',)),
+                                      valid_files=(good_file, ''),
                                       invalid_files=(bad_file1, bad_file2))
 
 RubySmellBearConfigTest = verify_local_bear(

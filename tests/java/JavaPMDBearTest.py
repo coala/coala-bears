@@ -16,7 +16,7 @@ class Hello {
     return myString.length();
   }
 }
-""".splitlines(keepends=True)
+"""
 
 bad_file = """
 // Hello.java
@@ -26,7 +26,7 @@ class Hello {
     return s.length();
   }
 }
-""".splitlines(keepends=True)
+"""
 
 
 JavaPMDBearTest = verify_local_bear(

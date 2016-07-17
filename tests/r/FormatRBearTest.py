@@ -7,7 +7,7 @@ if (TRUE) {
 } else {
     x = 2
     print("Oh no... ask the right bracket to go away!")
-}""".splitlines(keepends=True)
+}"""
 
 
 good_file_2 = """1 + 1
@@ -16,7 +16,7 @@ if (TRUE) {
 } else {
     x <- 2
     print("Oh no... ask the right bracket to go away!")
-}""".splitlines(keepends=True)
+}"""
 
 
 good_file_3 = """1 + 1
@@ -25,7 +25,7 @@ if (TRUE) {
 } else {
     x = 2
     print("Oh no... ask the right bracket to go away!")
-}""".splitlines(keepends=True)
+}"""
 
 
 good_file_4 = """1 + 1
@@ -36,7 +36,7 @@ if (TRUE)
 {
     x = 2
     print("Oh no... ask the right bracket to go away!")
-}""".splitlines(keepends=True)
+}"""
 
 
 good_file_5 = """1 + 1
@@ -45,7 +45,7 @@ if (TRUE) {
 } else {
         x = 2
         print("Oh no... ask the right bracket to go away!")
-}""".splitlines(keepends=True)
+}"""
 
 
 good_file_6 = """x = (1 + 1 + 1 + 1 + 1 + 1 +\x20
@@ -56,14 +56,14 @@ if (TRUE) {
     x = 2
     print("Oh no... ask the right bracket to go away!")
 }
-""".splitlines(keepends=True)
+"""
 
 
 bad_file_1 = """1+1
 if(TRUE){
 x=1  # inline comments
 }else{x=2;print("Oh no... ask the right bracket to go away!")}
-""".splitlines(keepends=True)
+"""
 
 
 bad_file_2 = """1+1
@@ -73,14 +73,14 @@ if(TRUE){
 x=1  # inline comments
 }else{
 x=2;print("Oh no... ask the right bracket to go away!")}
-""".splitlines(keepends=True)
+"""
 
 
 bad_file_3 = """x=(1+1+1+1+1+1+1+1+1)
 if(TRUE){
 x=1  # inline comments
 }else{x=2;print("Oh no... ask the right bracket to go away!")}
-""".splitlines(keepends=True)
+"""
 
 
 FormatRBearTest = verify_local_bear(

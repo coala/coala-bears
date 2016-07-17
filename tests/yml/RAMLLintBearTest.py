@@ -7,7 +7,7 @@ good_file = """
 title: World Music API
 baseUri: http://example.api.com/{version}
 version: v1
-""".splitlines(keepends=True)
+"""
 
 
 bad_file = """#%RAML 0.8
@@ -21,7 +21,7 @@ baseUri: http://example.com
 
   post:
 
-""".splitlines(keepends=True)
+"""
 
 
 RAMLLintBearTest = verify_local_bear(RAMLLintBear,

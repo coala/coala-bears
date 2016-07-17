@@ -12,7 +12,7 @@ test_good = """function addOne(i) {
 }
 
 addOne(3);
-""".splitlines(True)
+"""
 
 test_bad = """function addOne(i) {
     if (i != NaN) {
@@ -22,9 +22,9 @@ test_bad = """function addOne(i) {
         return
     }
 };
-""".splitlines(True)
+"""
 
-test_syntax_error = ('{<!@3@^ yeah!/\n',)
+test_syntax_error = '{<!@3@^ yeah!/\n'
 
 eslintconfig = os.path.join(os.path.dirname(__file__),
                             "test_files",

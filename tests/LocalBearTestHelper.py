@@ -184,7 +184,7 @@ def verify_local_bear(bear,
             self.assertIsInstance(valid_files, (list, tuple))
             for file in valid_files:
                 self.check_validity(self.uut,
-                                    file,
+                                    file.splitlines(keepends=True),
                                     filename,
                                     valid=True,
                                     force_linebreaks=force_linebreaks,
@@ -195,7 +195,7 @@ def verify_local_bear(bear,
             self.assertIsInstance(invalid_files, (list, tuple))
             for file in invalid_files:
                 self.check_validity(self.uut,
-                                    file,
+                                    file.splitlines(keepends=True),
                                     filename,
                                     valid=False,
                                     force_linebreaks=force_linebreaks,

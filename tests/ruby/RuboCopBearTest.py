@@ -6,12 +6,12 @@ from tests.LocalBearTestHelper import verify_local_bear
 good_file = """def good_name
   test if something
 end
-""".splitlines(keepends=True)
+"""
 
 bad_file = """def badName
   test if something
 end
-""".splitlines(keepends=True)
+"""
 
 
 RuboCopBearTest = verify_local_bear(RuboCopBear,
@@ -36,13 +36,13 @@ another_good_file = """
 def goodindent
  # 1 space indent
 end
-""".splitlines(keepends=True)
+"""
 
 another_bad_file = """
 def badindent
   # 2 spaces indent
 end
-""".splitlines(keepends=False)
+"""
 
 RuboCopBearSettingsTest = verify_local_bear(
                               RuboCopBear,

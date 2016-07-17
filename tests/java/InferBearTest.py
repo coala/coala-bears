@@ -9,7 +9,7 @@ class InferGood {
         return s == null ? 0 : s.length();
     }
 }
-""".splitlines(keepends=True)
+"""
 
 bad_file = """
 class InferBad {
@@ -18,7 +18,7 @@ class InferBad {
         return s.length();
     }
 }
-""".splitlines(keepends=True)
+"""
 
 
 InferBearTest = verify_local_bear(InferBear,

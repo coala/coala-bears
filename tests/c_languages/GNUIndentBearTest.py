@@ -6,7 +6,7 @@ int
 main ()
 {
     return 0;
-}""".splitlines(keepends=True)
+}"""
 
 
 test_file2 = """
@@ -14,7 +14,7 @@ int
 main ()
 {
   return 0;
-}""".splitlines(keepends=True)
+}"""
 
 
 test_file3 = """
@@ -22,13 +22,13 @@ int
 main ()
 {
 \treturn 0;
-}""".splitlines(keepends=True)
+}"""
 
 
 test_file4 = """
 int main() {
   return 0;
-}""".splitlines(keepends=True)
+}"""
 
 
 test_file5 = """
@@ -38,7 +38,7 @@ main ()
 
   int a;
   return 0;
-}""".splitlines(keepends=True)
+}"""
 
 
 test_file6 = """
@@ -49,7 +49,7 @@ main ()
     int a;
 
     return 0;
-}""".splitlines(keepends=True)
+}"""
 
 
 test_file7 = """
@@ -59,7 +59,7 @@ main ()
     int a;
 
     return 0;
-}""".splitlines(keepends=True)
+}"""
 
 
 test_file8 = """
@@ -69,21 +69,21 @@ if (bool)
 }
 else
 {
-}""".splitlines(keepends=True)
+}"""
 
 
 test_file9 = """
 if (bool) {
     return a;
 } else {
-}""".splitlines(keepends=True)
+}"""
 
 
 test_file10 = """
 int main()
 {
     return 0;
-}""".splitlines(keepends=True)
+}"""
 
 
 GNUIndentBearTest = verify_local_bear(
