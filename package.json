@@ -13,6 +13,7 @@
     "postcss-cli": "~2",
     "remark": "~3",
     "tslint": "~3",
-    "ramllint": "~1.2.2"
+    "ramllint": "~1.2.2",
+    "write-good": "~0.9.1"
   }
 }
