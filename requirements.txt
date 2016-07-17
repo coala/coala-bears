@@ -1,5 +1,5 @@
 # Use >= for development versions so that source builds always work
-coala>=0.8.0.dev20160706080738
+coala>=0.8.0.dev20160717205044
 setuptools>=19.2
 munkres3==1.*
 pylint==1.*
@@ -27,4 +27,3 @@ vim-vint==0.3.*
 nltk==3.1.*
 appdirs==1.*
 pyyaml==3.*
-coala_decorators>=0.2.1,==0.2.*

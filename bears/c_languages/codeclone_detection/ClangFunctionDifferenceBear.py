@@ -10,7 +10,7 @@ from bears.c_languages.codeclone_detection.CloneDetectionRoutines import (
     compare_functions, get_count_matrices)
 from coalib.bears.GlobalBear import GlobalBear
 from coalib.collecting.Collectors import collect_dirs
-from coalib.misc.StringConverter import StringConverter
+from coala_utils.string_processing.StringConverter import StringConverter
 from coalib.results.HiddenResult import HiddenResult
 from coalib.settings.Setting import path_list, typed_ordered_dict
 
