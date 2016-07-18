@@ -1,6 +1,6 @@
+from coala_utils.string_processing.Core import escape
 from coalib.bearlib.abstractions.Linter import linter
 from coalib.bearlib.spacing.SpacingHelper import SpacingHelper
-from coalib.parsing.StringProcessing import escape
 
 
 def _map_to_r_bool(py_bool):

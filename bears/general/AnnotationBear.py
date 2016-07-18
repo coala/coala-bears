@@ -1,5 +1,5 @@
-from coalib.parsing.StringProcessing.Core import (unescaped_search_in_between,
-                                                  unescaped_search_for)
+from coala_utils.string_processing.Core import (unescaped_search_in_between,
+                                                unescaped_search_for)
 from coalib.bearlib.languages.LanguageDefinition import LanguageDefinition
 from coalib.bears.LocalBear import LocalBear
 from coalib.results.HiddenResult import HiddenResult

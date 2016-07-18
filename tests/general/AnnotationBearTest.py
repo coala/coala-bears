@@ -3,12 +3,12 @@ import unittest
 import os
 
 from bears.general.AnnotationBear import AnnotationBear
+from coala_utils.string_processing.Core import escape
 from coalib.results.SourceRange import SourceRange
 from coalib.results.AbsolutePosition import AbsolutePosition
 from coalib. results.HiddenResult import HiddenResult
 from coalib.settings.Section import Section
 from coalib.settings.Setting import Setting
-from coalib.parsing.StringProcessing.Core import escape
 from tests.LocalBearTestHelper import execute_bear
 
 
