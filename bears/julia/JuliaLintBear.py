@@ -1,4 +1,4 @@
-from coalib.parsing.StringProcessing import escape
+from coala_utils.string_processing.Core import escape
 
 from coalib.bearlib.abstractions.Linter import linter
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY

@@ -13,7 +13,7 @@ from coalib.misc.Shell import run_shell_command
 from coalib.settings.ConfigurationGathering import get_config_directory
 from coalib.settings.Section import Section
 from coalib.settings.Setting import Setting
-from coalib.parsing.StringProcessing import escape
+from coala_utils.string_processing.Core import escape
 
 
 @generate_skip_decorator(GitCommitBear)
