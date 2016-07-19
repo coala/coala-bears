@@ -478,7 +478,8 @@ def get_first_unindent(indent,
                comment.end.line >= line_nr + 1):
                 valid = False
 
-            first_char = file[line_nr].lstrip()[0]
+            first_char = file[line_nr].lstrip()[0] if file[line_nr].strip()\
+                else ""
             if first_char in comments:
                 valid = False
 
