@@ -13,7 +13,7 @@ except (ValueError, UnicodeError):
 if __name__ == "__main__":
     try:
         setup(name=$NAME,
-              version=$VERSION,
+              version='$VERSION',
               description="$NAME bear for coala (http://coala.rtfd.org/)",
               authors=$AUTHORS,
               authors_emails=$AUTHORS_EMAILS,

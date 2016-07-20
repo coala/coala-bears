@@ -5,6 +5,7 @@ import shutil
 from string import Template
 import subprocess
 import sys
+import time
 
 from bears import VERSION
 from coalib.collecting.Importers import iimport_objects
@@ -102,6 +103,7 @@ def main():
     os.makedirs(os.path.join('bears', 'upload'), exist_ok=True)
 
     bear_file_name_list = glob('bears/**/*Bear.py')
+    nano_version = str(int(time.time()))
 
     for bear_file_name in bear_file_name_list:
         bear_object = next(iimport_objects(
@@ -111,9 +113,14 @@ def main():
             bear_name, _ = os.path.splitext(os.path.basename(bear_file_name))
             create_file_structure_for_packages(
                 os.path.join('bears', 'upload'), bear_file_name, bear_name)
-
+            bear_version = VERSION
+            if 'dev' in bear_version:  # pragma: no cover
+                bear_version = bear_version[:bear_version.find("dev")] + (
+                    nano_version)
+            else:  # pragma: no cover
+                bear_version = repr(bear_version) + '.' + nano_version
             substitution_dict = {'NAME': repr(bear_name),
-                                 'VERSION': repr(VERSION),
+                                 'VERSION': bear_version,
                                  'AUTHORS': str(bear_object.AUTHORS),
                                  'AUTHORS_EMAILS':
                                  str(bear_object.AUTHORS_EMAILS),
@@ -129,12 +136,12 @@ def main():
                                                    bear_name, 'setup.py'),
                                       substitution_dict)
 
-        bear_dist_name = bear_name + '-' + VERSION
-        if args.register:
-            perform_register(os.path.join('bears', 'upload', bear_name),
-                             bear_dist_name)
-        if args.upload:
-            perform_upload(os.path.join('bears', 'upload', bear_name))
+            bear_dist_name = bear_name + '-' + bear_version
+            if args.register:
+                perform_register(os.path.join('bears', 'upload', bear_name),
+                                 bear_dist_name)
+            if args.upload:
+                perform_upload(os.path.join('bears', 'upload', bear_name))
 
 
 if __name__ == '__main__':  # pragma: no cover
