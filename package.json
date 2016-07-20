@@ -10,7 +10,7 @@
     "eslint": "~2",
     "jshint": "~2",
     "postcss-cli": "~2",
-    "remark": "~3",
+    "remark-cli": "~1.0.0",
     "tslint": "~3",
     "ramllint": "~1.2.2"
   }
