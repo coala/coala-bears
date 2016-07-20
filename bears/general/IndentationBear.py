@@ -441,7 +441,8 @@ def get_indent_of_specifier(file, current_line, encapsulators):
            encapsulators[_range].end.line <= current_line):
 
         if current_line == encapsulators[_range].end.line:
-            start = encapsulators[_range].start.line
+            if encapsulators[_range].start.line < start:
+                start = encapsulators[_range].start.line
 
         _range += 1
 
