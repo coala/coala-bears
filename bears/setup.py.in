@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import locale
 
-from setuptools import setup
+from setuptools import find_packages, setup
 
 
 try:
@@ -21,6 +21,7 @@ if __name__ == "__main__":
               maintainers_emails=$MAINTAINERS_EMAILS,
               platforms=$PLATFORMS,
               license='$LICENSE',
+              packages=find_packages(exclude=["build.*"]),
               long_description="""$LONG_DESCRIPTION""",
               classifiers=[
                    "Development Status :: 4 - Beta",
