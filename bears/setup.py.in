@@ -40,6 +40,6 @@ if __name__ == "__main__":
                    "Topic :: Text Processing :: Linguistic"])
 
     finally:
-        print('[WARN] If you do not install the bears using the coala'
-              'installation tool, there may be problems with the dependencies'
+        print('[WARN] If you do not install the bears using the coala '
+              'installation tool, there may be problems with the dependencies '
               'and they may not work.')
