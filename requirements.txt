@@ -28,3 +28,5 @@ vim-vint==0.3.*
 nltk==3.1.*
 appdirs==1.*
 pyyaml==3.*
+prompt_toolkit==1.*
+pygments==2.*
