@@ -102,10 +102,9 @@ def main():
 
     os.makedirs(os.path.join('bears', 'upload'), exist_ok=True)
 
-    bear_file_name_list = glob('bears/**/*Bear.py')
     nano_version = str(int(time.time()))
 
-    for bear_file_name in bear_file_name_list:
+    for bear_file_name in sorted(set(glob('bears/**/*Bear.py'))):
         bear_object = next(iimport_objects(
             bear_file_name, attributes='kind', local=True),
             None)
