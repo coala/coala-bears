@@ -40,6 +40,9 @@ class ESLintBear:
         return args
 
     def process_output(self, output, filename, file):
+        if not file:
+            return
+
         output = json.loads(output)
         lines = "".join(file)
 
