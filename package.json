@@ -8,6 +8,7 @@
     "csslint": "~0",
     "dockerfile_lint": "~0",
     "eslint": "~2",
+    "happiness":"~7.1.2",
     "jshint": "~2",
     "postcss-cli": "~2",
     "remark": "~3",
