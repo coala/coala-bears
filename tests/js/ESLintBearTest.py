@@ -31,13 +31,14 @@ eslintconfig = os.path.join(os.path.dirname(__file__),
                             "eslintconfig.json")
 
 ESLintBearTestWithConfig = verify_local_bear(ESLintBear,
-                                             valid_files=(
-                                                 test_good, ''),
-                                             invalid_files=(test_bad,),
+                                             valid_files=('',),
+                                             invalid_files=(test_bad,
+                                                            test_good),
                                              settings={"eslint_config":
                                                        eslintconfig})
 
 ESLintBearWithoutConfig = verify_local_bear(ESLintBear,
                                             valid_files=(
-                                                test_good, test_bad, ''),
-                                            invalid_files=(test_syntax_error,))
+                                                test_good, ''),
+                                            invalid_files=(
+                                                test_syntax_error, test_bad))

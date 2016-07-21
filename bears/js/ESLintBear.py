@@ -38,7 +38,14 @@ class ESLintBear:
         args = '--no-ignore', '--no-color', '-f=json', '--stdin'
         if eslint_config:
             args += ('--config', eslint_config)
+        else:
+            args += ('--config', config_file)
+
         return args
+
+    @staticmethod
+    def generate_config(filename, file):
+        return '{"extends": "eslint:recommended"}'
 
     def process_output(self, output, filename, file):
         if not file:
