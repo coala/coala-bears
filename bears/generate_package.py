@@ -64,9 +64,9 @@ def perform_register(path, file_name):
     """
     subprocess.call(
         [sys.executable, 'setup.py', 'sdist', 'bdist_wheel'], cwd=path)
-    subprocess.call(['twine', 'register', '-r', 'pypitest', os.path.join(
+    subprocess.call(['twine', 'register', '-r', 'pypi', os.path.join(
         path, 'dist', file_name + '.tar.gz')])
-    subprocess.call(['twine', 'register', '-r', 'pypitest', os.path.join(
+    subprocess.call(['twine', 'register', '-r', 'pypi', os.path.join(
         path, 'dist', file_name + '-py3-none-any.whl')])
 
 
@@ -77,7 +77,7 @@ def perform_upload(path):
     :param path: The folder in which the upload should be done.
     """
     subprocess.call(
-        ['twine', 'upload', '-r', 'pypitest', path + '/dist/*'])
+        ['twine', 'upload', path + '/dist/*'])
 
 
 def create_upload_parser():

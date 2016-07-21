@@ -69,7 +69,7 @@ class perform_registerTest(unittest.TestCase):
     def test_command(self, call_mock):
         perform_register('.', 'MarkdownBear-0.8.0.dev20160623094115')
         call_mock.assert_called_with(
-            ['twine', 'register', '-r', 'pypitest', os.path.join(
+            ['twine', 'register', '-r', 'pypi', os.path.join(
                 '.', 'dist',
                 'MarkdownBear-0.8.0.dev20160623094115-py3-none-any.whl')])
 
@@ -79,8 +79,7 @@ class perform_uploadTest(unittest.TestCase):
     @patch('subprocess.call')
     def test_command(self, call_mock):
         perform_upload('.')
-        call_mock.assert_called_with(['twine', 'upload', '-r', 'pypitest',
-                                      './dist/*'])
+        call_mock.assert_called_with(['twine', 'upload', './dist/*'])
 
 
 class mainTest(unittest.TestCase):
