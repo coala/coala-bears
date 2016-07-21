@@ -41,6 +41,6 @@ ESLintBearTestWithConfig = verify_local_bear(ESLintBear,
 
 ESLintBearWithoutConfig = verify_local_bear(ESLintBear,
                                             valid_files=(
-                                                test_good, test_bad, test_empty_file),
+                                                test_good, test_empty_file),
                                             invalid_files=(
                                                 test_syntax_error, test_bad))

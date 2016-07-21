@@ -30,14 +30,22 @@ class ESLintBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file,
-                         eslint_config: str=""):
+                         eslint_config: str=''):
         """
         :param eslint_config: The location of the .eslintrc config file.
         """
         args = '--no-ignore', '--no-color', '-f=json', '--stdin'
+        if config_file and (not eslint_config):
+            args += ('--config', config_file)
+
         if eslint_config:
             args += ('--config', eslint_config)
+
         return args
+
+    @staticmethod
+    def generate_config(filename, file):
+        return '{"extends": "eslint:recommended"}'
 
     def process_output(self, output, filename, file):
         if not file:
