@@ -45,7 +45,7 @@ go get -u github.com/golang/lint/golint
 go get -u golang.org/x/tools/cmd/goimports
 go get -u sourcegraph.com/sqs/goreturns
 go get -u golang.org/x/tools/cmd/gotype
-go get -u github.com/kisielk/errcheck 
+go get -u github.com/kisielk/errcheck
 
 # Ruby commands
 bundle install
@@ -84,7 +84,7 @@ julia -e "Pkg.add(\"Lint\")"
 sudo luarocks install luacheck --deps-mode=none
 
 # Infer commands
-if [ ! -e ~/infer-linux64-v0.7.0/infer/bin ]; then 
+if [ ! -e ~/infer-linux64-v0.7.0/infer/bin ]; then
 	wget -nc -O ~/infer.tar.xz https://github.com/facebook/infer/releases/download/v0.7.0/infer-linux64-v0.7.0.tar.xz
 	tar xf ~/infer.tar.xz -C ~/
 	cd ~/infer-linux64-v0.7.0
