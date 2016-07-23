@@ -28,7 +28,7 @@ class JSONFormatBear(LocalBear):
 
         :param json_sort:      Whether or not keys should be sorted.
         :param tab_width:      Number of spaces to indent.
-        :param escape_unicode: Wether or not to escape unicode values using
+        :param escape_unicode: Whether or not to escape unicode values using
                                ASCII.
         """
         try:
