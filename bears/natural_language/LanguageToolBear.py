@@ -29,12 +29,12 @@ class LanguageToolBear(LocalBear):
     def run(self,
             filename,
             file,
-            locale: str='auto',
+            language: str='auto',
             languagetool_disable_rules: typed_list(str)=()):
         '''
         Checks the code with LanguageTool.
 
-        :param locale:                     A locale representing the language
+        :param language:                   A locale representing the language
                                            you want to have checked. If set to
                                            'auto' the language is guessed.
                                            If the language cannot be guessed,
@@ -42,10 +42,11 @@ class LanguageToolBear(LocalBear):
         :param languagetool_disable_rules: List of rules to disable checks for.
         '''
         joined_text = "".join(file)
-        locale = guess_language(joined_text) if locale == 'auto' else locale
-        locale = 'en-US' if not locale else locale
+        language = (guess_language(joined_text)
+                    if language == 'auto' else language)
+        language = 'en-US' if not language else language
 
-        tool = LanguageTool(locale, motherTongue="en_US")
+        tool = LanguageTool(language, motherTongue="en_US")
         tool.disabled.update(languagetool_disable_rules)
 
         matches = tool.check(joined_text)
