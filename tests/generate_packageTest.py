@@ -53,6 +53,7 @@ class create_file_structure_for_packagesTest(unittest.TestCase):
 
     def tearDown(self):
         shutil.rmtree('folder')
+        os.remove('TestFile.py')
 
 
 class create_upload_parserTest(unittest.TestCase):
