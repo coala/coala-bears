@@ -72,7 +72,7 @@ class RubySmellBear:
                         bad_param_name: bool=True,
                         bad_var_name: bool=True,
                         check_unused_variables: bool=True,
-                        unused_private_method: bool=False,
+                        check_unused_private_methods: bool=False,
                         utility_function: bool=True):
         """
         :param attribute:
@@ -133,7 +133,7 @@ class RubySmellBear:
             of the variable well.
         :param check_unused_variables:
             Warns about unused parameters which are thus dead code.
-        :param unused_private_method:
+        :param check_unused_private_methods:
             Warns about unused private methods, as they are dead code.
         :param utility_function:
             Warns about any instance method that has no dependency on the
@@ -163,7 +163,7 @@ class RubySmellBear:
             "UncommunicativeParameterName": bad_param_name,
             "UncommunicativeVariableName": bad_var_name,
             "UnusedParameters": check_unused_variables,
-            "UnusedPrivateMethod": unused_private_method,
+            "UnusedPrivateMethod": check_unused_private_methods,
             "UtilityFunction": utility_function}
 
         return ('---\n' +
