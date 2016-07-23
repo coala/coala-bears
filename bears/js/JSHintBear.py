@@ -101,7 +101,7 @@ class JSHintBear:
                         maxstatements: bool_or_int=False,
                         maxdepth: bool_or_int=False,
                         maxparams: bool_or_int=False,
-                        maxcomplexity: bool_or_int=False,
+                        cyclomatic_complexity: bool_or_int=False,
                         shadow: bool_or_str=False,
                         prohibit_unused: bool_or_str=True,
                         allow_latedef: bool_or_str=False,
@@ -264,7 +264,7 @@ class JSHintBear:
             be.
         :param maxparams:
             Maximum number of formal parameters allowed per function.
-        :param maxcomplexity:
+        :param cyclomatic_complexity:
             Maximum cyclomatic complexity in the code.
         :param shadow:
             This option suppresses warnings about variable shadowing i.e.
@@ -346,7 +346,7 @@ class JSHintBear:
                        "typed": environment_typed,
                        "phantom": environment_phantom,
                        "maxerr": maxerr,
-                       "maxcomplexity": maxcomplexity,
+                       "maxcomplexity": cyclomatic_complexity,
                        "maxdepth": maxdepth,
                        "maxparams": maxparams,
                        "maxstatements": maxstatements,
