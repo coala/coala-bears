@@ -103,7 +103,7 @@ class JSHintBear:
                         maxparams: bool_or_int=False,
                         cyclomatic_complexity: bool_or_int=False,
                         shadow: bool_or_str=False,
-                        prohibit_unused: bool_or_str=True,
+                        check_unused_variables: bool_or_str=True,
                         allow_latedef: bool_or_str=False,
                         es_version: int=5,
                         jshint_config: str=""):
@@ -275,7 +275,7 @@ class JSHintBear:
             - "outer" - check for variables defined in outer scopes as well
             - False - same as inner
             - True  - allow variable shadowing
-        :param prohibit_unused:
+        :param check_unused_variables:
             This option generates warnings when variables are defined but never
             used. This can be set to ""vars"" to only check for variables, not
             function parameters, or ""strict"" to check all variables and
@@ -351,7 +351,7 @@ class JSHintBear:
                        "maxparams": maxparams,
                        "maxstatements": maxstatements,
                        "shadow": shadow,
-                       "unused": prohibit_unused,
+                       "unused": check_unused_variables,
                        "latedef": allow_latedef,
                        "esversion": es_version}
 
