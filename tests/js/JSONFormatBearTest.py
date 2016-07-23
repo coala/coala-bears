@@ -49,4 +49,5 @@ JSONFormatBearTabWidthTest = verify_local_bear(JSONFormatBear,
 JSONFormatBearUnicodeTest = verify_local_bear(JSONFormatBear,
                                               valid_files=(unicode_file,),
                                               invalid_files=(),
-                                              settings={'keep_unicode': 'true'})
+                                              settings={'escape_unicode':
+                                                        'true'})
