@@ -113,11 +113,8 @@ class GitCommitBear(GlobalBear):
                          "Shortlog of HEAD commit contains a period at end.")
 
         if shortlog_regex:
-            match = re.match(shortlog_regex, shortlog)
-            # fullmatch() inside re-module exists sadly since 3.4, but we
-            # support 3.3 so we need to check that the regex matched completely
-            # ourselves.
-            if not match or match.end() != len(shortlog):
+            match = re.fullmatch(shortlog_regex, shortlog)
+            if not match:
                 yield Result(
                     self,
                     "Shortlog of HEAD commit does not match given regex.")

@@ -75,7 +75,7 @@ Installation
 -------------
 
 To install coala-bears, you first need Python 3 or higher. If you do not have it, it is recommended
-that you install Python3 >= 3.3 from `here <https://www.python.org/downloads/>`__.
+that you install Python3 >= 3.4 from `here <https://www.python.org/downloads/>`__.
 
 Once Python is installed, coala-bears can be installed with ``pip3 install coala-bears``. If you
 need more information about the installation and dependencies, take a look at our
