@@ -51,7 +51,7 @@ class RubySmellBear:
     def generate_config(self,
                         attribute: bool=True,
                         boolean_parameter: bool=True,
-                        class_variable: bool=True,
+                        check_class_variable: bool=True,
                         control_parameter: bool=True,
                         data_clump: bool=True,
                         duplicate_method_call: bool=True,
@@ -80,7 +80,7 @@ class RubySmellBear:
         :param boolean_parameter:
             Warns if a boolean parameter in a function is detected (control
             coupling).
-        :param class_variable:
+        :param check_class_variable:
             Warns if a class variable is detected.
         :param control_parameter:
             Warns if a parameter controls the function behaviour (control
@@ -142,7 +142,7 @@ class RubySmellBear:
         config = {
             "Attribute": attribute,
             "BooleanParameter": boolean_parameter,
-            "ClassVariable": class_variable,
+            "ClassVariable": check_class_variable,
             "ControlParameter": control_parameter,
             "DataClump": data_clump,
             "DuplicateMethodCall": duplicate_method_call,
