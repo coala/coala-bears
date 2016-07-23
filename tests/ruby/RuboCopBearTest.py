@@ -48,7 +48,7 @@ RuboCopBearSettingsTest = verify_local_bear(
                               RuboCopBear,
                               valid_files=(another_good_file,),
                               invalid_files=(another_bad_file,),
-                              settings={"indentation_width": 1})
+                              settings={"tab_width": 1})
 
 RuboCopBearSettingsTest = verify_local_bear(
                               RuboCopBear,

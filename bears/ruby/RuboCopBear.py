@@ -55,7 +55,7 @@ class RuboCopBear:
                                                  "HACK",
                                                  "REVIEW"),
                         min_if_unless_guard: int=1,
-                        indentation_width: int=2,
+                        tab_width: int=2,
                         method_name_case: str='snake_case',
                         string_literals: str='single_quotes',
                         variable_name_case: str='snake_case',
@@ -118,7 +118,7 @@ class RuboCopBear:
         :param min_if_unless_guard:
             The number of lines that are tolerable within an if/unless block,
             more than these lines call for the usage of a guard clause.
-        :param indentation_width:
+        :param tab_width:
             No. of spaces to indent.
         :param method_name_case:
             Case of a method's name.
@@ -186,7 +186,7 @@ class RuboCopBear:
                   'Style/GuardClause':
                       {'MinBodyLength': min_if_unless_guard},
                   'Style/IndentationWidth':
-                      {'Width': indentation_width},
+                      {'Width': tab_width},
                   'Style/MethodName':
                       {'EnforcedStyle': method_name_case},
                   'Style/StringLiterals':
