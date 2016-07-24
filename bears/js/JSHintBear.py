@@ -66,7 +66,7 @@ class JSHintBear:
                         allow_proto: bool=False,
                         allow_scripturls: bool=False,
                         allow_singleton: bool=False,
-                        allow_this_stmt: bool=False,
+                        allow_this_statements: bool=False,
                         allow_with_stmt: bool=False,
                         using_mozilla: bool=False,
                         allow_noyield: bool=False,
@@ -175,7 +175,7 @@ class JSHintBear:
             This option suppresses warnings about constructions like
             ``new function () { ... }`` and ``new Object;`` sometimes used to
             produce singletons.
-        :param allow_this_stmt:
+        :param allow_this_statements:
             This option suppresses warnings about possible strict violations
             when the code is running in strict mode and ``this`` is used in a
             non-constructor function.
@@ -314,7 +314,7 @@ class JSHintBear:
                        "proto": allow_proto,
                        "scripturl": allow_scripturls,
                        "supernew": allow_singleton,
-                       "validthis": allow_this_stmt,
+                       "validthis": allow_this_statements,
                        "withstmt": allow_with_stmt,
                        "moz": using_mozilla,
                        "noyield": allow_noyield,
