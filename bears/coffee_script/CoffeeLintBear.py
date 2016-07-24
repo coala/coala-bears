@@ -55,7 +55,7 @@ class CoffeeLintBear:
                         allow_trailing_semicolons: bool=False,
                         allow_trailing_whitespaces: bool=False,
                         no_unnecessary_double_quotes: bool=False,
-                        use_english_operator: bool=False,
+                        allow_bitwise_operators: bool=True,
                         spaces_around_operators: bool=True,
                         space_after_comma: bool=True,
                         cyclomatic_complexity: int=0,
@@ -178,7 +178,7 @@ class CoffeeLintBear:
         :param no_unnecessary_double_quotes:
             Prohibits double quotes unless string interpolation is used or the
             strings contain single quotes.
-        :param use_english_operator:
+        :param allow_bitwise_operators:
             Determines if ``and``, ``or``, ``is`` and ``isnt`` should be used
             instead of ``&&``, ``||``, ``==`` and ``!=``.
         :param spaces_around_operators:
@@ -269,7 +269,7 @@ class CoffeeLintBear:
                  "allowed_in_empty_lines": True})
         if no_unnecessary_double_quotes:
             coffee_configs["no_unnecessary_double_quotes"] = {"level": "error"}
-        if use_english_operator:
+        if not allow_bitwise_operators:
             coffee_configs["prefer_english_operator"] = (
                 {"level": "error", "doubleNotLevel": "ignore"})
         if spaces_around_operators:

@@ -277,7 +277,7 @@ CoffeeLintBearUseEnglishOperatorTest = verify_local_bear(
     CoffeeLintBear,
     valid_files=(good_file_use_english_operator,),
     invalid_files=(bad_file_use_english_operator,),
-    settings={"use_english_operator": "true",
+    settings={"allow_bitwise_operators": "false",
               "consistent_line_endings_style": "unix"})
 
 
@@ -308,7 +308,7 @@ CoffeeLintBearAllowTrailingWhiteSpacesTest = verify_local_bear(
     valid_files=(good_file_allow_trailing_white_spaces,),
     invalid_files=(bad_file_allow_trailing_white_spaces,),
     settings={"allow_trailing_whitespaces": "false",
-              "use_english_operator": "true",
+              "allow_bitwise_operators": "false",
               "spaces_around_operators": "true"})
 
 
