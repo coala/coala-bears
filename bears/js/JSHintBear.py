@@ -57,7 +57,7 @@ class JSHintBear:
                         prohibit_undefined: bool=True,
                         prohibit_groups: bool=False,
                         prohibit_variable_statements: bool=False,
-                        allow_missing_semicol: bool=False,
+                        allow_missing_semicolon: bool=False,
                         allow_debugger: bool=False,
                         allow_assignment_comparisions: bool=False,
                         allow_eval: bool=False,
@@ -150,7 +150,7 @@ class JSHintBear:
             not strictly required.
         :param prohibit_variable_statements:
             This option forbids the use of VariableStatements.
-        :param allow_missing_semicol:
+        :param allow_missing_semicolon:
             This option suppresses warnings about missing semicolons.
         :param allow_debugger:
             This option suppresses warnings about the ``debugger`` statements.
@@ -305,7 +305,7 @@ class JSHintBear:
                        "undef": prohibit_undefined,
                        "singleGroups": prohibit_groups,
                        "varstmt": prohibit_variable_statements,
-                       "asi": allow_missing_semicol,
+                       "asi": allow_missing_semicolon,
                        "debug": allow_debugger,
                        "boss": allow_assignment_comparisions,
                        "evil": allow_eval,
