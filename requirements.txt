@@ -1,5 +1,5 @@
 # Use >= for development versions so that source builds always work
-coala>=0.8.0.dev20160718123552
+coala>=0.8.0.dev20160724211007
 setuptools>=19.2
 munkres3==1.*
 pylint==1.*
@@ -28,3 +28,4 @@ vim-vint==0.3.*
 nltk==3.1.*
 appdirs==1.*
 pyyaml==3.*
+mypy-lang==0.*
