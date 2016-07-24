@@ -97,7 +97,6 @@ class JSHintBear:
                         environment_dojo: bool=False,
                         environment_typed: bool=False,
                         environment_phantom: bool=False,
-                        maxerr: int=50,
                         maxstatements: bool_or_int=False,
                         maxdepth: bool_or_int=False,
                         max_parameters: bool_or_int=False,
@@ -254,9 +253,6 @@ class JSHintBear:
         :param environment_phantom:
             This option defines globals available when your core is running
             inside of the PhantomJS runtime environment.
-        :param maxerr:
-            This options allows you to set the maximum amount of warnings
-            JSHintBear will produce before giving up. Default is 50.
         :param maxstatements:
             Maximum number of statements allowed per function.
         :param maxdepth:
@@ -345,7 +341,7 @@ class JSHintBear:
                        "dojo": environment_dojo,
                        "typed": environment_typed,
                        "phantom": environment_phantom,
-                       "maxerr": maxerr,
+                       "maxerr": 99999,
                        "maxcomplexity": cyclomatic_complexity,
                        "maxdepth": maxdepth,
                        "maxparams": max_parameters,
