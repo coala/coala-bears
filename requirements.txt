@@ -28,3 +28,4 @@ vim-vint==0.3.*
 nltk==3.1.*
 appdirs==1.*
 pyyaml==3.*
+mypy-lang==0.*
