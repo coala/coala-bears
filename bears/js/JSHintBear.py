@@ -100,7 +100,7 @@ class JSHintBear:
                         maxerr: int=50,
                         maxstatements: bool_or_int=False,
                         maxdepth: bool_or_int=False,
-                        maxparams: bool_or_int=False,
+                        max_parameters: bool_or_int=False,
                         cyclomatic_complexity: bool_or_int=False,
                         shadow: bool_or_str=False,
                         check_unused_variables: bool_or_str=True,
@@ -262,8 +262,8 @@ class JSHintBear:
         :param maxdepth:
             This option lets you control how nested do you want your blocks to
             be.
-        :param maxparams:
-            Maximum number of formal parameters allowed per function.
+        :param max_parameters:
+            Maximum number of parameters allowed per function.
         :param cyclomatic_complexity:
             Maximum cyclomatic complexity in the code.
         :param shadow:
@@ -348,7 +348,7 @@ class JSHintBear:
                        "maxerr": maxerr,
                        "maxcomplexity": cyclomatic_complexity,
                        "maxdepth": maxdepth,
-                       "maxparams": maxparams,
+                       "maxparams": max_parameters,
                        "maxstatements": maxstatements,
                        "shadow": shadow,
                        "unused": check_unused_variables,
