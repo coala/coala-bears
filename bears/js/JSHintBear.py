@@ -67,7 +67,7 @@ class JSHintBear:
                         allow_scripturls: bool=False,
                         allow_singleton: bool=False,
                         allow_this_statements: bool=False,
-                        allow_with_stmt: bool=False,
+                        allow_with_statements: bool=False,
                         using_mozilla: bool=False,
                         allow_noyield: bool=False,
                         allow_eqnull: bool=False,
@@ -179,7 +179,7 @@ class JSHintBear:
             This option suppresses warnings about possible strict violations
             when the code is running in strict mode and ``this`` is used in a
             non-constructor function.
-        :param allow_with_stmt:
+        :param allow_with_statements:
             This option suppresses warnings about the use of the ``with``
             statement.
         :param using_mozilla:
@@ -315,7 +315,7 @@ class JSHintBear:
                        "scripturl": allow_scripturls,
                        "supernew": allow_singleton,
                        "validthis": allow_this_statements,
-                       "withstmt": allow_with_stmt,
+                       "withstmt": allow_with_statements,
                        "moz": using_mozilla,
                        "noyield": allow_noyield,
                        "eqnull": allow_eqnull,
