@@ -68,7 +68,7 @@ class RuboCopBear:
                         line_length_allow_here_doc: bool=True,
                         line_length_allow_uri: bool=True,
                         max_method_length: int=10,
-                        method_count_comments: bool=False,
+                        method_length_count_comments: bool=False,
                         max_parameters: int=5,
                         count_keyword_args: bool=True,
                         ignore_unused_block_args_if_empty: bool=True,
@@ -150,7 +150,7 @@ class RuboCopBear:
             line length.
         :param max_method_length:
             Max number of lines in a method.
-        :param method_count_comments:
+        :param method_length_count_comments:
             Whether or not to count full line comments while calculating
             method length.
         :param max_parameters:
@@ -206,7 +206,7 @@ class RuboCopBear:
                        'AllowHeredoc': line_length_allow_here_doc,
                        'AllowURI': line_length_allow_uri},
                   'Metrics/MethodLength':
-                      {'CountComments':  method_count_comments,
+                      {'CountComments':  method_length_count_comments,
                        'Max': max_method_length},
                   'Metrics/ParameterLists':
                       {'Max': max_parameters,
