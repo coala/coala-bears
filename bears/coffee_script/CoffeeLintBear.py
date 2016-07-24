@@ -47,7 +47,7 @@ class CoffeeLintBear:
                         tab_width: int=2,
                         number_of_newlines_after_classes: int=2,
                         prohibit_embedding_javascript_snippet: bool=True,
-                        no_implicit_braces: bool=False,
+                        force_braces: bool=False,
                         no_implicit_parentheses: bool=False,
                         no_interpolation_in_single_quotes: bool=False,
                         no_stand_alone_at_sign: bool=True,
@@ -106,10 +106,10 @@ class CoffeeLintBear:
         :param prohibit_embedding_javascript_snippet:
             Prevents some JavaScript elements like ``eval`` to affect
             CoffeeScript.
-        :param no_implicit_braces:
+        :param force_braces:
             Prohibits implicit braces when declaring object literals.
 
-            Example: If ``no_implicit_braces = True`` then
+            Example: If ``force_braces = True`` then
             ```
             1:2, 3:4
             ```
@@ -243,7 +243,7 @@ class CoffeeLintBear:
         coffee_configs["no_backticks"] = (
             {"level": "error"
                 if prohibit_embedding_javascript_snippet else "ignore"})
-        if no_implicit_braces:
+        if force_braces:
             coffee_configs["no_implicit_braces"] = (
                 {"level": "error", "strict": True})
         if no_implicit_parentheses:

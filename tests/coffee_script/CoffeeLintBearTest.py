@@ -360,7 +360,7 @@ CoffeeLintBearDisableThrowingStringsTest = verify_local_bear(
               "allow_trailing_whitespaces": "true",
               "spaces_around_operators": "false",
               "space_after_comma": "false",
-              "no_implicit_braces": "true",
+              "force_braces": "true",
               "no_implicit_parentheses": "false",
               "prohibit_embedding_javascript_snippet": "false",
               "no_interpolation_in_single_quotes": "true",
