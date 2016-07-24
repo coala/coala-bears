@@ -41,7 +41,7 @@ class JSHintBear:
 
     @staticmethod
     def generate_config(filename, file,
-                        prohibit_bitwise: bool=True,
+                        allow_bitwise_operators: bool=False,
                         prohibit_prototype_overwrite: bool=True,
                         force_braces: bool=True,
                         prohibit_type_coercion: bool=True,
@@ -108,8 +108,8 @@ class JSHintBear:
                         es_version: int=5,
                         jshint_config: str=""):
         """
-        :param prohibit_bitwise:
-            This option prohibits the use of bitwise operators.
+        :param allow_bitwise_operators:
+            Prohibits the use of bitwise operators when its value is ``False``.
         :param prohibit_prototype_overwrite:
             This options prohibits overwriting prototypes of native objects
             such as ``Array``.
@@ -289,7 +289,7 @@ class JSHintBear:
             code must adhere to.
         """
         if not jshint_config:
-            options = {"bitwise": prohibit_bitwise,
+            options = {"bitwise": allow_bitwise_operators,
                        "freeze": prohibit_prototype_overwrite,
                        "curly": force_braces,
                        "eqeqeq": prohibit_type_coercion,
