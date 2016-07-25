@@ -61,7 +61,7 @@ class CoffeeLintBear:
                         cyclomatic_complexity: int=0,
                         prevent_duplicate_keys: bool=True,
                         consistent_line_endings_style: str='',
-                        no_this: bool=False,
+                        allow_this_statements: bool=True,
                         no_decr_or_incrementation_operators: bool=False,
                         no_empty_parameter_list: bool=False,
                         no_empty_functions: bool=False,
@@ -207,8 +207,8 @@ class CoffeeLintBear:
         :param consistent_line_endings_style:
             The option to ``line_endings``, its value is either ``unix`` or
             ``windows``.
-        :param no_this:
-            Prohibits ``this``. Use ``@`` instead.
+        :param allow_this_statements:
+            Allows the use of ``this``. ``@`` should be used if ``False``.
         :param no_decr_or_incrementation_operators:
             Prohibits the use of increment and decrement arithmetic operators.
         :param no_empty_parameter_list:
@@ -287,7 +287,7 @@ class CoffeeLintBear:
         if consistent_line_endings_style:
             coffee_configs["line_endings"] = (
                 {"level": "error", "value": consistent_line_endings_style})
-        if no_this:
+        if not allow_this_statements:
             coffee_configs["no_this"] = {"level": "error"}
         if no_decr_or_incrementation_operators:
             coffee_configs["no_plusplus"] = {"level": "error"}

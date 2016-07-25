@@ -382,7 +382,8 @@ CoffeeLintBearNoThisTest = verify_local_bear(
     CoffeeLintBear,
     valid_files=(good_file_no_this,),
     invalid_files=(bad_file_no_this,),
-    settings={"no_this": "true", "class_naming_camelCase": "false"})
+    settings={"allow_this_statements": "false",
+              "class_naming_camelCase": "false"})
 
 
 CoffeeLintBearEnforceParenthesesOnConstructorsTest = verify_local_bear(
