@@ -1,5 +1,7 @@
 from coala_utils.string_processing.Core import escape
 from coalib.bearlib.abstractions.Linter import linter
+from coalib.bears.requirements.DistributionRequirement import (
+    DistributionRequirement)
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
@@ -23,6 +25,7 @@ class JuliaLintBear:
     on the analysis provided.
     """
     LANGUAGES = {"Julia"}
+    REQUIREMENTS = {DistributionRequirement(apt='julia')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

@@ -3,6 +3,8 @@ import shlex
 
 from coalib.bearlib.abstractions.Linter import linter
 from coalib.bearlib.spacing.SpacingHelper import SpacingHelper
+from coalib.bears.requirements.DistributionRequirement import (
+    DistributionRequirement)
 
 
 @linter(executable="indent" if platform.system() != "Darwin" else "gindent",
@@ -18,6 +20,7 @@ class GNUIndentBear:
     """
 
     LANGUAGES = {"C", "C++"}
+    REQUIREMENTS = {DistributionRequirement(apt='indent')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

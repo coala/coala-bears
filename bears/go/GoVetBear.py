@@ -1,4 +1,5 @@
 from coalib.bearlib.abstractions.Linter import linter
+from coalib.bears.requirements.GoRequirement import GoRequirement
 
 
 @linter(executable='go',
@@ -17,6 +18,7 @@ class GoVetBear:
     <https://golang.org/cmd/vet/>.
     """
     LANGUAGES = {"Go"}
+    REQUIREMENTS = {GoRequirement(package='golang.org/cmd/vet', flag='-u')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

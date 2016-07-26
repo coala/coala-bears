@@ -1,6 +1,7 @@
 import shlex
 
 from coalib.bearlib.abstractions.Linter import linter
+from coalib.bears.requirements.GoRequirement import GoRequirement
 
 
 @linter(executable='golint',
@@ -12,6 +13,8 @@ class GoLintBear:
     separately.
     """
     LANGUAGES = {"Go"}
+    REQUIREMENTS = {GoRequirement(
+        package='github.com/golang/lint/golint', flag='-u')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

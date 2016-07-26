@@ -1,4 +1,6 @@
 from coalib.bearlib.abstractions.Linter import linter
+from coalib.bears.requirements.DistributionRequirement import (
+    DistributionRequirement)
 
 
 @linter(executable='verilator',
@@ -21,6 +23,7 @@ class VerilogLintBear:
     <http://www.veripool.org/projects/verilator/wiki/Manual-verilator>.
     """
     LANGUAGES = {"Verilog"}
+    REQUIREMENTS = {DistributionRequirement(apt='verilator')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

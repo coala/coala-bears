@@ -1,4 +1,6 @@
 from coalib.bearlib.abstractions.Linter import linter
+from coalib.bears.requirements.DistributionRequirement import (
+    DistributionRequirement)
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.settings.Setting import typed_list
 
@@ -19,6 +21,7 @@ class CPPCheckBear:
     """
 
     LANGUAGES = {"C", "C++"}
+    REQUIREMENTS = {DistributionRequirement(apt='cppcheck')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

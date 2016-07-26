@@ -1,4 +1,5 @@
 from coalib.bearlib.abstractions.Linter import linter
+from coalib.bears.requirements.GoRequirement import GoRequirement
 from coalib.settings.Setting import typed_list
 
 
@@ -16,6 +17,8 @@ class GoErrCheckBear:
     For more information on the analysis visit <https://github.com/kisielk/errcheck>.
     """
     LANGUAGES = {"Go"}
+    REQUIREMENTS = {GoRequirement(
+        package='github.com/kisielk/errcheck', flag='-u')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

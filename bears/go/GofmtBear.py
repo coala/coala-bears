@@ -1,4 +1,5 @@
 from coalib.bearlib.abstractions.Linter import linter
+from coalib.bears.requirements.GoRequirement import GoRequirement
 
 
 @linter(executable='gofmt',
@@ -14,6 +15,7 @@ class GofmtBear:
     <https://golang.org/cmd/gofmt/>.
     """
     LANGUAGES = {"Go"}
+    REQUIREMENTS = {GoRequirement(package='golang.org/cmd/gofmt', flag='-u')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
