@@ -64,7 +64,7 @@ class CoffeeLintBear:
                         allow_this_statements: bool=True,
                         allow_increment: bool=True,
                         allow_no_parameters: bool=True,
-                        no_empty_functions: bool=False,
+                        allow_empty_functions: bool=True,
                         enforce_parentheses_on_non_empty_constructors: bool=True
                         ):
         """
@@ -212,8 +212,8 @@ class CoffeeLintBear:
             Allows the use of increment and decrement arithmetic operators.
         :param allow_no_parameters:
             Allows empty parameter lists in function definitions.
-        :param no_empty_functions:
-            Prohibits declaring empty functions.
+        :param allow_empty_functions:
+            Allows declaring empty functions.
         """
         coffee_configs = {"max_line_length":
                           {"value": max_line_length,
@@ -292,8 +292,8 @@ class CoffeeLintBear:
             coffee_configs["no_plusplus"] = {"level": "error"}
         coffee_configs["no_empty_param_list"] = (
             {"level": "error" if not allow_no_parameters else "ignore"})
-        if no_empty_functions:
-            coffee_configs["no_empty_functions"] = {"level": "error"}
+        coffee_configs["no_empty_functions"] = (
+            {"level": "error" if not allow_empty_functions else "ignore"})
 
         return json.dumps(coffee_configs)
 

@@ -339,7 +339,7 @@ CoffeeLintBearNoEmpytyFunctionsAndParameterListTest = verify_local_bear(
     CoffeeLintBear,
     valid_files=(good_file_no_empyty_functions_and_parameter_list,),
     invalid_files=(bad_file_no_empyty_functions_and_parameter_list,),
-    settings={"no_empty_functions": "true",
+    settings={"allow_empty_functions": "true",
               "allow_no_parameters": "true",
               "allow_increment": "false",
               "check_braces_spacing": "true",
