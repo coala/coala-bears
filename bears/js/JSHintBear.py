@@ -98,7 +98,7 @@ class JSHintBear:
                         environment_typed: bool=False,
                         environment_phantom: bool=False,
                         max_statements: bool_or_int=False,
-                        maxdepth: bool_or_int=False,
+                        max_depth: bool_or_int=False,
                         max_parameters: bool_or_int=False,
                         cyclomatic_complexity: bool_or_int=False,
                         shadow: bool_or_str=False,
@@ -255,7 +255,7 @@ class JSHintBear:
             inside of the PhantomJS runtime environment.
         :param max_statements:
             Maximum number of statements allowed per function.
-        :param maxdepth:
+        :param max_depth:
             This option lets you control how nested do you want your blocks to
             be.
         :param max_parameters:
@@ -343,7 +343,7 @@ class JSHintBear:
                        "phantom": environment_phantom,
                        "maxerr": 99999,
                        "maxcomplexity": cyclomatic_complexity,
-                       "maxdepth": maxdepth,
+                       "maxdepth": max_depth,
                        "maxparams": max_parameters,
                        "maxstatements": max_statements,
                        "shadow": shadow,
