@@ -345,7 +345,7 @@ CoffeeLintBearNoEmpytyFunctionsAndParameterListTest = verify_local_bear(
               "check_braces_spacing": "true",
               "braces_spacing_width": 2,
               "spacing_in_empty_braces": 2,
-              "no_unnecessary_double_quotes": "true",
+              "allow_unnecessary_double_quotes": "false",
               "spaces_before_and_after_colon": "true",
               "spaces_before_colon": 1,
               "allow_implicit_parentheses": "false"})
