@@ -51,7 +51,7 @@ class CoffeeLintBear:
                         allow_implicit_parentheses: bool=True,
                         allow_interpolation_in_single_quotes: bool=True,
                         allow_stand_alone_at_sign: bool=False,
-                        disable_throwing_strings: bool=True,
+                        allow_throwing_strings: bool=False,
                         allow_trailing_semicolons: bool=False,
                         allow_trailing_whitespaces: bool=False,
                         no_unnecessary_double_quotes: bool=False,
@@ -150,10 +150,10 @@ class CoffeeLintBear:
             @ok()
             ```
             are accepted.
-        :param disable_throwing_strings:
-            Disables throwing string literals or interpolation.
+        :param allow_throwing_strings:
+            Allows throwing string literals or interpolation.
 
-            Example: If ``disable_throwing_strings = True``
+            Example: If ``allow_throwing_strings = False``
             ```
             throw 'my error'
             throw "#{1234}"
@@ -259,7 +259,7 @@ class CoffeeLintBear:
         coffee_configs["indentation"] = (
             {"value": tab_width, "level": "error"})
         coffee_configs["no_throwing_strings"] = (
-            {"level": "error" if disable_throwing_strings else "ignore"})
+            {"level": "error" if not allow_throwing_strings else "ignore"})
         coffee_configs["no_trailing_semicolons"] = (
             {"level": "error" if not allow_trailing_semicolons else "ignore"})
         if not allow_trailing_whitespaces:

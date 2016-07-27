@@ -355,7 +355,7 @@ CoffeeLintBearDisableThrowingStringsTest = verify_local_bear(
     CoffeeLintBear,
     valid_files=(good_file_disable_throwing_strings,),
     invalid_files=(bad_file_disable_throwing_strings,),
-    settings={"disable_throwing_strings": "true",
+    settings={"allow_throwing_strings": "false",
               "allow_trailing_semicolons": "true",
               "allow_trailing_whitespaces": "true",
               "spaces_around_operators": "false",
@@ -375,7 +375,7 @@ CoffeeLintBearNoStandAloneAtTest = verify_local_bear(
               "space_after_comma": "true",
               "enforce_parentheses_on_non_empty_constructors": "false",
               "prevent_duplicate_keys": "false",
-              "disable_throwing_strings": "false"})
+              "allow_throwing_strings": "true"})
 
 
 CoffeeLintBearNoThisTest = verify_local_bear(
