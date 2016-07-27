@@ -50,7 +50,7 @@ class CoffeeLintBear:
                         force_braces: bool=False,
                         allow_implicit_parentheses: bool=True,
                         allow_interpolation_in_single_quotes: bool=True,
-                        no_stand_alone_at_sign: bool=True,
+                        allow_stand_alone_at_sign: bool=False,
                         disable_throwing_strings: bool=True,
                         allow_trailing_semicolons: bool=False,
                         allow_trailing_whitespaces: bool=False,
@@ -132,10 +132,10 @@ class CoffeeLintBear:
             f = "#{bar}"
             ```
             is correct.
-        :param no_stand_alone_at_sign:
-            Prohibits the use of stand alone  ``@``.
+        :param allow_stand_alone_at_sign:
+            Allows the use of stand alone  ``@``.
 
-            Example: If ``no_stand_alone_at_sign = True``
+            Example: If ``allow_stand_alone_at_sign = False``
             ```
             @ notok
             not(@).ok
@@ -252,7 +252,7 @@ class CoffeeLintBear:
         coffee_configs["no_interpolation_in_single_quotes"] = (
             {"level": "error"
                 if not allow_interpolation_in_single_quotes else "ignore"})
-        if no_stand_alone_at_sign:
+        if not allow_stand_alone_at_sign:
             coffee_configs["no_stand_alone_at"] = {"level": "error"}
         if use_spaces:
             coffee_configs["no_tabs"] = {"level": "error"}

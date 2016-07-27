@@ -364,14 +364,14 @@ CoffeeLintBearDisableThrowingStringsTest = verify_local_bear(
               "allow_implicit_parentheses": "true",
               "prohibit_embedding_javascript_snippet": "false",
               "allow_interpolation_in_single_quotes": "false",
-              "no_stand_alone_at_sign": "false"})
+              "allow_stand_alone_at_sign": "true"})
 
 
 CoffeeLintBearNoStandAloneAtTest = verify_local_bear(
     CoffeeLintBear,
     valid_files=(good_file_no_stand_alone_at_sign, bad_file_no_duplicate_keys),
     invalid_files=(bad_file_no_stand_alone_at_sign,),
-    settings={"no_stand_alone_at_sign": "true",
+    settings={"allow_stand_alone_at_sign": "false",
               "space_after_comma": "true",
               "enforce_parentheses_on_non_empty_constructors": "false",
               "prevent_duplicate_keys": "false",
