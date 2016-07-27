@@ -63,7 +63,7 @@ class CoffeeLintBear:
                         consistent_line_endings_style: str='',
                         allow_this_statements: bool=True,
                         allow_increment: bool=True,
-                        no_empty_parameter_list: bool=False,
+                        allow_no_parameters: bool=True,
                         no_empty_functions: bool=False,
                         enforce_parentheses_on_non_empty_constructors: bool=True
                         ):
@@ -210,8 +210,8 @@ class CoffeeLintBear:
             Allows the use of ``this``. ``@`` should be used if ``False``.
         :param allow_increment:
             Allows the use of increment and decrement arithmetic operators.
-        :param no_empty_parameter_list:
-            Prohibits empty parameter lists in function definitions.
+        :param allow_no_parameters:
+            Allows empty parameter lists in function definitions.
         :param no_empty_functions:
             Prohibits declaring empty functions.
         """
@@ -290,8 +290,8 @@ class CoffeeLintBear:
             coffee_configs["no_this"] = {"level": "error"}
         if not allow_increment:
             coffee_configs["no_plusplus"] = {"level": "error"}
-        if no_empty_parameter_list:
-            coffee_configs["no_empty_param_list"] = {"level": "error"}
+        coffee_configs["no_empty_param_list"] = (
+            {"level": "error" if not allow_no_parameters else "ignore"})
         if no_empty_functions:
             coffee_configs["no_empty_functions"] = {"level": "error"}
 
