@@ -48,7 +48,7 @@ class CoffeeLintBear:
                         number_of_newlines_after_classes: int=2,
                         prohibit_embedding_javascript_snippet: bool=True,
                         force_braces: bool=False,
-                        no_implicit_parentheses: bool=False,
+                        allow_implicit_parentheses: bool=True,
                         no_interpolation_in_single_quotes: bool=False,
                         no_stand_alone_at_sign: bool=True,
                         disable_throwing_strings: bool=True,
@@ -118,8 +118,8 @@ class CoffeeLintBear:
             {1:2, 3:4}
             ```
             is accepted.
-        :param no_implicit_parentheses:
-            Prohibits implicit parentheses.
+        :param allow_implicit_parentheses:
+            Allows implicit parentheses.
         :param no_interpolation_in_single_quotes:
             Prohibits string interpolation in a single quoted string.
 
@@ -246,7 +246,7 @@ class CoffeeLintBear:
         if force_braces:
             coffee_configs["no_implicit_braces"] = (
                 {"level": "error", "strict": True})
-        if no_implicit_parentheses:
+        if not allow_implicit_parentheses:
             coffee_configs["no_implicit_parens"] = (
                 {"strict": True, "level": "error"})
         coffee_configs["no_interpolation_in_single_quotes"] = (

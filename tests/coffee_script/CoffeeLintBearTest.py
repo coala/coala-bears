@@ -348,7 +348,7 @@ CoffeeLintBearNoEmpytyFunctionsAndParameterListTest = verify_local_bear(
               "no_unnecessary_double_quotes": "true",
               "spaces_before_and_after_colon": "true",
               "spaces_before_colon": 1,
-              "no_implicit_parentheses": "true"})
+              "allow_implicit_parentheses": "false"})
 
 
 CoffeeLintBearDisableThrowingStringsTest = verify_local_bear(
@@ -361,7 +361,7 @@ CoffeeLintBearDisableThrowingStringsTest = verify_local_bear(
               "spaces_around_operators": "false",
               "space_after_comma": "false",
               "force_braces": "true",
-              "no_implicit_parentheses": "false",
+              "allow_implicit_parentheses": "true",
               "prohibit_embedding_javascript_snippet": "false",
               "no_interpolation_in_single_quotes": "true",
               "no_stand_alone_at_sign": "false"})
