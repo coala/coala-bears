@@ -97,7 +97,7 @@ class JSHintBear:
                         environment_dojo: bool=False,
                         environment_typed: bool=False,
                         environment_phantom: bool=False,
-                        maxstatements: bool_or_int=False,
+                        max_statements: bool_or_int=False,
                         maxdepth: bool_or_int=False,
                         max_parameters: bool_or_int=False,
                         cyclomatic_complexity: bool_or_int=False,
@@ -253,7 +253,7 @@ class JSHintBear:
         :param environment_phantom:
             This option defines globals available when your core is running
             inside of the PhantomJS runtime environment.
-        :param maxstatements:
+        :param max_statements:
             Maximum number of statements allowed per function.
         :param maxdepth:
             This option lets you control how nested do you want your blocks to
@@ -345,7 +345,7 @@ class JSHintBear:
                        "maxcomplexity": cyclomatic_complexity,
                        "maxdepth": maxdepth,
                        "maxparams": max_parameters,
-                       "maxstatements": maxstatements,
+                       "maxstatements": max_statements,
                        "shadow": shadow,
                        "unused": check_unused_variables,
                        "latedef": allow_latedef,
