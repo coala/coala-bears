@@ -49,7 +49,7 @@ class CoffeeLintBear:
                         prohibit_embedding_javascript_snippet: bool=True,
                         force_braces: bool=False,
                         allow_implicit_parentheses: bool=True,
-                        no_interpolation_in_single_quotes: bool=False,
+                        allow_interpolation_in_single_quotes: bool=True,
                         no_stand_alone_at_sign: bool=True,
                         disable_throwing_strings: bool=True,
                         allow_trailing_semicolons: bool=False,
@@ -120,10 +120,10 @@ class CoffeeLintBear:
             is accepted.
         :param allow_implicit_parentheses:
             Allows implicit parentheses.
-        :param no_interpolation_in_single_quotes:
-            Prohibits string interpolation in a single quoted string.
+        :param allow_interpolation_in_single_quotes:
+            Allows string interpolation in a single quoted string.
 
-            Example: If ``no_interpolation_in_single_quotes = True`` then
+            Example: If ``allow_interpolation_in_single_quotes = False`` then
             ```
             f = '#{bar}'
             ```
@@ -251,7 +251,7 @@ class CoffeeLintBear:
                 {"strict": True, "level": "error"})
         coffee_configs["no_interpolation_in_single_quotes"] = (
             {"level": "error"
-                if no_interpolation_in_single_quotes else "ignore"})
+                if not allow_interpolation_in_single_quotes else "ignore"})
         if no_stand_alone_at_sign:
             coffee_configs["no_stand_alone_at"] = {"level": "error"}
         if use_spaces:

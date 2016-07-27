@@ -363,7 +363,7 @@ CoffeeLintBearDisableThrowingStringsTest = verify_local_bear(
               "force_braces": "true",
               "allow_implicit_parentheses": "true",
               "prohibit_embedding_javascript_snippet": "false",
-              "no_interpolation_in_single_quotes": "true",
+              "allow_interpolation_in_single_quotes": "false",
               "no_stand_alone_at_sign": "false"})
 
 
@@ -392,7 +392,7 @@ CoffeeLintBearEnforceParenthesesOnConstructorsTest = verify_local_bear(
     invalid_files=(bad_file_enforce_parentheses_on_constructors,),
     settings={"enforce_parentheses_on_non_empty_constructors": "true",
               "no_function_call_without_parentheses": "false",
-              "no_interpolation_in_single_quotes": "false"})
+              "allow_interpolation_in_single_quotes": "true"})
 
 
 CoffeeLintBearNewLinesAfterClassesTest = verify_local_bear(
