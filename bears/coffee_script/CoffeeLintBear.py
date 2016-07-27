@@ -64,7 +64,7 @@ class CoffeeLintBear:
                         allow_this_statements: bool=True,
                         allow_increment: bool=True,
                         allow_no_parameters: bool=True,
-                        allow_empty_functions: bool=True,
+                        allow_empty_functions: bool=False,
                         enforce_parentheses_on_non_empty_constructors: bool=True
                         ):
         """
