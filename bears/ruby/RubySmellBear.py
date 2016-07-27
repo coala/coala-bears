@@ -71,7 +71,7 @@ class RubySmellBear:
                         bad_module_name: bool=True,
                         bad_param_name: bool=True,
                         bad_var_name: bool=True,
-                        check_unused_variables: bool=True,
+                        allow_unused_variables: bool=False,
                         check_unused_private_methods: bool=False,
                         utility_function: bool=True):
         """
@@ -131,8 +131,8 @@ class RubySmellBear:
         :param bad_var_name:
             Warns about variable names which are not communicating the purpose
             of the variable well.
-        :param check_unused_variables:
-            Warns about unused parameters which are thus dead code.
+        :param allow_unused_variables:
+            Allows unused parameters though they are dead code.
         :param check_unused_private_methods:
             Warns about unused private methods, as they are dead code.
         :param utility_function:
@@ -162,7 +162,7 @@ class RubySmellBear:
             "UncommunicativeModuleName": bad_module_name,
             "UncommunicativeParameterName": bad_param_name,
             "UncommunicativeVariableName": bad_var_name,
-            "UnusedParameters": check_unused_variables,
+            "UnusedParameters": not allow_unused_variables,
             "UnusedPrivateMethod": check_unused_private_methods,
             "UtilityFunction": utility_function}
 
