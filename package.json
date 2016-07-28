@@ -1,4 +1,6 @@
 {
+  "name": "coala-bears",
+  "version":"0.8.0",
   "dependencies": {
     "alex": "~2",
     "autoprefixer": "~6",
