@@ -7,7 +7,10 @@ from coalib.bears.requirements.NpmRequirement import NpmRequirement
 @linter(executable='remark',
         use_stdin=True,
         output_format='corrected',
-        result_message='The text does not comply to the set style.')
+        result_message='The text does not comply to the set style.',
+        prerequisite_check_command=('remark-cli',),
+        prerequisite_check_fail_message='remark-cli is not installed. Please'
+        'make sure you install ``remark-cli`` and not ``remark``.')
 class MarkdownBear:
     """
     Check and correct Markdown style violations automatically.
@@ -17,7 +20,7 @@ class MarkdownBear:
     """
 
     LANGUAGES = {"Markdown"}
-    REQUIREMENTS = {NpmRequirement('remark', '3')}
+    REQUIREMENTS = {NpmRequirement('remark-cli', '3')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
