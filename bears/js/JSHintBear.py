@@ -42,7 +42,7 @@ class JSHintBear:
     @staticmethod
     def generate_config(filename, file,
                         allow_bitwise_operators: bool=False,
-                        prohibit_prototype_overwrite: bool=True,
+                        allow_prototype_overwrite: bool=False,
                         force_braces: bool=True,
                         prohibit_type_coercion: bool=True,
                         future_hostile: bool=False,
@@ -109,9 +109,9 @@ class JSHintBear:
         """
         :param allow_bitwise_operators:
             Prohibits the use of bitwise operators when its value is ``False``.
-        :param prohibit_prototype_overwrite:
-            This options prohibits overwriting prototypes of native objects
-            such as ``Array``.
+        :param allow_prototype_overwrite:
+            This options allows overwriting prototypes of native objects such as
+            ``Array``.
         :param force_braces:
             This option requires you to always put curly braces around blocks
             in loops and conditionals.
@@ -286,7 +286,7 @@ class JSHintBear:
         """
         if not jshint_config:
             options = {"bitwise": allow_bitwise_operators,
-                       "freeze": prohibit_prototype_overwrite,
+                       "freeze": not allow_prototype_overwrite,
                        "curly": force_braces,
                        "eqeqeq": prohibit_type_coercion,
                        "futurehostile": future_hostile,
