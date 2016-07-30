@@ -51,7 +51,7 @@ class JSHintBear:
                         allow_funcscope: bool=False,
                         iterator: bool=False,
                         prohibit_arg: bool=True,
-                        prohibit_comma: bool=False,
+                        allow_comma_operator: bool=True,
                         prohibit_non_breaking_whitespace: bool=True,
                         prohibit_new: bool=False,
                         prohibit_undefined: bool=True,
@@ -135,8 +135,8 @@ class JSHintBear:
         :param prohibit_arg:
             This option prohibits the use of ``arguments.caller`` and
             ``arguments.callee``.
-        :param prohibit_comma:
-            This option prohibits the use of the comma operator.
+        :param allow_comma_operator:
+            This option allows the use of the comma operator.
         :param prohibit_non_breaking_whitespace:
             This option warns about "non-breaking whitespace characters".
         :param prohibit_new:
@@ -295,7 +295,7 @@ class JSHintBear:
                        "funcscope": allow_funcscope,
                        "iterator": iterator,
                        "noarg": prohibit_arg,
-                       "nocomma": prohibit_comma,
+                       "nocomma": not allow_comma_operator,
                        "nonbsp": prohibit_non_breaking_whitespace,
                        "nonew": prohibit_new,
                        "undef": prohibit_undefined,
