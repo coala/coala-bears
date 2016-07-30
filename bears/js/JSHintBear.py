@@ -46,7 +46,7 @@ class JSHintBear:
                         force_braces: bool=True,
                         allow_type_coercion: bool=False,
                         allow_future_identifiers: bool=True,
-                        prohibit_typeof: bool=False,
+                        allow_typeof: bool=True,
                         force_filter_forin: bool=True,
                         allow_funcscope: bool=False,
                         iterator: bool=False,
@@ -120,8 +120,8 @@ class JSHintBear:
         :param allow_future_identifiers:
             This option allows the use of identifiers which are defined in
             future versions of JavaScript.
-        :param prohibit_typeof:
-            This option suppresses warnings about invalid ``typeof`` operator
+        :param allow_typeof:
+            This option enables warnings about invalid ``typeof`` operator
             values.
         :param force_filter_forin:
             This option requires all ``for in`` loops to filter object's items.
@@ -289,7 +289,7 @@ class JSHintBear:
                        "curly": force_braces,
                        "eqeqeq": not allow_type_coercion,
                        "futurehostile": not allow_future_identifiers,
-                       "notypeof": prohibit_typeof,
+                       "notypeof": not allow_typeof,
                        "forin": force_filter_forin,
                        "funcscope": allow_funcscope,
                        "iterator": iterator,
