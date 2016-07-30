@@ -72,7 +72,7 @@ class RubySmellBear:
                         bad_param_name: bool=True,
                         bad_var_name: bool=True,
                         allow_unused_variables: bool=False,
-                        check_unused_private_methods: bool=False,
+                        allow_unused_private_methods: bool=True,
                         utility_function: bool=True):
         """
         :param attribute:
@@ -136,8 +136,8 @@ class RubySmellBear:
         :param check_unused_private_methods:
             Warns about unused private methods, as they are dead code.
         :param utility_function:
-            Warns about any instance method that has no dependency on the
-            state of the instance.
+            Allows any instance method that has no dependency on the state of
+            the instance.
         """
         config = {
             "Attribute": attribute,
@@ -163,7 +163,7 @@ class RubySmellBear:
             "UncommunicativeParameterName": bad_param_name,
             "UncommunicativeVariableName": bad_var_name,
             "UnusedParameters": not allow_unused_variables,
-            "UnusedPrivateMethod": check_unused_private_methods,
+            "UnusedPrivateMethod": not allow_unused_private_methods,
             "UtilityFunction": utility_function}
 
         return ('---\n' +
