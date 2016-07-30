@@ -30,7 +30,7 @@ jshintconfig = os.path.join(os.path.dirname(__file__),
 settings = {
     "max_statements": "False",
     "max_parameters": 10,
-    "check_unused_variables": "False",
+    "allow_unused_variables": "True",
     "shadow": "False",
     "allow_last_semicolon": "True",
     "es_version": 3,
