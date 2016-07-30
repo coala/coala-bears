@@ -45,7 +45,7 @@ class JSHintBear:
                         allow_prototype_overwrite: bool=False,
                         force_braces: bool=True,
                         allow_type_coercion: bool=False,
-                        future_hostile: bool=False,
+                        allow_future_identifiers: bool=True,
                         prohibit_typeof: bool=False,
                         force_filter_forin: bool=True,
                         allow_funcscope: bool=False,
@@ -117,9 +117,9 @@ class JSHintBear:
             in loops and conditionals.
         :param allow_type_coercion:
             This options allows the use of ``==`` and ``!=``.
-        :param future_hostile:
-            This option enables warnings about the use of identifiers which are
-            defined in future versions of JavaScript.
+        :param allow_future_identifiers:
+            This option allows the use of identifiers which are defined in
+            future versions of JavaScript.
         :param prohibit_typeof:
             This option suppresses warnings about invalid ``typeof`` operator
             values.
@@ -288,7 +288,7 @@ class JSHintBear:
                        "freeze": not allow_prototype_overwrite,
                        "curly": force_braces,
                        "eqeqeq": not allow_type_coercion,
-                       "futurehostile": future_hostile,
+                       "futurehostile": not allow_future_identifiers,
                        "notypeof": prohibit_typeof,
                        "forin": force_filter_forin,
                        "funcscope": allow_funcscope,
