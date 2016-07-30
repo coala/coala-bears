@@ -44,7 +44,7 @@ class JSHintBear:
                         allow_bitwise_operators: bool=False,
                         allow_prototype_overwrite: bool=False,
                         force_braces: bool=True,
-                        prohibit_type_coercion: bool=True,
+                        allow_type_coercion: bool=False,
                         future_hostile: bool=False,
                         prohibit_typeof: bool=False,
                         force_filter_forin: bool=True,
@@ -115,9 +115,8 @@ class JSHintBear:
         :param force_braces:
             This option requires you to always put curly braces around blocks
             in loops and conditionals.
-        :param prohibit_type_coercion:
-            This options prohibits the use of ``==`` and ``!=`` in favor of
-            ``===`` and ``!==``.
+        :param allow_type_coercion:
+            This options allows the use of ``==`` and ``!=``.
         :param future_hostile:
             This option enables warnings about the use of identifiers which are
             defined in future versions of JavaScript.
@@ -288,7 +287,7 @@ class JSHintBear:
             options = {"bitwise": allow_bitwise_operators,
                        "freeze": not allow_prototype_overwrite,
                        "curly": force_braces,
-                       "eqeqeq": prohibit_type_coercion,
+                       "eqeqeq": not allow_type_coercion,
                        "futurehostile": future_hostile,
                        "notypeof": prohibit_typeof,
                        "forin": force_filter_forin,
