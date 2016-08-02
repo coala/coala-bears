@@ -1,6 +1,7 @@
 from coala_utils.string_processing.Core import escape
 from coalib.bearlib.abstractions.Linter import linter
 from coalib.bearlib.spacing.SpacingHelper import SpacingHelper
+from coalib.bears.requirements.RscriptRequirement import RscriptRequirement
 
 
 def _map_to_r_bool(py_bool):
@@ -19,6 +20,8 @@ class FormatRBear:
     LANGUAGES = {"R"}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
+    REQUIREMENTS = {RscriptRequirement(package='formatR', flag='-e',
+                                       repo='http://cran.rstudio.com')}
     LICENSE = 'AGPL-3.0'
     CAN_FIX = {'Formatting'}
 

@@ -3,6 +3,7 @@ import re
 from coalib.bearlib.abstractions.Lint import Lint
 from coalib.bears.LocalBear import LocalBear
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
+from coalib.bears.requirements.RscriptRequirement import RscriptRequirement
 
 
 class RLintBear(LocalBear, Lint):
@@ -18,6 +19,8 @@ class RLintBear(LocalBear, Lint):
     LANGUAGES = {"R"}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
+    REQUIREMENTS = {RscriptRequirement(package='lintr', flag='-e',
+                                       repo='http://cran.rstudio.com')}
     LICENSE = 'AGPL-3.0'
     CAN_DETECT = {'Syntax', 'Formatting'}
 
