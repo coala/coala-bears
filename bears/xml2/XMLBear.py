@@ -2,6 +2,8 @@ import itertools
 
 from coalib.bearlib.abstractions.Lint import Lint, escape_path_argument
 from coalib.bears.LocalBear import LocalBear
+from coalib.bears.requirements.DistributionRequirement import (
+    DistributionRequirement)
 from coalib.settings.Setting import path, url
 
 
@@ -25,6 +27,7 @@ class XMLBear(LocalBear, Lint):
     gives_corrected = True
     use_stderr = True
     LANGUAGES = {"XML"}
+    REQUIREMENTS = {DistributionRequirement(apt='libxml2')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

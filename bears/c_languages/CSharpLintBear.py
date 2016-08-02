@@ -1,4 +1,6 @@
 from coalib.bearlib.abstractions.Linter import linter
+from coalib.bears.requirements.DistributionRequirement import (
+    DistributionRequirement)
 
 
 @linter(executable='mcs',
@@ -13,6 +15,7 @@ class CSharpLintBear:
     """
 
     LANGUAGES = {"C#"}
+    REQUIREMENTS = {DistributionRequirement(apt='mono-mcs')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

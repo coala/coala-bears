@@ -1,4 +1,5 @@
 from coalib.bearlib.abstractions.Linter import linter
+from coalib.bears.requirements.GemRequirement import GemRequirement
 
 
 @linter(executable='ruby',
@@ -13,6 +14,7 @@ class RubySyntaxBear:
     Checks the code with ``ruby -wc`` on each file separately.
     """
     LANGUAGES = {"Ruby"}
+    REQUIREMENTS = {GemRequirement('ruby', '2.1.5')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
