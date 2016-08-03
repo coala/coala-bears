@@ -123,8 +123,7 @@ space_between_ending_comma_and_closing_bracket= \
         for diff in diffs:
             yield Result(self,
                          "The code does not comply with the settings "
-                         "provided. " +
-                         str(blank_line_before_nested_class_or_def),
+                         "provided.",
                          affected_code=(diff.range(filename),),
                          diffs={filename: diff})
 
