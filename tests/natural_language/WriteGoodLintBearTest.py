@@ -45,7 +45,7 @@ WriteGoodLintBearWithPassiveTest = verify_local_bear(WriteGoodLintBear,
                                                          passive_file,
                                                          illusion_file),
                                                      settings={
-                                                         "check_passive_voice":
+                                                         "allow_passive_voice":
                                                                           True})
 
 WriteGoodLintBearWithTooWordyTest = verify_local_bear(WriteGoodLintBear,

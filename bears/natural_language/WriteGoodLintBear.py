@@ -22,7 +22,7 @@ class WriteGoodLintBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file,
-                         check_passive_voice: bool=False,
+                         allow_passive_voice: bool=False,
                          check_so_beginning: bool=False,
                          check_adverbs: bool=False,
                          check_repeated_words: bool=False,
@@ -33,7 +33,7 @@ class WriteGoodLintBear:
         """
         Using ``True`` will enable the check.
 
-        :param check_passive_voice:     Checks for passive voice.
+        :param allow_passive_voice:     Allows passive voice.
         :param check_so_beginning:      Checks for ``So`` at the beginning of
                                         the sentence.
         :param check_adverbs:           Checks for adverbs that can weaken the
@@ -51,7 +51,7 @@ class WriteGoodLintBear:
                                         sentence.
         """
         arg_map = {
-            'check_passive_voice': '--passive',
+            'allow_passive_voice': '--passive',
             'check_so_beginning': '--so',
             'check_adverbs': '--adverb',
             'check_repeated_words': '--illusion',
