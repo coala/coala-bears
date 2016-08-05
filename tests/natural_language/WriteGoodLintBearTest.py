@@ -93,7 +93,7 @@ WriteGoodLintBearWithClicheTest = verify_local_bear(WriteGoodLintBear,
                                                     invalid_files=(
                                                         cliche_file,),
                                                     settings={
-                                                        "check_cliche_exists":
+                                                        "allow_cliche_phrases":
                                                                           True})
 
 WriteGoodLintBearWithAdverbTest = verify_local_bear(WriteGoodLintBear,

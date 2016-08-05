@@ -29,7 +29,7 @@ class WriteGoodLintBear:
                          allow_there_is: bool=False,
                          allow_ambiguous_words: bool=False,
                          allow_extra_words: bool=False,
-                         check_cliche_exists: bool=False):
+                         allow_cliche_phrases: bool=False):
         """
         Using ``True`` will enable the check.
 
@@ -47,7 +47,7 @@ class WriteGoodLintBear:
                                         ``often``, ``probably``
         :param allow_extra_words:       Allows wordy phrases and unnecessary
                                         words.
-        :param check_cliche_exists:     Checks for common cliche phrases in the
+        :param allow_cliche_phrases:    Allows common cliche phrases in the
                                         sentence.
         """
         arg_map = {
@@ -58,7 +58,7 @@ class WriteGoodLintBear:
             'allow_there_is': '--thereIs',
             'allow_ambiguous_words': '--weasel',
             'allow_extra_words': '--tooWordy',
-            'check_cliche_exists': '--cliches'
+            'allow_cliche_phrases': '--cliches'
         }
         l = locals()
         args = tuple(arg for key, arg in arg_map.items()
