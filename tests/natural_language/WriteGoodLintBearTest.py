@@ -62,7 +62,7 @@ WriteGoodLintBearWithTooWordyTest = verify_local_bear(WriteGoodLintBear,
                                                           wordy_file,
                                                           so_file),
                                                       settings={
-                                                          "check_extra_words":
+                                                          "allow_extra_words":
                                                                           True})
 
 WriteGoodLintBearWithThereIsTest = verify_local_bear(WriteGoodLintBear,

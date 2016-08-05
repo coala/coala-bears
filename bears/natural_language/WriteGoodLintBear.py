@@ -28,7 +28,7 @@ class WriteGoodLintBear:
                          allow_repeated_words: bool=False,
                          allow_there_is: bool=False,
                          allow_ambiguous_words: bool=False,
-                         check_extra_words: bool=False,
+                         allow_extra_words: bool=False,
                          check_cliche_exists: bool=False):
         """
         Using ``True`` will enable the check.
@@ -45,8 +45,8 @@ class WriteGoodLintBear:
                                         at the beginning of the sentence.
         :param allow_ambiguous_words:   Allows ``weasel words`` for example
                                         ``often``, ``probably``
-        :param check_extra_words:       Checks for wordy phrases and
-                                        unnecessary words.
+        :param allow_extra_words:       Allows wordy phrases and unnecessary
+                                        words.
         :param check_cliche_exists:     Checks for common cliche phrases in the
                                         sentence.
         """
@@ -57,7 +57,7 @@ class WriteGoodLintBear:
             'allow_repeated_words': '--illusion',
             'allow_there_is': '--thereIs',
             'allow_ambiguous_words': '--weasel',
-            'check_extra_words': '--tooWordy',
+            'allow_extra_words': '--tooWordy',
             'check_cliche_exists': '--cliches'
         }
         l = locals()
