@@ -26,7 +26,7 @@ class WriteGoodLintBear:
                          allow_so_beginning: bool=False,
                          allow_adverbs: bool=False,
                          allow_repeated_words: bool=False,
-                         check_there_is: bool=False,
+                         allow_there_is: bool=False,
                          check_ambiguos_words: bool=False,
                          check_extra_words: bool=False,
                          check_cliche_exists: bool=False):
@@ -41,7 +41,7 @@ class WriteGoodLintBear:
                                         ``extremely``, etc.
         :param allow_repeated_words:    Allows lexical illusions – cases
                                         where a word is repeated.
-        :param check_there_is:          Checks for ``There is`` or ``There are``
+        :param allow_there_is:          Allows ``There is`` or ``There are``
                                         at the beginning of the sentence.
         :param check_ambiguos_words:    Checks for ``weasel words`` for example
                                         ``often``, ``probably``
@@ -55,7 +55,7 @@ class WriteGoodLintBear:
             'allow_so_beginning': '--so',
             'allow_adverbs': '--adverb',
             'allow_repeated_words': '--illusion',
-            'check_there_is': '--thereIs',
+            'allow_there_is': '--thereIs',
             'check_ambiguos_words': '--weasel',
             'check_extra_words': '--tooWordy',
             'check_cliche_exists': '--cliches'

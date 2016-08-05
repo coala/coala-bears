@@ -77,7 +77,7 @@ WriteGoodLintBearWithThereIsTest = verify_local_bear(WriteGoodLintBear,
                                                                   adverb_file,),
                                                      invalid_files=(),
                                                      settings={
-                                                         "check_there_is":
+                                                         "allow_there_is":
                                                                           True})
 
 WriteGoodLintBearWithClicheTest = verify_local_bear(WriteGoodLintBear,
