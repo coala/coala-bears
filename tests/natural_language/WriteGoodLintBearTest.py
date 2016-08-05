@@ -108,7 +108,7 @@ WriteGoodLintBearWithAdverbTest = verify_local_bear(WriteGoodLintBear,
                                                                    thereIs_file,
                                                                    wordy_file,
                                                                    adverb_file),
-                                                    settings={"check_adverbs":
+                                                    settings={"allow_adverbs":
                                                               True})
 
 WriteGoodLintBearWithSoTest = verify_local_bear(WriteGoodLintBear,

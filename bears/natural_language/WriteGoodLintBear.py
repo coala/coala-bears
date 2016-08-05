@@ -24,7 +24,7 @@ class WriteGoodLintBear:
     def create_arguments(filename, file, config_file,
                          allow_passive_voice: bool=False,
                          allow_so_beginning: bool=False,
-                         check_adverbs: bool=False,
+                         allow_adverbs: bool=False,
                          check_repeated_words: bool=False,
                          check_there_is: bool=False,
                          check_ambiguos_words: bool=False,
@@ -36,7 +36,7 @@ class WriteGoodLintBear:
         :param allow_passive_voice:     Allows passive voice.
         :param allow_so_beginning:      Allows ``So`` at the beginning of
                                         the sentence.
-        :param check_adverbs:           Checks for adverbs that can weaken the
+        :param allow_adverbs:           Allows adverbs that can weaken the
                                         meaning, such as: ``really``, ``very``,
                                         ``extremely``, etc.
         :param check_repeated_words:    Checks for lexical illusions – cases
@@ -53,7 +53,7 @@ class WriteGoodLintBear:
         arg_map = {
             'allow_passive_voice': '--passive',
             'allow_so_beginning': '--so',
-            'check_adverbs': '--adverb',
+            'allow_adverbs': '--adverb',
             'check_repeated_words': '--illusion',
             'check_there_is': '--thereIs',
             'check_ambiguos_words': '--weasel',
