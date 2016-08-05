@@ -122,7 +122,7 @@ WriteGoodLintBearWithSoTest = verify_local_bear(WriteGoodLintBear,
                                                              illusion_file,),
                                                 invalid_files=(
                                                     bad_file, so_file,),
-                                                settings={"check_so_beginning":
+                                                settings={"allow_so_beginning":
                                                           True})
 
 WriteGoodLintBearWithIllusionTest = verify_local_bear(WriteGoodLintBear,
