@@ -25,7 +25,7 @@ class WriteGoodLintBear:
                          allow_passive_voice: bool=False,
                          allow_so_beginning: bool=False,
                          allow_adverbs: bool=False,
-                         check_repeated_words: bool=False,
+                         allow_repeated_words: bool=False,
                          check_there_is: bool=False,
                          check_ambiguos_words: bool=False,
                          check_extra_words: bool=False,
@@ -39,7 +39,7 @@ class WriteGoodLintBear:
         :param allow_adverbs:           Allows adverbs that can weaken the
                                         meaning, such as: ``really``, ``very``,
                                         ``extremely``, etc.
-        :param check_repeated_words:    Checks for lexical illusions – cases
+        :param allow_repeated_words:    Allows lexical illusions – cases
                                         where a word is repeated.
         :param check_there_is:          Checks for ``There is`` or ``There are``
                                         at the beginning of the sentence.
@@ -54,7 +54,7 @@ class WriteGoodLintBear:
             'allow_passive_voice': '--passive',
             'allow_so_beginning': '--so',
             'allow_adverbs': '--adverb',
-            'check_repeated_words': '--illusion',
+            'allow_repeated_words': '--illusion',
             'check_there_is': '--thereIs',
             'check_ambiguos_words': '--weasel',
             'check_extra_words': '--tooWordy',

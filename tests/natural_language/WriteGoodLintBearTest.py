@@ -138,7 +138,7 @@ WriteGoodLintBearWithIllusionTest = verify_local_bear(WriteGoodLintBear,
                                                       invalid_files=(
                                                           illusion_file,),
                                                       settings={
-                                                         "check_repeated_words":
+                                                         "allow_repeated_words":
                                                                           True})
 
 WriteGoodLintBearWithWeaselTest = verify_local_bear(WriteGoodLintBear,
