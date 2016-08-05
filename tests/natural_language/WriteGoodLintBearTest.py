@@ -154,6 +154,6 @@ WriteGoodLintBearWithWeaselTest = verify_local_bear(WriteGoodLintBear,
                                                                    wordy_file,
                                                                    adverb_file),
                                                     settings={
-                                                        "check_ambiguos_words":
+                                                        "allow_ambiguous_words":
                                                                           True}
                                                     )
