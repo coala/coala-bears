@@ -44,7 +44,7 @@ class JavaPMDBear:
                          check_optimizations: bool = False,
                          check_strings: bool = False,
                          allow_unnecessary_code: bool = True,
-                         check_unused: bool = True):
+                         allow_unused_code: bool = True):
         """
         :param check_best_practices:
             Activate to check for best practices.
@@ -71,8 +71,8 @@ class JavaPMDBear:
             Check for String, StringBuffer and StringBuilder instances.
         :param allow_unnecessary_code:
             Allows unnecessary code.
-        :param check_unused:
-            Check for unused code.
+        :param allow_unused_code:
+            Allows unused code.
         """
         options = {
             "java-basic": check_best_practices,
@@ -87,7 +87,7 @@ class JavaPMDBear:
             "java-optimizations": check_optimizations,
             "java-strings": check_strings,
             "java-unnecessary": allow_unnecessary_code,
-            "java-unusedcode": check_unused}
+            "java-unusedcode": allow_unused_code}
         rules = ','.join(key for key in options if options[key])
 
         return which("run.sh"), "pmd", "-R", rules, "-d", filename
