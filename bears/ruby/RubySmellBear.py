@@ -49,7 +49,7 @@ class RubySmellBear:
                                 ".".format(issue["wiki_link"]))
 
     def generate_config(self,
-                        attribute: bool=True,
+                        allow_setter_in_classes: bool=False,
                         boolean_parameter: bool=True,
                         check_class_variable: bool=True,
                         control_parameter: bool=True,
@@ -75,8 +75,8 @@ class RubySmellBear:
                         allow_unused_private_methods: bool=True,
                         utility_function: bool=True):
         """
-        :param attribute:
-            Warns if a setter in a class is detected.
+        :param allow_setter_in_classes:
+            Allows setter in classes.
         :param boolean_parameter:
             Warns if a boolean parameter in a function is detected (control
             coupling).
@@ -140,7 +140,7 @@ class RubySmellBear:
             the instance.
         """
         config = {
-            "Attribute": attribute,
+            "Attribute": not allow_setter_in_classes,
             "BooleanParameter": boolean_parameter,
             "ClassVariable": check_class_variable,
             "ControlParameter": control_parameter,
