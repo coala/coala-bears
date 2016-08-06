@@ -43,7 +43,7 @@ class JavaPMDBear:
                          check_imports: bool = True, check_naming: bool = True,
                          check_optimizations: bool = False,
                          check_strings: bool = False,
-                         check_unnecessary: bool = True,
+                         allow_unnecessary_code: bool = True,
                          check_unused: bool = True):
         """
         :param check_best_practices:
@@ -69,8 +69,8 @@ class JavaPMDBear:
             Check for best pratices regarding optimization.
         :param check_strings:
             Check for String, StringBuffer and StringBuilder instances.
-        :param check_unnecessary:
-            Checks for unnecessary code.
+        :param allow_unnecessary_code:
+            Allows unnecessary code.
         :param check_unused:
             Check for unused code.
         """
@@ -86,7 +86,7 @@ class JavaPMDBear:
             "java-naming": check_naming,
             "java-optimizations": check_optimizations,
             "java-strings": check_strings,
-            "java-unnecessary": check_unnecessary,
+            "java-unnecessary": allow_unnecessary_code,
             "java-unusedcode": check_unused}
         rules = ','.join(key for key in options if options[key])
 
