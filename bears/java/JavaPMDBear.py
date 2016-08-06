@@ -47,28 +47,28 @@ class JavaPMDBear:
                          allow_unused_code: bool = True):
         """
         :param check_best_practices:
-            Activate to check for best practices.
+            Checks for best practices.
         :param check_braces:
-            Check for the right use of braces.
+            Checks for the right use of braces.
         :param check_clone_implementation:
-            Check for the right implementation of the ``clone()`` function.
+            Checks for the right implementation of the ``clone()`` function.
         :param check_code_size:
-            Check for large or complicated code constructs.
+            Checks for large or complicated code constructs.
         :param check_comments:
-            Check comments for length, content and placement.
+            Checks comments for length, content and placement.
         :param check_controversial:
             Does various checks that are considered controversial.
         :param check_design:
-            Check for optimal code implementations. Alternate approaches
+            Checks for optimal code implementations. Alternate approaches
             are suggested.
         :param check_imports:
-            Check for duplicate and unused imports.
+            Checks for duplicate and unused imports.
         :param check_naming:
-            Check the names of identifiers against some rules.
+            Checks the names of identifiers against some rules.
         :param check_optimizations:
-            Check for best pratices regarding optimization.
+            Checks for best pratices regarding optimization.
         :param check_strings:
-            Check for String, StringBuffer and StringBuilder instances.
+            Checks for String, StringBuffer and StringBuilder instances.
         :param allow_unnecessary_code:
             Allows unnecessary code.
         :param allow_unused_code:
