@@ -51,7 +51,7 @@ class RubySmellBear:
     def generate_config(self,
                         allow_setter_in_classes: bool=False,
                         allow_boolean_parameter_in_functions: bool=False,
-                        check_class_variable: bool=True,
+                        allow_class_variables: bool=False,
                         control_parameter: bool=True,
                         data_clump: bool=True,
                         duplicate_method_call: bool=True,
@@ -79,8 +79,8 @@ class RubySmellBear:
             Allows setter in classes.
         :param allow_boolean_parameter_in_functions:
             Allows boolean parameter in functions (control coupling).
-        :param check_class_variable:
-            Warns if a class variable is detected.
+        :param allow_class_variables:
+            Allows class variables.
         :param control_parameter:
             Warns if a parameter controls the function behaviour (control
             coupling).
@@ -141,7 +141,7 @@ class RubySmellBear:
         config = {
             "Attribute": not allow_setter_in_classes,
             "BooleanParameter": not allow_boolean_parameter_in_functions,
-            "ClassVariable": check_class_variable,
+            "ClassVariable": not allow_class_variables,
             "ControlParameter": control_parameter,
             "DataClump": data_clump,
             "DuplicateMethodCall": duplicate_method_call,
