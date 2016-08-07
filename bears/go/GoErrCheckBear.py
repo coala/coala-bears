@@ -43,7 +43,7 @@ class GoErrCheckBear:
         :param ignorepkg:    Takes a comma-separated list of package
                              import paths to ignore.
         :param asserts:      Enables checking for ignored type assertion
-                             results
+                             results.
         :param blank:        Enables checking for assignments of errors to
                              the blank identifier.
 
