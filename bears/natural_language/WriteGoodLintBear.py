@@ -4,8 +4,8 @@ from coalib.bears.requirements.NpmRequirement import NpmRequirement
 
 @linter(executable='write-good',
         output_format='regex',
-        output_regex=r'(?P<message>.*)\s*on\s*line\s*(?P<line>\d+)\s*at\scolumn'
-                      '\s*(?P<column>\d+)'
+        output_regex=r'(?P<message>.*)\s*on\s*line\s*(?P<line>\d+)\s*at\s'
+                      'column\s*(?P<column>\d+)'
         )
 class WriteGoodLintBear:
     """
@@ -38,8 +38,8 @@ class WriteGoodLintBear:
         :param allow_so_beginning:      Allows ``So`` at the beginning of
                                         the sentence.
         :param allow_adverbs:           Allows adverbs that can weaken the
-                                        meaning, such as: ``really``, ``very``,
-                                        ``extremely``, etc.
+                                        meaning, such as: ``really``,
+                                        ``very``, ``extremely``, etc.
         :param allow_repeated_words:    Allows lexical illusions – cases
                                         where a word is repeated.
         :param allow_there_is:          Allows ``There is`` or ``There are``

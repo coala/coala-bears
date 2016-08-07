@@ -86,8 +86,8 @@ class RubySmellBear:
             Warns if a parameter controls the function behaviour (control
             coupling).
         :param data_clump:
-            Warns when the same two or three items frequently appear together in
-            function/class parameter list.
+            Warns when the same two or three items frequently appear together
+            in function/class parameter list.
         :param duplicate_method_call:
             Warns when two fragments of code look nearly identical, or when two
             fragments of code have nearly identical effects at some conceptual

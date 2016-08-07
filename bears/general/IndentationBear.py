@@ -28,11 +28,11 @@ class IndentationBear(LocalBear):
         It is a generic indent bear, which looks for a start and end
         indent specifier, example: ``{ : }`` where "{" is the start indent
         specifier and "}" is the end indent specifier. If the end-specifier
-        is not given, this bear looks for unindents within the code to correctly
-        figure out indentation.
+        is not given, this bear looks for unindents within the code to
+        correctly figure out indentation.
 
-        It also figures out hanging indents and absolute indentation of function
-        params or list elements.
+        It also figures out hanging indents and absolute indentation of
+        function params or list elements.
 
         It does not however support  indents based on keywords yet.
         for example:
@@ -91,7 +91,8 @@ class IndentationBear(LocalBear):
             indent_levels = self.get_indent_levels(
                 file, filename,
                 indent_types, annotation_dict, encaps_pos, comments)
-        # This happens only in case of unmatched indents or ExpectedIndentError.
+        # This happens only in case of unmatched indents or
+        # ExpectedIndentError.
         except (UnmatchedIndentError, ExpectedIndentError) as e:
             yield Result(self, str(e), severity=RESULT_SEVERITY.MAJOR)
             return
@@ -222,7 +223,9 @@ class IndentationBear(LocalBear):
                 if _range.start.line == line + 1:
                     next_indent += 1
 
-                first_ch = file[line].lstrip()[0] if file[line].lstrip() else ""
+                first_ch = (file[line].lstrip()[0]
+                            if file[line].lstrip()
+                            else "")
                 if(_range.end.line == line + 1 and
                    first_ch in indent_types.values()):
                     indent -= 1
@@ -460,7 +463,8 @@ def get_first_unindent(indent,
 
     :param indent:          No. of spaces to check unindent against.
     :param file:            A tuple of strings.
-    :param start_line:      The line from where to start searching for unindent.
+    :param start_line:      The line from where to start searching for
+                            unindent.
     :param annotation_dict: A dictionary containing sourceranges of all the
                             strings and comments within a file.
     :param encapsulators:   A tuple of SourceRanges of code regions trapped in

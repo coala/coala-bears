@@ -28,7 +28,7 @@ class GNUIndentBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file,
-                         max_line_length: int=80,
+                         max_line_length: int=79,
                          use_spaces: bool=True,
                          blank_lines_after_declarations: bool=False,
                          blank_lines_after_procedures: bool=False,

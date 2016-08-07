@@ -110,8 +110,8 @@ class JSHintBear:
         :param allow_bitwise_operators:
             Prohibits the use of bitwise operators when its value is ``False``.
         :param allow_prototype_overwrite:
-            This options allows overwriting prototypes of native objects such as
-            ``Array``.
+            This options allows overwriting prototypes of native objects such
+            as ``Array``.
         :param force_braces:
             This option requires you to always put curly braces around blocks
             in loops and conditionals.
@@ -272,8 +272,8 @@ class JSHintBear:
             - True  - allow variable shadowing
         :param allow_unused_variables:
             Allows when variables are defined but never used. This can be set
-            to ""vars"" to only check for variables, not function parameters, or
-            ""strict"" to check all variables and parameters.
+            to ""vars"" to only check for variables, not function parameters,
+            or ""strict"" to check all variables and parameters.
         :param allow_latedef:
             This option prohibits the use of a variable before it was defined.
             Setting this option to "nofunc" will allow function declarations to

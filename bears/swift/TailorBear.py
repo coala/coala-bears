@@ -45,7 +45,7 @@ class TailorBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file,
-                         max_line_length: int=80,
+                         max_line_length: int=79,
                          max_class_length: int=0,
                          max_closure_length: int=0,
                          max_file_length: int=0,
@@ -67,7 +67,8 @@ class TailorBear:
         :param max_function_length: maximum number of lines in a Function
                                     <0-999>.
         :param max_name_length:     maximum length of Identifier name <0-999>.
-        :param max_struct_length:   maximum number od lines in a Struct <0-999>.
+        :param max_struct_length:   maximum number od lines in a Struct
+                                    <0-999>.
         :param min_name_length:     minimum number of characters in Identifier
                                     name <1-999>.
         :param tailor_config:       path to Tailor configuration file.

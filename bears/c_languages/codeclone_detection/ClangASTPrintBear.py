@@ -59,6 +59,7 @@ class ClangASTPrintBear(GlobalBear):
         for filename, file in sorted(self.file_dict.items()):
             root = Index.create().parse(
                 filename,
-                options=TranslationUnit.PARSE_DETAILED_PROCESSING_RECORD).cursor
+                options=TranslationUnit.PARSE_DETAILED_PROCESSING_RECORD
+                ).cursor
 
             self.print_node(root, filename)

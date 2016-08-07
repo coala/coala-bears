@@ -10,7 +10,7 @@ class PEP8BearTest(LocalBearTestHelper):
 
     def setUp(self):
         self.section = Section('name')
-        self.section.append(Setting('max_line_length', '80'))
+        self.section.append(Setting('max_line_length', '79'))
         self.uut = PEP8Bear(self.section, Queue())
 
     def test_valid(self):

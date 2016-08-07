@@ -63,9 +63,9 @@ class InvalidLinkBear(LocalBear):
         This bear can automatically fix redirects, but ignores redirect
         URLs that have a huge difference with the original URL.
 
-        Warning: This bear will make HEAD requests to all URLs mentioned in your
-        codebase, which can potentially be destructive. As an example, this bear
-        would naively just visit the URL from a line that goes like
+        Warning: This bear will make HEAD requests to all URLs mentioned in
+        your codebase, which can potentially be destructive. As an example,
+        this bear would naively just visit the URL from a line that goes like
         `do_not_ever_open = 'https://api.acme.inc/delete-all-data'` wiping out
         all your data.
 
@@ -94,7 +94,8 @@ class InvalidLinkBear(LocalBear):
                         line=line_number,
                         severity=RESULT_SEVERITY.NORMAL)
                 if 300 <= code < 400:  # HTTP status 30x
-                    redirect_url = requests.head(link, allow_redirects=True).url
+                    redirect_url = requests.head(link,
+                                                 allow_redirects=True).url
                     matcher = SequenceMatcher(
                         None, redirect_url, link)
                     if (matcher.real_quick_ratio() > 0.7 and
@@ -105,7 +106,9 @@ class InvalidLinkBear(LocalBear):
                         end = start + len(link)
                         replacement = current_line[:start] + \
                             redirect_url + current_line[end:]
-                        diff.change_line(line_number, current_line, replacement)
+                        diff.change_line(line_number,
+                                         current_line,
+                                         replacement)
 
                         yield Result.from_values(
                             self,

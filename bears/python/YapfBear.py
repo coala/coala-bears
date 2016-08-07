@@ -56,9 +56,9 @@ class YapfBear(LocalBear):
         :param continuation_tab_width:
             Indent width used for line continuations.
         :param dedent_closing_brackets:
-            Puts closing brackets on a separate line, dedented, if the bracketed
-            expression can't fit in a single line. Applies to all kinds of
-            brackets, including function definitions and calls.
+            Puts closing brackets on a separate line, dedented, if the
+            bracketed expression can't fit in a single line. Applies to all
+            kinds of brackets, including function definitions and calls.
         :param indent_dictionary_value:
             Indents the dictionary value if it cannot fit on the same line as
             the dictionary key.

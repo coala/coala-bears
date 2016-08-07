@@ -26,7 +26,8 @@ class YapfBearTest(LocalBearTestHelper):
         self.section.append(Setting('blank_line_before_nested_class_or_def',
                                     True))
         self.check_validity(self.uut,
-                            ["class foo(object):\n", "\n", "    def f(self):\n",
+                            ["class foo(object):\n", "\n",
+                             "    def f(self):\n",
                              "        return 37 * -+2\n"],
                             valid=True)
         self.check_validity(self.uut,
@@ -37,15 +38,15 @@ class YapfBearTest(LocalBearTestHelper):
     def test_allow_multiline_lambdas(self):
         self.section.append(Setting('allow_multiline_lambdas', True))
         self.check_validity(self.uut,
-                            ['func(a, lambda xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-                             'xxxxxxxxxxxxxxxxx:\n', '     xxxxxxxxxxxxxxxxxxxx'
-                             'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx + 222222222)\n'],
-                            valid=True)
+                            ['func(a, lambda xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+                             'xxxxxxxxxxxxxxxxxx:\n', '     xxxxxxxxxxxxxxxxxx'
+                             'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx + 222222222)\n'
+                             ], valid=True)
         self.section.append(Setting('allow_multiline_lambdas', False))
         self.check_validity(self.uut,
                             ['func(\n',
                              '    a,\n',
-                             '    lambda xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-                             'xxxxxxxxxxxxx: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-                             'xxxxxxxxxxxxxxxxx + 222222222)\n'],
+                             '    lambda xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+                             'xxxxxxxxxxxxxx: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+                             'xxxxxxxxxxxxxxxxxxx + 222222222)\n'],
                             valid=True)

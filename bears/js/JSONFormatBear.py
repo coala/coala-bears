@@ -44,7 +44,8 @@ class JSONFormatBear(LocalBear):
         corrected = json.dumps(json_content,
                                sort_keys=json_sort,
                                indent=tab_width,
-                               ensure_ascii=not escape_unicode).splitlines(True)
+                               ensure_ascii=not escape_unicode
+                               ).splitlines(True)
         # Because of a bug in several python versions we have to correct
         # whitespace here.
         corrected = tuple(line.rstrip(" \n") + "\n" for line in corrected)

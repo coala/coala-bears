@@ -17,7 +17,7 @@ class PEP8Bear(LocalBear):
     CAN_FIX = {'Formatting'}
 
     def run(self, filename, file,
-            max_line_length: int=80,
+            max_line_length: int=79,
             tab_width: int=SpacingHelper.DEFAULT_TAB_WIDTH,
             pep_ignore: typed_list(str)=(),
             pep_select: typed_list(str)=(),

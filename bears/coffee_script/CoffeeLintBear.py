@@ -32,7 +32,7 @@ class CoffeeLintBear:
 
     @staticmethod
     def generate_config(filename, file,
-                        max_line_length: int=80,
+                        max_line_length: int=79,
                         max_line_length_affect_comments: bool=True,
                         space_before_and_after_arrow: bool=True,
                         check_braces_spacing: bool=False,
@@ -65,7 +65,8 @@ class CoffeeLintBear:
                         allow_increment: bool=True,
                         allow_no_parameters: bool=True,
                         allow_empty_functions: bool=False,
-                        enforce_parentheses_on_non_empty_constructors: bool=True
+                        enforce_parentheses_on_non_empty_constructors:
+                            bool=True
                         ):
         """
         :param max_line_length:
@@ -97,12 +98,13 @@ class CoffeeLintBear:
         :param enforce_newline_at_EOF:
             Checks if the file ends with a single newline.
         :param use_spaces:
-            Forbids tabs in indentation and applies two spaces for this purpose.
+            Forbids tabs in indentation and applies two spaces for this
+            purpose.
         :param tab_width:
             Length of the tab for indentation.
         :param number_of_newlines_after_classes:
-            Determines the number of newlines that separate the class definition
-            and the rest of the code.
+            Determines the number of newlines that separate the class
+            definition and the rest of the code.
         :param prohibit_embedding_javascript_snippet:
             Prevents some JavaScript elements like ``eval`` to affect
             CoffeeScript.
@@ -300,7 +302,8 @@ class CoffeeLintBear:
     def process_output(self, output, filename, file):
         output = json.loads(output)
 
-        assert len(output) == 1, "More than 1 file parsed, something went wrong"
+        assert (len(output) == 1,
+                "More than 1 file parsed, something went wrong")
         for item in tuple(output.values())[0]:
             yield Result.from_values(
                 origin="{} ({})".format(self.name, item['rule']),

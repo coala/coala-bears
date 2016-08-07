@@ -44,7 +44,7 @@ class PyImportSortBear(LocalBear):
             known_first_party_imports: typed_list(str)=(),
             known_third_party_imports: typed_list(str)=(),
             known_standard_library_imports: typed_list(str)=None,
-            max_line_length: int=80,
+            max_line_length: int=79,
             imports_forced_to_top: typed_list(str)=()):
         """
         Raise issues related to sorting imports, segregating imports into

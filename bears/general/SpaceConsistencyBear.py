@@ -58,9 +58,9 @@ class SpaceConsistencyBear(LocalBear):
                 if replacement != line.rstrip("\n") + "\n":
                     result_texts.append("Trailing whitespaces.")
                     additional_info_texts.append(
-                        "Your source code contains trailing whitespaces. Those "
-                        "usually have no meaning. Please consider removing "
-                        "them.")
+                        "Your source code contains trailing whitespaces. "
+                        "Those usually have no meaning. Please consider "
+                        "removing them.")
 
             if use_spaces:
                 pre_replacement = replacement

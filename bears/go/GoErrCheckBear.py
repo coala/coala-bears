@@ -14,7 +14,8 @@ class GoErrCheckBear:
     Checks the code for all function calls that have unchecked errors.
     GoErrCheckBear runs ``errcheck`` over each file to find such functions.
 
-    For more information on the analysis visit <https://github.com/kisielk/errcheck>.
+    For more information on the analysis visit
+    <https://github.com/kisielk/errcheck>.
     """
     LANGUAGES = {"Go"}
     REQUIREMENTS = {GoRequirement(
@@ -41,7 +42,8 @@ class GoErrCheckBear:
                              regex apply to all packages.
         :param ignorepkg:    Takes a comma-separated list of package
                              import paths to ignore.
-        :param asserts:      Enables checking for ignored type assertion results
+        :param asserts:      Enables checking for ignored type assertion
+                             results
         :param blank:        Enables checking for assignments of errors to
                              the blank identifier.
 
@@ -50,7 +52,8 @@ class GoErrCheckBear:
         if ignore:
             args += ('-ignore', ','.join(part.strip() for part in ignore))
         if ignorepkg:
-            args += ('-ignorepkg', ','.join(part.strip() for part in ignorepkg))
+            args += ('-ignorepkg', ','.join(part.strip()
+                                            for part in ignorepkg))
         if blank:
             args += ("-blank",)
         if asserts:

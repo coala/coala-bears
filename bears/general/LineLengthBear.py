@@ -22,8 +22,8 @@ class LineLengthBear(LocalBear):
         '''
         Yields results for all lines longer than the given maximum line length.
 
-        :param max_line_length:     Maximum number of characters for a line, the
-                                    newline character being excluded.
+        :param max_line_length:     Maximum number of characters for a line,
+                                    the newline character being excluded.
         :param tab_width:           Number of spaces to show for one tab.
         :param ignore_length_regex: Lines matching each of the regular
                                     expressions in this list will be ignored.

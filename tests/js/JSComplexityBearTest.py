@@ -43,14 +43,16 @@ JSComplexityBearTest = verify_local_bear(JSComplexityBear,
 
 JSComplexityBearThresholdTest = verify_local_bear(JSComplexityBear,
                                                   valid_files=(),
-                                                  invalid_files=(complexity_4,
-                                                                 complexity_12),
+                                                  invalid_files=(
+                                                      complexity_4,
+                                                      complexity_12),
                                                   settings={"cc_threshold": 2},
                                                   tempfile_kwargs={"suffix":
                                                                    ".js"})
 
 # No output for non-js files
 JSComplexityBearInvalidFileTest = verify_local_bear(JSComplexityBear,
-                                                    valid_files=(complexity_4,
-                                                                 complexity_12),
+                                                    valid_files=(
+                                                        complexity_4,
+                                                        complexity_12),
                                                     invalid_files=())

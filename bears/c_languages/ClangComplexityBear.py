@@ -76,8 +76,8 @@ class ClangComplexityBear(LocalBear):
 
     def run(self, filename, file, cyclomatic_complexity: int=8):
         """
-        Check for all functions if they are too complicated using the cyclomatic
-        complexity metric.
+        Check for all functions if they are too complicated using the
+        cyclomatic complexity metric.
 
         You can read more about this metric at
         <https://www.wikiwand.com/en/Cyclomatic_complexity>.

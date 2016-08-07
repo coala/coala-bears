@@ -90,21 +90,21 @@ GNUIndentBearTest = verify_local_bear(
     GNUIndentBear,
     valid_files=(test_file1,),
     invalid_files=(test_file2, test_file3, test_file4),
-    settings={"use_spaces": "true", "max_line_length": "80"})
+    settings={"use_spaces": "true", "max_line_length": "79"})
 
 
 GNUIndentBearWithTabTest = verify_local_bear(
     GNUIndentBear,
     valid_files=(test_file3,),
     invalid_files=(test_file1, test_file2, test_file4),
-    settings={"use_spaces": "nope", "max_line_length": "80"})
+    settings={"use_spaces": "nope", "max_line_length": "79"})
 
 
 GNUIndentBearWidthTest = verify_local_bear(
     GNUIndentBear,
     valid_files=(test_file2,),
     invalid_files=(test_file1, test_file3, test_file4),
-    settings={"use_spaces": "true", "max_line_length": "80", "tab_width": "2"})
+    settings={"use_spaces": "true", "max_line_length": "79", "tab_width": "2"})
 
 
 GNUIndentBearBlankLineAfterDeclarationsTest = verify_local_bear(

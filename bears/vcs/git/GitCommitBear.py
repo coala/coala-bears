@@ -122,7 +122,9 @@ class GitCommitBear(GlobalBear):
 
         if shortlog_imperative_check:
             colon_pos = shortlog.find(':')
-            shortlog = shortlog[colon_pos + 1:] if colon_pos != -1 else shortlog
+            shortlog = (shortlog[colon_pos + 1:]
+                        if colon_pos != -1
+                        else shortlog)
             has_flaws = self.check_imperative(shortlog)
             if has_flaws:
                 bad_word = has_flaws[0]
@@ -148,7 +150,8 @@ class GitCommitBear(GlobalBear):
         """
         try:
             words = nltk.word_tokenize(nltk.sent_tokenize(paragraph)[0])
-            # VBZ : Verb, 3rd person singular present, like 'adds', 'writes' etc
+            # VBZ : Verb, 3rd person singular present, like 'adds', 'writes'
+            #       etc
             # VBD : Verb, Past tense , like 'added', 'wrote' etc
             # VBG : Verb, Present participle, like 'adding', 'writing'
             word, tag = nltk.pos_tag(['I'] + words)[1:2][0]
@@ -160,8 +163,8 @@ class GitCommitBear(GlobalBear):
             else:
                 return None
         except LookupError as error:  # pragma: no cover
-            self.err("NLTK data missing, install by running following commands "
-                     "`python3 -m nltk.downloader punkt"
+            self.err("NLTK data missing, install by running following "
+                     "commands `python3 -m nltk.downloader punkt"
                      " maxent_treebank_pos_tagger averaged_perceptron_tagger`")
             return
 

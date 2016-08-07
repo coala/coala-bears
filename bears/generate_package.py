@@ -42,12 +42,15 @@ def create_file_structure_for_packages(root_folder, file_to_copy, object_name):
     Creates a file structure for the packages to be uploaded. The structure
     will be ``root_folder/object_name/object_name/file_to_copy``.
     The file structure has two object_name folders because ``setup.py`` file
-    needs files to be one level deeper than itself so that they can be uploaded.
+    needs files to be one level deeper than itself so that they can be
+    uploaded.
 
     :param root_folder:  The folder in which the packages are going to be
                          generated.
-    :param file_to_copy: The file that is going to be generated the package for.
-    :param object_name:  The name of the object that is inside the file_to_copy.
+    :param file_to_copy: The file that is going to be generated the package
+                         for.
+    :param object_name:  The name of the object that is inside the
+                         file_to_copy.
     """
     upload_package_folder = os.path.join(root_folder, object_name, object_name)
     os.makedirs(upload_package_folder, exist_ok=True)

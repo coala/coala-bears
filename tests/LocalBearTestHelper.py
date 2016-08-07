@@ -128,8 +128,9 @@ class LocalBearTestHelper(unittest.TestCase):  # pragma: no cover
                           create_tempfile=create_tempfile,
                           tempfile_kwargs=tempfile_kwargs) as (file, fname), \
                 execute_bear(local_bear, fname, file) as bear_output:
-            msg = ("The local bear '{}' doesn't yield the right results. Or the"
-                   " order may be wrong.".format(local_bear.__class__.__name__))
+            msg = ("The local bear '{}' doesn't yield the right results. Or "
+                   "the order may be wrong."
+                   .format(local_bear.__class__.__name__))
             if not check_order:
                 self.assertEqual(sorted(bear_output), sorted(results), msg=msg)
             else:

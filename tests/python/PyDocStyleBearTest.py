@@ -52,7 +52,8 @@ PyDocStyleBearSelectSomeTest = verify_local_bear(
     settings={'pydocstyle_select': 'D200'},
     tempfile_kwargs={"suffix": ".py"})
 
-# Checks if an invalid file yields nothing when the selected error never occurs.
+# Checks if an invalid file yields nothing when the selected error never
+# occurs.
 PyDocStyleBearSelectAbsentErrorTest = verify_local_bear(
     PyDocStyleBear,
     valid_files=(good_file, bad_file,),

@@ -36,4 +36,5 @@ class ScalaLintBear:
         """
         :param scalalint_config: Path to a custom configuration file.
         """
-        return '-jar', ScalaLintBear.jar, filename, '--config', scalalint_config
+        return ('-jar', ScalaLintBear.jar, filename, '--config',
+                scalalint_config)

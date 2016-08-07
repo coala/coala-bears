@@ -22,8 +22,8 @@ adverb_file = """It really is an extremely hot day."""
 
 so_file = """So it was a bad day, wasn't it?"""
 
-illusion_file = """Many readers are not aware that the the second the is ignored
-."""
+illusion_file = """Many readers are not aware that the the second the is
+ignored."""
 
 weasel_file = """Some people say that weasel words are great.
 """
@@ -46,39 +46,40 @@ WriteGoodLintBearWithPassiveTest = verify_local_bear(WriteGoodLintBear,
                                                          illusion_file),
                                                      settings={
                                                          "allow_passive_voice":
-                                                                          True})
+                                                             True})
 
 WriteGoodLintBearWithTooWordyTest = verify_local_bear(WriteGoodLintBear,
-                                                      valid_files=(good_file,
-                                                                   weasel_file,
-                                                                   bad_file,
-                                                                   passive_file,
-                                                                   thereIs_file,
-                                                                   cliche_file,
-                                                                   adverb_file,
-                                                                   illusion_file
-                                                                   ),
+                                                      valid_files=(
+                                                          good_file,
+                                                          weasel_file,
+                                                          bad_file,
+                                                          passive_file,
+                                                          thereIs_file,
+                                                          cliche_file,
+                                                          adverb_file,
+                                                          illusion_file),
                                                       invalid_files=(
                                                           wordy_file,
                                                           so_file),
                                                       settings={
                                                           "allow_extra_words":
-                                                                          True})
+                                                              True})
 
 WriteGoodLintBearWithThereIsTest = verify_local_bear(WriteGoodLintBear,
-                                                     valid_files=(good_file,
-                                                                  bad_file,
-                                                                  weasel_file,
-                                                                  wordy_file,
-                                                                  so_file,
-                                                                  passive_file,
-                                                                  cliche_file,
-                                                                  illusion_file,
-                                                                  adverb_file,),
+                                                     valid_files=(
+                                                         good_file,
+                                                         bad_file,
+                                                         weasel_file,
+                                                         wordy_file,
+                                                         so_file,
+                                                         passive_file,
+                                                         cliche_file,
+                                                         illusion_file,
+                                                         adverb_file,),
                                                      invalid_files=(),
                                                      settings={
                                                          "allow_there_is":
-                                                                          True})
+                                                             True})
 
 WriteGoodLintBearWithClicheTest = verify_local_bear(WriteGoodLintBear,
                                                     valid_files=(good_file,
@@ -94,20 +95,21 @@ WriteGoodLintBearWithClicheTest = verify_local_bear(WriteGoodLintBear,
                                                         cliche_file,),
                                                     settings={
                                                         "allow_cliche_phrases":
-                                                                          True})
+                                                            True})
 
 WriteGoodLintBearWithAdverbTest = verify_local_bear(WriteGoodLintBear,
-                                                    valid_files=(good_file,
-                                                                 bad_file,
-                                                                 weasel_file,
-                                                                 cliche_file,
-                                                                 so_file,
-                                                                 passive_file,),
+                                                    valid_files=(
+                                                        good_file,
+                                                        bad_file,
+                                                        weasel_file,
+                                                        cliche_file,
+                                                        so_file,
+                                                        passive_file,),
                                                     invalid_files=(
-                                                                  illusion_file,
-                                                                   thereIs_file,
-                                                                   wordy_file,
-                                                                   adverb_file),
+                                                        illusion_file,
+                                                        thereIs_file,
+                                                        wordy_file,
+                                                        adverb_file),
                                                     settings={"allow_adverbs":
                                                               True})
 
@@ -126,20 +128,21 @@ WriteGoodLintBearWithSoTest = verify_local_bear(WriteGoodLintBear,
                                                           True})
 
 WriteGoodLintBearWithIllusionTest = verify_local_bear(WriteGoodLintBear,
-                                                      valid_files=(good_file,
-                                                                   weasel_file,
-                                                                   wordy_file,
-                                                                   thereIs_file,
-                                                                   cliche_file,
-                                                                   adverb_file,
-                                                                   passive_file,
-                                                                   bad_file,
-                                                                   so_file,),
+                                                      valid_files=(
+                                                          good_file,
+                                                          weasel_file,
+                                                          wordy_file,
+                                                          thereIs_file,
+                                                          cliche_file,
+                                                          adverb_file,
+                                                          passive_file,
+                                                          bad_file,
+                                                          so_file,),
                                                       invalid_files=(
                                                           illusion_file,),
                                                       settings={
-                                                         "allow_repeated_words":
-                                                                          True})
+                                                        "allow_repeated_words":
+                                                            True})
 
 WriteGoodLintBearWithWeaselTest = verify_local_bear(WriteGoodLintBear,
                                                     valid_files=(good_file,
@@ -147,13 +150,14 @@ WriteGoodLintBearWithWeaselTest = verify_local_bear(WriteGoodLintBear,
                                                                  weasel_file,
                                                                  cliche_file,
                                                                  so_file,
-                                                                 passive_file,),
+                                                                 passive_file,
+                                                                 ),
                                                     invalid_files=(
-                                                                  illusion_file,
-                                                                   thereIs_file,
-                                                                   wordy_file,
-                                                                   adverb_file),
+                                                        illusion_file,
+                                                        thereIs_file,
+                                                        wordy_file,
+                                                        adverb_file),
                                                     settings={
-                                                        "allow_ambiguous_words":
+                                                      "allow_ambiguous_words":
                                                                           True}
                                                     )

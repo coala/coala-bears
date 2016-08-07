@@ -65,7 +65,7 @@ class RuboCopBear:
                         max_module_length: int=100,
                         module_length_count_comments: bool=False,
                         cyclomatic_complexity: int=6,
-                        max_line_length: int=80,
+                        max_line_length: int=79,
                         line_length_allow_here_doc: bool=True,
                         line_length_allow_uri: bool=True,
                         max_method_length: int=10,
@@ -96,8 +96,8 @@ class RuboCopBear:
         :param inspect_last_argument_hash:
             Select whether hashes that are the last argument in a method call
             should be inspected.
-            options: ``always_inspect``, ``always_ignore``, ``ignore_implicit``,
-                     ``ignore_explicit``.
+            options: ``always_inspect``, ``always_ignore``,
+                     ``ignore_implicit``, ``ignore_explicit``.
         :param align_parameters:
             Alignment of parameters in multi-line method calls.
 
@@ -133,7 +133,8 @@ class RuboCopBear:
         :param max_class_length:
             Max lines in a class.
         :param class_length_count_comments:
-            Whether or not to count comments while calculating the class length.
+            Whether or not to count comments while calculating the class
+            length.
         :param max_module_length:
             Max lines in a module.
         :param module_length_count_comments:
