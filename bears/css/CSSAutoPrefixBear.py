@@ -17,6 +17,7 @@ class CSSAutoPrefixBear:
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
+    ASCIINEMA_URL = 'https://asciinema.org/a/40093'
     CAN_FIX = {'Syntax', 'Formatting'}
 
     @staticmethod

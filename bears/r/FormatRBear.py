@@ -23,6 +23,7 @@ class FormatRBear:
     REQUIREMENTS = {RscriptRequirement(package='formatR', flag='-e',
                                        repo='http://cran.rstudio.com')}
     LICENSE = 'AGPL-3.0'
+    ASCIINEMA_URL = 'https://asciinema.org/a/0y0oxtak18v492jdyfqwpw1n4'
     CAN_FIX = {'Formatting'}
 
     @staticmethod

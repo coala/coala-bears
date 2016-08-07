@@ -29,6 +29,7 @@ class CSecurityBear:
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
+    ASCIINEMA_URL = 'https://asciinema.org/a/7z8ol9mpsgtuo1096c6jk8hi6'
     CAN_DETECT = {'Security', 'Memory Leak', 'Code Simplification'}
 
     @staticmethod

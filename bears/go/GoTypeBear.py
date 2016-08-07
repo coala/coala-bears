@@ -18,6 +18,7 @@ class GoTypeBear:
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
+    ASCIINEMA_URL = 'https://asciinema.org/a/40055'
     CAN_DETECT = {'Syntax'}
 
     @staticmethod

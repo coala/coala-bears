@@ -11,6 +11,7 @@ class coalaBear(LocalBear):
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
+    ASCIINEMA_URL = 'https://asciinema.org/a/4p1i873ebi9qdfmczn2tvxrm0'
     CAN_DETECT = {'Spelling'}
 
     def run(self, filename, file):

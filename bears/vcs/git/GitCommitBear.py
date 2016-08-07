@@ -18,6 +18,7 @@ class GitCommitBear(GlobalBear):
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
+    ASCIINEMA_URL = 'https://asciinema.org/a/e146c9739ojhr8396wedsvf0d'
     CAN_DETECT = {'Formatting'}
 
     @classmethod

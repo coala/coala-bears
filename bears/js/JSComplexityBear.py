@@ -15,6 +15,7 @@ class JSComplexityBear:
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
+    ASCIINEMA_URL = 'https://asciinema.org/a/39250?speed=2'
     CAN_DETECT = {'Complexity'}
 
     @staticmethod
