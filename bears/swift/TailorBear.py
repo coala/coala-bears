@@ -22,7 +22,7 @@ class TailorBear:
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
-    ASCIINEMA_URL = 'https://asciinema.org/a/45666?autoplay=True'
+    ASCIINEMA_URL = 'https://asciinema.org/a/45666'
     CAN_DETECT = {'Formatting'}
 
     severity_map = {"warning": RESULT_SEVERITY.NORMAL,

@@ -21,7 +21,7 @@ class TSLintBear:
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
-    ASCIINEMA_URL = 'https://asciinema.org/a/9re9c4fv17lhn7rmvzueebb3b?speed=2'
+    ASCIINEMA_URL = 'https://asciinema.org/a/9re9c4fv17lhn7rmvzueebb3b'
     CAN_DETECT = {'Syntax', 'Formatting', 'Smell'}
 
     @staticmethod
