@@ -128,7 +128,8 @@ def main():
                                  str(bear_object.maintainers_emails),
                                  'PLATFORMS': str(bear_object.PLATFORMS),
                                  'LICENSE': str(bear_object.LICENSE),
-                                 'LONG_DESCRIPTION': str(bear_object.__doc__)}
+                                 'LONG_DESCRIPTION': str(bear_object.__doc__),
+                                 'BEAR_NAME': bear_name}
 
             create_file_from_template(os.path.join('bears', 'setup.py.in'),
                                       os.path.join('bears', 'upload',
