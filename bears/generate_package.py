@@ -105,7 +105,12 @@ def main():
 
     os.makedirs(os.path.join('bears', 'upload'), exist_ok=True)
 
-    nano_version = str(int(time.time()))
+    bear_version = VERSION
+    if 'dev' in bear_version:  # pragma: no cover
+        bear_version = bear_version[:bear_version.find("dev")] + (
+            str(int(time.time())))
+    else:  # pragma: no cover
+        bear_version = repr(bear_version) + '.' + str(int(time.time()))
 
     for bear_file_name in sorted(set(glob('bears/**/*Bear.py'))):
         bear_object = next(iimport_objects(
@@ -115,12 +120,6 @@ def main():
             bear_name, _ = os.path.splitext(os.path.basename(bear_file_name))
             create_file_structure_for_packages(
                 os.path.join('bears', 'upload'), bear_file_name, bear_name)
-            bear_version = VERSION
-            if 'dev' in bear_version:  # pragma: no cover
-                bear_version = bear_version[:bear_version.find("dev")] + (
-                    nano_version)
-            else:  # pragma: no cover
-                bear_version = repr(bear_version) + '.' + nano_version
             substitution_dict = {'NAME': repr(bear_name),
                                  'VERSION': bear_version,
                                  'AUTHORS': str(bear_object.AUTHORS),
