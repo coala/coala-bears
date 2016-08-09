@@ -223,9 +223,7 @@ class IndentationBear(LocalBear):
                 if _range.start.line == line + 1:
                     next_indent += 1
 
-                first_ch = (file[line].lstrip()[0]
-                            if file[line].lstrip()
-                            else "")
+                first_ch = file[line].lstrip()[:1]
                 if(_range.end.line == line + 1 and
                    first_ch in indent_types.values()):
                     indent -= 1
