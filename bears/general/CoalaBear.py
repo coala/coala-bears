@@ -6,7 +6,7 @@ from coalib.results.Result import Result
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
-class coalaBear(LocalBear):
+class CoalaBear(LocalBear):
     LANGUAGES = {"All"}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
@@ -16,18 +16,19 @@ class coalaBear(LocalBear):
 
     def run(self, filename, file):
         """
-        Check for the correct spelling of ``coala`` in the file.
+        Check for the correct spelling of ``Coala`` in the file.
         """
         corrected = []
         for line in file:
-            wrong_spelling = r'C([oO][aA][lL][aA])'
+            wrong_spelling = r'c([oO][aA][lL][aA])'
             corrected += [re.sub(wrong_spelling,
-                                 lambda match: 'c' + match.group(1),
+                                 lambda match: 'C' + match.group(1),
                                  line)]
         diffs = Diff.from_string_arrays(file, corrected).split_diff()
         for diff in diffs:
             yield Result(self,
-                         "``coala`` is always written with a lower case ``c``",
+                         "``Coala`` is always written with an upper case "
+                         "``C``",
                          affected_code=(diff.range(filename),),
                          diffs={filename: diff},
                          severity=RESULT_SEVERITY.MAJOR)
