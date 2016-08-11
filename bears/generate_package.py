@@ -40,10 +40,7 @@ def create_file_from_template(template_file, output_file, substitution_dict):
 def create_file_structure_for_packages(root_folder, file_to_copy, object_name):
     """
     Creates a file structure for the packages to be uploaded. The structure
-    will be ``root_folder/object_name/object_name/file_to_copy``.
-    The file structure has two object_name folders because ``setup.py`` file
-    needs files to be one level deeper than itself so that they can be
-    uploaded.
+    will be ``root_folder/object_name/object_name/__init__.py``.
 
     :param root_folder:  The folder in which the packages are going to be
                          generated.
@@ -54,9 +51,8 @@ def create_file_structure_for_packages(root_folder, file_to_copy, object_name):
     """
     upload_package_folder = os.path.join(root_folder, object_name, object_name)
     os.makedirs(upload_package_folder, exist_ok=True)
-    touch(os.path.join(upload_package_folder, '__init__.py'))
     shutil.copyfile(file_to_copy, os.path.join(upload_package_folder,
-                                               object_name + '.py'))
+                                               '__init__.py'))
 
 
 def perform_register(path, file_name):

@@ -44,13 +44,11 @@ class create_file_from_templateTest(unittest.TestCase):
 
 class create_file_structure_for_packagesTest(unittest.TestCase):
 
-    TEST_FILE_PATH = os.path.join('folder', 'Test', 'Test', 'Test.py')
     INIT_FILE_PATH = os.path.join('folder', 'Test', 'Test', '__init__.py')
 
     def test_structure(self):
         touch('TestFile.py')
         create_file_structure_for_packages('folder', 'TestFile.py', 'Test')
-        self.assertTrue(os.path.exists(self.TEST_FILE_PATH))
         self.assertTrue(os.path.exists(self.INIT_FILE_PATH))
 
     def tearDown(self):
