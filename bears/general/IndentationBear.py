@@ -15,6 +15,7 @@ class IndentationBear(LocalBear):
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
     CAN_FIX = {'Formatting'}
+    BEAR_DEPS = {AnnotationBear}  # pragma: no cover
 
     def run(self,
             filename,
@@ -421,10 +422,6 @@ class IndentationBear(LocalBear):
                 sequence_positions += (sequence_position,)
 
         return sequence_positions
-
-    @staticmethod
-    def get_dependencies():
-        return [AnnotationBear]  # pragma: no cover
 
 
 def get_indent_of_specifier(file, current_line, encapsulators):
