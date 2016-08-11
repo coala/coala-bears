@@ -26,7 +26,7 @@ class ClangCloneDetectionBearTest(unittest.TestCase):
 
     def test_dependencies(self):
         self.assertIn(ClangFunctionDifferenceBear,
-                      ClangCloneDetectionBear.get_dependencies())
+                      ClangCloneDetectionBear.BEAR_DEPS)
 
     def test_configuration(self):
         self.section.append(Setting("average_calculation", "true"))

@@ -11,6 +11,7 @@ class ClangCloneDetectionBear(GlobalBear):
     LANGUAGES = ClangBear.LANGUAGES
     REQUIREMENTS = ClangBear.REQUIREMENTS
     CAN_DETECT = {'Duplication'}
+    BEAR_DEPS = {ClangFunctionDifferenceBear}
 
     def run(self,
             dependency_results: dict,
@@ -44,7 +45,3 @@ class ClangCloneDetectionBear(GlobalBear):
                     line=function_1[1],
                     debug_msg=[count_matrices[function_1],
                                count_matrices[function_2]])
-
-    @staticmethod
-    def get_dependencies():
-        return [ClangFunctionDifferenceBear]
