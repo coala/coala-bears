@@ -39,12 +39,15 @@ echo 'options(repos=structure(c(CRAN="http://cran.rstudio.com")))' >> .Rprofile
 R -e "install.packages('lintr', dependencies=TRUE, quiet=TRUE, verbose=FALSE)"
 R -e "install.packages('formatR', dependencies=TRUE, quiet=TRUE, verbose=FALSE)"
 
+# Rust commands
+curl -sSf https://static.rust-lang.org/rustup.sh | sh
+
 # GO commands
 go get -u github.com/golang/lint/golint
 go get -u golang.org/x/tools/cmd/goimports
 go get -u sourcegraph.com/sqs/goreturns
 go get -u golang.org/x/tools/cmd/gotype
-go get -u github.com/kisielk/errcheck 
+go get -u github.com/kisielk/errcheck
 
 # Ruby commands
 bundle install
@@ -67,7 +70,7 @@ bash .ci/deps.nltk.sh
 python setup.py --help
 
 # Dart Lint commands
-if ! dartanalyzer -v &> /dev/null ; then
+if ! dartanalyzer -v &> /dev/null ; then 
   wget -nc -O ~/dart-sdk.zip https://storage.googleapis.com/dart-archive/channels/stable/release/1.14.2/sdk/dartsdk-linux-x64-release.zip
   unzip -n ~/dart-sdk.zip -d ~/
 fi
@@ -83,7 +86,7 @@ julia -e "Pkg.add(\"Lint\")"
 sudo luarocks install luacheck --deps-mode=none
 
 # Infer commands
-if [ ! -e ~/infer-linux64-v0.7.0/infer/bin ]; then 
+if [ ! -e ~/infer-linux64-v0.7.0/infer/bin ]; then
 	wget -nc -O ~/infer.tar.xz https://github.com/facebook/infer/releases/download/v0.7.0/infer-linux64-v0.7.0.tar.xz
 	tar xf ~/infer.tar.xz -C ~/
 	cd ~/infer-linux64-v0.7.0
