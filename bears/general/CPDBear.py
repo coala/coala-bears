@@ -72,7 +72,7 @@ class CPDBear(GlobalBear):
             Ignore ``using`` directives in C#.
         :param skip_duplicate_files:
             Ignore multiple copies of files of the same name and length in
-            omparison.
+            comparison.
         """
         language = language.lower()
 
