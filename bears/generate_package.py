@@ -116,10 +116,10 @@ def main():
             create_file_structure_for_packages(
                 os.path.join('bears', 'upload'), bear_file_name, bear_name)
             bear_version = VERSION
-            if 'dev' in bear_version:  # pragma: no cover
+            if 'dev' in bear_version:
                 bear_version = bear_version[:bear_version.find("dev")] + (
                     nano_version)
-            else:  # pragma: no cover
+            else:
                 bear_version = repr(bear_version) + '.' + nano_version
             substitution_dict = {'NAME': repr(bear_name),
                                  'VERSION': bear_version,

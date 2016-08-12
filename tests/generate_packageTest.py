@@ -3,7 +3,8 @@ import shutil
 import sys
 import unittest
 from unittest.mock import patch
-from bears.generate_package import (touch, create_file_from_template,
+
+from bears.generate_package import (VERSION, touch, create_file_from_template,
                                     create_file_structure_for_packages,
                                     perform_register, perform_upload, main,
                                     create_upload_parser)
@@ -90,25 +91,41 @@ class mainTest(unittest.TestCase):
 
     def setUp(self):
         self.old_argv = sys.argv
+        sys.argv = ["generate_package.py"]
 
     def test_main(self):
-        sys.argv = ["generate_package.py"]
         main()
         self.assertTrue(os.path.exists(os.path.join('bears', 'upload')))
         with open(self.CSS_BEAR_SETUP_PATH) as fl:
             setup_py = fl.read()
         self.assertIn("Check code for syntactical or semantical", setup_py)
 
+    def test_main_bear_version(self):
+        fake_prod_version = '99.99.99'
+        with patch('bears.generate_package.VERSION', fake_prod_version):
+            main()
+        with open(self.CSS_BEAR_SETUP_PATH) as fl:
+            setup_py = fl.read()
+        self.assertIn(fake_prod_version, setup_py)
+        self.assertNotIn(VERSION, setup_py)
+
+    def test_main_bear_version_dev(self):
+        main()
+        with open(self.CSS_BEAR_SETUP_PATH) as fl:
+            setup_py = fl.read()
+        self.assertNotIn(VERSION, setup_py)
+        self.assertIn(VERSION[:VERSION.find("dev")], setup_py)
+
     @patch('bears.generate_package.perform_upload')
     def test_upload(self, call_mock):
-        sys.argv = ["generate_package.py", "--upload"]
+        sys.argv.append("--upload")
         main()
         for call_object in call_mock.call_args_list:
             self.assertRegex(call_object[0][0], r".+Bear")
 
     @patch('bears.generate_package.perform_register')
     def test_register(self, call_mock):
-        sys.argv = ["generate_package.py", "--register"]
+        sys.argv.append("--register")
         main()
         for call_object in call_mock.call_args_list:
             self.assertRegex(call_object[0][0], r".+Bear")
@@ -117,7 +134,6 @@ class mainTest(unittest.TestCase):
         if not os.path.exists(self.NO_BEAR_PATH):
             os.makedirs(os.path.join('bears', 'BadBear'))
             touch(self.NO_BEAR_PATH)
-        sys.argv = ["generate_package.py"]
         main()
         self.assertFalse(os.path.exists(os.path.join(
             'bears', 'upload', 'BadBear')))
