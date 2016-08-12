@@ -29,4 +29,5 @@ nltk==3.2.*
 appdirs==1.*
 pyyaml==3.*
 vulture==0.10.*
+nbformat>=4.*
 pyflakes==1.2.*  # Although we don't need this directly, solves a dep conflict
