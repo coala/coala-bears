@@ -3,6 +3,7 @@ from clang.cindex import Index, CursorKind
 from coalib.bears.LocalBear import LocalBear
 from coalib.results.Result import Result
 from coalib.results.SourceRange import SourceRange
+from coalib.bearlib import deprecate_settings
 from bears.c_languages.ClangBear import clang_available, ClangBear
 
 
@@ -74,6 +75,7 @@ class ClangComplexityBear(LocalBear):
             for child in cursor.get_children():
                 yield from self.complexities(child, filename)
 
+    @deprecate_settings(cyclomatic_complexity='max_complexity')
     def run(self, filename, file, cyclomatic_complexity: int=8):
         """
         Check for all functions if they are too complicated using the
