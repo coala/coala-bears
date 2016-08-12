@@ -3,6 +3,7 @@ import shutil
 from guess_language import guess_language
 from language_check import LanguageTool, correct
 
+from coalib.bearlib import deprecate_settings
 from coalib.bears.LocalBear import LocalBear
 from coalib.bears.requirements.PipRequirement import PipRequirement
 from coalib.results.Diff import Diff
@@ -26,6 +27,7 @@ class LanguageToolBear(LocalBear):
         else:
             return True
 
+    @deprecate_settings(language='locale')
     def run(self,
             filename,
             file,
