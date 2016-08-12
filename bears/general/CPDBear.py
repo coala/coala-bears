@@ -41,7 +41,7 @@ class CPDBear(GlobalBear):
     def check_prerequisites(cls):  # pragma: no cover
         if which("bash") is None:
             return "bash is not installed."
-        elif which("run.sh") is None:
+        if which("pmd") is None and which("run.sh") is None:
             return ("CPD is missing. Make sure to install it from "
                     "<https://pmd.github.io/>")
         else:
@@ -89,7 +89,8 @@ class CPDBear(GlobalBear):
             "--skip-duplicate-files": skip_duplicate_files}
 
         files = ",".join(self.file_dict.keys())
-        arguments = ("bash", which("run.sh"), "cpd", "--skip-lexical-errors",
+        executable = which("pmd") or which("run.sh")
+        arguments = ("bash", executable, "cpd", "--skip-lexical-errors",
                      "--minimum-tokens", str(minimum_tokens),
                      "--language", self.lowered_lang_dict[language],
                      "--files", files,
