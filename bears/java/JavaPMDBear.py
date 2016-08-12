@@ -1,6 +1,8 @@
 from shutil import which
 
 from coalib.bearlib.abstractions.Linter import linter
+from coalib.bearlib import deprecate_settings
+from coala_utils.param_convertion import negate
 
 
 @linter("bash", output_format="regex",
@@ -32,6 +34,8 @@ class JavaPMDBear:
             return True
 
     @staticmethod
+    @deprecate_settings(allow_unnecessary_code=('check_unnecessary', negate),
+                        allow_unused_code=('check_unused', negate))
     def create_arguments(filename, file, config_file,
                          check_best_practices: bool = True,
                          check_braces: bool = True,
