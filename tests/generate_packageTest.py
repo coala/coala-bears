@@ -87,10 +87,12 @@ class mainTest(unittest.TestCase):
     NO_BEAR_PATH = os.path.join('bears', 'BadBear', 'NoBearHere.py')
 
     def setUp(self):
-        self.old_argv = sys.argv
+        self.argv = ["generate_package.py"]
+        argv_patcher = patch.object(sys, 'argv', self.argv)
+        self.addCleanup(argv_patcher.stop)
+        self.argv_mock = argv_patcher.start()
 
     def test_main(self):
-        sys.argv = ["generate_package.py"]
         main()
         self.assertTrue(os.path.exists(os.path.join('bears', 'upload')))
         with open(self.CSS_BEAR_SETUP_PATH) as fl:
@@ -99,14 +101,14 @@ class mainTest(unittest.TestCase):
 
     @patch('bears.generate_package.perform_upload')
     def test_upload(self, call_mock):
-        sys.argv = ["generate_package.py", "--upload"]
+        self.argv.append("--upload")
         main()
         for call_object in call_mock.call_args_list:
             self.assertRegex(call_object[0][0], r".+Bear")
 
     @patch('bears.generate_package.perform_register')
     def test_register(self, call_mock):
-        sys.argv = ["generate_package.py", "--register"]
+        self.argv.append("--register")
         main()
         for call_object in call_mock.call_args_list:
             self.assertRegex(call_object[0][0], r".+Bear")
@@ -115,7 +117,6 @@ class mainTest(unittest.TestCase):
         if not os.path.exists(self.NO_BEAR_PATH):
             os.makedirs(os.path.join('bears', 'BadBear'))
             touch(self.NO_BEAR_PATH)
-        sys.argv = ["generate_package.py"]
         main()
         self.assertFalse(os.path.exists(os.path.join(
             'bears', 'upload', 'BadBear')))
@@ -123,4 +124,3 @@ class mainTest(unittest.TestCase):
 
     def tearDown(self):
         shutil.rmtree(os.path.join('bears', 'upload'))
-        sys.argv = self.old_argv
