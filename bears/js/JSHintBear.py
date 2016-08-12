@@ -1,7 +1,9 @@
 import json
 
+from coalib.bearlib import deprecate_settings
 from coalib.bearlib.abstractions.Linter import linter
 from coalib.bears.requirements.NpmRequirement import NpmRequirement
+from coala_utils.param_convertion import negate
 
 
 def bool_or_str(value):
@@ -40,6 +42,33 @@ class JSHintBear:
     CAN_DETECT = {'Formatting', 'Syntax', 'Complexity', 'Unused Code'}
 
     @staticmethod
+    @deprecate_settings(cyclomatic_complexity='maxcomplexity',
+                        allow_unused_variables=('prohibit_unused', negate),
+                        max_parameters='maxparams',
+                        allow_missing_semicolon='allow_missing_semicol',
+                        allow_this_statements='allow_this_stmt',
+                        allow_with_statements='allow_with_stmt',
+                        allow_bitwise_operators=('prohibit_bitwise', negate),
+                        max_statements='maxstatements',
+                        max_depth='maxdepth',
+                        allow_comma_operator=('prohibit_comma', negate),
+                        allow_non_breaking_whitespace=(
+                            'prohibit_non_breaking_whitespace', negate),
+                        allow_prototype_overwrite=(
+                            'prohibit_prototype_overwrite', negate),
+                        allow_type_coercion=('prohibit_type_coercion', negate),
+                        allow_future_identifiers=('future_hostile', negate),
+                        allow_typeof=('prohibit_typeof', negate),
+                        allow_var_statement=(
+                            'prohibit_variable_statements', negate),
+                        allow_grouping_operator=('prohibit_groups', negate),
+                        allow_variable_shadowing='shadow',
+                        use_mozilla_extension='using_mozilla',
+                        allow_constructor_functions=('prohibit_new', negate),
+                        allow_argument_caller_and_callee=(
+                            'prohibit_arg', negate),
+                        allow_iterator_property=('iterator', negate),
+                        allow_filter_in_forin='force_filter_forin')
     def generate_config(filename, file,
                         allow_bitwise_operators: bool=False,
                         allow_prototype_overwrite: bool=False,
