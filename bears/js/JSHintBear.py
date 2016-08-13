@@ -49,7 +49,7 @@ class JSHintBear:
                         allow_typeof: bool=True,
                         allow_filter_in_forin: bool=True,
                         allow_funcscope: bool=False,
-                        iterator: bool=False,
+                        allow_iterator_property: bool=False,
                         prohibit_arg: bool=True,
                         allow_comma_operator: bool=True,
                         allow_non_breaking_whitespace: bool=False,
@@ -125,7 +125,7 @@ class JSHintBear:
             values.
         :param allow_filter_in_forin:
             This option requires all ``for in`` loops to filter object's items.
-        :param iterator:
+        :param allow_iterator_property:
             This option suppresses warnings about the ``__iterator__``
             property.
         :param allow_funcscope:
@@ -291,7 +291,7 @@ class JSHintBear:
                        "notypeof": not allow_typeof,
                        "forin": allow_filter_in_forin,
                        "funcscope": allow_funcscope,
-                       "iterator": iterator,
+                       "iterator": allow_iterator_property,
                        "noarg": prohibit_arg,
                        "nocomma": not allow_comma_operator,
                        "nonbsp": not allow_non_breaking_whitespace,
