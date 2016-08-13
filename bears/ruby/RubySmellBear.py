@@ -53,7 +53,7 @@ class RubySmellBear:
                         allow_boolean_parameter_in_functions: bool=False,
                         allow_class_variables: bool=False,
                         allow_control_parameters: bool=False,
-                        data_clump: bool=True,
+                        allow_data_clump: bool=False,
                         duplicate_method_call: bool=True,
                         feature_envy: bool=True,
                         missing_module_description: bool=True,
@@ -84,9 +84,9 @@ class RubySmellBear:
         :param allow_control_parameters:
             Allows parameters that control function behaviour (control
             coupling).
-        :param data_clump:
-            Warns when the same two or three items frequently appear together
-            in function/class parameter list.
+        :param allow_data_clump:
+            Does not warn when the same two or three items frequently appear
+            together in function/class parameter list.
         :param duplicate_method_call:
             Warns when two fragments of code look nearly identical, or when two
             fragments of code have nearly identical effects at some conceptual
@@ -143,7 +143,7 @@ class RubySmellBear:
             "BooleanParameter": not allow_boolean_parameter_in_functions,
             "ClassVariable": not allow_class_variables,
             "ControlParameter": not allow_control_parameters,
-            "DataClump": data_clump,
+            "DataClump": not allow_data_clump,
             "DuplicateMethodCall": duplicate_method_call,
             "FeatureEnvy": feature_envy,
             "IrresponsibleModule": missing_module_description,
