@@ -54,7 +54,7 @@ class RubySmellBear:
                         allow_class_variables: bool=False,
                         allow_control_parameters: bool=False,
                         allow_data_clump: bool=False,
-                        duplicate_method_call: bool=True,
+                        allow_duplicate_method: bool=False,
                         feature_envy: bool=True,
                         missing_module_description: bool=True,
                         long_param_list: bool=True,
@@ -87,10 +87,10 @@ class RubySmellBear:
         :param allow_data_clump:
             Does not warn when the same two or three items frequently appear
             together in function/class parameter list.
-        :param duplicate_method_call:
-            Warns when two fragments of code look nearly identical, or when two
-            fragments of code have nearly identical effects at some conceptual
-            level.
+        :param allow_duplicate_method:
+            Allows having two fragments of code that look nearly identical, or
+            two fragments of code that have nearly identical effects at some
+            conceptual level.
         :param feature_envy:
             Occurs when a code fragment references another object more often
             than it references itself, or when several clients do the same
@@ -144,7 +144,7 @@ class RubySmellBear:
             "ClassVariable": not allow_class_variables,
             "ControlParameter": not allow_control_parameters,
             "DataClump": not allow_data_clump,
-            "DuplicateMethodCall": duplicate_method_call,
+            "DuplicateMethodCall": not allow_duplicate_method,
             "FeatureEnvy": feature_envy,
             "IrresponsibleModule": missing_module_description,
             "LongParameterList": long_param_list,
