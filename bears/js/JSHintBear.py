@@ -68,7 +68,7 @@ class JSHintBear:
                         allow_singleton: bool=False,
                         allow_this_statements: bool=False,
                         allow_with_statements: bool=False,
-                        using_mozilla: bool=False,
+                        use_mozilla_extension: bool=False,
                         allow_noyield: bool=False,
                         allow_eqnull: bool=False,
                         allow_last_semicolon: bool=False,
@@ -179,7 +179,7 @@ class JSHintBear:
         :param allow_with_statements:
             This option suppresses warnings about the use of the ``with``
             statement.
-        :param using_mozilla:
+        :param use_mozilla_extension:
             This options tells JSHint that your code uses Mozilla JavaScript
             extensions.
         :param allow_noyield:
@@ -309,7 +309,7 @@ class JSHintBear:
                        "supernew": allow_singleton,
                        "validthis": allow_this_statements,
                        "withstmt": allow_with_statements,
-                       "moz": using_mozilla,
+                       "moz": use_mozilla_extension,
                        "noyield": allow_noyield,
                        "eqnull": allow_eqnull,
                        "lastsemic": allow_last_semicolon,
