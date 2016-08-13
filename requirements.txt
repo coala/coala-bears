@@ -29,3 +29,4 @@ nltk==3.1.*
 appdirs==1.*
 pyyaml==3.*
 vulture==0.10.*
+Pygments==2.1.*
