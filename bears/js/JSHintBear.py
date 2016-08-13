@@ -101,7 +101,7 @@ class JSHintBear:
                         max_depth: bool_or_int=False,
                         max_parameters: bool_or_int=False,
                         cyclomatic_complexity: bool_or_int=False,
-                        shadow: bool_or_str=False,
+                        allow_variable_shadowing: bool_or_str=False,
                         allow_unused_variables: bool_or_str=False,
                         allow_latedef: bool_or_str=False,
                         es_version: int=5,
@@ -260,7 +260,7 @@ class JSHintBear:
             Maximum number of parameters allowed per function.
         :param cyclomatic_complexity:
             Maximum cyclomatic complexity in the code.
-        :param shadow:
+        :param allow_variable_shadowing:
             This option suppresses warnings about variable shadowing i.e.
             declaring a variable that had been already declared somewhere in
             the outer scope.
@@ -343,7 +343,7 @@ class JSHintBear:
                        "maxdepth": max_depth,
                        "maxparams": max_parameters,
                        "maxstatements": max_statements,
-                       "shadow": shadow,
+                       "shadow": allow_variable_shadowing,
                        "unused": not allow_unused_variables,
                        "latedef": allow_latedef,
                        "esversion": es_version}
