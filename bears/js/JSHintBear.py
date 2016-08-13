@@ -50,7 +50,7 @@ class JSHintBear:
                         allow_filter_in_forin: bool=True,
                         allow_funcscope: bool=False,
                         allow_iterator_property: bool=False,
-                        prohibit_arg: bool=True,
+                        allow_argument_caller_and_callee: bool=False,
                         allow_comma_operator: bool=True,
                         allow_non_breaking_whitespace: bool=False,
                         prohibit_new: bool=False,
@@ -131,8 +131,8 @@ class JSHintBear:
         :param allow_funcscope:
             This option suppresses warnings about declaring variables inside of
             control structures while accessing them later from outside.
-        :param prohibit_arg:
-            This option prohibits the use of ``arguments.caller`` and
+        :param allow_argument_caller_and_callee:
+            This option allows the use of ``arguments.caller`` and
             ``arguments.callee``.
         :param allow_comma_operator:
             This option allows the use of the comma operator.
@@ -292,7 +292,7 @@ class JSHintBear:
                        "forin": allow_filter_in_forin,
                        "funcscope": allow_funcscope,
                        "iterator": allow_iterator_property,
-                       "noarg": prohibit_arg,
+                       "noarg": not allow_argument_caller_and_callee,
                        "nocomma": not allow_comma_operator,
                        "nonbsp": not allow_non_breaking_whitespace,
                        "nonew": prohibit_new,
