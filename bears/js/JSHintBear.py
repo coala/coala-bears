@@ -55,7 +55,7 @@ class JSHintBear:
                         allow_non_breaking_whitespace: bool=False,
                         allow_constructor_functions: bool=True,
                         allow_grouping_operator: bool=True,
-                        prohibit_variable_statements: bool=False,
+                        allow_var_statement: bool=True,
                         allow_missing_semicolon: bool=False,
                         allow_debugger: bool=False,
                         allow_assignment_comparisions: bool=False,
@@ -142,8 +142,9 @@ class JSHintBear:
         :param allow_grouping_operator:
             This option allows the use of the grouping operator when it is
             not strictly required.
-        :param prohibit_variable_statements:
-            This option forbids the use of VariableStatements.
+        :param allow_var_statement:
+            Allows the use of the ``var`` statement while declaring a variable.
+            Should use ``let`` or ``const`` while it is set to ``False``.
         :param allow_missing_semicolon:
             This option suppresses warnings about missing semicolons.
         :param allow_debugger:
@@ -294,7 +295,7 @@ class JSHintBear:
                        "nonew": not allow_constructor_functions,
                        "undef": True,
                        "singleGroups": not allow_grouping_operator,
-                       "varstmt": prohibit_variable_statements,
+                       "varstmt": not allow_var_statement,
                        "asi": allow_missing_semicolon,
                        "debug": allow_debugger,
                        "boss": allow_assignment_comparisions,
