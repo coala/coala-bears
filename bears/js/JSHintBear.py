@@ -54,7 +54,6 @@ class JSHintBear:
                         allow_comma_operator: bool=True,
                         allow_non_breaking_whitespace: bool=False,
                         allow_constructor_functions: bool=True,
-                        prohibit_undefined: bool=True,
                         prohibit_groups: bool=False,
                         prohibit_variable_statements: bool=False,
                         allow_missing_semicolon: bool=False,
@@ -140,8 +139,6 @@ class JSHintBear:
             Allows "non-breaking whitespace characters".
         :param allow_constructor_functions:
             Allows the use of constructor functions.
-        :param prohibit_undefined:
-            This option prohibits the use of explicitly undeclared variables.
         :param prohibit_groups:
             This option prohibits the use of the grouping operator when it is
             not strictly required.
@@ -295,7 +292,7 @@ class JSHintBear:
                        "nocomma": not allow_comma_operator,
                        "nonbsp": not allow_non_breaking_whitespace,
                        "nonew": not allow_constructor_functions,
-                       "undef": prohibit_undefined,
+                       "undef": True,
                        "singleGroups": prohibit_groups,
                        "varstmt": prohibit_variable_statements,
                        "asi": allow_missing_semicolon,
