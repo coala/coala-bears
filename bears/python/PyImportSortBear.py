@@ -1,5 +1,6 @@
 from isort import SortImports
 
+from coalib.bearlib import deprecate_settings
 from coalib.bearlib.spacing.SpacingHelper import SpacingHelper
 from coalib.bears.LocalBear import LocalBear
 from coalib.bears.requirements.PipRequirement import PipRequirement
@@ -17,6 +18,7 @@ class PyImportSortBear(LocalBear):
     LICENSE = 'AGPL-3.0'
     CAN_FIX = {'Formatting'}
 
+    @deprecate_settings(indent_size='tab_width')
     def run(self, filename, file,
             use_parentheses_in_import: bool=True,
             force_alphabetical_sort_in_import: bool=False,
@@ -38,7 +40,7 @@ class PyImportSortBear(LocalBear):
             force_single_line_imports: bool=True,
             sort_imports_by_length: bool=False,
             use_spaces: bool=True,
-            tab_width: int=SpacingHelper.DEFAULT_TAB_WIDTH,
+            indent_size: int=SpacingHelper.DEFAULT_TAB_WIDTH,
             forced_separate_imports: typed_list(str)=(),
             isort_multi_line_output: int=4,
             known_first_party_imports: typed_list(str)=(),
@@ -112,8 +114,8 @@ class PyImportSortBear(LocalBear):
             Set to true to sort imports by length instead of alphabetically.
         :param use_spaces:
             True if spaces are to be used instead of tabs.
-        :param tab_width:
-            Number of spaces per indent level.
+        :param indent_size:
+            Number of spaces per indentation level.
         :param forced_separate_imports:
             A list of modules that you want to appear in their own separate
             section.
@@ -163,7 +165,7 @@ class PyImportSortBear(LocalBear):
             force_grid_wrap=force_grid_wrap_imports,
             force_single_line=force_single_line_imports,
             length_sort=sort_imports_by_length,
-            indent="Tab" if use_spaces == False else tab_width,
+            indent="Tab" if use_spaces == False else indent_size,
             forced_separate=forced_separate_imports,
             multi_line_output=isort_multi_line_output,
             known_first_party=known_first_party_imports,

@@ -121,7 +121,7 @@ FormatRBearRTabwidthTest = verify_local_bear(
     FormatRBear,
     valid_files=(good_file_5,),
     invalid_files=(bad_file_1,),
-    settings={"tab_width": "8"})
+    settings={"indent_size": "8"})
 
 
 FormatRBearRWidthcutoffTest = verify_local_bear(

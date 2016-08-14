@@ -29,7 +29,7 @@ class PEP8BearTest(LocalBearTestHelper):
                      '    pass\n']
         self.check_validity(self.uut, test_code)
 
-        self.section.append(Setting('tab_width', '2'))
+        self.section.append(Setting('indent_size', '2'))
         self.check_validity(self.uut, test_code, valid=False)
         self.check_validity(self.uut, ['def func():\n', '  pass\n'])
 

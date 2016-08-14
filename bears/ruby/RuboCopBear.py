@@ -1,6 +1,7 @@
 import json
 import yaml
 
+from coalib.bearlib import deprecate_settings
 from coalib.bearlib.abstractions.Linter import linter
 from coalib.bears.requirements.GemRequirement import GemRequirement
 from coalib.bears.requirements.PipRequirement import PipRequirement
@@ -42,6 +43,7 @@ class RuboCopBear:
         return args
 
     @staticmethod
+    @deprecate_settings(indent_size='tab_width')
     def generate_config(filename, file,
                         access_modifier_indentation: str='indent',
                         preferred_alias: str='prefer_alias',
@@ -56,7 +58,7 @@ class RuboCopBear:
                                                  "HACK",
                                                  "REVIEW"),
                         min_if_unless_guard: int=1,
-                        tab_width: int=2,
+                        indent_size: int=2,
                         method_name_case: str='snake_case',
                         string_literals: str='single_quotes',
                         variable_name_case: str='snake_case',
@@ -119,8 +121,8 @@ class RuboCopBear:
         :param min_if_unless_guard:
             The number of lines that are tolerable within an if/unless block,
             more than these lines call for the usage of a guard clause.
-        :param tab_width:
-            No. of spaces to indent.
+        :param indent_size:
+            Number of spaces per indentation level.
         :param method_name_case:
             Case of a method's name.
             options: ``snake_case``, ``camelCase``.
@@ -188,7 +190,7 @@ class RuboCopBear:
                   'Style/GuardClause':
                       {'MinBodyLength': min_if_unless_guard},
                   'Style/IndentationWidth':
-                      {'Width': tab_width},
+                      {'Width': indent_size},
                   'Style/MethodName':
                       {'EnforcedStyle': method_name_case},
                   'Style/StringLiterals':

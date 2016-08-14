@@ -43,7 +43,8 @@ JSONFormatBearSortTest = verify_local_bear(JSONFormatBear,
 JSONFormatBearTabWidthTest = verify_local_bear(JSONFormatBear,
                                                valid_files=(test_file3,),
                                                invalid_files=(test_file2,),
-                                               settings={"tab_width": "3"})
+                                               settings={
+                                                   "indent_size": "3"})
 
 
 JSONFormatBearUnicodeTest = verify_local_bear(JSONFormatBear,
