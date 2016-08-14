@@ -104,7 +104,8 @@ GNUIndentBearWidthTest = verify_local_bear(
     GNUIndentBear,
     valid_files=(test_file2,),
     invalid_files=(test_file1, test_file3, test_file4),
-    settings={"use_spaces": "true", "max_line_length": "79", "tab_width": "2"})
+    settings={"use_spaces": "true", "max_line_length": "79",
+              "indentation_width": "2"})
 
 
 GNUIndentBearBlankLineAfterDeclarationsTest = verify_local_bear(

@@ -1,6 +1,7 @@
 import json
 from collections import OrderedDict
 
+from coalib.bearlib import deprecate_settings
 from coalib.bearlib.spacing.SpacingHelper import SpacingHelper
 from coalib.bears.LocalBear import LocalBear
 from coalib.results.Diff import Diff
@@ -19,17 +20,18 @@ class JSONFormatBear(LocalBear):
     LICENSE = 'AGPL-3.0'
     CAN_DETECT = {'Formatting'}
 
+    @deprecate_settings(indentation_width='tab_width')
     def run(self, filename, file,
             json_sort: bool=False,
-            tab_width: int=SpacingHelper.DEFAULT_TAB_WIDTH,
+            indentation_width: int=SpacingHelper.DEFAULT_TAB_WIDTH,
             escape_unicode: bool=False):
         """
         Raises issues for any deviations from the pretty-printed JSON.
 
-        :param json_sort:      Whether or not keys should be sorted.
-        :param tab_width:      Number of spaces to indent.
-        :param escape_unicode: Whether or not to escape unicode values using
-                               ASCII.
+        :param json_sort:         Whether or not keys should be sorted.
+        :param indenation_width:  Number of spaces representing one tab.
+        :param escape_unicode:    Whether or not to escape unicode values
+                                  using ASCII.
         """
         try:
             json_content = json.loads(''.join(file),
@@ -43,7 +45,7 @@ class JSONFormatBear(LocalBear):
 
         corrected = json.dumps(json_content,
                                sort_keys=json_sort,
-                               indent=tab_width,
+                               indent=indentation_width,
                                ensure_ascii=not escape_unicode
                                ).splitlines(True)
         # Because of a bug in several python versions we have to correct

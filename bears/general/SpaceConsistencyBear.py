@@ -1,3 +1,4 @@
+from coalib.bearlib import deprecate_settings
 from coalib.bearlib.spacing.SpacingHelper import SpacingHelper
 from coalib.bears.LocalBear import LocalBear
 from coalib.results.Diff import Diff
@@ -11,12 +12,13 @@ class SpaceConsistencyBear(LocalBear):
     LICENSE = 'AGPL-3.0'
     CAN_FIX = {'Formatting'}
 
+    @deprecate_settings(indentation_width='tab_width')
     def run(self,
             filename,
             file,
             use_spaces: bool,
             allow_trailing_whitespace: bool=False,
-            tab_width: int=SpacingHelper.DEFAULT_TAB_WIDTH,
+            indentation_width: int=SpacingHelper.DEFAULT_TAB_WIDTH,
             enforce_newline_at_EOF: bool=True):
         '''
         Check and correct spacing for all textual data. This includes usage of
@@ -27,12 +29,12 @@ class SpaceConsistencyBear(LocalBear):
                                           of tabs.
         :param allow_trailing_whitespace: Whether to allow trailing whitespace
                                           or not.
-        :param tab_width:                 Number of spaces representing one
+        :param indentation_width:         Number of spaces representing one
                                           tab.
         :param enforce_newline_at_EOF:    Whether to enforce a newline at the
                                           End Of File.
         '''
-        spacing_helper = SpacingHelper(tab_width)
+        spacing_helper = SpacingHelper(indentation_width)
         result_texts = []
         additional_info_texts = []
 

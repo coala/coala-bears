@@ -1,5 +1,6 @@
 from coala_utils.string_processing.Core import unescaped_search_for
 from coalib.bears.LocalBear import LocalBear
+from coalib.bearlib import deprecate_settings
 from coalib.bearlib.languages.LanguageDefinition import LanguageDefinition
 from coalib.results.SourceRange import SourceRange
 from coalib.results.Result import Result, RESULT_SEVERITY
@@ -17,13 +18,14 @@ class IndentationBear(LocalBear):
     CAN_FIX = {'Formatting'}
     BEAR_DEPS = {AnnotationBear}  # pragma: no cover
 
+    @deprecate_settings(indentation_width='tab_width')
     def run(self,
             filename,
             file,
             dependency_results: dict,
             language: str,
             use_spaces: bool=True,
-            tab_width: int=4,
+            indentation_width: int=4,
             coalang_dir: str=None):
         """
         It is a generic indent bear, which looks for a start and end
@@ -56,9 +58,8 @@ class IndentationBear(LocalBear):
             Language to be used for indentation.
         :param use_spaces:
             Insert spaces instead of tabs for indentation.
-        :param tab_width:
-            No. of spaces to insert for indentation.
-            Only Applicable if use_spaces is False.
+        :param indentation_width:
+            Number of spaces representing one tab.
         :param coalang_dir:
             Full path of external directory containing the coalang
             file for language.
@@ -102,7 +103,7 @@ class IndentationBear(LocalBear):
             file, filename,
             encaps_pos, annotation_dict)
 
-        insert = ' '*tab_width if use_spaces else '\t'
+        insert = ' '*indentation_width if use_spaces else '\t'
 
         no_indent_file = self._get_no_indent_file(file)
         new_file = self._get_basic_indent_file(no_indent_file,
