@@ -1,5 +1,6 @@
 import json
 
+from coalib.bearlib import deprecate_settings
 from coalib.bearlib.abstractions.Linter import linter
 from coalib.bears.requirements.NpmRequirement import NpmRequirement
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
@@ -31,6 +32,7 @@ class CoffeeLintBear:
         return '--reporter=raw', '--stdin', '-f', config_file
 
     @staticmethod
+    @deprecate_settings(indentation_width='tab_width')
     def generate_config(filename, file,
                         max_line_length: int=79,
                         max_line_length_affect_comments: bool=True,
@@ -44,7 +46,7 @@ class CoffeeLintBear:
                         spaces_after_colon: int=1,
                         enforce_newline_at_EOF: bool=True,
                         use_spaces: bool=True,
-                        tab_width: int=2,
+                        indentation_width: int=2,
                         number_of_newlines_after_classes: int=2,
                         prohibit_embedding_javascript_snippet: bool=True,
                         force_braces: bool=False,
@@ -100,8 +102,8 @@ class CoffeeLintBear:
         :param use_spaces:
             Forbids tabs in indentation and applies two spaces for this
             purpose.
-        :param tab_width:
-            Length of the tab for indentation.
+        :param indentation_width:
+            Number of spaces representing one tab.
         :param number_of_newlines_after_classes:
             Determines the number of newlines that separate the class
             definition and the rest of the code.
@@ -258,7 +260,7 @@ class CoffeeLintBear:
         if use_spaces:
             coffee_configs["no_tabs"] = {"level": "error"}
         coffee_configs["indentation"] = (
-            {"value": tab_width, "level": "error"})
+            {"value": indentation_width, "level": "error"})
         coffee_configs["no_throwing_strings"] = (
             {"level": "error" if not allow_throwing_strings else "ignore"})
         coffee_configs["no_trailing_semicolons"] = (

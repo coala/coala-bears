@@ -1,6 +1,7 @@
 import platform
 import shlex
 
+from coalib.bearlib import deprecate_settings
 from coalib.bearlib.abstractions.Linter import linter
 from coalib.bearlib.spacing.SpacingHelper import SpacingHelper
 from coalib.bears.requirements.DistributionRequirement import (
@@ -27,6 +28,7 @@ class GNUIndentBear:
     CAN_FIX = {'Formatting'}
 
     @staticmethod
+    @deprecate_settings(indentation_width='tab_width')
     def create_arguments(filename, file, config_file,
                          max_line_length: int=79,
                          use_spaces: bool=True,
@@ -45,7 +47,8 @@ class GNUIndentBear:
                          gnu_style: bool=False,
                          k_and_r_style: bool=False,
                          linux_style: bool=False,
-                         tab_width: int=SpacingHelper.DEFAULT_TAB_WIDTH,
+                         indentation_width:
+                         int=SpacingHelper.DEFAULT_TAB_WIDTH,
                          indent_cli_options: str=''):
         """
         :param max_line_length:
@@ -152,16 +155,16 @@ class GNUIndentBear:
             Uses Kernighan & Ritchie coding style.
         :param linux_style:
             Uses Linux coding style.
-        :param tab_width:
-            Number of spaces per indent level.
+        :param indentation_width:
+            Number of spaces representing one tab.
         :param indent_cli_options:
             Any command line options the indent binary understands. They
             will be simply passed through.
         """
         indent_options = ("--no-tabs" if use_spaces else "--use-tabs",
                           "--line-length", str(max_line_length),
-                          "--indent-level", str(tab_width),
-                          "--tab-size", str(tab_width), )
+                          "--indent-level", str(indentation_width),
+                          "--tab-size", str(indentation_width), )
         indent_options += (("--cuddle-do-while",)
                            if while_and_brace_on_same_line
                            else ("--dont-cuddle-do-while",))

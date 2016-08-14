@@ -285,7 +285,7 @@ CoffeeLintBearTabWidthTest = verify_local_bear(
     CoffeeLintBear,
     valid_files=(good_file_tab_width,),
     invalid_files=(good_file,),
-    settings={"use_spaces": "false", "tab_width": 4})
+    settings={"use_spaces": "false", "indentation_width": 4})
 
 
 CoffeeLintBearNoDuplicateKeysTest = verify_local_bear(

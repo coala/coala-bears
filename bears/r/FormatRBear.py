@@ -1,4 +1,5 @@
 from coala_utils.string_processing.Core import escape
+from coalib.bearlib import deprecate_settings
 from coalib.bearlib.abstractions.Linter import linter
 from coalib.bearlib.spacing.SpacingHelper import SpacingHelper
 from coalib.bears.requirements.RscriptRequirement import RscriptRequirement
@@ -27,12 +28,14 @@ class FormatRBear:
     CAN_FIX = {'Formatting'}
 
     @staticmethod
+    @deprecate_settings(indentation_width='tab_width')
     def create_arguments(filename, file, config_file,
                          r_keep_comments: bool=True,
                          r_keep_blank_lines: bool=True,
                          r_braces_on_next_line: bool=False,
                          r_use_arrows: bool=False,
-                         tab_width: int=SpacingHelper.DEFAULT_TAB_WIDTH,
+                         indentation_width:
+                         int=SpacingHelper.DEFAULT_TAB_WIDTH,
                          r_max_expression_length: int=0):
         """
         :param r_keep_comments:
@@ -58,8 +61,8 @@ class FormatRBear:
             by an arrow ``<-`` or not.
 
             Example: If  ``True``, ``x = 1`` changes to ``x <- 1``.
-        :param tab_width:
-            Number of spaces for indentation.
+        :param indentation_width:
+            Number of spaces representing one tab.
         :param r_max_expression_length:
             Maximum number of characters for an expression.
 
@@ -78,7 +81,7 @@ class FormatRBear:
                    'brace.newline=' + _map_to_r_bool(r_braces_on_next_line),
                    'comment=' + _map_to_r_bool(r_keep_comments),
                    'arrow=' + _map_to_r_bool(r_use_arrows),
-                   'indent=' + str(tab_width)}
+                   'indent=' + str(indentation_width)}
         if r_max_expression_length:
             options.add('width.cutoff=' + str(r_max_expression_length))
 

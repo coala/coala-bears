@@ -143,7 +143,7 @@ class IndentationBearTest(unittest.TestCase):
         section = Section("")
         section.append(Setting('language', 'c'))
         section.append(Setting('use_spaces', True))
-        section.append(Setting('tab_width', 6))
+        section.append(Setting('indentation_width', 6))
         valid_file = ('{\n',
                       # Start ignoring SpaceConsistencyBear
                       '      6 spaces of indentation\n'

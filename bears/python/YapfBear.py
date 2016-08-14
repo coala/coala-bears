@@ -2,6 +2,7 @@ import sys
 
 from yapf.yapflib.yapf_api import FormatFile
 
+from coalib.bearlib import deprecate_settings
 from coalib.bearlib.spacing.SpacingHelper import SpacingHelper
 from coalib.bears.LocalBear import LocalBear
 from coalib.bears.requirements.PipRequirement import PipRequirement
@@ -24,9 +25,10 @@ class YapfBear(LocalBear):
     CAN_FIX = {'Formatting'}
 
     # TODO Add coalesce_brackets once supported by yapf
+    @deprecate_settings(indentation_width='tab_width')
     def run(self, filename, file,
             max_line_length: int=79,
-            tab_width: int=SpacingHelper.DEFAULT_TAB_WIDTH,
+            indentation_width: int=SpacingHelper.DEFAULT_TAB_WIDTH,
             allow_multiline_lambdas: bool=False,
             blank_line_before_nested_class_or_def: bool=False,
             continuation_tab_width: int=SpacingHelper.DEFAULT_TAB_WIDTH,
@@ -46,8 +48,8 @@ class YapfBear(LocalBear):
         """
         :param max_line_length:
             Maximum number of characters for a line.
-        :param tab_width:
-            Number of spaces per indent level.
+        :param indentation_width:
+            Number of spaces representing one tab.
         :param allow_multiline_lambdas:
             Allows lambdas to be formatted on more than one line.
         :param blank_line_before_nested_class_or_def:
@@ -93,7 +95,7 @@ class YapfBear(LocalBear):
 
         options = """
 [style]
-indent_width = {tab_width}
+indent_width = {indentation_width}
 column_limit = {max_line_length}
 allow_multiline_lambdas = {allow_multiline_lambdas}
 continuation_indent_width = {continuation_tab_width}
