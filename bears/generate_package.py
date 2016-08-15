@@ -102,10 +102,10 @@ def main():
     os.makedirs(os.path.join('bears', 'upload'), exist_ok=True)
 
     bear_version = VERSION
-    if 'dev' in bear_version:  # pragma: no cover
+    if 'dev' in bear_version:
         bear_version = bear_version[:bear_version.find("dev")] + (
             str(int(time.time())))
-    else:  # pragma: no cover
+    else:
         bear_version = repr(bear_version) + '.' + str(int(time.time()))
 
     for bear_file_name in sorted(set(glob('bears/**/*Bear.py'))):

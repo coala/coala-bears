@@ -3,7 +3,7 @@ import shutil
 import sys
 import unittest
 from unittest.mock import patch
-from bears.generate_package import (touch, create_file_from_template,
+from bears.generate_package import (VERSION, touch, create_file_from_template,
                                     create_file_structure_for_packages,
                                     perform_register, perform_upload, main,
                                     create_upload_parser)
@@ -98,6 +98,24 @@ class mainTest(unittest.TestCase):
         with open(self.CSS_BEAR_SETUP_PATH) as fl:
             setup_py = fl.read()
         self.assertIn("Check code for syntactical or semantical", setup_py)
+
+    def test_main_bear_version_prod(self):
+        fake_prod_version = '99.99.99'
+        with patch('bears.generate_package.VERSION', fake_prod_version):
+            main()
+        with open(self.CSS_BEAR_SETUP_PATH) as fl:
+            setup_py = fl.read()
+        self.assertIn(fake_prod_version, setup_py)
+        self.assertNotIn(VERSION, setup_py)
+
+    def test_main_bear_version_dev(self):
+        fake_dev_version = '13.37.0.dev133713371337'
+        with patch('bears.generate_package.VERSION', fake_dev_version):
+            main()
+        with open(self.CSS_BEAR_SETUP_PATH) as fl:
+            setup_py = fl.read()
+        self.assertNotIn(fake_dev_version, setup_py)
+        self.assertIn('13.37.0', setup_py)
 
     @patch('bears.generate_package.perform_upload')
     def test_upload(self, call_mock):
