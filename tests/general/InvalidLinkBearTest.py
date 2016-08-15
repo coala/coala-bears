@@ -74,72 +74,37 @@ class InvalidLinkBearTest(unittest.TestCase):
         valid_file = """
         http://httpbin.org/status/200
         http://httpbin.org/status/201
-        https://en.wikipedia.org/wiki/200
+        http://httpbin.org/status/401  # Unauthorized
+
+        # Parentheses
+        https://en.wikipedia.org/wiki/Hello_(Adele_song)/200
+
+        # Quotes
+        "https://github.com/coala-analyzer/coala-bears/issues/200"
+        'http://httpbin.org/status/203'
+
+        # Markup/down stuff
+        <http://httpbin.org/status/202>
+        http://httpbin.org/status/204.....
+        [httpbin](http://httpbin.org/status/200)
+        |http://httpbin.org/status/200|
+
+        # Not a link
+        http://not a link dot com
         """.splitlines()
 
         self.assertResult(valid_file=valid_file)
 
-        # Link Redirect
-        invalid_file = """
-        http://httpbin.org/status/301
-        http://httpbin.org/status/302
-        """.splitlines()
-
-        self.assertResult(invalid_file=invalid_file)
-
-        # Invalid Link Not Found
-        valid_file = """
-        http://httpbin.org/status/401
-        """
-        invalid_file = """
+        invalid_file = """http://coalaisthebest.com/
+        http://httpbin.org/status/301  # Redirect
+        http://httpbin.org/status/302  # Redirect
         http://httpbin.org/status/404
         http://httpbin.org/status/410
-        """.splitlines()
-
-        self.assertResult(valid_file=valid_file, invalid_file=invalid_file)
-
-        # Invalid Link ServerError
-        invalid_file = """
         http://httpbin.org/status/500
-        http://httpbin.org/status/503
-        """.splitlines()
+        http://httpbin.org/status/503"""
 
-        self.assertResult(invalid_file=invalid_file)
-
-        # Link Does Not Exist
-        invalid_file = """
-           http://coalaisthebest.com/
-        """.splitlines()
-
-        self.assertResult(invalid_file=invalid_file)
-
-        # Test Regex
-        valid_file = """
-            https://en.wikipedia.org/wiki/Hello_(Adele_song)/200
-            "https://github.com/coala-analyzer/coala-bears/issues/200"
-            http://httpbin.org/status/200\n
-            http://httpbin.org/status/201
-            <http://httpbin.org/status/202>
-            'http://httpbin.org/status/203'
-            http://httpbin.org/status/204.....
-            http://not a link dot com
-        """.splitlines()
-
-        self.assertResult(valid_file=valid_file)
-
-        # Markdown Links
-        valid_file = """
-            [httpbin](http://httpbin.org/status/200)
-        """.splitlines()
-
-        self.assertResult(valid_file=valid_file)
-
-        # Sphinx Links
-        valid_file = """
-        |http://httpbin.org/status/200|
-        """.splitlines()
-
-        self.assertResult(valid_file=valid_file)
+        for line in invalid_file.splitlines():
+            self.assertResult(invalid_file=[line])
 
     def test_check_prerequisites(self):
         with requests_mock.Mocker() as m:
