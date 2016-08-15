@@ -1,9 +1,11 @@
 import json
 
+from coalib.bearlib import deprecate_settings
 from coalib.bearlib.abstractions.Linter import linter
 from coalib.bears.requirements.GemRequirement import GemRequirement
 from coalib.results.Result import Result
 from coalib.results.SourceRange import SourceRange
+from coala_utils.param_convertion import negate
 
 
 @linter(executable='reek', use_stdin=True)
@@ -48,6 +50,17 @@ class RubySmellBear:
                 additional_info="More information is available at {}"
                                 ".".format(issue["wiki_link"]))
 
+    @deprecate_settings(allow_duplicate_method=(
+                            'duplicate_method_call', negate),
+                        allow_data_clump=('data_clump', negate),
+                        allow_control_parameters=('control_parameter', negate),
+                        allow_class_variables=('class_variable', negate),
+                        allow_boolean_parameter_in_functions=(
+                            'boolean_parameter', negate),
+                        allow_setter_in_classes=('attribute', negate),
+                        allow_unused_private_methods=(
+                            'unused_private_method', negate),
+                        allow_unused_variables=('unused_params', negate))
     def generate_config(self,
                         allow_setter_in_classes: bool=False,
                         allow_boolean_parameter_in_functions: bool=False,
