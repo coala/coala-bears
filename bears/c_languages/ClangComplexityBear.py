@@ -1,9 +1,10 @@
 from clang.cindex import Index, CursorKind
 
 from coalib.bears.LocalBear import LocalBear
+from coalib.bears.requirements.PipRequirement import PipRequirement
 from coalib.results.Result import Result
 from coalib.results.SourceRange import SourceRange
-from bears.c_languages.ClangBear import clang_available, ClangBear
+from ClangBear.ClangBear import clang_available, ClangBear
 
 
 class ClangComplexityBear(LocalBear):
@@ -13,7 +14,8 @@ class ClangComplexityBear(LocalBear):
     """
 
     LANGUAGES = ClangBear.LANGUAGES
-    REQUIREMENTS = ClangBear.REQUIREMENTS
+    REQUIREMENTS = {PipRequirement('libclang-py3', '0.2'),
+                    PipRequirement('ClangBear')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
