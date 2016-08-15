@@ -17,7 +17,9 @@ class FilenameBear(LocalBear):
                           "pascal": to_pascalcase,
                           "snake": to_snakecase}
 
-    def run(self, filename, file, file_naming_convention: str="snake"):
+    def run(self, filename, file,
+            file_naming_convention: str="snake",
+            ignore_uppercase_filenames: bool=True):
         """
         Checks whether the filename follows a certain naming-convention.
 
@@ -26,6 +28,9 @@ class FilenameBear(LocalBear):
             - ``camel`` (``thisIsCamelCase``)
             - ``pascal`` (``ThisIsPascalCase``)
             - ``snake`` (``this_is_snake_case``)
+        :param ignore_uppercase_filenames:
+            Whether or not to ignore fully uppercase filenames completely,
+            e.g. COPYING, LICENSE etc.
         """
         head, tail = os.path.split(filename)
         filename_without_extension, extension = os.path.splitext(tail)
@@ -35,6 +40,9 @@ class FilenameBear(LocalBear):
         except KeyError:
             self.err("Invalid file-naming-convention provided: " +
                      file_naming_convention)
+            return
+
+        if ignore_uppercase_filenames and filename_without_extension.isupper():
             return
 
         if new_name != filename_without_extension:

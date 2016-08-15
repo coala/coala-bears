@@ -44,3 +44,10 @@ class SpaceConsistencyBearTest(LocalBearTestHelper):
                             valid=False)
         self.check_validity(self.uut, [""], filename="XYZ/__Init__.py")
         self.check_validity(self.uut, [""], filename="/a/PascalCase")
+
+    def test_ignore_upper(self):
+        self.check_validity(self.uut, [""], filename='/LICENSE')
+
+        self.section['ignore_uppercase_filenames'] = 'nope'
+
+        self.check_validity(self.uut, [""], filename='/LICENSE', valid=False)
