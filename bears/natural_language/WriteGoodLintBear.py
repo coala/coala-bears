@@ -23,16 +23,16 @@ class WriteGoodLintBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file,
-                         allow_passive_voice: bool=False,
-                         allow_so_beginning: bool=False,
-                         allow_adverbs: bool=False,
-                         allow_repeated_words: bool=False,
-                         allow_there_is: bool=False,
-                         allow_ambiguous_words: bool=False,
-                         allow_extra_words: bool=False,
-                         allow_cliche_phrases: bool=False):
+                         allow_passive_voice: bool=True,
+                         allow_so_beginning: bool=True,
+                         allow_adverbs: bool=True,
+                         allow_repeated_words: bool=True,
+                         allow_there_is: bool=True,
+                         allow_ambiguous_words: bool=True,
+                         allow_extra_words: bool=True,
+                         allow_cliche_phrases: bool=True):
         """
-        Using ``True`` will enable the check.
+        Using ``False`` will enable the check.
 
         :param allow_passive_voice:     Allows passive voice.
         :param allow_so_beginning:      Allows ``So`` at the beginning of
@@ -63,5 +63,5 @@ class WriteGoodLintBear:
         }
         l = locals()
         args = tuple(arg for key, arg in arg_map.items()
-                     if l[key])
+                     if not l[key])
         return args + (filename,)
