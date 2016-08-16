@@ -1,5 +1,7 @@
+from coalib.bearlib import deprecate_settings
 from coalib.bearlib.abstractions.Linter import linter
 from coalib.bears.requirements.NpmRequirement import NpmRequirement
+from coala_utils.param_convertion import negate
 
 
 @linter(executable='write-good',
@@ -22,6 +24,14 @@ class WriteGoodLintBear:
     CAN_DETECT = {'Formatting', 'Grammar'}
 
     @staticmethod
+    @deprecate_settings(allow_passive_voice=('check_passive_voice', negate),
+                        allow_so_beginning=('check_so_beginning', negate),
+                        allow_adverbs=('check_adverbs', negate),
+                        allow_repeated_words=('check_repeated_words', negate),
+                        allow_there_is=('check_there_is', negate),
+                        allow_ambiguous_words=('check_ambiguos_words', negate),
+                        allow_extra_words=('check_extra_words', negate),
+                        allow_cliche_phrases=('check_cliche_exists', negate))
     def create_arguments(filename, file, config_file,
                          allow_passive_voice: bool=True,
                          allow_so_beginning: bool=True,
