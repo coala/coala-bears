@@ -54,7 +54,7 @@ class InvalidLinkBear(LocalBear):
 
     def run(self, filename, file,
             timeout: int=DEFAULT_TIMEOUT,
-            ignore_regex: str="[.\/]example\.com"):
+            ignore_regex: str="([.\/]example\.com|\{|\$)"):
         """
         Find links in any text file and check if they are valid.
 

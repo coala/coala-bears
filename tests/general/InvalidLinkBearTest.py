@@ -92,6 +92,10 @@ class InvalidLinkBearTest(unittest.TestCase):
         <h3>Something http://httpbin.org/status/200</h3>
         repo=\\"http://httpbin.org/status/200\\"
 
+        # Templated URLs can't be checked
+        "http://httpbin.org/{status}/404".format(...)
+        "http://httpbin.org/$status/404"
+
         # Not a link
         http://not a link dot com
         """.splitlines()
