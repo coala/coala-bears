@@ -90,6 +90,7 @@ class InvalidLinkBearTest(unittest.TestCase):
         [httpbin](http://httpbin.org/status/200)
         |http://httpbin.org/status/200|
         <h3>Something http://httpbin.org/status/200</h3>
+        repo=\\"http://httpbin.org/status/200\\"
 
         # Not a link
         http://not a link dot com
