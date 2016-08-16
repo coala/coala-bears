@@ -309,7 +309,7 @@ class JSHintBear:
             code must adhere to.
         """
         if not jshint_config:
-            options = {"bitwise": allow_bitwise_operators,
+            options = {"bitwise": not allow_bitwise_operators,
                        "freeze": not allow_prototype_overwrite,
                        "curly": force_braces,
                        "eqeqeq": not allow_type_coercion,
