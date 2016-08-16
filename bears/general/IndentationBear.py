@@ -2,6 +2,7 @@ from coala_utils.string_processing.Core import unescaped_search_for
 from coalib.bears.LocalBear import LocalBear
 from coalib.bearlib import deprecate_settings
 from coalib.bearlib.languages.LanguageDefinition import LanguageDefinition
+from coalib.bearlib.spacing.SpacingHelper import SpacingHelper
 from coalib.results.SourceRange import SourceRange
 from coalib.results.Result import Result, RESULT_SEVERITY
 from coalib.results.AbsolutePosition import AbsolutePosition
@@ -25,7 +26,7 @@ class IndentationBear(LocalBear):
             dependency_results: dict,
             language: str,
             use_spaces: bool=True,
-            indent_size: int=4,
+            indent_size: int=SpacingHelper.DEFAULT_TAB_WIDTH,
             coalang_dir: str=None):
         """
         It is a generic indent bear, which looks for a start and end
