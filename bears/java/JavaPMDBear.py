@@ -47,8 +47,8 @@ class JavaPMDBear:
                          check_imports: bool = True, check_naming: bool = True,
                          check_optimizations: bool = False,
                          check_strings: bool = False,
-                         allow_unnecessary_code: bool = True,
-                         allow_unused_code: bool = True):
+                         allow_unnecessary_code: bool = False,
+                         allow_unused_code: bool = False):
         """
         :param check_best_practices:
             Checks for best practices.
@@ -90,8 +90,8 @@ class JavaPMDBear:
             "java-naming": check_naming,
             "java-optimizations": check_optimizations,
             "java-strings": check_strings,
-            "java-unnecessary": allow_unnecessary_code,
-            "java-unusedcode": allow_unused_code}
+            "java-unnecessary": not allow_unnecessary_code,
+            "java-unusedcode": not allow_unused_code}
         rules = ','.join(key for key in options if options[key])
 
         return which("run.sh"), "pmd", "-R", rules, "-d", filename
