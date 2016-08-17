@@ -24,7 +24,7 @@ class JSONFormatBear(LocalBear):
     def run(self, filename, file,
             json_sort: bool=False,
             indent_size: int=SpacingHelper.DEFAULT_TAB_WIDTH,
-            escape_unicode: bool=False):
+            escape_unicode: bool=True):
         """
         Raises issues for any deviations from the pretty-printed JSON.
 
@@ -46,7 +46,7 @@ class JSONFormatBear(LocalBear):
         corrected = json.dumps(json_content,
                                sort_keys=json_sort,
                                indent=indent_size,
-                               ensure_ascii=not escape_unicode
+                               ensure_ascii=escape_unicode
                                ).splitlines(True)
         # Because of a bug in several python versions we have to correct
         # whitespace here.

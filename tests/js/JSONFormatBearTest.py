@@ -51,4 +51,4 @@ JSONFormatBearUnicodeTest = verify_local_bear(JSONFormatBear,
                                               valid_files=(unicode_file,),
                                               invalid_files=(),
                                               settings={'escape_unicode':
-                                                        'true'})
+                                                        'false'})
