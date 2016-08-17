@@ -1,0 +1,8 @@
+def empty():
+    """
+    first line not correctly aligned.
+        But second can be aligned differently.
+
+    :param x:
+    :return:
+    """; return 88
