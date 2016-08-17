@@ -1,0 +1,9 @@
+def myfunc(a, b, x):
+    """
+
+    :param a:slope
+    :param b:offset
+    :param x:
+    :return:"""
+
+    return a * x + b
