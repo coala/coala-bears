@@ -5,6 +5,7 @@ from coalib.bearlib.abstractions.Linter import linter
 from coalib.bears.requirements.NpmRequirement import NpmRequirement
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.results.Result import Result
+from coala_utils.param_convertion import negate
 
 
 @linter(executable='coffeelint',
@@ -32,7 +33,26 @@ class CoffeeLintBear:
         return '--reporter=raw', '--stdin', '-f', config_file
 
     @staticmethod
-    @deprecate_settings(indent_size='tab_width')
+    @deprecate_settings(indent_size='tab_width',
+                        allow_increment=(
+                            'no_decr_or_incrementation_operators', negate),
+                        allow_no_parameters=(
+                            'no_empty_parameter_list', negate),
+                        allow_empty_functions=('no_empty_functions', negate),
+                        allow_this_statements=('no_this', negate),
+                        allow_implicit_parentheses=(
+                            'no_implicit_parentheses', negate),
+                        allow_interpolation_in_single_quotes=(
+                            'no_interpolation_in_single_quotes', negate),
+                        allow_stand_alone_at_sign=(
+                            'no_stand_alone_at_sign', negate),
+                        allow_throwing_strings=(
+                            'disable_throwing_strings', negate),
+                        allow_unnecessary_double_quotes=(
+                            'no_unnecessary_double_quotes', negate),
+                        allow_bitwise_operators=(
+                            'use_english_operator', negate),
+                        force_braces='no_implicit_braces')
     def generate_config(filename, file,
                         max_line_length: int=79,
                         max_line_length_affect_comments: bool=True,
