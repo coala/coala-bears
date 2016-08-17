@@ -6,6 +6,7 @@ from coalib.bearlib.spacing.SpacingHelper import SpacingHelper
 from coalib.bears.LocalBear import LocalBear
 from coalib.results.Diff import Diff
 from coalib.results.Result import Result
+from coala_utils.param_convertion import negate
 
 
 class JSONFormatBear(LocalBear):
@@ -20,7 +21,8 @@ class JSONFormatBear(LocalBear):
     LICENSE = 'AGPL-3.0'
     CAN_DETECT = {'Formatting'}
 
-    @deprecate_settings(indent_size='tab_width')
+    @deprecate_settings(indent_size='tab_width',
+                        escape_unicode=('keep_unicode', negate))
     def run(self, filename, file,
             json_sort: bool=False,
             indent_size: int=SpacingHelper.DEFAULT_TAB_WIDTH,
