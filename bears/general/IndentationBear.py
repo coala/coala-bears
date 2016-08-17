@@ -69,6 +69,7 @@ class IndentationBear(LocalBear):
             Full path of external directory containing the coalang
             file for language.
         """
+        ranges = {}
         lang_settings_dict = LanguageDefinition(
             language, coalang_dir=coalang_dir)
         annotation_dict = dependency_results[AnnotationBear.name][0].contents
@@ -90,23 +91,51 @@ class IndentationBear(LocalBear):
                 annotation_dict)
         encaps_pos = tuple(sorted(encaps_pos, key=lambda x: x.start.line))
 
+        ranges['encapsulators'] = encaps_pos
+        ranges['strings'] = annotation_dict['strings']
+        ranges['comments'] = annotation_dict['comments']
         comments = dict(lang_settings_dict["comment_delimiter"])
         comments.update(
             dict(lang_settings_dict["multiline_comment_delimiters"]))
 
+        indent_ranges = []
         try:
-            indent_levels = self.get_indent_levels(
-                file, filename,
-                indent_types, annotation_dict, encaps_pos, comments)
+            for indent_specifier in indent_types:
+                if indent_types[indent_specifier]:
+                    indent_ranges += get_specified_block_range(
+                        file,
+                        filename,
+                        indent_specifier,
+                        indent_types[indent_specifier],
+                        ranges)
+                else:
+                    indent_ranges += self.get_unspecified_block_range(
+                        file,
+                        filename,
+                        indent_specifier,
+                        ranges,
+                        comments)
         # This happens only in case of unmatched indents or
         # ExpectedIndentError.
         except (UnmatchedIndentError, ExpectedIndentError) as e:
             yield Result(self, str(e), severity=RESULT_SEVERITY.MAJOR)
             return
 
+        indent_ranges = sorted(indent_ranges, key=lambda x: (x.start.line,
+                                                             x.start.column))
+        ranges['indent_ranges'] = indent_ranges
+
+        indent_levels = self.get_indent_levels(
+            file,
+            filename,
+            indent_types,
+            ranges,
+            comments)
+
         absolute_indent_levels = self.get_absolute_indent_of_range(
-            file, filename,
-            encaps_pos, annotation_dict)
+            file,
+            filename,
+            ranges)
 
         insert = ' '*indent_size if use_spaces else '\t'
 
@@ -162,24 +191,22 @@ class IndentationBear(LocalBear):
     def get_absolute_indent_of_range(self,
                                      file,
                                      filename,
-                                     encaps_pos,
-                                     annotation_dict):
+                                     ranges):
         """
         Gets the absolute indentation of all the encapsulators.
 
         :param file:            A tuple of strings.
         :param filename:        Name of file.
-        :param encaps_pos:      A tuple ofSourceRanges of code regions
-                                trapped in between a matching pair of
-                                encapsulators.
-        :param annotation_dict: A dictionary containing sourceranges of all the
-                                strings and comments within a file.
+        :param ranges:          A dict contating ranges of various code
+                                segments. Keys include: ``strings``,
+                                ``comments``, ``encapsulators`` and
+                                ``indent_ranges``.
         :return:                A tuple of tuples with first element as the
                                 range of encapsulator and second element as the
                                 indent of its elements.
         """
         indent_of_range = []
-        for encaps in encaps_pos:
+        for encaps in ranges["encapsulators"]:
             indent = get_element_indent(file, encaps)
             indent_of_range.append((encaps, indent))
 
@@ -189,8 +216,7 @@ class IndentationBear(LocalBear):
                           file,
                           filename,
                           indent_types,
-                          annotation_dict,
-                          encapsulators,
+                          ranges,
                           comments):
         """
         Gets the level of indentation of each line.
@@ -200,33 +226,20 @@ class IndentationBear(LocalBear):
         :param filename:        Name of the file that needs to be checked.
         :param indent_types:    A dictionary with keys as start of indent and
                                 values as their corresponding closing indents.
-        :param annotation_dict: A dictionary containing sourceranges of all the
-                                strings and comments within a file.
-        :param encapsulators:   A tuple of sourceranges of all encapsulators of
-                                a language.
+        :param ranges:          A dict contating ranges of various code
+                                segments. Keys include: ``strings``,
+                                ``comments``, ``encapsulators`` and
+                                ``indent_ranges``.
         :param comments:        A dict containing all the types of comment
                                 specifiers in a language.
         :return:                A tuple containing the levels of indentation of
                                 each line.
         """
-        ranges = []
-        for indent_specifier in indent_types:
-            if indent_types[indent_specifier]:
-                ranges += get_specified_block_range(
-                    file, filename,
-                    indent_specifier, indent_types[indent_specifier],
-                    annotation_dict)
-            else:
-                ranges += self.get_unspecified_block_range(
-                    file, filename,
-                    indent_specifier, annotation_dict, encapsulators, comments)
-
-        ranges = sorted(ranges, key=lambda x: x.start.line)
         indent_levels = []
         indent, next_indent = 0, 0
         for line in range(0, len(file)):
             indent = next_indent
-            for _range in ranges:
+            for _range in ranges["indent_ranges"]:
                 if _range.start.line == line + 1:
                     next_indent += 1
 
@@ -246,8 +259,7 @@ class IndentationBear(LocalBear):
                                     file,
                                     filename,
                                     indent_specifier,
-                                    annotation_dict,
-                                    encapsulators,
+                                    ranges,
                                     comments):
         """
         Gets the range of all blocks which do not have an un-indent specifer.
@@ -257,31 +269,32 @@ class IndentationBear(LocalBear):
         :param filename:         Name of the file that needs to be checked.
         :param indent_specifier: A character or string indicating that the
                                  indentation should begin.
-        :param annotation_dict: A dictionary containing sourceranges of all the
-                                strings and comments within a file.
-        :param encapsulators:   A tuple of sourceranges of all encapsulators of
-                                a language.
-        :param comments:        A dict containing all the types of comments
-                                specifiers in a language.
-        :return:                A tuple of SourceRanges of blocks without
-                                un-indent specifiers.
+        :param ranges:           A dict contating ranges of various code
+                                 segments. Keys include: ``strings``,
+                                 ``comments``, ``encapsulators`` and
+                                 ``indent_ranges``.
+        :param comments:         A dict containing all the types of comments
+                                 specifiers in a language.
+        :return:                 A tuple of SourceRanges of blocks without
+                                 un-indent specifiers.
         """
         specifiers = list(get_valid_sequences(
             file,
             indent_specifier,
-            annotation_dict,
-            encapsulators,
+            ranges,
+            check_encapsulators=True,
             check_ending=True))
 
         _range = []
         for specifier in specifiers:
             current_line = specifier.line
-            indent = get_indent_of_specifier(file, current_line, encapsulators)
+            indent = get_indent_of_specifier(file,
+                                             current_line,
+                                             ranges["encapsulators"])
             unindent_line = get_first_unindent(indent,
                                                file,
                                                current_line,
-                                               annotation_dict,
-                                               encapsulators,
+                                               ranges,
                                                comments)
 
             if unindent_line == specifier.line:
@@ -325,8 +338,7 @@ def get_indent_of_specifier(file, current_line, encapsulators):
 def get_first_unindent(indent,
                        file,
                        start_line,
-                       annotation_dict,
-                       encapsulators,
+                       ranges,
                        comments):
     """
     Get the first case of a valid unindentation.
@@ -335,10 +347,9 @@ def get_first_unindent(indent,
     :param file:            A tuple of strings.
     :param start_line:      The line from where to start searching for
                             unindent.
-    :param annotation_dict: A dictionary containing sourceranges of all the
-                            strings and comments within a file.
-    :param encapsulators:   A tuple of SourceRanges of code regions trapped in
-                            between a matching pair of encapsulators.
+    :param ranges:          A dict contating ranges of various code
+                            segments. Keys include: ``strings``, ``comments``,
+                            ``encapsulators`` and ``indent_ranges``.
     :param comments:        A dict containing all the types of comments
                             specifiers in a language.
     :return:                The line where unindent is found (intial 0).
@@ -348,7 +359,7 @@ def get_first_unindent(indent,
     while line_nr < len(file):
         valid = True
 
-        for comment in annotation_dict["comments"]:
+        for comment in ranges["comments"]:
             if(comment.start.line < line_nr + 1 and
                comment.end.line >= line_nr + 1):
                 valid = False
@@ -358,7 +369,7 @@ def get_first_unindent(indent,
             if first_char in comments:
                 valid = False
 
-        for encapsulator in encapsulators:
+        for encapsulator in ranges["encapsulators"]:
             if(encapsulator.start.line < line_nr + 1 and
                encapsulator.end.line >= line_nr + 1):
                 valid = False
