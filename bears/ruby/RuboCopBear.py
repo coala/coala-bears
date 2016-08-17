@@ -43,7 +43,8 @@ class RuboCopBear:
         return args
 
     @staticmethod
-    @deprecate_settings(indent_size='tab_width')
+    @deprecate_settings(indent_size='tab_width',
+                        method_length_count_comments='method_count_comments')
     def generate_config(filename, file,
                         access_modifier_indentation: str='indent',
                         preferred_alias: str='prefer_alias',
