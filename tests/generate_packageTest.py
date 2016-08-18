@@ -3,10 +3,12 @@ import shutil
 import sys
 import unittest
 from unittest.mock import patch
+from coalib.parsing.Globbing import glob
 from bears.generate_package import (touch, create_file_from_template,
                                     create_file_structure_for_packages,
                                     perform_register, perform_upload, main,
-                                    create_upload_parser)
+                                    create_upload_parser, get_bear_glob,
+                                    fetch_url)
 
 
 class touchTest(unittest.TestCase):
@@ -48,11 +50,13 @@ class create_file_structure_for_packagesTest(unittest.TestCase):
 
     def test_structure(self):
         touch('TestFile.py')
-        create_file_structure_for_packages('folder', 'TestFile.py', 'Test')
+        create_file_structure_for_packages('folder', 'TestFile.py',
+                                           'Test', 'pypi')
         self.assertTrue(os.path.exists(self.INIT_FILE_PATH))
 
     def tearDown(self):
         shutil.rmtree('folder')
+        os.remove('TestFile.py')
 
 
 class create_upload_parserTest(unittest.TestCase):
@@ -80,11 +84,73 @@ class perform_uploadTest(unittest.TestCase):
         call_mock.assert_called_with(['twine', 'upload', './dist/*'])
 
 
+class get_bear_globTest(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        bear_path = os.path.join('tests', 'conda_package_testfiles',
+                                 'test_conda_bear')
+        shutil.copytree(os.path.join(bear_path, 'git'),
+                        os.path.join(bear_path, '.git'))
+
+    def test_single_bear(self):
+        bear_path = os.path.join('tests', 'conda_package_testfiles',
+                                 'test_conda_bear')
+        result = get_bear_glob(bear_path)
+        self.assertEqual(result, [os.path.join(bear_path, 'TestBear.py')])
+
+    def test_all_bears(self):
+        bear_path = os.path.join('tests', 'conda_package_testfiles',
+                                 'test_conda_bear')
+        result = get_bear_glob("")
+        expected = sorted(set(glob('bears/**/*Bear.py')))
+        self.assertEqual(result, expected)
+
+    @classmethod
+    def tearDownClass(cls):
+        bear_path = os.path.join('tests', 'conda_package_testfiles',
+                                 'test_conda_bear')
+        shutil.rmtree(os.path.join(bear_path, '.git'))
+
+
+class fetch_urlTest(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        bear_path = os.path.join('tests', 'conda_package_testfiles',
+                                 'test_conda_bear')
+        shutil.copytree(os.path.join(bear_path, 'git'),
+                        os.path.join(bear_path, '.git'))
+
+    def test_existing_url(self):
+        result = fetch_url(os.path.join('tests', 'conda_package_testfiles',
+                                        'test_conda_bear'))
+        self.assertEqual(result, '../test_conda_bear_remote/')
+
+    def test_non_existing_url(self):
+        result = fetch_url(os.path.join('tests', 'conda_package_testfiles',
+                                        'test_conda_beare'))
+        self.assertEqual(result, None)
+
+    @classmethod
+    def tearDownClass(cls):
+        bear_path = os.path.join('tests', 'conda_package_testfiles',
+                                 'test_conda_bear')
+        shutil.rmtree(os.path.join(bear_path, '.git'))
+
+
 class mainTest(unittest.TestCase):
 
     CSS_BEAR_SETUP_PATH = os.path.join(
         'bears', 'upload', 'CSSLintBear', 'setup.py')
     NO_BEAR_PATH = os.path.join('bears', 'BadBear', 'NoBearHere.py')
+
+    @classmethod
+    def setUpClass(cls):
+        bear_path = os.path.join('tests', 'conda_package_testfiles',
+                                 'test_conda_bear')
+        shutil.copytree(os.path.join(bear_path, 'git'),
+                        os.path.join(bear_path, '.git'))
 
     def setUp(self):
         self.argv = ["generate_package.py"]
@@ -113,6 +179,18 @@ class mainTest(unittest.TestCase):
         for call_object in call_mock.call_args_list:
             self.assertRegex(call_object[0][0], r".+Bear")
 
+    def test_conda(self):
+        package_path = os.path.join('tests', 'conda_package_testfiles',
+                                    'test_conda_bear')
+        template_path = os.path.join('bears', 'templates')
+        sys.argv = ["generate_package.py", "--conda", package_path]
+        main()
+        self.assertTrue(os.path.exists(os.path.join(package_path, 'build.sh')))
+        self.assertTrue(os.path.exists(os.path.join(package_path, 'bld.bat')))
+        self.assertTrue(os.path.exists(
+            os.path.join(package_path, 'meta.yaml')))
+        self.assertTrue(os.path.exists(os.path.join(package_path, 'setup.py')))
+
     def test_no_bear_object(self):
         if not os.path.exists(self.NO_BEAR_PATH):
             os.makedirs(os.path.join('bears', 'BadBear'))
@@ -124,3 +202,14 @@ class mainTest(unittest.TestCase):
 
     def tearDown(self):
         shutil.rmtree(os.path.join('bears', 'upload'))
+
+    @classmethod
+    def tearDownClass(cls):
+        package_path = os.path.join('tests', 'conda_package_testfiles',
+                                    'test_conda_bear')
+        shutil.rmtree(os.path.join(package_path, '.git'))
+        shutil.rmtree(os.path.join(package_path, 'TestBear'))
+        os.remove(os.path.join(package_path, 'setup.py'))
+        os.remove(os.path.join(package_path, 'build.sh'))
+        os.remove(os.path.join(package_path, 'bld.bat'))
+        os.remove(os.path.join(package_path, 'meta.yaml'))

@@ -1,0 +1,16 @@
+package:
+  name: $NAME
+  version: $VERSION
+
+source:
+  git_url: $URL
+
+requirements:
+  build:
+    - python
+    - setuptools
+  run:
+    - python
+
+about:
+  license: $LICENSE
