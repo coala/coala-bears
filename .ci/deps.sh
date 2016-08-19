@@ -89,6 +89,7 @@ for dep_version in "${dep_versions[@]}" ; do
   python --version
   source .ci/env_variables.sh
 
+  pip install pip -U
   pip install -r test-requirements.txt
   pip install -r requirements.txt
 done
