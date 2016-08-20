@@ -1,3 +1,77 @@
+coala-bears 0.8.0
+=================
+
+For this release, we have had 19 contributors from around the world
+contributing 176 commits to just coala-bears in the past 9 weeks.
+
+Here are the important changes and additions:
+
+**New Bears**
+
+- ``CSecurityBear`` - Lints C/C++ files and identifies possible security
+  issues.
+  `[CSecurityBear documentation] <https://github.com/coala-analyzer/bear-docs/blob/master/docs/CSecurityBear.rst>`__
+
+- ``HappinessLintBear`` - Checks JavaScript files for semantic and syntax
+  errors using ``happiness``.
+  `[HappinessLintBear documentation] <https://github.com/coala-analyzer/bear-docs/blob/master/docs/HappinessLintBear.rst>`__
+
+- ``WriteGoodLintBear`` - Lints the text files using ``write-good`` to
+  improve proses.
+  `[WriteGoodLintBear documentation] <https://github.com/coala-analyzer/bear-docs/blob/master/docs/WriteGoodLintBear.rst>`__
+
+- ``coalaBear`` - Checks for the correct spelling and casing of ``coala``
+  in the text files.
+  `[coalaBear documentation] <https://github.com/coala-analyzer/bear-docs/blob/master/docs/coalaBear.rst>`__
+
+- ``VultureBear`` - Checks Python code for unused variables and functions
+  using ``vulture``.
+  `[VultureBear documentation] <https://github.com/coala-analyzer/bear-docs/blob/master/docs/VultureBear.rst>`__
+
+- ``YapfBear`` - Checks and corrects the formatting of Python code using
+  ``yapf`` utility.
+  `[YapfBear documentation] <https://github.com/coala-analyzer/bear-docs/blob/master/docs/YapfBear.rst>`__
+
+**Major API Changes**
+
+- Settings unification - most bears have seen API changes. Settings' names
+  are now consistent across bears. This supports backwards
+  compatibility, however (but with a deprecation notice). You can find the
+  whole list `here <http://dpaste.com/3EP5GCV>`_.
+
+**New Features**
+
+- Bear upload tool - this is a part of the complete decentralization of
+  bears. With this tool, bears are uploaded as individual packages to PyPI
+  and just the necessary bears (and their dependencies) can be installed.
+
+- Also as a part of the decentralization process, several bears now have
+  the ``REQUIREMENTS`` attribute. This is one of the requirement objects
+  supporting various package managers such as ``apt-get``, ``dnf``,
+  ``yum``, ``pip``, ``npm``, ``gem``, and so on. To learn more, please
+  see the ``coala`` `0.8.0 release changelog <https://github.com/coala-analyzer/coala/blob/master/RELEASE_NOTES.rst>`__.
+
+- Several bears now support the ``ASCIINEMA_URL`` attribute. This contains
+  an URL to an asciinema video displaying the bear's working.
+
+**Bug Fixes**
+
+- An issue in ``FilenameBear`` involving files with fully capitalized names
+  has been resolved. `Pull #687 <https://github.com/coala-analyzer/coala-bears/pull/687>`_
+
+- Various corner cases with ``InvalidLinkBear`` involving some false positives
+  and false negatives have been fixed.
+  `Issue #691 <https://github.com/coala-analyzer/coala-bears/issues/691>`_
+
+**Documentation**
+
+- A complete overhaul of the README page with a special emphasis on design
+  and user-friendliness.
+
+**Regressions**
+
+- Python 3.3 support was dropped.
+
 coala-bears 0.7.0
 =================
 
