@@ -40,7 +40,9 @@ def create_file_from_template(template_file, output_file, substitution_dict):
 def create_file_structure_for_packages(root_folder, file_to_copy, object_name):
     """
     Creates a file structure for the packages to be uploaded. The structure
-    will be ``root_folder/object_name/object_name/__init__.py``.
+    will be ``root_folder/object_name/coalaobject_name/object_name.py``.
+    Also holds a ``root_folder/object_name/coalaobject_name/__init__.py``
+    to make the package importable.
 
     :param root_folder:  The folder in which the packages are going to be
                          generated.
@@ -49,10 +51,12 @@ def create_file_structure_for_packages(root_folder, file_to_copy, object_name):
     :param object_name:  The name of the object that is inside the
                          file_to_copy.
     """
-    upload_package_folder = os.path.join(root_folder, object_name, object_name)
+    upload_package_folder = os.path.join(
+        root_folder, object_name, 'coala' + object_name)
     os.makedirs(upload_package_folder, exist_ok=True)
+    touch(os.path.join(upload_package_folder, '__init__.py'))
     shutil.copyfile(file_to_copy, os.path.join(upload_package_folder,
-                                               '__init__.py'))
+                                               object_name + '.py'))
 
 
 def perform_register(path, file_name):
@@ -127,7 +131,8 @@ def main():
                                  'PLATFORMS': str(bear_object.PLATFORMS),
                                  'LICENSE': str(bear_object.LICENSE),
                                  'LONG_DESCRIPTION': str(bear_object.__doc__),
-                                 'BEAR_NAME': bear_name}
+                                 'BEAR_NAME': bear_name,
+                                 'ENTRY': 'coala' + bear_name}
 
             create_file_from_template(os.path.join('bears', 'setup.py.in'),
                                       os.path.join('bears', 'upload',

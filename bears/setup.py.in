@@ -23,7 +23,7 @@ if __name__ == "__main__":
               license='$LICENSE',
               packages=find_packages(exclude=["build.*"]),
               long_description="""$LONG_DESCRIPTION""",
-              entry_points={"coalabears": ["$BEAR_NAME = $BEAR_NAME"]},
+              entry_points={"coalabears": ["$BEAR_NAME = $ENTRY"]},
               classifiers=[
                    "Development Status :: 4 - Beta",
                    "Environment :: Console",

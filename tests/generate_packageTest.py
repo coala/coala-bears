@@ -44,12 +44,14 @@ class create_file_from_templateTest(unittest.TestCase):
 
 class create_file_structure_for_packagesTest(unittest.TestCase):
 
-    INIT_FILE_PATH = os.path.join('folder', 'Test', 'Test', '__init__.py')
+    INIT_FILE_PATH = os.path.join('folder', 'Test', 'coalaTest', '__init__.py')
+    BEAR_FILE_PATH = os.path.join('folder', 'Test', 'coalaTest', 'Test.py')
 
     def test_structure(self):
         touch('TestFile.py')
         create_file_structure_for_packages('folder', 'TestFile.py', 'Test')
         self.assertTrue(os.path.exists(self.INIT_FILE_PATH))
+        self.assertTrue(os.path.exists(self.BEAR_FILE_PATH))
 
     def tearDown(self):
         shutil.rmtree('folder')
