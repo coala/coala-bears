@@ -8,6 +8,7 @@ import sys
 import time
 
 from bears import VERSION
+from coalib.bears.requirements.PipRequirement import PipRequirement
 from coalib.collecting.Importers import iimport_objects
 from coalib.parsing.Globbing import glob
 
@@ -120,6 +121,17 @@ def main():
             bear_name, _ = os.path.splitext(os.path.basename(bear_file_name))
             create_file_structure_for_packages(
                 os.path.join('bears', 'upload'), bear_file_name, bear_name)
+            if bear_object.REQUIREMENTS:
+                for requirement in bear_object.REQUIREMENTS:
+                    if isinstance(requirement, PipRequirement):
+                        with open(os.path.join(
+                                    'bears', 'upload',
+                                    bear_name, 'requirements.txt'),
+                                  'a') as reqtxt:
+                            reqtxt.write(
+                                requirement.package + '=='
+                                + requirement.version + '\n')
+
             substitution_dict = {'NAME': repr(bear_name),
                                  'VERSION': bear_version,
                                  'AUTHORS': str(bear_object.AUTHORS),
