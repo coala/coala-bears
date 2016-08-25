@@ -24,7 +24,6 @@ class YapfBear(LocalBear):
     LICENSE = 'AGPL-3.0'
     CAN_FIX = {'Formatting'}
 
-    # TODO Add coalesce_brackets once supported by yapf
     @deprecate_settings(indent_size='tab_width')
     def run(self, filename, file,
             max_line_length: int=79,
@@ -34,6 +33,7 @@ class YapfBear(LocalBear):
             continuation_tab_width: int=SpacingHelper.DEFAULT_TAB_WIDTH,
             dedent_closing_brackets: bool=False,
             indent_dictionary_value: bool=False,
+            coalesce_brackets: bool=False,
             join_multiple_lines: bool=True,
             spaces_around_power_operator: bool=True,
             spaces_before_comment: int=2,
@@ -64,6 +64,27 @@ class YapfBear(LocalBear):
         :param indent_dictionary_value:
             Indents the dictionary value if it cannot fit on the same line as
             the dictionary key.
+        :param coalesce_brackets:
+            Prevents splitting consecutive brackets. Only relevant when
+            ``dedent_closing_brackets`` is set.
+            Example:
+            If ``True``,
+
+            ```
+            call_func_that_takes_a_dict(
+                {
+                    'key1': 'value1',
+                    'key2': 'value2',
+                }
+            )
+            ```
+            would reformat to:
+            ```
+            call_func_that_takes_a_dict({
+                'key1': 'value1',
+                'key2': 'value2',
+            })
+            ```
         :param join_multiple_lines:
             Joins short lines into one line.
         :param spaces_around_power_operator:
@@ -104,6 +125,7 @@ indent_dictionary_value = {indent_dictionary_value}
 join_multiple_lines = {join_multiple_lines}
 spaces_around_power_operator = {spaces_around_power_operator}
 spaces_before_comment = {spaces_before_comment}
+coalesce_brackets = {coalesce_brackets}
 split_before_bitwise_operator = {split_before_bitwise_operator}
 split_before_first_argument = {split_before_first_argument}
 split_before_logical_operator = {split_before_logical_operator}
