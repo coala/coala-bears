@@ -132,6 +132,13 @@ def main():
                                 requirement.package + '=='
                                 + requirement.version + '\n')
 
+                if os.path.exists(os.path.join('bears', 'upload',
+                                               bear_name, 'requirements.txt')):
+                    with open(os.path.join(
+                                'bears', 'upload',
+                                bear_name, 'MANIFEST.in'), 'w') as manifest:
+                        manifest.write('include requirements.txt')
+
             substitution_dict = {'NAME': repr(bear_name),
                                  'VERSION': bear_version,
                                  'AUTHORS': str(bear_object.AUTHORS),

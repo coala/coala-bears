@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import os
 import locale
 
 from setuptools import find_packages, setup
@@ -9,6 +10,10 @@ try:
 except (ValueError, UnicodeError):
     locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
+required = ""
+if os.path.exists('requirements.txt'):
+    with open('requirements.txt') as requirements:
+        required = requirements.read().splitlines()
 
 if __name__ == "__main__":
     try:
@@ -22,6 +27,7 @@ if __name__ == "__main__":
               platforms=$PLATFORMS,
               license='$LICENSE',
               packages=find_packages(exclude=["build.*"]),
+              install_requires=required,
               long_description="""$LONG_DESCRIPTION""",
               entry_points={"coalabears": ["$BEAR_NAME = $ENTRY"]},
               classifiers=[
