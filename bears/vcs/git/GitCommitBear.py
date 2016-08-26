@@ -144,7 +144,7 @@ class GitCommitBear(GlobalBear):
 
         :param paragraph:
             The input paragraph to be tested.
-        :returns:
+        :return:
             A list of tuples having 2 elements (invalid word, parts of speech)
             or an empty list if no invalid words are found.
         """
