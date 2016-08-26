@@ -36,7 +36,7 @@ class CSecurityBear:
     def create_arguments(filename, file, config_file, neverignore: bool=False):
         """
         :param neverignore:
-            Never ignore security issues, even if they have an ``ignore''
+            Never ignore security issues, even if they have an ``ignore``
             directive in a comment.
         """
         args = "--columns", "--dataonly", "--quiet", "--singleline"
