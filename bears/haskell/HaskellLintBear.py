@@ -19,7 +19,7 @@ class HaskellLintBear:
     """
 
     LANGUAGES = {"Haskell"}
-    REQUIREMENTS = {DistributionRequirement(apt='hlint')}
+    REQUIREMENTS = {DistributionRequirement(apt_get='hlint')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

@@ -27,7 +27,7 @@ class XMLBear(LocalBear, Lint):
     gives_corrected = True
     use_stderr = True
     LANGUAGES = {"XML"}
-    REQUIREMENTS = {DistributionRequirement(apt='libxml2')}
+    REQUIREMENTS = {DistributionRequirement(apt_get='libxml2')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

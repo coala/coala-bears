@@ -17,7 +17,7 @@ class LuaLintBear:
     """
 
     LANGUAGES = {"Lua"}
-    REQUIREMENTS = {DistributionRequirement(apt='luarocks')}
+    REQUIREMENTS = {DistributionRequirement(apt_get='luarocks')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

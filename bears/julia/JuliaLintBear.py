@@ -25,7 +25,7 @@ class JuliaLintBear:
     on the analysis provided.
     """
     LANGUAGES = {"Julia"}
-    REQUIREMENTS = {DistributionRequirement(apt='julia')}
+    REQUIREMENTS = {DistributionRequirement(apt_get='julia')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

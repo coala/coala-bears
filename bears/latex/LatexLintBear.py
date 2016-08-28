@@ -12,7 +12,7 @@ class LatexLintBear:
     Checks the code with ``chktex``.
     """
     LANGUAGES = {"Tex"}
-    REQUIREMENTS = {DistributionRequirement(apt='chktex')}
+    REQUIREMENTS = {DistributionRequirement(apt_get='chktex')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
