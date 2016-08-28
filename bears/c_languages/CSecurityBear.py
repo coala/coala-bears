@@ -33,12 +33,5 @@ class CSecurityBear:
     CAN_DETECT = {'Security', 'Memory Leak', 'Code Simplification'}
 
     @staticmethod
-    def create_arguments(filename, file, config_file, neverignore: bool=False):
-        """
-        :param neverignore:
-            Never ignore security issues, even if they have an ``ignore``
-            directive in a comment.
-        """
-        args = "--columns", "--dataonly", "--quiet", "--singleline"
-        args += ("--neverignore", filename) if neverignore else (filename,)
-        return args
+    def create_arguments(filename, file, config_file):
+        return "--columns", "--dataonly", "--quiet", "--singleline", filename

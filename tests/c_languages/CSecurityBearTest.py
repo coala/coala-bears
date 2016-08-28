@@ -20,21 +20,7 @@ if ((len = readlink("/modules/pass1", buf, sizeof(buf)-1)) != -1)
 """
 
 
-good_file1 = """
-void demo(char *a) {
-    strcpy(a, 'c');  // Flawfinder: ignore
-}"""
-
-
 CSecurityBearTest = verify_local_bear(
     CSecurityBear,
     valid_files=(good_file,),
-    invalid_files=(bad_file1, bad_file2, good_file1),
-    settings={"neverignore": "true"})
-
-
-CSecurityBearIgnoreTest = verify_local_bear(
-    CSecurityBear,
-    valid_files=(good_file1, good_file),
-    invalid_files=(bad_file2,),
-    settings={"neverignore": "false"})
+    invalid_files=(bad_file1, bad_file2,))
