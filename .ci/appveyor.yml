@@ -17,6 +17,7 @@ environment:
 cache:
   - "C:\\wheels"
   - "node_modules"
+  - "C:\\Users\\appveyor\\AppData\\Local\\coala-bears\\coala-bears"
 
 branches:  # Only build official branches, PRs are built anyway.
   only:
