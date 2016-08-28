@@ -42,8 +42,8 @@ class CPDBear(GlobalBear):
         if which("bash") is None:
             return "bash is not installed."
         if which("pmd") is None and which("run.sh") is None:
-            return ("CPD is missing. Make sure to install it from "
-                    "<https://pmd.github.io/>")
+            return ("PMD is missing. Make sure to install it from "
+                    "<https://pmd.github.io/>.")
         else:
             return True
 
