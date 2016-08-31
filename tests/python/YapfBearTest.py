@@ -24,6 +24,13 @@ class YapfBearTest(LocalBearTestHelper):
                             ["x = {  'a':37,'b':42,\n", "'c':927}\n", '\n',
                              "y = 'hello ''world'\n"], valid=False)
 
+    def test_eof_handling(self):
+        self.check_validity(self.uut, [], valid=True)
+        self.check_validity(self.uut, [''], valid=True)
+        self.check_validity(self.uut, ['a = 2\n'], valid=True)
+        self.check_validity(self.uut, ['a = 2'], valid=True)
+        self.check_validity(self.uut, ['\n'], valid=True)
+
     def test_valid_python_2(self):
         self.check_validity(self.uut, ['print 1\n'], valid=True)
 
