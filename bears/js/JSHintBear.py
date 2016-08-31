@@ -42,7 +42,8 @@ class JSHintBear:
     CAN_DETECT = {'Formatting', 'Syntax', 'Complexity', 'Unused Code'}
 
     @staticmethod
-    @deprecate_settings(cyclomatic_complexity='maxcomplexity',
+    @deprecate_settings(es_version='use_es6_syntax',
+                        cyclomatic_complexity='maxcomplexity',
                         allow_unused_variables=('prohibit_unused', negate),
                         max_parameters='maxparams',
                         allow_missing_semicolon='allow_missing_semicol',
@@ -102,7 +103,6 @@ class JSHintBear:
                         allow_last_semicolon: bool=False,
                         allow_func_in_loop: bool=False,
                         allow_expr_in_assignments: bool=False,
-                        use_es6_syntax: bool=False,
                         use_es3_array: bool=False,
                         environment_mootools: bool=False,
                         environment_couch: bool=False,
@@ -132,7 +132,7 @@ class JSHintBear:
                         allow_variable_shadowing: bool_or_str=False,
                         allow_unused_variables: bool_or_str=False,
                         allow_latedef: bool_or_str=False,
-                        es_version: int=5,
+                        es_version: bool_or_int=5,
                         jshint_config: str=""):
         """
         :param allow_bitwise_operators:
@@ -225,8 +225,6 @@ class JSHintBear:
         :param use_es3_array:
             This option tells JSHintBear ES3 array elision elements, or empty
             elements are used.
-        :param use_es3_array:
-            This option tells JSHint ECMAScript 6 specific syntax is used.
         :param environment_mootools:
             This option defines globals exposed by the Mootools.
         :param environment_couch:
@@ -308,6 +306,12 @@ class JSHintBear:
             This option is used to specify the ECMAScript version to which the
             code must adhere to.
         """
+        # Assume that when es_version is bool, it is intended for the
+        # deprecated use_es6_version
+        if es_version is True:
+            es_version = 6
+        elif es_version is False:
+            es_version = 5
         if not jshint_config:
             options = {"bitwise": not allow_bitwise_operators,
                        "freeze": not allow_prototype_overwrite,
@@ -342,7 +346,6 @@ class JSHintBear:
                        "lastsemic": allow_last_semicolon,
                        "loopfunc": allow_func_in_loop,
                        "expr": allow_expr_in_assignments,
-                       "esnext": use_es6_syntax,
                        "elision": use_es3_array,
                        "mootools": environment_mootools,
                        "couch": environment_couch,
