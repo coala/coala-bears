@@ -43,6 +43,9 @@ class JSHintBear:
 
     @staticmethod
     @deprecate_settings(es_version='use_es6_syntax',
+                        javascript_strictness=(
+                            "allow_global_strict",
+                            lambda x: "global" if x else True),
                         cyclomatic_complexity='maxcomplexity',
                         allow_unused_variables=('prohibit_unused', negate),
                         max_parameters='maxparams',
@@ -90,7 +93,6 @@ class JSHintBear:
                         allow_debugger: bool=False,
                         allow_assignment_comparisions: bool=False,
                         allow_eval: bool=False,
-                        allow_global_strict: bool=False,
                         allow_increment: bool=False,
                         allow_proto: bool=False,
                         allow_scripturls: bool=False,
@@ -98,6 +100,7 @@ class JSHintBear:
                         allow_this_statements: bool=False,
                         allow_with_statements: bool=False,
                         use_mozilla_extension: bool=False,
+                        javascript_strictness: bool_or_str=True,
                         allow_noyield: bool=False,
                         allow_eqnull: bool=False,
                         allow_last_semicolon: bool=False,
@@ -184,9 +187,6 @@ class JSHintBear:
         :param allow_eval:
             This options suppresses warnings about the use of ``eval``
             function.
-        :param allow_global_strict:
-            This option suppresses warnings about the use of global strict
-            mode.
         :param allow_increment:
             This option suppresses warnings about the use of unary increment
             and decrement operators.
@@ -209,6 +209,14 @@ class JSHintBear:
         :param use_mozilla_extension:
             This options tells JSHint that your code uses Mozilla JavaScript
             extensions.
+        :param javascript_strictness:
+            Determines what sort of strictness to use in the JavaScript code.
+            The possible options are:
+
+            - "global" - there must be a ``"use strict";`` at global level
+            - "implied" - lint the code as if there is a ``"use strict";``
+            - "False" - disable warnings about strict mode
+            - "True" - there must be a ``"use strict";`` at function level
         :param allow_noyield:
             This option suppresses warnings about generator functions with no
             ``yield`` statement in them.
@@ -333,7 +341,7 @@ class JSHintBear:
                        "debug": allow_debugger,
                        "boss": allow_assignment_comparisions,
                        "evil": allow_eval,
-                       "globalstrict": allow_global_strict,
+                       "strict": javascript_strictness,
                        "plusplus": allow_increment,
                        "proto": allow_proto,
                        "scripturl": allow_scripturls,

@@ -21,7 +21,10 @@ var a = (function() {
 }());
 """
 
-test_es6 = """
+# Test strictness and ES6
+test_file4 = """
+"use strict";
+
 var foo = {
   bar: 1,
   baz: 2
@@ -29,6 +32,7 @@ var foo = {
 var { bar, baz } = foo;
 console.log(bar, baz);
 """
+
 
 jshintconfig = os.path.join(os.path.dirname(__file__),
                             "test_files",
@@ -42,7 +46,8 @@ settings = {
     "shadow": "False",
     "allow_last_semicolon": "True",
     "es_version": 3,
-    "allow_latedef": "no_func"}
+    "allow_latedef": "no_func",
+    "javascript_strictness": "False"}
 
 
 JSHintBearTest = verify_local_bear(JSHintBear,
@@ -67,11 +72,11 @@ JSHintBearCoafileTest = verify_local_bear(
 JSHintBearDeprecationTest = verify_local_bear(
     JSHintBear,
     valid_files=(),
-    invalid_files=(test_es6,),
-    settings={"use_es6_syntax": 'False'})
+    invalid_files=(test_file4,),
+    settings={"use_es6_syntax": 'False', "allow_global_strict": 'False'})
 
 JSHintBearDeprecation2Test = verify_local_bear(
     JSHintBear,
-    valid_files=(test_es6,),
+    valid_files=(test_file4,),
     invalid_files=(),
-    settings={"use_es6_syntax": 'True'})
+    settings={"use_es6_syntax": 'True', "allow_global_strict": 'True'})
