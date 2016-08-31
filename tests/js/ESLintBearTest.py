@@ -26,19 +26,15 @@ test_bad = """function addOne(i) {
 
 test_syntax_error = '{<!@3@^ yeah!/\n'
 
-eslintconfig = os.path.join(os.path.dirname(__file__),
-                            "test_files",
-                            "eslintconfig.json")
+test_dir = os.path.join(os.path.dirname(__file__), "test_files")
 
-ESLintBearTestWithConfig = verify_local_bear(ESLintBear,
-                                             valid_files=('',),
-                                             invalid_files=(test_bad,
-                                                            test_good),
-                                             settings={"eslint_config":
-                                                       eslintconfig})
+ESLintBearWithConfigTest = verify_local_bear(
+    ESLintBear,
+    valid_files=('',),
+    invalid_files=(test_bad, test_good),
+    settings={"eslint_config": os.path.join(test_dir, "eslintconfig.json")})
 
-ESLintBearWithoutConfig = verify_local_bear(ESLintBear,
-                                            valid_files=(
-                                                test_good, ''),
-                                            invalid_files=(
-                                                test_syntax_error, test_bad))
+ESLintBearWithoutConfigTest = verify_local_bear(
+    ESLintBear,
+    valid_files=(test_good, ''),
+    invalid_files=(test_syntax_error, test_bad))
