@@ -1,7 +1,9 @@
 import json
+import re
 
 from coalib.bearlib.abstractions.Linter import linter
 from coalib.bears.requirements.NpmRequirement import NpmRequirement
+from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.results.Result import Result
 
 
@@ -18,6 +20,11 @@ class JSComplexityBear:
     ASCIINEMA_URL = 'https://asciinema.org/a/39250'
     CAN_DETECT = {'Complexity'}
 
+    try:
+        DecodeError = json.decoder.JSONDecodeError
+    except AttributeError:
+        DecodeError = ValueError
+
     @staticmethod
     def create_arguments(filename, file, config_file):
         return '--format', 'json', filename
@@ -28,7 +35,20 @@ class JSComplexityBear:
         """
         message = "{} has a cyclomatic complexity of {}."
         if output:
-            output = json.loads(output)
+            try:
+                output = json.loads(output)
+            except self.DecodeError:
+                output_regex = (r'Fatal error \[getReports\]: .+: '
+                                r'Line (?P<line>\d+): (?P<message>.*)')
+                for match in re.finditer(output_regex, output):
+                    groups = match.groupdict()
+                    yield Result.from_values(
+                        origin=self,
+                        message=groups["message"].strip(),
+                        file=filename,
+                        severity=RESULT_SEVERITY.MAJOR,
+                        line=int(groups["line"]))
+                return
             for function in output["reports"][0]["functions"]:
                 if function["cyclomatic"] >= cc_threshold:
                     yield Result.from_values(

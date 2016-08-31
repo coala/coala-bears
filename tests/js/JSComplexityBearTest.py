@@ -36,10 +36,12 @@ complexity_4 = """(function () {
 })()
 """
 
+test_syntax_error = '{<!@3@^ yeah!/\n'
+
 JSComplexityBearTest = verify_local_bear(
     JSComplexityBear,
     valid_files=(complexity_4,),
-    invalid_files=(complexity_12,),
+    invalid_files=(complexity_12, test_syntax_error),
     tempfile_kwargs={"suffix": ".js"})
 
 JSComplexityBearThresholdTest = verify_local_bear(
