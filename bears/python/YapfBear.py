@@ -120,7 +120,8 @@ space_between_ending_comma_and_closing_bracket= \
         with prepare_file(options.splitlines(keepends=True),
                           None) as (file_, fname):
             corrected = FormatFile(filename,
-                                   style_config=fname)[0].splitlines(True)
+                                   style_config=fname,
+                                   verify=False)[0].splitlines(True)
         diffs = Diff.from_string_arrays(file, corrected).split_diff()
         for diff in diffs:
             yield Result(self,
