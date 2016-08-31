@@ -92,6 +92,11 @@ class YapfBear(LocalBear):
         :param based_on_style:
             The formatting style to be used as reference.
         """
+        if not file:
+            # Yapf cannot handle zero-byte files well, and adds a redundent
+            # newline into the file. To avoid this, we don't parse zero-byte
+            # files as they cannot have anything to format either.
+            return
 
         options = """
 [style]
