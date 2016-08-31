@@ -1,4 +1,6 @@
+import sys
 from queue import Queue
+from unittest.case import skipIf
 
 from bears.python.YapfBear import YapfBear
 from tests.LocalBearTestHelper import LocalBearTestHelper
@@ -21,6 +23,15 @@ class YapfBearTest(LocalBearTestHelper):
         self.check_validity(self.uut,
                             ["x = {  'a':37,'b':42,\n", "'c':927}\n", '\n',
                              "y = 'hello ''world'\n"], valid=False)
+
+    def test_valid_python_2(self):
+        self.check_validity(self.uut, ['print 1\n'], valid=True)
+
+    @skipIf(sys.version_info < (3, 5), "ast before 3.5 can't parse async def")
+    def test_valid_async(self):
+        self.check_validity(self.uut,
+                            ['async def x():\n', '    pass\n'],
+                            valid=True)
 
     def test_blank_line_after_nested_class_or_def(self):
         self.section.append(Setting('blank_line_before_nested_class_or_def',
