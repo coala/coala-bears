@@ -45,8 +45,9 @@ class RadonBear(LocalBear):
             if severity is None:
                 continue
 
+            col = visitor.col_offset if visitor.col_offset else None
             visitor_range = SourceRange.from_values(
-                filename, visitor.lineno, visitor.col_offset, visitor.endline)
+                filename, visitor.lineno, col, visitor.endline)
             message = "{} has a cyclomatic complexity of {}".format(
                 visitor.name, rank)
 

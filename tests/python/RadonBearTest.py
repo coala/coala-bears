@@ -12,10 +12,18 @@ class class1():
     pass
 """
 
+test_file3 = "def f():\n" + ("    assert True\n" * 50)
+
+
+RadonBearDefaultsTest = verify_local_bear(
+    RadonBear,
+    valid_files=(test_file1, test_file2),
+    invalid_files=(test_file3,))
+
 
 RadonBearNoReportsTest = verify_local_bear(
     RadonBear,
-    valid_files=(test_file1, test_file2),
+    valid_files=(test_file1, test_file2, test_file3),
     invalid_files=(),
     settings={"radon_ranks_info": "",
               "radon_ranks_normal": "",
