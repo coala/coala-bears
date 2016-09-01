@@ -54,7 +54,8 @@ class InvalidLinkBear(LocalBear):
 
     def run(self, filename, file,
             timeout: int=DEFAULT_TIMEOUT,
-            ignore_regex: str="([.\/]example\.com|\{|\$)"):
+            ignore_regex: str="([.\/]example\.com|\{|\$)",
+            follow_redirects: bool=False):
         """
         Find links in any text file and check if they are valid.
 
@@ -69,8 +70,9 @@ class InvalidLinkBear(LocalBear):
         `do_not_ever_open = 'https://api.acme.inc/delete-all-data'` wiping out
         all your data.
 
-        :param timeout:      Request timeout period.
-        :param ignore_regex: A regex for urls to ignore.
+        :param timeout:          Request timeout period.
+        :param ignore_regex:     A regex for urls to ignore.
+        :param follow_redirects: Set to true to autocorrect redirects.
         """
         for line_number, link, code in InvalidLinkBear.find_links_in_file(
                 file, timeout, ignore_regex):
@@ -93,7 +95,7 @@ class InvalidLinkBear(LocalBear):
                         file=filename,
                         line=line_number,
                         severity=RESULT_SEVERITY.NORMAL)
-                if 300 <= code < 400:  # HTTP status 30x
+                if follow_redirects and 300 <= code < 400:  # HTTP status 30x
                     redirect_url = requests.head(link,
                                                  allow_redirects=True).url
                     matcher = SequenceMatcher(

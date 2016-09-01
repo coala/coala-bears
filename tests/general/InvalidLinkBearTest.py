@@ -98,13 +98,15 @@ class InvalidLinkBearTest(unittest.TestCase):
 
         # Not a link
         http://not a link dot com
+
+        # Redirect
+        http://httpbin.org/status/301
+        http://httpbin.org/status/302
         """.splitlines()
 
         self.assertResult(valid_file=valid_file)
 
         invalid_file = """http://coalaisthebest.com/
-        http://httpbin.org/status/301  # Redirect
-        http://httpbin.org/status/302  # Redirect
         http://httpbin.org/status/404
         http://httpbin.org/status/410
         http://httpbin.org/status/500
@@ -130,7 +132,8 @@ class InvalidLinkBearTest(unittest.TestCase):
         """.splitlines()
 
         self.assertResult(valid_file=long_url_redirect,
-                          invalid_file=short_url_redirect)
+                          invalid_file=short_url_redirect,
+                          settings={'follow_redirects': 'yeah'})
 
     def test_ignore_regex(self):
 
