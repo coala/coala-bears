@@ -132,3 +132,11 @@ class AnnotationBearTest(unittest.TestCase):
         with execute_bear(uut, "F", text) as result:
             self.assertNotEqual(result[0].contents['strings'], ())
             self.assertNotEqual(result[0].contents['comments'], ())
+
+    def test_no_coalang(self):
+        self.section1.append(Setting('language', 'Valyrian'))
+        text = ["Valar Morghulis"]
+        uut = AnnotationBear(self.section1, Queue())
+        with execute_bear(uut, "F", text) as result:
+            self.assertEqual(result[0].contents,
+                             "coalang specification for Valyrian not found.")

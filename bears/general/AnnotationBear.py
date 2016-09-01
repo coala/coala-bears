@@ -26,7 +26,14 @@ class AnnotationBear(LocalBear):
                                 a tuple of SourceRanges of comments
                                 respectively.
         """
-        lang_dict = LanguageDefinition(language, coalang_dir=coalang_dir)
+        try:
+            lang_dict = LanguageDefinition(language, coalang_dir=coalang_dir)
+        except FileNotFoundError:
+            content = ("coalang specification for " + language +
+                       " not found.")
+            yield HiddenResult(self, content)
+            return
+
         string_delimiters = dict(lang_dict["string_delimiters"])
         multiline_string_delimiters = dict(
             lang_dict["multiline_string_delimiters"])
