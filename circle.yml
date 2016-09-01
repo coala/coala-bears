@@ -11,6 +11,7 @@ dependencies:
     - ~/nltk_data
     - ~/pmd-bin-5.4.1
     - ~/.local/share/coala-bears
+    - ~/bakalint-0.4.0
   pre:
     - echo 'export PATH=$PATH:~/coala-bears/node_modules/.bin' >> ~/.circlerc
     - echo 'export LINTR_COMMENT_BOT=false' >> ~/.circlerc

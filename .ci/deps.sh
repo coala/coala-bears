@@ -73,8 +73,10 @@ if ! dartanalyzer -v &> /dev/null ; then
 fi
 
 # VHDL Bakalint Installation
-wget "http://downloads.sourceforge.net/project/fpgalibre/bakalint/0.4.0/bakalint-0.4.0.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Ffpgalibre%2Ffiles%2Fbakalint%2F0.4.0%2F&ts=1461844926&use_mirror=netcologne" -O ~/bl.tar.gz
-tar xf ~/bl.tar.gz -C ~/
+if [ ! -e ~/bakalint-0.4.0 ]; then
+  wget "http://downloads.sourceforge.net/project/fpgalibre/bakalint/0.4.0/bakalint-0.4.0.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Ffpgalibre%2Ffiles%2Fbakalint%2F0.4.0%2F&ts=1461844926&use_mirror=netcologne" -O ~/bl.tar.gz
+  tar xf ~/bl.tar.gz -C ~/
+fi
 
 # Julia commands
 julia -e "Pkg.add(\"Lint\")"
