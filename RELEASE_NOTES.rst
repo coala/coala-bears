@@ -1,3 +1,13 @@
+coala-bears 0.8.1
+=================
+
+This bugfix release fixes two issues:
+
+- A dependency issue due to a newly released version of one of coala's
+  dependencies.
+- YapfBear's unstable syntax verification has been disabled.
+  (https://github.com/coala-analyzer/coala-bears/issues/738)
+
 coala-bears 0.8.0
 =================
 
