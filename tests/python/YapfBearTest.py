@@ -31,6 +31,23 @@ class YapfBearTest(LocalBearTestHelper):
         self.check_validity(self.uut, ['a = 2'], valid=True)
         self.check_validity(self.uut, ['\n'], valid=True)
 
+    def test_invalid_python(self):
+        results = self.check_validity(
+            self.uut, ['def a():', ' b=1', '  bad indent'], valid=False)
+        self.assertEqual(len(results), 1, str(results))
+        self.assertIn('unexpected indent', results[0].message)
+
+        results = self.check_validity(
+            self.uut, ['def a():', '    b=1', '\ttab error'], valid=False)
+        self.assertEqual(len(results), 1, str(results))
+        self.assertIn('inconsistent use of tabs and spaces in indentation',
+                      results[0].message)
+
+        results = self.check_validity(
+            self.uut, ['def a(:', '    b=1', '\ttab error'], valid=False)
+        self.assertEqual(len(results), 1, str(results))
+        self.assertIn('syntax errors', results[0].message)
+
     def test_valid_python_2(self):
         self.check_validity(self.uut, ['print 1\n'], valid=True)
 
