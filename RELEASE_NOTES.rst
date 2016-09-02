@@ -1,3 +1,15 @@
+coala-bears 0.8.2
+=================
+
+This bugfix release fixes the following issues:
+
+- YapfBear handles empty files correctly now.
+  (https://github.com/coala-analyzer/coala-bears/issues/739)
+- JSComplexityBear shows errors on invalid syntax correctly
+  (https://github.com/coala-analyzer/coala-bears/issues/729)
+- Cases where RadonBear failed to raise an issue have been solved
+  (https://github.com/coala-analyzer/coala-bears/issues/609)
+
 coala-bears 0.8.1
 =================
 
