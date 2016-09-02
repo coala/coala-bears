@@ -1,3 +1,4 @@
+from coalib.bearlib import deprecate_settings
 from coalib.bears.LocalBear import LocalBear
 from coalib.results.Result import RESULT_SEVERITY, Result
 
@@ -9,32 +10,34 @@ class KeywordBear(LocalBear):
     LICENSE = 'AGPL-3.0'
     CAN_DETECT = {'Documentation'}
 
+    @deprecate_settings(keywords_case_sensitive='cs_keywords')
     def run(self,
             filename,
             file,
-            cs_keywords: list,
-            ci_keywords: list):
+            keywords_case_insensitive: list,
+            keywords_case_sensitive: list=()):
         '''
         Checks the code files for given keywords.
 
-        :param cs_keywords: A list of keywords to search for (case sensitive).
-                            Usual examples are TODO and FIXME.
-        :param ci_keywords: A list of keywords to search for (case
-                            insensitive).
+        :param keywords_case_insensitive:
+            A list of keywords to search for (case insensitive).
+            Usual examples are TODO and FIXME.
+        :param keywords_case_sensitive:
+            A list of keywords to search for (case sensitive).
         '''
         results = list()
 
-        for i in range(len(ci_keywords)):
-            ci_keywords[i] = ci_keywords[i].lower()
+        for i in range(len(keywords_case_insensitive)):
+            keywords_case_insensitive[i] = keywords_case_insensitive[i].lower()
 
         for line_number, line in enumerate(file):
-            for keyword in cs_keywords:
+            for keyword in keywords_case_sensitive:
                 results += self.check_line_for_keyword(line,
                                                        filename,
                                                        line_number,
                                                        keyword)
 
-            for keyword in ci_keywords:
+            for keyword in keywords_case_insensitive:
                 results += self.check_line_for_keyword(line.lower(),
                                                        filename,
                                                        line_number,
