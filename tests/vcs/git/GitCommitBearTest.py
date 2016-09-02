@@ -44,6 +44,16 @@ class GitCommitBearTest(unittest.TestCase):
         """
         return list(result.message for result in self.uut.run(*args, **kwargs))
 
+    def assert_no_msgs(self):
+        """
+        Assert that there are no messages in the message queue of the bear, and
+        show the messages in the failure messgae if it is not empty.
+        """
+        self.assertTrue(
+            self.msg_queue.empty(),
+            "Expected no messages in bear message queue, but got: " +
+            str(list(str(i) for i in self.msg_queue.queue)))
+
     def setUp(self):
         self.msg_queue = Queue()
         self.section = Section("")
@@ -100,41 +110,41 @@ class GitCommitBearTest(unittest.TestCase):
         git_error = self.msg_queue.get().message
         self.assertEqual(git_error[:4], "git:")
 
-        self.assertTrue(self.msg_queue.empty())
+        self.assert_no_msgs()
 
     def test_empty_message(self):
         self.git_commit("")
 
         self.assertEqual(self.run_uut(),
                          ["HEAD commit has no message."])
-        self.assertTrue(self.msg_queue.empty())
+        self.assert_no_msgs()
 
         self.assertEqual(self.run_uut(allow_empty_commit_message=True),
                          [])
-        self.assertTrue(self.msg_queue.empty())
+        self.assert_no_msgs()
 
     @unittest.mock.patch("bears.vcs.git.GitCommitBear.run_shell_command",
                          return_value=("one-liner-message\n", ""))
     def test_pure_oneliner_message(self, patch):
         self.assertEqual(self.run_uut(), [])
-        self.assertTrue(self.msg_queue.empty())
+        self.assert_no_msgs()
 
     def test_shortlog_checks_length(self):
         self.git_commit("Commit messages that nearly exceed default limit..")
 
         self.assertEqual(self.run_uut(), [])
-        self.assertTrue(self.msg_queue.empty())
+        self.assert_no_msgs()
 
         self.assertEqual(self.run_uut(shortlog_length=17),
                          ["Shortlog of HEAD commit is 33 character(s) "
                           "longer than the limit (50 > 17)."])
-        self.assertTrue(self.msg_queue.empty())
+        self.assert_no_msgs()
 
         self.git_commit("Add a very long shortlog for a bad project history.")
         self.assertEqual(self.run_uut(),
                          ["Shortlog of HEAD commit is 1 character(s) longer "
                           "than the limit (51 > 50)."])
-        self.assertTrue(self.msg_queue.empty())
+        self.assert_no_msgs()
 
     def test_shortlog_checks_shortlog_trailing_period(self):
         self.git_commit("Shortlog with dot.")
@@ -213,24 +223,24 @@ class GitCommitBearTest(unittest.TestCase):
             "haaaaaands")
 
         self.assertEqual(self.run_uut(), [])
-        self.assertTrue(self.msg_queue.empty())
+        self.assert_no_msgs()
 
         self.git_commit("Shortlog only")
 
         self.assertEqual(self.run_uut(), [])
-        self.assertTrue(self.msg_queue.empty())
+        self.assert_no_msgs()
 
         # Force a body.
         self.git_commit("Shortlog only ...")
         self.assertEqual(self.run_uut(force_body=True),
                          ["No commit message body at HEAD."])
-        self.assertTrue(self.msg_queue.empty())
+        self.assert_no_msgs()
 
         # Miss a newline between shortlog and body.
         self.git_commit("Shortlog\nOops, body too early")
         self.assertEqual(self.run_uut(),
                          ["No newline between shortlog and body at HEAD."])
-        self.assertTrue(self.msg_queue.empty())
+        self.assert_no_msgs()
 
         # And now too long lines.
         self.git_commit("Shortlog\n\n"
@@ -239,7 +249,7 @@ class GitCommitBearTest(unittest.TestCase):
                         "This one too, blablablablablablablablabla.")
         self.assertEqual(self.run_uut(body_line_length=41),
                          ["Body of HEAD commit contains too long lines."])
-        self.assertTrue(self.msg_queue.empty())
+        self.assert_no_msgs()
 
     def test_different_path(self):
         no_git_dir = mkdtemp()
