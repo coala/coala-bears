@@ -38,3 +38,12 @@ ESLintBearWithoutConfigTest = verify_local_bear(
     ESLintBear,
     valid_files=(test_good, ''),
     invalid_files=(test_syntax_error, test_bad))
+
+# If there is an invalid config file, the results cannot be found. So, no
+# file gives a result.
+ESLintBearWithUnloadablePluginTest = verify_local_bear(
+    ESLintBear,
+    valid_files=(test_bad, test_good),
+    invalid_files=(),
+    settings={"eslint_config": os.path.join(test_dir,
+                                            "eslintconfig_badplugin.json")})
