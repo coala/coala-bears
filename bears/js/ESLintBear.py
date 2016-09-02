@@ -48,7 +48,7 @@ class ESLintBear:
         return '{"extends": "eslint:recommended"}'
 
     def process_output(self, output, filename, file):
-        if not file:
+        if not file or not output:
             return
 
         output = json.loads(output)
