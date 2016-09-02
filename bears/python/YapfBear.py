@@ -144,11 +144,22 @@ space_between_ending_comma_and_closing_bracket= \
         options += 'use_tabs = ' + str(not use_spaces)
         options = options.format(**locals())
 
-        with prepare_file(options.splitlines(keepends=True),
-                          None) as (file_, fname):
-            corrected = FormatFile(filename,
-                                   style_config=fname,
-                                   verify=False)[0].splitlines(True)
+        try:
+            with prepare_file(options.splitlines(keepends=True),
+                              None) as (file_, fname):
+                corrected = FormatFile(filename,
+                                       style_config=fname,
+                                       verify=False)[0].splitlines(True)
+        except SyntaxError as err:
+            if isinstance(err, IndentationError):
+                error_type = "indentation errors (" + err.args[0] + ')'
+            else:
+                error_type = "syntax errors"
+            yield Result.from_values(
+                self,
+                "The code cannot be parsed due to {0}.".format(error_type),
+                filename, line=err.lineno, column=err.offset)
+            return
         diffs = Diff.from_string_arrays(file, corrected).split_diff()
         for diff in diffs:
             yield Result(self,
