@@ -251,6 +251,15 @@ class GitCommitBearTest(unittest.TestCase):
                          ["Body of HEAD commit contains too long lines."])
         self.assert_no_msgs()
 
+        # Allow long lines with ignore regex
+        self.git_commit("Shortlog\n\n"
+                        "This line is ok.\n"
+                        "This line is by far too long (in this case).")
+        self.assertEqual(self.run_uut(body_line_length=41,
+                                      ignore_length_regex=("^.*too long",)),
+                         [])
+        self.assertTrue(self.msg_queue.empty())
+
     def test_different_path(self):
         no_git_dir = mkdtemp()
         self.git_commit("Add a very long shortlog for a bad project history.")

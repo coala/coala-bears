@@ -10,6 +10,7 @@ from coalib.misc.Shell import run_shell_command
 from coalib.results.Result import Result
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.settings.FunctionMetadata import FunctionMetadata
+from coalib.settings.Setting import typed_list
 
 
 class GitCommitBear(GlobalBear):
@@ -170,15 +171,18 @@ class GitCommitBear(GlobalBear):
 
     def check_body(self, body,
                    body_line_length: int=72,
-                   force_body: bool=False):
+                   force_body: bool=False,
+                   ignore_length_regex: typed_list(str)=()):
         """
         Checks the given commit body.
 
-        :param body:             The commit body splitted by lines.
-        :param body_line_length: The maximum line-length of the body. The
-                                 newline character at each line end does not
-                                 count to the length.
-        :param force_body:       Whether a body shall exist or not.
+        :param body:                The commit body splitted by lines.
+        :param body_line_length:    The maximum line-length of the body. The
+                                    newline character at each line end does not
+                                    count to the length.
+        :param force_body:          Whether a body shall exist or not.
+        :param ignore_length_regex: Lines matching each of the regular
+                                    expressions in this list will be ignored.
         """
         if len(body) == 0:
             if force_body:
@@ -189,5 +193,8 @@ class GitCommitBear(GlobalBear):
             yield Result(self, "No newline between shortlog and body at HEAD.")
             return
 
-        if any(len(line) > body_line_length for line in body[1:]):
+        ignore_regexes = [re.compile(regex) for regex in ignore_length_regex]
+        if any((len(line) > body_line_length and
+                not any(regex.search(line) for regex in ignore_regexes))
+               for line in body[1:]):
             yield Result(self, "Body of HEAD commit contains too long lines.")
