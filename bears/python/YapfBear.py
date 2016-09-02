@@ -44,7 +44,8 @@ class YapfBear(LocalBear):
             split_before_logical_operator: bool=False,
             split_before_named_assigns: bool=True,
             use_spaces: bool=True,
-            based_on_style: str='pep8'):
+            based_on_style: str='pep8',
+            prefer_line_break_after_opening_bracket: bool=True):
         """
         :param max_line_length:
             Maximum number of characters for a line.
@@ -112,6 +113,9 @@ class YapfBear(LocalBear):
             Uses spaces for indentation.
         :param based_on_style:
             The formatting style to be used as reference.
+        :param prefer_line_break_after_opening_bracket:
+            If True, splitting right after a open bracket will not be
+            preferred.
         """
         if not file:
             # Yapf cannot handle zero-byte files well, and adds a redundent
@@ -141,7 +145,10 @@ split_arguments_when_comma_terminated = {split_arguments_when_comma_terminated}
 space_between_ending_comma_and_closing_bracket= \
 {space_between_ending_comma_and_closing_bracket}
 """
-        options += 'use_tabs = ' + str(not use_spaces)
+        options += 'use_tabs = ' + str(not use_spaces) + "\n"
+        options += ('split_penalty_after_opening_bracket = ' +
+                    ('30' if prefer_line_break_after_opening_bracket
+                     else '0') + "\n")
         options = options.format(**locals())
 
         try:
