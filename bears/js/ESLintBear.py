@@ -36,7 +36,14 @@ class ESLintBear:
         """
         :param eslint_config: The location of the .eslintrc config file.
         """
-        args = '--no-ignore', '--no-color', '-f=json', '--stdin'
+        args = (
+            '--no-ignore',
+            '--no-color',
+            '-f=json',
+            '--stdin',
+            '--stdin-filename=' + filename,
+        )
+
         if eslint_config:
             args += ('--config', eslint_config)
         else:
