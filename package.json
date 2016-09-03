@@ -2,7 +2,7 @@
   "name": "coala-bears",
   "version":"0.8.0",
   "dependencies": {
-    "alex": "~2",
+    "alex": "~3",
     "autoprefixer": "~6",
     "bootlint": "~0",
     "coffeelint": "~1",

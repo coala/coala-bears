@@ -13,7 +13,7 @@ class AlexBear:
     writing.
     """
     LANGUAGES = {"Natural Language"}
-    REQUIREMENTS = {NpmRequirement('alex', '2')}
+    REQUIREMENTS = {NpmRequirement('alex', '3')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
