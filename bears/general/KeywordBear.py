@@ -41,10 +41,10 @@ class KeywordBear(LocalBear):
                 message="The line contains the keyword `{}`."
                         .format(keyword),
                 file=filename,
-                line=line_number+1,
-                column=pos+1,
-                end_line=line_number+1,
-                end_column=pos+len(keyword)+1,
+                line=line_number + 1,
+                column=pos + 1,
+                end_line=line_number + 1,
+                end_column=pos + len(keyword) + 1,
                 severity=RESULT_SEVERITY.INFO)]
 
         return []
