@@ -8,7 +8,8 @@ from coalib.results.Result import Result
 
 
 @linter(executable='eslint',
-        use_stdin=True)
+        use_stdin=True,
+        use_stderr=True)
 class ESLintBear:
     """
     Check JavaScript and JSX code for style issues and semantic errors.
@@ -48,10 +49,15 @@ class ESLintBear:
         return '{"extends": "eslint:recommended"}'
 
     def process_output(self, output, filename, file):
-        if not file or not output:
+        if output[1]:
+            self.warn("While running {0}, some issues were found:"
+                      .format(self.__class__.__name__))
+            self.warn(output[1])
+
+        if not file or not output[0]:
             return
 
-        output = json.loads(output)
+        output = json.loads(output[0])
         lines = "".join(file)
 
         assert len(output) == 1
