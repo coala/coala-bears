@@ -1,3 +1,15 @@
+coala-bears 0.8.3
+=================
+
+This bugfix release fixes the following issues:
+
+- YapfBear handles files with syntax errors gracefully.
+  (https://github.com/coala-analyzer/coala-bears/issues/750)
+- ESLintBear doesn't fail with an unrelated error when eslint fails anymore,
+  it rather shows the errors from eslint as a warning.
+  (https://github.com/coala-analyzer/coala-bears/issues/727 and
+  https://github.com/coala-analyzer/coala-bears/issues/730)
+
 coala-bears 0.8.2
 =================
 
