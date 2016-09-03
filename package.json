@@ -13,7 +13,7 @@
     "happiness":"~7.1.2",
     "jshint": "~2",
     "postcss-cli": "~2",
-    "remark": "~3",
+    "remark-cli": "~2",
     "tslint": "~3",
     "ramllint": "~1.2.2",
     "write-good": "~0.9.1"
