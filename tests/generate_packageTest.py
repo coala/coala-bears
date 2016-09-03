@@ -9,7 +9,7 @@ from bears.generate_package import (VERSION, touch, create_file_from_template,
                                     create_upload_parser)
 
 
-class touchTest(unittest.TestCase):
+class TouchTest(unittest.TestCase):
 
     def setUp(self):
         if os.path.exists('TestFile.py'):
@@ -24,7 +24,7 @@ class touchTest(unittest.TestCase):
         os.remove('TestFile.py')
 
 
-class create_file_from_templateTest(unittest.TestCase):
+class CreateFileFromTemplateTest(unittest.TestCase):
 
     SUBST_FILE = os.path.join(
         'tests', 'generate_package_input_files', 'substituted_file.py')
@@ -42,7 +42,7 @@ class create_file_from_templateTest(unittest.TestCase):
         os.remove(self.SUBST_FILE)
 
 
-class create_file_structure_for_packagesTest(unittest.TestCase):
+class CreateFileStructureForPackagesTest(unittest.TestCase):
 
     INIT_FILE_PATH = os.path.join('folder', 'Test', 'coalaTest', '__init__.py')
     BEAR_FILE_PATH = os.path.join('folder', 'Test', 'coalaTest', 'Test.py')
@@ -57,13 +57,13 @@ class create_file_structure_for_packagesTest(unittest.TestCase):
         shutil.rmtree('folder')
 
 
-class create_upload_parserTest(unittest.TestCase):
+class CreateUploadParserTest(unittest.TestCase):
 
     def test_parser(self):
         self.assertTrue(create_upload_parser().parse_args(['--upload']).upload)
 
 
-class perform_registerTest(unittest.TestCase):
+class PerformRegisterTest(unittest.TestCase):
 
     @patch('subprocess.call')
     def test_command(self, call_mock):
@@ -74,7 +74,7 @@ class perform_registerTest(unittest.TestCase):
                 'MarkdownBear-0.8.0.dev20160623094115-py3-none-any.whl')])
 
 
-class perform_uploadTest(unittest.TestCase):
+class PerformUploadTest(unittest.TestCase):
 
     @patch('subprocess.call')
     def test_command(self, call_mock):
@@ -82,7 +82,7 @@ class perform_uploadTest(unittest.TestCase):
         call_mock.assert_called_with(['twine', 'upload', './dist/*'])
 
 
-class mainTest(unittest.TestCase):
+class MainTest(unittest.TestCase):
 
     CSS_BEAR_SETUP_PATH = os.path.join(
         'bears', 'upload', 'CSSLintBear', 'setup.py')
