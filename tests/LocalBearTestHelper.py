@@ -89,6 +89,7 @@ class LocalBearTestHelper(unittest.TestCase):  # pragma: no cover
                 msg = ("The local bear '{}' yields no result although it "
                        "should.".format(local_bear.__class__.__name__))
                 self.assertNotEqual(len(bear_output), 0, msg=msg)
+            return bear_output
 
     def check_results(self,
                       local_bear,
