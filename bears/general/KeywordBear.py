@@ -10,34 +10,22 @@ class KeywordBear(LocalBear):
     LICENSE = 'AGPL-3.0'
     CAN_DETECT = {'Documentation'}
 
-    @deprecate_settings(keywords_case_sensitive='cs_keywords')
-    def run(self,
-            filename,
-            file,
-            keywords_case_insensitive: list,
-            keywords_case_sensitive: list=()):
+    @deprecate_settings(keywords='ci_keywords')
+    def run(self, filename, file, keywords: list):
         '''
         Checks the code files for given keywords.
 
-        :param keywords_case_insensitive:
+        :param keywords:
             A list of keywords to search for (case insensitive).
             Usual examples are TODO and FIXME.
-        :param keywords_case_sensitive:
-            A list of keywords to search for (case sensitive).
         '''
         results = list()
 
-        for i in range(len(keywords_case_insensitive)):
-            keywords_case_insensitive[i] = keywords_case_insensitive[i].lower()
+        for i in range(len(keywords)):
+            keywords[i] = keywords[i].lower()
 
         for line_number, line in enumerate(file):
-            for keyword in keywords_case_sensitive:
-                results += self.check_line_for_keyword(line,
-                                                       filename,
-                                                       line_number,
-                                                       keyword)
-
-            for keyword in keywords_case_insensitive:
+            for keyword in keywords:
                 results += self.check_line_for_keyword(line.lower(),
                                                        filename,
                                                        line_number,

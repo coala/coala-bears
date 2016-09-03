@@ -35,5 +35,7 @@ max_lines_per_file = 1000
 enabled = False
 bears = KeywordBear
 
-ci_keywords, keywords_case_insensitive = \#TODO, \# TODO, \#FIXME, \# FIXME
+# Note that the ci_keywords and cs_keywords are only used here because coala
+# 0.8.x (current stable release) needs them.
+ci_keywords, keywords = \#TODO, \# TODO, \#FIXME, \# FIXME
 cs_keywords =
