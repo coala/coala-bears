@@ -3,16 +3,16 @@ from tests.LocalBearTestHelper import verify_local_bear
 
 good_file = """
 .class {
-  font-weight: 400;
   font-size: 5px;
+  font-weight: 400;
 }
 """
 
 
 bad_file = """
 .class {
-  font-weight: 400
-  font-size: 5px;
+  font-size: 5px
+  font-weight: 400;
 }
 """
 

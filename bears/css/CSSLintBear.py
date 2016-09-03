@@ -13,7 +13,7 @@ class CSSLintBear:
     problems or inefficiencies.
     """
     LANGUAGES = {"CSS"}
-    REQUIREMENTS = {NpmRequirement('csslint', '0')}
+    REQUIREMENTS = {NpmRequirement('csslint', '1')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
