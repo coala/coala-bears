@@ -135,7 +135,7 @@ class InvalidLinkBearTest(unittest.TestCase):
                           invalid_file=short_url_redirect,
                           settings={'follow_redirects': 'yeah'})
 
-    def test_ignore_regex(self):
+    def test_link_ignore_regex(self):
 
         ignored_URLs = """
         http://sub.example.com
@@ -159,4 +159,4 @@ class InvalidLinkBearTest(unittest.TestCase):
         """.splitlines()
         self.assertResult(valid_file=valid_file,
                           invalid_file=invalid_file,
-                          settings={'ignore_regex': '[1-9]{2}$'})
+                          settings={'link_ignore_regex': '[1-9]{2}$'})

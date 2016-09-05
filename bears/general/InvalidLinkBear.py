@@ -8,6 +8,7 @@ from coalib.bears.LocalBear import LocalBear
 from coalib.bears.requirements.PipRequirement import PipRequirement
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.results.Result import Result
+from coalib.bearlib import deprecate_settings
 
 
 class InvalidLinkBear(LocalBear):
@@ -39,8 +40,8 @@ class InvalidLinkBear(LocalBear):
             pass
 
     @staticmethod
-    def find_links_in_file(file, timeout, ignore_regex):
-        ignore_regex = re.compile(ignore_regex)
+    def find_links_in_file(file, timeout, link_ignore_regex):
+        link_ignore_regex = re.compile(link_ignore_regex)
         regex = re.compile(
             r'((ftp|http)s?://[^.:\s_/?#[\]@\\]+\.(?:[^\s()\'"<>|\\]+|'
             r'\([^\s()\'"<>|\\]*\))*)(?<!\.)(?<!,)')
@@ -48,13 +49,14 @@ class InvalidLinkBear(LocalBear):
             match = regex.search(line)
             if match:
                 link = match.group()
-                if not ignore_regex.search(link):
+                if not link_ignore_regex.search(link):
                     code = InvalidLinkBear.get_status_code(link, timeout)
                     yield line_number + 1, link, code
 
+    @deprecate_settings(link_ignore_regex='ignore_regex')
     def run(self, filename, file,
             timeout: int=DEFAULT_TIMEOUT,
-            ignore_regex: str="([.\/]example\.com|\{|\$)",
+            link_ignore_regex: str="([.\/]example\.com|\{|\$)",
             follow_redirects: bool=False):
         """
         Find links in any text file and check if they are valid.
@@ -71,11 +73,11 @@ class InvalidLinkBear(LocalBear):
         all your data.
 
         :param timeout:          Request timeout period.
-        :param ignore_regex:     A regex for urls to ignore.
+        :param link_ignore_regex:     A regex for urls to ignore.
         :param follow_redirects: Set to true to autocorrect redirects.
         """
         for line_number, link, code in InvalidLinkBear.find_links_in_file(
-                file, timeout, ignore_regex):
+                file, timeout, link_ignore_regex):
             if code is None:
                 yield Result.from_values(
                     origin=self,
