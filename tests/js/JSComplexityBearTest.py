@@ -1,4 +1,6 @@
-from bears.js.JSComplexityBear import JSComplexityBear
+import json
+
+from bears.js import JSComplexityBear
 from tests.LocalBearTestHelper import verify_local_bear
 
 complexity_12 = """(function () {
@@ -39,13 +41,13 @@ complexity_4 = """(function () {
 test_syntax_error = '{<!@3@^ yeah!/\n'
 
 JSComplexityBearTest = verify_local_bear(
-    JSComplexityBear,
+    JSComplexityBear.JSComplexityBear,
     valid_files=(complexity_4,),
     invalid_files=(complexity_12, test_syntax_error),
     tempfile_kwargs={"suffix": ".js"})
 
 JSComplexityBearThresholdTest = verify_local_bear(
-    JSComplexityBear,
+    JSComplexityBear.JSComplexityBear,
     valid_files=(),
     invalid_files=(complexity_4, complexity_12),
     settings={"cc_threshold": 2},
@@ -53,7 +55,22 @@ JSComplexityBearThresholdTest = verify_local_bear(
 
 # No output for non-js files
 JSComplexityBearInvalidFileTest = verify_local_bear(
-    JSComplexityBear,
+    JSComplexityBear.JSComplexityBear,
     valid_files=(complexity_4, complexity_12),
     invalid_files=(),
     tempfile_kwargs={"suffix": ".not_js"})
+
+
+def get_available_decodeerror_test(monkeypatch):
+    class TestError(Exception):
+        pass
+    monkeypatch.setattr(
+        json.decoder, 'JSONDecodeError', TestError, raising=False)
+    result = JSComplexityBear.get_available_decodeerror()
+    assert result == TestError
+
+
+def get_available_decodeerror_py34_test(monkeypatch):
+    monkeypatch.delattr('json.decoder.JSONDecodeError', raising=False)
+    result = JSComplexityBear.get_available_decodeerror()
+    assert result == ValueError

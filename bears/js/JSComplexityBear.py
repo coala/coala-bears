@@ -7,12 +7,21 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.results.Result import Result
 
 
+def get_available_decodeerror():
+    try:
+        return json.decoder.JSONDecodeError
+    except AttributeError:  # Python 3.4 does not have JSONDecodeError there
+        return ValueError
+
+
 @linter(executable='cr')
 class JSComplexityBear:
     """
     Calculates cyclomatic complexity using ``cr``, the command line utility
     provided by the NodeJS module ``complexity-report``.
     """
+    DecodeError = get_available_decodeerror()
+
     LANGUAGES = {"JavaScript"}
     REQUIREMENTS = {NpmRequirement('complexity-report', '2.0.0-alpha')}
     AUTHORS = {'The coala developers'}
@@ -20,11 +29,6 @@ class JSComplexityBear:
     LICENSE = 'AGPL-3.0'
     ASCIINEMA_URL = 'https://asciinema.org/a/39250'
     CAN_DETECT = {'Complexity'}
-
-    try:
-        DecodeError = json.decoder.JSONDecodeError
-    except AttributeError:
-        DecodeError = ValueError
 
     @staticmethod
     def create_arguments(filename, file, config_file):
