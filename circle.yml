@@ -13,6 +13,7 @@ dependencies:
     - ~/.local/share/coala-bears
     - ~/bakalint-0.4.0
     - ~/.julia
+    - ~/hlint_1.9.26-1_amd64.deb
   pre:
     - echo 'export PATH=$PATH:~/coala-bears/node_modules/.bin' >> ~/.circlerc
     - echo 'export LINTR_COMMENT_BOT=false' >> ~/.circlerc
