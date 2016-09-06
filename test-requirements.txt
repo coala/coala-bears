@@ -1,5 +1,5 @@
 coverage>=4.0.3
-pytest>=2.8.7
+pytest>=3.0.0
 pytest-cov>=2.2.1
 pytest-env>=0.6.0
 pytest-timeout>=1.0.0
