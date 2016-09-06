@@ -9,11 +9,15 @@ from coalib.results.Result import Result
 from coala_utils.param_convertion import negate
 
 
-class JSONFormatBear(LocalBear):
+def get_available_decodeerror():
     try:
-        DecodeError = json.decoder.JSONDecodeError
-    except AttributeError:
-        DecodeError = ValueError
+        return json.decoder.JSONDecodeError
+    except AttributeError:  # Python 3.4 does not have JSONDecodeError there
+        return ValueError
+
+
+class JSONFormatBear(LocalBear):
+    DecodeError = get_available_decodeerror()
 
     LANGUAGES = {"JSON"}
     AUTHORS = {'The coala developers'}
