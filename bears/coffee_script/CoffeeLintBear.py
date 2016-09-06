@@ -324,8 +324,8 @@ class CoffeeLintBear:
     def process_output(self, output, filename, file):
         output = json.loads(output)
 
-        assert (len(output) == 1,
-                "More than 1 file parsed, something went wrong")
+        assert len(output) == 1, (
+            "More than 1 file parsed, something went wrong")
         for item in tuple(output.values())[0]:
             yield Result.from_values(
                 origin="{} ({})".format(self.name, item['rule']),
