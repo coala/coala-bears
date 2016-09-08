@@ -62,9 +62,9 @@ class RuboCopBear:
                                                  "REVIEW"),
                         min_if_unless_guard: int=1,
                         indent_size: int=2,
-                        method_naming_convention: str='snake_case',
+                        method_naming_convention: str='snake',
                         string_literals: str='single_quotes',
-                        variable_naming_convention: str='snake_case',
+                        variable_naming_convention: str='snake',
                         max_class_length: int=100,
                         class_length_count_comments: bool=False,
                         max_module_length: int=100,
@@ -128,13 +128,13 @@ class RuboCopBear:
             Number of spaces per indentation level.
         :param method_naming_convention:
             Case of a method's name.
-            options: ``snake_case``, ``camelCase``.
+            options: ``snake``, ``camel``.
         :param string_literals:
             Use ' or " as string literals.
             options: ``single_quotes``, ``double_quotes``.
         :param variable_naming_convention:
             Case of a variable's name.
-            options: ``snake_case``, ``camelCase``.
+            options: ``snake``, ``camel``.
         :param max_class_length:
             Max lines in a class.
         :param class_length_count_comments:
@@ -173,7 +173,7 @@ class RuboCopBear:
         :param allow_unused_method_keyword_args:
             Allows unused keyword arguments in a method.
         """
-
+        naming_convention = {'camel': 'camelCase', 'snake': 'snake_case'}
         options = {
                   'Style/AccessModifierIndentation':
                       {'EnforcedStyle': access_modifier_indentation},
@@ -195,11 +195,14 @@ class RuboCopBear:
                   'Style/IndentationWidth':
                       {'Width': indent_size},
                   'Style/MethodName':
-                      {'EnforcedStyle': method_maming_convention},
+                      {'EnforcedStyle': naming_convention.get(
+                         method_naming_convention, method_naming_convention)},
                   'Style/StringLiterals':
                       {'EnforcedStyle': string_literals},
                   'Style/VariableName':
-                      {'EnforcedStyle': variable_naming_convention},
+                      {'EnforcedStyle': naming_convention.get(
+                         variable_naming_convention,
+                         variable_naming_convention)},
                   'Metrics/ClassLength':
                       {'Max': max_class_length,
                        'CountComments': class_length_count_comments},

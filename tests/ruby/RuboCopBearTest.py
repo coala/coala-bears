@@ -54,4 +54,4 @@ RuboCopBearSettingsTest = verify_local_bear(
                               RuboCopBear,
                               valid_files=(bad_file,),
                               invalid_files=(good_file,),
-                              settings={"method_name_case": "camelCase"})
+                              settings={"method_name_case": "camel"})
