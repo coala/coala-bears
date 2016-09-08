@@ -8,12 +8,12 @@ from coalib.settings.Setting import path, url
 
 
 def path_or_url(xml_dtd):
-    '''
+    """
     Converts the setting value to url or path.
 
     :param xml_dtd: Setting key.
     :return:        Returns a converted setting value.
-    '''
+    """
     try:
         return url(xml_dtd)
     except ValueError:
