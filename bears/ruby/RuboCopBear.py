@@ -44,7 +44,9 @@ class RuboCopBear:
 
     @staticmethod
     @deprecate_settings(indent_size='tab_width',
-                        method_length_count_comments='method_count_comments')
+                        method_length_count_comments='method_count_comments',
+                        method_naming_convention='method_name_case',
+                        variable_naming_convention='variable_name_case')
     def generate_config(filename, file,
                         access_modifier_indentation: str='indent',
                         preferred_alias: str='prefer_alias',
@@ -60,9 +62,9 @@ class RuboCopBear:
                                                  "REVIEW"),
                         min_if_unless_guard: int=1,
                         indent_size: int=2,
-                        method_name_case: str='snake_case',
+                        method_naming_convention: str='snake_case',
                         string_literals: str='single_quotes',
-                        variable_name_case: str='snake_case',
+                        variable_naming_convention: str='snake_case',
                         max_class_length: int=100,
                         class_length_count_comments: bool=False,
                         max_module_length: int=100,
@@ -124,13 +126,13 @@ class RuboCopBear:
             more than these lines call for the usage of a guard clause.
         :param indent_size:
             Number of spaces per indentation level.
-        :param method_name_case:
+        :param method_naming_convention:
             Case of a method's name.
             options: ``snake_case``, ``camelCase``.
         :param string_literals:
             Use ' or " as string literals.
             options: ``single_quotes``, ``double_quotes``.
-        :param variable_name_case:
+        :param variable_naming_convention:
             Case of a variable's name.
             options: ``snake_case``, ``camelCase``.
         :param max_class_length:
@@ -193,11 +195,11 @@ class RuboCopBear:
                   'Style/IndentationWidth':
                       {'Width': indent_size},
                   'Style/MethodName':
-                      {'EnforcedStyle': method_name_case},
+                      {'EnforcedStyle': method_maming_convention},
                   'Style/StringLiterals':
                       {'EnforcedStyle': string_literals},
                   'Style/VariableName':
-                      {'EnforcedStyle': variable_name_case},
+                      {'EnforcedStyle': variable_naming_convention},
                   'Metrics/ClassLength':
                       {'Max': max_class_length,
                        'CountComments': class_length_count_comments},
