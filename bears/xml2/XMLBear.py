@@ -26,6 +26,8 @@ def path_or_url(xml_dtd):
 class XMLBear:
     """
     Checks the code with ``xmllint``.
+
+    See http://xmlsoft.org/xmllint.html
     """
     LANGUAGES = {"XML"}
     REQUIREMENTS = {DistributionRequirement(apt_get='libxml2')}
