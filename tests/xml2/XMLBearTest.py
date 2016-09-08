@@ -15,6 +15,8 @@ valid_xml_file = """<?xml version="1.0"?>
 <a/>
 """
 
+# The <?xml version="1.0"?> header is missing. This is no actual syntax error,
+# but will be suggested from xmllint as a fix.
 invalid_xml_file = """
 <a>blah</a>
 """
