@@ -1,5 +1,6 @@
 dependencies:
   cache_directories:
+    - ~/.apt-cache
     - ~/.pyenv/versions/3.4.3
     - ~/.pyenv/versions/3.5.1
     - ~/coala-bears/node_modules
@@ -16,6 +17,7 @@ dependencies:
     - ~/.julia
     - ~/hlint_1.9.26-1_amd64.deb
   pre:
+    - sudo rm -rf /var/cache/apt/archives && sudo ln -s ~/.apt-cache /var/cache/apt/archives && mkdir -p ~/.apt-cache/partial
     - echo 'export PATH=$PATH:~/coala-bears/node_modules/.bin' >> ~/.circlerc
     - echo 'export PATH=$PATH:~/coala-bears/vendor/bin' >> ~/.circlerc
     - echo 'export LINTR_COMMENT_BOT=false' >> ~/.circlerc
