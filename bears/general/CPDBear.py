@@ -109,10 +109,11 @@ class CPDBear(GlobalBear):
                 length = int(duplication.attrib['lines'])
                 affected_code = list()
 
-                for file in duplication.findall('file'):
-                    filename = file.attrib['path']
-                    start_line = int(file.attrib['line'])
-                    end_line = min(start_line + length - 1, len(file))
+                for xml_file in duplication.findall('file'):
+                    filename = xml_file.attrib['path']
+                    start_line = int(xml_file.attrib['line'])
+                    end_line = min(start_line + length - 1,
+                                   len(self.file_dict[filename]))
 
                     affected_code.append(
                         SourceRange.from_values(filename,
