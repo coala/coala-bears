@@ -31,7 +31,9 @@ site
 node_modules
 *.log
 *.jar
+.bundle
 .vendor
+vendor
 Goopfile.lock
 Gemfile.lock
 .Rhistory

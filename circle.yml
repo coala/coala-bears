@@ -3,7 +3,8 @@ dependencies:
     - ~/.pyenv/versions/3.4.3
     - ~/.pyenv/versions/3.5.1
     - ~/coala-bears/node_modules
-    - ~/.rvm/gems/ruby-2.1.5/gems/
+    - ~/coala-bears/.bundle
+    - ~/coala-bears/vendor
     - ~/.RLibrary
     - ~/dart-sdk/bin
     - ~/.cabal
@@ -16,6 +17,7 @@ dependencies:
     - ~/hlint_1.9.26-1_amd64.deb
   pre:
     - echo 'export PATH=$PATH:~/coala-bears/node_modules/.bin' >> ~/.circlerc
+    - echo 'export PATH=$PATH:~/coala-bears/vendor/bin' >> ~/.circlerc
     - echo 'export LINTR_COMMENT_BOT=false' >> ~/.circlerc
     - echo 'export PATH=$PATH:~/dart-sdk/bin' >> ~/.circlerc
     - echo 'export PATH=$PATH:~/.cabal/bin' >> ~/.circlerc
