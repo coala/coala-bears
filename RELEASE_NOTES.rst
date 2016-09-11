@@ -1,3 +1,13 @@
+coala-bears 0.8.4
+=================
+
+This bugfix release fixes the following issues:
+
+- ESLintBear was unable to resolve relative imports correctly.
+  (https://github.com/coala-analyzer/coala-bears/issues/741)
+- CPDBear was not showing the context of results correctly.
+  (https://github.com/coala-analyzer/coala-bears/issues/810)
+
 coala-bears 0.8.3
 =================
 
