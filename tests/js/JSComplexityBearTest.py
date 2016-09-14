@@ -59,18 +59,3 @@ JSComplexityBearInvalidFileTest = verify_local_bear(
     valid_files=(complexity_4, complexity_12),
     invalid_files=(),
     tempfile_kwargs={"suffix": ".not_js"})
-
-
-def get_available_decodeerror_test(monkeypatch):
-    class TestError(Exception):
-        pass
-    monkeypatch.setattr(
-        json.decoder, 'JSONDecodeError', TestError, raising=False)
-    result = JSComplexityBear.get_available_decodeerror()
-    assert result == TestError
-
-
-def get_available_decodeerror_py34_test(monkeypatch):
-    monkeypatch.delattr('json.decoder.JSONDecodeError', raising=False)
-    result = JSComplexityBear.get_available_decodeerror()
-    assert result == ValueError

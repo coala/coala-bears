@@ -3,15 +3,9 @@ import re
 
 from coalib.bearlib.abstractions.Linter import linter
 from coalib.bears.requirements.NpmRequirement import NpmRequirement
+from coalib.misc.Compatibility import JSONDecodeError
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.results.Result import Result
-
-
-def get_available_decodeerror():
-    try:
-        return json.decoder.JSONDecodeError
-    except AttributeError:  # Python 3.4 does not have JSONDecodeError there
-        return ValueError
 
 
 @linter(executable='cr')
@@ -20,7 +14,6 @@ class JSComplexityBear:
     Calculates cyclomatic complexity using ``cr``, the command line utility
     provided by the NodeJS module ``complexity-report``.
     """
-    DecodeError = get_available_decodeerror()
 
     LANGUAGES = {"JavaScript"}
     REQUIREMENTS = {NpmRequirement('complexity-report', '2.0.0-alpha')}
@@ -42,7 +35,7 @@ class JSComplexityBear:
         if output:
             try:
                 output = json.loads(output)
-            except self.DecodeError:
+            except JSONDecodeError:
                 output_regex = (r'Fatal error \[getReports\]: .+: '
                                 r'Line (?P<line>\d+): (?P<message>.*)')
                 for match in re.finditer(output_regex, output):

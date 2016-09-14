@@ -4,20 +4,13 @@ from collections import OrderedDict
 from coalib.bearlib import deprecate_settings
 from coalib.bearlib.spacing.SpacingHelper import SpacingHelper
 from coalib.bears.LocalBear import LocalBear
+from coalib.misc.Compatibility import JSONDecodeError
 from coalib.results.Diff import Diff
 from coalib.results.Result import Result
 from coala_utils.param_convertion import negate
 
 
-def get_available_decodeerror():
-    try:
-        return json.decoder.JSONDecodeError
-    except AttributeError:  # Python 3.4 does not have JSONDecodeError there
-        return ValueError
-
-
 class JSONFormatBear(LocalBear):
-    DecodeError = get_available_decodeerror()
 
     LANGUAGES = {"JSON"}
     AUTHORS = {'The coala developers'}
@@ -42,7 +35,7 @@ class JSONFormatBear(LocalBear):
         try:
             json_content = json.loads(''.join(file),
                                       object_pairs_hook=OrderedDict)
-        except self.DecodeError as err:
+        except JSONDecodeError as err:
             yield Result.from_values(
                 self,
                 "This file does not contain parsable JSON. " + repr(str(err)),

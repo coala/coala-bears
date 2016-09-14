@@ -54,18 +54,3 @@ JSONFormatBearUnicodeTest = verify_local_bear(JSONFormatBear.JSONFormatBear,
                                               invalid_files=(),
                                               settings={'escape_unicode':
                                                         'false'})
-
-
-def get_available_decodeerror_test(monkeypatch):
-    class TestError(Exception):
-        pass
-    monkeypatch.setattr(
-        json.decoder, 'JSONDecodeError', TestError, raising=False)
-    result = JSONFormatBear.get_available_decodeerror()
-    assert result == TestError
-
-
-def get_available_decodeerror_py34_test(monkeypatch):
-    monkeypatch.delattr('json.decoder.JSONDecodeError', raising=False)
-    result = JSONFormatBear.get_available_decodeerror()
-    assert result == ValueError
