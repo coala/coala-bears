@@ -25,7 +25,7 @@ def _get_comments(dependency_results):
 def generate_diff(comments, file, filename,
                   line, line_number, pos):
     diffs = {}
-    todo_source_range = SourceRange.from_values(filename, line_number + 1,
+    todo_source_range = SourceRange.from_values(filename, line_number,
                                                 pos + 1)
     for comment_sourcerange in comments:
         if todo_source_range not in comment_sourcerange:
@@ -36,13 +36,13 @@ def generate_diff(comments, file, filename,
         line_before_todo_comment = line[:comment_start - 1].strip()
 
         if (line_before_todo_comment and
-                line_number + 1 == comment_sourcerange.start.line):
+                line_number == comment_sourcerange.start.line):
             diff.change_line(
-                line_number + 1,
+                line_number,
                 line,
                 line[:comment_start - 1].rstrip() + '\n')
         else:
-            diff.delete_line(line_number + 1)
+            diff.delete_line(line_number)
 
         diffs[filename] = diff
     return diffs
@@ -75,7 +75,7 @@ class KeywordBear(LocalBear):
 
         comments = _get_comments(dependency_results)
 
-        for line_number, line in enumerate(file):
+        for line_number, line in enumerate(file, start=1):
             for keyword in keywords_regex.finditer(line):
                 diffs = generate_diff(
                     comments,
@@ -89,9 +89,9 @@ class KeywordBear(LocalBear):
                     message="The line contains the keyword '{}'."
                             .format(keyword.group()),
                     file=filename,
-                    line=line_number + 1,
+                    line=line_number,
                     column=keyword.start() + 1,
-                    end_line=line_number + 1,
+                    end_line=line_number,
                     end_column=keyword.end() + 1,
                     severity=RESULT_SEVERITY.INFO,
                     diffs=diffs)
