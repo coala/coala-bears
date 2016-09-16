@@ -47,7 +47,7 @@ class IndentationBear(LocalBear):
         undergoes no change.
 
         WARNING: The IndentationBear is experimental right now, you can report
-        any issues found to https://github.com/coala-analyzer/coala-bears
+        any issues found to https://github.com/coala/coala-bears
 
         :param filename:
             Name of the file that needs to be checked.
@@ -498,7 +498,7 @@ def get_first_unindent(indent,
     return line_nr
 
 
-# TODO remove these once https://github.com/coala-analyzer/coala/issues/2377
+# TODO remove these once https://github.com/coala/coala/issues/2377
 # gets a fix
 def lt_eq(absolute, source):
     if absolute.line == source.line:
