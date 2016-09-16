@@ -30,11 +30,10 @@ class LineLengthBear(LocalBear):
         :param ignore_length_regex: Lines matching each of the regular
                                     expressions in this list will be ignored.
         '''
-        spacing_helper = SpacingHelper(indent_size)
         ignore_regexes = [re.compile(regex) for regex in ignore_length_regex]
 
         for line_number, line in enumerate(file):
-            line = spacing_helper.replace_tabs_with_spaces(line)
+            line = line.expandtabs(indent_size)
             if len(line) > max_line_length + 1:
                 if any(regex.search(line) for regex in ignore_regexes):
                     continue

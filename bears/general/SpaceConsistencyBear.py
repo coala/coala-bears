@@ -66,8 +66,7 @@ class SpaceConsistencyBear(LocalBear):
 
             if use_spaces:
                 pre_replacement = replacement
-                replacement = spacing_helper.replace_tabs_with_spaces(
-                    replacement)
+                replacement = replacement.expandtabs(indent_size)
                 if replacement != pre_replacement:
                     result_texts.append('Tabs used instead of spaces.')
             else:
