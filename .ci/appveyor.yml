@@ -54,8 +54,6 @@ install:
   - "python -m nltk.downloader punkt"
   - "python -m nltk.downloader maxent_treebank_pos_tagger"
   - "python -m nltk.downloader averaged_perceptron_tagger"
-  # Calling setup.py will download checkstyle automatically so tests may succeed
-  - "%CMD_IN_ENV% python setup.py --help"
 
   - ps: "Install-Product node ''"  # Use latest node v5.x.x
   - "npm config set loglevel warn"
