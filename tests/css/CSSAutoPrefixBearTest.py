@@ -5,7 +5,6 @@ from tests.LocalBearTestHelper import verify_local_bear
 good_file = """
 .example {
     display: -webkit-box;
-    display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
 }
