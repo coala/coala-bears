@@ -1,13 +1,13 @@
 import json
 from collections import OrderedDict
 
+from coala_utils.param_convertion import negate
 from coalib.bearlib import deprecate_settings
 from coalib.bearlib.spacing.SpacingHelper import SpacingHelper
 from coalib.bears.LocalBear import LocalBear
 from coalib.misc.Compatibility import JSONDecodeError
 from coalib.results.Diff import Diff
 from coalib.results.Result import Result
-from coala_utils.param_convertion import negate
 
 
 class JSONFormatBear(LocalBear):
