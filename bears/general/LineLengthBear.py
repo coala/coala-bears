@@ -34,7 +34,7 @@ class LineLengthBear(LocalBear):
         ignore_regexes = [re.compile(regex) for regex in ignore_length_regex]
 
         for line_number, line in enumerate(file):
-            line = spacing_helper.replace_tabs_with_spaces(line)
+            line = line.expandtabs(self.indent_size)
             if len(line) > max_line_length + 1:
                 if any(regex.search(line) for regex in ignore_regexes):
                     continue
