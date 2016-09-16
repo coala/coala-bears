@@ -5,7 +5,7 @@ coala-bears
 
 coala-bears is a Python package containing all the bears that are officially
 supported by coala. It features more than **78 bears** covering
-**54 languages**. Here is a `generated list <https://github.com/coala-analyzer/bear-docs/>`_
+**54 languages**. Here is a `generated list <https://github.com/coala/bear-docs/>`_
 that contains information about each bear, such as the languages it supports and
 what fixes it can apply to your code.
 
@@ -58,7 +58,7 @@ For usage instructions, consult
 
 Be sure to use the latest version of pip, the default pip from Debian doesn't
 support our dependency version number specifiers. You will have to `use a
-virtualenv <https://github.com/coala-analyzer/coala/wiki/FAQ#installation-is-failing-help>`__
+virtualenv <https://github.com/coala/coala/wiki/FAQ#installation-is-failing-help>`__
 in this case.
 
 |PyPI| |Windows| |Linux|
@@ -124,7 +124,7 @@ Usage
 =====
 
 For more information about how to do basic analysis, check out the
-`coala README <https://github.com/coala-analyzer/coala#usage>`__.
+`coala README <https://github.com/coala/coala#usage>`__.
 
 -----
 
@@ -160,13 +160,13 @@ or need some help, feel free to contact us on Gitter or drop a mail at our
 Support
 =======
 
-Feel free to contact us at our `Gitter channel <https://gitter.im/coala-analyzer/coala>`__, we'd be happy to help!
+Feel free to contact us at our `Gitter channel <https://gitter.im/coala/coala>`__, we'd be happy to help!
 
 If you are interested in commercial support, please contact us on the Gitter
 channel as well.
 
 You can also drop an email at our
-`mailing list <https://github.com/coala-analyzer/coala/wiki/Mailing-Lists>`__.
+`mailing list <https://github.com/coala/coala/wiki/Mailing-Lists>`__.
 
 -----
 
@@ -189,15 +189,15 @@ License
 .. |Stable| image:: https://img.shields.io/badge/latest%20stable-0.8.0-green.svg
 .. |PyPI| image:: https://img.shields.io/pypi/v/coala-bears.svg
    :target: https://pypi.python.org/pypi/coala-bears
-.. |Linux| image:: https://img.shields.io/circleci/project/coala-analyzer/coala-bears/master.svg?label=linux%20build
-   :target: https://circleci.com/gh/coala-analyzer/coala-bears
+.. |Linux| image:: https://img.shields.io/circleci/project/coala/coala-bears/master.svg?label=linux%20build
+   :target: https://circleci.com/gh/coala/coala-bears
 .. |Windows| image:: https://img.shields.io/appveyor/ci/coala/coala-bears/master.svg?label=windows%20build
    :target: https://ci.appveyor.com/project/coala/coala-bears/branch/master
 .. |Documentation Status| image:: https://readthedocs.org/projects/coala/badge/?version=latest
    :target: http://coala.rtfd.org/
-.. |codecov.io| image:: https://img.shields.io/codecov/c/github/coala-analyzer/coala-bears/master.svg?label=branch%20coverage
-   :target: https://codecov.io/github/coala-analyzer/coala-bears
+.. |codecov.io| image:: https://img.shields.io/codecov/c/github/coala/coala-bears/master.svg?label=branch%20coverage
+   :target: https://codecov.io/github/coala/coala-bears
 .. |gitter| image:: https://img.shields.io/badge/gitter-join%20chat%20%E2%86%92-brightgreen.svg
-   :target: https://gitter.im/coala-analyzer/coala
-.. |AGPL| image:: https://img.shields.io/github/license/coala-analyzer/coala-bears.svg
+   :target: https://gitter.im/coala/coala
+.. |AGPL| image:: https://img.shields.io/github/license/coala/coala-bears.svg
    :target: https://www.gnu.org/licenses/agpl-3.0.html
