@@ -63,7 +63,7 @@ class GitCommitBearTest(unittest.TestCase):
         self.gitdir = mkdtemp()
         os.chdir(self.gitdir)
         self.run_git_command("init")
-        self.run_git_command("config", "user.email coala@coala-analyzer.io")
+        self.run_git_command("config", "user.email coala@coala.io")
         self.run_git_command("config", "user.name coala")
 
     @staticmethod
