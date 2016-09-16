@@ -80,7 +80,7 @@ class InvalidLinkBearTest(unittest.TestCase):
         https://en.wikipedia.org/wiki/Hello_(Adele_song)/200
 
         # Quotes
-        "https://github.com/coala-analyzer/coala-bears/issues/200"
+        "https://github.com/coala/coala-bears/issues/200"
         'http://httpbin.org/status/203'
         ('http://httpbin.org/status/200').install_command()
 
