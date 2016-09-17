@@ -44,4 +44,4 @@ class DockerfileLintBear:
                     message=issue["message"],
                     file=filename,
                     severity=self.severity_map[issue["level"]],
-                    line=issue["line"])
+                    line=issue.get("line"))
