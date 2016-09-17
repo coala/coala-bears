@@ -3,10 +3,15 @@ from tests.LocalBearTestHelper import verify_local_bear
 
 good_file = """
 FROM ubuntu:14.04
+MAINTAINER coala
+LABEL Name coala-docker
+LABEL Version 0.1
 
 # Install basic tools
 RUN apt-get -y -qq update
 RUN apt-get -y -qq upgrade
+EXPOSE 5432
+CMD ["/bin/bash", "coala"]
 """
 
 
