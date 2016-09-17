@@ -136,14 +136,16 @@ class GitCommitBearTest(unittest.TestCase):
         self.assert_no_msgs()
 
         self.assertEqual(self.run_uut(shortlog_length=17),
-                         ["Shortlog of HEAD commit is 33 character(s) "
-                          "longer than the limit (50 > 17)."])
+                         ["Shortlog of the HEAD commit contains 50 "
+                          "character(s). This is 33 character(s) longer than "
+                          "the limit (50 > 17)."])
         self.assert_no_msgs()
 
         self.git_commit("Add a very long shortlog for a bad project history.")
         self.assertEqual(self.run_uut(),
-                         ["Shortlog of HEAD commit is 1 character(s) longer "
-                          "than the limit (51 > 50)."])
+                         ["Shortlog of the HEAD commit contains 51 "
+                          "character(s). This is 1 character(s) longer than "
+                          "the limit (51 > 50)."])
         self.assert_no_msgs()
 
     def test_shortlog_checks_shortlog_trailing_period(self):
@@ -173,20 +175,20 @@ class GitCommitBearTest(unittest.TestCase):
 
     def test_shortlog_checks_imperative(self):
         self.git_commit("tag: Add shortlog in imperative")
-        self.assertNotIn("Shortlog of HEAD commit isn't imperative mood, "
-                         "bad words are 'Add'",
+        self.assertNotIn("Shortlog of HEAD commit isn't in imperative "
+                         "mood! Bad words are 'added'",
                          self.run_uut())
         self.git_commit("Added invalid shortlog")
-        self.assertIn("Shortlog of HEAD commit isn't imperative mood, "
-                      "bad words are 'Added'",
+        self.assertIn("Shortlog of HEAD commit isn't in imperative "
+                      "mood! Bad words are 'Added'",
                       self.run_uut())
         self.git_commit("Adding another invalid shortlog")
-        self.assertIn("Shortlog of HEAD commit isn't imperative mood, "
-                      "bad words are 'Adding'",
+        self.assertIn("Shortlog of HEAD commit isn't in imperative "
+                      "mood! Bad words are 'Adding'",
                       self.run_uut())
         self.git_commit("Added another invalid shortlog")
-        self.assertNotIn("Shortlog of HEAD commit isn't imperative mood, "
-                         "bad words are 'Added'",
+        self.assertNotIn("Shortlog of HEAD commit isn't in imperative "
+                         "mood! Bad words are 'Added'",
                          self.run_uut(shortlog_imperative_check=False))
 
     def test_shortlog_checks_regex(self):
@@ -239,7 +241,8 @@ class GitCommitBearTest(unittest.TestCase):
         # Miss a newline between shortlog and body.
         self.git_commit("Shortlog\nOops, body too early")
         self.assertEqual(self.run_uut(),
-                         ["No newline between shortlog and body at HEAD."])
+                         ["No newline found between shortlog and body at "
+                          "HEAD commit. Please add one."])
         self.assert_no_msgs()
 
         # And now too long lines.
@@ -248,7 +251,9 @@ class GitCommitBearTest(unittest.TestCase):
                         "This line is by far too long (in this case).\n"
                         "This one too, blablablablablablablablabla.")
         self.assertEqual(self.run_uut(body_line_length=41),
-                         ["Body of HEAD commit contains too long lines."])
+                         ["Body of HEAD commit contains too long lines. "
+                          "Commit body lines should not exceed 41 "
+                          "characters."])
         self.assert_no_msgs()
 
         # Allow long lines with ignore regex
@@ -271,8 +276,9 @@ class GitCommitBearTest(unittest.TestCase):
         # when section does have a project_dir
         self.section.append(Setting("project_dir", escape(self.gitdir, '\\')))
         self.assertEqual(self.run_uut(),
-                         ["Shortlog of HEAD commit is 1 character(s) longer "
-                          "than the limit (51 > 50)."])
+                         ["Shortlog of the HEAD commit contains 51 "
+                          "character(s). This is 1 character(s) longer than "
+                          "the limit (51 > 50)."])
         self.assertEqual(get_config_directory(self.section),
                          self.gitdir)
         os.chdir(self.gitdir)

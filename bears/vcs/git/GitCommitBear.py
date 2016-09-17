@@ -104,9 +104,11 @@ class GitCommitBear(GlobalBear):
         diff = len(shortlog) - shortlog_length
         if diff > 0:
             yield Result(self,
-                         "Shortlog of HEAD commit is {} character(s) longer "
-                         "than the limit ({} > {}).".format(
-                             diff, len(shortlog), shortlog_length))
+                         "Shortlog of the HEAD commit contains {} "
+                         "character(s). This is {} character(s) longer than "
+                         "the limit ({} > {}).".format(
+                              len(shortlog), diff,
+                              len(shortlog), shortlog_length))
 
         if (shortlog[-1] != ".") == shortlog_trailing_period:
             yield Result(self,
@@ -130,8 +132,8 @@ class GitCommitBear(GlobalBear):
             if has_flaws:
                 bad_word = has_flaws[0]
                 yield Result(self,
-                             "Shortlog of HEAD commit isn't imperative mood, "
-                             "bad words are '{}'".format(bad_word))
+                             "Shortlog of HEAD commit isn't in imperative "
+                             "mood! Bad words are '{}'".format(bad_word))
         if shortlog_wip_check:
             if "wip" in shortlog.lower()[:4]:
                 yield Result(
@@ -190,11 +192,14 @@ class GitCommitBear(GlobalBear):
             return
 
         if body[0] != "":
-            yield Result(self, "No newline between shortlog and body at HEAD.")
+            yield Result(self, "No newline found between shortlog and body at "
+                               "HEAD commit. Please add one.")
             return
 
         ignore_regexes = [re.compile(regex) for regex in ignore_length_regex]
         if any((len(line) > body_line_length and
                 not any(regex.search(line) for regex in ignore_regexes))
                for line in body[1:]):
-            yield Result(self, "Body of HEAD commit contains too long lines.")
+            yield Result(self, "Body of HEAD commit contains too long lines. "
+                               "Commit body lines should not exceed {} "
+                               "characters.".format(body_line_length))
