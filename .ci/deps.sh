@@ -41,6 +41,9 @@ echo 'options(repos=structure(c(CRAN="http://cran.rstudio.com")))' >> .Rprofile
 R -e "install.packages('lintr', dependencies=TRUE, quiet=TRUE, verbose=FALSE)"
 R -e "install.packages('formatR', dependencies=TRUE, quiet=TRUE, verbose=FALSE)"
 
+# Rust commands
+curl -sSf https://static.rust-lang.org/rustup.sh | sh
+
 # GO commands
 go get -u github.com/golang/lint/golint
 go get -u golang.org/x/tools/cmd/goimports
@@ -69,7 +72,7 @@ bash .ci/deps.nltk.sh
 python setup.py --help
 
 # Dart Lint commands
-if ! dartanalyzer -v &> /dev/null ; then
+if ! dartanalyzer -v &> /dev/null ; then 
   wget -nc -O ~/dart-sdk.zip https://storage.googleapis.com/dart-archive/channels/stable/release/1.14.2/sdk/dartsdk-linux-x64-release.zip
   unzip -n ~/dart-sdk.zip -d ~/
 fi
