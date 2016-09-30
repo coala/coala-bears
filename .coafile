@@ -23,6 +23,10 @@ default_actions = PEP8Bear: ApplyPatchAction
 bears = LineLengthBear
 ignore_length_regex = ^.*https?://
 
+[CI]
+files = .ci/*
+bears = SpaceConsistencyBear
+
 [commit]
 bears = GitCommitBear
 

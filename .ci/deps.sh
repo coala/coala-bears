@@ -49,7 +49,7 @@ go get -u golang.org/x/tools/cmd/gotype
 go get -u github.com/kisielk/errcheck
 
 # Ruby commands
-bundle install --path=vendor/bundle --binstubs=vendor/bin --jobs=8 --retry=3 
+bundle install --path=vendor/bundle --binstubs=vendor/bin --jobs=8 --retry=3
 
 for dep_version in "${dep_versions[@]}" ; do
   pyenv install -ks $dep_version
@@ -88,20 +88,20 @@ sudo luarocks install luacheck --deps-mode=none
 
 # Infer commands
 if [ ! -e ~/infer-linux64-v0.7.0/infer/bin ]; then
-	wget -nc -O ~/infer.tar.xz https://github.com/facebook/infer/releases/download/v0.7.0/infer-linux64-v0.7.0.tar.xz
-	tar xf ~/infer.tar.xz -C ~/
-	cd ~/infer-linux64-v0.7.0
-	opam init --y
-	opam update
-	opam pin add --yes --no-action infer .
-	opam install --deps-only --yes infer
-	./build-infer.sh java
+  wget -nc -O ~/infer.tar.xz https://github.com/facebook/infer/releases/download/v0.7.0/infer-linux64-v0.7.0.tar.xz
+  tar xf ~/infer.tar.xz -C ~/
+  cd ~/infer-linux64-v0.7.0
+  opam init --y
+  opam update
+  opam pin add --yes --no-action infer .
+  opam install --deps-only --yes infer
+  ./build-infer.sh java
 fi
 
 # PMD commands
 if [ ! -e ~/pmd-bin-5.4.1/bin ]; then
-	wget -nc -O ~/pmd.zip https://github.com/pmd/pmd/releases/download/pmd_releases%2F5.4.1/pmd-bin-5.4.1.zip
-	unzip ~/pmd.zip -d ~/
+  wget -nc -O ~/pmd.zip https://github.com/pmd/pmd/releases/download/pmd_releases%2F5.4.1/pmd-bin-5.4.1.zip
+  unzip ~/pmd.zip -d ~/
 fi
 
 # Tailor (Swift) commands
