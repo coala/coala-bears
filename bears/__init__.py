@@ -1,3 +1,9 @@
+"""
+coala-bears is a Python package containing all
+the bears that are officially supported by coala.
+"""
+
+
 import os
 import sys
 
