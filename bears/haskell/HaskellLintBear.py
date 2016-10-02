@@ -3,8 +3,8 @@ import json
 from coalib.bearlib.abstractions.Linter import linter
 from coalib.bears.requirements.DistributionRequirement import (
     DistributionRequirement)
-from coalib.results.Result import Result
 from coalib.results.Diff import Diff
+from coalib.results.Result import Result
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
