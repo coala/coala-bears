@@ -6,7 +6,6 @@ from contextlib import contextmanager
 import pytest
 
 from tests.BearTestHelper import generate_skip_decorator
-from coalib.bearlib.abstractions.Lint import Lint
 from coalib.bears.LocalBear import LocalBear
 from coalib.misc.ContextManagers import prepare_file
 from coalib.settings.Section import Section
@@ -21,15 +20,6 @@ def execute_bear(bear, *args, **kwargs):
             "Bear returned None on execution\n"
         yield bear_output_generator
     except Exception as err:
-        if isinstance(bear, Lint):  # Give extra debug info for Lint.
-            if hasattr(bear, 'command'):
-                bear.debug("Command:", bear.command)
-            if (hasattr(bear, 'stdout_output') and
-                    isinstance(bear.stdout_output, collections.Iterable)):
-                bear.debug("Stdout:\n", "".join(bear.stdout_output))
-            if (hasattr(bear, 'stderr_output') and
-                    isinstance(bear.stderr_output, collections.Iterable)):
-                bear.debug("Stderr:\n", "".join(bear.stderr_output))
         msg = []
         while not bear.message_queue.empty():
             msg.append(bear.message_queue.get().message)

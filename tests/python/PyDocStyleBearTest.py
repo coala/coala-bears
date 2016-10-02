@@ -33,7 +33,7 @@ PyDocStyleBearIgnoreAllTest = verify_local_bear(
     PyDocStyleBear,
     valid_files=(good_file, bad_file,),
     invalid_files=(),
-    settings={'pydocstyle_ignore': 'D400, D200, D103'},
+    settings={'pydocstyle_ignore': 'D400, D200, D103, D212'},
     tempfile_kwargs={"suffix": ".py"})
 
 # Checks if an invalid file yields results when only some errors are ignored.
