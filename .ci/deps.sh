@@ -12,9 +12,10 @@ esac
 sudo add-apt-repository -y ppa:marutter/rdev
 sudo add-apt-repository -y ppa:staticfloat/juliareleases
 sudo add-apt-repository -y ppa:staticfloat/julia-deps
+sudo add-apt-repository -y ppa:ondrej/golang
 sudo add-apt-repository -y ppa:avsm/ppa
 sudo apt-get -y update
-deps="espeak libclang1-3.4 indent mono-mcs chktex hlint r-base julia luarocks verilator cppcheck flawfinder"
+deps="espeak libclang1-3.4 indent mono-mcs chktex hlint r-base julia golang luarocks verilator cppcheck flawfinder"
 deps_python_dbus="libdbus-glib-1-dev libdbus-1-dev"
 deps_python_gi="glib2.0-dev gobject-introspection libgirepository1.0-dev python3-cairo-dev"
 deps_perl="perl libperl-critic-perl"
@@ -42,6 +43,8 @@ R -e "install.packages('lintr', dependencies=TRUE, quiet=TRUE, verbose=FALSE)"
 R -e "install.packages('formatR', dependencies=TRUE, quiet=TRUE, verbose=FALSE)"
 
 # GO commands
+sudo mv /usr/local/go/bin/go /usr/local/go/bin/circleci-go
+
 go get -u github.com/golang/lint/golint
 go get -u golang.org/x/tools/cmd/goimports
 go get -u sourcegraph.com/sqs/goreturns
