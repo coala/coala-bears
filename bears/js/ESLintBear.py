@@ -18,7 +18,7 @@ class ESLintBear:
     """
 
     LANGUAGES = {"JavaScript", "JSX"}
-    REQUIREMENTS = {NpmRequirement('eslint', '3')}
+    REQUIREMENTS = {NpmRequirement('eslint', '2')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
