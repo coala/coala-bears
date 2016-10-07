@@ -4,3 +4,4 @@ multiline_comment_delimiters = /* : */
 comment_delimiter = //, \#
 indent_types = { : }, < : >, :
 encapsulators = ( : ), [ : ]
+indent_keywords = if,while,for
