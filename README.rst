@@ -108,7 +108,7 @@ To see what coala can do for your language, run:
 +----------------------------+----------------------------+----------------------------+
 | Julia                      | sh & bash scripts          |                            |
 +----------------------------+----------------------------+----------------------------+
-
+ 
 The number of bears grows every day! If you want to see any particular
 functionality be sure to submit an issue, but please read the `Getting Involved`_
 section before doing so.
