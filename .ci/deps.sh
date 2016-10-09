@@ -9,17 +9,48 @@ case $CIRCLE_NODE_INDEX in
 esac
 
 # apt-get commands
-sudo add-apt-repository -y ppa:marutter/rdev
-sudo add-apt-repository -y ppa:staticfloat/juliareleases
-sudo add-apt-repository -y ppa:staticfloat/julia-deps
-sudo add-apt-repository -y ppa:ondrej/golang
-sudo add-apt-repository -y ppa:avsm/ppa
-sudo apt-get -y update
+export DEBIAN_FRONTEND=noninteractive
+
 deps="espeak libclang1-3.4 indent mono-mcs chktex hlint r-base julia golang luarocks verilator cppcheck flawfinder"
+
+case $CIRCLE_BUILD_IMAGE in
+  "ubuntu-12.04")
+    USE_PPAS="true"
+    # The Circle provided Go is too old
+    sudo mv /usr/local/go /usr/local/circleci-go
+    ;;
+  "ubuntu-14.04")
+    # Use xenial, needed to replace outdated julia provided by Circle CI
+    ADD_APT_UBUNTU_RELEASE=xenial
+    # Work around lack of systemd on trusty, which xenial's lxc-common expects
+    echo '#!/bin/sh' | sudo tee /usr/bin/systemd-detect-virt > /dev/null
+    sudo chmod a+x /usr/bin/systemd-detect-virt
+
+    # The non-apt go provided by Circle CI is acceptable
+    deps=${deps/golang/}
+    # Add libxml2-utils
+    deps="$deps libxml2-utils"
+    ;;
+esac
+
+if [ -n "$ADD_APT_UBUNTU_RELEASE" ]; then
+  echo "deb http://archive.ubuntu.com/ubuntu/ $ADD_APT_UBUNTU_RELEASE main universe" | sudo tee -a /etc/apt/sources.list.d/$ADD_APT_UBUNTU_RELEASE.list > /dev/null
+fi
+
+if [ "$USE_PPAS" = "true" ]; then
+  sudo add-apt-repository -y ppa:marutter/rdev
+  sudo add-apt-repository -y ppa:staticfloat/juliareleases
+  sudo add-apt-repository -y ppa:staticfloat/julia-deps
+  sudo add-apt-repository -y ppa:ondrej/golang
+  sudo add-apt-repository -y ppa:avsm/ppa
+fi
+
 deps_python_dbus="libdbus-glib-1-dev libdbus-1-dev"
 deps_python_gi="glib2.0-dev gobject-introspection libgirepository1.0-dev python3-cairo-dev"
 deps_perl="perl libperl-critic-perl"
 deps_infer="m4 opam"
+
+sudo apt-get -y update
 sudo apt-get -y --no-install-recommends install $deps $deps_python_gi $deps_python_dbus $deps_perl $deps_infer
 
 # Change environment for flawfinder from python to python2
@@ -43,8 +74,6 @@ R -e "install.packages('lintr', dependencies=TRUE, quiet=TRUE, verbose=FALSE)"
 R -e "install.packages('formatR', dependencies=TRUE, quiet=TRUE, verbose=FALSE)"
 
 # GO commands
-sudo mv /usr/local/go/bin/go /usr/local/go/bin/circleci-go
-
 go get -u github.com/golang/lint/golint
 go get -u golang.org/x/tools/cmd/goimports
 go get -u sourcegraph.com/sqs/goreturns
