@@ -18,8 +18,8 @@ void f1(struct fred_t *p)
 
 bad_file = """
 #define f(c) { \
-    char *p = new char[10];  \
-    p[c] = 42; \
+    char s[10]; \
+    s[c] = 42; \
 }
 int main() {
     f(100);
