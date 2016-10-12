@@ -3,6 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+Test change
+
 .. meta::
    :description: coala is a simple COde AnaLysis Application. Its goal is
                  to make static code analysis easy while remaining completely
