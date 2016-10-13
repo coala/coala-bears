@@ -23,6 +23,7 @@ class YapfBear(LocalBear):
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
     CAN_FIX = {'Formatting'}
+    ASCIINEMA_URL = 'https://asciinema.org/a/89021'
 
     @deprecate_settings(indent_size='tab_width')
     def run(self, filename, file,
