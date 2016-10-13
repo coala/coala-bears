@@ -78,6 +78,8 @@ To see what coala can do for your language, run:
 +----------------------------+----------------------------+----------------------------+
 |                        Languages coala provides algorithms for                       |
 +============================+============================+============================+
+| C                          | Latex                      | SQL                        |
++----------------------------+----------------------------+----------------------------+
 | C++                        | Lua                        | TypeScript                 |
 +----------------------------+----------------------------+----------------------------+
 | C#                         | Markdown                   | VHDL                       |
@@ -106,9 +108,7 @@ To see what coala can do for your language, run:
 +----------------------------+----------------------------+----------------------------+
 | Julia                      | sh & bash scripts          |                            |
 +----------------------------+----------------------------+----------------------------+
-| Latex                      | SQL                        |                            |
-+----------------------------+----------------------------+----------------------------+
-
+ 
 The number of bears grows every day! If you want to see any particular
 functionality be sure to submit an issue, but please read the `Getting Involved`_
 section before doing so.
