@@ -43,8 +43,8 @@ class InvalidLinkBear(LocalBear):
     def find_links_in_file(file, timeout, link_ignore_regex):
         link_ignore_regex = re.compile(link_ignore_regex)
         regex = re.compile(
-            r'((ftp|http)s?://[^.:\s_/?#[\]@\\]+\.(?:[^\s()\'"<>|\\]+|'
-            r'\([^\s()\'"<>|\\]*\))*)(?<!\.)(?<!,)')
+            r'((ftp|http)s?://[^.:\s_/?#[\]@\\]+\.(?:[^\s()\'"`<>|\\]+|'
+            r'\([^\s()\'"`<>|\\]*\))*)(?<!\.)(?<!,)')
         for line_number, line in enumerate(file):
             match = regex.search(line)
             if match:

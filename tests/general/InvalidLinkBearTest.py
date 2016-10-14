@@ -83,6 +83,7 @@ class InvalidLinkBearTest(unittest.TestCase):
         "https://github.com/coala/coala-bears/issues/200"
         'http://httpbin.org/status/203'
         ('http://httpbin.org/status/200').install_command()
+        `https://coala.io/200`
 
         # Markup/down stuff
         <http://httpbin.org/status/202>
