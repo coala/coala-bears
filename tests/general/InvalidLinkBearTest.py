@@ -51,6 +51,14 @@ def custom_matcher(request):
 
 class InvalidLinkBearTest(unittest.TestCase):
 
+    """
+    The tests are mocked (don't actually connect to internet) and
+    return the int conversion of the last three chars of
+    the URL as status code.
+
+    Check ``custom matcher`` for more info on implementation.
+    """
+
     def setUp(self):
         self.section = Section("")
 
