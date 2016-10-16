@@ -10,7 +10,7 @@ class SpellCheckBear:
     """
     Lints files to check for incorrect spellings using ``scspell``.
 
-    See <https://pypi.python.org/pypi/scspell> for more information.
+    See <https://pypi.python.org/pypi/scspell3k> for more information.
     """
     LANGUAGES = {"Natural Language"}
     REQUIREMENTS = {PipRequirement('scspell3k', '2.0')}
