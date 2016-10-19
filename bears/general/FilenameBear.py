@@ -4,7 +4,7 @@ from coalib.bears.LocalBear import LocalBear
 from coalib.results.Diff import Diff
 from coalib.results.Result import Result
 from coalib.bearlib.naming_conventions import (
-    to_camelcase, to_pascalcase, to_snakecase)
+    to_camelcase, to_pascalcase, to_snakecase, to_spacecase)
 
 
 class FilenameBear(LocalBear):
@@ -15,7 +15,8 @@ class FilenameBear(LocalBear):
 
     _naming_convention = {"camel": to_camelcase,
                           "pascal": to_pascalcase,
-                          "snake": to_snakecase}
+                          "snake": to_snakecase,
+                          "space": to_spacecase}
 
     def run(self, filename, file,
             file_naming_convention: str="snake",
@@ -28,6 +29,7 @@ class FilenameBear(LocalBear):
             - ``camel`` (``thisIsCamelCase``)
             - ``pascal`` (``ThisIsPascalCase``)
             - ``snake`` (``this_is_snake_case``)
+            - ``space`` (``This Is Space Case``)
         :param ignore_uppercase_filenames:
             Whether or not to ignore fully uppercase filenames completely,
             e.g. COPYING, LICENSE etc.

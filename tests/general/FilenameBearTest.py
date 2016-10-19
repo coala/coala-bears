@@ -45,6 +45,16 @@ class SpaceConsistencyBearTest(LocalBearTestHelper):
         self.check_validity(self.uut, [""], filename="XYZ/__Init__.py")
         self.check_validity(self.uut, [""], filename="/a/PascalCase")
 
+    def test_space_case(self):
+        self.section["file_naming_convention"] = "space"
+        self.check_validity(self.uut, [""], filename="/Home/xyz/x_y.py",
+                            valid=False)
+        self.check_validity(self.uut, [""], filename="XYZ/__Init__.py",
+                            valid=False)
+        self.check_validity(self.uut, [""], filename="/a/camCase",
+                            valid=False)
+        self.check_validity(self.uut, [""], filename="/a/Space Case")
+
     def test_ignore_upper(self):
         self.check_validity(self.uut, [""], filename='/LICENSE')
 
