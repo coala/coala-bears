@@ -10,6 +10,13 @@ known_checkstyles = {
     "geosoft": "http://geosoft.no/development/geosoft_checks.xml"}
 
 
+def check_invalid_configuration(checkstyle_configs, use_spaces, indent_size):
+    if (checkstyle_configs is 'google' and
+            (not use_spaces or indent_size != 2)):
+        raise ValueError('Google checkstyle config does not support '
+                         'use_spaces=False or indent_size != 2')
+
+
 def known_checkstyle_or_path(setting):
     if str(setting) in known_checkstyles.keys():
         return str(setting)
@@ -44,7 +51,8 @@ class CheckstyleBear:
 
     def create_arguments(
             self, filename, file, config_file,
-            checkstyle_configs: known_checkstyle_or_path="google"):
+            checkstyle_configs: known_checkstyle_or_path="google",
+            use_spaces: bool=True, indent_size: int=2):
         """
         :param checkstyle_configs:
             A file containing configs to use in ``checkstyle``. It can also
@@ -64,6 +72,9 @@ class CheckstyleBear:
             - geosoft - The Java style followed by GeoSoft. More info at
               <http://geosoft.no/development/javastyle.html>
         """
+        check_invalid_configuration(
+            checkstyle_configs, use_spaces, indent_size)
+
         if checkstyle_configs in known_checkstyles:
             checkstyle_configs = self.download_cached_file(
                 known_checkstyles[checkstyle_configs],
