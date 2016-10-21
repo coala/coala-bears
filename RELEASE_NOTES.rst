@@ -175,8 +175,8 @@ are added for existing bears.
 
 New bears:
 -  ``AutoPrefixBear`` (Add vendor prefixes automatically in CSS)
--  ``ClangComplexityBear`` (Calculates cyclomatic complexity of each function
-    for C, C++ and other Clang supported languages.)
+-  ``ClangComplexityBear`` (Calculates cyclomatic complexity of each function for C,
+   C++ and other Clang supported languages.)
 -  ``GoTypeBear`` (Static analysis for Go code)
 -  ``PMDBear`` (Static analysis for Java code)
 -  ``CPDBear`` (Checks for code duplication in a file/multiple files)
@@ -217,13 +217,14 @@ Bugfixes:
    ``stderr``.
    (https://github.com/coala-analyzer/coala-bears/issues/251)
 
+
 coala-bears 0.1.0 beta
 =======================
 
 coala-bears is a Python package containing all the bears that are used by coala.
 It has been split from `coala <https://github.com/coala-analyzer/coala>`_.
 With the initial release, it features 56 bears covering 32 languages.
-You can see all of them `here <https://gist.github.com/Adrianzatreanu/cf2d0c8b2ecd542a4860>`_
+You can see all the `changes here <https://gist.github.com/Adrianzatreanu/cf2d0c8b2ecd542a4860>`_
 with a brief description each.
 
 coala-bears has bears for famous languages, such as:
