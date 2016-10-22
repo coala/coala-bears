@@ -174,6 +174,7 @@ In this release, coala-bears has been revamped with new bears and more configs
 are added for existing bears.
 
 New bears:
+
 -  ``AutoPrefixBear`` (Add vendor prefixes automatically in CSS)
 -  ``ClangComplexityBear`` (Calculates cyclomatic complexity of each function
    for C, C++ and other Clang supported languages.)
