@@ -107,6 +107,9 @@ class InvalidLinkBearTest(unittest.TestCase):
 
         # Not a link
         http://not a link dot com
+        http://www.%s.com
+        http://www.%d.com
+        http://www.%f.com
 
         # Redirect
         http://httpbin.org/status/301
@@ -119,7 +122,8 @@ class InvalidLinkBearTest(unittest.TestCase):
         http://httpbin.org/status/404
         http://httpbin.org/status/410
         http://httpbin.org/status/500
-        http://httpbin.org/status/503"""
+        http://httpbin.org/status/503
+        http://www.google.com/hello%20world"""
 
         for line in invalid_file.splitlines():
             self.assertResult(invalid_file=[line])
