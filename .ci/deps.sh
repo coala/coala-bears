@@ -1,6 +1,15 @@
 set -e
 set -x
 
+# Trim spaces
+
+trimSpaces() {
+  local s2 s="$*"
+  until s2="${s#[   ]}"; [ "$s2" = "$s" ]; do s="$s2"; done
+  until s2="${s%[   ]}"; [ "$s2" = "$s" ]; do s="$s2"; done
+  echo "$s"
+  }
+
 # Choose the python versions to install deps for
 case $CIRCLE_NODE_INDEX in
  0) dep_versions=( "3.4.3" "3.5.1" ) ;;
@@ -138,7 +147,7 @@ if [ ! -e ~/pmd-bin-5.4.1/bin ]; then
 fi
 
 # Tailor (Swift) commands
-curl -fsSL https://tailor.sh/install.sh | sed 's/read -r CONTINUE < \/dev\/tty/CONTINUE=y/' > install.sh
+trimSpaces "curl -fsSL https://tailor.sh/install.sh" | sed 's/read -r CONTINUE < \/dev\/tty/CONTINUE=y/' > install.sh
 sudo bash install.sh
 
 # making coala cache the dependencies downloaded upon first run
