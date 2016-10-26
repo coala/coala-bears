@@ -83,5 +83,5 @@ class YapfBearTest(LocalBearTestHelper):
                              '    a,\n',
                              '    lambda xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
                              'xxxxxxxxxxxxxx: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-                             'xxxxxxxxxxxxxxxxxxx + 222222222)\n'],
+                             'xxxxxxxxxxxxxxxxxxx + 222222222\n', ')\n'],
                             valid=True)
