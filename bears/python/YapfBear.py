@@ -178,7 +178,7 @@ space_between_ending_comma_and_closing_bracket= \
 
     @classmethod
     def check_prerequisites(cls):  # pragma: no cover
-        if not sys.version_info >= (3, 4):
+        if sys.version_info < (3, 4):
             return 'Yapf only supports Python 2.7 and Python 3.4+'
         else:
             return True
