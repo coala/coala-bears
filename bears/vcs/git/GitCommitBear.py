@@ -121,7 +121,8 @@ class GitCommitBear(GlobalBear):
             if not match:
                 yield Result(
                     self,
-                    "Shortlog of HEAD commit does not match given regex.")
+                    "Shortlog of HEAD commit does not match given regex:"
+                    " {regex}".format(regex=shortlog_regex))
 
         if shortlog_imperative_check:
             colon_pos = shortlog.find(':')

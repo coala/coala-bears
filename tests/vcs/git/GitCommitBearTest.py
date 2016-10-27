@@ -200,13 +200,14 @@ class GitCommitBearTest(unittest.TestCase):
         self.git_commit("tag: message invalid.")
         self.assertEqual(
             self.run_uut(shortlog_regex=pattern),
-            ["Shortlog of HEAD commit does not match given regex."])
+            ["Shortlog of HEAD commit does not match given regex: {regex}"
+             .format(regex=pattern)])
 
         self.git_commit("SuCkS cOmPleTely")
         self.assertEqual(
             self.run_uut(shortlog_regex=pattern),
-            ["Shortlog of HEAD commit does not match given regex."])
-
+            ["Shortlog of HEAD commit does not match given regex: {regex}"
+             .format(regex=pattern)])
         # Check for full-matching.
         pattern = "abcdefg"
 
@@ -216,7 +217,8 @@ class GitCommitBearTest(unittest.TestCase):
         self.git_commit("abcdefgNO MATCH")
         self.assertEqual(
             self.run_uut(shortlog_regex=pattern),
-            ["Shortlog of HEAD commit does not match given regex."])
+            ["Shortlog of HEAD commit does not match given regex: {regex}"
+             .format(regex=pattern)])
 
     def test_body_checks(self):
         self.git_commit(
