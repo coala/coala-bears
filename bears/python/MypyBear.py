@@ -100,6 +100,7 @@ class MypyBear:
     REQUIREMENTS = {PipRequirement('mypy-lang', '0.*')}
     AUTHORS_EMAILS = {'encukou@gmail.com'}
     LICENSE = 'AGPL-3.0'
+    ASCIINEMA_URL = 'https://asciinema.org/a/90736'
 
     # This detects typing errors, which is pretty unique -- it doesn't
     # make sense to add a category for it.
