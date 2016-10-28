@@ -12,9 +12,9 @@ int main() {
 """
 
 CPPLintBearTest = verify_local_bear(CPPLintBear,
-        valid_files=(),
-        invalid_files=(test_file,),
-        tempfile_kwargs={"suffix": ".cpp"})
+                                    valid_files=(),
+                                    invalid_files=(test_file,),
+                                    tempfile_kwargs={"suffix": ".cpp"})
 
 CPPLintBearIgnoreConfigTest = verify_local_bear(
         CPPLintBear,
@@ -28,8 +28,9 @@ CPPLintBearLineLengthConfigTest = verify_local_bear(
         valid_files=(),
         invalid_files=(test_file,),
         settings={'cpplint_ignore': 'legal',
-            'max_line_length': '13'},
+                  'max_line_length': '13'},
         tempfile_kwargs={"suffix": ".cpp"})
+
 
 @generate_skip_decorator(CPPLintBear)
 class CPPLintBearTest(LocalBearTestHelper):
