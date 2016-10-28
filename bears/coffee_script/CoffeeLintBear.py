@@ -5,7 +5,7 @@ from coalib.bearlib.abstractions.Linter import linter
 from coalib.bears.requirements.NpmRequirement import NpmRequirement
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.results.Result import Result
-from coala_utils.param_convertion import negate
+from coala_utils.param_conversion import negate
 
 
 @linter(executable='coffeelint',

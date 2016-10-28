@@ -5,7 +5,7 @@ from coalib.bearlib.abstractions.Linter import linter
 from coalib.bears.requirements.GemRequirement import GemRequirement
 from coalib.results.Result import Result
 from coalib.results.SourceRange import SourceRange
-from coala_utils.param_convertion import negate
+from coala_utils.param_conversion import negate
 
 
 @linter(executable='reek', use_stdin=True)
