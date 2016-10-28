@@ -19,5 +19,16 @@ class DartLintBear:
     CAN_DETECT = {'Syntax', 'Formatting'}
 
     @staticmethod
-    def create_arguments(filename, file, config_file):
+    def create_arguments(
+            filename, file, config_file,
+            use_spaces: bool=True, indent_size: int=2):
+
+        # use_spaces must be True and indent_size must be 2 because
+        # dartanalyzer only supports these settings
+        # see https://github.com/dart-lang/dart_style/issues/261
+        if (indent_size != 2 or not use_spaces):
+            raise ValueError(
+                "DartLintBear only supports `use_spaces=True` "
+                "and `indent_size=2`"
+            )
         return filename,
