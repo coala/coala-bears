@@ -2,7 +2,7 @@ from shutil import which
 
 from coalib.bearlib.abstractions.Linter import linter
 from coalib.bearlib import deprecate_settings
-from coala_utils.param_convertion import negate
+from coala_utils.param_conversion import negate
 
 
 @linter("bash", output_format="regex",

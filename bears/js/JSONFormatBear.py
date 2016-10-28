@@ -1,7 +1,7 @@
 import json
 from collections import OrderedDict
 
-from coala_utils.param_convertion import negate
+from coala_utils.param_conversion import negate
 from coalib.bearlib import deprecate_settings
 from coalib.bearlib.spacing.SpacingHelper import SpacingHelper
 from coalib.bears.LocalBear import LocalBear

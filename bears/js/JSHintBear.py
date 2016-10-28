@@ -3,7 +3,7 @@ import json
 from coalib.bearlib import deprecate_settings
 from coalib.bearlib.abstractions.Linter import linter
 from coalib.bears.requirements.NpmRequirement import NpmRequirement
-from coala_utils.param_convertion import negate
+from coala_utils.param_conversion import negate
 
 
 def bool_or_str(value):
