@@ -112,6 +112,8 @@ class PHPCodeSnifferBear:
         configs = '''<?xml version="1.0"?>
 <ruleset name="Custom Standard">
  <description>A custom coding standard</description>
+ <!-- Include the whole PSR-1 standard -->
+ <rule ref="PSR1"/>
  <rule ref="Generic.Files.LineLength">
   <properties>
    <property name="lineLimit" value="{max_line_length}"/>
