@@ -128,15 +128,6 @@ For more information about how to do basic analysis, check out the
 
 -----
 
-=======
-Authors
-=======
-
-coala-bears is maintained by a growing community. Please take a look at the
-meta information in `setup.py <setup.py>`__ for current maintainers.
-
------
-
 ================
 Getting Involved
 ================
