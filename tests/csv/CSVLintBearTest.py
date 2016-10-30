@@ -1,4 +1,4 @@
-from bears.csv.CsvLintBear import CsvLintBear
+from bears.csv.CSVLintBear import CSVLintBear
 from tests.LocalBearTestHelper import verify_local_bear
 
 good_file = """
@@ -17,6 +17,6 @@ id,first_name,last_name,email,gender,ip_address
 """
 
 
-CsvLintBearTest = verify_local_bear(CsvLintBear,
+CSVLintBearTest = verify_local_bear(CSVLintBear,
                                     valid_files=(good_file,),
                                     invalid_files=(bad_file,))

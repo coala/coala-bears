@@ -6,12 +6,12 @@ from coalib.bearlib.abstractions.Linter import linter
         output_regex=r'\d\. (?P<message>.+)\. Row:'
                      r' (?P<row>\d+)\. (?P<information>.+)',
         result_message='This ``csv`` file is invalid.')
-class CsvLintBear:
+class CSVLintBear:
     """
-    Verifies using ``csvlint`` if ``.csv`` files are valid csv or not.
+    Verifies using ``csvlint`` if ``.csv`` files are valid CSV or not.
     """
 
-    LANGUAGES = {"csv"}
+    LANGUAGES = {"CSV"}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
