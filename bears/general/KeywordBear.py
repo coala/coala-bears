@@ -78,14 +78,14 @@ class KeywordBear(LocalBear):
     def run(self,
             filename,
             file,
-            keywords: list,
+            keywords: list=["todo", "fixme"],
             dependency_results: dict=None):
         '''
         Checks the code files for given keywords.
 
         :param keywords:
             A list of keywords to search for (case insensitive).
-            Usual examples are TODO and FIXME.
+            Default are TODO and FIXME.
         '''
         keywords_regex = re.compile(
             '(' + '|'.join(re.escape(key) for key in keywords) + ')',
