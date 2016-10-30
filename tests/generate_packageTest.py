@@ -55,6 +55,7 @@ class CreateFileStructureForPackagesTest(unittest.TestCase):
 
     def tearDown(self):
         shutil.rmtree('folder')
+        os.remove('TestFile.py')
 
 
 class CreateUploadParserTest(unittest.TestCase):
