@@ -3,9 +3,8 @@ from coalib.bearlib.abstractions.Linter import linter
 
 @linter(executable='csvlint',
         output_format='regex',
-        output_regex=r'\d\. (?P<message>.+)\. Row:'
-                     r' (?P<row>\d+)\. (?P<information>.+)',
-        result_message='This ``csv`` file is invalid.')
+        output_regex=r'\d\. (?P<message>.+(s|g|e|w|d)\.*)'
+                     r'( |$)(?P<additional_info>.*)')
 class CSVLintBear:
     """
     Verifies using ``csvlint`` if ``.csv`` files are valid CSV or not.
