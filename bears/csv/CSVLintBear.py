@@ -1,4 +1,5 @@
 from coalib.bearlib.abstractions.Linter import linter
+from coalib.bears.requirements.GemRequirement import GemRequirement
 
 
 @linter(executable='csvlint',
@@ -11,6 +12,7 @@ class CSVLintBear:
     """
 
     LANGUAGES = {"CSV"}
+    REQUIREMENTS = {GemRequirement('csvlint')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
