@@ -1,3 +1,5 @@
+import re
+
 from isort import SortImports
 
 from coalib.bearlib import deprecate_settings
@@ -182,7 +184,33 @@ class PyImportSortBear(LocalBear):
 
         if new_file != tuple(file):
             diff = Diff.from_string_arrays(file, new_file)
+            all_imports = []
+            for line_nr in range(diff.range(filename).start.line,
+                                 diff.range(filename).end.line + 1):
+                if diff._get_change(line_nr).change:
+                    line_diff = diff._get_change(line_nr).change[0]
+                    list_of_imports = re.split(', *', line_diff.rstrip())
+                    if 'import' in list_of_imports[0]:
+                        list_of_imports[0] = list_of_imports[0][
+                            list_of_imports[0].find('import') + 7:]
+                        list_of_imports.sort()
+                        string_of_imports = ', '.join(list_of_imports)
+                        all_imports.append(string_of_imports)
+
+                elif diff._get_change(line_nr).delete:
+                    line_diff = diff.original[line_nr - 1]
+                    list_of_imports = re.split(', *', line_diff.rstrip())
+                    if 'import' in list_of_imports[0]:
+                        list_of_imports[0] = list_of_imports[0][
+                            list_of_imports[0].find('import') + 7:]
+                        string_of_imports = ', '.join(list_of_imports)
+                        all_imports.append(string_of_imports)
+                        all_imports.sort()
+                    else:
+                        all_imports.append('')
+
             yield Result(self,
-                         "Imports can be sorted.",
+                         "Imports " + ' '.join(all_imports) +
+                         " are sorted incorrectly.",
                          affected_code=diff.affected_code(filename),
                          diffs={filename: diff})
