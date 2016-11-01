@@ -2,7 +2,6 @@ from coalib.bearlib.abstractions.Linter import linter
 from coalib.bears.requirements.DistributionRequirement import (
     DistributionRequirement)
 
-
 @linter(executable='mcs',
         use_stdout=False,
         use_stderr=True,
@@ -14,7 +13,7 @@ class CSharpLintBear:
     Checks C# code for syntactical correctness using the ``mcs`` compiler.
     """
 
-    LANGUAGES = {"C#"}
+    LANGUAGE = {"C#"}
     REQUIREMENTS = {DistributionRequirement(apt_get='mono-mcs')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
