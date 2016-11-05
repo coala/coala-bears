@@ -18,6 +18,32 @@ items:
 ...
 """
 
+no_start_yml_file = """receipt: Oz-Ware Purchase Invoice
+date: 2012-08-06
+customer:
+    first_name: Dorothy
+    family_name: Gale
+
+items:
+    - part_no: A4786
+      descrip: Water Bucket (Filled)
+      price: 1.47
+      quantity: 4"""
+
+with_start_yml_file = """---
+receipt: Oz-Ware Purchase Invoice
+date: 2012-08-06
+customer:
+    first_name: Dorothy
+    family_name: Gale
+
+items:
+    - part_no: A4786
+      descrip: Water Bucket (Filled)
+      price: 1.47
+      quantity: 4
+..."""
+
 config_file = """
 extends:
     default
@@ -42,3 +68,13 @@ with prepare_file(config_file,
                                           invalid_files=(),
                                           settings={
                                               'yamllint_config': conf_file})
+
+YAMLLintBear3Test = verify_local_bear(YAMLLintBear,
+                                      valid_files=(no_start_yml_file,),
+                                      invalid_files=(with_start_yml_file,))
+
+YAMLLintBear4Test = verify_local_bear(YAMLLintBear,
+                                      valid_files=(with_start_yml_file,),
+                                      invalid_files=(no_start_yml_file,),
+                                      settings={
+                                          'document_start': True})

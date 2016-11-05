@@ -1,5 +1,6 @@
 from coalib.bearlib.abstractions.Linter import linter
 from coalib.bears.requirements.PipRequirement import PipRequirement
+import yaml
 
 
 @linter(executable='yamllint',
@@ -22,6 +23,27 @@ class YAMLLintBear:
     CAN_DETECT = {'Syntax', 'Formatting'}
 
     @staticmethod
+    def generate_config(filename, file,
+                        document_start: bool=False):
+        """
+        :param document_start:
+            Use this rule to require or forbid the use of document start
+            marker (---).
+        """
+        yamllint_configs = {
+            'extends': 'default',
+            'rules': {
+                'document-start': {
+                    'present': False
+                 }
+            }
+        }
+        if document_start:
+            yamllint_configs['rules']['document-start']['present'] = True
+
+        return yaml.dump(yamllint_configs)
+
+    @staticmethod
     def create_arguments(filename, file, config_file, yamllint_config: str=''):
         """
         :param yamllint_config: Path to a custom configuration file.
@@ -29,4 +51,6 @@ class YAMLLintBear:
         args = ('-f', 'parsable', filename)
         if yamllint_config:
             args += ('--config=' + yamllint_config,)
+        else:
+            args += ('--config-file=' + config_file,)
         return args
