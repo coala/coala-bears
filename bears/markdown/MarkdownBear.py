@@ -23,23 +23,22 @@ class MarkdownBear:
     LICENSE = 'AGPL-3.0'
     CAN_FIX = {'Formatting'}
 
-    @staticmethod
-    def create_arguments(filename, file, config_file,
-                         markdown_bullets: str='-',
-                         markdown_closed_headings: bool=False,
-                         markdown_setext_headings: bool=False,
-                         markdown_emphasis: str='*',
-                         markdown_strong: str='*',
-                         markdown_encode_entities: bool=False,
-                         markdown_codefence: str='`',
-                         markdown_fences: bool=True,
-                         markdown_list_indent: str='1',
-                         markdown_loose_tables: bool=False,
-                         markdown_spaced_tables: bool=True,
-                         markdown_list_increment: bool=True,
-                         markdown_horizontal_rule: str='*',
-                         markdown_horizontal_rule_spaces: bool=False,
-                         markdown_horizontal_rule_repeat: int=3):
+    def generate_config(filename, file, config_file,
+                        markdown_bullets: str="-",
+                        markdown_closed_headings: bool=False,
+                        markdown_setext_headings: bool=False,
+                        markdown_emphasis: str="*",
+                        markdown_strong: str="*",
+                        markdown_encode_entities: bool=False,
+                        markdown_codefence: str="`",
+                        markdown_fences: bool=True,
+                        markdown_list_indent: str="1",
+                        markdown_loose_tables: bool=False,
+                        markdown_spaced_tables: bool=True,
+                        markdown_list_increment: bool=True,
+                        markdown_horizontal_rule: str='*',
+                        markdown_horizontal_rule_spaces: bool=False,
+                        markdown_horizontal_rule_repeat: int=3):
         """
         :param markdown_bullets:
             Character to use for bullets in lists. Can be "-", "*" or "+".
@@ -101,7 +100,11 @@ class MarkdownBear:
             'ruleRepetition': markdown_horizontal_rule_repeat,  # int
         }
 
-        config_json = json.dumps(remark_configs)
-        # Remove { and } as remark adds them on its own
-        settings = config_json[1:-1]
-        return '--no-color', '--quiet', '--setting', settings
+        return json.dumps(remark_configs)
+
+    @staticmethod
+    def create_arguments(filename, file, config_file):
+        if config_file:
+            return '--no-color', '--quiet', '--setting', config_file
+        else:
+            raise Exception('No config file')
