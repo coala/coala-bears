@@ -50,7 +50,7 @@ class YAMLLintBear:
         """
         args = ('-f', 'parsable', filename)
         if yamllint_config:
-            args += ('--config=' + yamllint_config,)
+            args += ('--config-file=' + yamllint_config,)
         else:
             args += ('--config-file=' + config_file,)
         return args
