@@ -1,5 +1,5 @@
 # Use >= for development versions so that source builds always work
-coala>=0.9.0.dev20161028145459
+coala>=0.9.0.dev20161112225154
 munkres3==1.*
 pylint==1.*
 language-check==0.8.*
