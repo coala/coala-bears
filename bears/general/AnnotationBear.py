@@ -4,6 +4,7 @@ from coalib.results.HiddenResult import HiddenResult
 from coalib.results.Result import Result, RESULT_SEVERITY
 from coalib.results.SourceRange import SourceRange
 from coalib.results.AbsolutePosition import AbsolutePosition
+from coala_utils.string_processing.Core import unescaped_search_for
 
 
 class AnnotationBear(LocalBear):
@@ -199,10 +200,8 @@ class AnnotationBear(LocalBear):
             A SourceRange object holding the range of the multi-line annotation
             and the end_position of the annotation as an integer.
         """
-        end_start = text.find(annotation_end,
-                              position + 1)
-        end_end = end_start + len(annotation_end) - 1
-        if end_start == -1:
+        end_end = get_end_position(annotation_end, text, position)
+        if end_end == -1:
             _range = SourceRange.from_absolute_position(
                 filename,
                 AbsolutePosition(file, position))
@@ -238,9 +237,8 @@ class AnnotationBear(LocalBear):
             A SourceRange object identifying the range of the single-line
             string and the end_position of the string as an integer.
         """
-        end_position = (text.find(string_end, position + 1)
-                        + len(string_end) - 1)
-        newline = text.find("\n", position + 1)
+        end_position = get_end_position(string_end, text, position)
+        newline = get_end_position("\n", text, position)
         if newline == -1:
             newline = len(text)
         if end_position == -1:
@@ -273,7 +271,7 @@ class AnnotationBear(LocalBear):
             A SourceRange object identifying the range of the single-line
             comment and the end_position of the comment as an integer.
         """
-        end_position = text.find("\n", position + 1)
+        end_position = get_end_position("\n", text, position)
         if end_position == -1:
             end_position = len(text) - 1
         return (SourceRange.from_absolute_position(
@@ -281,6 +279,16 @@ class AnnotationBear(LocalBear):
                     AbsolutePosition(file, position),
                     AbsolutePosition(file, end_position)),
                 end_position)
+
+
+def get_end_position(end_marker, text, position):
+    try:
+        end_match = next(unescaped_search_for(end_marker, text[position + 1:]))
+        end_position = position + end_match.span()[1]
+    except StopIteration:
+        end_position = -1
+
+    return end_position
 
 
 class NoCloseError(Exception):

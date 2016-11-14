@@ -140,3 +140,13 @@ class AnnotationBearTest(unittest.TestCase):
         with execute_bear(uut, "F", text) as result:
             self.assertEqual(result[0].contents,
                              "coalang specification for Valyrian not found.")
+
+    def test_escape_strings(self):
+        text = [r"'I\'ll be back' -T1000"]
+        uut = AnnotationBear(self.section1, Queue())
+        test_range = SourceRange.from_absolute_position(
+            "F",
+            AbsolutePosition(text, 0),
+            AbsolutePosition(text, text[0].find("'", 4)))
+        with execute_bear(uut, "F", text) as result:
+            self.assertEqual(result[0].contents["strings"], (test_range,))
