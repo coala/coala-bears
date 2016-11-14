@@ -98,8 +98,7 @@ done
 pip install appdirs
 git clone https://github.com/coala-analyzer/coala coala-manual-branch-inst
 cd coala-manual-branch-inst
-git fetch origin pull/2962/head:tulphoon
-git checkout tulphoon
+git checkout master
 pip install .
 cd ..
 
