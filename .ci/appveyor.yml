@@ -41,6 +41,13 @@ install:
   - "python --version"
   - "python -c \"import struct; print(struct.calcsize('P') * 8)\""
 
+  - "%CMD_IN_ENV% pip install appdirs"
+  - git clone https://github.com/coala-analyzer/coala coala-manual-branch-inst
+  - cd coala-manual-branch-inst
+  - git checkout master
+  - pip install .
+  - cd ..
+
   - "%CMD_IN_ENV% pip install wheel"
   # Create c:/wheels if it does not exist.
   - ps: If ( -not (Test-Path C:\\wheels) )  { mkdir C:\\wheels }
