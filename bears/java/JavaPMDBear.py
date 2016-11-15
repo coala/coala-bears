@@ -27,7 +27,7 @@ class JavaPMDBear:
     def check_prerequisites(cls):  # pragma: no cover
         if which("bash") is None:
             return "bash is not installed."
-        elif which("run.sh") is None:
+        elif which("pmd") is None and which("run.sh") is None:
             return ("PMD is missing. Make sure to install it from "
                     "<https://pmd.github.io/>")
         else:
@@ -94,4 +94,5 @@ class JavaPMDBear:
             "java-unusedcode": not allow_unused_code}
         rules = ','.join(key for key in options if options[key])
 
-        return which("run.sh"), "pmd", "-R", rules, "-d", filename
+        executable = which("pmd") or which("run.sh")  # Mac vs. Unix
+        return executable, "pmd", "-R", rules, "-d", filename
