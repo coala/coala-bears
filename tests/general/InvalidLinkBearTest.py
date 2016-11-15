@@ -118,6 +118,10 @@ class InvalidLinkBearTest(unittest.TestCase):
         # Redirect
         http://httpbin.org/status/301
         http://httpbin.org/status/302
+
+        # Example.com URLs should be ignored
+        http://sub.example.com/404
+        http://sub.example.com/something/404
         """.splitlines()
 
         self.assertResult(valid_file=valid_file)
@@ -127,7 +131,9 @@ class InvalidLinkBearTest(unittest.TestCase):
         http://httpbin.org/status/410
         http://httpbin.org/status/500
         http://httpbin.org/status/503
-        http://www.google.com/hello%20world"""
+        http://www.notexample.com/404
+        http://exampe.com/404
+        http://example.co.in/404"""
 
         for line in invalid_file.splitlines():
             self.assertResult(invalid_file=[line])
@@ -151,29 +157,3 @@ class InvalidLinkBearTest(unittest.TestCase):
         self.assertResult(valid_file=long_url_redirect,
                           invalid_file=short_url_redirect,
                           settings={'follow_redirects': 'yeah'})
-
-    def test_link_ignore_regex(self):
-
-        ignored_URLs = """
-        http://sub.example.com
-        http://sub.example.com/something
-        """.splitlines()
-
-        not_ignored_URLs = """
-        http://www.notexample.com
-        http://exampe.com
-        http://example.co.in
-        """.splitlines()
-
-        self.assertResult(valid_file=ignored_URLs,
-                          invalid_file=not_ignored_URLs)
-
-        valid_file = """
-        http://httpbin.org/status/524
-        """.splitlines()
-        invalid_file = """
-        http://httpbin.org/status/503
-        """.splitlines()
-        self.assertResult(valid_file=valid_file,
-                          invalid_file=invalid_file,
-                          settings={'link_ignore_regex': '[1-9]{2}$'})
