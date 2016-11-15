@@ -17,7 +17,46 @@ bad_file = """
 }
 """
 
+bad_file2 = '''
+$value: 5px;
+
+.foo {
+  padding: $value;
+}
+
+.bar {
+  margin: $value;
+}
+
+.foo.bar {
+  display: block;
+}
+'''
+
+good_file2 = '''
+$value: 5px;
+
+.foo {
+  padding: $value;
+}
+
+.bar {
+  margin: $value;
+}
+
+.new-class {
+  display: block;
+}
+'''
+
 
 SCSSLintBearTest = verify_local_bear(SCSSLintBear,
-                                     valid_files=(good_file,),
-                                     invalid_files=(bad_file,))
+                                     valid_files=(good_file, good_file2),
+                                     invalid_files=(bad_file, bad_file2))
+
+
+SCSSLintBearChainedClassesTest = verify_local_bear(
+    SCSSLintBear,
+    valid_files=(bad_file2, good_file2),
+    invalid_files=(bad_file,),
+    settings={'allow_chained_classes': True})
