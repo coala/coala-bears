@@ -1,7 +1,6 @@
 import shutil
 
 from guess_language import guess_language
-from language_check import LanguageTool, correct
 
 from coalib.bearlib import deprecate_settings
 from coalib.bears.LocalBear import LocalBear
@@ -14,7 +13,8 @@ from coalib.settings.Setting import typed_list
 
 class LanguageToolBear(LocalBear):
     LANGUAGES = {"Natural Language"}
-    REQUIREMENTS = {PipRequirement('guess-language-spirit', '0.5.*')}
+    REQUIREMENTS = {PipRequirement('guess-language-spirit', '0.5.*'),
+                    PipRequirement('language-check', '0.8.*')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
@@ -25,7 +25,11 @@ class LanguageToolBear(LocalBear):
         if shutil.which("java") is None:
             return "java is not installed."
         else:
-            return True
+            try:
+                from language_check import LanguageTool, correct
+                return True
+            except ImportError:  # pragma: no cover
+                return "Please install the `language-check` pip package."
 
     @deprecate_settings(language='locale')
     def run(self,
@@ -43,6 +47,10 @@ class LanguageToolBear(LocalBear):
                                            'en-US' is used.
         :param languagetool_disable_rules: List of rules to disable checks for.
         '''
+        # Defer import so the check_prerequisites can be run without
+        # language_check being there.
+        from language_check import LanguageTool, correct
+
         joined_text = "".join(file)
         language = (guess_language(joined_text)
                     if language == 'auto' else language)

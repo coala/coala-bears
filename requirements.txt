@@ -2,7 +2,6 @@
 coala>=0.9.0.dev20161112225154
 munkres3==1.*
 pylint==1.*
-language-check==0.8.*
 autopep8==1.*
 eradicate==0.1.*
 autoflake==0.6.*

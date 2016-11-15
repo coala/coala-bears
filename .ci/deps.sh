@@ -93,6 +93,7 @@ for dep_version in "${dep_versions[@]}" ; do
   pip install -U setuptools
   pip install -r test-requirements.txt
   pip install -r requirements.txt
+  pip install language_check==0.8.*
 done
 
 pip install -r docs-requirements.txt
