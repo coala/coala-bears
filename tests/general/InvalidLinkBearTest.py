@@ -2,8 +2,6 @@ import requests
 import unittest
 from queue import Queue
 import requests_mock
-import platform
-from unittest.case import skipIf
 
 from bears.general.InvalidLinkBear import InvalidLinkBear
 from coalib.settings.Section import Section
@@ -51,8 +49,6 @@ def custom_matcher(request):
     return resp
 
 
-@skipIf(platform.system() == "Windows",
-        "The tests mocking doesn't work correctly on windows.")
 class InvalidLinkBearTest(unittest.TestCase):
 
     """
