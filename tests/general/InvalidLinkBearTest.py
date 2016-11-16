@@ -66,14 +66,12 @@ class InvalidLinkBearTest(unittest.TestCase):
         with requests_mock.Mocker() as m:
             InvalidLinkBear.check_prerequisites = lambda *args: True
             uut = InvalidLinkBear(self.section, Queue())
-            for name, value in settings.items():
-                self.section.append(Setting(name, value))
             m.add_matcher(custom_matcher)
             if valid_file:
-                out = uut.execute("valid", valid_file)
+                out = list(uut.run("valid", valid_file, **settings))
                 self.assertEqual(out, [])
             if invalid_file:
-                out = uut.execute("invalid", invalid_file)
+                out = list(uut.run("invalid", invalid_file, **settings))
                 self.assertNotEqual(out, [])
                 self.assertNotEqual(out, None)
 
