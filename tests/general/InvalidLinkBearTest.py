@@ -6,7 +6,6 @@ import requests_mock
 
 from bears.general.InvalidLinkBear import InvalidLinkBear
 from coalib.settings.Section import Section
-from coalib.settings.Setting import Setting
 
 
 def custom_matcher(request):
