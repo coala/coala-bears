@@ -1,8 +1,8 @@
 import io
-import requests
-import unittest
 from queue import Queue
+import requests
 import requests_mock
+import unittest
 
 from bears.general.InvalidLinkBear import InvalidLinkBear
 from coalib.settings.Section import Section
