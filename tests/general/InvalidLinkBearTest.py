@@ -1,3 +1,4 @@
+import io
 import requests
 import unittest
 from queue import Queue
@@ -45,6 +46,7 @@ def custom_matcher(request):
     resp = requests.Response()
     if change_url:
         resp.url = url
+    resp.raw = io.BytesIO()
     resp.status_code = status_code
     return resp
 
