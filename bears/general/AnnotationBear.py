@@ -203,7 +203,9 @@ class AnnotationBear(LocalBear):
             A SourceRange object holding the range of the multi-line annotation
             and the end_position of the annotation as an integer.
         """
-        end_end = get_end_position(annotation_end, text, position)
+        end_end = get_end_position(annotation_end,
+                                   text,
+                                   position + len(annotation_start) - 1)
         if end_end == -1:
             _range = SourceRange.from_absolute_position(
                 filename,
@@ -240,7 +242,9 @@ class AnnotationBear(LocalBear):
             A SourceRange object identifying the range of the single-line
             string and the end_position of the string as an integer.
         """
-        end_position = get_end_position(string_end, text, position)
+        end_position = get_end_position(string_end,
+                                        text,
+                                        position + len(string_start) - 1)
         newline = get_end_position("\n", text, position)
         if newline == -1:
             newline = len(text)
@@ -274,7 +278,9 @@ class AnnotationBear(LocalBear):
             A SourceRange object identifying the range of the single-line
             comment and the end_position of the comment as an integer.
         """
-        end_position = get_end_position("\n", text, position)
+        end_position = get_end_position("\n",
+                                        text,
+                                        position + len(comment) - 1)
         if end_position == -1:
             end_position = len(text) - 1
         return (SourceRange.from_absolute_position(

@@ -150,3 +150,15 @@ class AnnotationBearTest(unittest.TestCase):
             AbsolutePosition(text, text[0].find("'", 4)))
         with execute_bear(uut, "F", text) as result:
             self.assertEqual(result[0].contents["strings"], (test_range,))
+
+        text = ['''
+            """"quoting inside quoting"
+            """
+            ''']
+        uut = AnnotationBear(self.section1, Queue())
+        with execute_bear(uut, "F", text) as results:
+            for result in results:
+                # The """" was recognized as a string start and end before.
+                # That lead to a Result being yielded because of unclosed
+                # quotes, this asserts that no such thing happened.
+                self.assertEqual(type(result), HiddenResult)
