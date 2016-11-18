@@ -15,7 +15,7 @@ class PyUnusedCodeBear(LocalBear):
     CAN_DETECT = {'Unused Code'}
 
     def run(self, filename, file,
-            remove_all_unused_imports: bool):
+            remove_all_unused_imports: bool=False):
         """
         Detects unused code. By default this functionality is limited to:
 
