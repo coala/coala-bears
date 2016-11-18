@@ -27,7 +27,6 @@ pyyaml==3.*
 vulture==0.10.*
 bandit==1.1.*
 nbformat>=4.*
-pyflakes==1.2.*  # Although we don't need this directly, solves a dep conflict
 scspell3k==2.*
 mypy-lang==0.4.*
 rstcheck~=2.2
