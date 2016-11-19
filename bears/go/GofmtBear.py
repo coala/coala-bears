@@ -14,7 +14,7 @@ class GofmtBear:
     This is done using the ``gofmt`` utility. For more information visit
     <https://golang.org/cmd/gofmt/>.
     """
-    LANGUAGES = {"Go"}
+    LANGUAGES = {'Go'}
     REQUIREMENTS = {GoRequirement(package='golang.org/cmd/gofmt', flag='-u')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}

@@ -14,7 +14,7 @@ class CSharpLintBear:
     Checks C# code for syntactical correctness using the ``mcs`` compiler.
     """
 
-    LANGUAGES = {"C#"}
+    LANGUAGES = {'C#'}
     REQUIREMENTS = {DistributionRequirement(apt_get='mono-mcs')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}

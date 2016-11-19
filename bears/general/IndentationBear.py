@@ -69,14 +69,14 @@ class IndentationBear(LocalBear):
             language, coalang_dir=coalang_dir)
         annotation_dict = dependency_results[AnnotationBear.name][0].contents
         # sometimes can't convert strings with ':' to dict correctly
-        if ':' in list(lang_settings_dict["indent_types"]):
-            indent_types = dict(lang_settings_dict["indent_types"])
+        if ':' in list(lang_settings_dict['indent_types']):
+            indent_types = dict(lang_settings_dict['indent_types'])
             indent_types[':'] = ''
         else:
-            indent_types = dict(lang_settings_dict["indent_types"])
+            indent_types = dict(lang_settings_dict['indent_types'])
 
-        encapsulators = (dict(lang_settings_dict["encapsulators"]) if
-                         "encapsulators" in lang_settings_dict else {})
+        encapsulators = (dict(lang_settings_dict['encapsulators']) if
+                         'encapsulators' in lang_settings_dict else {})
 
         encaps_pos = []
         for encapsulator in encapsulators:
@@ -86,9 +86,9 @@ class IndentationBear(LocalBear):
                 annotation_dict)
         encaps_pos = tuple(sorted(encaps_pos, key=lambda x: x.start.line))
 
-        comments = dict(lang_settings_dict["comment_delimiter"])
+        comments = dict(lang_settings_dict['comment_delimiter'])
         comments.update(
-            dict(lang_settings_dict["multiline_comment_delimiters"]))
+            dict(lang_settings_dict['multiline_comment_delimiters']))
 
         try:
             indent_levels = self.get_indent_levels(
@@ -125,7 +125,7 @@ class IndentationBear(LocalBear):
                     diffs={filename: diff})
 
     def _get_no_indent_file(self, file):
-        no_indent_file = [line.lstrip() if line.lstrip() else "\n"
+        no_indent_file = [line.lstrip() if line.lstrip() else '\n'
                           for line_nr, line in enumerate(file)]
         return no_indent_file
 
@@ -133,7 +133,7 @@ class IndentationBear(LocalBear):
         new_file = []
         for line_nr, line in enumerate(no_indent_file):
             new_file.append(insert*indent_levels[line_nr] + line
-                            if line is not "\n" else "\n")
+                            if line is not '\n' else '\n')
 
         return new_file
 
@@ -151,8 +151,8 @@ class IndentationBear(LocalBear):
                 new_line = (prev_indent + ' '*indent +
                             insert*(indent_levels[line] - prev_indent_level) +
                             indented_file[line].lstrip())
-                indented_file[line] = new_line if new_line.strip() != ""\
-                    else "\n"
+                indented_file[line] = new_line if new_line.strip() != ''\
+                    else '\n'
         return indented_file
 
     def get_absolute_indent_of_range(self,
@@ -475,13 +475,13 @@ def get_first_unindent(indent,
     while line_nr < len(file):
         valid = True
 
-        for comment in annotation_dict["comments"]:
+        for comment in annotation_dict['comments']:
             if(comment.start.line < line_nr + 1 and
                comment.end.line >= line_nr + 1):
                 valid = False
 
             first_char = file[line_nr].lstrip()[0] if file[line_nr].strip()\
-                else ""
+                else ''
             if first_char in comments:
                 valid = False
 
@@ -545,11 +545,11 @@ def get_indent_of_line(file, line, length=True):
 class ExpectedIndentError(Exception):
 
     def __init__(self, line):
-        Exception.__init__(self, "Expected indent after line: " + str(line))
+        Exception.__init__(self, 'Expected indent after line: ' + str(line))
 
 
 class UnmatchedIndentError(Exception):
 
     def __init__(self, open_indent, close_indent):
-        Exception.__init__(self, "Unmatched " + open_indent + ", " +
-                           close_indent + " pair")
+        Exception.__init__(self, 'Unmatched ' + open_indent + ', ' +
+                           close_indent + ' pair')

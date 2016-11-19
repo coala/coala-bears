@@ -24,7 +24,7 @@ class JuliaLintBear:
     See <https://lintjl.readthedocs.org/en/stable/> for more information
     on the analysis provided.
     """
-    LANGUAGES = {"Julia"}
+    LANGUAGES = {'Julia'}
     REQUIREMENTS = {DistributionRequirement(apt_get='julia')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}

@@ -15,7 +15,7 @@ class WriteGoodLintBear:
 
     See <https://github.com/btford/write-good> for more information.
     """
-    LANGUAGES = {"Natural Language"}
+    LANGUAGES = {'Natural Language'}
     REQUIREMENTS = {NpmRequirement('write-good', '0.9.1')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}

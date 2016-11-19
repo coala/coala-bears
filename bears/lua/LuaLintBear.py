@@ -16,7 +16,7 @@ class LuaLintBear:
     Read more at <https://github.com/mpeterv/luacheck>.
     """
 
-    LANGUAGES = {"Lua"}
+    LANGUAGES = {'Lua'}
     REQUIREMENTS = {DistributionRequirement(apt_get='luarocks')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
@@ -25,4 +25,4 @@ class LuaLintBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file):
-        return "-", "--formatter=plain", "--ranges", "--codes"
+        return '-', '--formatter=plain', '--ranges', '--codes'

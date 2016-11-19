@@ -12,7 +12,7 @@ from coalib.results.Result import Result
 
 class JSONFormatBear(LocalBear):
 
-    LANGUAGES = {"JSON"}
+    LANGUAGES = {'JSON'}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
@@ -38,7 +38,7 @@ class JSONFormatBear(LocalBear):
         except JSONDecodeError as err:
             yield Result.from_values(
                 self,
-                "This file does not contain parsable JSON. " + repr(str(err)),
+                'This file does not contain parsable JSON. ' + repr(str(err)),
                 file=filename)
             return
 
@@ -49,13 +49,13 @@ class JSONFormatBear(LocalBear):
                                ).splitlines(True)
         # Because of a bug in several python versions we have to correct
         # whitespace here.
-        corrected = tuple(line.rstrip(" \n") + "\n" for line in corrected)
+        corrected = tuple(line.rstrip(' \n') + '\n' for line in corrected)
         diff = Diff.from_string_arrays(file, corrected)
 
         if len(diff) > 0:
             yield Result(self,
-                         "This file can be reformatted by sorting keys and "
-                         "following indentation.",
+                         'This file can be reformatted by sorting keys and '
+                         'following indentation.',
                          affected_code=tuple(d.range(filename)
                                              for d in diff.split_diff()),
                          diffs={filename: diff})

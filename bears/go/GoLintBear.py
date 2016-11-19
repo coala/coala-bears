@@ -12,7 +12,7 @@ class GoLintBear:
     Checks the code using ``golint``. This will run golint over each file
     separately.
     """
-    LANGUAGES = {"Go"}
+    LANGUAGES = {'Go'}
     REQUIREMENTS = {GoRequirement(
         package='github.com/golang/lint/golint', flag='-u')}
     AUTHORS = {'The coala developers'}

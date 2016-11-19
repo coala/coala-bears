@@ -8,7 +8,7 @@ from coalib.settings.Setting import typed_list
 
 
 class LineLengthBear(LocalBear):
-    LANGUAGES = {"All"}
+    LANGUAGES = {'All'}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
@@ -41,8 +41,8 @@ class LineLengthBear(LocalBear):
 
                 yield Result.from_values(
                     origin=self,
-                    message="Line is longer than allowed." +
-                            " ({actual} > {maximum})".format(
+                    message='Line is longer than allowed.' +
+                            ' ({actual} > {maximum})'.format(
                                 actual=len(line)-1,
                                 maximum=max_line_length),
                     file=filename,

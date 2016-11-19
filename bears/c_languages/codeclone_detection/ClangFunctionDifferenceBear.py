@@ -129,20 +129,20 @@ class ClangFunctionDifferenceBear(GlobalBear):
                                     function pairs will be reduced using an
                                     exponential approach.
         '''
-        self.debug("Using the following counting conditions:")
+        self.debug('Using the following counting conditions:')
         for key, val in counting_conditions.items():
-            self.debug(" *", key.__name__, "(weighting: {})".format(val))
+            self.debug(' *', key.__name__, '(weighting: {})'.format(val))
 
-        self.debug("Creating count matrices...")
+        self.debug('Creating count matrices...')
         count_matrices = get_count_matrices(
             ClangCountVectorCreator(list(counting_conditions.keys()),
                                     list(counting_conditions.values())),
             list(self.file_dict.keys()),
-            lambda prog: self.debug("{:2.4f}%...".format(prog)),
-            self.section["files"].origin,
+            lambda prog: self.debug('{:2.4f}%...'.format(prog)),
+            self.section['files'].origin,
             collect_dirs(extra_include_paths))
 
-        self.debug("Calculating differences...")
+        self.debug('Calculating differences...')
 
         differences = []
         function_count = len(count_matrices)
@@ -159,7 +159,7 @@ class ClangFunctionDifferenceBear(GlobalBear):
                 map(partial_get_difference,
                     [(f1, f2) for f1, f2 in combinations(count_matrices, 2)])):
             if i % 50 == 0:
-                self.debug("{:2.4f}%...".format(100*i/combination_length))
+                self.debug('{:2.4f}%...'.format(100*i/combination_length))
             differences.append(elem)
 
         yield HiddenResult(self, differences)

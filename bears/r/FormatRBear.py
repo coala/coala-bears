@@ -18,7 +18,7 @@ class FormatRBear:
     """
     Check and correct formatting of R Code using known formatR utility.
     """
-    LANGUAGES = {"R"}
+    LANGUAGES = {'R'}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     REQUIREMENTS = {RscriptRequirement(package='formatR', flag='-e',

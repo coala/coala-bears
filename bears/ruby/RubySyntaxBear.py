@@ -13,7 +13,7 @@ class RubySyntaxBear:
     """
     Checks the code with ``ruby -wc`` on each file separately.
     """
-    LANGUAGES = {"Ruby"}
+    LANGUAGES = {'Ruby'}
     REQUIREMENTS = {GemRequirement('ruby', '2.1.5')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}

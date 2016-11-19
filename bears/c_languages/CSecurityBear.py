@@ -4,16 +4,16 @@ from coalib.bears.requirements.DistributionRequirement import (
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
-@linter(executable="flawfinder",
-        output_format="regex",
+@linter(executable='flawfinder',
+        output_format='regex',
         output_regex=r'.+:(?P<line>\d+):(?P<column>\d+):\s*'
                      r'\[(?P<severity>\d)\]\s*'
                      r'\((?P<origin>.+)\) (?P<message>.+)',
-        severity_map={"1": RESULT_SEVERITY.INFO,
-                      "2": RESULT_SEVERITY.INFO,
-                      "3": RESULT_SEVERITY.NORMAL,
-                      "4": RESULT_SEVERITY.NORMAL,
-                      "5": RESULT_SEVERITY.MAJOR},
+        severity_map={'1': RESULT_SEVERITY.INFO,
+                      '2': RESULT_SEVERITY.INFO,
+                      '3': RESULT_SEVERITY.NORMAL,
+                      '4': RESULT_SEVERITY.NORMAL,
+                      '5': RESULT_SEVERITY.MAJOR},
         prerequisite_check_command=('flawfinder',),
         prerequisite_check_fail_message=('Flawfinder needs to be run with '
                                          'python2.'))
@@ -34,4 +34,4 @@ class CSecurityBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file):
-        return "--columns", "--dataonly", "--quiet", "--singleline", filename
+        return '--columns', '--dataonly', '--quiet', '--singleline', filename

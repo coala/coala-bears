@@ -7,7 +7,7 @@ from coalib.settings.Setting import typed_list
         output_format='regex',
         output_regex=r'([^:]+):(?P<line>\d+):'
                      r'(?P<column>\d+)\s*(?P<message>.*)',
-        result_message="This function call has an unchecked error.")
+        result_message='This function call has an unchecked error.')
 class GoErrCheckBear:
 
     """
@@ -17,7 +17,7 @@ class GoErrCheckBear:
     For more information on the analysis visit
     <https://github.com/kisielk/errcheck>.
     """
-    LANGUAGES = {"Go"}
+    LANGUAGES = {'Go'}
     REQUIREMENTS = {GoRequirement(
         package='github.com/kisielk/errcheck', flag='-u')}
     AUTHORS = {'The coala developers'}
@@ -55,7 +55,7 @@ class GoErrCheckBear:
             args += ('-ignorepkg', ','.join(part.strip()
                                             for part in ignorepkg))
         if blank:
-            args += ("-blank",)
+            args += ('-blank',)
         if asserts:
-            args += ("-asserts",)
+            args += ('-asserts',)
         return args + (filename,)

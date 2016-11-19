@@ -10,7 +10,7 @@ from coalib.settings.Setting import typed_list
 
 
 class PEP8Bear(LocalBear):
-    LANGUAGES = {"Python", "Python 2", "Python 3"}
+    LANGUAGES = {'Python', 'Python 2', 'Python 3'}
     REQUIREMENTS = {PipRequirement('autopep8', '1.*')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
@@ -36,10 +36,10 @@ class PEP8Bear(LocalBear):
         :param local_pep8_config: Set to true if autopep8 should use a config
                                   file as if run normally from this directory.
         """
-        options = {"ignore": pep_ignore,
-                   "select": pep_select,
-                   "max_line_length": max_line_length,
-                   "indent_size": indent_size}
+        options = {'ignore': pep_ignore,
+                   'select': pep_select,
+                   'max_line_length': max_line_length,
+                   'indent_size': indent_size}
 
         corrected = autopep8.fix_code(''.join(file),
                                       apply_config=local_pep8_config,
@@ -49,6 +49,6 @@ class PEP8Bear(LocalBear):
 
         for diff in diffs:
             yield Result(self,
-                         "The code does not comply to PEP8.",
+                         'The code does not comply to PEP8.',
                          affected_code=(diff.range(filename),),
                          diffs={filename: diff})

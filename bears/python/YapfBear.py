@@ -17,7 +17,7 @@ class YapfBear(LocalBear):
 
     See <https://github.com/google/yapf> for more information.
     """
-    LANGUAGES = {"Python", "Python 2", "Python 3"}
+    LANGUAGES = {'Python', 'Python 2', 'Python 3'}
     AUTHORS = {'The coala developers'}
     REQUIREMENTS = {PipRequirement('yapf', '0.11')}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
@@ -146,10 +146,10 @@ split_arguments_when_comma_terminated = {split_arguments_when_comma_terminated}
 space_between_ending_comma_and_closing_bracket= \
 {space_between_ending_comma_and_closing_bracket}
 """
-        options += 'use_tabs = ' + str(not use_spaces) + "\n"
+        options += 'use_tabs = ' + str(not use_spaces) + '\n'
         options += ('split_penalty_after_opening_bracket = ' +
                     ('30' if prefer_line_break_after_opening_bracket
-                     else '0') + "\n")
+                     else '0') + '\n')
         options = options.format(**locals())
 
         try:
@@ -160,19 +160,19 @@ space_between_ending_comma_and_closing_bracket= \
                                        verify=False)[0].splitlines(True)
         except SyntaxError as err:
             if isinstance(err, IndentationError):
-                error_type = "indentation errors (" + err.args[0] + ')'
+                error_type = 'indentation errors (' + err.args[0] + ')'
             else:
-                error_type = "syntax errors"
+                error_type = 'syntax errors'
             yield Result.from_values(
                 self,
-                "The code cannot be parsed due to {0}.".format(error_type),
+                'The code cannot be parsed due to {0}.'.format(error_type),
                 filename, line=err.lineno, column=err.offset)
             return
         diffs = Diff.from_string_arrays(file, corrected).split_diff()
         for diff in diffs:
             yield Result(self,
-                         "The code does not comply with the settings "
-                         "provided.",
+                         'The code does not comply with the settings '
+                         'provided.',
                          affected_code=(diff.range(filename),),
                          diffs={filename: diff})
 

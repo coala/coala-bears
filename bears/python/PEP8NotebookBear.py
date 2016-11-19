@@ -63,7 +63,7 @@ def autopep8_fix_code_cell(source, options=None, apply_config=None):
 
 
 class PEP8NotebookBear(LocalBear):
-    LANGUAGES = {"Python", "Python 2", "Python 3"}
+    LANGUAGES = {'Python', 'Python 2', 'Python 3'}
     REQUIREMENTS = {PipRequirement('autopep8', '1.*'),
                     PipRequirement('nbformat', '4.*')}
     AUTHORS = {'The coala developers'}
@@ -90,10 +90,10 @@ class PEP8NotebookBear(LocalBear):
         :param local_pep8_config: Set to true if autopep8 should use a config
                                   file as if run normally from this directory.
         """
-        options = {"ignore": pep_ignore,
-                   "select": pep_select,
-                   "max_line_length": max_line_length,
-                   "indent_size": indent_size}
+        options = {'ignore': pep_ignore,
+                   'select': pep_select,
+                   'max_line_length': max_line_length,
+                   'indent_size': indent_size}
         notebook_node = notebook_node_from_string_list(file)
         cells = notebook_node['cells']
 
@@ -116,6 +116,6 @@ class PEP8NotebookBear(LocalBear):
 
         for diff in diffs:
             yield Result(self,
-                         "The code does not comply to PEP8.",
+                         'The code does not comply to PEP8.',
                          affected_code=(diff.range(filename),),
                          diffs={filename: diff})

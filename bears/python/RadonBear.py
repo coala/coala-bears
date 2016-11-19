@@ -10,7 +10,7 @@ from coalib.settings.Setting import typed_list
 
 
 class RadonBear(LocalBear):
-    LANGUAGES = {"Python", "Python 2", "Python 3"}
+    LANGUAGES = {'Python', 'Python 2', 'Python 3'}
     REQUIREMENTS = {PipRequirement('radon', '1.*')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
@@ -36,7 +36,7 @@ class RadonBear(LocalBear):
             RESULT_SEVERITY.NORMAL: radon_ranks_normal,
             RESULT_SEVERITY.MAJOR: radon_ranks_major
         }
-        for visitor in radon.complexity.cc_visit("".join(file)):
+        for visitor in radon.complexity.cc_visit(''.join(file)):
             rank = radon.complexity.cc_rank(visitor.complexity)
             severity = None
             for result_severity, rank_list in severity_map.items():
@@ -48,7 +48,7 @@ class RadonBear(LocalBear):
             col = visitor.col_offset if visitor.col_offset else None
             visitor_range = SourceRange.from_values(
                 filename, visitor.lineno, col, visitor.endline)
-            message = "{} has a cyclomatic complexity of {}".format(
+            message = '{} has a cyclomatic complexity of {}'.format(
                 visitor.name, rank)
 
             yield Result(self, message, severity=severity,

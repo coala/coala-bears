@@ -12,7 +12,7 @@ class GoTypeBear:
     Checks the code using ``gotype``. This will run ``gotype`` over each file
     separately.
     """
-    LANGUAGES = {"Go"}
+    LANGUAGES = {'Go'}
     REQUIREMENTS = {GoRequirement(
         package='golang.org/x/tools/cmd/gotype', flag='-u')}
     AUTHORS = {'The coala developers'}

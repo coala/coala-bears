@@ -17,7 +17,7 @@ class CoffeeLintBear:
     For more information about coffeelint, visit <http://www.coffeelint.org/>.
     """
 
-    LANGUAGES = {"CoffeeScript"}
+    LANGUAGES = {'CoffeeScript'}
     REQUIREMENTS = {NpmRequirement('coffeelint', '1')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
@@ -239,85 +239,85 @@ class CoffeeLintBear:
         :param allow_empty_functions:
             Allows declaring empty functions.
         """
-        coffee_configs = {"max_line_length":
-                          {"value": max_line_length,
-                           "level": "error",
-                           "limitComments":
+        coffee_configs = {'max_line_length':
+                          {'value': max_line_length,
+                           'level': 'error',
+                           'limitComments':
                                max_line_length_affect_comments}}
-        coffee_configs["arrow_spacing"] = (
-            {"level": "error" if space_before_and_after_arrow else "ignore"})
+        coffee_configs['arrow_spacing'] = (
+            {'level': 'error' if space_before_and_after_arrow else 'ignore'})
         if check_braces_spacing:
-            coffee_configs["braces_spacing"] = (
-                {"level": "error",
-                 "spaces": braces_spacing_width,
-                 "empty_object_spaces": spacing_in_empty_braces})
+            coffee_configs['braces_spacing'] = (
+                {'level': 'error',
+                 'spaces': braces_spacing_width,
+                 'empty_object_spaces': spacing_in_empty_braces})
         if class_naming_camelCase:
-            coffee_configs["camel_case_classes"] = {"level": "error"}
+            coffee_configs['camel_case_classes'] = {'level': 'error'}
         if spaces_before_and_after_colon:
-            coffee_configs["colon_assignment_spacing"] = (
-                {"level": "error",
-                 "spacing": {"left": spaces_before_colon,
-                             "right": spaces_after_colon}})
-        coffee_configs["eol_last"] = (
-            {"level": "error" if enforce_newline_at_EOF else "ignore"})
-        coffee_configs["newlines_after_classes"] = (
-            {"value": number_of_newlines_after_classes,
-             "level": "error"})
-        coffee_configs["no_backticks"] = (
-            {"level": "error"
-                if prohibit_embedding_javascript_snippet else "ignore"})
+            coffee_configs['colon_assignment_spacing'] = (
+                {'level': 'error',
+                 'spacing': {'left': spaces_before_colon,
+                             'right': spaces_after_colon}})
+        coffee_configs['eol_last'] = (
+            {'level': 'error' if enforce_newline_at_EOF else 'ignore'})
+        coffee_configs['newlines_after_classes'] = (
+            {'value': number_of_newlines_after_classes,
+             'level': 'error'})
+        coffee_configs['no_backticks'] = (
+            {'level': 'error'
+                if prohibit_embedding_javascript_snippet else 'ignore'})
         if force_braces:
-            coffee_configs["no_implicit_braces"] = (
-                {"level": "error", "strict": True})
+            coffee_configs['no_implicit_braces'] = (
+                {'level': 'error', 'strict': True})
         if not allow_implicit_parentheses:
-            coffee_configs["no_implicit_parens"] = (
-                {"strict": True, "level": "error"})
-        coffee_configs["no_interpolation_in_single_quotes"] = (
-            {"level": "error"
-                if not allow_interpolation_in_single_quotes else "ignore"})
+            coffee_configs['no_implicit_parens'] = (
+                {'strict': True, 'level': 'error'})
+        coffee_configs['no_interpolation_in_single_quotes'] = (
+            {'level': 'error'
+                if not allow_interpolation_in_single_quotes else 'ignore'})
         if not allow_stand_alone_at_sign:
-            coffee_configs["no_stand_alone_at"] = {"level": "error"}
+            coffee_configs['no_stand_alone_at'] = {'level': 'error'}
         if use_spaces:
-            coffee_configs["no_tabs"] = {"level": "error"}
-        coffee_configs["indentation"] = (
-            {"value": indent_size, "level": "error"})
-        coffee_configs["no_throwing_strings"] = (
-            {"level": "error" if not allow_throwing_strings else "ignore"})
-        coffee_configs["no_trailing_semicolons"] = (
-            {"level": "error" if not allow_trailing_semicolons else "ignore"})
+            coffee_configs['no_tabs'] = {'level': 'error'}
+        coffee_configs['indentation'] = (
+            {'value': indent_size, 'level': 'error'})
+        coffee_configs['no_throwing_strings'] = (
+            {'level': 'error' if not allow_throwing_strings else 'ignore'})
+        coffee_configs['no_trailing_semicolons'] = (
+            {'level': 'error' if not allow_trailing_semicolons else 'ignore'})
         if not allow_trailing_whitespaces:
-            coffee_configs["no_trailing_whitespace"] = (
-                {"level": "error",
-                 "allowed_in_comments": True,
-                 "allowed_in_empty_lines": True})
+            coffee_configs['no_trailing_whitespace'] = (
+                {'level': 'error',
+                 'allowed_in_comments': True,
+                 'allowed_in_empty_lines': True})
         if not allow_unnecessary_double_quotes:
-            coffee_configs["no_unnecessary_double_quotes"] = {"level": "error"}
+            coffee_configs['no_unnecessary_double_quotes'] = {'level': 'error'}
         if not allow_bitwise_operators:
-            coffee_configs["prefer_english_operator"] = (
-                {"level": "error", "doubleNotLevel": "ignore"})
+            coffee_configs['prefer_english_operator'] = (
+                {'level': 'error', 'doubleNotLevel': 'ignore'})
         if spaces_around_operators:
-            coffee_configs["space_operators"] = {"level": "error"}
+            coffee_configs['space_operators'] = {'level': 'error'}
         if space_after_comma:
-            coffee_configs["spacing_after_comma"] = {"level": "warn"}
-        coffee_configs["cyclomatic_complexity"] = (
-                {"value": cyclomatic_complexity,
-                 "level": ("error" if cyclomatic_complexity else 'ignore')})
-        coffee_configs["duplicate_key"] = (
-            {"level": "error" if prevent_duplicate_keys else "ignore"})
+            coffee_configs['spacing_after_comma'] = {'level': 'warn'}
+        coffee_configs['cyclomatic_complexity'] = (
+                {'value': cyclomatic_complexity,
+                 'level': ('error' if cyclomatic_complexity else 'ignore')})
+        coffee_configs['duplicate_key'] = (
+            {'level': 'error' if prevent_duplicate_keys else 'ignore'})
         if enforce_parentheses_on_non_empty_constructors:
-            coffee_configs["non_empty_constructor_needs_parens"] = (
-                {"level": "error"})
+            coffee_configs['non_empty_constructor_needs_parens'] = (
+                {'level': 'error'})
         if consistent_line_endings_style:
-            coffee_configs["line_endings"] = (
-                {"level": "error", "value": consistent_line_endings_style})
+            coffee_configs['line_endings'] = (
+                {'level': 'error', 'value': consistent_line_endings_style})
         if not allow_this_statements:
-            coffee_configs["no_this"] = {"level": "error"}
+            coffee_configs['no_this'] = {'level': 'error'}
         if not allow_increment:
-            coffee_configs["no_plusplus"] = {"level": "error"}
-        coffee_configs["no_empty_param_list"] = (
-            {"level": "error" if not allow_no_parameters else "ignore"})
-        coffee_configs["no_empty_functions"] = (
-            {"level": "error" if not allow_empty_functions else "ignore"})
+            coffee_configs['no_plusplus'] = {'level': 'error'}
+        coffee_configs['no_empty_param_list'] = (
+            {'level': 'error' if not allow_no_parameters else 'ignore'})
+        coffee_configs['no_empty_functions'] = (
+            {'level': 'error' if not allow_empty_functions else 'ignore'})
 
         return json.dumps(coffee_configs)
 
@@ -325,14 +325,14 @@ class CoffeeLintBear:
         output = json.loads(output)
 
         assert len(output) == 1, (
-            "More than 1 file parsed, something went wrong")
+            'More than 1 file parsed, something went wrong')
         for item in tuple(output.values())[0]:
             yield Result.from_values(
-                origin="{} ({})".format(self.name, item['rule']),
+                origin='{} ({})'.format(self.name, item['rule']),
                 message=item['message'],
                 file=filename,
                 line=item.get('lineNumber', None),
                 end_line=item.get('lineNumberEnd', None),
                 severity=self.severity_map[item['level']],
                 additional_info=item.get('description',
-                                         item.get('context', "")))
+                                         item.get('context', '')))

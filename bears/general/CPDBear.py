@@ -9,24 +9,24 @@ from coalib.results.SourceRange import SourceRange
 
 class CPDBear(GlobalBear):
 
-    language_dict = {"C#": "cs",
-                     "C++": "cpp",
-                     "JavaScript": "ecmascript",
-                     "Fortran": "fortran",
-                     "Go": "go",
-                     "Java": "java",
-                     "JSP": "jsp",
-                     "Matlab": "matlab",
-                     "Octave": "matlab",
-                     "Objective-C": "objectivec",
-                     "PHP": "php",
-                     "PL/SQL": "plsql",
-                     "Python": "python",
-                     "Python 2": "python",
-                     "Python 3": "python",
-                     "Ruby": "ruby",
-                     "Scala": "scala",
-                     "Swift": "swift"}
+    language_dict = {'C#': 'cs',
+                     'C++': 'cpp',
+                     'JavaScript': 'ecmascript',
+                     'Fortran': 'fortran',
+                     'Go': 'go',
+                     'Java': 'java',
+                     'JSP': 'jsp',
+                     'Matlab': 'matlab',
+                     'Octave': 'matlab',
+                     'Objective-C': 'objectivec',
+                     'PHP': 'php',
+                     'PL/SQL': 'plsql',
+                     'Python': 'python',
+                     'Python 2': 'python',
+                     'Python 3': 'python',
+                     'Ruby': 'ruby',
+                     'Scala': 'scala',
+                     'Swift': 'swift'}
 
     lowered_lang_dict = {key.lower(): value
                          for key, value in language_dict.items()}
@@ -39,11 +39,11 @@ class CPDBear(GlobalBear):
 
     @classmethod
     def check_prerequisites(cls):  # pragma: no cover
-        if which("bash") is None:
-            return "bash is not installed."
-        if which("pmd") is None and which("run.sh") is None:
-            return ("PMD is missing. Make sure to install it from "
-                    "<https://pmd.github.io/>.")
+        if which('bash') is None:
+            return 'bash is not installed.'
+        if which('pmd') is None and which('run.sh') is None:
+            return ('PMD is missing. Make sure to install it from '
+                    '<https://pmd.github.io/>.')
         else:
             return True
 
@@ -77,24 +77,24 @@ class CPDBear(GlobalBear):
         language = language.lower()
 
         if language not in self.lowered_lang_dict:  # pragma: no cover
-            self.err("This bear does not support files with the extension "
+            self.err('This bear does not support files with the extension '
                      "'{}'.".format(language))
             return
 
         options = {
-            "--ignore-annotations": ignore_annotations,
-            "--ignore-identifiers": ignore_identifiers,
-            "--ignore-literals": ignore_literals,
-            "--ignore-usings": ignore_usings,
-            "--skip-duplicate-files": skip_duplicate_files}
+            '--ignore-annotations': ignore_annotations,
+            '--ignore-identifiers': ignore_identifiers,
+            '--ignore-literals': ignore_literals,
+            '--ignore-usings': ignore_usings,
+            '--skip-duplicate-files': skip_duplicate_files}
 
-        files = ",".join(self.file_dict.keys())
-        executable = which("pmd") or which("run.sh")
-        arguments = ("bash", executable, "cpd", "--skip-lexical-errors",
-                     "--minimum-tokens", str(minimum_tokens),
-                     "--language", self.lowered_lang_dict[language],
-                     "--files", files,
-                     "--format", "xml")
+        files = ','.join(self.file_dict.keys())
+        executable = which('pmd') or which('run.sh')
+        arguments = ('bash', executable, 'cpd', '--skip-lexical-errors',
+                     '--minimum-tokens', str(minimum_tokens),
+                     '--language', self.lowered_lang_dict[language],
+                     '--files', files,
+                     '--format', 'xml')
 
         arguments += tuple(option
                            for option, enable in options.items()
@@ -121,10 +121,10 @@ class CPDBear(GlobalBear):
                                                 end_line=end_line))
 
                 yield Result(
-                    self, "Duplicate code found.", affected_code,
+                    self, 'Duplicate code found.', affected_code,
                     additional_info=(
-                        "Duplicate code is an indicator "
-                        "that you have more code than you need. Consider"
-                        " refactor your code to remove one of the"
-                        " occurrences. For more information go here:"
-                        "http://tinyurl.com/coala-clone"))
+                        'Duplicate code is an indicator '
+                        'that you have more code than you need. Consider'
+                        ' refactor your code to remove one of the'
+                        ' occurrences. For more information go here:'
+                        'http://tinyurl.com/coala-clone'))

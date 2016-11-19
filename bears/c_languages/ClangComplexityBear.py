@@ -100,19 +100,19 @@ class ClangComplexityBear(LocalBear):
                 yield Result(
                     self,
                     "The function '{function}' should be simplified. Its "
-                    "cyclomatic complexity is {complexity} which exceeds "
-                    "maximal recommended value "
-                    "of {rec_value}.".format(
+                    'cyclomatic complexity is {complexity} which exceeds '
+                    'maximal recommended value '
+                    'of {rec_value}.'.format(
                         function=cursor.displayname,
                         complexity=complexity,
                         rec_value=cyclomatic_complexity),
                     affected_code=affected_code,
                     additional_info=(
-                        "The cyclomatic complexity is a metric that measures "
-                        "how complicated a function is by counting branches "
-                        "and exits of each function.\n\n"
-                        "Your function seems to be complicated and should be "
-                        "refactored so that it can be understood by other "
-                        "people easily.\n\nSee "
-                        "<http://www.wikiwand.com/en/Cyclomatic_complexity>"
-                        " for more information."))
+                        'The cyclomatic complexity is a metric that measures '
+                        'how complicated a function is by counting branches '
+                        'and exits of each function.\n\n'
+                        'Your function seems to be complicated and should be '
+                        'refactored so that it can be understood by other '
+                        'people easily.\n\nSee '
+                        '<http://www.wikiwand.com/en/Cyclomatic_complexity>'
+                        ' for more information.'))

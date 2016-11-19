@@ -4,7 +4,7 @@ import yaml
 
 
 @linter(executable='yamllint',
-        output_format="regex",
+        output_format='regex',
         output_regex=r'.+:(?P<line>\d+):(?P<column>\d+): '
                      r'\[(?P<severity>error|warning)\] (?P<message>.+)')
 class YAMLLintBear:
@@ -15,7 +15,7 @@ class YAMLLintBear:
     <http://yamllint.readthedocs.org/en/latest/rules.html>.
     """
 
-    LANGUAGES = {"YAML"}
+    LANGUAGES = {'YAML'}
     REQUIREMENTS = {PipRequirement('yamllint', '1.*')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}

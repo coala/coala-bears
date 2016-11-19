@@ -33,17 +33,17 @@ class AnnotationBear(LocalBear):
         try:
             lang_dict = LanguageDefinition(language, coalang_dir=coalang_dir)
         except FileNotFoundError:
-            content = ("coalang specification for " + language +
-                       " not found.")
+            content = ('coalang specification for ' + language +
+                       ' not found.')
             yield HiddenResult(self, content)
             return
 
-        string_delimiters = dict(lang_dict["string_delimiters"])
+        string_delimiters = dict(lang_dict['string_delimiters'])
         multiline_string_delimiters = dict(
-            lang_dict["multiline_string_delimiters"])
+            lang_dict['multiline_string_delimiters'])
         multiline_comment_delimiters = dict(
-            lang_dict["multiline_comment_delimiters"])
-        comment_delimiter = dict(lang_dict["comment_delimiter"])
+            lang_dict['multiline_comment_delimiters'])
+        comment_delimiter = dict(lang_dict['comment_delimiter'])
         string_ranges = comment_ranges = ()
         try:
             string_ranges, comment_ranges = self.find_annotation_ranges(
@@ -58,7 +58,7 @@ class AnnotationBear(LocalBear):
             yield Result(self, str(e), severity=RESULT_SEVERITY.MAJOR,
                          affected_code=(e.code,))
 
-        content = {"strings": string_ranges, "comments": comment_ranges}
+        content = {'strings': string_ranges, 'comments': comment_ranges}
         yield HiddenResult(self, content)
 
     def find_annotation_ranges(self,
@@ -245,7 +245,7 @@ class AnnotationBear(LocalBear):
         end_position = get_end_position(string_end,
                                         text,
                                         position + len(string_start) - 1)
-        newline = get_end_position("\n", text, position)
+        newline = get_end_position('\n', text, position)
         if newline == -1:
             newline = len(text)
         if end_position == -1:
@@ -278,7 +278,7 @@ class AnnotationBear(LocalBear):
             A SourceRange object identifying the range of the single-line
             comment and the end_position of the comment as an integer.
         """
-        end_position = get_end_position("\n",
+        end_position = get_end_position('\n',
                                         text,
                                         position + len(comment) - 1)
         if end_position == -1:
@@ -303,5 +303,5 @@ def get_end_position(end_marker, text, position):
 class NoCloseError(Exception):
 
     def __init__(self, annotation, code):
-        Exception.__init__(self, annotation + " has no closure")
+        Exception.__init__(self, annotation + ' has no closure')
         self.code = code

@@ -11,7 +11,7 @@ class CSVLintBear:
     Verifies using ``csvlint`` if ``.csv`` files are valid CSV or not.
     """
 
-    LANGUAGES = {"CSV"}
+    LANGUAGES = {'CSV'}
     REQUIREMENTS = {GemRequirement('csvlint')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
