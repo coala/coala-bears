@@ -1,4 +1,3 @@
-import collections
 import queue
 import unittest
 from contextlib import contextmanager

@@ -26,7 +26,8 @@ class LanguageToolBear(LocalBear):
             return "java is not installed."
         else:
             try:
-                from language_check import LanguageTool, correct
+                from language_check import LanguageTool
+                from language_check import correct
                 return True
             except ImportError:  # pragma: no cover
                 return "Please install the `language-check` pip package."
