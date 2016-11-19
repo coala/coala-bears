@@ -22,7 +22,7 @@ class VerilogLintBear:
     This is done using the ``--lint-only`` command. For more information visit
     <http://www.veripool.org/projects/verilator/wiki/Manual-verilator>.
     """
-    LANGUAGES = {"Verilog"}
+    LANGUAGES = {'Verilog'}
     REQUIREMENTS = {DistributionRequirement(apt_get='verilator')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}

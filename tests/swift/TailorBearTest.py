@@ -4,8 +4,8 @@ from bears.swift.TailorBear import TailorBear
 from tests.LocalBearTestHelper import verify_local_bear
 
 tailorconfig = os.path.join(os.path.dirname(__file__),
-                            "test_files",
-                            "tailor.yml")
+                            'test_files',
+                            'tailor.yml')
 
 good_file = """class UpperCamelCase {
   var x: Int
@@ -28,18 +28,18 @@ TailorBearWithoutConfig = verify_local_bear(TailorBear,
                                             valid_files=(good_file,),
                                             invalid_files=(bad_file,),
                                             tempfile_kwargs={
-                                                "suffix": ".swift"})
+                                                'suffix': '.swift'})
 
 TailorBearWithConfig = verify_local_bear(TailorBear,
                                          valid_files=(bad_file,),
                                          invalid_files=(),
                                          settings={
-                                             "tailor_config": tailorconfig},
-                                         tempfile_kwargs={"suffix": ".swift"})
+                                             'tailor_config': tailorconfig},
+                                         tempfile_kwargs={'suffix': '.swift'})
 
 TailorBearWithSetting = verify_local_bear(TailorBear,
                                           valid_files=(),
                                           invalid_files=(long_class_file,),
                                           settings={
-                                              "max_class_length": 2},
-                                          tempfile_kwargs={"suffix": ".swift"})
+                                              'max_class_length': 2},
+                                          tempfile_kwargs={'suffix': '.swift'})

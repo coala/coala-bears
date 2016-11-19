@@ -11,18 +11,18 @@ e
 
 LineLengthBearTest = verify_local_bear(LineLengthBear,
                                        valid_files=(test_file,),
-                                       invalid_files=("testa",
-                                                      "test line"),
-                                       settings={"max_line_length": "4"})
+                                       invalid_files=('testa',
+                                                      'test line'),
+                                       settings={'max_line_length': '4'})
 
 
 LineLengthBearIgnoreRegexTest = verify_local_bear(
     LineLengthBear,
     valid_files=(test_file,
-                 "http://a.domain.de",
-                 "ftp://a.domain.de",
-                 "hi there ftp://!"),
-    invalid_files=("http not a link",),
+                 'http://a.domain.de',
+                 'ftp://a.domain.de',
+                 'hi there ftp://!'),
+    invalid_files=('http not a link',),
     settings={
-        "max_line_length": "4",
-        "ignore_length_regex": "http://, https://, ftp://"})
+        'max_line_length': '4',
+        'ignore_length_regex': 'http://, https://, ftp://'})

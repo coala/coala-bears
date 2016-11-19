@@ -21,38 +21,38 @@ class MypyBearTest(LocalBearTestHelper):
 
     def test_variable(self):
         self.check_validity(self.uut,
-                            ["a = 1  # type: int"], valid=True)
+                            ['a = 1  # type: int'], valid=True)
         self.check_validity(self.uut,
                             ["a = 'abc'  # type: int"], valid=False)
 
     def test_call_sum(self):
         self.check_validity(self.uut,
-                            ["sum([1, 2, 3])"], valid=True)
+                            ['sum([1, 2, 3])'], valid=True)
         self.check_validity(self.uut,
-                            ["sum(1, 2, 3)"], valid=False)
+                            ['sum(1, 2, 3)'], valid=False)
 
     def test_py2(self):
         self.check_validity(self.uut,
-                            ["print(123)"], valid=True)
+                            ['print(123)'], valid=True)
         self.check_validity(self.uut,
-                            ["print 123"], valid=False)
+                            ['print 123'], valid=False)
         self.section.append(Setting('language', 'Python 2'))
         self.check_validity(self.uut,
-                            ["print 123"], valid=True)
+                            ['print 123'], valid=True)
 
     def test_py2_version(self):
         self.check_validity(self.uut,
-                            ["print(123)"], valid=True)
+                            ['print(123)'], valid=True)
         self.check_validity(self.uut,
-                            ["print 123"], valid=False)
+                            ['print 123'], valid=False)
         self.section.append(Setting('python_version', '2.7'))
         self.check_validity(self.uut,
-                            ["print 123"], valid=True)
+                            ['print 123'], valid=True)
 
     def test_bad_language(self):
         self.section.append(Setting('language', 'Piet'))
         self.check_validity(self.uut,
-                            ["1 + 1"], valid=True)
+                            ['1 + 1'], valid=True)
         while not self.queue.empty():
             message = self.queue.get()
             msg = ('Language needs to be "Python", "Python 2" or '

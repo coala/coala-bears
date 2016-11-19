@@ -22,7 +22,7 @@ class PyLintBear:
     Checks the code with pylint. This will run pylint over each file
     separately.
     """
-    LANGUAGES = {"Python", "Python 2", "Python 3"}
+    LANGUAGES = {'Python', 'Python 2', 'Python 3'}
     REQUIREMENTS = {PipRequirement('pylint', '1.*')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
@@ -34,8 +34,8 @@ class PyLintBear:
     def create_arguments(filename, file, config_file,
                          pylint_disable: typed_list(str)=None,
                          pylint_enable: typed_list(str)=None,
-                         pylint_cli_options: str="",
-                         pylint_rcfile: str=""):
+                         pylint_cli_options: str='',
+                         pylint_rcfile: str=''):
         """
         :param pylint_disable:     Disable the message, report, category or
                                    checker with the given id(s).

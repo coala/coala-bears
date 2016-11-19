@@ -34,14 +34,14 @@ main() {
 DartLintBearTest = verify_local_bear(DartLintBear,
                                      valid_files=(good_file,),
                                      invalid_files=(bad_file,),
-                                     tempfile_kwargs={"suffix": ".dart"})
+                                     tempfile_kwargs={'suffix': '.dart'})
 
 
 @generate_skip_decorator(DartLintBear)
 class DartLintBearConfigTest(LocalBearTestHelper):
 
     def test_config_failure_use_spaces(self):
-        section = Section("name")
+        section = Section('name')
         section.append(Setting('use_spaces', False))
         bear = DartLintBear(section, Queue())
 
@@ -49,7 +49,7 @@ class DartLintBearConfigTest(LocalBearTestHelper):
             self.check_validity(bear, [], good_file)
 
     def test_config_failure_wrong_indent_size(self):
-        section = Section("name")
+        section = Section('name')
         section.append(Setting('indent_size', 3))
         bear = DartLintBear(section, Queue())
 

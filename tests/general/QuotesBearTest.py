@@ -6,7 +6,8 @@ from coalib.results.HiddenResult import HiddenResult, Result
 from bears.general.QuotesBear import QuotesBear
 from coalib.results.SourceRange import SourceRange
 from coalib.settings.Section import Section
-from coalib.testing.LocalBearTestHelper import verify_local_bear, execute_bear
+from coalib.testing.LocalBearTestHelper import execute_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 
 class QuotesBearDiffTest(unittest.TestCase):
@@ -46,7 +47,7 @@ class QuotesBearDiffTest(unittest.TestCase):
         }
 
     def test_error_handling(self):
-        dep_results = {'AnnotationBear': [Result("test", "test")]}
+        dep_results = {'AnnotationBear': [Result('test', 'test')]}
         with execute_bear(self.uut, self.filename, self.double_quote_file,
                           dependency_results=dep_results) as results:
             self.assertEqual(len(results), 0)
@@ -76,7 +77,7 @@ class QuotesBearDiffTest(unittest.TestCase):
                              '+++ \n'
                              '@@ -2,5 +2,5 @@\n'
                              " '''\n"
-                             " Multiline string\n"
+                             ' Multiline string\n'
                              " '''\n"
                              "-'a string with single quotes!'\n"
                              '+"a string with single quotes!"\n'
@@ -92,7 +93,7 @@ class QuotesBearDiffTest(unittest.TestCase):
                              '+++ \n'
                              '@@ -2,5 +2,5 @@\n'
                              " '''\n"
-                             " Multiline string\n"
+                             ' Multiline string\n'
                              " '''\n"
                              '-"a string with double quotes!"\n'
                              "+'a string with double quotes!'\n"

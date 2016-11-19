@@ -12,7 +12,7 @@ class DartLintBear:
     This bear expects dart commands to be on your ``PATH``. Please ensure
     /path/to/dart-sdk/bin is in your ``PATH``.
     """
-    LANGUAGES = {"Dart"}
+    LANGUAGES = {'Dart'}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
@@ -28,7 +28,7 @@ class DartLintBear:
         # see https://github.com/dart-lang/dart_style/issues/261
         if (indent_size != 2 or not use_spaces):
             raise ValueError(
-                "DartLintBear only supports `use_spaces=True` "
-                "and `indent_size=2`"
+                'DartLintBear only supports `use_spaces=True` '
+                'and `indent_size=2`'
             )
         return filename,

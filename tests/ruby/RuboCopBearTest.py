@@ -20,8 +20,8 @@ RuboCopBearTest = verify_local_bear(RuboCopBear,
 
 # Testing Config
 rubocop_config = os.path.join(os.path.dirname(__file__),
-                              "test_files",
-                              "rubocop_config.yml")
+                              'test_files',
+                              'rubocop_config.yml')
 
 
 # bad file becomes good and vice-versa
@@ -29,7 +29,7 @@ RuboCopBearConfigFileTest = verify_local_bear(
                                 RuboCopBear,
                                 valid_files=(bad_file,),
                                 invalid_files=(good_file,),
-                                settings={"rubocop_config": rubocop_config})
+                                settings={'rubocop_config': rubocop_config})
 
 # Testing settings
 another_good_file = """
@@ -48,10 +48,10 @@ RuboCopBearSettingsTest = verify_local_bear(
                               RuboCopBear,
                               valid_files=(another_good_file,),
                               invalid_files=(another_bad_file,),
-                              settings={"indent_size": 1})
+                              settings={'indent_size': 1})
 
 RuboCopBearSettingsTest = verify_local_bear(
                               RuboCopBear,
                               valid_files=(bad_file,),
                               invalid_files=(good_file,),
-                              settings={"method_name_case": "camel"})
+                              settings={'method_name_case': 'camel'})

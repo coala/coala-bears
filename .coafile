@@ -10,10 +10,10 @@ use_spaces = True
 # will be executed sequentially; also we need the LineLengthBear to double
 # check the line length because PEP8Bear sometimes isn't able to correct the
 # linelength.
-bears = SpaceConsistencyBear
-default_actions =
-    SpaceConsistencyBear: ApplyPatchAction,
-    PyUnusedCodeBear: ApplyPatchAction
+bears = SpaceConsistencyBear, PyUnusedCodeBear, QuotesBear
+language = python
+preferred_quotation = '
+default_actions = *: ApplyPatchAction
 
 [autopep8]
 bears = PEP8Bear

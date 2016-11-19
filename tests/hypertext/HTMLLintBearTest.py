@@ -12,18 +12,18 @@ test_file = """
 HTMLLintBearTest = verify_local_bear(HTMLLintBear,
                                      valid_files=(),
                                      invalid_files=(test_file,),
-                                     tempfile_kwargs={"suffix": ".html"})
+                                     tempfile_kwargs={'suffix': '.html'})
 
 HTMLLintBearIgnoreTest = verify_local_bear(
     HTMLLintBear,
     valid_files=(test_file,),
     invalid_files=(),
     settings={'htmllint_ignore': 'optional_tag'},
-    tempfile_kwargs={"suffix": ".html"})
+    tempfile_kwargs={'suffix': '.html'})
 
 HTMLLintBearIgnoreQuotationTest = verify_local_bear(
     HTMLLintBear,
     valid_files=(),
     invalid_files=(test_file,),
     settings={'htmllint_ignore': 'quotation'},
-    tempfile_kwargs={"suffix": ".html"})
+    tempfile_kwargs={'suffix': '.html'})

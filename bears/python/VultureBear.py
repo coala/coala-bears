@@ -11,7 +11,7 @@ class VultureBear:
 
     See <https://bitbucket.org/jendrikseipp/vulture> for more information.
     """
-    LANGUAGES = {"Python", "Python 3"}
+    LANGUAGES = {'Python', 'Python 3'}
     REQUIREMENTS = {PipRequirement('happiness', '0.10.0')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}

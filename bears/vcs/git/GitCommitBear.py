@@ -14,7 +14,7 @@ from coalib.settings.Setting import typed_list
 
 
 class GitCommitBear(GlobalBear):
-    LANGUAGES = {"Git"}
+    LANGUAGES = {'Git'}
     REQUIREMENTS = {PipRequirement('nltk', '3.1.*')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
@@ -24,8 +24,8 @@ class GitCommitBear(GlobalBear):
 
     @classmethod
     def check_prerequisites(cls):
-        if shutil.which("git") is None:
-            return "git is not installed."
+        if shutil.which('git') is None:
+            return 'git is not installed.'
         else:
             return True
 
@@ -33,20 +33,20 @@ class GitCommitBear(GlobalBear):
     def get_shortlog_checks_metadata(cls):
         return FunctionMetadata.from_function(
             cls.check_shortlog,
-            omit={"self", "shortlog"})
+            omit={'self', 'shortlog'})
 
     @classmethod
     def get_body_checks_metadata(cls):
         return FunctionMetadata.from_function(
             cls.check_body,
-            omit={"self", "body"})
+            omit={'self', 'body'})
 
     @classmethod
     def get_metadata(cls):
         return FunctionMetadata.merge(
             FunctionMetadata.from_function(
                 cls.run,
-                omit={"self", "dependency_results"}),
+                omit={'self', 'dependency_results'}),
             cls.get_shortlog_checks_metadata(),
             cls.get_body_checks_metadata())
 
@@ -61,17 +61,17 @@ class GitCommitBear(GlobalBear):
                                            allowed or not.
         """
         with change_directory(self.get_config_dir() or os.getcwd()):
-            stdout, stderr = run_shell_command("git log -1 --pretty=%B")
+            stdout, stderr = run_shell_command('git log -1 --pretty=%B')
 
         if stderr:
-            self.err("git:", repr(stderr))
+            self.err('git:', repr(stderr))
             return
 
-        stdout = stdout.rstrip("\n").splitlines()
+        stdout = stdout.rstrip('\n').splitlines()
 
         if len(stdout) == 0:
             if not allow_empty_commit_message:
-                yield Result(self, "HEAD commit has no message.")
+                yield Result(self, 'HEAD commit has no message.')
             return
 
         yield from self.check_shortlog(
@@ -83,7 +83,7 @@ class GitCommitBear(GlobalBear):
 
     def check_shortlog(self, shortlog,
                        shortlog_length: int=50,
-                       shortlog_regex: str="",
+                       shortlog_regex: str='',
                        shortlog_trailing_period: bool=None,
                        shortlog_imperative_check: bool=True,
                        shortlog_wip_check: bool=True):
@@ -104,25 +104,25 @@ class GitCommitBear(GlobalBear):
         diff = len(shortlog) - shortlog_length
         if diff > 0:
             yield Result(self,
-                         "Shortlog of the HEAD commit contains {} "
-                         "character(s). This is {} character(s) longer than "
-                         "the limit ({} > {}).".format(
+                         'Shortlog of the HEAD commit contains {} '
+                         'character(s). This is {} character(s) longer than '
+                         'the limit ({} > {}).'.format(
                               len(shortlog), diff,
                               len(shortlog), shortlog_length))
 
-        if (shortlog[-1] != ".") == shortlog_trailing_period:
+        if (shortlog[-1] != '.') == shortlog_trailing_period:
             yield Result(self,
-                         "Shortlog of HEAD commit contains no period at end."
+                         'Shortlog of HEAD commit contains no period at end.'
                          if shortlog_trailing_period else
-                         "Shortlog of HEAD commit contains a period at end.")
+                         'Shortlog of HEAD commit contains a period at end.')
 
         if shortlog_regex:
             match = re.fullmatch(shortlog_regex, shortlog)
             if not match:
                 yield Result(
                     self,
-                    "Shortlog of HEAD commit does not match given regex:"
-                    " {regex}".format(regex=shortlog_regex))
+                    'Shortlog of HEAD commit does not match given regex:'
+                    ' {regex}'.format(regex=shortlog_regex))
 
         if shortlog_imperative_check:
             colon_pos = shortlog.find(':')
@@ -136,11 +136,11 @@ class GitCommitBear(GlobalBear):
                              "Shortlog of HEAD commit isn't in imperative "
                              "mood! Bad words are '{}'".format(bad_word))
         if shortlog_wip_check:
-            if "wip" in shortlog.lower()[:4]:
+            if 'wip' in shortlog.lower()[:4]:
                 yield Result(
                     self,
-                    "This commit seems to be marked as work in progress and "
-                    "should not be used in production. Treat carefully.")
+                    'This commit seems to be marked as work in progress and '
+                    'should not be used in production. Treat carefully.')
 
     def check_imperative(self, paragraph):
         """
@@ -167,9 +167,9 @@ class GitCommitBear(GlobalBear):
             else:
                 return None
         except LookupError as error:  # pragma: no cover
-            self.err("NLTK data missing, install by running following "
-                     "commands `python3 -m nltk.downloader punkt"
-                     " maxent_treebank_pos_tagger averaged_perceptron_tagger`")
+            self.err('NLTK data missing, install by running following '
+                     'commands `python3 -m nltk.downloader punkt'
+                     ' maxent_treebank_pos_tagger averaged_perceptron_tagger`')
             return
 
     def check_body(self, body,
@@ -189,18 +189,18 @@ class GitCommitBear(GlobalBear):
         """
         if len(body) == 0:
             if force_body:
-                yield Result(self, "No commit message body at HEAD.")
+                yield Result(self, 'No commit message body at HEAD.')
             return
 
-        if body[0] != "":
-            yield Result(self, "No newline found between shortlog and body at "
-                               "HEAD commit. Please add one.")
+        if body[0] != '':
+            yield Result(self, 'No newline found between shortlog and body at '
+                               'HEAD commit. Please add one.')
             return
 
         ignore_regexes = [re.compile(regex) for regex in ignore_length_regex]
         if any((len(line) > body_line_length and
                 not any(regex.search(line) for regex in ignore_regexes))
                for line in body[1:]):
-            yield Result(self, "Body of HEAD commit contains too long lines. "
-                               "Commit body lines should not exceed {} "
-                               "characters.".format(body_line_length))
+            yield Result(self, 'Body of HEAD commit contains too long lines. '
+                               'Commit body lines should not exceed {} '
+                               'characters.'.format(body_line_length))

@@ -16,7 +16,7 @@ class MarkdownBear:
     below.
     """
 
-    LANGUAGES = {"Markdown"}
+    LANGUAGES = {'Markdown'}
     REQUIREMENTS = {NpmRequirement('remark-cli', '2')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
@@ -25,15 +25,15 @@ class MarkdownBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file,
-                         markdown_bullets: str="-",
+                         markdown_bullets: str='-',
                          markdown_closed_headings: bool=False,
                          markdown_setext_headings: bool=False,
-                         markdown_emphasis: str="*",
-                         markdown_strong: str="*",
+                         markdown_emphasis: str='*',
+                         markdown_strong: str='*',
                          markdown_encode_entities: bool=False,
-                         markdown_codefence: str="`",
+                         markdown_codefence: str='`',
                          markdown_fences: bool=True,
-                         markdown_list_indent: str="1",
+                         markdown_list_indent: str='1',
                          markdown_loose_tables: bool=False,
                          markdown_spaced_tables: bool=True,
                          markdown_list_increment: bool=True,
@@ -83,22 +83,22 @@ class MarkdownBear:
             The number of times the horizontal rule character will be repeated.
         """
         remark_configs = {
-            "bullet": markdown_bullets,                         # - or *
-            "closeAtx": markdown_closed_headings,               # Bool
-            "setext": markdown_setext_headings,                 # Bool
-            "emphasis": markdown_emphasis,                      # char (_ or *)
-            "strong": markdown_strong,                          # char (_ or *)
-            "entities": markdown_encode_entities,               # Bool
-            "fence": markdown_codefence,                        # char (~ or `)
-            "fences": markdown_fences,                          # Bool
-            "listItemIndent": markdown_list_indent,             # int or "tab"
+            'bullet': markdown_bullets,                         # - or *
+            'closeAtx': markdown_closed_headings,               # Bool
+            'setext': markdown_setext_headings,                 # Bool
+            'emphasis': markdown_emphasis,                      # char (_ or *)
+            'strong': markdown_strong,                          # char (_ or *)
+            'entities': markdown_encode_entities,               # Bool
+            'fence': markdown_codefence,                        # char (~ or `)
+            'fences': markdown_fences,                          # Bool
+            'listItemIndent': markdown_list_indent,             # int or "tab"
                                                                 # or "mixed"
-            "looseTable": markdown_loose_tables,                # Bool
-            "spacedTable": markdown_spaced_tables,              # Bool
-            "incrementListMarker": markdown_list_increment,     # Bool
-            "rule": markdown_horizontal_rule,                   # - or * or _
-            "ruleSpaces": markdown_horizontal_rule_spaces,      # Bool
-            "ruleRepetition": markdown_horizontal_rule_repeat,  # int
+            'looseTable': markdown_loose_tables,                # Bool
+            'spacedTable': markdown_spaced_tables,              # Bool
+            'incrementListMarker': markdown_list_increment,     # Bool
+            'rule': markdown_horizontal_rule,                   # - or * or _
+            'ruleSpaces': markdown_horizontal_rule_spaces,      # Bool
+            'ruleRepetition': markdown_horizontal_rule_repeat,  # int
         }
 
         config_json = json.dumps(remark_configs)

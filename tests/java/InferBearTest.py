@@ -24,4 +24,4 @@ class InferBad {
 InferBearTest = verify_local_bear(InferBear,
                                   valid_files=(good_file,),
                                   invalid_files=(bad_file,),
-                                  tempfile_kwargs={"suffix": ".java"})
+                                  tempfile_kwargs={'suffix': '.java'})

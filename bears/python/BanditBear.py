@@ -13,7 +13,7 @@ class BanditBear:
     Performs security analysis on Python source code, utilizing the ``ast``
     module from the Python standard library.
     """
-    LANGUAGES = {"Python", "Python 2", "Python 3"}
+    LANGUAGES = {'Python', 'Python 2', 'Python 3'}
     REQUIREMENTS = {PipRequirement('bandit', '1.1')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}

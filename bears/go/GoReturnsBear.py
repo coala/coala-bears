@@ -10,7 +10,7 @@ class GoReturnsBear:
     """
     Proposes corrections of Go code using ``goreturns``.
     """
-    LANGUAGES = {"Go"}
+    LANGUAGES = {'Go'}
     REQUIREMENTS = {GoRequirement(
         package='sourcegraph.com/sqs/goreturns', flag='-u')}
     AUTHORS = {'The coala developers'}

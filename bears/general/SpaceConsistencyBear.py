@@ -6,7 +6,7 @@ from coalib.results.Result import Result
 
 
 class SpaceConsistencyBear(LocalBear):
-    LANGUAGES = {"All"}
+    LANGUAGES = {'All'}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
@@ -46,49 +46,49 @@ class SpaceConsistencyBear(LocalBear):
                 # the last line could potentially not have one. So we don't
                 # need to check whether the current line_number is the last
                 # one.
-                if replacement[-1] != "\n":
-                    replacement += "\n"
-                    result_texts.append("No newline at EOF.")
+                if replacement[-1] != '\n':
+                    replacement += '\n'
+                    result_texts.append('No newline at EOF.')
                     additional_info_texts.append(
                         "A trailing newline character ('\\n') is missing from "
-                        "your file. "
-                        "<http://stackoverflow.com/a/5813359/3212182> gives "
-                        "more information about why you might need one.")
+                        'your file. '
+                        '<http://stackoverflow.com/a/5813359/3212182> gives '
+                        'more information about why you might need one.')
 
             if not allow_trailing_whitespace:
-                replacement = replacement.rstrip(" \t\n") + "\n"
-                if replacement != line.rstrip("\n") + "\n":
-                    result_texts.append("Trailing whitespaces.")
+                replacement = replacement.rstrip(' \t\n') + '\n'
+                if replacement != line.rstrip('\n') + '\n':
+                    result_texts.append('Trailing whitespaces.')
                     additional_info_texts.append(
-                        "Your source code contains trailing whitespaces. "
-                        "Those usually have no meaning. Please consider "
-                        "removing them.")
+                        'Your source code contains trailing whitespaces. '
+                        'Those usually have no meaning. Please consider '
+                        'removing them.')
 
             if use_spaces:
                 pre_replacement = replacement
                 replacement = spacing_helper.replace_tabs_with_spaces(
                     replacement)
                 if replacement != pre_replacement:
-                    result_texts.append("Tabs used instead of spaces.")
+                    result_texts.append('Tabs used instead of spaces.')
             else:
                 pre_replacement = replacement
                 replacement = spacing_helper.replace_spaces_with_tabs(
                     replacement)
                 if replacement != pre_replacement:
-                    result_texts.append("Spaces used instead of tabs.")
+                    result_texts.append('Spaces used instead of tabs.')
 
             if len(result_texts) > 0:
                 diff = Diff(file)
                 diff.change_line(line_number, line, replacement)
-                inconsistencies = "".join("\n- " + string
+                inconsistencies = ''.join('\n- ' + string
                                           for string in result_texts)
                 yield Result.from_values(
                     self,
-                    "Line contains following spacing inconsistencies:"
+                    'Line contains following spacing inconsistencies:'
                     + inconsistencies,
                     diffs={filename: diff},
                     file=filename,
                     line=line_number,
-                    additional_info="\n\n".join(additional_info_texts))
+                    additional_info='\n\n'.join(additional_info_texts))
                 result_texts = []
                 additional_info_texts = []

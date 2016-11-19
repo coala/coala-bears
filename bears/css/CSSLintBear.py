@@ -12,7 +12,7 @@ class CSSLintBear:
     Check code for syntactical or semantical problems that might lead to
     problems or inefficiencies.
     """
-    LANGUAGES = {"CSS"}
+    LANGUAGES = {'CSS'}
     REQUIREMENTS = {NpmRequirement('csslint', '1')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}

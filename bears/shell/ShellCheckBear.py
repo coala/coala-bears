@@ -1,7 +1,7 @@
 from coalib.bearlib.abstractions.Linter import linter
 
 
-@linter(executable='shellcheck', output_format="regex",
+@linter(executable='shellcheck', output_format='regex',
         output_regex=r'.+:(?P<line>\d+):(?P<column>\d+): '
                      r'(?P<severity>error|warning|info): (?P<message>.+)')
 class ShellCheckBear:
@@ -13,7 +13,7 @@ class ShellCheckBear:
     <https://github.com/koalaman/shellcheck/blob/master/README.md>.
     """
 
-    LANGUAGES = {"sh", "bash", "ksh", "dash"}
+    LANGUAGES = {'sh', 'bash', 'ksh', 'dash'}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

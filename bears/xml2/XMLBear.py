@@ -29,7 +29,7 @@ class XMLBear:
 
     See http://xmlsoft.org/xmllint.html
     """
-    LANGUAGES = {"XML"}
+    LANGUAGES = {'XML'}
     REQUIREMENTS = {DistributionRequirement(apt_get='libxml2')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
@@ -63,7 +63,7 @@ class XMLBear:
                     output_regex=self._output_regex),
                 self.process_output_corrected(
                     output[0], filename, file,
-                    result_message="XML can be formatted better."))
+                    result_message='XML can be formatted better.'))
         else:
             # Return issues from stderr if stdout is empty
             return self.process_output_regex(

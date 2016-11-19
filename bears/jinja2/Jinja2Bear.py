@@ -19,18 +19,18 @@ def generate_spacing_diff(file, filename, line, line_number,
     """
     diff = Diff(file)
 
-    content_before = line[:match_object.start("open")]
-    content_after = line[match_object.end("close"):]
+    content_before = line[:match_object.start('open')]
+    content_after = line[match_object.end('close'):]
 
-    spacing = " " * required_spacing
+    spacing = ' ' * required_spacing
     replacement = (
-        "{before}{open}{spacing}{content}{spacing}{close}{after}".format(
+        '{before}{open}{spacing}{content}{spacing}{close}{after}'.format(
             before=content_before,
             spacing=spacing,
             after=content_after,
-            content=match_object.group("content").strip(),
-            open=match_object.group("open"),
-            close=match_object.group("close")))
+            content=match_object.group('content').strip(),
+            open=match_object.group('open'),
+            close=match_object.group('close')))
     diff.change_line(
         line_number,
         line,
@@ -55,16 +55,16 @@ def generate_label_diff(file, filename, line, line_number,
     """
     diff = Diff(file)
 
-    content_before = line[:match_object.end("close")]
+    content_before = line[:match_object.end('close')]
 
-    suffix_start = match_object.end("close")
+    suffix_start = match_object.end('close')
     # if a label is there, we cut it out, by starting the kept suffix after it
-    if match_object.group("label") is not None:
-        suffix_start = match_object.end("label")
+    if match_object.group('label') is not None:
+        suffix_start = match_object.end('label')
 
     content_after = line[suffix_start:]
 
-    replacement = "{before}{label}{after}".format(
+    replacement = '{before}{label}{after}'.format(
         before=content_before,
         after=content_after,
         label=expected_label
@@ -102,7 +102,7 @@ def has_required_spacing(string, required_spacing):
 
 
 class Jinja2Bear(LocalBear):
-    LANGUAGES = {"Jinja2"}
+    LANGUAGES = {'Jinja2'}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
@@ -111,12 +111,12 @@ class Jinja2Bear(LocalBear):
     CAN_FIX = {'Formatting', 'Documentation'}
 
     VARIABLE_REGEX = re.compile(
-        r"(?P<open>{{)(?P<content>.*?)(?P<close>}})")
+        r'(?P<open>{{)(?P<content>.*?)(?P<close>}})')
     CONTROL_START_REGEX = re.compile(
-        r"(?P<open>{%)(?P<content>\s*(for|if).*?)(?P<close>%})")
+        r'(?P<open>{%)(?P<content>\s*(for|if).*?)(?P<close>%})')
     CONTROL_END_REGEX = re.compile(
-        r"(?P<open>{%)(?P<content>\s*end(for|if)\s*?)"
-        r"(?P<close>%})(?P<label>{#.*?#})?")
+        r'(?P<open>{%)(?P<content>\s*end(for|if)\s*?)'
+        r'(?P<close>%})(?P<label>{#.*?#})?')
 
     def handle_control_spacing_issue(self, file, filename, line, line_number,
                                      control_spacing, match_object):
@@ -135,8 +135,8 @@ class Jinja2Bear(LocalBear):
             file, filename, line, line_number, match_object, control_spacing)
         return Result.from_values(
             origin=self,
-            message="Control blocks should be spaced with "
-                    "`{0}` spaces on each side.".format(
+            message='Control blocks should be spaced with '
+                    '`{0}` spaces on each side.'.format(
                         control_spacing),
             file=filename,
             line=line_number,
@@ -167,15 +167,15 @@ class Jinja2Bear(LocalBear):
             The number of spaces required on each side of a variable tag.
         """
         for m in self.VARIABLE_REGEX.finditer(line):
-            match = m.group("content")
+            match = m.group('content')
             if not has_required_spacing(match, variable_spacing):
                 diff = generate_spacing_diff(
                     file, filename, line, line_number, m,
                     variable_spacing)
                 yield Result.from_values(
                     origin=self,
-                    message="Variable blocks should be spaced with "
-                            "`{0}` spaces on each side.".format(
+                    message='Variable blocks should be spaced with '
+                            '`{0}` spaces on each side.'.format(
                                 variable_spacing),
                     file=filename,
                     line=line_number,
@@ -208,13 +208,13 @@ class Jinja2Bear(LocalBear):
         """
         for m in self.CONTROL_START_REGEX.finditer(line):
             # build the label which is expected at the end of this block
-            end_label = "{{#{spacing}{content}{spacing}#}}".format(
-                content=m.group("content").strip(),
-                spacing=" " * control_spacing)
+            end_label = '{{#{spacing}{content}{spacing}#}}'.format(
+                content=m.group('content').strip(),
+                spacing=' ' * control_spacing)
             self.control_stack.append((end_label, line_number))
 
             # check for spacing issues with this tag
-            if not has_required_spacing(m.group("content"), control_spacing):
+            if not has_required_spacing(m.group('content'), control_spacing):
                 yield self.handle_control_spacing_issue(
                     file, filename, line, line_number, control_spacing, m)
 
@@ -241,14 +241,14 @@ class Jinja2Bear(LocalBear):
             The number of spaces required on each side of a control tag.
         """
         for m in self.CONTROL_END_REGEX.finditer(line):
-            label = m.group("label")
+            label = m.group('label')
             try:
                 expected_label, start_in_line = self.control_stack.pop()
             except IndexError:
                 # an end tag without an opening tag
                 yield Result.from_values(
                     origin=self,
-                    message="Control end tag has no corresponding start",
+                    message='Control end tag has no corresponding start',
                     file=filename,
                     line=line_number,
                     column=m.start(0) + 1,
@@ -260,7 +260,7 @@ class Jinja2Bear(LocalBear):
                 continue
 
             # check for spacing issues with this tag
-            if not has_required_spacing(m.group("content"), control_spacing):
+            if not has_required_spacing(m.group('content'), control_spacing):
                 yield self.handle_control_spacing_issue(
                     file, filename, line, line_number, control_spacing, m)
 
@@ -270,7 +270,7 @@ class Jinja2Bear(LocalBear):
                     file, filename, line, line_number, m, expected_label)
                 yield Result.from_values(
                     origin=self,
-                    message="Unlabeled control end tag",
+                    message='Unlabeled control end tag',
                     file=filename,
                     line=line_number,
                     column=m.start(0) + 1,
@@ -282,12 +282,12 @@ class Jinja2Bear(LocalBear):
                     file, filename, line, line_number, m, expected_label)
                 yield Result.from_values(
                     origin=self,
-                    message="End tag label does not match expected label",
+                    message='End tag label does not match expected label',
                     file=filename,
                     line=line_number,
-                    column=m.start("label") + 1,
+                    column=m.start('label') + 1,
                     end_line=line_number,
-                    end_column=m.end("label") + 1,
+                    end_column=m.end('label') + 1,
                     diffs=diff)
 
     def check_for_empty_control_stack(self, filename):
@@ -301,7 +301,7 @@ class Jinja2Bear(LocalBear):
             for (_, line_number) in self.control_stack:
                 yield Result.from_values(
                     origin=self,
-                    message="Control start tag has no corresponding end",
+                    message='Control start tag has no corresponding end',
                     file=filename,
                     line=line_number,
                     severity=RESULT_SEVERITY.MAJOR)

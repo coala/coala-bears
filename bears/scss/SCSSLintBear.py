@@ -2,7 +2,7 @@ from coalib.bearlib.abstractions.Linter import linter
 from coalib.bears.requirements.GemRequirement import GemRequirement
 
 
-@linter(executable='scss-lint', output_format="regex",
+@linter(executable='scss-lint', output_format='regex',
         output_regex=r'.+:(?P<line>\d+)\s+(\[(?P<severity>.)\])\s*'
                      r'(?P<message>.*)')
 class SCSSLintBear:
@@ -12,7 +12,7 @@ class SCSSLintBear:
     More information is available at <https://github.com/brigade/scss-lint>.
     """
 
-    LANGUAGES = {"SCSS"}
+    LANGUAGES = {'SCSS'}
     REQUIREMENTS = {GemRequirement('scss-lint', '', 'false')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}

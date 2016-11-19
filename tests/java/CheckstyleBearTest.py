@@ -7,43 +7,44 @@ from bears.java import CheckstyleBear
 from tests.BearTestHelper import generate_skip_decorator
 from tests.LocalBearTestHelper import LocalBearTestHelper
 from coalib.settings.Section import Section
-from coalib.settings.Setting import path, Setting
+from coalib.settings.Setting import Setting
+from coalib.settings.Setting import path
 
 
 @generate_skip_decorator(CheckstyleBear.CheckstyleBear)
 class CheckstyleBearTest(LocalBearTestHelper):
 
     def setUp(self):
-        self.section = Section("test section")
+        self.section = Section('test section')
         self.uut = CheckstyleBear.CheckstyleBear(self.section, Queue())
-        test_files = os.path.join(os.path.dirname(__file__), "test_files")
-        self.good_file = os.path.join(test_files, "CheckstyleGood.java")
-        self.bad_file = os.path.join(test_files, "CheckstyleBad.java")
+        test_files = os.path.join(os.path.dirname(__file__), 'test_files')
+        self.good_file = os.path.join(test_files, 'CheckstyleGood.java')
+        self.bad_file = os.path.join(test_files, 'CheckstyleBad.java')
         self.empty_config = os.path.join(test_files,
-                                         "checkstyle_empty_config.xml")
+                                         'checkstyle_empty_config.xml')
 
     def test_run(self):
         self.check_validity(self.uut, [], self.good_file)
         self.check_validity(self.uut, [], self.bad_file, valid=False)
 
     def test_known_configs(self):
-        self.section["checkstyle_configs"] = "google"
+        self.section['checkstyle_configs'] = 'google'
         self.check_validity(self.uut, [], self.good_file)
 
     def test_config_failure_use_spaces(self):
-        self.section["checkstyle_configs"] = "google"
+        self.section['checkstyle_configs'] = 'google'
         self.section.append(Setting('use_spaces', False))
         with self.assertRaises(AssertionError):
             self.check_validity(self.uut, [], self.good_file)
 
     def test_config_failure_indent_size(self):
-        self.section["checkstyle_configs"] = "google"
+        self.section['checkstyle_configs'] = 'google'
         self.section.append(Setting('indent_size', 3))
         with self.assertRaises(AssertionError):
             self.check_validity(self.uut, [], self.good_file)
 
     def test_with_custom_configfile(self):
-        self.section["checkstyle_configs"] = self.empty_config
+        self.section['checkstyle_configs'] = self.empty_config
         self.check_validity(self.uut, [], self.good_file)
         self.check_validity(self.uut, [], self.bad_file)
 

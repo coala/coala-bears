@@ -15,7 +15,7 @@ class JSComplexityBear:
     provided by the NodeJS module ``complexity-report``.
     """
 
-    LANGUAGES = {"JavaScript"}
+    LANGUAGES = {'JavaScript'}
     REQUIREMENTS = {NpmRequirement('complexity-report', '2.0.0-alpha')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
@@ -31,7 +31,7 @@ class JSComplexityBear:
         """
         :param cc_threshold: Threshold value for cyclomatic complexity
         """
-        message = "{} has a cyclomatic complexity of {}."
+        message = '{} has a cyclomatic complexity of {}.'
         if output:
             try:
                 output = json.loads(output)
@@ -42,16 +42,16 @@ class JSComplexityBear:
                     groups = match.groupdict()
                     yield Result.from_values(
                         origin=self,
-                        message=groups["message"].strip(),
+                        message=groups['message'].strip(),
                         file=filename,
                         severity=RESULT_SEVERITY.MAJOR,
-                        line=int(groups["line"]))
+                        line=int(groups['line']))
                 return
-            for function in output["reports"][0]["functions"]:
-                if function["cyclomatic"] >= cc_threshold:
+            for function in output['reports'][0]['functions']:
+                if function['cyclomatic'] >= cc_threshold:
                     yield Result.from_values(
                         origin=self,
-                        message=message.format(function["name"],
-                                               function["cyclomatic"]),
+                        message=message.format(function['name'],
+                                               function['cyclomatic']),
                         file=filename,
-                        line=function["line"])
+                        line=function['line'])

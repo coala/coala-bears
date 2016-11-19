@@ -83,7 +83,7 @@ def add_param_docs(param_map):
 # so discard those. We're only capturing the errors.
 @linter(executable=sys.executable,
         prerequisite_check_command=(sys.executable, '-m', 'mypy', '-V'),
-        output_format="regex",
+        output_format='regex',
         output_regex=r'(?P<filename>[^:]+):((?P<line>\d+):)? '
                       '(?P<severity>error): (?P<message>.*)')
 class MypyBear:
@@ -95,7 +95,7 @@ class MypyBear:
     add static typing.
     """
 
-    LANGUAGES = {"Python", "Python 2", "Python 3"}
+    LANGUAGES = {'Python', 'Python 2', 'Python 3'}
     AUTHORS = {'Petr Viktorin'}
     REQUIREMENTS = {PipRequirement('mypy-lang', '0.*')}
     AUTHORS_EMAILS = {'encukou@gmail.com'}
@@ -108,7 +108,7 @@ class MypyBear:
 
     @add_param_docs(FLAG_MAP)
     def create_arguments(self, filename, file, config_file,
-                         language: str="Python 3",
+                         language: str='Python 3',
                          python_version: str=None,
                          allow_untyped_functions: bool=True,
                          allow_untyped_calls: bool=True,

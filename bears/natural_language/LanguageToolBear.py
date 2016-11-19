@@ -12,7 +12,7 @@ from coalib.settings.Setting import typed_list
 
 
 class LanguageToolBear(LocalBear):
-    LANGUAGES = {"Natural Language"}
+    LANGUAGES = {'Natural Language'}
     REQUIREMENTS = {PipRequirement('guess-language-spirit', '0.5.*'),
                     PipRequirement('language-check', '0.8.*')}
     AUTHORS = {'The coala developers'}
@@ -22,14 +22,15 @@ class LanguageToolBear(LocalBear):
 
     @classmethod
     def check_prerequisites(cls):
-        if shutil.which("java") is None:
-            return "java is not installed."
+        if shutil.which('java') is None:
+            return 'java is not installed.'
         else:
             try:
-                from language_check import LanguageTool, correct
+                from language_check import LanguageTool
+                from language_check import correct
                 return True
             except ImportError:  # pragma: no cover
-                return "Please install the `language-check` pip package."
+                return 'Please install the `language-check` pip package.'
 
     @deprecate_settings(language='locale')
     def run(self,
@@ -51,12 +52,12 @@ class LanguageToolBear(LocalBear):
         # language_check being there.
         from language_check import LanguageTool, correct
 
-        joined_text = "".join(file)
+        joined_text = ''.join(file)
         language = (guess_language(joined_text)
                     if language == 'auto' else language)
         language = 'en-US' if not language else language
 
-        tool = LanguageTool(language, motherTongue="en_US")
+        tool = LanguageTool(language, motherTongue='en_US')
         tool.disabled.update(languagetool_disable_rules)
 
         matches = tool.check(joined_text)

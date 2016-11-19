@@ -18,7 +18,7 @@ class RuboCopBear:
     See <https://github.com/bbatsov/rubocop#cops> for more information.
     """
 
-    LANGUAGES = {"Ruby"}
+    LANGUAGES = {'Ruby'}
     REQUIREMENTS = {GemRequirement('rubocop'), PipRequirement('pyyaml', '3.*')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
@@ -27,12 +27,12 @@ class RuboCopBear:
     CAN_DETECT = {'Simplification'}
     CAN_FIX = {'Syntax', 'Formatting'}
 
-    severity_map = {"error": RESULT_SEVERITY.MAJOR,
-                    "warning": RESULT_SEVERITY.NORMAL,
-                    "convention": RESULT_SEVERITY.INFO}
+    severity_map = {'error': RESULT_SEVERITY.MAJOR,
+                    'warning': RESULT_SEVERITY.NORMAL,
+                    'convention': RESULT_SEVERITY.INFO}
 
     @staticmethod
-    def create_arguments(filename, file, config_file, rubocop_config: str=""):
+    def create_arguments(filename, file, config_file, rubocop_config: str=''):
         # Need both stdin and filename. Explained in this comment:
         # https://github.com/bbatsov/rubocop/pull/2146#issuecomment-131403694
         args = (filename, '--stdin', '--format=json')
@@ -55,11 +55,11 @@ class RuboCopBear:
                         inspect_last_argument_hash: str='always_inspect',
                         align_parameters: str='with_first_parameter',
                         class_check: str='is_a?',
-                        comment_keywords: tuple=("TODO",
-                                                 "FIXME",
-                                                 "OPTIMIZE",
-                                                 "HACK",
-                                                 "REVIEW"),
+                        comment_keywords: tuple=('TODO',
+                                                 'FIXME',
+                                                 'OPTIMIZE',
+                                                 'HACK',
+                                                 'REVIEW'),
                         min_if_unless_guard: int=1,
                         indent_size: int=2,
                         method_naming_convention: str='snake',
@@ -240,7 +240,7 @@ class RuboCopBear:
             # TODO: Add condition for auto-correct, when rubocop is updated.
             # Relevant Issue: https://github.com/bbatsov/rubocop/issues/2932
             yield Result.from_values(
-                origin="{class_name} ({rule})".format(
+                origin='{class_name} ({rule})'.format(
                     class_name=self.__class__.__name__,
                     rule=result['cop_name']),
                 message=result['message'],

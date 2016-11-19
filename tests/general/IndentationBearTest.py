@@ -12,23 +12,23 @@ from coalib.settings.Setting import Setting
 class IndentationBearTest(unittest.TestCase):
 
     def setUp(self):
-        self.section = Section("")
+        self.section = Section('')
         self.section.append(Setting('language', 'test'))
         self.section.append(Setting('use_spaces', False))
         self.section.append(Setting('coalang_dir', escape(os.path.join(
-            os.path.dirname(__file__), "test_files"), '\\')))
+            os.path.dirname(__file__), 'test_files'), '\\')))
         self.dep_uut = AnnotationBear(self.section, Queue())
 
     def get_results(self, file, section=None):
         if section is None:
             section = self.section
-        dep_results_valid = self.dep_uut.execute("file", file)
+        dep_results_valid = self.dep_uut.execute('file', file)
         uut = IndentationBear(section, Queue())
         arg_dict = {'dependency_results':
                     {AnnotationBear.__name__:
                      list(dep_results_valid)},
                     'file': file}
-        return list(uut.run_bear_from_section(["file"], arg_dict))
+        return list(uut.run_bear_from_section(['file'], arg_dict))
 
     def verify_bear(self,
                     valid_file=None,
@@ -44,26 +44,26 @@ class IndentationBearTest(unittest.TestCase):
 
     def test_basic_indent(self):
         valid_file =\
-            ("{\n",
-             "\tright indent\n",
-             "}\n")
+            ('{\n',
+             '\tright indent\n',
+             '}\n')
         invalid_file =\
-            ("{\n",
-             "wrong indent\n",
-             "}\n")
+            ('{\n',
+             'wrong indent\n',
+             '}\n')
         self.verify_bear(valid_file, invalid_file)
 
         valid_file2 =\
-            ("a {\n",
-             "\tindent1\n",
-             "\tindent2\n",
-             "}\n")
+            ('a {\n',
+             '\tindent1\n',
+             '\tindent2\n',
+             '}\n')
 
         invalid_file2 =\
-            ("a {\n",
-             "\tindentlevel1;\n",
-             "\t\tsecondlinehere;\n",
-             "}\n")
+            ('a {\n',
+             '\tindentlevel1;\n',
+             '\t\tsecondlinehere;\n',
+             '}\n')
         self.verify_bear(valid_file2, invalid_file2)
 
     def test_within_strings(self):
@@ -113,24 +113,24 @@ class IndentationBearTest(unittest.TestCase):
         self.verify_bear(valid_file)
 
     def test_bracket_matching(self):
-        valid_file = ("{{{}{}}",
-                      "\tone_indent",
-                      "}")
-        invalid_file = ("{{{}{}}",
-                        "did not give indent",
-                        "}")
+        valid_file = ('{{{}{}}',
+                      '\tone_indent',
+                      '}')
+        invalid_file = ('{{{}{}}',
+                        'did not give indent',
+                        '}')
         self.verify_bear(valid_file, invalid_file)
 
         invalid_file = ('}}}{{{\n',)
         self.verify_bear(invalid_file=invalid_file)
 
     def test_blank_lines(self):
-        valid_file = ("{ trying indent",
-                      "\n",
-                      "\tIndents even after blank line}")
-        invalid_file = ("{ trying indent",
-                        "\n",
-                        "should have Indented after blank line}")
+        valid_file = ('{ trying indent',
+                      '\n',
+                      '\tIndents even after blank line}')
+        invalid_file = ('{ trying indent',
+                        '\n',
+                        'should have Indented after blank line}')
         self.verify_bear(valid_file, invalid_file)
 
         valid_file = ('def func(x):\n',
@@ -140,7 +140,7 @@ class IndentationBearTest(unittest.TestCase):
         self.verify_bear(valid_file)
 
     def test_settings(self):
-        section = Section("")
+        section = Section('')
         section.append(Setting('language', 'c'))
         section.append(Setting('use_spaces', True))
         section.append(Setting('indent_size', 6))
@@ -220,66 +220,66 @@ class IndentationBearTest(unittest.TestCase):
 
     def test_absolute_indentation(self):
         valid_file =\
-            ("some_function(param1,\n",
-             "              second_param,\n",
-             "              third_one)\n",
-             "indent back to normal\n")
+            ('some_function(param1,\n',
+             '              second_param,\n',
+             '              third_one)\n',
+             'indent back to normal\n')
 
         invalid_file =\
-            ("some_function(param1,\n",
-             "              param2)\n",
-             "              wrong_indent\n")
+            ('some_function(param1,\n',
+             '              param2)\n',
+             '              wrong_indent\n')
 
         self.verify_bear(valid_file=valid_file, invalid_file=invalid_file)
 
         valid_file = \
-            ("branched_function(param1,\n",
-             "                  param2_func(param3,\n",
-             "                              param4)\n",
-             "                  param5)\n",
-             "indent back to original\n")
+            ('branched_function(param1,\n',
+             '                  param2_func(param3,\n',
+             '                              param4)\n',
+             '                  param5)\n',
+             'indent back to original\n')
 
         invalid_file = \
-            ("some_function(param1\n",
-             "              param2(param3,\n",
-             "                     param4))\n",
-             "              wrong indent\n")
+            ('some_function(param1\n',
+             '              param2(param3,\n',
+             '                     param4))\n',
+             '              wrong indent\n')
 
         self.verify_bear(valid_file=valid_file, invalid_file=invalid_file)
 
         valid_file =\
-            ("some_function(param1{\n",
-             "              \tshould be here\n",
-             "              }\n",
-             "              param2)\n")
+            ('some_function(param1{\n',
+             '              \tshould be here\n',
+             '              }\n',
+             '              param2)\n')
 
         invalid_file =\
-            ("some_function(param1{\n",
-             "                     \tis this right?\n",
-             "                     }\n",
-             "              probably not)\n")
+            ('some_function(param1{\n',
+             '                     \tis this right?\n',
+             '                     }\n',
+             '              probably not)\n')
 
         self.verify_bear(valid_file=valid_file, invalid_file=invalid_file)
 
         valid_file =\
-            ("some_function(\n",
-             "         does hanging indents\n"
-             "         so can indent like this)\n")
+            ('some_function(\n',
+             '         does hanging indents\n'
+             '         so can indent like this)\n')
 
         self.verify_bear(valid_file)
 
     def test_invalid_specifiers(self):
-        valid_file = ("not a valid : indent specifier\n",
-                      "does not indent\n")
-        invalid_file = ("not a valid : indent specifier\n",
-                        "\tindents\n")
+        valid_file = ('not a valid : indent specifier\n',
+                      'does not indent\n')
+        invalid_file = ('not a valid : indent specifier\n',
+                        '\tindents\n')
         self.verify_bear(valid_file, invalid_file)
 
-        valid_file = ("[a specifier :\n",
-                      " inside an encapsulator]\n",
-                      "is not valid")
+        valid_file = ('[a specifier :\n',
+                      ' inside an encapsulator]\n',
+                      'is not valid')
         self.verify_bear(valid_file)
 
-        valid_file = ("This is a valid specifier: # A comment\n",
-                      "\tand so it indents\n")
+        valid_file = ('This is a valid specifier: # A comment\n',
+                      '\tand so it indents\n')
         self.verify_bear(valid_file)

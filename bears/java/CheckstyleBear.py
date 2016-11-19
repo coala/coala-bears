@@ -3,11 +3,11 @@ from coalib.settings.Setting import path
 
 
 known_checkstyles = {
-    "google": "https://raw.githubusercontent.com/checkstyle/checkstyle/master/src/main/resources/google_checks.xml",
-    "sun": 'https://raw.githubusercontent.com/checkstyle/checkstyle/master/src/main/resources/sun_checks.xml',
-    "android-check-easy": "https://raw.githubusercontent.com/noveogroup/android-check/master/android-check-plugin/src/main/resources/checkstyle/checkstyle-easy.xml",
-    "android-check-hard": "https://raw.githubusercontent.com/noveogroup/android-check/master/android-check-plugin/src/main/resources/checkstyle/checkstyle-hard.xml",
-    "geosoft": "http://geosoft.no/development/geosoft_checks.xml"}
+    'google': 'https://raw.githubusercontent.com/checkstyle/checkstyle/master/src/main/resources/google_checks.xml',
+    'sun': 'https://raw.githubusercontent.com/checkstyle/checkstyle/master/src/main/resources/sun_checks.xml',
+    'android-check-easy': 'https://raw.githubusercontent.com/noveogroup/android-check/master/android-check-plugin/src/main/resources/checkstyle/checkstyle-easy.xml',
+    'android-check-hard': 'https://raw.githubusercontent.com/noveogroup/android-check/master/android-check-plugin/src/main/resources/checkstyle/checkstyle-hard.xml',
+    'geosoft': 'http://geosoft.no/development/geosoft_checks.xml'}
 
 
 def check_invalid_configuration(checkstyle_configs, use_spaces, indent_size):
@@ -37,7 +37,7 @@ class CheckstyleBear:
     <http://checkstyle.sourceforge.net/checks.html>.
     """
 
-    LANGUAGES = {"Java"}
+    LANGUAGES = {'Java'}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
@@ -47,11 +47,11 @@ class CheckstyleBear:
         type(self).checkstyle_jar_file = self.download_cached_file(
             'http://sourceforge.net/projects/checkstyle/files/checkstyle/6.15'
             '/checkstyle-6.15-all.jar',
-            "checkstyle.jar")
+            'checkstyle.jar')
 
     def create_arguments(
             self, filename, file, config_file,
-            checkstyle_configs: known_checkstyle_or_path="google",
+            checkstyle_configs: known_checkstyle_or_path='google',
             use_spaces: bool=True, indent_size: int=2):
         """
         :param checkstyle_configs:
@@ -78,7 +78,7 @@ class CheckstyleBear:
         if checkstyle_configs in known_checkstyles:
             checkstyle_configs = self.download_cached_file(
                 known_checkstyles[checkstyle_configs],
-                checkstyle_configs + ".xml")
+                checkstyle_configs + '.xml')
 
         return ('-jar', self.checkstyle_jar_file, '-c',
                 checkstyle_configs, filename)

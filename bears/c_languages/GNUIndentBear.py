@@ -8,10 +8,10 @@ from coalib.bears.requirements.DistributionRequirement import (
     DistributionRequirement)
 
 
-@linter(executable="indent" if platform.system() != "Darwin" else "gindent",
+@linter(executable='indent' if platform.system() != 'Darwin' else 'gindent',
         use_stdin=True,
         output_format='corrected',
-        result_message="Indentation can be improved.")
+        result_message='Indentation can be improved.')
 class GNUIndentBear:
     """
     This bear checks and corrects spacing and indentation via the well known
@@ -20,7 +20,7 @@ class GNUIndentBear:
     C++ support is considered experimental.
     """
 
-    LANGUAGES = {"C", "C++"}
+    LANGUAGES = {'C', 'C++'}
     REQUIREMENTS = {DistributionRequirement(apt_get='indent')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
@@ -160,39 +160,39 @@ class GNUIndentBear:
             Any command line options the indent binary understands. They
             will be simply passed through.
         """
-        indent_options = ("--no-tabs" if use_spaces else "--use-tabs",
-                          "--line-length", str(max_line_length),
-                          "--indent-level", str(indent_size),
-                          "--tab-size", str(indent_size), )
-        indent_options += (("--cuddle-do-while",)
+        indent_options = ('--no-tabs' if use_spaces else '--use-tabs',
+                          '--line-length', str(max_line_length),
+                          '--indent-level', str(indent_size),
+                          '--tab-size', str(indent_size), )
+        indent_options += (('--cuddle-do-while',)
                            if while_and_brace_on_same_line
-                           else ("--dont-cuddle-do-while",))
-        indent_options += (("--swallow-optional-blank-lines",)
-                           if delete_optional_blank_lines else ("-nsob",))
-        indent_options += (("--blank-lines-after-declarations",)
-                           if blank_lines_after_declarations else ("-nbad",))
-        indent_options += (("--blank-lines-after-commas",)
-                           if blank_lines_after_commas else ("-nbc",))
-        indent_options += (("--blank-lines-after-procedures",)
-                           if blank_lines_after_procedures else ("-nbap",))
-        indent_options += (("-di" + str(declaration_indent),)
+                           else ('--dont-cuddle-do-while',))
+        indent_options += (('--swallow-optional-blank-lines',)
+                           if delete_optional_blank_lines else ('-nsob',))
+        indent_options += (('--blank-lines-after-declarations',)
+                           if blank_lines_after_declarations else ('-nbad',))
+        indent_options += (('--blank-lines-after-commas',)
+                           if blank_lines_after_commas else ('-nbc',))
+        indent_options += (('--blank-lines-after-procedures',)
+                           if blank_lines_after_procedures else ('-nbap',))
+        indent_options += (('-di' + str(declaration_indent),)
                            if declaration_indent != 0 else ())
-        indent_options += (("--case-indentation"+str(case_indentation),)
+        indent_options += (('--case-indentation'+str(case_indentation),)
                            if case_indentation != 0 else ())
-        indent_options += (("--space-special-semicolon",)
+        indent_options += (('--space-special-semicolon',)
                            if space_before_semicolon_after_empty_loop
-                           else ("-nss",))
-        indent_options += ("--brace-indent"+str(brace_indent),)
-        indent_options += (("--braces-on-func-def-line",)
-                           if braces_on_func_def_line else ("-blf",))
-        indent_options += ((("-ce",) if cuddle_else else ("-nce",)) +
-                           ("-br",)) if braces_on_if_line else ("-bl",)
+                           else ('-nss',))
+        indent_options += ('--brace-indent'+str(brace_indent),)
+        indent_options += (('--braces-on-func-def-line',)
+                           if braces_on_func_def_line else ('-blf',))
+        indent_options += ((('-ce',) if cuddle_else else ('-nce',)) +
+                           ('-br',)) if braces_on_if_line else ('-bl',)
         indent_style_option = ()
-        indent_style_option += ("--gnu-style",) if gnu_style else ()
-        indent_style_option += (("--k-and-r-style",)
+        indent_style_option += ('--gnu-style',) if gnu_style else ()
+        indent_style_option += (('--k-and-r-style',)
                                 if k_and_r_style and indent_style_option is ()
                                 else ())
-        indent_style_option += (("--linux-style",)
+        indent_style_option += (('--linux-style',)
                                 if linux_style and indent_style_option is ()
                                 else ())
         # If a style is chosen the other configs aren't passed to `indent`

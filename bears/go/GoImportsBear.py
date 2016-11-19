@@ -10,7 +10,7 @@ class GoImportsBear:
     """
     Adds/Removes imports to Go code for missing imports.
     """
-    LANGUAGES = {"Go"}
+    LANGUAGES = {'Go'}
     REQUIREMENTS = {GoRequirement(
         package='golang.org/x/tools/cmd/goimports', flag='-u')}
     AUTHORS = {'The coala developers'}

@@ -63,7 +63,7 @@ GoErrCheckBearTest = verify_local_bear(GoErrCheckBear,
                                        valid_files=(
                                            good_file, assert_file, blank_file),
                                        invalid_files=(bad_file,),
-                                       tempfile_kwargs={"suffix": ".go"})
+                                       tempfile_kwargs={'suffix': '.go'})
 
 GoErrCheckBearWithIgnoreTest = verify_local_bear(GoErrCheckBear,
                                                  valid_files=(
@@ -72,10 +72,10 @@ GoErrCheckBearWithIgnoreTest = verify_local_bear(GoErrCheckBear,
                                                      blank_file),
                                                  invalid_files=(bad_file,),
                                                  settings={
-                                                     "ignore":
+                                                     'ignore':
                                                      "'[rR]ead|[wW]rite'"},
-                                                 tempfile_kwargs={"suffix":
-                                                                  ".go"})
+                                                 tempfile_kwargs={'suffix':
+                                                                  '.go'})
 GoErrCheckBearWithIgnorePkgTest = verify_local_bear(GoErrCheckBear,
                                                     valid_files=(
                                                         good_file, assert_file,
@@ -83,22 +83,22 @@ GoErrCheckBearWithIgnorePkgTest = verify_local_bear(GoErrCheckBear,
                                                     invalid_files=(
                                                         ignorepkg_file,),
                                                     settings={
-                                                        "ignorepkg":
+                                                        'ignorepkg':
                                                         "'io'"},
-                                                    tempfile_kwargs={"suffix":
-                                                                     ".go"})
+                                                    tempfile_kwargs={'suffix':
+                                                                     '.go'})
 
 GoErrCheckBearWithBlankTest = verify_local_bear(GoErrCheckBear,
                                                 valid_files=(good_file,
                                                              assert_file),
                                                 invalid_files=(blank_file,),
-                                                settings={"blank": True},
-                                                tempfile_kwargs={"suffix":
-                                                                 ".go"})
+                                                settings={'blank': True},
+                                                tempfile_kwargs={'suffix':
+                                                                 '.go'})
 GoErrCheckBearWithAssertsTest = verify_local_bear(GoErrCheckBear,
                                                   valid_files=(good_file,
                                                                blank_file),
                                                   invalid_files=(assert_file,),
-                                                  settings={"asserts": True},
-                                                  tempfile_kwargs={"suffix":
-                                                                   ".go"})
+                                                  settings={'asserts': True},
+                                                  tempfile_kwargs={'suffix':
+                                                                   '.go'})
