@@ -28,10 +28,10 @@ class PyUnusedCodeBear(LocalBear):
 
         corrected = autoflake.fix_code(
                     ''.join(file),
-                   additional_imports=None,
-                   remove_all_unused_imports=remove_all_unused_imports,
-                   remove_unused_variables=True
-                   ).splitlines(True)
+                    additional_imports=None,
+                    remove_all_unused_imports=remove_all_unused_imports,
+                    remove_unused_variables=True
+                    ).splitlines(True)
 
         for diff in Diff.from_string_arrays(file, corrected).split_diff():
             yield Result(self,
