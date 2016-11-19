@@ -49,8 +49,32 @@ class InvalidLinkBear(LocalBear):
     def find_links_in_file(file, timeout, link_ignore_regex):
         link_ignore_regex = re.compile(link_ignore_regex)
         regex = re.compile(
-            r'((git\+|bzr\+|svn\+|hg\+|)https?://[^.:%\s_/?#[\]@\\]+\.(?:[^\s('
-            r')%\'"`<>|\\]+|\([^\s()%\'"`<>|\\]*\))*)(?<!\.)(?<!,)')
+            r"""
+            ((git\+|bzr\+|svn\+|hg\+|)  # For VCS URLs
+            https?://                   # http:// or https:// as only these
+                                        # are supported by the ``requests``
+                                        # library
+            [^.:%\s_/?#[\]@\\]+         # Initial part of domain
+            \.                          # A required dot `.`
+            (
+                (?:[^\s()%\'"`<>|\\]+)  # Path name
+                                        # This part does not allow
+                                        # any parenthesis: balanced or
+                                        # unbalanced.
+            |                           # OR
+                \([^\s()%\'"`<>|\\]*\)  # Path name contained within ()
+                                        # This part allows path names that
+                                        # are explicitly enclosed within one
+                                        # set of parenthesis.
+                                        # An example can be:
+                                        # http://wik.org/Hello_(Adele_song)/200
+            )
+            *)
+                                        # Thus, the whole part above
+                                        # prevents matching of
+                                        # Unbalanced parenthesis
+            (?<!\.)(?<!,)               # Exclude trailing `.` or `,` from URL
+            """, re.VERBOSE)
         for line_number, line in enumerate(file):
             match = regex.search(line)
             if match:
