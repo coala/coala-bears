@@ -61,13 +61,13 @@ class YapfBearTest(LocalBearTestHelper):
         self.section.append(Setting('blank_line_before_nested_class_or_def',
                                     True))
         self.check_validity(self.uut,
-                            ["class foo(object):\n", "\n",
-                             "    def f(self):\n",
-                             "        return 37 * -+2\n"],
+                            ['class foo(object):\n', '\n',
+                             '    def f(self):\n',
+                             '        return 37 * -+2\n'],
                             valid=True)
         self.check_validity(self.uut,
-                            ["class foo(object):\n", "    def f(self):\n",
-                             "        return 37 * -+2\n"],
+                            ['class foo(object):\n', '    def f(self):\n',
+                             '        return 37 * -+2\n'],
                             valid=False)
 
     def test_allow_multiline_lambdas(self):

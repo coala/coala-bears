@@ -30,7 +30,7 @@ print "Hello World\n";
 
 conf_file = os.path.abspath(os.path.join(
     os.path.dirname(os.path.realpath(__file__)),
-    "testfiles", ".perlcriticrc"))
+    'testfiles', '.perlcriticrc'))
 
 PerlCriticBearTest = verify_local_bear(PerlCriticBear,
                                        valid_files=(good_file,),
@@ -40,4 +40,4 @@ PerlCriticBearConfigTest = verify_local_bear(
     PerlCriticBear,
     valid_files=(good_file, bad_file),
     invalid_files=(),
-    settings={"perlcritic_profile": conf_file})
+    settings={'perlcritic_profile': conf_file})

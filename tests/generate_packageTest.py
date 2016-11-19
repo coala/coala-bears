@@ -90,7 +90,7 @@ class MainTest(unittest.TestCase):
     NO_BEAR_PATH = os.path.join('bears', 'BadBear', 'NoBearHere.py')
 
     def setUp(self):
-        self.argv = ["generate_package.py"]
+        self.argv = ['generate_package.py']
         argv_patcher = patch.object(sys, 'argv', self.argv)
         self.addCleanup(argv_patcher.stop)
         self.argv_mock = argv_patcher.start()
@@ -100,7 +100,7 @@ class MainTest(unittest.TestCase):
         self.assertTrue(os.path.exists(os.path.join('bears', 'upload')))
         with open(self.CSS_BEAR_SETUP_PATH) as fl:
             setup_py = fl.read()
-        self.assertIn("Check code for syntactical or semantical", setup_py)
+        self.assertIn('Check code for syntactical or semantical', setup_py)
 
     def test_main_bear_version_prod(self):
         fake_prod_version = '99.99.99'
@@ -122,17 +122,17 @@ class MainTest(unittest.TestCase):
 
     @patch('bears.generate_package.perform_upload')
     def test_upload(self, call_mock):
-        self.argv.append("--upload")
+        self.argv.append('--upload')
         main()
         for call_object in call_mock.call_args_list:
-            self.assertRegex(call_object[0][0], r".+Bear")
+            self.assertRegex(call_object[0][0], r'.+Bear')
 
     @patch('bears.generate_package.perform_register')
     def test_register(self, call_mock):
-        self.argv.append("--register")
+        self.argv.append('--register')
         main()
         for call_object in call_mock.call_args_list:
-            self.assertRegex(call_object[0][0], r".+Bear")
+            self.assertRegex(call_object[0][0], r'.+Bear')
 
     def test_no_bear_object(self):
         if not os.path.exists(self.NO_BEAR_PATH):

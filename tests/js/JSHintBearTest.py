@@ -35,19 +35,19 @@ console.log(bar, baz);
 
 
 jshintconfig = os.path.join(os.path.dirname(__file__),
-                            "test_files",
-                            "jshintconfig.json")
+                            'test_files',
+                            'jshintconfig.json')
 
 
 settings = {
-    "max_statements": "False",
-    "max_parameters": 10,
-    "allow_unused_variables": "True",
-    "shadow": "False",
-    "allow_last_semicolon": "True",
-    "es_version": 3,
-    "allow_latedef": "no_func",
-    "javascript_strictness": "False"}
+    'max_statements': 'False',
+    'max_parameters': 10,
+    'allow_unused_variables': 'True',
+    'shadow': 'False',
+    'allow_last_semicolon': 'True',
+    'es_version': 3,
+    'allow_latedef': 'no_func',
+    'javascript_strictness': 'False'}
 
 
 JSHintBearTest = verify_local_bear(JSHintBear,
@@ -60,7 +60,7 @@ JSHintBearConfigFileTest = verify_local_bear(
     JSHintBear,
     valid_files=(test_file1,),
     invalid_files=(test_file2,),
-    settings={"jshint_config": jshintconfig})
+    settings={'jshint_config': jshintconfig})
 
 
 JSHintBearCoafileTest = verify_local_bear(
@@ -73,10 +73,10 @@ JSHintBearDeprecationTest = verify_local_bear(
     JSHintBear,
     valid_files=(),
     invalid_files=(test_file4,),
-    settings={"use_es6_syntax": 'False', "allow_global_strict": 'False'})
+    settings={'use_es6_syntax': 'False', 'allow_global_strict': 'False'})
 
 JSHintBearDeprecation2Test = verify_local_bear(
     JSHintBear,
     valid_files=(test_file4,),
     invalid_files=(),
-    settings={"use_es6_syntax": 'True', "allow_global_strict": 'True'})
+    settings={'use_es6_syntax': 'True', 'allow_global_strict': 'True'})

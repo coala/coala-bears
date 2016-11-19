@@ -22,4 +22,4 @@ fun = function(one)
 RLintBearTest = verify_local_bear(RLintBear,
                                   invalid_files=(bad_file,),
                                   valid_files=(good_file,),
-                                  tempfile_kwargs={"suffix": ".R"})
+                                  tempfile_kwargs={'suffix': '.R'})

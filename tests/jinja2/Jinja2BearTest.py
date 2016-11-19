@@ -7,31 +7,31 @@ from tests.LocalBearTestHelper import verify_local_bear, execute_bear
 
 Jinja2BearVariableSpacingTest = verify_local_bear(
     Jinja2Bear,
-    valid_files=(r"foo {{ var }}",
+    valid_files=(r'foo {{ var }}',
                  r'foo {{ var1|filter }} bar {{ var2 }}'),
-    invalid_files=(r"foo {{var }}",
-                   r"foo {{ var}} bar",
-                   r"{{  var }}",
-                   r"{{ good_var }} foo {{bad_var }}"))
+    invalid_files=(r'foo {{var }}',
+                   r'foo {{ var}} bar',
+                   r'{{  var }}',
+                   r'{{ good_var }} foo {{bad_var }}'))
 
 Jinja2BearCustomVariableSpacingTest = verify_local_bear(
     Jinja2Bear,
-    valid_files=(r"foo {{var}}",
+    valid_files=(r'foo {{var}}',
                  r'foo {{var1|filter}} bar {{var2}}'),
-    invalid_files=(r"foo {{ var }}",
-                   r"foo {{ var}} bar",
-                   r"{{  var }}"),
-    settings={"variable_spacing": "0"})
+    invalid_files=(r'foo {{ var }}',
+                   r'foo {{ var}} bar',
+                   r'{{  var }}'),
+    settings={'variable_spacing': '0'})
 
 
 class Jinja2BearSpacingDiffTest(unittest.TestCase):
 
     def setUp(self):
-        self.uut = Jinja2Bear(Section(""), Queue())
+        self.uut = Jinja2Bear(Section(''), Queue())
 
     def test_variable_spacing(self):
-        content = (r"foo {{var }} bar",)
-        with execute_bear(self.uut, "F", content) as result:
+        content = (r'foo {{var }} bar',)
+        with execute_bear(self.uut, 'F', content) as result:
             self.assertEqual(result[0].diffs['F'].unified_diff,
                              '--- \n'
                              '+++ \n'
@@ -41,11 +41,11 @@ class Jinja2BearSpacingDiffTest(unittest.TestCase):
 
     def test_control_spacing(self):
         content = [
-            "{% for x in y %}\n",
-            "rendering stuff\n",
-            "{% endfor%}{# for x in y #}\n"
+            '{% for x in y %}\n',
+            'rendering stuff\n',
+            '{% endfor%}{# for x in y #}\n'
         ]
-        with execute_bear(self.uut, "F", content) as result:
+        with execute_bear(self.uut, 'F', content) as result:
             self.assertEqual(result[0].diffs['F'].unified_diff,
                              '--- \n'
                              '+++ \n'
@@ -57,18 +57,18 @@ class Jinja2BearSpacingDiffTest(unittest.TestCase):
 
 Jinja2BearControlSpacingTest = verify_local_bear(
     Jinja2Bear,
-    valid_files=(r"foo {% if something %} bar {% endif %}",),
-    invalid_files=(r"foo {% if var%} bar {% endif %}",
-                   r"{% if something %} foo {%endif%}{# if something #}",
-                   r"{%for a in var %} {% endfor %}"))
+    valid_files=(r'foo {% if something %} bar {% endif %}',),
+    invalid_files=(r'foo {% if var%} bar {% endif %}',
+                   r'{% if something %} foo {%endif%}{# if something #}',
+                   r'{%for a in var %} {% endfor %}'))
 
 Jinja2BearCustomControlSpacingTest = verify_local_bear(
     Jinja2Bear,
-    valid_files=(r"foo {%if something%} bar {%endif%}",),
-    invalid_files=(r"foo {% if var%} bar {%endif%}",
-                   r"foo {%if foo%} bar {% endif%}",
-                   r"{%for a in var %} {%endfor%}"),
-    settings={"control_spacing": "0"})
+    valid_files=(r'foo {%if something%} bar {%endif%}',),
+    invalid_files=(r'foo {% if var%} bar {%endif%}',
+                   r'foo {%if foo%} bar {% endif%}',
+                   r'{%for a in var %} {%endfor%}'),
+    settings={'control_spacing': '0'})
 
 
 good_file1 = """
@@ -85,7 +85,7 @@ render stuff
 {% endif %}{# if x == something #}
 """
 
-good_file3 = "{% for x in y %} one liner needs no label {% endfor %}"
+good_file3 = '{% for x in y %} one liner needs no label {% endfor %}'
 
 bad_file1 = """
 foo
@@ -110,12 +110,12 @@ Jinja2BearForLoopLabelTest = verify_local_bear(
 class Jinja2BearLabelDiffTest(unittest.TestCase):
 
     def setUp(self):
-        self.section = Section("")
+        self.section = Section('')
         self.uut = Jinja2Bear(self.section, Queue())
 
     def test_missing_label(self):
-        content = [line + "\n" for line in bad_file1.splitlines()]
-        with execute_bear(self.uut, "F", content) as result:
+        content = [line + '\n' for line in bad_file1.splitlines()]
+        with execute_bear(self.uut, 'F', content) as result:
             self.assertEqual(
                 result[0].diffs['F'].unified_diff,
                 '--- \n'
@@ -128,8 +128,8 @@ class Jinja2BearLabelDiffTest(unittest.TestCase):
                 '+{% endfor %}{# for x in something #} more stuff\n')
 
     def test_wrong_label(self):
-        content = [line + "\n" for line in bad_file2.splitlines()]
-        with execute_bear(self.uut, "F", content) as result:
+        content = [line + '\n' for line in bad_file2.splitlines()]
+        with execute_bear(self.uut, 'F', content) as result:
             self.assertEqual(
                 result[0].diffs['F'].unified_diff,
                 '--- \n'
@@ -143,6 +143,6 @@ class Jinja2BearLabelDiffTest(unittest.TestCase):
 
 Jinja2BearControlBlockTest = verify_local_bear(
     Jinja2Bear,
-    valid_files=("foo {% for a in b %} bar {% endfor %}",),
-    invalid_files=("This {% for a in b %} has no closing tag",
-                   "This {% endif %} has no open tag"))
+    valid_files=('foo {% for a in b %} bar {% endfor %}',),
+    invalid_files=('This {% for a in b %} has no closing tag',
+                   'This {% endif %} has no open tag'))

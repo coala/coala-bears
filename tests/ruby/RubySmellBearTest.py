@@ -25,4 +25,4 @@ RubySmellBearTest = verify_local_bear(RubySmellBear,
 
 RubySmellBearConfigTest = verify_local_bear(
     RubySmellBear, valid_files=(good_file, bad_file1), invalid_files=(),
-    settings={'missing_module_description': "nope"})
+    settings={'missing_module_description': 'nope'})

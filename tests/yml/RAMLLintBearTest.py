@@ -27,4 +27,4 @@ baseUri: http://example.com
 RAMLLintBearTest = verify_local_bear(RAMLLintBear,
                                      valid_files=(good_file,),
                                      invalid_files=(bad_file,),
-                                     tempfile_kwargs={"suffix": ".raml"})
+                                     tempfile_kwargs={'suffix': '.raml'})

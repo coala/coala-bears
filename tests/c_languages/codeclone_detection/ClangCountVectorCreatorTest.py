@@ -22,29 +22,29 @@ def is_call_argument(stack):
 
 @skip_if_no_clang()
 class ClangCountVectorCreatorTest(unittest.TestCase):
-    functions = sorted(["main(int, char *)", "test()"])
+    functions = sorted(['main(int, char *)', 'test()'])
 
     def setUp(self):
         self.testfile = os.path.abspath(os.path.join(
             os.path.dirname(__file__),
-            "sample.c"))
+            'sample.c'))
 
     def test_empty_counting(self):
         expected_results = {
-            (6, "test()"): {},
-            (12, "main(int, char *)"): {
+            (6, 'test()'): {},
+            (12, 'main(int, char *)'): {
                 # Variables
-                "i": [],
-                "asd": [],
-                "t": [],
-                "args": [],
+                'i': [],
+                'asd': [],
+                't': [],
+                'args': [],
                 # Globals
-                "g": [],
+                'g': [],
                 # Functions
-                "smile": [],
-                "printf": [],
+                'smile': [],
+                'printf': [],
                 # Constants
-                "5": [],
+                '5': [],
                 '"i is %d"': []}}
 
         self.uut = ClangCountVectorCreator()
@@ -66,20 +66,20 @@ class ClangCountVectorCreatorTest(unittest.TestCase):
 
     def test_counting(self):
         expected_results = {
-            (6, "test()"): {},
-            (12, "main(int, char *)"): {
+            (6, 'test()'): {},
+            (12, 'main(int, char *)'): {
                 # Variables
-                "i": [4, 1],
-                "asd": [1, 0],
-                "t": [4, 1],
-                "args": [2, 0],
+                'i': [4, 1],
+                'asd': [1, 0],
+                't': [4, 1],
+                'args': [2, 0],
                 # Globals
-                "g": [3, 1],
+                'g': [3, 1],
                 # Functions
-                "smile": [1, 1],
-                "printf": [1, 1],
+                'smile': [1, 1],
+                'printf': [1, 1],
                 # Constants
-                "5": [1, 0],
+                '5': [1, 0],
                 '"i is %d"': [1, 1]}}
 
         self.uut = ClangCountVectorCreator([no_condition, is_call_argument])
