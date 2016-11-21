@@ -69,7 +69,7 @@ class IndentationBear(LocalBear):
             language, coalang_dir=coalang_dir)
         annotation_dict = dependency_results[AnnotationBear.name][0].contents
         # sometimes can't convert strings with ':' to dict correctly
-        if ':' in list(lang_settings_dict["indent_types"]):
+        if ':' in dict(lang_settings_dict["indent_types"]).keys():
             indent_types = dict(lang_settings_dict["indent_types"])
             indent_types[':'] = ''
         else:
