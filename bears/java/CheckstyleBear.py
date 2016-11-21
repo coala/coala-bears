@@ -3,8 +3,8 @@ from coalib.settings.Setting import path
 
 
 known_checkstyles = {
-    "google": "https://raw.githubusercontent.com/checkstyle/checkstyle/master/src/main/resources/google_checks.xml",
-    "sun": 'https://raw.githubusercontent.com/checkstyle/checkstyle/master/src/main/resources/sun_checks.xml',
+    "google": "https://raw.githubusercontent.com/checkstyle/checkstyle/checkstyle-7.2/src/main/resources/google_checks.xml",
+    "sun": 'https://raw.githubusercontent.com/checkstyle/checkstyle/checkstyle-7.2/src/main/resources/sun_checks.xml',
     "android-check-easy": "https://raw.githubusercontent.com/noveogroup/android-check/master/android-check-plugin/src/main/resources/checkstyle/checkstyle-easy.xml",
     "android-check-hard": "https://raw.githubusercontent.com/noveogroup/android-check/master/android-check-plugin/src/main/resources/checkstyle/checkstyle-hard.xml",
     "geosoft": "http://geosoft.no/development/geosoft_checks.xml"}
@@ -45,9 +45,9 @@ class CheckstyleBear:
 
     def setup_dependencies(self):
         type(self).checkstyle_jar_file = self.download_cached_file(
-            'http://sourceforge.net/projects/checkstyle/files/checkstyle/6.15'
-            '/checkstyle-6.15-all.jar',
-            "checkstyle.jar")
+            'http://sourceforge.net/projects/checkstyle/files/checkstyle/7.2'
+            '/checkstyle-7.2-all.jar',
+            "checkstyle-7-2.jar")
 
     def create_arguments(
             self, filename, file, config_file,

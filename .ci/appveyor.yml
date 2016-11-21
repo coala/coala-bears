@@ -17,7 +17,6 @@ environment:
 cache:
   - "C:\\wheels"
   - "node_modules"
-  - "C:\\Users\\appveyor\\AppData\\Local\\coala-bears\\coala-bears"
   - "C:\\Users\\appveyor\\AppData\\Roaming\\nltk_data"
 
 branches:  # Only build official branches, PRs are built anyway.
