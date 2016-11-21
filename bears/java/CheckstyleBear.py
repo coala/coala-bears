@@ -2,12 +2,13 @@ from coalib.bearlib.abstractions.Linter import linter
 from coalib.settings.Setting import path
 
 
-known_checkstyles = {
-    "google": "https://raw.githubusercontent.com/checkstyle/checkstyle/master/src/main/resources/google_checks.xml",
-    "sun": 'https://raw.githubusercontent.com/checkstyle/checkstyle/master/src/main/resources/sun_checks.xml',
+_online_styles = {
     "android-check-easy": "https://raw.githubusercontent.com/noveogroup/android-check/master/android-check-plugin/src/main/resources/checkstyle/checkstyle-easy.xml",
     "android-check-hard": "https://raw.githubusercontent.com/noveogroup/android-check/master/android-check-plugin/src/main/resources/checkstyle/checkstyle-hard.xml",
     "geosoft": "http://geosoft.no/development/geosoft_checks.xml"}
+
+# To be deprecated
+known_checkstyles = dict(_online_styles, **{'google': None, 'sun': None})
 
 
 def check_invalid_configuration(checkstyle_configs, use_spaces, indent_size):
@@ -75,9 +76,13 @@ class CheckstyleBear:
         check_invalid_configuration(
             checkstyle_configs, use_spaces, indent_size)
 
-        if checkstyle_configs in known_checkstyles:
+        if checkstyle_configs in ('google', 'sun'):
+            # Checkstyle included these two rulesets since version 6.2
+            # Locate the file as an absolute resource into the checkstyle jar
+            checkstyle_configs = '/%s_checks.xml' % checkstyle_configs
+        elif checkstyle_configs in _online_styles:
             checkstyle_configs = self.download_cached_file(
-                known_checkstyles[checkstyle_configs],
+                _online_styles[checkstyle_configs],
                 checkstyle_configs + ".xml")
 
         return ('-jar', self.checkstyle_jar_file, '-c',

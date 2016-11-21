@@ -26,8 +26,23 @@ class CheckstyleBearTest(LocalBearTestHelper):
         self.check_validity(self.uut, [], self.good_file)
         self.check_validity(self.uut, [], self.bad_file, valid=False)
 
-    def test_known_configs(self):
+    def test_style_google(self):
         self.section["checkstyle_configs"] = "google"
+        self.check_validity(self.uut, [], self.good_file)
+
+    def test_style_sun(self):
+        self.section["checkstyle_configs"] = "sun"
+        self.check_validity(self.uut, [], self.good_file)
+
+    def test_style_android(self):
+        self.section["checkstyle_configs"] = "android-check-easy"
+        self.check_validity(self.uut, [], self.good_file)
+
+        self.section["checkstyle_configs"] = "android-check-hard"
+        self.check_validity(self.uut, [], self.good_file)
+
+    def test_style_geosoft(self):
+        self.section["checkstyle_configs"] = "geosoft"
         self.check_validity(self.uut, [], self.good_file)
 
     def test_config_failure_use_spaces(self):
