@@ -12,7 +12,7 @@ class AnnotationBear(LocalBear):
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
 
-    def run(self, filename, file, language: str, coalang_dir: str = None):
+    def run(self, filename, file, language: str):
         """
         Finds out all the positions of strings and comments in a file.
         The Bear searches for valid comments and strings and yields their
@@ -31,7 +31,7 @@ class AnnotationBear(LocalBear):
             ``u"string"``, the ``u`` will not be in the source range).
         """
         try:
-            lang_dict = LanguageDefinition(language, coalang_dir=coalang_dir)
+            lang_dict = LanguageDefinition(language)
         except FileNotFoundError:
             content = ("coalang specification for " + language +
                        " not found.")
@@ -43,7 +43,7 @@ class AnnotationBear(LocalBear):
             lang_dict["multiline_string_delimiters"])
         multiline_comment_delimiters = dict(
             lang_dict["multiline_comment_delimiters"])
-        comment_delimiter = dict(lang_dict["comment_delimiter"])
+        comment_delimiter = {lang_dict["comment_delimiter"]: None}
         string_ranges = comment_ranges = ()
         try:
             string_ranges, comment_ranges = self.find_annotation_ranges(

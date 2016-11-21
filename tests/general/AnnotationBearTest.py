@@ -16,7 +16,7 @@ class AnnotationBearTest(unittest.TestCase):
 
     def setUp(self):
         self.section1 = Section("")
-        self.section1.append(Setting('language', 'python3'))
+        self.section1.append(Setting('language', 'python 3'))
         self.python_uut = AnnotationBear(self.section1, Queue())
         self.section2 = Section("")
         self.section2.append(Setting('language', 'c'))
@@ -122,16 +122,6 @@ class AnnotationBearTest(unittest.TestCase):
             self.assertIn(string2, results[0].contents['strings'])
             self.assertIn(string3, results[0].contents['strings'])
             self.assertEqual(results[0].contents['comments'], ())
-
-    def test_external_coalang(self):
-        self.section1.append(Setting('coalang_dir', escape(os.path.join(
-                            os.path.dirname(__file__), 'test_files'), '\\')))
-        self.section1.append(Setting('language', 'test'))
-        uut = AnnotationBear(self.section1, Queue())
-        text = ['//comment line 1\n', '"""string line 2"""']
-        with execute_bear(uut, "F", text) as result:
-            self.assertNotEqual(result[0].contents['strings'], ())
-            self.assertNotEqual(result[0].contents['comments'], ())
 
     def test_no_coalang(self):
         self.section1.append(Setting('language', 'Valyrian'))

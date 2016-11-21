@@ -1,10 +1,8 @@
 import unittest
 from queue import Queue
-import os
 
 from bears.general.IndentationBear import IndentationBear
 from bears.general.AnnotationBear import AnnotationBear
-from coala_utils.string_processing.Core import escape
 from coalib.settings.Section import Section
 from coalib.settings.Setting import Setting
 
@@ -13,16 +11,15 @@ class IndentationBearTest(unittest.TestCase):
 
     def setUp(self):
         self.section = Section("")
-        self.section.append(Setting('language', 'test'))
+        self.section.append(Setting('language', 'C++'))
         self.section.append(Setting('use_spaces', False))
-        self.section.append(Setting('coalang_dir', escape(os.path.join(
-            os.path.dirname(__file__), "test_files"), '\\')))
         self.dep_uut = AnnotationBear(self.section, Queue())
 
     def get_results(self, file, section=None):
         if section is None:
             section = self.section
-        dep_results_valid = self.dep_uut.execute("file", file)
+        dep_results_valid = list(self.dep_uut.run("file", file, language=str(section['language'])))
+        print(dep_results_valid)
         uut = IndentationBear(section, Queue())
         arg_dict = {'dependency_results':
                     {AnnotationBear.__name__:

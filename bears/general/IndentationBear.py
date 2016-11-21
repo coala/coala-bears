@@ -26,8 +26,7 @@ class IndentationBear(LocalBear):
             dependency_results: dict,
             language: str,
             use_spaces: bool=True,
-            indent_size: int=SpacingHelper.DEFAULT_TAB_WIDTH,
-            coalang_dir: str=None):
+            indent_size: int=SpacingHelper.DEFAULT_TAB_WIDTH):
         """
         It is a generic indent bear, which looks for a start and end
         indent specifier, example: ``{ : }`` where "{" is the start indent
@@ -65,8 +64,7 @@ class IndentationBear(LocalBear):
             Full path of external directory containing the coalang
             file for language.
         """
-        lang_settings_dict = LanguageDefinition(
-            language, coalang_dir=coalang_dir)
+        lang_settings_dict = LanguageDefinition(language)
         annotation_dict = dependency_results[AnnotationBear.name][0].contents
         # sometimes can't convert strings with ':' to dict correctly
         if ':' in list(lang_settings_dict["indent_types"]):
@@ -86,7 +84,7 @@ class IndentationBear(LocalBear):
                 annotation_dict)
         encaps_pos = tuple(sorted(encaps_pos, key=lambda x: x.start.line))
 
-        comments = dict(lang_settings_dict["comment_delimiter"])
+        comments = {lang_settings_dict["comment_delimiter"]: None}
         comments.update(
             dict(lang_settings_dict["multiline_comment_delimiters"]))
 
