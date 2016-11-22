@@ -61,25 +61,31 @@ class GitCommitBear(GlobalBear):
                                            allowed or not.
         """
         with change_directory(self.get_config_dir() or os.getcwd()):
-            stdout, stderr = run_shell_command('git log -1 --pretty=%B')
+            stdout_head, stderr_head = run_shell_command(
+                "git log -1 --pretty=%B")
+            stdout_shortlogs, stderr_shortlogs = run_shell_command(
+                "git log --pretty=%s")
 
-        if stderr:
-            self.err('git:', repr(stderr))
+        if stderr_head or stderr_shortlogs:
+            self.err("git:", repr(stderr_head),
+                     "\ngit:", repr(stderr_shortlogs))
             return
 
-        stdout = stdout.rstrip('\n').splitlines()
+        stdout_head = stdout_head.rstrip("\n").splitlines()
+        stdout_shortlogs = stdout_shortlogs.rstrip("\n").splitlines()
 
-        if len(stdout) == 0:
+        if len(stdout_head) == 0:
             if not allow_empty_commit_message:
-                yield Result(self, 'HEAD commit has no message.')
+                yield Result(self, "HEAD commit has no message.")
             return
 
         yield from self.check_shortlog(
-            stdout[0],
+            stdout_head[0],
             **self.get_shortlog_checks_metadata().filter_parameters(kwargs))
         yield from self.check_body(
-            stdout[1:],
+            stdout_head[1:],
             **self.get_body_checks_metadata().filter_parameters(kwargs))
+        yield from self.check_duplicate_shortlogs(stdout_shortlogs)
 
     def check_shortlog(self, shortlog,
                        shortlog_length: int=50,
@@ -204,3 +210,16 @@ class GitCommitBear(GlobalBear):
             yield Result(self, 'Body of HEAD commit contains too long lines. '
                                'Commit body lines should not exceed {} '
                                'characters.'.format(body_line_length))
+
+    def check_duplicate_shortlogs(self, shortlogs: list):
+        shortlogs_set = set(shortlogs)
+        if len(shortlogs_set) == len(shortlogs):
+            return False
+        else:
+            for log in shortlogs_set:
+                del shortlogs[shortlogs.index(log)]
+            duplicated_shortlogs = set(shortlogs)
+            for shortlog in duplicated_shortlogs:
+                yield Result(self, "`git log` contains duplicate commits "
+                             "having short log '{}'".format(shortlog))
+            return True

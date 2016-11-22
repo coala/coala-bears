@@ -248,7 +248,7 @@ class GitCommitBearTest(unittest.TestCase):
         self.assert_no_msgs()
 
         # And now too long lines.
-        self.git_commit('Shortlog\n\n'
+        self.git_commit('Shortlog..\n\n'
                         'This line is ok.\n'
                         'This line is by far too long (in this case).\n'
                         'This one too, blablablablablablablablabla.')
@@ -285,3 +285,13 @@ class GitCommitBearTest(unittest.TestCase):
                          self.gitdir)
         os.chdir(self.gitdir)
         os.rmdir(no_git_dir)
+
+    def test_duplicate_shortlog(self):
+        self.git_commit("Duplicate 1")
+        self.assertEqual(self.run_uut(), [])
+
+        self.git_commit("Duplicate 1")
+        self.git_commit("Duplicate 2")
+        self.assertEqual(self.run_uut(), ["`git log` contains duplicate "
+                                          "commits having short log "
+                                          "'Duplicate 1'"])
