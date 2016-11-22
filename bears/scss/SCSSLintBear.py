@@ -17,7 +17,7 @@ class SCSSLintBear:
 
     LANGUAGES = {'SCSS'}
     REQUIREMENTS = {GemRequirement('scss-lint', '', 'false'),
-                    PipRequirement('pyyaml', '3.*')}
+                    PipRequirement('pyyaml', '3.12')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

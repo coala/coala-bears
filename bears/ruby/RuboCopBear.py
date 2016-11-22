@@ -19,7 +19,8 @@ class RuboCopBear:
     """
 
     LANGUAGES = {'Ruby'}
-    REQUIREMENTS = {GemRequirement('rubocop'), PipRequirement('pyyaml', '3.*')}
+    REQUIREMENTS = {GemRequirement('rubocop'),
+                    PipRequirement('pyyaml', '3.12')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

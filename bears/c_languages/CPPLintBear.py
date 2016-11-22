@@ -16,7 +16,7 @@ class CPPLintBear:
     """
 
     LANGUAGES = {'C++'}
-    REQUIREMENTS = {PipRequirement('cpplint', '1.*')}
+    REQUIREMENTS = {PipRequirement('cpplint', '1.3')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
