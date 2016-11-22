@@ -1,6 +1,6 @@
 import sys
 
-from yapf.yapflib.yapf_api import FormatFile
+from yapf.yapflib.yapf_api import FormatCode
 
 from coalib.bearlib import deprecate_settings
 from coalib.bearlib.spacing.SpacingHelper import SpacingHelper
@@ -155,9 +155,8 @@ space_between_ending_comma_and_closing_bracket= \
         try:
             with prepare_file(options.splitlines(keepends=True),
                               None) as (file_, fname):
-                corrected = FormatFile(filename,
-                                       style_config=fname,
-                                       verify=False)[0].splitlines(True)
+                corrected = FormatCode(
+                    ''.join(file), style_config=fname)[0].splitlines(True)
         except SyntaxError as err:
             if isinstance(err, IndentationError):
                 error_type = 'indentation errors (' + err.args[0] + ')'
