@@ -14,7 +14,7 @@ class BanditBear:
     module from the Python standard library.
     """
     LANGUAGES = {'Python', 'Python 2', 'Python 3'}
-    REQUIREMENTS = {PipRequirement('bandit', '1.1')}
+    REQUIREMENTS = {PipRequirement('bandit', '1.2')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
