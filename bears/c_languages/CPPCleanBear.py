@@ -15,7 +15,7 @@ class CPPCleanBear:
     """
 
     LANGUAGES = {'C++'}
-    REQUIREMENTS = {PipRequirement('cppclean', '0.9.*')}
+    REQUIREMENTS = {PipRequirement('cppclean', '0.12')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
