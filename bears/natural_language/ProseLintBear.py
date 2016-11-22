@@ -10,7 +10,7 @@ class ProseLintBear:
     Lints the file using ``proselint``.
     """
     LANGUAGES = {'Natural Language'}
-    REQUIREMENTS = {PipRequirement('proselint', '0.3.*')}
+    REQUIREMENTS = {PipRequirement('proselint', '0.7')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
