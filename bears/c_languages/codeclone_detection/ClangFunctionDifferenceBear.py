@@ -10,6 +10,7 @@ from bears.c_languages.codeclone_detection.CloneDetectionRoutines import (
     compare_functions, get_count_matrices)
 from coala_utils.string_processing.StringConverter import StringConverter
 from coalib.bears.GlobalBear import GlobalBear
+from coalib.bears.requirements.PipRequirement import PipRequirement
 from coalib.collecting.Collectors import collect_dirs
 from coalib.results.HiddenResult import HiddenResult
 from coalib.settings.Setting import path_list, typed_ordered_dict
@@ -83,7 +84,7 @@ def get_difference(function_pair,
 class ClangFunctionDifferenceBear(GlobalBear):
     check_prerequisites = classmethod(clang_available)
     LANGUAGES = ClangBear.LANGUAGES
-    REQUIREMENTS = ClangBear.REQUIREMENTS
+    REQUIREMENTS = ClangBear.REQUIREMENTS | {PipRequirement('munkres3', '1.0')}
 
     def run(self,
             counting_conditions: counting_condition_dict=default_cc_dict,
