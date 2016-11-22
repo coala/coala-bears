@@ -14,7 +14,7 @@ class RAMLLintBear:
     identify the problems correctly.
     """
 
-    LANGUAGES = {"RAML"}
+    LANGUAGES = {'RAML'}
     REQUIREMENTS = {NpmRequirement('ramllint', '1.2.2')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}

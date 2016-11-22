@@ -13,7 +13,7 @@ from coalib.bearlib import deprecate_settings
 
 class InvalidLinkBear(LocalBear):
     DEFAULT_TIMEOUT = 2
-    LANGUAGES = {"All"}
+    LANGUAGES = {'All'}
     REQUIREMENTS = {PipRequirement('requests', '2.*')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
@@ -21,13 +21,13 @@ class InvalidLinkBear(LocalBear):
     CAN_DETECT = {'Documentation'}
 
     # IP Address of www.google.com
-    check_connection_url = "http://216.58.218.174"
+    check_connection_url = 'http://216.58.218.174'
 
     @classmethod
     def check_prerequisites(cls):
         code = cls.get_status_code(
             cls.check_connection_url, cls.DEFAULT_TIMEOUT)
-        return ("You are not connected to the internet."
+        return ('You are not connected to the internet.'
                 if code is None else True)
 
     @staticmethod
@@ -56,7 +56,7 @@ class InvalidLinkBear(LocalBear):
     @deprecate_settings(link_ignore_regex='ignore_regex')
     def run(self, filename, file,
             timeout: int=DEFAULT_TIMEOUT,
-            link_ignore_regex: str="([.\/]example\.com|\{|\$)",
+            link_ignore_regex: str='([.\/]example\.com|\{|\$)',
             follow_redirects: bool=False):
         """
         Find links in any text file and check if they are valid.

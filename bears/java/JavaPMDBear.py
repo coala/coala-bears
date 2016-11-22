@@ -5,7 +5,7 @@ from coalib.bearlib import deprecate_settings
 from coala_utils.param_conversion import negate
 
 
-@linter("bash", output_format="regex",
+@linter('bash', output_format='regex',
         output_regex=r'.+:(?P<line>.+):(?P<message>.*)')
 class JavaPMDBear:
     """
@@ -16,7 +16,7 @@ class JavaPMDBear:
     <http://pmd.github.io/pmd-5.4.1/pmd-java/rules/index.html>.
     """
 
-    LANGUAGES = {"Java"}
+    LANGUAGES = {'Java'}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
@@ -25,11 +25,11 @@ class JavaPMDBear:
 
     @classmethod
     def check_prerequisites(cls):  # pragma: no cover
-        if which("bash") is None:
-            return "bash is not installed."
-        elif which("pmd") is None and which("run.sh") is None:
-            return ("PMD is missing. Make sure to install it from "
-                    "<https://pmd.github.io/>")
+        if which('bash') is None:
+            return 'bash is not installed.'
+        elif which('pmd') is None and which('run.sh') is None:
+            return ('PMD is missing. Make sure to install it from '
+                    '<https://pmd.github.io/>')
         else:
             return True
 
@@ -79,20 +79,20 @@ class JavaPMDBear:
             Allows unused code.
         """
         options = {
-            "java-basic": check_best_practices,
-            "java-braces": check_braces,
-            "java-clone": check_clone_implementation,
-            "java-codesize": check_code_size,
-            "java-comments": check_comments,
-            "java-controversial": check_controversial,
-            "java-design": check_design,
-            "java-imports": check_imports,
-            "java-naming": check_naming,
-            "java-optimizations": check_optimizations,
-            "java-strings": check_strings,
-            "java-unnecessary": not allow_unnecessary_code,
-            "java-unusedcode": not allow_unused_code}
+            'java-basic': check_best_practices,
+            'java-braces': check_braces,
+            'java-clone': check_clone_implementation,
+            'java-codesize': check_code_size,
+            'java-comments': check_comments,
+            'java-controversial': check_controversial,
+            'java-design': check_design,
+            'java-imports': check_imports,
+            'java-naming': check_naming,
+            'java-optimizations': check_optimizations,
+            'java-strings': check_strings,
+            'java-unnecessary': not allow_unnecessary_code,
+            'java-unusedcode': not allow_unused_code}
         rules = ','.join(key for key in options if options[key])
 
-        executable = which("pmd") or which("run.sh")  # Mac vs. Unix
-        return executable, "pmd", "-R", rules, "-d", filename
+        executable = which('pmd') or which('run.sh')  # Mac vs. Unix
+        return executable, 'pmd', '-R', rules, '-d', filename

@@ -17,7 +17,7 @@ class ESLintBear:
     Find out more at <http://eslint.org/docs/rules/>.
     """
 
-    LANGUAGES = {"JavaScript", "JSX"}
+    LANGUAGES = {'JavaScript', 'JSX'}
     REQUIREMENTS = {NpmRequirement('eslint', '2')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
@@ -32,7 +32,7 @@ class ESLintBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file,
-                         eslint_config: str=""):
+                         eslint_config: str=''):
         """
         :param eslint_config: The location of the .eslintrc config file.
         """
@@ -57,7 +57,7 @@ class ESLintBear:
 
     def process_output(self, output, filename, file):
         if output[1]:
-            self.warn("While running {0}, some issues were found:"
+            self.warn('While running {0}, some issues were found:'
                       .format(self.__class__.__name__))
             self.warn(output[1])
 
@@ -65,7 +65,7 @@ class ESLintBear:
             return
 
         output = json.loads(output[0])
-        lines = "".join(file)
+        lines = ''.join(file)
 
         assert len(output) == 1
 
@@ -81,7 +81,7 @@ class ESLintBear:
                     lines.splitlines(True), new_output.splitlines(True))}
 
             origin = (
-                "{class_name} ({rule})".format(class_name=type(self).__name__,
+                '{class_name} ({rule})'.format(class_name=type(self).__name__,
                                                rule=result['ruleId'])
                 if result['ruleId'] is not None else self)
             yield Result.from_values(

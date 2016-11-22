@@ -3,9 +3,9 @@ from coalib.settings.Setting import path
 
 
 _online_styles = {
-    "android-check-easy": "https://raw.githubusercontent.com/noveogroup/android-check/master/android-check-plugin/src/main/resources/checkstyle/checkstyle-easy.xml",
-    "android-check-hard": "https://raw.githubusercontent.com/noveogroup/android-check/master/android-check-plugin/src/main/resources/checkstyle/checkstyle-hard.xml",
-    "geosoft": "http://geosoft.no/development/geosoft_checks.xml"}
+    'android-check-easy': 'https://raw.githubusercontent.com/noveogroup/android-check/master/android-check-plugin/src/main/resources/checkstyle/checkstyle-easy.xml',
+    'android-check-hard': 'https://raw.githubusercontent.com/noveogroup/android-check/master/android-check-plugin/src/main/resources/checkstyle/checkstyle-hard.xml',
+    'geosoft': 'http://geosoft.no/development/geosoft_checks.xml'}
 
 # To be deprecated
 known_checkstyles = dict(_online_styles, **{'google': None, 'sun': None})
@@ -38,7 +38,7 @@ class CheckstyleBear:
     <http://checkstyle.sourceforge.net/checks.html>.
     """
 
-    LANGUAGES = {"Java"}
+    LANGUAGES = {'Java'}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
@@ -48,11 +48,11 @@ class CheckstyleBear:
         type(self).checkstyle_jar_file = self.download_cached_file(
             'http://sourceforge.net/projects/checkstyle/files/checkstyle/6.15'
             '/checkstyle-6.15-all.jar',
-            "checkstyle.jar")
+            'checkstyle.jar')
 
     def create_arguments(
             self, filename, file, config_file,
-            checkstyle_configs: known_checkstyle_or_path="google",
+            checkstyle_configs: known_checkstyle_or_path='google',
             use_spaces: bool=True, indent_size: int=2):
         """
         :param checkstyle_configs:
@@ -83,7 +83,7 @@ class CheckstyleBear:
         elif checkstyle_configs in _online_styles:
             checkstyle_configs = self.download_cached_file(
                 _online_styles[checkstyle_configs],
-                checkstyle_configs + ".xml")
+                checkstyle_configs + '.xml')
 
         return ('-jar', self.checkstyle_jar_file, '-c',
                 checkstyle_configs, filename)

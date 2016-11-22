@@ -14,51 +14,51 @@ from coalib.settings.Setting import path, Setting
 class CheckstyleBearTest(LocalBearTestHelper):
 
     def setUp(self):
-        self.section = Section("test section")
+        self.section = Section('test section')
         self.uut = CheckstyleBear.CheckstyleBear(self.section, Queue())
-        test_files = os.path.join(os.path.dirname(__file__), "test_files")
-        self.good_file = os.path.join(test_files, "CheckstyleGood.java")
-        self.bad_file = os.path.join(test_files, "CheckstyleBad.java")
+        test_files = os.path.join(os.path.dirname(__file__), 'test_files')
+        self.good_file = os.path.join(test_files, 'CheckstyleGood.java')
+        self.bad_file = os.path.join(test_files, 'CheckstyleBad.java')
         self.empty_config = os.path.join(test_files,
-                                         "checkstyle_empty_config.xml")
+                                         'checkstyle_empty_config.xml')
 
     def test_run(self):
         self.check_validity(self.uut, [], self.good_file)
         self.check_validity(self.uut, [], self.bad_file, valid=False)
 
     def test_style_google(self):
-        self.section["checkstyle_configs"] = "google"
+        self.section['checkstyle_configs'] = 'google'
         self.check_validity(self.uut, [], self.good_file)
 
     def test_style_sun(self):
-        self.section["checkstyle_configs"] = "sun"
+        self.section['checkstyle_configs'] = 'sun'
         self.check_validity(self.uut, [], self.good_file)
 
     def test_style_android(self):
-        self.section["checkstyle_configs"] = "android-check-easy"
+        self.section['checkstyle_configs'] = 'android-check-easy'
         self.check_validity(self.uut, [], self.good_file)
 
-        self.section["checkstyle_configs"] = "android-check-hard"
+        self.section['checkstyle_configs'] = 'android-check-hard'
         self.check_validity(self.uut, [], self.good_file)
 
     def test_style_geosoft(self):
-        self.section["checkstyle_configs"] = "geosoft"
+        self.section['checkstyle_configs'] = 'geosoft'
         self.check_validity(self.uut, [], self.good_file)
 
     def test_config_failure_use_spaces(self):
-        self.section["checkstyle_configs"] = "google"
+        self.section['checkstyle_configs'] = 'google'
         self.section.append(Setting('use_spaces', False))
         with self.assertRaises(AssertionError):
             self.check_validity(self.uut, [], self.good_file)
 
     def test_config_failure_indent_size(self):
-        self.section["checkstyle_configs"] = "google"
+        self.section['checkstyle_configs'] = 'google'
         self.section.append(Setting('indent_size', 3))
         with self.assertRaises(AssertionError):
             self.check_validity(self.uut, [], self.good_file)
 
     def test_with_custom_configfile(self):
-        self.section["checkstyle_configs"] = self.empty_config
+        self.section['checkstyle_configs'] = self.empty_config
         self.check_validity(self.uut, [], self.good_file)
         self.check_validity(self.uut, [], self.bad_file)
 

@@ -18,7 +18,7 @@ class HaskellLintBear:
     information.
     """
 
-    LANGUAGES = {"Haskell"}
+    LANGUAGES = {'Haskell'}
     REQUIREMENTS = {DistributionRequirement(apt_get='hlint')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
@@ -26,9 +26,9 @@ class HaskellLintBear:
     CAN_DETECT = {'Duplication'}
     CAN_FIX = {'Unused Code', 'Code Simplification'}
 
-    severity_map = {"Error": RESULT_SEVERITY.MAJOR,
-                    "Warning": RESULT_SEVERITY.NORMAL,
-                    "Suggestion": RESULT_SEVERITY.INFO}
+    severity_map = {'Error': RESULT_SEVERITY.MAJOR,
+                    'Warning': RESULT_SEVERITY.NORMAL,
+                    'Suggestion': RESULT_SEVERITY.INFO}
 
     @staticmethod
     def create_arguments(filename, file, config_file):
@@ -38,17 +38,17 @@ class HaskellLintBear:
         output = json.loads(output)
 
         for issue in output:
-            assert issue["startLine"] == issue["endLine"]
+            assert issue['startLine'] == issue['endLine']
             diff = Diff(file)
-            line_nr = issue["startLine"]
+            line_nr = issue['startLine']
             line_to_change = file[line_nr-1]
-            newline = line_to_change.replace(issue["from"], issue["to"])
+            newline = line_to_change.replace(issue['from'], issue['to'])
             diff.change_line(line_nr, line_to_change, newline)
 
             yield Result.from_values(
                 origin=self,
-                message=issue["hint"],
+                message=issue['hint'],
                 file=filename,
-                severity=self.severity_map[issue["severity"]],
-                line=issue["startLine"],
+                severity=self.severity_map[issue['severity']],
+                line=issue['startLine'],
                 diffs={filename: diff})

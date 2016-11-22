@@ -43,4 +43,4 @@ PHPCodeSnifferBearTest = verify_local_bear(
     PHPCodeSnifferBear,
     valid_files=(good_file,),
     invalid_files=(bad_file,),
-    tempfile_kwargs={"suffix": ".php"})
+    tempfile_kwargs={'suffix': '.php'})

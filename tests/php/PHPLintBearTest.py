@@ -12,14 +12,14 @@ from coalib.settings.Section import Section
 class PHPLintBearTest(LocalBearTestHelper):
 
     def setUp(self):
-        self.section = Section("test section")
+        self.section = Section('test section')
         self.uut = PHPLintBear(self.section, Queue())
         self.test_file1 = os.path.join(os.path.dirname(__file__),
-                                       "test_files",
-                                       "phplint_test1.php")
+                                       'test_files',
+                                       'phplint_test1.php')
         self.test_file2 = os.path.join(os.path.dirname(__file__),
-                                       "test_files",
-                                       "phplint_test2.php")
+                                       'test_files',
+                                       'phplint_test2.php')
 
     def test_run(self):
         # Test a file with errors and warnings

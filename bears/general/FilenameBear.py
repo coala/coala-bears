@@ -8,18 +8,18 @@ from coalib.bearlib.naming_conventions import (
 
 
 class FilenameBear(LocalBear):
-    LANGUAGES = {"All"}
+    LANGUAGES = {'All'}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
 
-    _naming_convention = {"camel": to_camelcase,
-                          "pascal": to_pascalcase,
-                          "snake": to_snakecase,
-                          "space": to_spacecase}
+    _naming_convention = {'camel': to_camelcase,
+                          'pascal': to_pascalcase,
+                          'snake': to_snakecase,
+                          'space': to_spacecase}
 
     def run(self, filename, file,
-            file_naming_convention: str="snake",
+            file_naming_convention: str='snake',
             ignore_uppercase_filenames: bool=True):
         """
         Checks whether the filename follows a certain naming-convention.
@@ -40,7 +40,7 @@ class FilenameBear(LocalBear):
             new_name = self._naming_convention[file_naming_convention](
                 filename_without_extension)
         except KeyError:
-            self.err("Invalid file-naming-convention provided: " +
+            self.err('Invalid file-naming-convention provided: ' +
                      file_naming_convention)
             return
 
@@ -52,7 +52,7 @@ class FilenameBear(LocalBear):
 
             yield Result(
                 self,
-                "Filename does not follow {} naming-convention.".format(
+                'Filename does not follow {} naming-convention.'.format(
                     file_naming_convention),
                 diff.affected_code(filename),
                 diffs={filename: diff})

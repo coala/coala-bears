@@ -46,7 +46,7 @@ class QuotesBearDiffTest(unittest.TestCase):
         }
 
     def test_error_handling(self):
-        dep_results = {'AnnotationBear': [Result("test", "test")]}
+        dep_results = {'AnnotationBear': [Result('test', 'test')]}
         with execute_bear(self.uut, self.filename, self.double_quote_file,
                           dependency_results=dep_results) as results:
             self.assertEqual(len(results), 0)
@@ -76,7 +76,7 @@ class QuotesBearDiffTest(unittest.TestCase):
                              '+++ \n'
                              '@@ -2,5 +2,5 @@\n'
                              " '''\n"
-                             " Multiline string\n"
+                             ' Multiline string\n'
                              " '''\n"
                              "-'a string with single quotes!'\n"
                              '+"a string with single quotes!"\n'
@@ -92,7 +92,7 @@ class QuotesBearDiffTest(unittest.TestCase):
                              '+++ \n'
                              '@@ -2,5 +2,5 @@\n'
                              " '''\n"
-                             " Multiline string\n"
+                             ' Multiline string\n'
                              " '''\n"
                              '-"a string with double quotes!"\n'
                              "+'a string with double quotes!'\n"

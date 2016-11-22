@@ -277,133 +277,133 @@ CoffeeLintBearUseEnglishOperatorTest = verify_local_bear(
     CoffeeLintBear,
     valid_files=(good_file_use_english_operator,),
     invalid_files=(bad_file_use_english_operator,),
-    settings={"allow_bitwise_operators": "false",
-              "consistent_line_endings_style": "unix"})
+    settings={'allow_bitwise_operators': 'false',
+              'consistent_line_endings_style': 'unix'})
 
 
 CoffeeLintBearTabWidthTest = verify_local_bear(
     CoffeeLintBear,
     valid_files=(good_file_tab_width,),
     invalid_files=(good_file,),
-    settings={"use_spaces": "false", "indent_size": 4})
+    settings={'use_spaces': 'false', 'indent_size': 4})
 
 
 CoffeeLintBearNoDuplicateKeysTest = verify_local_bear(
     CoffeeLintBear,
     valid_files=(good_file_no_duplicate_keys,),
     invalid_files=(bad_file_no_duplicate_keys,),
-    settings={"prevent_duplicate_keys": "true",
-              "enforce_newline_at_EOF": "true"})
+    settings={'prevent_duplicate_keys': 'true',
+              'enforce_newline_at_EOF': 'true'})
 
 
 CoffeeLintBearCamelCaseTest = verify_local_bear(
     CoffeeLintBear,
     valid_files=(good_file,),
     invalid_files=(error_file,),
-    settings={"class_naming_camelCase": "true"})
+    settings={'class_naming_camelCase': 'true'})
 
 
 CoffeeLintBearAllowTrailingWhiteSpacesTest = verify_local_bear(
     CoffeeLintBear,
     valid_files=(good_file_allow_trailing_white_spaces,),
     invalid_files=(bad_file_allow_trailing_white_spaces,),
-    settings={"allow_trailing_whitespaces": "false",
-              "allow_bitwise_operators": "false",
-              "spaces_around_operators": "true"})
+    settings={'allow_trailing_whitespaces': 'false',
+              'allow_bitwise_operators': 'false',
+              'spaces_around_operators': 'true'})
 
 
 CoffeLintBearArrowSpacingTest = verify_local_bear(
     CoffeeLintBear,
     valid_files=(good_file_arrow_spacing,),
     invalid_files=(bad_file_arrow_spacing,),
-    settings={"space_before_and_after_arrow": "true"})
+    settings={'space_before_and_after_arrow': 'true'})
 
 
 CoffeeLintBearNoBackticksTest = verify_local_bear(
     CoffeeLintBear,
     valid_files=(good_file_no_backticks,),
     invalid_files=(bad_file_no_backticks,),
-    settings={"prohibit_embedding_javascript_snippet": "true",
-              "space_after_comma": "true",
-              "no_function_call_without_parentheses": "true"})
+    settings={'prohibit_embedding_javascript_snippet': 'true',
+              'space_after_comma': 'true',
+              'no_function_call_without_parentheses': 'true'})
 
 
 CoffeeLintBearAllowTrailingSemiColonTest = verify_local_bear(
     CoffeeLintBear,
     valid_files=(good_file_allow_trailing_semiColon,),
     invalid_files=(bad_file_allow_trailing_semiColon,),
-    settings={"allow_trailing_semicolons": "false"})
+    settings={'allow_trailing_semicolons': 'false'})
 
 
 CoffeeLintBearNoEmpytyFunctionsAndParameterListTest = verify_local_bear(
     CoffeeLintBear,
     valid_files=(good_file_no_empyty_functions_and_parameter_list,),
     invalid_files=(bad_file_no_empyty_functions_and_parameter_list,),
-    settings={"allow_empty_functions": "true",
-              "allow_no_parameters": "true",
-              "allow_increment": "false",
-              "check_braces_spacing": "true",
-              "braces_spacing_width": 2,
-              "spacing_in_empty_braces": 2,
-              "allow_unnecessary_double_quotes": "false",
-              "spaces_before_and_after_colon": "true",
-              "spaces_before_colon": 1,
-              "allow_implicit_parentheses": "false"})
+    settings={'allow_empty_functions': 'true',
+              'allow_no_parameters': 'true',
+              'allow_increment': 'false',
+              'check_braces_spacing': 'true',
+              'braces_spacing_width': 2,
+              'spacing_in_empty_braces': 2,
+              'allow_unnecessary_double_quotes': 'false',
+              'spaces_before_and_after_colon': 'true',
+              'spaces_before_colon': 1,
+              'allow_implicit_parentheses': 'false'})
 
 
 CoffeeLintBearDisableThrowingStringsTest = verify_local_bear(
     CoffeeLintBear,
     valid_files=(good_file_disable_throwing_strings,),
     invalid_files=(bad_file_disable_throwing_strings,),
-    settings={"allow_throwing_strings": "false",
-              "allow_trailing_semicolons": "true",
-              "allow_trailing_whitespaces": "true",
-              "spaces_around_operators": "false",
-              "space_after_comma": "false",
-              "force_braces": "true",
-              "allow_implicit_parentheses": "true",
-              "prohibit_embedding_javascript_snippet": "false",
-              "allow_interpolation_in_single_quotes": "false",
-              "allow_stand_alone_at_sign": "true"})
+    settings={'allow_throwing_strings': 'false',
+              'allow_trailing_semicolons': 'true',
+              'allow_trailing_whitespaces': 'true',
+              'spaces_around_operators': 'false',
+              'space_after_comma': 'false',
+              'force_braces': 'true',
+              'allow_implicit_parentheses': 'true',
+              'prohibit_embedding_javascript_snippet': 'false',
+              'allow_interpolation_in_single_quotes': 'false',
+              'allow_stand_alone_at_sign': 'true'})
 
 
 CoffeeLintBearNoStandAloneAtTest = verify_local_bear(
     CoffeeLintBear,
     valid_files=(good_file_no_stand_alone_at_sign, bad_file_no_duplicate_keys),
     invalid_files=(bad_file_no_stand_alone_at_sign,),
-    settings={"allow_stand_alone_at_sign": "false",
-              "space_after_comma": "true",
-              "enforce_parentheses_on_non_empty_constructors": "false",
-              "prevent_duplicate_keys": "false",
-              "allow_throwing_strings": "true"})
+    settings={'allow_stand_alone_at_sign': 'false',
+              'space_after_comma': 'true',
+              'enforce_parentheses_on_non_empty_constructors': 'false',
+              'prevent_duplicate_keys': 'false',
+              'allow_throwing_strings': 'true'})
 
 
 CoffeeLintBearNoThisTest = verify_local_bear(
     CoffeeLintBear,
     valid_files=(good_file_no_this,),
     invalid_files=(bad_file_no_this,),
-    settings={"allow_this_statements": "false",
-              "class_naming_camelCase": "false"})
+    settings={'allow_this_statements': 'false',
+              'class_naming_camelCase': 'false'})
 
 
 CoffeeLintBearEnforceParenthesesOnConstructorsTest = verify_local_bear(
     CoffeeLintBear,
     valid_files=(good_file_enforce_parentheses_on_constructors,),
     invalid_files=(bad_file_enforce_parentheses_on_constructors,),
-    settings={"enforce_parentheses_on_non_empty_constructors": "true",
-              "no_function_call_without_parentheses": "false",
-              "allow_interpolation_in_single_quotes": "true"})
+    settings={'enforce_parentheses_on_non_empty_constructors': 'true',
+              'no_function_call_without_parentheses': 'false',
+              'allow_interpolation_in_single_quotes': 'true'})
 
 
 CoffeeLintBearNewLinesAfterClassesTest = verify_local_bear(
     CoffeeLintBear,
     valid_files=(good_file_new_lines_after_classes,),
     invalid_files=(bad_file_new_lines_after_classes,),
-    settings={"number_of_newlines_after_classes": 1})
+    settings={'number_of_newlines_after_classes': 1})
 
 
 CoffeeLintBearCyclomaticComplexityTest = verify_local_bear(
     CoffeeLintBear,
     valid_files=(good_file_cyclomatic_complexity,),
     invalid_files=(bad_file_cyclomatic_complexity,),
-    settings={"cyclomatic_complexity": 1})
+    settings={'cyclomatic_complexity': 1})

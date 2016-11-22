@@ -93,39 +93,39 @@ FormatRBearRArrowToEqualTest = verify_local_bear(
     FormatRBear,
     valid_files=(good_file_2,),
     invalid_files=(bad_file_1,),
-    settings={"r_use_arrows": "true"})
+    settings={'r_use_arrows': 'true'})
 
 
 FormatRBearRKeepCommentsTest = verify_local_bear(
     FormatRBear,
     valid_files=(good_file_3,),
     invalid_files=(good_file_1,),
-    settings={"r_keep_comments": "false"})
+    settings={'r_keep_comments': 'false'})
 
 
 FormatRBearRBraceToNewlineTest = verify_local_bear(
     FormatRBear,
     valid_files=(good_file_4,),
     invalid_files=(bad_file_1,),
-    settings={"r_braces_on_next_line": "true"})
+    settings={'r_braces_on_next_line': 'true'})
 
 
 FormatRBearRKeepBlanklinesTest = verify_local_bear(
     FormatRBear,
     valid_files=(good_file_1,),
     invalid_files=(bad_file_2,),
-    settings={"r_keep_blank_lines": "false"})
+    settings={'r_keep_blank_lines': 'false'})
 
 
 FormatRBearRTabwidthTest = verify_local_bear(
     FormatRBear,
     valid_files=(good_file_5,),
     invalid_files=(bad_file_1,),
-    settings={"indent_size": "8"})
+    settings={'indent_size': '8'})
 
 
 FormatRBearRWidthcutoffTest = verify_local_bear(
     FormatRBear,
     valid_files=(good_file_6,),
     invalid_files=(bad_file_3,),
-    settings={"r_max_expression_length": "25"})
+    settings={'r_max_expression_length': '25'})

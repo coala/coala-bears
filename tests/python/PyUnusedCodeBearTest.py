@@ -42,7 +42,7 @@ PyAllUnusedImportTest = verify_local_bear(
                                invalid_from_import,
                                valid_non_builtin
                                ],
-                settings={"remove_all_unused_imports": True})
+                settings={'remove_all_unused_imports': True})
 
 PyUnusedCodeBearTest = verify_local_bear(
                 PyUnusedCodeBear,
@@ -51,4 +51,4 @@ PyUnusedCodeBearTest = verify_local_bear(
                              valid_from_import],
                 invalid_files=[invalid_imports,
                                invalid_from_import],
-                settings={"remove_all_unused_imports": False})
+                settings={'remove_all_unused_imports': False})

@@ -6,7 +6,7 @@ from coalib.bears.requirements.DistributionRequirement import (
 
 @linter(executable='phpcs',
         output_format='regex',
-        config_suffix=".xml",
+        config_suffix='.xml',
         output_regex=r'(?P<filename>.+):(?P<line>\d+):(?P<column>\d+): '
                      r'(\w+) - (?P<message>.+)')
 class PHPCodeSnifferBear:
@@ -16,7 +16,7 @@ class PHPCodeSnifferBear:
     See <https://github.com/squizlabs/PHP_CodeSniffer> for more information.
     """
 
-    LANGUAGES = {"PHP", "JavaScript", "CSS"}
+    LANGUAGES = {'PHP', 'JavaScript', 'CSS'}
     REQUIREMENTS = {DistributionRequirement(apt_get='php-codesniffer')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
@@ -32,7 +32,7 @@ class PHPCodeSnifferBear:
     @staticmethod
     def generate_config(filename, file,
                         max_line_length: int=79,
-                        line_ending_character: str="\\n",
+                        line_ending_character: str='\\n',
                         indent_size: int=SpacingHelper.DEFAULT_TAB_WIDTH,
                         use_spaces: bool=True,
                         allow_multiple_statements_per_line: bool=False,
@@ -86,25 +86,25 @@ class PHPCodeSnifferBear:
             Allows argument lists to be split accross multiple lines correctly
             indented.
         """
-        rules_map = {"Generic.WhiteSpace.DisallowTabIndent":
+        rules_map = {'Generic.WhiteSpace.DisallowTabIndent':
                      use_spaces,
-                     "Generic.Formatting.DisallowMultipleStatements":
+                     'Generic.Formatting.DisallowMultipleStatements':
                      not allow_multiple_statements_per_line,
-                     "Generic.PHP.LowerCaseKeyword":
+                     'Generic.PHP.LowerCaseKeyword':
                      force_lower_case_keywords,
-                     "Generic.PHP.LowerCaseConstant":
+                     'Generic.PHP.LowerCaseConstant':
                      force_lower_case_constants,
-                     "PSR2.Namespaces.UseDeclaration":
+                     'PSR2.Namespaces.UseDeclaration':
                      check_use_blocks,
-                     "PSR2.Namespaces.NamespaceDeclaration":
+                     'PSR2.Namespaces.NamespaceDeclaration':
                      blank_line_after_namespace_declaration,
-                     "PSR2.Classes.ClassDeclaration":
+                     'PSR2.Classes.ClassDeclaration':
                      check_class_declaration,
-                     "PSR2.Classes.PropertyDeclaration":
+                     'PSR2.Classes.PropertyDeclaration':
                      check_property_declaration,
-                     "Squiz.Scope.MethodScope":
+                     'Squiz.Scope.MethodScope':
                      force_scope_modifier_on_method,
-                     "Squiz.Functions.MultiLineFunctionDeclaration":
+                     'Squiz.Functions.MultiLineFunctionDeclaration':
                      allow_multiline_function_declaration}
         rules = ''
         for k, v in rules_map.items():

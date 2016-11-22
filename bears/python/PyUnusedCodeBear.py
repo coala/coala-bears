@@ -7,7 +7,7 @@ from coalib.results.Result import Result
 
 
 class PyUnusedCodeBear(LocalBear):
-    LANGUAGES = {"Python", "Python 2", "Python 3"}
+    LANGUAGES = {'Python', 'Python 2', 'Python 3'}
     REQUIREMENTS = {PipRequirement('autoflake', '0.6.*')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
@@ -35,6 +35,6 @@ class PyUnusedCodeBear(LocalBear):
 
         for diff in Diff.from_string_arrays(file, corrected).split_diff():
             yield Result(self,
-                         "This file contains unused source code.",
+                         'This file contains unused source code.',
                          affected_code=(diff.range(filename),),
                          diffs={filename: diff})

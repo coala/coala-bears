@@ -17,7 +17,7 @@ class ScalaLintBear:
     e.g. cyclomatic complexity.
     """
 
-    LANGUAGES = {"Scala"}
+    LANGUAGES = {'Scala'}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
@@ -28,7 +28,7 @@ class ScalaLintBear:
         type(self).jar = self.download_cached_file(
             'https://oss.sonatype.org/content/repositories/releases/org/'
             'scalastyle/scalastyle_2.10/0.8.0/scalastyle_2.10-0.8.0-batch.jar',
-            "scalastyle.jar")
+            'scalastyle.jar')
 
     @staticmethod
     def create_arguments(filename, file, config_file,

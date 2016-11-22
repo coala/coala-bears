@@ -23,10 +23,10 @@ def custom_matcher(request):
     :param request: The ``request`` that the mocker recieves.
     :return:        A mocked ``Response`` object.
     """
-    redirect_long_url = ("https://confluence.atlassian.com/bitbucket"
-                         "/use-the-bitbucket-cloud-rest-apis-222724129.html")
-    redirect_urls = ("https://bitbucket.org/api/301",
-                     "https://bitbucket.org/api/302")
+    redirect_long_url = ('https://confluence.atlassian.com/bitbucket'
+                         '/use-the-bitbucket-cloud-rest-apis-222724129.html')
+    redirect_urls = ('https://bitbucket.org/api/301',
+                     'https://bitbucket.org/api/302')
 
     change_url = False
     # the connection check url needs to be explicitly
@@ -41,7 +41,7 @@ def custom_matcher(request):
     if status_code in range(300, 400):
         change_url = True
         url = (redirect_long_url if request.url in redirect_urls else
-               "http://httpbin.org/get")
+               'http://httpbin.org/get')
     resp = requests.Response()
     if change_url:
         resp.url = url
@@ -60,7 +60,7 @@ class InvalidLinkBearTest(unittest.TestCase):
     """
 
     def setUp(self):
-        self.section = Section("")
+        self.section = Section('')
 
     def assertResult(self, valid_file=None, invalid_file=None, settings={}):
         with requests_mock.Mocker() as m:
@@ -68,10 +68,10 @@ class InvalidLinkBearTest(unittest.TestCase):
             uut = InvalidLinkBear(self.section, Queue())
             m.add_matcher(custom_matcher)
             if valid_file:
-                out = list(uut.run("valid", valid_file, **settings))
+                out = list(uut.run('valid', valid_file, **settings))
                 self.assertEqual(out, [])
             if invalid_file:
-                out = list(uut.run("invalid", invalid_file, **settings))
+                out = list(uut.run('invalid', invalid_file, **settings))
                 self.assertNotEqual(out, [])
                 self.assertNotEqual(out, None)
 

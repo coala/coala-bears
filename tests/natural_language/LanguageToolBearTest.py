@@ -15,26 +15,26 @@ except ImportError as err:
 
 LanguageToolBearTest = verify_local_bear(
     LanguageToolBear,
-    valid_files=("A correct English sentence sounds nice to everyone.",
-                 "Ein korrekter englischer Satz klingt für alle gut."),
-    invalid_files=("  ",
-                   "asdgaasdfgahsadf",
+    valid_files=('A correct English sentence sounds nice to everyone.',
+                 'Ein korrekter englischer Satz klingt für alle gut.'),
+    invalid_files=('  ',
+                   'asdgaasdfgahsadf',
                    '"quoted"'))
 
 
 LanguageToolBearLanguageTest = verify_local_bear(
     LanguageToolBear,
-    valid_files=("A correct English sentence sounds nice to everyone.",),
-    invalid_files=("Ein korrekter englischer Satz klingt für alle gut.",),
+    valid_files=('A correct English sentence sounds nice to everyone.',),
+    invalid_files=('Ein korrekter englischer Satz klingt für alle gut.',),
     settings={'language': 'en-US'})
 
 
 LanguageToolBearDisableRulesTest = verify_local_bear(
     LanguageToolBear,
-    valid_files=("Line without unnecessary spaces at the start.",
-                 "a line beginning with lowercase.",
-                 "A line beginning with uppercase."),
-    invalid_files=("  Line with unnecessary spaces at the start.",),
+    valid_files=('Line without unnecessary spaces at the start.',
+                 'a line beginning with lowercase.',
+                 'A line beginning with uppercase.'),
+    invalid_files=('  Line with unnecessary spaces at the start.',),
     settings={'languagetool_disable_rules': 'UPPERCASE_SENTENCE_START'})
 
 
@@ -46,9 +46,9 @@ class LanguageToolBearPrerequisitesTest(unittest.TestCase):
         try:
             shutil.which = lambda *args, **kwargs: None
             self.assertEqual(LanguageToolBear.check_prerequisites(),
-                             "java is not installed.")
+                             'java is not installed.')
 
-            shutil.which = lambda *args, **kwargs: "path/to/java"
+            shutil.which = lambda *args, **kwargs: 'path/to/java'
             self.assertTrue(LanguageToolBear.check_prerequisites())
         finally:
             shutil.which = _shutil_which

@@ -17,7 +17,7 @@ class GoVetBear:
     This is done using the ``vet`` command. For more information visit
     <https://golang.org/cmd/vet/>.
     """
-    LANGUAGES = {"Go"}
+    LANGUAGES = {'Go'}
     REQUIREMENTS = {GoRequirement(package='golang.org/cmd/vet', flag='-u')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}

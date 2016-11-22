@@ -13,7 +13,7 @@ class PuppetLintBear:
     See <http://puppet-lint.com/> for details about the tool.
     '''
 
-    LANGUAGES = {"Puppet"}
+    LANGUAGES = {'Puppet'}
     REQUIREMENTS = {GemRequirement('puppet-lint', '2')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
@@ -23,5 +23,5 @@ class PuppetLintBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file):
-        return ('--log-format', "%{line}:%{column}:%{kind}:%{message}",
+        return ('--log-format', '%{line}:%{column}:%{kind}:%{message}',
                 filename)

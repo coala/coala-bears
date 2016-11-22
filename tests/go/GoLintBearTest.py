@@ -43,4 +43,4 @@ GoLintBearWithSettingsTest = verify_local_bear(
     GoLintBear,
     valid_files=(bad_file, good_file),
     invalid_files=(),
-    settings={"golint_cli_options": "-min_confidence=1"})
+    settings={'golint_cli_options': '-min_confidence=1'})

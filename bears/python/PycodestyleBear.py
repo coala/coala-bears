@@ -11,7 +11,7 @@ class PycodestyleBear:
     """
     A wrapper for the tool ``pycodestyle`` formerly known as ``pep8``.
     """
-    LANGUAGES = {"Python", "Python 2", "Python 3"}
+    LANGUAGES = {'Python', 'Python 2', 'Python 3'}
     REQUIREMENTS = {PipRequirement('pycodestyle')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
@@ -21,8 +21,8 @@ class PycodestyleBear:
     @staticmethod
     def create_arguments(
             filename, file, config_file,
-            pycodestyle_ignore: str="",
-            pycodestyle_select: str="",
+            pycodestyle_ignore: str='',
+            pycodestyle_select: str='',
             max_line_length: int=79):
         """
         :param pycodestyle_ignore:
@@ -38,12 +38,12 @@ class PycodestyleBear:
         arguments = [r"--format='%(row)d %(col)d %(code)s %(text)s'"]
 
         if pycodestyle_ignore:
-            arguments.append("--ignore=" + pycodestyle_ignore)
+            arguments.append('--ignore=' + pycodestyle_ignore)
 
         if pycodestyle_select:
-            arguments.append("--select=" + pycodestyle_select)
+            arguments.append('--select=' + pycodestyle_select)
 
-        arguments.append("--max-line-length=" + str(max_line_length))
+        arguments.append('--max-line-length=' + str(max_line_length))
 
         arguments.append(filename)
 

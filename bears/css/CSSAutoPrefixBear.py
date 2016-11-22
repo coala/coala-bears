@@ -11,7 +11,7 @@ class CSSAutoPrefixBear:
     """
     This bear adds vendor prefixes to CSS rules using ``autoprefixer`` utility.
     """
-    LANGUAGES = {"CSS"}
+    LANGUAGES = {'CSS'}
     REQUIREMENTS = {NpmRequirement('postcss-cli', '2'),
                     NpmRequirement('autoprefixer', '6')}
     AUTHORS = {'The coala developers'}

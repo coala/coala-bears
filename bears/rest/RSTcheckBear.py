@@ -3,16 +3,16 @@ from coalib.bears.requirements.PipRequirement import PipRequirement
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
-@linter(executable="rstcheck",
+@linter(executable='rstcheck',
         use_stdout=False,
         use_stderr=True,
-        output_format="regex",
+        output_format='regex',
         output_regex=r'.+\s?:(?P<line>\d+):\s'
                      r'(?P<message>\((?P<severity>\w+).+)',
-        severity_map={"INFO": RESULT_SEVERITY.INFO,
-                      "WARNING": RESULT_SEVERITY.NORMAL,
-                      "ERROR": RESULT_SEVERITY.MAJOR,
-                      "SEVERE": RESULT_SEVERITY.MAJOR})
+        severity_map={'INFO': RESULT_SEVERITY.INFO,
+                      'WARNING': RESULT_SEVERITY.NORMAL,
+                      'ERROR': RESULT_SEVERITY.MAJOR,
+                      'SEVERE': RESULT_SEVERITY.MAJOR})
 class RSTcheckBear:
 
     """
@@ -43,5 +43,5 @@ class RSTcheckBear:
         args = ()
         if code_block_language_ignore:
             args = ('--ignore-language=' +
-                    ",".join(code_block_language_ignore),)
+                    ','.join(code_block_language_ignore),)
         return args + (filename,)

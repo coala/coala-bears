@@ -17,7 +17,7 @@ class RubySmellBear:
     <https://github.com/troessner/reek/blob/master/docs/Code-Smells.md>.
     """
 
-    LANGUAGES = {"Ruby"}
+    LANGUAGES = {'Ruby'}
     REQUIREMENTS = {GemRequirement('reek')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
@@ -43,12 +43,12 @@ class RubySmellBear:
                 message = "'{}' {}".format(issue['context'], issue['message'])
 
             yield Result(
-                origin="{} ({})".format(self.__class__.__name__,
+                origin='{} ({})'.format(self.__class__.__name__,
                                         issue['smell_type']),
                 message=message,
                 affected_code=sourceranges,
-                additional_info="More information is available at {}"
-                                ".".format(issue["wiki_link"]))
+                additional_info='More information is available at {}'
+                                '.'.format(issue['wiki_link']))
 
     @deprecate_settings(allow_duplicate_method=(
                             'duplicate_method_call', negate),
@@ -152,31 +152,31 @@ class RubySmellBear:
             the instance.
         """
         config = {
-            "Attribute": not allow_setter_in_classes,
-            "BooleanParameter": not allow_boolean_parameter_in_functions,
-            "ClassVariable": not allow_class_variables,
-            "ControlParameter": not allow_control_parameters,
-            "DataClump": not allow_data_clump,
-            "DuplicateMethodCall": not allow_duplicate_method,
-            "FeatureEnvy": feature_envy,
-            "IrresponsibleModule": missing_module_description,
-            "LongParameterList": long_param_list,
-            "LongYieldList": long_yield_list,
-            "ModuleInitialize": module_initialize,
-            "NestedIterators": nested_iterators,
-            "NilCheck": nil_check,
-            "PrimaDonnaMethod": prima_donna_method,
-            "RepeatedConditional": repeated_conditional,
-            "TooManyInstanceVariables": too_many_instance_variables,
-            "TooManyMethods": too_many_methods,
-            "TooManyStatements": too_long_method,
-            "UncommunicativeMethodName": bad_method_name,
-            "UncommunicativeModuleName": bad_module_name,
-            "UncommunicativeParameterName": bad_param_name,
-            "UncommunicativeVariableName": bad_var_name,
-            "UnusedParameters": not allow_unused_variables,
-            "UnusedPrivateMethod": not allow_unused_private_methods,
-            "UtilityFunction": utility_function}
+            'Attribute': not allow_setter_in_classes,
+            'BooleanParameter': not allow_boolean_parameter_in_functions,
+            'ClassVariable': not allow_class_variables,
+            'ControlParameter': not allow_control_parameters,
+            'DataClump': not allow_data_clump,
+            'DuplicateMethodCall': not allow_duplicate_method,
+            'FeatureEnvy': feature_envy,
+            'IrresponsibleModule': missing_module_description,
+            'LongParameterList': long_param_list,
+            'LongYieldList': long_yield_list,
+            'ModuleInitialize': module_initialize,
+            'NestedIterators': nested_iterators,
+            'NilCheck': nil_check,
+            'PrimaDonnaMethod': prima_donna_method,
+            'RepeatedConditional': repeated_conditional,
+            'TooManyInstanceVariables': too_many_instance_variables,
+            'TooManyMethods': too_many_methods,
+            'TooManyStatements': too_long_method,
+            'UncommunicativeMethodName': bad_method_name,
+            'UncommunicativeModuleName': bad_module_name,
+            'UncommunicativeParameterName': bad_param_name,
+            'UncommunicativeVariableName': bad_var_name,
+            'UnusedParameters': not allow_unused_variables,
+            'UnusedPrivateMethod': not allow_unused_private_methods,
+            'UtilityFunction': utility_function}
 
         return ('---\n' +
                 '\n'.join('{}:\n  enabled: {}'.format(key, str(value).lower())

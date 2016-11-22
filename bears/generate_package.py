@@ -108,7 +108,7 @@ def main():
 
     bear_version = VERSION
     if 'dev' in bear_version:
-        bear_version = bear_version[:bear_version.find("dev")] + (
+        bear_version = bear_version[:bear_version.find('dev')] + (
             str(int(time.time())))
     else:
         bear_version = repr(bear_version) + '.' + str(int(time.time()))

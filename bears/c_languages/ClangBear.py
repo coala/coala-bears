@@ -23,8 +23,8 @@ def clang_available(cls):
 
 
 class ClangBear(LocalBear):
-    LANGUAGES = {"C", "C++", "Objective-C", "Objective-C++", "OpenMP",
-                 "OpenCL", "CUDA"}
+    LANGUAGES = {'C', 'C++', 'Objective-C', 'Objective-C++', 'OpenMP',
+                 'OpenCL', 'CUDA'}
     REQUIREMENTS = {PipRequirement('libclang-py3', '0.2')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}

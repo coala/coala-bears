@@ -12,7 +12,7 @@ class PyDocStyleBear:
     """
     Checks python docstrings.
     """
-    LANGUAGES = {"Python", "Python 2", "Python 3"}
+    LANGUAGES = {'Python', 'Python 2', 'Python 3'}
     REQUIREMENTS = {PipRequirement('pydocstyle', '1.*')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
@@ -32,14 +32,14 @@ class PyDocStyleBear:
         """
         args = (filename,)
         if pydocstyle_ignore and pydocstyle_select:
-            self.err("The arguments pydocstyle_select and pydocstyle_ignore "
-                     "are both given but mutually exclusive.")
+            self.err('The arguments pydocstyle_select and pydocstyle_ignore '
+                     'are both given but mutually exclusive.')
             return
         elif pydocstyle_ignore:
             ignore = ','.join(part.strip() for part in pydocstyle_ignore)
-            args += ("--ignore=" + ignore,)
+            args += ('--ignore=' + ignore,)
         elif pydocstyle_select:
             select = ','.join(part.strip() for part in pydocstyle_select)
-            args += ("--select=" + select,)
+            args += ('--select=' + select,)
 
         return args

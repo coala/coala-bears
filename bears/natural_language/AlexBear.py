@@ -15,7 +15,7 @@ class AlexBear:
     Checks the markdown file with Alex - Catch insensitive, inconsiderate
     writing.
     """
-    LANGUAGES = {"Natural Language"}
+    LANGUAGES = {'Natural Language'}
     REQUIREMENTS = {NpmRequirement('alex', '3')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
@@ -28,22 +28,22 @@ class AlexBear:
             return parent_prereqs
 
         incorrect_pkg_msg = (
-            "Please ensure that the package that has been installed is the "
+            'Please ensure that the package that has been installed is the '
             "one to 'Catch insensitive, inconsiderate writing'. This can be "
-            "verified by running `alex --help` and seeing what it does.")
+            'verified by running `alex --help` and seeing what it does.')
         try:
-            output = subprocess.check_output(("alex", "--help"),
+            output = subprocess.check_output(('alex', '--help'),
                                              stderr=subprocess.STDOUT)
         except (OSError, subprocess.CalledProcessError):
-            return ("The `alex` package could not be verified. " +
+            return ('The `alex` package could not be verified. ' +
                     incorrect_pkg_msg)
         else:
             output = output.decode(sys.getfilesystemencoding())
-            if "Catch insensitive, inconsiderate writing" in output:
+            if 'Catch insensitive, inconsiderate writing' in output:
                 return True
             else:
                 return ("The `alex` package that's been installed seems to "
-                        "be incorrect. " + incorrect_pkg_msg)
+                        'be incorrect. ' + incorrect_pkg_msg)
 
     @staticmethod
     def create_arguments(filename, file, config_file):

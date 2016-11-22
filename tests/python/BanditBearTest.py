@@ -90,7 +90,7 @@ BanditBearSkipErrorCodesTest1 = verify_local_bear(
     valid_files=tuple(load_testfile(file) for file in good_files),
     invalid_files=tuple(load_testfile(file) for file in bad_files),
     settings={'bandit_skipped_tests': ','.join(skipped_error_codes)},
-    tempfile_kwargs={"suffix": ".py"})
+    tempfile_kwargs={'suffix': '.py'})
 
 
 good_files = ('good_file.py',)
@@ -102,4 +102,4 @@ BanditBearSkipErrorCodesTest2 = verify_local_bear(
     valid_files=tuple(load_testfile(file) for file in good_files),
     invalid_files=tuple(load_testfile(file) for file in bad_files),
     settings={'bandit_skipped_tests': ''},
-    tempfile_kwargs={"suffix": ".py"})
+    tempfile_kwargs={'suffix': '.py'})

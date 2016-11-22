@@ -11,7 +11,7 @@ from coalib.settings.Setting import typed_list
 
 class PyImportSortBear(LocalBear):
 
-    LANGUAGES = {"Python", "Python 3", "Python 2"}
+    LANGUAGES = {'Python', 'Python 3', 'Python 2'}
     REQUIREMENTS = {PipRequirement('isort', '4.*')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
@@ -30,12 +30,12 @@ class PyImportSortBear(LocalBear):
             lines_after_imports: int=-1,
             order_imports_by_type: bool=False,
             balanced_wrapping_in_imports: bool=False,
-            import_heading_localfolder: str="",
-            import_heading_firstparty: str="",
-            import_heading_thirdparty: str="",
-            import_heading_stdlib: str="",
-            import_heading_future: str="",
-            default_import_section: str="FIRSTPARTY",
+            import_heading_localfolder: str='',
+            import_heading_firstparty: str='',
+            import_heading_thirdparty: str='',
+            import_heading_stdlib: str='',
+            import_heading_future: str='',
+            default_import_section: str='FIRSTPARTY',
             force_grid_wrap_imports: bool=False,
             force_single_line_imports: bool=True,
             sort_imports_by_length: bool=False,
@@ -165,7 +165,7 @@ class PyImportSortBear(LocalBear):
             force_grid_wrap=force_grid_wrap_imports,
             force_single_line=force_single_line_imports,
             length_sort=sort_imports_by_length,
-            indent="Tab" if use_spaces == False else indent_size,
+            indent='Tab' if use_spaces == False else indent_size,
             forced_separate=forced_separate_imports,
             multi_line_output=isort_multi_line_output,
             known_first_party=known_first_party_imports,
@@ -173,7 +173,7 @@ class PyImportSortBear(LocalBear):
             force_to_top=imports_forced_to_top)
 
         if known_standard_library_imports is not None:
-            isort_settings["known_standard_library"] = (
+            isort_settings['known_standard_library'] = (
                 known_standard_library_imports)
 
         sort_imports = SortImports(file_contents=''.join(file),
@@ -183,6 +183,6 @@ class PyImportSortBear(LocalBear):
         if new_file != tuple(file):
             diff = Diff.from_string_arrays(file, new_file)
             yield Result(self,
-                         "Imports can be sorted.",
+                         'Imports can be sorted.',
                          affected_code=diff.affected_code(filename),
                          diffs={filename: diff})

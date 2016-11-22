@@ -28,14 +28,14 @@ class ClangCloneDetectionBear(GlobalBear):
         count_matrices = dependency_results[
             ClangFunctionDifferenceBear.__name__][1].contents
 
-        self.debug("Creating results...")
+        self.debug('Creating results...')
         for function_1, function_2, difference in differences:
             if difference < max_clone_difference:
                 yield Result.from_values(
                     self,
-                    "Code clone found. The other occurrence is at file "
-                    "{file}, line {line}, function {function}. The "
-                    "difference is {difference}%.".format(
+                    'Code clone found. The other occurrence is at file '
+                    '{file}, line {line}, function {function}. The '
+                    'difference is {difference}%.'.format(
                         file=function_2[0],
                         line=function_2[1],
                         function=function_2[2],

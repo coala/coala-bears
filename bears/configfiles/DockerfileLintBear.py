@@ -16,7 +16,7 @@ class DockerfileLintBear:
     See <https://github.com/projectatomic/dockerfile_lint#dockerfile-lint> for
     more information .
     """
-    LANGUAGES = {"Dockerfile"}
+    LANGUAGES = {'Dockerfile'}
     REQUIREMENTS = {NpmRequirement('dockerfile_lint', '0')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
@@ -24,9 +24,9 @@ class DockerfileLintBear:
     CAN_DETECT = {'Syntax', 'Smell'}
 
     severity_map = {
-        "error": RESULT_SEVERITY.MAJOR,
-        "warn": RESULT_SEVERITY.NORMAL,
-        "info": RESULT_SEVERITY.INFO}
+        'error': RESULT_SEVERITY.MAJOR,
+        'warn': RESULT_SEVERITY.NORMAL,
+        'info': RESULT_SEVERITY.INFO}
 
     @staticmethod
     def create_arguments(filename, file, config_file):
@@ -36,12 +36,12 @@ class DockerfileLintBear:
         output = json.loads(output)
 
         for severity in output:
-            if severity == "summary":
+            if severity == 'summary':
                 continue
-            for issue in output[severity]["data"]:
+            for issue in output[severity]['data']:
                 yield Result.from_values(
                     origin=self,
-                    message=issue["message"],
+                    message=issue['message'],
                     file=filename,
-                    severity=self.severity_map[issue["level"]],
-                    line=issue.get("line"))
+                    severity=self.severity_map[issue['level']],
+                    line=issue.get('line'))

@@ -33,7 +33,7 @@ def generate_diff(comments, file, filename,
 
     if affected_len == 0:
         return {}
-    assert affected_len == 1, "More than 1 affected comment source ranges"
+    assert affected_len == 1, 'More than 1 affected comment source ranges'
 
     comment_sourcerange = affected_comment_sourcerange[0]
 
@@ -67,7 +67,7 @@ def generate_diff(comments, file, filename,
 
 
 class KeywordBear(LocalBear):
-    LANGUAGES = {"All"}
+    LANGUAGES = {'All'}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
@@ -78,7 +78,7 @@ class KeywordBear(LocalBear):
     def run(self,
             filename,
             file,
-            keywords: list=["todo", "fixme"],
+            keywords: list=['todo', 'fixme'],
             dependency_results: dict=None):
         '''
         Checks the code files for given keywords.

@@ -14,14 +14,14 @@ class PEP8BearTest(LocalBearTestHelper):
         self.uut = PEP8Bear(self.section, Queue())
 
     def test_valid(self):
-        self.check_validity(self.uut, ["import sys"])
-        self.check_validity(self.uut, ["a = 1 + 1"])
+        self.check_validity(self.uut, ['import sys'])
+        self.check_validity(self.uut, ['a = 1 + 1'])
 
     def test_line_length(self):
-        self.check_validity(self.uut, ["a = 1 + 1 + 1 + 1 + 1 + 1 + 1"])
+        self.check_validity(self.uut, ['a = 1 + 1 + 1 + 1 + 1 + 1 + 1'])
         self.section.append(Setting('max_line_length', '10'))
         self.check_validity(self.uut,
-                            ["a = 1 + 1 + 1 + 1 + 1 + 1 + 1"],
+                            ['a = 1 + 1 + 1 + 1 + 1 + 1 + 1'],
                             valid=False)
 
     def test_indent_level(self):
@@ -44,5 +44,5 @@ class PEP8BearTest(LocalBearTestHelper):
         self.check_validity(self.uut, test_code)
 
     def test_invalid(self):
-        self.check_validity(self.uut, [""], valid=False)
-        self.check_validity(self.uut, ["a=1+1"], valid=False)
+        self.check_validity(self.uut, [''], valid=False)
+        self.check_validity(self.uut, ['a=1+1'], valid=False)

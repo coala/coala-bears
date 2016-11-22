@@ -16,7 +16,7 @@ class TSLintBear:
     <https://github.com/palantir/tslint#core-rules>.
     """
 
-    LANGUAGES = {"TypeScript"}
+    LANGUAGES = {'TypeScript'}
     REQUIREMENTS = {NpmRequirement('tslint', '3')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
@@ -26,7 +26,7 @@ class TSLintBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file,
-                         tslint_config: path="", rules_dir: path=""):
+                         tslint_config: path='', rules_dir: path=''):
         """
         :param tslint_config: Path to configuration file.
         :param rules_dir:     Rules directory
@@ -42,11 +42,11 @@ class TSLintBear:
         output = json.loads(output) if output else []
         for issue in output:
             yield Result.from_values(
-                origin="{} ({})".format(self.__class__.__name__,
+                origin='{} ({})'.format(self.__class__.__name__,
                                         issue['ruleName']),
-                message=issue["failure"],
-                file=issue["name"],
-                line=int(issue["startPosition"]["line"]) + 1,
-                end_line=int(issue["endPosition"]["line"]) + 1,
-                column=int(issue["startPosition"]["character"]) + 1,
-                end_column=int(issue["endPosition"]["character"]) + 1)
+                message=issue['failure'],
+                file=issue['name'],
+                line=int(issue['startPosition']['line']) + 1,
+                end_line=int(issue['endPosition']['line']) + 1,
+                column=int(issue['startPosition']['character']) + 1,
+                end_column=int(issue['endPosition']['character']) + 1)
