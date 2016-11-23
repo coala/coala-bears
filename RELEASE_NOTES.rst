@@ -1,3 +1,11 @@
+coala-bears 0.9.1
+=================
+
+This bugfix release fixes the following issues:
+
+- `TailorBear` was not distributed correctly.
+  (https://github.com/coala/coala-bears/issues/1048)
+
 coala-bears 0.9.0
 =================
 
