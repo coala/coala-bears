@@ -1,3 +1,126 @@
+coala-bears 0.9.0
+=================
+
+This release, we had 40 different contributors, pushing almost 200 commits.
+
+To get a quick overview over the current state of all bears, check out
+https://coala.io/languages. We added a number of asciinemas so you can see
+them in action right away.
+
+Here are the important changes and additions, of course coala was upgraded to
+0.9 so you can enjoy all it's new features and bugfixes:
+
+**New Bears:**
+
+Language Independent:
+
+- `QuotesBear` - Checks and corrects your quoting style for any language!
+- `SpellCheckBear` - Checks for english spelling mistakes in any source code.
+
+Python:
+
+- `MypyBear` - Checks Python code for typing using Mypy!
+- `BanditBear` - Checks Python code for security issues.
+- `PEP8NotebookBear` - Autocorrects formatting for Python code in Jupyter
+  Notebooks.
+- `PySafetyBear` - Checks for known security vulnerabilities of your Python
+  requirements.
+- `PinRequirementsBear` - Checks if Python requirements are pinned precisely.
+- `PycodestyleBear` - Checks Python coding style with better error messages
+  and reliability than `PEP8Bear`, however without automatic correction.
+
+Others:
+
+- `PHPCodeSnifferBear` - Ensures that your PHP, JavaScript or CSS code remains
+  clean and consistent.
+- `Jinja2Bear` - Detects and fixes formatting issues in Jinja2 templates.
+- `RSTcheckBear` - Checks reStructuredText for formatting and syntax.
+- `PuppetLintBear` - Checks and autocorrects puppet configuration files.
+- `CSVLintBear` - Checks syntax of CSV files.
+
+**Bears with New Settings:**
+
+You can look up the new settings at https://coala.io/languages.
+
+- `InvalidLinkBear`
+- `GitCommitBear`
+- `YapfBear`
+- `SCSSLintBear`
+
+**Deleted Settings:**
+
+- `CSecurityBear` does not accept a `neverignore` setting anymore. Those kinds
+  of issues are and should be consistently handled by coala.
+
+**Deprecated Settings:**
+
+- The `ignore_regex` setting from `InvalidLinkBear` was deprecated in favour of
+  `link_ignore_regex` for more clarity in coafiles.
+- `KeywordBear` accepts only one `keywords` argument. The `ci_keywords` and
+  `cs_keywords` arguments have been deprecated.
+- `JSHintBear` provides an `es_version` argument that implies the
+  `use_es6_syntax` argument. The latter has been deprecated in favour of the
+  former.
+- `JSHintBear` provides a more flexible `javascript_strictness` argument
+  instead of the `allow_global_strict` which has been deprecated.
+- `RuboCopBear` uses `naming_convention` instead of `name_case` now.
+
+**Other Bear Enhancements:**
+
+- The `coala-bears` package does no longer require Java upon installation.
+- `VultureBear` picks up global dependencies.
+- `ESLintBear` shows errors as `WARNING` in coala. This simplifies debugging
+  bad ESLint configurations.
+- `KeywordBear` can now automatically remove TODO comments for any language
+  coala has `Language` definitions for.
+- `FilenameBear` supports the `spacecase` convention.
+- `KeywordBear` checks for `todo` and `fixme` by default.
+- `GitCommitBear` has improved result messages.
+- `YAMLLintBear` does not check for `document-start` by default. This was not
+  a commonly chosen setting.
+- `YapfBear` will pass files in-memory to save precious IO time.
+
+**Major API Changes:**
+
+- The bears testing modules were moved to the coalib and are deprecated.
+
+**Bug Fixes:**
+
+- `AnnotationBear` yields a `HiddenResult` with an error message instead of
+  raising an exception, when the desired language is not available.
+- `AnnotationBear` yields correct results for escaped strings.
+  (https://github.com/coala/coala-bears/issues/993)
+- `AnnotationBear` yields correct results for rare corner cases of multiline
+  strings. (https://github.com/coala/coala-bears/issues/1006)
+- An issue where `LatexLintBear` crashed has been resolved.
+  (https://github.com/coala/coala-bears/issues/317)
+- `InvalidLinkBear` parses links within backticks properly. It also ignores
+  links with placeholders like `%s` and others.
+- `InvalidLinkBear` ignores FTP links.
+  (https://github.com/coala/coala-bears/issues/906)
+- `DartLintBear` emits an error when it cannot satisfy given settings.
+  (https://github.com/coala/coala-bears/issues/897)
+- `CheckstyleBear` emits an error when it cannot satisfy given settings.
+  (https://github.com/coala/coala-bears/issues/898)
+- `CheckstyleBear`: preset configurations `google` and `sun` are no longer
+  downloaded. (https://github.com/coala/coala-bears/issues/1034)
+- `YAMLLintBear` picks up the configuration properly.
+  (https://github.com/coala/coala-bears/issues/979)
+- `JavaPMDBear` works correctly on Mac now.
+  (https://github.com/coala/coala-bears/issues/998)
+- The dependencies of the following bears were bumped due to upstream
+  bugfixes:
+    - `AlexBear`
+    - `CPPCleanBear`
+    - `ESLintBear`
+    - `MarkdownBear`
+    - `ProseLintBear`
+    - `YapfBear`
+
+**Internal Changes:**
+
+- All bears use the new `linter` API now.
+
 coala-bears 0.8.4
 =================
 
