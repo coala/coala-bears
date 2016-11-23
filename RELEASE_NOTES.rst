@@ -110,6 +110,7 @@ You can look up the new settings at https://coala.io/languages.
   (https://github.com/coala/coala-bears/issues/998)
 - The dependencies of the following bears were bumped due to upstream
   bugfixes:
+
     - `AlexBear`
     - `CPPCleanBear`
     - `ESLintBear`
