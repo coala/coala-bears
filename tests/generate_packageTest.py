@@ -87,7 +87,7 @@ class MainTest(unittest.TestCase):
 
     CSS_BEAR_SETUP_PATH = os.path.join(
         'bears', 'upload', 'CSSLintBear', 'setup.py')
-    NO_BEAR_PATH = os.path.join('bears', 'BadBear', 'NoBearHere.py')
+    NO_BEAR_PATH = os.path.join('bears', 'BadBear', 'InvalidBear.py')
 
     def setUp(self):
         self.argv = ['generate_package.py']
