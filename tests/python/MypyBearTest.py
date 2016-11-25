@@ -8,7 +8,7 @@ from coalib.settings.Section import Section
 from coalib.settings.Setting import Setting
 from coalib.results.Result import Result
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
-from coalib.misc.ContextManagers import prepare_file
+from coala_utils.ContextManagers import prepare_file
 
 
 @generate_skip_decorator(MypyBear)

@@ -5,7 +5,7 @@ import os
 
 from coalib.bears.GlobalBear import GlobalBear
 from coalib.bears.requirements.PipRequirement import PipRequirement
-from coalib.misc.ContextManagers import change_directory
+from coala_utils.ContextManagers import change_directory
 from coalib.misc.Shell import run_shell_command
 from coalib.results.Result import Result
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY

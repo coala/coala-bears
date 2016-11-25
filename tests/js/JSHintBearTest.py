@@ -2,7 +2,7 @@ import os
 
 from bears.js.JSHintBear import JSHintBear
 from tests.LocalBearTestHelper import verify_local_bear
-from coalib.misc.ContextManagers import prepare_file
+from coala_utils.ContextManagers import prepare_file
 
 test_file1 = """
 var name = (function() { return 'Anton' }());

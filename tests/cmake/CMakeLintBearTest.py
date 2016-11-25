@@ -1,7 +1,7 @@
 import os
 
 from bears.cmake.CMakeLintBear import CMakeLintBear
-from coalib.misc.ContextManagers import prepare_file
+from coala_utils.ContextManagers import prepare_file
 from tests.LocalBearTestHelper import verify_local_bear
 
 
