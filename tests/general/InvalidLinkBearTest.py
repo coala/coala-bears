@@ -151,3 +151,58 @@ class InvalidLinkBearTest(unittest.TestCase):
         self.assertResult(valid_file=long_url_redirect,
                           invalid_file=short_url_redirect,
                           settings={'follow_redirects': 'yeah'})
+
+    def test_pip_vcs_url(self):
+        with_at = """
+        git+http://httpbin.org/status/200@master
+        svn+http://httpbin.org/status/200@master
+        hg+http://httpbin.org/status/200@master
+        bzr+http://httpbin.org/status/200@master
+        """.splitlines()
+
+        self.assertResult(valid_file=with_at)
+
+        with_hash = """
+        git+http://httpbin.org/status/200#egg=coala-bears
+        svn+http://httpbin.org/status/200#egg=coala-bears
+        hg+http://httpbin.org/status/200#egg=coala-bears
+        bzr+http://httpbin.org/status/200#egg=coala-bears
+        """.splitlines()
+
+        self.assertResult(valid_file=with_hash)
+
+        with_at_hash = """
+        git+http://httpbin.org/status/200@master#egg=coala-bears
+        svn+http://httpbin.org/status/200@master#egg=coala-bears
+        hg+http://httpbin.org/status/200@master#egg=coala-bears
+        bzr+http://httpbin.org/status/200@master#egg=coala-bears
+        """.splitlines()
+
+        self.assertResult(valid_file=with_at_hash)
+
+        brokenlink_at = """
+        git+http://httpbin.org/status/404@master
+        svn+http://httpbin.org/status/404@master
+        hg+http://httpbin.org/status/404@master
+        bzr+http://httpbin.org/status/404@master
+        """.splitlines()
+
+        self.assertResult(invalid_file=brokenlink_at)
+
+        brokenlink_hash = """
+        git+http://httpbin.org/status/404#egg=coala-bears
+        svn+http://httpbin.org/status/404#egg=coala-bears
+        hg+http://httpbin.org/status/404#egg=coala-bears
+        bzr+http://httpbin.org/status/404#egg=coala-bears
+        """.splitlines()
+
+        self.assertResult(invalid_file=brokenlink_hash)
+
+        brokenlink_at_hash = """
+        git+http://httpbin.org/status/404@master#egg=coala-bears
+        svn+http://httpbin.org/status/404@master#egg=coala-bears
+        hg+http://httpbin.org/status/404@master#egg=coala-bears
+        bzr+http://httpbin.org/status/404@master#egg=coala-bears
+        """.splitlines()
+
+        self.assertResult(invalid_file=brokenlink_at_hash)

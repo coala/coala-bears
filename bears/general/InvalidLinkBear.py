@@ -40,16 +40,24 @@ class InvalidLinkBear(LocalBear):
             pass
 
     @staticmethod
+    def parse_pip_vcs_url(link):
+        splitted_at = link.split('@')[0]
+        splitted_schema = splitted_at[splitted_at.index('+') + 1:]
+        return splitted_schema
+
+    @staticmethod
     def find_links_in_file(file, timeout, link_ignore_regex):
         link_ignore_regex = re.compile(link_ignore_regex)
         regex = re.compile(
-            r'(https?://[^.:%\s_/?#[\]@\\]+\.(?:[^\s()%\'"`<>|\\]+|'
-            r'\([^\s()%\'"`<>|\\]*\))*)(?<!\.)(?<!,)')
+            r'((git\+|bzr\+|svn\+|hg\+|)https?://[^.:%\s_/?#[\]@\\]+\.(?:[^\s('
+            r')%\'"`<>|\\]+|\([^\s()%\'"`<>|\\]*\))*)(?<!\.)(?<!,)')
         for line_number, line in enumerate(file):
             match = regex.search(line)
             if match:
                 link = match.group()
                 if not link_ignore_regex.search(link):
+                    if link.startswith(('hg+', 'bzr+', 'git+', 'svn+')):
+                        link = InvalidLinkBear.parse_pip_vcs_url(link)
                     code = InvalidLinkBear.get_status_code(link, timeout)
                     yield line_number + 1, link, code
 
