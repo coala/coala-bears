@@ -1,7 +1,7 @@
-coverage>=4.0.3
-pytest>=3.0.0
-pytest-cov>=2.2.1
-pytest-env>=0.6.0
-pytest-timeout>=1.0.0
-pytest-xdist>=1.14
-requests_mock==0.7.*
+coverage~=4.2
+pytest~=3.0
+pytest-cov~=2.4
+pytest-env~=0.6.0
+pytest-timeout~=1.2
+pytest-xdist~=1.15
+requests_mock~=0.7.0
