@@ -50,7 +50,9 @@ class GitCommitBear(GlobalBear):
             cls.get_shortlog_checks_metadata(),
             cls.get_body_checks_metadata())
 
-    def run(self, allow_empty_commit_message: bool = False, **kwargs):
+    def run(self, allow_empty_commit_message: bool = False,
+            no_of_commits_to_check_for_duplication: int = 20,
+            **kwargs):
         """
         Check the current git commit message at HEAD.
 
@@ -64,7 +66,8 @@ class GitCommitBear(GlobalBear):
             stdout_head, stderr_head = run_shell_command(
                 "git log -1 --pretty=%B")
             stdout_shortlogs, stderr_shortlogs = run_shell_command(
-                "git log --pretty=%s")
+                "git log --max-count={} --pretty=%s".format(
+                                    no_of_commits_to_check_for_duplication))
 
         if stderr_head or stderr_shortlogs:
             self.err("git:", repr(stderr_head),
