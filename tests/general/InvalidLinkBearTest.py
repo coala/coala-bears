@@ -180,29 +180,26 @@ class InvalidLinkBearTest(unittest.TestCase):
 
         self.assertResult(valid_file=with_at_hash)
 
-        brokenlink_at = """
-        git+http://httpbin.org/status/404@master
+        brokenlink_at = """git+http://httpbin.org/status/404@master
         svn+http://httpbin.org/status/404@master
         hg+http://httpbin.org/status/404@master
-        bzr+http://httpbin.org/status/404@master
-        """.splitlines()
+        bzr+http://httpbin.org/status/404@master"""
 
-        self.assertResult(invalid_file=brokenlink_at)
+        for line in brokenlink_at.splitlines():
+            self.assertResult(invalid_file=[line])
 
-        brokenlink_hash = """
-        git+http://httpbin.org/status/404#egg=coala-bears
+        brokenlink_hash = """git+http://httpbin.org/status/404#egg=coala-bears
         svn+http://httpbin.org/status/404#egg=coala-bears
         hg+http://httpbin.org/status/404#egg=coala-bears
-        bzr+http://httpbin.org/status/404#egg=coala-bears
-        """.splitlines()
+        bzr+http://httpbin.org/status/404#egg=coala-bears"""
 
-        self.assertResult(invalid_file=brokenlink_hash)
+        for line in brokenlink_hash.splitlines():
+            self.assertResult(invalid_file=[line])
 
-        brokenlink_at_hash = """
-        git+http://httpbin.org/status/404@master#egg=coala-bears
+        brokenlink_at_hash = """git+http://httpbin.org/status/404@master#egg=coala-bears
         svn+http://httpbin.org/status/404@master#egg=coala-bears
         hg+http://httpbin.org/status/404@master#egg=coala-bears
-        bzr+http://httpbin.org/status/404@master#egg=coala-bears
-        """.splitlines()
+        bzr+http://httpbin.org/status/404@master#egg=coala-bears"""
 
-        self.assertResult(invalid_file=brokenlink_at_hash)
+        for line in brokenlink_at_hash.splitlines():
+            self.assertResult(invalid_file=[line])
