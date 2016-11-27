@@ -29,3 +29,4 @@ vim-vint~=0.3.10
 vulture~=0.10.0
 yamllint~=1.5
 yapf~=0.14.0
+check-manifest~=0.34
