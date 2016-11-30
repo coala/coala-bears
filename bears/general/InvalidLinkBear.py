@@ -1,5 +1,6 @@
 import re
 import requests
+from urllib.parse import urlparse
 
 from difflib import SequenceMatcher
 
@@ -11,6 +12,7 @@ from coalib.results.Result import Result
 from coalib.bearlib import deprecate_settings
 from coalib.settings.Setting import typed_list
 from coalib.parsing.Globbing import fnmatch
+from coalib.settings.Setting import typed_dict
 
 
 class InvalidLinkBear(LocalBear):
@@ -48,7 +50,8 @@ class InvalidLinkBear(LocalBear):
         return splitted_schema
 
     @staticmethod
-    def find_links_in_file(file, timeout, link_ignore_regex, link_ignore_list):
+    def find_links_in_file(file, network_timeout, link_ignore_regex,
+                           link_ignore_list):
         link_ignore_regex = re.compile(link_ignore_regex)
         regex = re.compile(
             r"""
@@ -85,12 +88,15 @@ class InvalidLinkBear(LocalBear):
                         fnmatch(link, link_ignore_list)):
                     if link.startswith(('hg+', 'bzr+', 'git+', 'svn+')):
                         link = InvalidLinkBear.parse_pip_vcs_url(link)
-                    code = InvalidLinkBear.get_status_code(link, timeout)
+                    host = urlparse(link).netloc
+                    code = InvalidLinkBear.get_status_code(
+                               link, network_timeout.get(
+                                   host, InvalidLinkBear.DEFAULT_TIMEOUT))
                     yield line_number + 1, link, code
 
     @deprecate_settings(link_ignore_regex='ignore_regex')
     def run(self, filename, file,
-            timeout: int=DEFAULT_TIMEOUT,
+            network_timeout: typed_dict(str, int, DEFAULT_TIMEOUT)=dict(),
             link_ignore_regex: str='([.\/]example\.com|\{|\$)',
             link_ignore_list: typed_list(str)='',
             follow_redirects: bool=False):
@@ -108,13 +114,19 @@ class InvalidLinkBear(LocalBear):
         `do_not_ever_open = 'https://api.acme.inc/delete-all-data'` wiping out
         all your data.
 
-        :param timeout:          Request timeout period.
+        :param network_timeout:       A dict mapping URLs and timeout to be
+                                      used for that URL. All the URLs that have
+                                      the same host as that of URLs provided
+                                      will be passed that timeout.
         :param link_ignore_regex:     A regex for urls to ignore.
         :param link_ignore_list: Comma separated url globs to ignore
         :param follow_redirects: Set to true to autocorrect redirects.
         """
+        network_timeout = {urlparse(url).netloc: timeout
+                           for url, timeout in network_timeout.items()}
+
         for line_number, link, code in InvalidLinkBear.find_links_in_file(
-                file, timeout, link_ignore_regex, link_ignore_list):
+                file, network_timeout, link_ignore_regex, link_ignore_list):
             if code is None:
                 yield Result.from_values(
                     origin=self,

@@ -3,6 +3,7 @@ from queue import Queue
 import requests
 import requests_mock
 import unittest
+import unittest.mock
 
 from bears.general.InvalidLinkBear import InvalidLinkBear
 from coalib.settings.Section import Section
@@ -229,3 +230,35 @@ class InvalidLinkBearTest(unittest.TestCase):
 
         self.assertResult(valid_file=valid_file,
                           settings={'link_ignore_list': link_ignore_list})
+
+    def test_variable_timeouts(self):
+        nt = {
+            'https://google.com/timeout/test/2/3/4/5/something': 10,
+            'https://facebook.com/timeout': 15
+        }
+
+        file_contents = """
+        https://facebook.com/
+        https://google.com/
+        https://coala.io/som/thingg/page/123
+        """.splitlines()
+
+        def response(status_code, *args, **kwargs):
+            res = requests.Response()
+            res.status_code = status_code
+            return res
+
+        with unittest.mock.patch(
+                'tests.general.InvalidLinkBearTest.requests.head',
+                return_value=response(status_code=200)) as mock:
+            uut = InvalidLinkBear(self.section, Queue())
+            self.assertEqual([x.message
+                              for x in list(uut.run('file', file_contents,
+                                                    network_timeout=nt))], [])
+            mock.assert_has_calls([
+                unittest.mock.call('https://facebook.com/', timeout=15,
+                                   allow_redirects=False),
+                unittest.mock.call('https://google.com/',
+                                   timeout=10, allow_redirects=False),
+                unittest.mock.call('https://coala.io/som/thingg/page/123',
+                                   timeout=2, allow_redirects=False)])
