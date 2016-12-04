@@ -20,6 +20,7 @@ class GofmtBear:
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
     CAN_FIX = {'Formatting'}
+    ASCIINEMA_URL = 'https://asciinema.org/a/94812'
 
     @staticmethod
     def create_arguments(filename, file, config_file):

@@ -15,6 +15,7 @@ class JSONFormatBear(LocalBear):
     LANGUAGES = {'JSON'}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
+    ASCIINEMA_URL = 'https://asciinema.org/a/6vxc7076tnf996zanpdfwojwu'
     LICENSE = 'AGPL-3.0'
     CAN_DETECT = {'Formatting'}
 
