@@ -8,7 +8,7 @@ _online_styles = {
     'geosoft': 'http://geosoft.no/development/geosoft_checks.xml'}
 
 # To be deprecated
-known_checkstyles = dict(_online_styles , **{'google': None, 'sun': None})
+known_checkstyles = dict(_online_styles, **{'google': None, 'sun': None})
 
 
 def check_invalid_configuration(checkstyle_configs, use_spaces, indent_size):
