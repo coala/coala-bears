@@ -1,4 +1,4 @@
-from coalib.bearlib.languages.LanguageDefinition import LanguageDefinition
+from coalib.bearlib.languages.Language import Language
 from coalib.bears.LocalBear import LocalBear
 from coalib.results.HiddenResult import HiddenResult
 from coalib.results.Result import Result, RESULT_SEVERITY
@@ -12,7 +12,8 @@ class AnnotationBear(LocalBear):
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
 
-    def run(self, filename, file, language: str, coalang_dir: str = None):
+    def run(self, filename, file, language: str='Unknown',
+            coalang_dir: str=None):
         """
         Finds out all the positions of strings and comments in a file.
         The Bear searches for valid comments and strings and yields their
@@ -31,19 +32,43 @@ class AnnotationBear(LocalBear):
             ``u"string"``, the ``u`` will not be in the source range).
         """
         try:
-            lang_dict = LanguageDefinition(language, coalang_dir=coalang_dir)
-        except FileNotFoundError:
+            lang = Language[language]
+        except AttributeError:
             content = ('coalang specification for ' + language +
                        ' not found.')
             yield HiddenResult(self, content)
-            return
+            lang = Language['Unknown']
 
-        string_delimiters = dict(lang_dict['string_delimiters'])
-        multiline_string_delimiters = dict(
-            lang_dict['multiline_string_delimiters'])
-        multiline_comment_delimiters = dict(
-            lang_dict['multiline_comment_delimiters'])
-        comment_delimiter = dict(lang_dict['comment_delimiter'])
+        lang = lang.get_default_version()
+
+        if 'string_delimiters' in lang.attributes:
+            string_delimiters = lang.string_delimiters
+        else:
+            string_delimiters = {}
+
+        if 'multiline_string_delimiters' in lang.attributes:
+            multiline_string_delimiters = lang.multiline_string_delimiters
+        else:
+            multiline_string_delimiters = {}
+
+        if 'multiline_comment_delimiters' in lang.attributes:
+            multiline_comment_delimiters = lang.multiline_comment_delimiters
+        else:
+            multiline_comment_delimiters = {}
+
+        if 'comment_delimiter' in lang.attributes:
+            if isinstance(lang.comment_delimiter, str):
+                comment_delimiter = {lang.comment_delimiter: ''}
+            elif isinstance(lang.comment_delimiter, tuple):
+                comment_delimiter = {item: ''
+                                     for item in lang.comment_delimiter}
+            else:
+                raise TypeError('%s.comment_delimiter of unknown type %s'
+                                % (lang.__class__.__qualname__,
+                                   lang.comment_delimiter.__class__.__name__))
+        else:
+            comment_delimiter = {}
+
         string_ranges = comment_ranges = ()
         try:
             string_ranges, comment_ranges = self.find_annotation_ranges(

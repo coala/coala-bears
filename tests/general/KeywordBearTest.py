@@ -43,6 +43,17 @@ class KeywordBearDiffTest(unittest.TestCase):
                           dependency_results=self.dep_results) as result:
             self.assertEqual(result, [])
 
+    def test_no_language(self):
+        text = ['# todo 123']
+        section = Section('')
+        section.append(Setting('keywords', 'TODO'))
+
+        with execute_bear(KeywordBear(section, Queue()), 'F', text,
+                          dependency_results=self.dep_results) as result:
+            self.assertEqual(result[0].diffs, {})
+            self.assertEqual(result[0].affected_code[0].start.line, 1)
+            self.assertEqual(len(result), 1)
+
     def test_keyword_in_comment(self):
         dep_results = {
             'AnnotationBear': {}
