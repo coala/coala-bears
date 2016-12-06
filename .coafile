@@ -46,3 +46,7 @@ language = python3
 # 0.8.x (current stable release) needs them.
 ci_keywords, keywords = \#TODO, \# TODO, \#FIXME, \# FIXME
 cs_keywords =
+
+[PythonPackageInit]
+bears = PythonPackageInitBear
+ignore = *.py
