@@ -19,11 +19,17 @@ class TestLanguage:
     encapsulators = {'(': ')', '[': ']'}
 
 
-class IndentationBearTest(unittest.TestCase):
+@Language
+class InvalidLanguageSpec:
+    comment_delimiter = {}
+
+
+class IndentationBearTestBase(unittest.TestCase):
 
     def setUp(self):
         self.section = Section('')
-        self.section.append(Setting('language', 'TestLanguage'))
+        if self.language:
+            self.section.append(Setting('language', self.language))
         self.section.append(Setting('use_spaces', False))
         self.dep_uut = AnnotationBear(self.section, Queue())
 
@@ -31,12 +37,53 @@ class IndentationBearTest(unittest.TestCase):
         if section is None:
             section = self.section
         dep_results_valid = self.dep_uut.execute('file', file)
+        if not dep_results_valid:
+            return
+
         uut = IndentationBear(section, Queue())
         arg_dict = {'dependency_results':
                     {AnnotationBear.__name__:
                      list(dep_results_valid)},
                     'file': file}
         return list(uut.run_bear_from_section(['file'], arg_dict))
+
+
+class MissingLanguageTest(IndentationBearTestBase):
+
+    language = None
+
+    def test_no_language(self):
+        self.assertRaisesRegex(IndexError, 'Required index is unavailable',
+                               self.get_results, '')
+
+        # Check there are no unexpected messages
+        mq = self.dep_uut.message_queue
+        messages = []
+        while not mq.empty():
+            messages.append(mq.get(False))
+
+        self.assertEqual(len(messages), 1)
+        self.assertIn('Running bear AnnotationBear', str(messages[0]))
+
+
+class InvalidLanguageTest(IndentationBearTestBase):
+
+    language = 'InvalidLanguageSpec'
+
+    def test_wrong_type(self):
+        self.get_results('')
+        mq = self.dep_uut.message_queue
+        last_message = None
+        while not mq.empty():
+            last_message = mq.get(False)
+
+        self.assertIn(self.language, str(last_message))
+        self.assertIn('unknown type dict', str(last_message))
+
+
+class IndentationBearTest(IndentationBearTestBase):
+
+    language = 'TestLanguage'
 
     def verify_bear(self,
                     valid_file=None,
