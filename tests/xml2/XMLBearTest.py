@@ -1,7 +1,13 @@
 import os
+import unittest
 
+from queue import Queue
 from bears.xml2.XMLBear import XMLBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.BearTestHelper import generate_skip_decorator
+from coalib.testing.LocalBearTestHelper import verify_local_bear, execute_bear
+from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
+from coalib.settings.Section import Section
+from coala_utils.ContextManagers import prepare_file
 
 
 def load_testdata(filename):
@@ -10,6 +16,7 @@ def load_testdata(filename):
                         filename)
     with open(path) as f:
         return f.read()
+
 
 valid_xml_file = """<?xml version="1.0"?>
 <a/>
@@ -71,3 +78,23 @@ XMLBearDTDUrlTest = verify_local_bear(
     invalid_files=(invalid_xml_url,),
     settings={'xml_dtd': dtd_url},
     tempfile_kwargs={'suffix': '.xml'})
+
+
+@generate_skip_decorator(XMLBear)
+class XMLBearSeverityTest(unittest.TestCase):
+
+    def setUp(self):
+        self.section = Section('')
+        self.uut = XMLBear(self.section, Queue())
+
+    def test_info(self):
+        content = invalid_xml_file.splitlines()
+        with prepare_file(content, None) as (file, fname):
+            with execute_bear(self.uut, fname, file) as results:
+                self.assertEqual(results[0].severity, RESULT_SEVERITY.INFO)
+
+    def test_errors(self):
+        content = invalid_xml_chars.splitlines()
+        with prepare_file(content, None) as (file, fname):
+            with execute_bear(self.uut, fname, file) as results:
+                self.assertEqual(results[0].severity, RESULT_SEVERITY.MAJOR)

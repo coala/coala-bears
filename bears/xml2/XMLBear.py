@@ -5,6 +5,7 @@ from coalib.bearlib.abstractions.Linter import linter
 from coalib.bears.requirements.DistributionRequirement import (
     DistributionRequirement)
 from coalib.settings.Setting import path, url
+from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
 def path_or_url(xml_dtd):
@@ -36,7 +37,9 @@ class XMLBear:
     LICENSE = 'AGPL-3.0'
     CAN_DETECT = {'Formatting', 'Syntax'}
 
-    _output_regex = re.compile(r'.*:(?P<line>\d+): (?P<message>.*)\n.*\n.*')
+    _output_regex = re.compile(
+        r'.*:(?P<line>\d+):.*(?P<severity>error|warning)\s?: '
+        r'(?P<message>.*)\n.*\n.*')
 
     @staticmethod
     def create_arguments(filename, file, config_file,
@@ -52,20 +55,23 @@ class XMLBear:
             args += ('-schema', xml_schema)
         if xml_dtd:
             args += ('-dtdvalid', xml_dtd)
+
         return args
 
     def process_output(self, output, filename, file):
-        if output[0]:
+        stdout, stderr = output
+        if stdout:
             # Return issues from stderr and stdout if stdout is not empty
             return itertools.chain(
                 self.process_output_regex(
-                    output[1], filename, file,
+                    stderr, filename, file,
                     output_regex=self._output_regex),
                 self.process_output_corrected(
-                    output[0], filename, file,
+                    stdout, filename, file,
+                    diff_severity=RESULT_SEVERITY.INFO,
                     result_message='XML can be formatted better.'))
         else:
             # Return issues from stderr if stdout is empty
             return self.process_output_regex(
-                output[1], filename, file,
+                stderr, filename, file,
                 output_regex=self._output_regex)
