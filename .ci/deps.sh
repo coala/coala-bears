@@ -13,6 +13,7 @@ esac
 export DEBIAN_FRONTEND=noninteractive
 
 deps="libclang1-3.4 indent mono-mcs chktex r-base julia golang luarocks verilator cppcheck flawfinder"
+deps_infer="m4 opam"
 
 case $CIRCLE_BUILD_IMAGE in
   "ubuntu-12.04")
@@ -32,8 +33,19 @@ case $CIRCLE_BUILD_IMAGE in
     # Add packages which are available in xenial
     # The xenial hlint is >= 1.9.1
     deps="$deps hlint"
-    # Add libxml2-utils
-    deps="$deps libxml2-utils"
+    # Add packages which are already in the precise image
+    deps="$deps g++-4.9 libxml2-utils php-codesniffer"
+    # gfortran on CircleCI precise is 4.6 and R irlba compiles ok,
+    # but for reasons unknown it fails on trusty without gfortran-4.9
+    deps="$deps gfortran-4.9"
+    # Add extra infer deps
+    deps_infer="$deps_infer ocaml camlp4"
+    # opam install --deps-only --yes infer fails with
+    #  Fatal error:
+    #  Stack overflow
+    # aspcud is an external dependency resolver, and is the recommended
+    # solution: https://github.com/ocaml/opam/issues/2507
+    deps_infer="$deps_infer aspcud"
     ;;
 esac
 
@@ -54,10 +66,17 @@ elif [ -n "$USE_PPAS" ]; then
 fi
 
 deps_perl="perl libperl-critic-perl"
-deps_infer="m4 opam"
 
 sudo apt-get -y update
 sudo apt-get -y --no-install-recommends install $deps $deps_perl $deps_infer
+
+# On Trusty, g++ & gfortran 4.9 need activating for R lintr dependency irlba.
+ls -al /usr/bin/gcc* /usr/bin/g++* /usr/bin/gfortran* || true
+if [[ "$CIRCLE_BUILD_IMAGE" == "ubuntu-14.04" ]]; then
+  sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 20
+  sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 20
+  sudo update-alternatives --install /usr/bin/gfortran gfortran /usr/bin/gfortran-4.9 20
+fi
 
 # Change environment for flawfinder from python to python2
 sudo sed -i '1s/.*/#!\/usr\/bin\/env python2/' /usr/bin/flawfinder
