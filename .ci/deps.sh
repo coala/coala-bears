@@ -12,6 +12,7 @@ esac
 export DEBIAN_FRONTEND=noninteractive
 
 deps="espeak libclang1-3.4 indent mono-mcs chktex hlint r-base julia golang luarocks verilator cppcheck flawfinder"
+deps_infer="m4 opam"
 
 case $CIRCLE_BUILD_IMAGE in
   "ubuntu-12.04")
@@ -28,8 +29,10 @@ case $CIRCLE_BUILD_IMAGE in
 
     # The non-apt go provided by Circle CI is acceptable
     deps=${deps/golang/}
-    # Add libxml2-utils
-    deps="$deps libxml2-utils"
+    # Add packages which are already in the precise image
+    deps="$deps libxml2-utils php-codesniffer"
+    # Add extra infer deps
+    deps_infer="$deps_infer ocaml camlp4"
     ;;
 esac
 
@@ -47,7 +50,6 @@ fi
 
 deps_python_gi="glib2.0-dev gobject-introspection libgirepository1.0-dev python3-cairo-dev"
 deps_perl="perl libperl-critic-perl"
-deps_infer="m4 opam"
 
 sudo apt-get -y update
 sudo apt-get -y --no-install-recommends install $deps $deps_python_gi $deps_perl $deps_infer
