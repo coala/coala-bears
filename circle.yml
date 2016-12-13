@@ -15,7 +15,6 @@ dependencies:
     - ~/.local/share/coala-bears
     - ~/bakalint-0.4.0
     - ~/.julia
-    - ~/hlint_1.9.26-1_amd64.deb
   pre:
     - sudo rm -rf /var/cache/apt/archives && sudo ln -s ~/.apt-cache /var/cache/apt/archives && mkdir -p ~/.apt-cache/partial
     - echo 'export PATH=$PATH:~/coala-bears/node_modules/.bin' >> ~/.circlerc
