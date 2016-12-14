@@ -49,12 +49,11 @@ if [ "$USE_PPAS" = "true" ]; then
   sudo add-apt-repository -y ppa:avsm/ppa
 fi
 
-deps_python_gi="glib2.0-dev gobject-introspection libgirepository1.0-dev python3-cairo-dev"
 deps_perl="perl libperl-critic-perl"
 deps_infer="m4 opam"
 
 sudo apt-get -y update
-sudo apt-get -y --no-install-recommends install $deps $deps_python_gi $deps_perl $deps_infer
+sudo apt-get -y --no-install-recommends install $deps $deps_perl $deps_infer
 
 # Change environment for flawfinder from python to python2
 sudo sed -i '1s/.*/#!\/usr\/bin\/env python2/' /usr/bin/flawfinder
