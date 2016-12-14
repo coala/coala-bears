@@ -72,7 +72,7 @@ if [[ -z "$(which hlint)" ]]; then
 fi
 
 # NPM commands
-sudo rm -rf /opt/alex # Delete ghc-alex as it clashes with npm deps
+sudo rm -rf $(which alex)  # Delete ghc-alex as it clashes with npm deps
 npm install
 
 # R commands
