@@ -66,8 +66,13 @@ sudo rm -rf /opt/alex # Delete ghc-alex as it clashes with npm deps
 npm install
 
 # R commands
-mkdir -p ~/.RLibrary
-echo '.libPaths( c( "~/.RLibrary", .libPaths()) )' >> .Rprofile
+if [[ ! -d ~/R/Library/ ]]; then
+  mkdir -p ~/R/Library/
+  if [[ -d ~/.RLibrary/ ]]; then
+    cp -rp ~/.RLibrary/* ~/R/Library
+  fi
+fi
+echo '.libPaths( c( "~/R/Library", .libPaths()) )' >> .Rprofile
 echo 'options(repos=structure(c(CRAN="http://cran.rstudio.com")))' >> .Rprofile
 R -e "install.packages('lintr', dependencies=TRUE, quiet=TRUE, verbose=FALSE)"
 R -e "install.packages('formatR', dependencies=TRUE, quiet=TRUE, verbose=FALSE)"
