@@ -26,7 +26,8 @@ dependencies:
     - echo 'export PATH=$PATH:~/pmd-bin-5.4.1/bin' >> ~/.circlerc
     - echo 'export PATH=$PATH:~/bakalint-0.4.0' >> ~/.circlerc
     - sed -i '/source \/home\/ubuntu\/virtualenvs\//d' ~/.circlerc
-    - nvm alias default node
+    - nvm install 6.9
+    - nvm alias default 6.9
   override:
     - bash .ci/deps.shellcheck.sh
     - bash .ci/deps.sh:
