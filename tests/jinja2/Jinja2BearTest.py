@@ -55,6 +55,7 @@ class Jinja2BearSpacingDiffTest(unittest.TestCase):
                              '-{% endfor%}{# for x in y #}\n'
                              '+{% endfor %}{# for x in y #}\n')
 
+
 Jinja2BearControlSpacingTest = verify_local_bear(
     Jinja2Bear,
     valid_files=(r'foo {% if something %} bar {% endif %}',),
@@ -140,6 +141,7 @@ class Jinja2BearLabelDiffTest(unittest.TestCase):
                 ' render stuff\n'
                 '-{% endif %}{# some random comment #} more stuff\n'
                 '+{% endif %}{# if x == something #} more stuff\n')
+
 
 Jinja2BearControlBlockTest = verify_local_bear(
     Jinja2Bear,

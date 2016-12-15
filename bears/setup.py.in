@@ -37,7 +37,7 @@ if __name__ == '__main__':
                    'Intended Audience :: Science/Research',
                    'Intended Audience :: Developers',
                    'Programming Language :: '
-                        'Python :: Implementation :: CPython',
+                   'Python :: Implementation :: CPython',
                    'Programming Language :: Python :: 3.4',
                    'Programming Language :: Python :: 3.5',
                    'Programming Language :: Python :: 3 :: Only',

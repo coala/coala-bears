@@ -47,19 +47,19 @@ class CSVLintBear:
     message_dict = {
         'wrong_content_type': 'Content type is not text/csv.',
         'ragged_rows': 'Row has a different number of columns. (than the first'
-                        ' row in the file)',
+                       ' row in the file)',
         'blank_rows': 'Completely empty row, e.g. blank line or a line where'
-                       ' all column values are empty.',
+                      ' all column values are empty.',
         'invalid_encoding': 'Encoding error when parsing row, e.g. because of'
-                             ' invalid characters.',
+                            ' invalid characters.',
         'not_found': 'HTTP 404 error when retrieving the data.',
         'stray_quotd': 'Missing or stray quote.',
         'unclosed_quotd': 'Unclosed quoted field.',
         'whitespacd': 'A quoted column has leading or trailing whitespace.',
         'line_breakd': 'Line breaks were inconsistent or incorrectly'
-                         ' specified.',
+                       ' specified.',
         'no_encodind': 'The Content-Type header returned in the HTTP request'
-                         ' does not have a charset parameter.',
+                       ' does not have a charset parameter.',
         'encoding': 'The character set is not UTF-8.',
         'no_content_type': 'File is being served without a Content-Type'
                            ' header.',
@@ -93,4 +93,4 @@ class CSVLintBear:
                 self,
                 match, filename, severity_map=self.severity_map,
                 result_message=self.message_dict[groups['origin']] +
-                               result_message)
+                result_message)

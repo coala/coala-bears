@@ -270,7 +270,7 @@ class SCSSLintBear:
                                    'enabled': True,
                                    'style': (
                                        'exclude_zero' if exclude_leading_zero
-                                        else 'include_zero')
+                                       else 'include_zero')
                                   },
                    'MergeableSelector': {'enabled': allow_mergeable_selectors,
                                          'force_nesting': True},

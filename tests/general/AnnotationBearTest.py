@@ -103,14 +103,14 @@ class AnnotationBearTest(unittest.TestCase):
         string2_start = string1_end+2
         text = ''.join(file_text)
         string2_end = text.find('"""', string2_start + 1) + 2
-        #+2 for length of """
+        # +2 for length of """
         string2 = SourceRange.from_absolute_position(
                                     'F',
                                     AbsolutePosition(file_text, string2_start),
                                     AbsolutePosition(file_text, string2_end))
         string3_start = text.find('"""', string2_end + 1)
         string3_end = text.find('"""', string3_start + 1) + 2
-        #+2 for length of """
+        # +2 for length of """
         string3 = SourceRange.from_absolute_position(
                                     'F',
                                     AbsolutePosition(file_text, string3_start),

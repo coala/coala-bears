@@ -3,8 +3,12 @@ from coalib.settings.Setting import path
 
 
 _online_styles = {
-    'android-check-easy': 'https://raw.githubusercontent.com/noveogroup/android-check/master/android-check-plugin/src/main/resources/checkstyle/checkstyle-easy.xml',
-    'android-check-hard': 'https://raw.githubusercontent.com/noveogroup/android-check/master/android-check-plugin/src/main/resources/checkstyle/checkstyle-hard.xml',
+    'android-check-easy': 'https://raw.githubusercontent.com/noveogroup/' +
+    'android-check/master/android-check-plugin/src/main/resources/' +
+    'checkstyle/checkstyle-easy.xml',
+    'android-check-hard': 'https://raw.githubusercontent.com/noveogroup/' +
+    'android-check/master/android-check-plugin/src/main/resources/' +
+    'checkstyle/checkstyle-hard.xml',
     'geosoft': 'http://geosoft.no/development/geosoft_checks.xml'}
 
 # To be deprecated

@@ -176,62 +176,81 @@ class RuboCopBear:
         """
         naming_convention = {'camel': 'camelCase', 'snake': 'snake_case'}
         options = {
-                  'Style/AccessModifierIndentation':
-                      {'EnforcedStyle': access_modifier_indentation},
-                  'Style/Alias':
-                      {'EnforcedStyle': preferred_alias},
-                  'Style/AlignHash':
-                      {'EnforcedHashRocketStyle': align_hash_rocket_by,
-                       'EnforcedColonStyle': align_colon_by,
-                       'EnforcedLastArgumentHashStyle':
-                           inspect_last_argument_hash},
-                  'Style/AlignParameters':
-                      {'EnforcedStyle': align_parameters},
-                  'Style/ClassCheck':
-                      {'EnforcedStyle': class_check},
-                  'Style/CommentAnnotation':
-                      {'Keywords': comment_keywords},
-                  'Style/GuardClause':
-                      {'MinBodyLength': min_if_unless_guard},
-                  'Style/IndentationWidth':
-                      {'Width': indent_size},
-                  'Style/MethodName':
-                      {'EnforcedStyle': naming_convention.get(
-                         method_naming_convention, method_naming_convention)},
-                  'Style/StringLiterals':
-                      {'EnforcedStyle': string_literals},
-                  'Style/VariableName':
-                      {'EnforcedStyle': naming_convention.get(
-                         variable_naming_convention,
-                         variable_naming_convention)},
-                  'Metrics/ClassLength':
-                      {'Max': max_class_length,
-                       'CountComments': class_length_count_comments},
-                  'Metrics/ModuleLength':
-                      {'CountComments': module_length_count_comments,
-                       'Max': max_module_length},
-                  'Metrics/CyclomaticComplexity':
-                      {'Max': cyclomatic_complexity},
-                  'Metrics/LineLength':
-                      {'Max': max_line_length,
-                       'AllowHeredoc': line_length_allow_here_doc,
-                       'AllowURI': line_length_allow_uri},
-                  'Metrics/MethodLength':
-                      {'CountComments':  method_length_count_comments,
-                       'Max': max_method_length},
-                  'Metrics/ParameterLists':
-                      {'Max': max_parameters,
-                       'CountKeywordArgs': count_keyword_args},
-                  'Lint/UnusedBlockArgument':
-                      {'IgnoreEmptyBlocks': ignore_unused_block_args_if_empty,
-                       'AllowUnusedKeywordArguments':
-                           allow_unused_block_keyword_arguments},
-                  'Lint/UnusedMethodArgument':
-                      {'AllowUnusedKeywordArguments':
-                           allow_unused_method_keyword_args,
-                       'IgnoreEmptyMethods':
-                           ignore_unused_method_args_if_empty},
-                  }
+            'Style/AccessModifierIndentation': {
+                'EnforcedStyle': access_modifier_indentation
+            },
+            'Style/Alias': {
+                'EnforcedStyle': preferred_alias
+            },
+            'Style/AlignHash': {
+                'EnforcedHashRocketStyle': align_hash_rocket_by,
+                'EnforcedColonStyle': align_colon_by,
+                'EnforcedLastArgumentHashStyle': inspect_last_argument_hash
+            },
+            'Style/AlignParameters': {
+                'EnforcedStyle': align_parameters
+            },
+            'Style/ClassCheck': {
+                'EnforcedStyle': class_check
+            },
+            'Style/CommentAnnotation': {
+                'Keywords': comment_keywords
+            },
+            'Style/GuardClause': {
+                'MinBodyLength': min_if_unless_guard
+            },
+            'Style/IndentationWidth': {
+                'Width': indent_size
+            },
+            'Style/MethodName': {
+                'EnforcedStyle': naming_convention.get(
+                                 method_naming_convention,
+                                 method_naming_convention)
+            },
+            'Style/StringLiterals': {
+                 'EnforcedStyle': string_literals
+            },
+            'Style/VariableName': {
+                'EnforcedStyle': naming_convention.get(
+                                 variable_naming_convention,
+                                 variable_naming_convention)
+            },
+            'Metrics/ClassLength': {
+                'Max': max_class_length,
+                'CountComments': class_length_count_comments
+            },
+            'Metrics/ModuleLength': {
+                'CountComments': module_length_count_comments,
+                'Max': max_module_length
+            },
+            'Metrics/CyclomaticComplexity': {
+                'Max': cyclomatic_complexity
+            },
+            'Metrics/LineLength': {
+                'Max': max_line_length,
+                'AllowHeredoc': line_length_allow_here_doc,
+                'AllowURI': line_length_allow_uri
+            },
+            'Metrics/MethodLength': {
+                'CountComments':  method_length_count_comments,
+                'Max': max_method_length
+            },
+            'Metrics/ParameterLists': {
+                'Max': max_parameters,
+                'CountKeywordArgs': count_keyword_args
+            },
+            'Lint/UnusedBlockArgument': {
+                'IgnoreEmptyBlocks': ignore_unused_block_args_if_empty,
+                'AllowUnusedKeywordArguments':
+                    allow_unused_block_keyword_arguments
+            },
+            'Lint/UnusedMethodArgument': {
+                'AllowUnusedKeywordArguments':
+                    allow_unused_method_keyword_args,
+                'IgnoreEmptyMethods':
+                    ignore_unused_method_args_if_empty
+            },
+        }
         return yaml.dump(options, default_flow_style=False)
 
     def process_output(self, output, filename, file):

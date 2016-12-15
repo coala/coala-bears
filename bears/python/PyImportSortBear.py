@@ -165,7 +165,7 @@ class PyImportSortBear(LocalBear):
             force_grid_wrap=force_grid_wrap_imports,
             force_single_line=force_single_line_imports,
             length_sort=sort_imports_by_length,
-            indent='Tab' if use_spaces == False else indent_size,
+            indent='Tab' if not use_spaces else indent_size,
             forced_separate=forced_separate_imports,
             multi_line_output=isort_multi_line_output,
             known_first_party=known_first_party_imports,

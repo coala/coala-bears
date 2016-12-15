@@ -71,7 +71,7 @@ class WriteGoodLintBear:
             'allow_extra_words': '--tooWordy',
             'allow_cliche_phrases': '--cliches'
         }
-        l = locals()
+        arg_values = locals()
         args = tuple(arg for key, arg in arg_map.items()
-                     if not l[key])
+                     if not arg_values[key])
         return args + (filename,)

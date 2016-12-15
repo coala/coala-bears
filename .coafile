@@ -16,7 +16,7 @@ default_actions = *: ApplyPatchAction
 preferred_quotation = '
 
 [autopep8]
-bears = PEP8Bear
+bears = PEP8Bear, PycodestyleBear
 default_actions = PEP8Bear: ApplyPatchAction
 
 [linelength]  # Sometimes autopep8 makes too long lines, need to check after!

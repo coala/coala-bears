@@ -80,7 +80,10 @@ class BanditBearTest(LocalBearTestHelper):
 
 # The following test will ignore some error codes, so "good" and "bad" doesn't
 # reflect the actual code quality.
+
+
 good_files = ('good_file.py', 'assert.py')
+
 bad_files = ('exec-py2.py', 'httpoxy_cgihandler.py', 'jinja2_templating.py',
              'skip.py')
 skipped_error_codes = ['B105', 'B106', 'B107', 'B404', 'B606', 'B607', 'B101']
