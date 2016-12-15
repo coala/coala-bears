@@ -1,0 +1,97 @@
+sudo: required
+
+language: python
+python:
+  - 3.4
+  - 3.5
+
+dist: trusty
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+      - avsm  # OPAM stable
+      - hvr-ghc  # Haskell
+    packages:
+      - cabal-install
+      - chktex
+      - clang-3.4
+      - cppcheck
+      - espeak
+      - ghc
+      - haskell-platform
+      - indent
+      - libblas-dev
+      - liblapack-dev
+      - libxml2-utils
+      - luarocks
+      - menhir
+      - mono-mcs
+      - oracle-java9-set-default
+      - php-codesniffer
+      - verilator
+
+cache:
+  pip: true
+  directories:
+    # Installed language package caches
+    - ~/.cabal
+    - ~/R/Library
+    - ~/.julia
+    - $TRAVIS_BUILD_DIR/node_modules
+    - $TRAVIS_BUILD_DIR/.bundle
+    - $TRAVIS_BUILD_DIR/vendor
+    # coala managed data
+    - ~/nltk_data
+    - ~/.local/share/coala-bears
+    # .deb cache
+    - ~/.apt-cache
+    # Installed linters
+    - ~/infer-linux64-v0.7.0
+    - ~/pmd-bin-5.4.1
+    - ~/bakalint-0.4.0
+    - ~/dart-sdk/bin
+
+env:
+  global:
+    - CIRCLE_NODE_INDEX=-1  # Avoid accidentially being a CircleCI worker
+    - USE_PPAS=true
+    - R_LIB_USER=~/R/Library
+    - LINTR_COMMENT_BOT=false
+    - PATH="$PATH:$TRAVIS_BUILD_DIR/node_modules/.bin:$TRAVIS_BUILD_DIR/vendor/bin:$HOME/dart-sdk/bin:$HOME/.cabal/bin:$HOME/infer-linux64-v0.7.0/infer/bin:$HOME/pmd-bin-5.4.1/bin:/$HOME/bakalint-0.4.0"
+
+before_install:
+  - nvm install 4
+  - nvm use 4
+  # Remove Ruby directive from Gemfile as this image has 2.2.5
+  - sed -i '/^ruby/d' Gemfile
+  - mkdir -p ~/.apt-cache
+  - bash .ci/deps.sh
+  - bash .ci/deps.shellcheck.sh
+  # https://github.com/coala/coala/issues/3183
+  # https://github.com/coala/coala/issues/3184
+  - pip install -U py==1.4.29 pip
+  - cat test-requirements.txt docs-requirements.txt >> requirements.txt
+  - sed -i '/^-r/d' requirements.txt
+  - echo 'language_check==0.8.*' >> requirements.txt
+
+before_script:
+  - julia -e 'Pkg.add("Lint")'
+  - python3 -m nltk.downloader punkt maxent_treebank_pos_tagger averaged_perceptron_tagger
+
+script:
+  - bash .ci/tests.sh
+  - python setup.py install
+  # https://github.com/coala/coala-bears/issues/1037
+  - >
+    if [[ "$TRAVIS_PULL_REQUEST" != "false" ]]; then
+      sed -i '/bears = GitCommitBear/d' .coafile
+    fi
+  - coala --non-interactive
+  - bash .ci/deploy.coverage.sh
+  - rm -rf docs/API && make -C docs clean
+  - python setup.py docs
+
+notifications:
+  email: false

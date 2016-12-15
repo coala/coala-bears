@@ -6,7 +6,7 @@ BIN_PATH=~/.cabal/bin/shellcheck
 
 function install_shellcheck {
   cabal update --verbose=0
-  cabal install --verbose=0 shellcheck-$VERSION
+  cabal install --verbose=0 --force-reinstalls shellcheck-$VERSION
 }
 
 function currently_installed_shellcheck_version {

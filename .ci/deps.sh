@@ -5,6 +5,7 @@ set -x
 case $CIRCLE_NODE_INDEX in
  0) dep_versions=( "3.4.3" "3.5.1" ) ;;
  1) dep_versions=( "3.4.3" ) ;;
+ -1) dep_versions=( ) ;;  # set by .travis.yml
  *) dep_versions=( "3.5.1" ) ;;
 esac
 
@@ -76,8 +77,7 @@ sudo rm -rf $(which alex)  # Delete ghc-alex as it clashes with npm deps
 npm install
 
 # R commands
-mkdir -p ~/.RLibrary
-echo '.libPaths( c( "~/.RLibrary", .libPaths()) )' >> .Rprofile
+echo '.libPaths( c( "'"$R_LIB_USER"'", .libPaths()) )' >> .Rprofile
 echo 'options(repos=structure(c(CRAN="http://cran.rstudio.com")))' >> .Rprofile
 R -e "install.packages('lintr', dependencies=TRUE, quiet=TRUE, verbose=FALSE)"
 R -e "install.packages('formatR', dependencies=TRUE, quiet=TRUE, verbose=FALSE)"
@@ -119,7 +119,7 @@ if ! dartanalyzer -v &> /dev/null ; then
 fi
 
 # VHDL Bakalint Installation
-if [ ! -e ~/bakalint-0.4.0 ]; then
+if [ ! -e ~/bakalint-0.4.0/bakalint.pl ]; then
   wget "http://downloads.sourceforge.net/project/fpgalibre/bakalint/0.4.0/bakalint-0.4.0.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Ffpgalibre%2Ffiles%2Fbakalint%2F0.4.0%2F&ts=1461844926&use_mirror=netcologne" -O ~/bl.tar.gz
   tar xf ~/bl.tar.gz -C ~/
 fi
