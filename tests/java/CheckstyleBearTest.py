@@ -7,7 +7,7 @@ from bears.java import CheckstyleBear
 from tests.BearTestHelper import generate_skip_decorator
 from tests.LocalBearTestHelper import LocalBearTestHelper
 from coalib.settings.Section import Section
-from coalib.settings.Setting import path, Setting
+from coalib.settings.Setting import Setting
 
 
 @generate_skip_decorator(CheckstyleBear.CheckstyleBear)

@@ -1,11 +1,9 @@
 import unittest
 
 from queue import Queue
-import os
 
 from bears.general.IndentationBear import IndentationBear
 from bears.general.AnnotationBear import AnnotationBear
-from coala_utils.string_processing.Core import escape
 from coalib.settings.Section import Section
 from coalib.settings.Setting import Setting
 from coalib.bearlib.languages import Language
