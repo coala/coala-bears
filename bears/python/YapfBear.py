@@ -1,5 +1,3 @@
-import sys
-
 from yapf.yapflib.yapf_api import FormatCode
 
 from coalib.bearlib import deprecate_settings

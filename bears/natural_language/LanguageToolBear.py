@@ -27,6 +27,8 @@ class LanguageToolBear(LocalBear):
         else:
             try:
                 from language_check import LanguageTool, correct
+                LanguageTool
+                correct
                 return True
             except ImportError:  # pragma: no cover
                 return 'Please install the `language-check` pip package.'

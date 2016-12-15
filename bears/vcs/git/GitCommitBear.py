@@ -8,7 +8,6 @@ from dependency_management.requirements.PipRequirement import PipRequirement
 from coala_utils.ContextManagers import change_directory
 from coalib.misc.Shell import run_shell_command
 from coalib.results.Result import Result
-from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.settings.FunctionMetadata import FunctionMetadata
 from coalib.settings.Setting import typed_list
 

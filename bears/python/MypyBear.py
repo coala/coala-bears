@@ -4,8 +4,6 @@ import sys
 
 from coalib.bearlib.abstractions.Linter import linter
 from dependency_management.requirements.PipRequirement import PipRequirement
-from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
-from coalib.results.Result import Result
 
 
 class FlagInfo(namedtuple('FlagInfo', 'arg doc inverse')):
