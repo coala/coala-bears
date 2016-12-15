@@ -6,7 +6,7 @@ from coalib.results.HiddenResult import HiddenResult, Result
 from bears.general.QuotesBear import QuotesBear
 from coalib.results.SourceRange import SourceRange
 from coalib.settings.Section import Section
-from coalib.testing.LocalBearTestHelper import verify_local_bear, execute_bear
+from coalib.testing.LocalBearTestHelper import execute_bear
 
 
 class QuotesBearDiffTest(unittest.TestCase):
