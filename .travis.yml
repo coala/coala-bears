@@ -19,6 +19,7 @@ addons:
       - clang-3.4
       - cppcheck
       - espeak
+      - gfortran
       - ghc
       - haskell-platform
       - indent
