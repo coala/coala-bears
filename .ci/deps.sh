@@ -148,8 +148,14 @@ if [ ! -e ~/pmd-bin-5.4.1/bin ]; then
 fi
 
 # Tailor (Swift) commands
-curl -fsSL https://tailor.sh/install.sh | sed 's/read -r CONTINUE < \/dev\/tty/CONTINUE=y/' > install.sh
-sudo bash install.sh
+# Comment out the hardcoded PREFIX, so we can put it into ~/.local
+if [ ! -e ~/.local/tailor/tailor-latest ]; then
+  curl -fsSL -o install.sh https://tailor.sh/install.sh
+  sed -i 's/read -r CONTINUE < \/dev\/tty/CONTINUE=y/;;s/^PREFIX.*/# PREFIX=""/;' install.sh
+  PREFIX=$HOME/.local bash ./install.sh
+  # Provide a constant path for the executable
+  ln -s ~/.local/tailor/tailor-* ~/.local/tailor/tailor-latest
+fi
 
 # making coala cache the dependencies downloaded upon first run
 echo '' > dummy
