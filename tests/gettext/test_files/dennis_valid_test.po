@@ -1,0 +1,6 @@
+msgid 'Foo'
+msgstr 'Foo'
+msgid '{Foo} hi'
+msgstr '{Foo}'
+msgid '%s Foo'
+msgstr '%s Foo'

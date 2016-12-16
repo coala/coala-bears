@@ -1,0 +1,4 @@
+msgid 'Foo'
+msgstr 'Foo'
+msgid 'Foo'
+msgstr '  '
