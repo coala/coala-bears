@@ -38,7 +38,7 @@ class YapfBear(LocalBear):
             join_multiple_lines: bool=True,
             spaces_around_power_operator: bool=True,
             spaces_before_comment: int=2,
-            space_between_ending_comma_and_closing_bracket: bool=False,
+            space_between_ending_comma_and_closing_bracket: bool=True,
             split_arguments_when_comma_terminated: bool=False,
             split_before_bitwise_operator: bool=False,
             split_before_first_argument: bool=False,
