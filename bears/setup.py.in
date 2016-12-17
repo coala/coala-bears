@@ -19,7 +19,7 @@ if __name__ == '__main__':
     try:
         setup(name=$NAME,
               version='$VERSION',
-              description='$NAME bear for coala (http://coala.rtfd.org/)',
+              description='''$NAME bear for coala (http://coala.rtfd.org/)''',
               authors=$AUTHORS,
               authors_emails=$AUTHORS_EMAILS,
               maintainers=$MAINTAINERS,
@@ -28,7 +28,7 @@ if __name__ == '__main__':
               license='$LICENSE',
               packages=find_packages(exclude=['build.*']),
               install_requires=required,
-              long_description='$LONG_DESCRIPTION',
+              long_description='''$LONG_DESCRIPTION''',
               entry_points={'coalabears': ['$BEAR_NAME = $ENTRY']},
               classifiers=[
                    'Development Status :: 4 - Beta',
