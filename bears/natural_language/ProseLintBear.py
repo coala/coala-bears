@@ -7,7 +7,8 @@ from coalib.bears.requirements.PipRequirement import PipRequirement
         output_regex=r'.+?:(?P<line>\d+):(?P<column>\d+): \S* (?P<message>.+)')
 class ProseLintBear:
     """
-    Lints the file using ``proselint``.
+    Lints the file using `proselint <https://github.com/amperser/proselint>`__.
+    Works only with English language text.
     """
     LANGUAGES = {'Natural Language'}
     REQUIREMENTS = {PipRequirement('proselint', '0.7')}
