@@ -54,7 +54,7 @@ for bears. To install it, run:
     $ pip3 install cib
 
 For usage instructions, consult
-`this link <http://coala.readthedocs.io/en/latest/Developers/Bear_Installation_Tool.html>`__.
+`this link <http://api.coala.io/en/latest/Developers/Bear_Installation_Tool.html>`__.
 
 Be sure to use the latest version of pip, the default pip from Debian doesn't
 support our dependency version number specifiers. You will have to `use a
