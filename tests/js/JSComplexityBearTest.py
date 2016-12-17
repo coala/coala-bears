@@ -1,5 +1,3 @@
-import json
-
 from bears.js import JSComplexityBear
 from tests.LocalBearTestHelper import verify_local_bear
 

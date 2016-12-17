@@ -6,13 +6,6 @@ from bears.natural_language.LanguageToolBear import LanguageToolBear
 from tests.BearTestHelper import generate_skip_decorator
 from tests.LocalBearTestHelper import verify_local_bear
 
-try:
-    import language_check
-    import guess_language
-except ImportError as err:
-    raise SkipTest(str(err))
-
-
 LanguageToolBearTest = verify_local_bear(
     LanguageToolBear,
     valid_files=('A correct English sentence sounds nice to everyone.',

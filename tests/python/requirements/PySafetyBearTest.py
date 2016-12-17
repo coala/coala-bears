@@ -1,4 +1,3 @@
-import pytest
 from queue import Queue
 from unittest import mock
 
