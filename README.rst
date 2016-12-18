@@ -113,7 +113,7 @@ The number of bears grows every day! If you want to see any particular
 functionality be sure to submit an issue, but please read the `Getting Involved`_
 section before doing so.
 
-You can read more at our `documentation <http://coala.readthedocs.io/en/latest/Developers/Writing_Bears.html>`__.
+You can read more at our `documentation <http://coala.io/writingbears>`__.
 There you can learn how to easily write bears yourself! Be sure to let us know
 if you do so, so we'll be able to include it here and spread the word about it.
 
@@ -138,7 +138,7 @@ page or ask us at our active Gitter channel, where we have maintainers from
 all over the world. We appreciate any help!
 
 We also have a
-`newcomer guide <http://coala.readthedocs.io/en/latest/Developers/Newcomers_Guide.html>`__
+`newcomer guide <http://coala.io/newcomer>`__
 to help you get started by fixing an issue yourself! If you get stuck anywhere
 or need some help, feel free to contact us on Gitter or drop a mail at our
 `newcomer mailing list <https://groups.google.com/d/forum/coala-newcomers>`__.
