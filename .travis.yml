@@ -79,7 +79,6 @@ before_install:
   - echo 'language_check==0.8.*' >> requirements.txt
 
 before_script:
-  - julia -e 'Pkg.add("Lint")'
   - python3 -m nltk.downloader punkt maxent_treebank_pos_tagger averaged_perceptron_tagger
 
 script:
