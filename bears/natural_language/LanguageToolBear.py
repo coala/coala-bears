@@ -4,7 +4,7 @@ from guess_language import guess_language
 
 from coalib.bearlib import deprecate_settings
 from coalib.bears.LocalBear import LocalBear
-from coalib.bears.requirements.PipRequirement import PipRequirement
+from dependency_management.requirements.PipRequirement import PipRequirement
 from coalib.results.Diff import Diff
 from coalib.results.Result import Result
 from coalib.results.SourceRange import SourceRange

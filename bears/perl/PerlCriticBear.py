@@ -1,7 +1,7 @@
 import platform
 
 from coalib.bearlib.abstractions.Linter import linter
-from coalib.bears.requirements.DistributionRequirement import (
+from dependency_management.requirements.DistributionRequirement import (
     DistributionRequirement)
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 

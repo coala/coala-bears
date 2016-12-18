@@ -1,7 +1,7 @@
 import shlex
 
 from coalib.bearlib.abstractions.Linter import linter
-from coalib.bears.requirements.GoRequirement import GoRequirement
+from dependency_management.requirements.GoRequirement import GoRequirement
 
 
 @linter(executable='golint',

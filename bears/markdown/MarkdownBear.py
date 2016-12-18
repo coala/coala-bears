@@ -1,7 +1,7 @@
 import json
 
 from coalib.bearlib.abstractions.Linter import linter
-from coalib.bears.requirements.NpmRequirement import NpmRequirement
+from dependency_management.requirements.NpmRequirement import NpmRequirement
 
 
 @linter(executable='remark',

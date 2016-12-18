@@ -8,7 +8,7 @@ import sys
 import time
 
 from bears import VERSION
-from coalib.bears.requirements.PipRequirement import PipRequirement
+from dependency_management.requirements.PipRequirement import PipRequirement
 from coalib.collecting.Importers import iimport_objects
 from coalib.parsing.Globbing import glob
 

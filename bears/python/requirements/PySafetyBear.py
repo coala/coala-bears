@@ -5,7 +5,7 @@ import re
 from safety import safety
 
 from coalib.bears.LocalBear import LocalBear
-from coalib.bears.requirements.PipRequirement import PipRequirement
+from dependency_management.requirements.PipRequirement import PipRequirement
 from coalib.results.Result import Result
 from coalib.results.SourceRange import SourceRange
 from coalib.settings.Setting import typed_list

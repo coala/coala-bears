@@ -2,7 +2,8 @@ from coala_utils.string_processing.Core import escape
 from coalib.bearlib import deprecate_settings
 from coalib.bearlib.abstractions.Linter import linter
 from coalib.bearlib.spacing.SpacingHelper import SpacingHelper
-from coalib.bears.requirements.RscriptRequirement import RscriptRequirement
+from dependency_management.requirements.RscriptRequirement import (
+    RscriptRequirement)
 
 
 def _map_to_r_bool(py_bool):

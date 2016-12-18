@@ -1,5 +1,5 @@
 from coalib.bearlib.abstractions.Linter import linter
-from coalib.bears.requirements.GemRequirement import GemRequirement
+from dependency_management.requirements.GemRequirement import GemRequirement
 
 
 @linter(executable='puppet-lint',

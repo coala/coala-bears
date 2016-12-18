@@ -2,7 +2,7 @@ import itertools
 import re
 
 from coalib.bearlib.abstractions.Linter import linter
-from coalib.bears.requirements.DistributionRequirement import (
+from dependency_management.requirements.DistributionRequirement import (
     DistributionRequirement)
 from coalib.settings.Setting import path, url
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY

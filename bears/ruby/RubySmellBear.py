@@ -2,7 +2,7 @@ import json
 
 from coalib.bearlib import deprecate_settings
 from coalib.bearlib.abstractions.Linter import linter
-from coalib.bears.requirements.GemRequirement import GemRequirement
+from dependency_management.requirements.GemRequirement import GemRequirement
 from coalib.results.Result import Result
 from coalib.results.SourceRange import SourceRange
 from coala_utils.param_conversion import negate

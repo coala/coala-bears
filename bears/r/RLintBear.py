@@ -1,7 +1,8 @@
 from coala_utils.string_processing import escape
 
 from coalib.bearlib.abstractions.Linter import linter
-from coalib.bears.requirements.RscriptRequirement import RscriptRequirement
+from dependency_management.requirements.RscriptRequirement import (
+    RscriptRequirement)
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 

@@ -2,7 +2,7 @@ import re
 from shutil import which
 
 from coalib.bears.GlobalBear import GlobalBear
-from coalib.bears.requirements.PipRequirement import PipRequirement
+from dependency_management.requirements.PipRequirement import PipRequirement
 from coalib.misc.Shell import run_shell_command
 from coalib.results.Result import Result
 

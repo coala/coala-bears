@@ -5,7 +5,7 @@ from difflib import SequenceMatcher
 
 from coalib.results.Diff import Diff
 from coalib.bears.LocalBear import LocalBear
-from coalib.bears.requirements.PipRequirement import PipRequirement
+from dependency_management.requirements.PipRequirement import PipRequirement
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.results.Result import Result
 from coalib.bearlib import deprecate_settings

@@ -1,5 +1,5 @@
 from coalib.bearlib.abstractions.Linter import linter
-from coalib.bears.requirements.GoRequirement import GoRequirement
+from dependency_management.requirements.GoRequirement import GoRequirement
 from coalib.settings.Setting import typed_list
 
 
