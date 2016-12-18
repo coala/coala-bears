@@ -16,7 +16,10 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
                       '5': RESULT_SEVERITY.MAJOR},
         prerequisite_check_command=('flawfinder',),
         prerequisite_check_fail_message=('Flawfinder needs to be run with '
-                                         'python2.'))
+                                         'python2. If you have it installed, '
+                                         'make sure the first line in the '
+                                         'script is '
+                                         '"#!/usr/bin/env python2".'))
 class CSecurityBear:
     """
     Report possible security weaknesses for C/C++.
