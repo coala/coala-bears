@@ -8,7 +8,7 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
         output_format='regex',
         output_regex=r'.+:(?P<line>\d+):(?P<column>\d+):\s*'
                      r'\[(?P<severity>\d)\]\s*'
-                     r'\((?P<origin>.+)\) (?P<message>.+)',
+                     r'\((?P<origin>[^\)]+)\) (?P<message>.+)',
         severity_map={'1': RESULT_SEVERITY.INFO,
                       '2': RESULT_SEVERITY.INFO,
                       '3': RESULT_SEVERITY.NORMAL,
