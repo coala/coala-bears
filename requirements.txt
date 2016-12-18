@@ -5,6 +5,7 @@ coala>=0.9
 # coala_utils
 munkres3~=1.0
 pylint~=1.6
+dennis~=0.7
 autopep8~=1.2
 eradicate~=0.1.6
 autoflake~=0.6.6
