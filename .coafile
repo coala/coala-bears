@@ -39,7 +39,7 @@ max_lines_per_file = 1000
 
 [rst]
 bear = reSTLintBear
-files = README.rst
+files = **.rst
 
 [TODOS]
 enabled = False
