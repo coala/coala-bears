@@ -37,6 +37,10 @@ enabled = False
 bears = LineCountBear
 max_lines_per_file = 1000
 
+[rst]
+bear = reSTCheckBear
+files = README.rst
+
 [TODOS]
 enabled = False
 bears = KeywordBear
