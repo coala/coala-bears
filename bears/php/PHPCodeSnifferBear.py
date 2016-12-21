@@ -7,8 +7,8 @@ from dependency_management.requirements.DistributionRequirement import (
 @linter(executable='phpcs',
         output_format='regex',
         config_suffix='.xml',
-        output_regex=r'(?P<filename>.+):(?P<line>\d+):(?P<column>\d+): '
-                     r'(\w+) - (?P<message>.+)')
+        output_regex=r'.+:(?P<line>\d+):(?P<column>\d+): '
+                     r'\w+ - (?P<message>.+)')
 class PHPCodeSnifferBear:
     """
     Ensures that your PHP, JavaScript or CSS code remains clean and consistent.

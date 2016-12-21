@@ -6,7 +6,7 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 @linter(executable='pyflakes',
         use_stderr=True,
         output_format='regex',
-        output_regex=r'(?P<filename>.*):(?P<line>\d+):'
+        output_regex=r'.*:(?P<line>\d+):'
                      r'[(?P<column>\d+):|?]*(?P<severity>)\s(?P<message>.*)\n',
         severity_map={
             '': RESULT_SEVERITY.INFO

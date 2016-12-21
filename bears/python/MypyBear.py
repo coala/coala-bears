@@ -82,7 +82,7 @@ def add_param_docs(param_map):
 @linter(executable=sys.executable,
         prerequisite_check_command=(sys.executable, '-m', 'mypy', '-V'),
         output_format='regex',
-        output_regex=r'(?P<filename>[^:]+):((?P<line>\d+):)? '
+        output_regex=r'[^:]+:(?:(?P<line>\d+):)? '
                       '(?P<severity>error): (?P<message>.*)')
 class MypyBear:
     """

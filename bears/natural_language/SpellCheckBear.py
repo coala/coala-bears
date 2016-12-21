@@ -5,7 +5,7 @@ from dependency_management.requirements.PipRequirement import PipRequirement
 @linter(executable='scspell',
         use_stderr=True,
         output_format='regex',
-        output_regex=r'(?P<filename>.*):(?P<line>.\d*):\s*(?P<message>.*)')
+        output_regex=r'.*:(?P<line>.\d*):\s*(?P<message>.*)')
 class SpellCheckBear:
     """
     Lints files to check for incorrect spellings using ``scspell``.
