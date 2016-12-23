@@ -19,12 +19,14 @@ addons:
       - chktex
       - clang-3.4
       - cppcheck
+      - flawfinder
       - gfortran
       - ghc
       - haskell-platform
       - indent
       - libblas-dev
       - liblapack-dev
+      - libperl-critic-perl
       - libxml2-utils
       - luarocks
       - menhir
