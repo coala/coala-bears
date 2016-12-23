@@ -13,6 +13,8 @@ from coalib.settings.Setting import Setting
 @generate_skip_decorator(CheckstyleBear.CheckstyleBear)
 class CheckstyleBearTest(LocalBearTestHelper):
 
+    GOOGLE_VALUEERROR_RE = 'ValueError: Google checkstyle config'
+
     def setUp(self):
         self.section = Section('test section')
         self.uut = CheckstyleBear.CheckstyleBear(self.section, Queue())
@@ -48,13 +50,13 @@ class CheckstyleBearTest(LocalBearTestHelper):
     def test_config_failure_use_spaces(self):
         self.section['checkstyle_configs'] = 'google'
         self.section.append(Setting('use_spaces', False))
-        with self.assertRaises(AssertionError):
+        with self.assertRaisesRegex(AssertionError, self.GOOGLE_VALUEERROR_RE):
             self.check_validity(self.uut, [], self.good_file)
 
     def test_config_failure_indent_size(self):
         self.section['checkstyle_configs'] = 'google'
         self.section.append(Setting('indent_size', 3))
-        with self.assertRaises(AssertionError):
+        with self.assertRaisesRegex(AssertionError, self.GOOGLE_VALUEERROR_RE):
             self.check_validity(self.uut, [], self.good_file)
 
     def test_with_custom_configfile(self):
