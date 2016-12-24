@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
 
-# Start ignoring PyImportSortBear as imports below may yield syntax errors
-from bears import assert_supported_version
-assert_supported_version()
-# Stop ignoring
-
 import locale
 import sys
 from subprocess import call

@@ -2,6 +2,8 @@ sudo: required
 
 language: python
 python:
+  # 2.7 is rejected by dependency mypy-lang
+  - 3.3
   - 3.4
   - 3.5
   - 3.6-dev
@@ -68,23 +70,50 @@ env:
     - PATH="$PATH:$TRAVIS_BUILD_DIR/node_modules/.bin:$TRAVIS_BUILD_DIR/vendor/bin:$HOME/dart-sdk/bin:$HOME/.cabal/bin:$HOME/infer-linux64-v0.7.0/infer/bin:$HOME/pmd-bin-5.4.1/bin:$HOME/bakalint-0.4.0:$HOME/.local/tailor/tailor-latest/bin"
 
 before_install:
+  - export TRAVIS_PYTHON_VERSION_MAJOR=${TRAVIS_PYTHON_VERSION%.[0-9]}
+  - export TRAVIS_PYTHON_VERSION_MINOR=${TRAVIS_PYTHON_VERSION#[0-9].}
+  - >
+    if [[ $TRAVIS_PYTHON_VERSION_MINOR < 4 || $TRAVIS_PYTHON_VERSION_MAJOR == 2 ]]; then
+      UNSUPPORTED=true
+    fi
+
   - nvm install 4
   - nvm use 4
   # Remove Ruby directive from Gemfile as this image has 2.2.5
   - sed -i '/^ruby/d' Gemfile
   - mkdir -p ~/.apt-cache
-  - bash .ci/deps.sh
-  - bash .ci/deps.shellcheck.sh
+  - if [[ "$UNSUPPORTED" != true ]]; then bash .ci/deps.sh; fi
+  - if [[ "$UNSUPPORTED" != true ]]; then bash .ci/deps.shellcheck.sh; fi
   # https://github.com/coala/coala/issues/3183
   - cp requirements.txt requirements.orig
   - cat test-requirements.txt docs-requirements.txt bear-requirements.txt >> requirements.txt
   - sed -i '/^-r/d' requirements.txt
+  # On unsupported versions, coala will be installed in the `script` block
+  - >
+    if [[ "$UNSUPPORTED" == true ]]; then
+      sed -e '/^coala/d' requirements.txt > requirements.new
+      mv requirements.new requirements.txt
+    fi
 
 before_script:
   - mv requirements.orig requirements.txt
-  - python3 -m nltk.downloader punkt maxent_treebank_pos_tagger averaged_perceptron_tagger
+  # nltk 3.2.2 dropped support for Python 3.3
+  - >
+    if [[ "$TRAVIS_PYTHON_VERSION" != "3.3" ]]; then
+      python -m nltk.downloader punkt maxent_treebank_pos_tagger averaged_perceptron_tagger
+    fi
 
 script:
+  - >
+    if [[ "$UNSUPPORTED" == true ]]; then
+      set -e
+      python setup.py install | tee setup.err
+      grep -q 'coala supports only python 3.4 or later' setup.err
+      if grep -q 'Traceback (most recent call last)' setup.err; then
+        false
+      fi
+    fi
+  - if [[ "$UNSUPPORTED" == true ]]; then exit; fi
   - python setup.py bdist_wheel
   - pip install $(ls ./dist/*.whl)"[alldeps]"
   - bash .ci/tests.sh
@@ -94,7 +123,8 @@ script:
   # https://github.com/coala/coala-bears/issues/1037
   - >
     if [[ "$TRAVIS_PULL_REQUEST" != "false" ]]; then
-      sed -i '/bears = GitCommitBear/d' .coafile
+      sed -e '/bears = GitCommitBear/d' .coafile > .coafile.new
+      mv .coafile.new .coafile
     fi
   - coala --non-interactive
   - bash .ci/deploy.coverage.sh
