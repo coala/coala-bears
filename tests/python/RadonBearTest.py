@@ -1,5 +1,5 @@
 from bears.python.RadonBear import RadonBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 test_file1 = """
 def simple():

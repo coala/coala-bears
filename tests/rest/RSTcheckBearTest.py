@@ -1,5 +1,5 @@
 from bears.rest.RSTcheckBear import RSTcheckBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 rst_syntax_good = '====\ntest\n====\n'
 rst_syntax_bad = '====\ntest\n===\n'

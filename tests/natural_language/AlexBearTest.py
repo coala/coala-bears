@@ -3,7 +3,7 @@ from unittest.mock import patch
 
 from bears.natural_language.AlexBear import AlexBear
 from tests.BearTestHelper import generate_skip_decorator
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 good_file = 'Their network looks good.'
 

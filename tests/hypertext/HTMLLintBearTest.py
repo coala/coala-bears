@@ -1,5 +1,5 @@
 from bears.hypertext.HTMLLintBear import HTMLLintBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 test_file = """
 <html>

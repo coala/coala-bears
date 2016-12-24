@@ -1,5 +1,5 @@
 from bears.natural_language.WriteGoodLintBear import WriteGoodLintBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 good_file = """The 70s era was awesome for music lovers.
 """

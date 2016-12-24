@@ -1,5 +1,5 @@
 from bears.python.PyUnusedCodeBear import PyUnusedCodeBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 
 invalid_imports = """

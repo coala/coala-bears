@@ -1,7 +1,7 @@
 import os
 
 from bears.perl.PerlCriticBear import PerlCriticBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 
 good_file = """

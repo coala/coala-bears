@@ -1,5 +1,5 @@
 from bears.go.GoLintBear import GoLintBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 good_file = """
 // Test that blank imports in package main are not flagged.

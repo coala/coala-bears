@@ -1,5 +1,5 @@
 from bears.coffee_script.CoffeeLintBear import CoffeeLintBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 good_file = """
 # Lint your CoffeeScript!

@@ -7,7 +7,7 @@ from coalib.results.AbsolutePosition import AbsolutePosition
 from coalib.results.HiddenResult import HiddenResult
 from coalib.settings.Section import Section
 from coalib.settings.Setting import Setting
-from tests.LocalBearTestHelper import execute_bear
+from coalib.testing.LocalBearTestHelper import execute_bear
 
 
 class AnnotationBearTest(unittest.TestCase):

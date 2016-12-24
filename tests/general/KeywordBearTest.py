@@ -7,7 +7,7 @@ from coalib.results.HiddenResult import HiddenResult
 from coalib.results.SourceRange import SourceRange
 from coalib.settings.Section import Section
 from coalib.settings.Setting import Setting
-from tests.LocalBearTestHelper import verify_local_bear, execute_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear, execute_bear
 
 test_file = """
 test line fix me

@@ -1,7 +1,7 @@
 import os
 
 from bears.ruby.RuboCopBear import RuboCopBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 good_file = """def good_name
   test if something

@@ -1,5 +1,5 @@
 from bears.r.RLintBear import RLintBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 good_file = """
 fun <- function(one){

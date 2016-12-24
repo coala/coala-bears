@@ -4,7 +4,7 @@ from unittest.case import SkipTest
 
 from bears.natural_language.LanguageToolBear import LanguageToolBear
 from tests.BearTestHelper import generate_skip_decorator
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 try:
     import language_check

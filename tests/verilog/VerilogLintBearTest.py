@@ -1,5 +1,5 @@
 from bears.verilog.VerilogLintBear import VerilogLintBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 good_file = """
 module mux2to1 (w0, w1, s, f);

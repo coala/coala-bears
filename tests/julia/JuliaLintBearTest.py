@@ -1,5 +1,5 @@
 from bears.julia.JuliaLintBear import JuliaLintBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 good_file = """
 a = 2

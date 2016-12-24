@@ -1,6 +1,6 @@
 from bears.yml.YAMLLintBear import YAMLLintBear
 from coala_utils.ContextManagers import prepare_file
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 test_file = """
 ---

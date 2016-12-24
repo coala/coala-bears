@@ -1,5 +1,5 @@
 from bears.yml.RAMLLintBear import RAMLLintBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 good_file = """
 #%RAML 0.8

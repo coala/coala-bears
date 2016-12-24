@@ -1,5 +1,5 @@
 from bears.matlab.MatlabIndentationBear import MatlabIndentationBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 MatlabIndentationBearTest = verify_local_bear(
     MatlabIndentationBear,

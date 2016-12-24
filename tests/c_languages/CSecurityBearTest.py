@@ -1,5 +1,5 @@
 from bears.c_languages.CSecurityBear import CSecurityBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 good_file = """
 void demo() {

@@ -1,7 +1,7 @@
 import os
 
 from bears.js.JSHintBear import JSHintBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 test_file1 = """
 var name = (function() { return 'Anton' }());

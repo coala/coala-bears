@@ -1,7 +1,7 @@
 from queue import Queue
 
 from bears.general.FilenameBear import FilenameBear
-from tests.LocalBearTestHelper import LocalBearTestHelper
+from coalib.testing.LocalBearTestHelper import LocalBearTestHelper
 from coalib.output.printers.LOG_LEVEL import LOG_LEVEL
 from coalib.settings.Section import Section
 

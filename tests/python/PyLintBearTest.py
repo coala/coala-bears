@@ -5,7 +5,7 @@ from shutil import which
 from unittest.case import skipIf
 
 from bears.python.PyLintBear import PyLintBear
-from tests.LocalBearTestHelper import LocalBearTestHelper
+from coalib.testing.LocalBearTestHelper import LocalBearTestHelper
 from coalib.settings.Section import Section
 from coalib.settings.Setting import Setting
 

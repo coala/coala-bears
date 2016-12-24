@@ -1,5 +1,5 @@
 from bears.shell.ShellCheckBear import ShellCheckBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 
 valid_file = """

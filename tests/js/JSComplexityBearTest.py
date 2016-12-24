@@ -1,5 +1,5 @@
 from bears.js import JSComplexityBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 complexity_12 = """(function () {
   var foo = 1 && 1 || 0;

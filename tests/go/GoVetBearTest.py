@@ -4,7 +4,7 @@ from shutil import which
 from unittest.case import skipIf
 
 from bears.go.GoVetBear import GoVetBear
-from tests.LocalBearTestHelper import LocalBearTestHelper
+from coalib.testing.LocalBearTestHelper import LocalBearTestHelper
 from coalib.settings.Section import Section
 
 

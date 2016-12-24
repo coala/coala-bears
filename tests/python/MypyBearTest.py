@@ -3,7 +3,7 @@ from textwrap import dedent
 
 from bears.python.MypyBear import MypyBear
 from tests.BearTestHelper import generate_skip_decorator
-from tests.LocalBearTestHelper import LocalBearTestHelper
+from coalib.testing.LocalBearTestHelper import LocalBearTestHelper
 from coalib.settings.Section import Section
 from coalib.settings.Setting import Setting
 from coalib.results.Result import Result

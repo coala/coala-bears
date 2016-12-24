@@ -3,7 +3,7 @@ from queue import Queue
 from unittest.case import skipIf
 
 from bears.python.YapfBear import YapfBear
-from tests.LocalBearTestHelper import LocalBearTestHelper
+from coalib.testing.LocalBearTestHelper import LocalBearTestHelper
 from tests.BearTestHelper import generate_skip_decorator
 from coalib.settings.Section import Section
 from coalib.settings.Setting import Setting

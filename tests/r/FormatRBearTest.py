@@ -1,5 +1,5 @@
 from bears.r.FormatRBear import FormatRBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 good_file_1 = """1 + 1
 if (TRUE) {

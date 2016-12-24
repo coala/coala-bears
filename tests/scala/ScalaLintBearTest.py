@@ -1,7 +1,7 @@
 import os
 
 from bears.scala.ScalaLintBear import ScalaLintBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 good_file = """
 object HelloWorld {

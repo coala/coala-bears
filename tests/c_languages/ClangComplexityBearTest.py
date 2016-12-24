@@ -10,7 +10,7 @@ from coalib.settings.Section import Section
 from bears.c_languages.ClangComplexityBear import (
     ClangComplexityBear)
 from tests.BearTestHelper import generate_skip_decorator
-from tests.LocalBearTestHelper import execute_bear
+from coalib.testing.LocalBearTestHelper import execute_bear
 
 
 @generate_skip_decorator(ClangComplexityBear)

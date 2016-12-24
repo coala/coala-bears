@@ -1,5 +1,5 @@
 from bears.c_languages.CPPCheckBear import CPPCheckBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 good_file = """
 using namespace std;

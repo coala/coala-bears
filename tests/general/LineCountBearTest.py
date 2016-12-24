@@ -1,7 +1,7 @@
 from queue import Queue
 
 from bears.general.LineCountBear import LineCountBear
-from tests.LocalBearTestHelper import LocalBearTestHelper
+from coalib.testing.LocalBearTestHelper import LocalBearTestHelper
 from coalib.results.Result import RESULT_SEVERITY, Result
 from coalib.settings.Section import Section
 from coalib.settings.Setting import Setting

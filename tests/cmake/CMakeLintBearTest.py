@@ -1,7 +1,7 @@
 import os
 
 from bears.cmake.CMakeLintBear import CMakeLintBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 
 good_file = 'project(FooBar C)\nset(VERSION 0)\n'

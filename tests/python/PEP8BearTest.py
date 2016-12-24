@@ -1,7 +1,7 @@
 from queue import Queue
 
 from bears.python.PEP8Bear import PEP8Bear
-from tests.LocalBearTestHelper import LocalBearTestHelper
+from coalib.testing.LocalBearTestHelper import LocalBearTestHelper
 from coalib.settings.Section import Section
 from coalib.settings.Setting import Setting
 

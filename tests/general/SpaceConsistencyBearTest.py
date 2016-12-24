@@ -2,7 +2,7 @@ from queue import Queue
 
 from bears.general.SpaceConsistencyBear import (
     SpaceConsistencyBear, SpacingHelper)
-from tests.LocalBearTestHelper import LocalBearTestHelper
+from coalib.testing.LocalBearTestHelper import LocalBearTestHelper
 from coalib.settings.Section import Section
 from coalib.settings.Setting import Setting
 

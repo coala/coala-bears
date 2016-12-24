@@ -4,7 +4,7 @@ from shutil import which
 from unittest.case import skipIf
 
 from bears.php.PHPLintBear import PHPLintBear
-from tests.LocalBearTestHelper import LocalBearTestHelper
+from coalib.testing.LocalBearTestHelper import LocalBearTestHelper
 from coalib.settings.Section import Section
 
 

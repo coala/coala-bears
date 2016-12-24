@@ -2,7 +2,7 @@ import unittest
 from queue import Queue
 from coalib.settings.Section import Section
 from bears.jinja2.Jinja2Bear import Jinja2Bear
-from tests.LocalBearTestHelper import verify_local_bear, execute_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear, execute_bear
 
 
 Jinja2BearVariableSpacingTest = verify_local_bear(

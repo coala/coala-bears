@@ -1,5 +1,5 @@
 from bears.ruby.RubySyntaxBear import RubySyntaxBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 good_file = """
 class HelloWorld

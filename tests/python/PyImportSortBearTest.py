@@ -1,5 +1,5 @@
 from bears.python.PyImportSortBear import PyImportSortBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 PyImportSortBearTest = verify_local_bear(PyImportSortBear,
                                          ('import os\nimport sys\n',

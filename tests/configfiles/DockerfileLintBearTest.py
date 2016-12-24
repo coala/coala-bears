@@ -1,5 +1,5 @@
 from bears.configfiles.DockerfileLintBear import DockerfileLintBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 good_file = """
 FROM ubuntu:14.04

@@ -1,5 +1,5 @@
 from bears.go.GoErrCheckBear import GoErrCheckBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 good_file = """package main
 import "fmt"
