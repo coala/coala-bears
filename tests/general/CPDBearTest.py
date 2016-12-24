@@ -5,7 +5,7 @@ from queue import Queue
 
 
 from bears.general.CPDBear import CPDBear
-from tests.BearTestHelper import generate_skip_decorator
+from coalib.testing.BearTestHelper import generate_skip_decorator
 from coalib.settings.Section import Section
 from coalib.settings.Setting import Setting
 

@@ -6,7 +6,7 @@ from clang.cindex import TranslationUnitLoadError
 
 from bears.c_languages.codeclone_detection.ClangASTPrintBear import (
     ClangASTPrintBear)
-from tests.BearTestHelper import generate_skip_decorator
+from coalib.testing.BearTestHelper import generate_skip_decorator
 from coalib.settings.Section import Section
 
 
