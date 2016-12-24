@@ -7,7 +7,7 @@ import unittest.mock
 from queue import Queue
 from tempfile import mkdtemp
 
-from tests.BearTestHelper import generate_skip_decorator
+from coalib.testing.BearTestHelper import generate_skip_decorator
 from bears.vcs.git.GitCommitBear import GitCommitBear
 from coala_utils.string_processing.Core import escape
 from coalib.misc.Shell import run_shell_command

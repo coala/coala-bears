@@ -5,7 +5,7 @@ from coalib.settings.Section import Section
 from coalib.settings.Setting import Setting
 from coalib.testing.LocalBearTestHelper import verify_local_bear
 from coalib.testing.LocalBearTestHelper import LocalBearTestHelper
-from tests.BearTestHelper import generate_skip_decorator
+from coalib.testing.BearTestHelper import generate_skip_decorator
 
 
 good_file = """

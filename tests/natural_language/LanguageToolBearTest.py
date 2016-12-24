@@ -3,7 +3,7 @@ import unittest
 from unittest.case import SkipTest
 
 from bears.natural_language.LanguageToolBear import LanguageToolBear
-from tests.BearTestHelper import generate_skip_decorator
+from coalib.testing.BearTestHelper import generate_skip_decorator
 from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 try:
