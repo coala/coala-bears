@@ -92,5 +92,5 @@ class ClangComplexityBearTest(unittest.TestCase):
 
         generator = self.bear.execute('not_existing', self.file)
         self.assertNotEqual(generator, None)
-        with self.assertRaises(TranslationUnitLoadError):
+        with self.assertRaisesRegex(TranslationUnitLoadError, 'C value error'):
             yield generator
