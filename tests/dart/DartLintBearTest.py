@@ -7,7 +7,6 @@ from coalib.testing.LocalBearTestHelper import verify_local_bear
 from coalib.testing.LocalBearTestHelper import LocalBearTestHelper
 from coalib.testing.BearTestHelper import generate_skip_decorator
 
-
 good_file = """
 printNumber(num aNumber) {
   print('The number is $aNumber.');
@@ -46,7 +45,7 @@ class DartLintBearConfigTest(LocalBearTestHelper):
         section.append(Setting('use_spaces', False))
         bear = DartLintBear(section, Queue())
 
-        with self.assertRaises(AssertionError):
+        with self.assertRaisesRegex(AssertionError, 'Value error'):
             self.check_validity(bear, [], good_file)
 
     def test_config_failure_wrong_indent_size(self):
@@ -54,5 +53,5 @@ class DartLintBearConfigTest(LocalBearTestHelper):
         section.append(Setting('indent_size', 3))
         bear = DartLintBear(section, Queue())
 
-        with self.assertRaises(AssertionError):
+        with self.assertRaisesRegex(AssertionError, 'Value error'):
             self.check_validity(bear, [], good_file)
