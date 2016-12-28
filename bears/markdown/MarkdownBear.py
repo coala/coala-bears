@@ -1,14 +1,16 @@
 import json
+import re
 
 from coalib.bearlib.abstractions.Linter import linter
 from dependency_management.requirements.NpmRequirement import NpmRequirement
+from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.bearlib import deprecate_settings
 
 
 @linter(executable='remark',
         use_stdin=True,
-        output_format='corrected',
-        result_message='The text does not comply to the set style.')
+        use_stdout=True,
+        use_stderr=True)
 class MarkdownBear:
     """
     Check and correct Markdown style violations automatically.
@@ -23,6 +25,10 @@ class MarkdownBear:
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
     CAN_FIX = {'Formatting'}
+
+    _output_regex = re.compile(
+        r'\s*(?P<line>\d+):(?P<column>\d+)'
+        r'\s*(?P<severity>warning)\s*(?P<message>.*)')
 
     @staticmethod
     @deprecate_settings(bullets='markdown_bullets',
@@ -57,7 +63,8 @@ class MarkdownBear:
                          list_increment: bool=True,
                          horizontal_rule: str='*',
                          horizontal_rule_spaces: bool=False,
-                         horizontal_rule_repeat: int=3):
+                         horizontal_rule_repeat: int=3,
+                         max_line_length: int=80):
         """
         :param bullets:
             Character to use for bullets in lists. Can be "-", "*" or "+".
@@ -98,8 +105,10 @@ class MarkdownBear:
             Whether spaces should be added between horizontal rule characters.
         :param horizontal_rule_repeat:
             The number of times the horizontal rule character will be repeated.
+        :param max_line_length:
+            The maximum line length allowed.
         """
-        remark_configs = {
+        remark_configs_settings = {
             'bullet': bullets,                          # - or *
             'closeAtx': closed_headings,                # Bool
             'setext': setext_headings,                  # Bool
@@ -117,8 +126,22 @@ class MarkdownBear:
             'ruleSpaces': horizontal_rule_spaces,       # Bool
             'ruleRepetition': horizontal_rule_repeat,   # int
         }
+        remark_configs_plugins = {
+            'maximumLineLength': max_line_length        # int
+        }
 
-        config_json = json.dumps(remark_configs)
+        config_json = json.dumps(remark_configs_settings)
         # Remove { and } as remark adds them on its own
         settings = config_json[1:-1]
-        return '--no-color', '--quiet', '--setting', settings
+        config_json = json.dumps(remark_configs_plugins)
+        plugins = 'lint=' + config_json[1:-1]
+        return '--no-color', '--quiet', '--setting', settings, '--use', plugins
+
+    def process_output(self, output, filename, file):
+        stdout, stderr = output
+        yield from self.process_output_corrected(stdout, filename, file,
+                                                 RESULT_SEVERITY.NORMAL,
+                                                 'The text does not comply'
+                                                 ' to the set style.')
+        yield from self.process_output_regex(stderr, filename, file,
+                                             self._output_regex)
