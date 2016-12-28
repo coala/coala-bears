@@ -19,4 +19,4 @@ MarkdownBearConfigsTest = verify_local_bear(
     MarkdownBear,
     valid_files=(test_file1,),
     invalid_files=(test_file2,),
-    settings={'markdown_list_increment': False})
+    settings={'list_increment': False})
