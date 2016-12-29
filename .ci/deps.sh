@@ -94,6 +94,10 @@ if [[ -z "$(which hlint)" ]]; then
   sudo dpkg -i $hlint_deb
 fi
 
+# cabal update to 1.22.9.0 and install ghc-mod 5.6.0
+cabal update && cabal install cabal-install-1.22.9.0
+cabal install ghc-mod
+
 # NPM commands
 sudo rm -rf $(which alex)  # Delete ghc-alex as it clashes with npm deps
 npm install
