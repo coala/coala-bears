@@ -100,6 +100,7 @@ for dep_version in "${dep_versions[@]}" ; do
   pip install pip -U
   pip install -U setuptools
   pip install -r test-requirements.txt
+  pip install git+https://github.com/willkg/dennis
   pip install -r requirements.txt
   pip install language_check==0.8.*
 done
