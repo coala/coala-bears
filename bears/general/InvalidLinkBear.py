@@ -16,7 +16,7 @@ from coalib.settings.Setting import typed_dict
 
 
 class InvalidLinkBear(LocalBear):
-    DEFAULT_TIMEOUT = 2
+    DEFAULT_TIMEOUT = 15
     LANGUAGES = {'All'}
     REQUIREMENTS = {PipRequirement('requests', '2.12')}
     AUTHORS = {'The coala developers'}
