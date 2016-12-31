@@ -7,6 +7,7 @@ coala>=0.10.0.dev20161217232433
 munkres3~=1.0
 pylint~=1.6
 autopep8~=1.2
+pycodestyle~=2.2
 eradicate~=0.1.6
 autoflake~=0.6.6
 restructuredtext-lint~=0.17.2
