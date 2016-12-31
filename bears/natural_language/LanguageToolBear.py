@@ -13,7 +13,7 @@ from coalib.settings.Setting import typed_list
 
 class LanguageToolBear(LocalBear):
     LANGUAGES = {'Natural Language'}
-    REQUIREMENTS = {PipRequirement('guess-language-spirit', '0.5'),
+    REQUIREMENTS = {PipRequirement('guess-language-spirit', '0.5.2'),
                     PipRequirement('language-check', '0.8')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}

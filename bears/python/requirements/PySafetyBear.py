@@ -30,7 +30,7 @@ class PySafetyBear(LocalBear):
         'Python 3 Requirements',
     }
     AUTHORS = {'Bence Nagy'}
-    REQUIREMENTS = {PipRequirement('safety', '0.5')}
+    REQUIREMENTS = {PipRequirement('safety', '0.5.1')}
     AUTHORS_EMAILS = {'bence@underyx.me'}
     LICENSE = 'AGPL'
     CAN_DETECT = {'Security'}

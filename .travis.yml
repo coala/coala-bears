@@ -72,16 +72,21 @@ before_install:
   - bash .ci/deps.sh
   - bash .ci/deps.shellcheck.sh
   # https://github.com/coala/coala/issues/3183
-  - cat test-requirements.txt docs-requirements.txt >> requirements.txt
+  - cp requirements.txt requirements.orig
+  - cat test-requirements.txt docs-requirements.txt bear-requirements.txt >> requirements.txt
   - sed -i '/^-r/d' requirements.txt
-  - echo 'language_check==0.8.*' >> requirements.txt
 
 before_script:
+  - mv requirements.orig requirements.txt
   - python3 -m nltk.downloader punkt maxent_treebank_pos_tagger averaged_perceptron_tagger
 
 script:
+  - python setup.py bdist_wheel
+  - pip install $(ls ./dist/*.whl)"[alldeps]"
   - bash .ci/tests.sh
-  - python setup.py install
+  # Ensure bear requirements are in sync with the bear PipRequirement
+  - .ci/generate_bear_requirements.py
+  - git diff --exit-code bear-requirements.txt
   # https://github.com/coala/coala-bears/issues/1037
   - >
     if [[ "$TRAVIS_PULL_REQUEST" != "false" ]]; then
