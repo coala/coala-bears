@@ -234,7 +234,7 @@ class InvalidLinkBearTest(unittest.TestCase):
     def test_variable_timeouts(self):
         nt = {
             'https://google.com/timeout/test/2/3/4/5/something': 10,
-            'https://facebook.com/timeout': 15
+            'https://facebook.com/timeout': 2
         }
 
         file_contents = """
@@ -256,9 +256,9 @@ class InvalidLinkBearTest(unittest.TestCase):
                               for x in list(uut.run('file', file_contents,
                                                     network_timeout=nt))], [])
             mock.assert_has_calls([
-                unittest.mock.call('https://facebook.com/', timeout=15,
+                unittest.mock.call('https://facebook.com/', timeout=2,
                                    allow_redirects=False),
                 unittest.mock.call('https://google.com/',
                                    timeout=10, allow_redirects=False),
                 unittest.mock.call('https://coala.io/som/thingg/page/123',
-                                   timeout=2, allow_redirects=False)])
+                                   timeout=15, allow_redirects=False)])
