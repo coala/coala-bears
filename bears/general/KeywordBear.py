@@ -79,6 +79,7 @@ class KeywordBear(LocalBear):
             filename,
             file,
             keywords: list=['todo', 'fixme'],
+            regex_keyword: str='',
             dependency_results: dict=None):
         '''
         Checks the code files for given keywords.
@@ -86,15 +87,46 @@ class KeywordBear(LocalBear):
         :param keywords:
             A list of keywords to search for (case insensitive).
             Default are TODO and FIXME.
+        :param regex_keyword:
+            A regular expression to search for matching keywords in a file.
         '''
-        keywords_regex = re.compile(
+        comments = _get_comments(dependency_results)
+
+        simple_keywords_regex = re.compile(
             '(' + '|'.join(re.escape(key) for key in keywords) + ')',
             re.IGNORECASE)
 
-        comments = _get_comments(dependency_results)
+        message = "The line contains the keyword '{}'."
+        yield from self.check_keywords(filename, file, comments,
+                                       simple_keywords_regex, message)
+
+        if regex_keyword is not '':
+            regex = re.compile(regex_keyword)
+            message = ("The line contains the keyword '{}' which "
+                       'resulted in a match with given regex.')
+            yield from self.check_keywords(filename, file, comments, regex,
+                                           message)
+
+    def check_keywords(self,
+                       filename,
+                       file,
+                       comments,
+                       regex,
+                       message):
+        '''
+        Checks for the presence of keywords according to regex in a given file.
+
+        :param regex:
+           A regular expression which is used to search matching
+           keywords in a file.
+        :param message:
+           A message to be displayed to the user when a keyword in a given file
+           results in a match. It may have an unnamed placeholder for the
+           keyword.
+        '''
 
         for line_number, line in enumerate(file, start=1):
-            for keyword in keywords_regex.finditer(line):
+            for keyword in regex.finditer(line):
                 diffs = generate_diff(
                     comments,
                     file,
@@ -104,8 +136,7 @@ class KeywordBear(LocalBear):
                     keyword.start())
                 yield Result.from_values(
                     origin=self,
-                    message="The line contains the keyword '{}'."
-                            .format(keyword.group()),
+                    message=message.format(keyword.group()),
                     file=filename,
                     line=line_number,
                     column=keyword.start() + 1,

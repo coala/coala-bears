@@ -185,3 +185,32 @@ class KeywordBearDiffTest(unittest.TestCase):
                              '+/*\n'
                              ' test\n'
                              ' */\n')
+
+    def test_keyword_regex(self):
+        text = ['# add two given values and result the result\n',
+                'def add(a, b):',
+                '    return a+b\n',
+                '               \n',
+                'print(add(2, 3))\n']
+
+        regex_keyword = 'r.s.l.'
+
+        with execute_bear(self.uut, filename='F', file=text,
+                          regex_keyword=regex_keyword,
+                          dependency_results=self.dep_results) as result:
+            self.assertEqual(result[0].message, 'The line contains the keyword'
+                                                " 'result' which resulted in a"
+                                                ' match with given regex.')
+
+        text = ['# bla bla bla',
+                'Issue #123',
+                'bla bla bla']
+
+        regex_keyword = '[iI]ssue #[1-9][0-9]*'
+
+        with execute_bear(self.uut, filename='F', file=text,
+                          regex_keyword=regex_keyword,
+                          dependency_results=self.dep_results) as result:
+            self.assertEqual(result[0].message, 'The line contains the keyword'
+                                                " 'Issue #123' which resulted "
+                                                'in a match with given regex.')
