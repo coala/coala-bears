@@ -19,16 +19,20 @@ addons:
       - chktex
       - clang-3.4
       - cppcheck
+      - flawfinder
       - gfortran
       - ghc
       - haskell-platform
       - indent
       - libblas-dev
       - liblapack-dev
+      - libperl-critic-perl
       - libxml2-utils
       - luarocks
       - menhir
       - mono-mcs
+      - ocaml
+      - opam
       - oracle-java9-set-default
       - php-codesniffer
       - verilator
@@ -58,7 +62,7 @@ cache:
 env:
   global:
     - CIRCLE_NODE_INDEX=-1  # Avoid accidentially being a CircleCI worker
-    - USE_PPAS=true
+    - USE_PPAS="marutter/rdev staticfloat/juliareleases ondrej/golang"
     - R_LIB_USER=~/R/Library
     - LINTR_COMMENT_BOT=false
     - PATH="$PATH:$TRAVIS_BUILD_DIR/node_modules/.bin:$TRAVIS_BUILD_DIR/vendor/bin:$HOME/dart-sdk/bin:$HOME/.cabal/bin:$HOME/infer-linux64-v0.7.0/infer/bin:$HOME/pmd-bin-5.4.1/bin:$HOME/bakalint-0.4.0:$HOME/.local/tailor/tailor-latest/bin"
@@ -72,18 +76,21 @@ before_install:
   - bash .ci/deps.sh
   - bash .ci/deps.shellcheck.sh
   # https://github.com/coala/coala/issues/3183
-  # https://github.com/coala/coala/issues/3184
-  - pip install -U py==1.4.29 pip
-  - cat test-requirements.txt docs-requirements.txt >> requirements.txt
+  - cp requirements.txt requirements.orig
+  - cat test-requirements.txt docs-requirements.txt bear-requirements.txt >> requirements.txt
   - sed -i '/^-r/d' requirements.txt
-  - echo 'language_check==0.8.*' >> requirements.txt
 
 before_script:
+  - mv requirements.orig requirements.txt
   - python3 -m nltk.downloader punkt maxent_treebank_pos_tagger averaged_perceptron_tagger
 
 script:
+  - python setup.py bdist_wheel
+  - pip install $(ls ./dist/*.whl)"[alldeps]"
   - bash .ci/tests.sh
-  - python setup.py install
+  # Ensure bear requirements are in sync with the bear PipRequirement
+  - .ci/generate_bear_requirements.py
+  - git diff --exit-code bear-requirements.txt
   # https://github.com/coala/coala-bears/issues/1037
   - >
     if [[ "$TRAVIS_PULL_REQUEST" != "false" ]]; then

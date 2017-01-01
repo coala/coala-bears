@@ -8,7 +8,7 @@ from coalib.results.Result import Result
 
 class PyCommentedCodeBear(LocalBear):
     LANGUAGES = {'Python', 'Python 2', 'Python 3'}
-    REQUIREMENTS = {PipRequirement('eradicate', '0.1')}
+    REQUIREMENTS = {PipRequirement('eradicate', '0.1.6')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

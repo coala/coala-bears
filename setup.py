@@ -43,12 +43,22 @@ class BuildDocsCommand(setuptools.command.build_py.build_py):
 
 with open('requirements.txt') as requirements:
     required = requirements.read().splitlines()
+    required.remove('-r bear-requirements.txt')
+
+with open('bear-requirements.txt') as requirements:
+    bear_required = requirements.read().splitlines()
 
 with open('test-requirements.txt') as requirements:
     test_required = requirements.read().splitlines()
 
 with open('README.rst') as readme:
     long_description = readme.read()
+
+extras_require = {
+    'alldeps': bear_required,
+}
+required += [req for req in bear_required
+             if not req.startswith('language-check')]
 
 
 if __name__ == '__main__':
@@ -64,6 +74,7 @@ if __name__ == '__main__':
           platforms='any',
           packages=find_packages(exclude=('build.*', 'tests', 'tests.*')),
           install_requires=required,
+          extras_require=extras_require,
           tests_require=test_required,
           package_data={'bears': ['VERSION'],
                         'bears.java': ['checkstyle.jar', 'google_checks.xml'],

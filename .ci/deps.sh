@@ -47,6 +47,10 @@ if [ "$USE_PPAS" = "true" ]; then
   sudo add-apt-repository -y ppa:staticfloat/julia-deps
   sudo add-apt-repository -y ppa:ondrej/golang
   sudo add-apt-repository -y ppa:avsm/ppa
+elif [ -n "$USE_PPAS" ]; then
+  for ppa in $USE_PPAS; do
+    sudo add-apt-repository -y ppa:$ppa
+  done
 fi
 
 deps_perl="perl libperl-critic-perl"

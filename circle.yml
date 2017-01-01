@@ -42,9 +42,11 @@ machine:
 
 test:
   override:
-    - bash .ci/tests.sh:
+    - python setup.py bdist_wheel:
         parallel: true
-    - python setup.py install:
+    - pip install $(ls ./dist/*.whl)"[alldeps]":
+        parallel: true
+    - bash .ci/tests.sh:
         parallel: true
     - coala-ci -L DEBUG:
         parallel: true
