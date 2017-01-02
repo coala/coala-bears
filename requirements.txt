@@ -1,5 +1,5 @@
 # Use >= for development versions so that source builds always work
-coala~=0.9
+coala~=0.9.1
 munkres3~=1.0
 pylint~=1.6
 autopep8~=1.2
