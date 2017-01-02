@@ -29,6 +29,10 @@ PROJECT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 PROJECT_BEAR_DIR = os.path.abspath(os.path.join(PROJECT_DIR, 'bears'))
 
+PINNED_PACKAGES = (
+   'radon',
+)
+
 
 def get_args():
     parser = argparse.ArgumentParser(
@@ -71,8 +75,10 @@ def get_all_pip_requirements(bears):
 def write_requirements(requirements, output):
     for requirement in requirements:
         if requirement.version:
-            output.write(requirement.package + '~=' + requirement.version +
-                         '\n')
+            marker = '==' if requirement.package in PINNED_PACKAGES else '~='
+            output.write('{0}{1}{2}\n'.format(requirement.package,
+                                              marker,
+                                              requirement.version))
         else:
             output.write(requirement.package + '\n')
 
