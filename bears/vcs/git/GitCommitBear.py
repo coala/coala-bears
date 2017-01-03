@@ -102,7 +102,10 @@ class GitCommitBear(GlobalBear):
             self.err('git:', repr(stderr))
             return
 
-        stdout = stdout.rstrip('\n').splitlines()
+        stdout = stdout.rstrip('\n')
+        pos = stdout.find('\n')
+        shortlog = stdout[:pos] if pos != -1 else stdout
+        body = stdout[pos+1:] if pos != -1 else ''
 
         if len(stdout) == 0:
             if not allow_empty_commit_message:
@@ -110,13 +113,13 @@ class GitCommitBear(GlobalBear):
             return
 
         yield from self.check_shortlog(
-            stdout[0],
+            shortlog,
             **self.get_shortlog_checks_metadata().filter_parameters(kwargs))
         yield from self.check_body(
-            stdout[1:],
+            body.splitlines(),
             **self.get_body_checks_metadata().filter_parameters(kwargs))
         yield from self.check_issue_reference(
-            '\n'.join(stdout[1:]),
+            body,
             **self.get_issue_checks_metadata().filter_parameters(kwargs))
 
     def check_shortlog(self, shortlog,
