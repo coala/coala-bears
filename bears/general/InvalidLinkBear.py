@@ -90,11 +90,16 @@ class InvalidLinkBear(LocalBear):
                         link = InvalidLinkBear.parse_pip_vcs_url(link)
                     host = urlparse(link).netloc
                     code = InvalidLinkBear.get_status_code(
-                               link, network_timeout.get(
-                                   host, InvalidLinkBear.DEFAULT_TIMEOUT))
+                               link,
+                               network_timeout.get(host)
+                               if host in network_timeout
+                               else network_timeout.get('*')
+                               if '*' in network_timeout
+                               else InvalidLinkBear.DEFAULT_TIMEOUT)
                     yield line_number + 1, link, code
 
-    @deprecate_settings(link_ignore_regex='ignore_regex')
+    @deprecate_settings(link_ignore_regex='ignore_regex',
+                        network_timeout=('timeout', lambda t: {'*': t}))
     def run(self, filename, file,
             network_timeout: typed_dict(str, int, DEFAULT_TIMEOUT)=dict(),
             link_ignore_regex: str='([.\/]example\.com|\{|\$)',
@@ -117,12 +122,17 @@ class InvalidLinkBear(LocalBear):
         :param network_timeout:       A dict mapping URLs and timeout to be
                                       used for that URL. All the URLs that have
                                       the same host as that of URLs provided
-                                      will be passed that timeout.
+                                      will be passed that timeout. It can also
+                                      contain a wildcard timeout entry with key
+                                      '*'. The timeout of all the websites not
+                                      in the dict will be the value of the key
+                                      '*'.
         :param link_ignore_regex:     A regex for urls to ignore.
         :param link_ignore_list: Comma separated url globs to ignore
         :param follow_redirects: Set to true to autocorrect redirects.
         """
-        network_timeout = {urlparse(url).netloc: timeout
+        network_timeout = {urlparse(url).netloc
+                           if not url == '*' else '*': timeout
                            for url, timeout in network_timeout.items()}
 
         for line_number, link, code in InvalidLinkBear.find_links_in_file(

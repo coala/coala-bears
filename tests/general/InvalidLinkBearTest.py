@@ -1,4 +1,5 @@
 import io
+import logging
 from queue import Queue
 import requests
 import requests_mock
@@ -234,7 +235,8 @@ class InvalidLinkBearTest(unittest.TestCase):
     def test_variable_timeouts(self):
         nt = {
             'https://google.com/timeout/test/2/3/4/5/something': 10,
-            'https://facebook.com/timeout': 2
+            'https://facebook.com/timeout': 2,
+            '*': 25
         }
 
         file_contents = """
@@ -255,10 +257,32 @@ class InvalidLinkBearTest(unittest.TestCase):
             self.assertEqual([x.message
                               for x in list(uut.run('file', file_contents,
                                                     network_timeout=nt))], [])
+
+            with self.assertLogs(logging.getLogger()) as log:
+                self.assertEqual([x.message
+                                  for x in list(uut.run('file', file_contents,
+                                                        timeout=20))], [])
+                self.assertEqual(log.output,
+                                 ['WARNING:root:The setting `timeout` is '
+                                  'deprecated. Please use `network_timeout` '
+                                  'instead.'])
+
+            self.assertEqual([x.message
+                              for x in list(uut.run('file',
+                                                    ['https://gitmate.io']))],
+                             [])
             mock.assert_has_calls([
                 unittest.mock.call('https://facebook.com/', timeout=2,
                                    allow_redirects=False),
                 unittest.mock.call('https://google.com/',
                                    timeout=10, allow_redirects=False),
                 unittest.mock.call('https://coala.io/som/thingg/page/123',
+                                   timeout=25, allow_redirects=False),
+                unittest.mock.call('https://facebook.com/', timeout=20,
+                                   allow_redirects=False),
+                unittest.mock.call('https://google.com/',
+                                   timeout=20, allow_redirects=False),
+                unittest.mock.call('https://coala.io/som/thingg/page/123',
+                                   timeout=20, allow_redirects=False),
+                unittest.mock.call('https://gitmate.io',
                                    timeout=15, allow_redirects=False)])
