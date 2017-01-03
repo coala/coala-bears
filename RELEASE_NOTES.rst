@@ -1,3 +1,15 @@
+coala-bears 0.9.2
+=================
+
+- A dependency problem in `RadonBear` causing install failure has been fixed
+  `Issue #1228 <https://github.com/coala/coala-bears/issues/1228>`_
+- coala dependency has been fixed to only allow coala versions 0.9.x with
+  0.9 series bears
+  `Pull #1243 <https://github.com/coala/coala-bears/pull/1243>`_
+- `InvalidLinkBear` default timeout has been increased to 15 seconds from 2
+  because it was creating false positives
+  `Issue #1219 <https://github.com/coala/coala-bears/issues/1219>`_
+
 coala-bears 0.9.1
 =================
 
