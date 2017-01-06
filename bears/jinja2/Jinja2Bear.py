@@ -312,14 +312,15 @@ class Jinja2Bear(LocalBear):
             variable_spacing: int=1,
             control_spacing: int=1):
         """
-        Check `Jinja2 templates <http://jinja.pocoo.org>`_ for syntax, formatting and documentation issues.
+        Check `Jinja2 templates <http://jinja.pocoo.org>`_ for syntax,
+        formatting and documentation issues.
         The following aspects are being looked at:
 
         * Variable spacing:
             Variable tags should be padded with one space on each side, like
             this: ``{{ var_name }}``. This can be set to any number of spaces
-            via the setting ``variable_spacing``. Malformatted variable tags are
-            detected and fixes suggested.
+            via the setting ``variable_spacing``.
+            Malformatted variable tags are detected and fixes suggested.
         * Control spacing:
             Like variable spacing, but for control blocks, i.e., if and for
             constructs. Looks at both start and end block.
