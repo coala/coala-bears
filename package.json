@@ -1,6 +1,6 @@
 {
   "name": "coala-bears",
-  "version":"0.8.0",
+  "version": "0.8.0",
   "dependencies": {
     "alex": "~3",
     "autoprefixer": "~6",
@@ -12,14 +12,14 @@
     "dockerfile_lint": "~0",
     "eslint": "~2",
     "eslint-plugin-import": "~1",
-    "happiness":"~7.1.2",
+    "happiness": "~7.1.2",
     "jshint": "~2",
     "postcss-cli": "~2",
+    "ramllint": "~1.2.2",
     "remark-cli": "~2",
     "remark-lint": ">=5.1.0",
     "tslint": "~3",
     "typescript": ">=1.7.3",
-    "ramllint": "~1.2.2",
     "write-good": "~0.9.1"
-  }
+}
 }

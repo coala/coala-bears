@@ -118,7 +118,7 @@ script:
   - bash .ci/tests.sh
   # Ensure bear requirements are in sync with the bear PipRequirement
   - .ci/generate_bear_requirements.py
-  - git diff --exit-code bear-requirements.txt
+  - git diff --exit-code bear-requirements.txt package.json
   # https://github.com/coala/coala-bears/issues/1037
   - >
     if [[ "$TRAVIS_PULL_REQUEST" != "false" ]]; then

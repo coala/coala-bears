@@ -15,15 +15,22 @@
 
 import argparse
 import itertools
+import json
 import os
 import sys
 
+from jinja2 import Environment, FileSystemLoader
 from pyprint.NullPrinter import NullPrinter
 
 from coalib.bears.BEAR_KIND import BEAR_KIND
 from coalib.collecting.Collectors import collect_bears
 
+from dependency_management.requirements.NpmRequirement import NpmRequirement
 from dependency_management.requirements.PipRequirement import PipRequirement
+
+NPM_REQUIREMENTS_TEMPLATE_FILE = "package.json.jinja2"
+
+THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 PROJECT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
@@ -33,6 +40,9 @@ PINNED_PACKAGES = (
    'radon',
    'click',
 )
+
+env = Environment(loader=FileSystemLoader(THIS_DIR))
+env.filters['jsonify'] = json.dumps
 
 
 def get_args():
@@ -61,19 +71,48 @@ def get_all_bears(bear_dirs):
     return list(itertools.chain(local_bears, global_bears))
 
 
-def get_all_pip_requirements(bears):
-    requirements = []
+def get_all_pip_and_npm_requirements(bears):
+    pip_requirements = []
+    npm_requirements = []
 
     for bear in bears:
         for requirement in bear.REQUIREMENTS:
             if isinstance(requirement, PipRequirement) and \
-               requirement not in requirements:
-                requirements.append(requirement)
+               requirement not in pip_requirements:
+                pip_requirements.append(requirement)
+            elif isinstance(requirement, NpmRequirement) and \
+               requirement not in npm_requirements:
+                npm_requirements.append(requirement)
 
-    return sorted(requirements, key=lambda requirement: requirement.package)
+    return (
+        sorted(pip_requirements, key=lambda requirement: requirement.package),
+        sorted(npm_requirements, key=lambda requirement: requirement.package)
+        )
 
 
-def write_requirements(requirements, output):
+def write_npm_requirements(requirements):
+    npm_dependencies = {}
+    template = env.get_template(NPM_REQUIREMENTS_TEMPLATE_FILE)
+
+    for requirement in requirements:
+        req_version = requirement.version
+        package_name = requirement.package
+        if req_version:
+            if req_version.startswith(">="):
+                npm_dependencies[package_name] = req_version
+            else:
+                npm_dependencies[package_name] = "~" + req_version
+        else:
+            npm_dependencies[package_name] = "*"
+
+    package_json_string = template.render(
+        dependencies=npm_dependencies, version="0.8.0")
+
+    with open(os.path.join(PROJECT_DIR, "package.json"), 'w') as file:
+        file.write(package_json_string)
+
+
+def write_pip_requirements(requirements, output):
     for requirement in requirements:
         if requirement.version:
             marker = '==' if requirement.package in PINNED_PACKAGES else '~='
@@ -92,7 +131,11 @@ if __name__ == '__main__':
     if args.bear_dirs is not None:
         bear_dirs.extend(args.bear_dirs)
 
-    reqs = get_all_pip_requirements(get_all_bears(bear_dirs))
+    pip_reqs, npm_reqs = (
+        get_all_pip_and_npm_requirements(get_all_bears(bear_dirs))
+        )
+
+    write_npm_requirements(npm_reqs)
 
     output = None
 
@@ -101,5 +144,5 @@ if __name__ == '__main__':
     else:
         output = open(args.output, 'w')
 
-    write_requirements(reqs, output)
+    write_pip_requirements(pip_reqs, output)
     output.close()
