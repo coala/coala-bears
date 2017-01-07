@@ -1,0 +1,5 @@
+source 'https://rubygems.org'
+ruby '2.2.2'
+
+{% for gem in gems %}gem "{{gem.name + '"' if gem.required == '' else gem.name + '", require: false'}}
+{% endfor %}

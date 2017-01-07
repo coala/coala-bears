@@ -25,10 +25,13 @@ from pyprint.NullPrinter import NullPrinter
 from coalib.bears.BEAR_KIND import BEAR_KIND
 from coalib.collecting.Collectors import collect_bears
 
+from dependency_management.requirements.GemRequirement import GemRequirement
 from dependency_management.requirements.NpmRequirement import NpmRequirement
 from dependency_management.requirements.PipRequirement import PipRequirement
 
 NPM_REQUIREMENTS_TEMPLATE_FILE = "package.json.jinja2"
+
+GEM_REQUIREMENTS_TEMPLATE_FILE = "Gemfile.jinja2"
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -71,9 +74,10 @@ def get_all_bears(bear_dirs):
     return list(itertools.chain(local_bears, global_bears))
 
 
-def get_all_pip_and_npm_requirements(bears):
+def get_all_requirements(bears):
     pip_requirements = []
     npm_requirements = []
+    gem_requirements = []
 
     for bear in bears:
         for requirement in bear.REQUIREMENTS:
@@ -83,11 +87,32 @@ def get_all_pip_and_npm_requirements(bears):
             elif isinstance(requirement, NpmRequirement) and \
                requirement not in npm_requirements:
                 npm_requirements.append(requirement)
+            elif isinstance(requirement, GemRequirement) and \
+               requirement not in gem_requirements:
+                gem_requirements.append(requirement)
 
     return (
         sorted(pip_requirements, key=lambda requirement: requirement.package),
-        sorted(npm_requirements, key=lambda requirement: requirement.package)
+        sorted(npm_requirements, key=lambda requirement: requirement.package),
+        sorted(gem_requirements, key=lambda requirement: requirement.package)
         )
+
+
+def write_gem_requirements(requirements):
+    gem_dependencies = []
+    template = env.get_template(GEM_REQUIREMENTS_TEMPLATE_FILE)
+
+    for requirement in requirements:
+        gem_dependencies.append(
+            {'name' : requirement.package,
+             'required' : requirement.require})
+
+    gemfile_string = template.render(
+        gems=gem_dependencies
+        )
+
+    with open(os.path.join(PROJECT_DIR, "Gemfile"), 'w') as file:
+        file.write(gemfile_string)
 
 
 def write_npm_requirements(requirements):
@@ -131,9 +156,11 @@ if __name__ == '__main__':
     if args.bear_dirs is not None:
         bear_dirs.extend(args.bear_dirs)
 
-    pip_reqs, npm_reqs = (
-        get_all_pip_and_npm_requirements(get_all_bears(bear_dirs))
+    pip_reqs, npm_reqs, gem_reqs = (
+        get_all_requirements(get_all_bears(bear_dirs))
         )
+
+    write_gem_requirements(gem_reqs)
 
     write_npm_requirements(npm_reqs)
 
