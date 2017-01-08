@@ -17,6 +17,7 @@
     "postcss-cli": "~2",
     "remark-cli": "~2",
     "remark-lint": ">=5.1.0",
+    "remark-validate-links": "~5.0.0",
     "tslint": "~3",
     "typescript": ">=1.7.3",
     "ramllint": "~1.2.2",
