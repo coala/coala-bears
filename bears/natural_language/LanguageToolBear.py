@@ -33,16 +33,16 @@ class LanguageToolBear(LocalBear):
             except ImportError:  # pragma: no cover
                 return 'Please install the `language-check` pip package.'
 
-    @deprecate_settings(language='locale')
+    @deprecate_settings(natural_language=('language', 'locale'))
     def run(self,
             filename,
             file,
-            language: str='auto',
+            natural_language: str='auto',
             languagetool_disable_rules: typed_list(str)=()):
         '''
         Checks the code with LanguageTool.
 
-        :param language:                   A locale representing the language
+        :param natural_language:           A locale representing the language
                                            you want to have checked. If set to
                                            'auto' the language is guessed.
                                            If the language cannot be guessed,
@@ -54,11 +54,13 @@ class LanguageToolBear(LocalBear):
         from language_check import LanguageTool, correct
 
         joined_text = ''.join(file)
-        language = (guess_language(joined_text)
-                    if language == 'auto' else language)
-        language = 'en-US' if not language else language
+        natural_language = (guess_language(joined_text)
+                            if natural_language == 'auto'
+                            else natural_language)
+        natural_language = 'en-US' if not natural_language \
+                           else natural_language
 
-        tool = LanguageTool(language, motherTongue='en_US')
+        tool = LanguageTool(natural_language, motherTongue='en_US')
         tool.disabled.update(languagetool_disable_rules)
 
         matches = tool.check(joined_text)

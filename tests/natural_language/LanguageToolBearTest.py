@@ -27,7 +27,7 @@ LanguageToolBearLanguageTest = verify_local_bear(
     LanguageToolBear,
     valid_files=('A correct English sentence sounds nice to everyone.',),
     invalid_files=('Ein korrekter englischer Satz klingt für alle gut.',),
-    settings={'language': 'en-US'})
+    settings={'natural_language': 'en-US'})
 
 
 LanguageToolBearDisableRulesTest = verify_local_bear(
@@ -37,6 +37,20 @@ LanguageToolBearDisableRulesTest = verify_local_bear(
                  'A line beginning with uppercase.'),
     invalid_files=('  Line with unnecessary spaces at the start.',),
     settings={'languagetool_disable_rules': 'UPPERCASE_SENTENCE_START'})
+
+
+LanguageToolBearDeprecatedSettingTest1 = verify_local_bear(
+    LanguageToolBear,
+    valid_files=('A correct English sentence sounds nice to everyone.',),
+    invalid_files=('Ein korrekter englischer Satz klingt für alle gut.',),
+    settings={'language': 'en-US'})
+
+
+LanguageToolBearDeprecatedSettingTest2 = verify_local_bear(
+    LanguageToolBear,
+    valid_files=('A correct English sentence sounds nice to everyone.',),
+    invalid_files=('Ein korrekter englischer Satz klingt für alle gut.',),
+    settings={'locale': 'en-US'})
 
 
 @generate_skip_decorator(LanguageToolBear)
