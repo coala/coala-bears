@@ -35,7 +35,6 @@ addons:
       - mono-mcs
       - ocaml
       - opam
-      - oracle-java9-set-default
       - php-codesniffer
       - verilator
 
