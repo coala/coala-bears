@@ -23,7 +23,9 @@ class DennisBear:
     """
 
     LANGUAGES = {'po', 'pot'}
-    REQUIREMENTS = {PipRequirement('dennis', '0.8')}
+    REQUIREMENTS = {PipRequirement('dennis', '0.8'),
+                    # Workaround for https://github.com/willkg/dennis/issues/91
+                    PipRequirement('click', '6.6')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

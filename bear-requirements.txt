@@ -1,6 +1,7 @@
 autoflake~=0.6.6
 autopep8~=1.2
 bandit~=1.2
+click==6.6
 cmakelint~=1.3
 cppclean~=0.12.0
 cpplint~=1.3
