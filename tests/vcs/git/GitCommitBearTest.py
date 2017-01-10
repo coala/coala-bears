@@ -269,6 +269,26 @@ class GitCommitBearTest(unittest.TestCase):
                          [])
         self.assertTrue(self.msg_queue.empty())
 
+        # Testing body_regex
+        self.git_commit('Shortlog\n\n'
+                        'First line, blablablablablabla.\n'
+                        'Another line, blablablablablabla.\n'
+                        'Fix 1112')
+        self.assertEqual(self.run_uut(
+                             body_regex=r'Fix\s+[1-9][0-9]*\s*'), [])
+        self.assert_no_msgs()
+
+        # Matching with regexp, no match found
+        self.git_commit('Shortlog\n\n'
+                        'First line, blablablablablabla.\n'
+                        'Another line, blablablablablabla.\n'
+                        'Closes #01112')
+        self.assertEqual(self.run_uut(
+                             body_regex=r'Closes\s+#[1-9][0-9]*\s*'),
+                         ['No match found in commit message for the regular '
+                          'expression provided: Closes\s+#[1-9][0-9]*\s*'])
+        self.assert_no_msgs()
+
     def test_check_issue_reference(self):
         # Commit with no remotes configured
         self.git_commit('Shortlog\n\n'
