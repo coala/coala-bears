@@ -114,7 +114,7 @@ class GitCommitBear(GlobalBear):
             shortlog,
             **self.get_shortlog_checks_metadata().filter_parameters(kwargs))
         yield from self.check_body(
-            body.splitlines(),
+            body,
             **self.get_body_checks_metadata().filter_parameters(kwargs))
         yield from self.check_issue_reference(
             body,
@@ -214,28 +214,36 @@ class GitCommitBear(GlobalBear):
     def check_body(self, body,
                    body_line_length: int=72,
                    force_body: bool=False,
-                   ignore_length_regex: typed_list(str)=()):
+                   ignore_length_regex: typed_list(str)=(),
+                   body_regex: str=None):
         """
         Checks the given commit body.
 
-        :param body:                The commit body splitted by lines.
+        :param body:                The body of the commit message of HEAD.
         :param body_line_length:    The maximum line-length of the body. The
                                     newline character at each line end does not
                                     count to the length.
         :param force_body:          Whether a body shall exist or not.
         :param ignore_length_regex: Lines matching each of the regular
                                     expressions in this list will be ignored.
+        :param body_regex:          If provided, checks the presence of regex
+                                    in the commit body.
         """
         if len(body) == 0:
             if force_body:
                 yield Result(self, 'No commit message body at HEAD.')
             return
 
-        if body[0] != '':
+        if body[0] != '\n':
             yield Result(self, 'No newline found between shortlog and body at '
                                'HEAD commit. Please add one.')
             return
 
+        if body_regex and not re.search(body_regex, body):
+            yield Result(self, 'No match found in commit message for the '
+                               'regular expression provided: %s' % body_regex)
+
+        body = body.splitlines()
         ignore_regexes = [re.compile(regex) for regex in ignore_length_regex]
         if any((len(line) > body_line_length and
                 not any(regex.search(line) for regex in ignore_regexes))
