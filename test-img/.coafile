@@ -1,0 +1,6 @@
+[Default]
+bears = ImageDimensionBear
+files = .coafile
+image_file = ./test-img/*.*
+width = 240
+height = 240
