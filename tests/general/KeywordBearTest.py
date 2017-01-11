@@ -1,6 +1,7 @@
 from collections import namedtuple
 from queue import Queue
 import unittest
+import logging
 
 from bears.general.KeywordBear import KeywordBear
 from coalib.results.HiddenResult import HiddenResult
@@ -214,3 +215,27 @@ class KeywordBearDiffTest(unittest.TestCase):
             self.assertEqual(result[0].message, 'The line contains the keyword'
                                                 " 'Issue #123' which resulted "
                                                 'in a match with given regex.')
+
+    def test_wrong_language(self):
+        self.section.append(Setting('language', 'anything'))
+        logger = logging.getLogger()
+        annotation_bear_result_type = namedtuple('result', 'contents')
+        dep_results = {
+            'AnnotationBear': [
+                annotation_bear_result_type(
+                  'coalang specification for anything not found.')
+            ]
+        }
+
+        text = ['# todo 123']
+
+        with self.assertLogs(logger, 'ERROR') as log:
+            with execute_bear(self.uut, filename='F', file=text,
+                              dependency_results=dep_results) as result:
+                self.assertEqual(len(result), 1)
+                self.assertEqual(result[0].diffs, {})
+                self.assertEqual(result[0].affected_code[0].start.line, 1)
+                self.assertEqual(len(log.output), 1)
+                self.assertIn(log.output[0],
+                              'ERROR:root:coalang specification'
+                              ' for anything not found.')

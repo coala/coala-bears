@@ -1,4 +1,5 @@
 import re
+import logging
 
 from coalib.bearlib import deprecate_settings
 from coalib.bears.LocalBear import LocalBear
@@ -19,7 +20,10 @@ def _get_comments(dependency_results):
         return
 
     for result in annotation_bear_results:
-        yield from result.contents.get('comments', [])
+        if isinstance(result.contents, str):
+            logging.error(result.contents)
+        else:
+            yield from result.contents.get('comments', [])
 
 
 def generate_diff(comments, file, filename,
