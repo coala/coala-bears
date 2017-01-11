@@ -38,11 +38,15 @@ class HaskellLintBear:
         output = json.loads(output)
 
         for issue in output:
-            assert issue['startLine'] == issue['endLine']
             diff = Diff(file)
+            from_lines = issue['from'].splitlines()
+            to_lines = issue['to'].splitlines()
+            assert len(from_lines) == len(to_lines)
+            for other_lines in range(1, len(from_lines)):
+                assert from_lines[other_lines] == to_lines[other_lines]
             line_nr = issue['startLine']
             line_to_change = file[line_nr-1]
-            newline = line_to_change.replace(issue['from'], issue['to'])
+            newline = line_to_change.replace(from_lines[0], to_lines[0])
             diff.change_line(line_nr, line_to_change, newline)
 
             yield Result.from_values(
@@ -51,4 +55,7 @@ class HaskellLintBear:
                 file=filename,
                 severity=self.severity_map[issue['severity']],
                 line=issue['startLine'],
+                column=issue['startColumn'],
+                end_line=issue['endLine'],
+                end_column=issue['endColumn'],
                 diffs={filename: diff})
