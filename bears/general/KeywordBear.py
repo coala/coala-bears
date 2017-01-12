@@ -94,7 +94,7 @@ class KeywordBear(LocalBear):
         :param regex_keyword:
             A regular expression to search for matching keywords in a file.
         '''
-        comments = _get_comments(dependency_results)
+        comments = list(_get_comments(dependency_results))
 
         simple_keywords_regex = re.compile(
             '(' + '|'.join(re.escape(key) for key in keywords) + ')',
