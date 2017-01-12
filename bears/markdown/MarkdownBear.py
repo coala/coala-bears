@@ -28,7 +28,7 @@ class MarkdownBear:
 
     _output_regex = re.compile(
         r'\s*(?P<line>\d+):(?P<column>\d+)'
-        r'\s*(?P<severity>warning)\s*(?P<message>.*)')
+        r'\s*(?P<severity>warning)\s*(?P<message>(?:\S|\s(?!\s))*)')
 
     @staticmethod
     @deprecate_settings(bullets='markdown_bullets',
@@ -126,16 +126,17 @@ class MarkdownBear:
             'ruleSpaces': horizontal_rule_spaces,       # Bool
             'ruleRepetition': horizontal_rule_repeat,   # int
         }
-        remark_configs_plugins = {
+        remark_lint_configs = {
             'maximumLineLength': max_line_length        # int
         }
 
         config_json = json.dumps(remark_configs_settings)
         # Remove { and } as remark adds them on its own
         settings = config_json[1:-1]
-        config_json = json.dumps(remark_configs_plugins)
-        plugins = 'lint=' + config_json[1:-1]
-        return '--no-color', '--quiet', '--setting', settings, '--use', plugins
+        config_json = json.dumps(remark_lint_configs)
+        lint = 'lint=' + config_json[1:-1]
+        return (filename, '--no-color', '--quiet', '--setting', settings,
+                '--use', lint, '--use', 'validate-links')
 
     def process_output(self, output, filename, file):
         stdout, stderr = output
