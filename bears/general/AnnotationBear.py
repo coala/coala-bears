@@ -79,16 +79,16 @@ class AnnotationBear(LocalBear):
             A dictionary containing the various ways to  define single-line
             strings in a language.
         :param multiline_string_delimiters:
-            A dictionary contatining the various ways to define multi-line
+            A dictionary containing the various ways to define multi-line
             strings in a language.
         :param comment_delimiter:
-            A dictionary contatining the various ways to define single-line
+            A dictionary containing the various ways to define single-line
             comments in a language.
         :param multiline_comment_delimiters:
-            A dictionary contatining the various ways to define multi-line
+            A dictionary containing the various ways to define multi-line
             comments in a language.
         :return:
-            Two tuples first contatining a tuple of strings, the second a tuple
+            Two tuples first containing a tuple of strings, the second a tuple
             of comments.
         """
         text = ''.join(file)
