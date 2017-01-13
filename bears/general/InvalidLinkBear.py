@@ -81,9 +81,8 @@ class InvalidLinkBear(LocalBear):
             (?<!\.)(?<!,)               # Exclude trailing `.` or `,` from URL
             """, re.VERBOSE)
         for line_number, line in enumerate(file):
-            match = regex.search(line)
-            if match:
-                link = match.group()
+            for match in re.findall(regex, line):
+                link = match[0]
                 if not (link_ignore_regex.search(link) or
                         fnmatch(link, link_ignore_list)):
                     if link.startswith(('hg+', 'bzr+', 'git+', 'svn+')):

@@ -77,6 +77,15 @@ class InvalidLinkBearTest(unittest.TestCase):
                 self.assertNotEqual(out, [])
                 self.assertNotEqual(out, None)
 
+    def assertResultCount(self, test_file, expected_num):
+        with requests_mock.Mocker() as m:
+            InvalidLinkBear.check_prerequisites = lambda *args: True
+            uut = InvalidLinkBear(self.section, Queue())
+            m.add_matcher(custom_matcher)
+            for line, num in zip(test_file, expected_num):
+                outputs = list(uut.run('testline', [line]))
+                self.assertEqual(num, len(outputs))
+
     def test_run(self):
         # Valid Links
         valid_file = """
@@ -154,6 +163,20 @@ class InvalidLinkBearTest(unittest.TestCase):
         self.assertResult(valid_file=long_url_redirect,
                           invalid_file=short_url_redirect,
                           settings={'follow_redirects': 'yeah'})
+
+    def test_multiple_results_per_line(self):
+
+        test_file = """
+        http://httpbin.org/status/410
+        http://httpbin.org/status/200
+        http://httpbin.org/status/404 http://httpbin.org/status/410
+        http://httpbin.org/status/200 http://httpbin.org/status/404
+        http://httpbin.org/status/200 http://httpbin.org/status/201
+        """.splitlines()
+
+        expected_num_results = [0, 1, 0, 2, 1, 0]
+
+        self.assertResultCount(test_file, expected_num_results)
 
     def test_pip_vcs_url(self):
         with_at = """
