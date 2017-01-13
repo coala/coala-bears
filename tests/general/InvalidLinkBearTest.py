@@ -86,6 +86,9 @@ class InvalidLinkBearTest(unittest.TestCase):
         # Parentheses
         https://en.wikipedia.org/wiki/Hello_(Adele_song)/200
 
+        # Percentage after forward slash
+        http://example.com/123%abc
+
         # Quotes
         "https://github.com/coala/coala-bears/issues/200"
         'http://httpbin.org/status/203'
