@@ -53,6 +53,10 @@ addons:
       - opam
       - php-codesniffer
       - verilator
+      - jpegoptim
+      - libjpeg-progs
+      - pngcrush
+      - optipng
 
 cache:
   pip: true
