@@ -50,7 +50,6 @@ install:
   - "%CMD_IN_ENV% pip wheel --use-wheel --wheel-dir C:\\wheels --find-links C:\\wheels -r requirements.txt"
   - "%CMD_IN_ENV% pip install --find-links=C:\\wheels -r test-requirements.txt"
   - "%CMD_IN_ENV% pip install --find-links=C:\\wheels -r requirements.txt"
-  - "%CMD_IN_ENV% pip install --upgrade astroid"
   - "CALL .ci/deps.nltk.cmd"
 
   - ps: "Install-Product node ''"  # Use latest node v5.x.x
