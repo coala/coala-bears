@@ -84,6 +84,31 @@ class KeywordBearDiffTest(unittest.TestCase):
                           dependency_results=dep_results) as result:
             self.assertEqual(len(result[0].diffs), 0)
 
+    def test_keyword_diff_in_multiple_comments(self):
+        text = ['# todo 1\n', '# todo 2']
+        comments = [SourceRange.from_values('F', 1, 1, 2, 8)]
+        dep_results = {
+            'AnnotationBear': [
+                self.annotation_bear_result_type({'comments': comments})
+            ]
+        }
+
+        with execute_bear(self.uut, filename='F', file=text,
+                          dependency_results=dep_results) as results:
+            self.assertEqual(len(results), 2)
+            self.assertEqual(results[0].diffs['F'].unified_diff,
+                             '--- \n'
+                             '+++ \n'
+                             '@@ -1,2 +1 @@\n'
+                             '-# todo 1\n'
+                             ' # todo 2')
+            self.assertEqual(results[1].diffs['F'].unified_diff,
+                             '--- \n'
+                             '+++ \n'
+                             '@@ -1,2 +1 @@\n'
+                             ' # todo 1\n'
+                             '-# todo 2')
+
     def test_keyword_diff(self):
         text = ['# todo 123\n']
         comments = [SourceRange.from_values('F', 1, 1, 1, 10)]
