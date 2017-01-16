@@ -342,8 +342,8 @@ class GitCommitBearTest(unittest.TestCase):
         self.assertEqual(self.run_uut(
                              body_close_issue=True,
                              body_close_issue_full_url=True),
-                         ['Body of HEAD commit does not contain any full issue'
-                          ' reference.'])
+                         ['Invalid issue reference: '
+                          'https://github.com/user/repo.git'])
         self.assert_no_msgs()
 
         # GitHub host with short issue tag
@@ -357,9 +357,9 @@ class GitCommitBearTest(unittest.TestCase):
         self.git_commit('Shortlog\n\n'
                         'First line, blablablablablabla.\n'
                         'Another line, blablablablablabla.\n'
-                        'Fix #01112 and #111')
+                        'Fix #1111 and #01112')
         self.assertEqual(self.run_uut(body_close_issue=True,),
-                         ['Invalid issue number at #01112'])
+                         ['Invalid issue reference: #01112'])
         self.assert_no_msgs()
 
         # GitHub host with no full issue reference
@@ -370,8 +370,7 @@ class GitCommitBearTest(unittest.TestCase):
         self.assertEqual(self.run_uut(
                              body_close_issue=True,
                              body_close_issue_full_url=True),
-                         ['Body of HEAD commit does not contain any full issue'
-                          ' reference.'])
+                         ['Invalid issue reference: #01112'])
         self.assert_no_msgs()
 
         # Adding GitLab remote for testing
@@ -397,7 +396,7 @@ class GitCommitBearTest(unittest.TestCase):
         self.assertEqual(self.run_uut(
                              body_close_issue=True,
                              body_close_issue_full_url=True),
-                         ['Invalid issue number at '
+                         ['Invalid issue reference: '
                           'https://gitlab.com/user/repo/issues/not_num'])
         self.assert_no_msgs()
 
@@ -409,8 +408,8 @@ class GitCommitBearTest(unittest.TestCase):
         self.assertEqual(self.run_uut(
                              body_close_issue=True,
                              body_close_issue_full_url=True),
-                         ['Body of HEAD commit does not contain any full issue'
-                          ' reference.'])
+                         ['Invalid issue reference: '
+                          'http://google.com/issues/hehehe'])
         self.assert_no_msgs()
 
         # One of the short references is broken
@@ -419,7 +418,7 @@ class GitCommitBearTest(unittest.TestCase):
                         'Another line, blablablablablabla.\n'
                         'Resolve #11 and close #notnum')
         self.assertEqual(self.run_uut(body_close_issue=True,),
-                         ['Invalid issue number at #notnum'])
+                         ['Invalid issue reference: #notnum'])
         self.assert_no_msgs()
 
         # Last line enforce full URL
@@ -431,8 +430,8 @@ class GitCommitBearTest(unittest.TestCase):
                              body_close_issue=True,
                              body_close_issue_full_url=True,
                              body_close_issue_on_last_line=True),
-                         ['Body of HEAD commit does not contain any full issue'
-                          ' reference in the last line.'])
+                         ['Body of HEAD commit does not contain any full '
+                          'issue URL in the last line.'])
         self.assert_no_msgs()
 
     def test_different_path(self):

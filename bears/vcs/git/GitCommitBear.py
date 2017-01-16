@@ -23,10 +23,12 @@ class GitCommitBear(GlobalBear):
     ASCIINEMA_URL = 'https://asciinema.org/a/e146c9739ojhr8396wedsvf0d'
     CAN_DETECT = {'Formatting'}
     SUPPORTED_KEYWORD_REGEX = {
-        'github': (r'[Cc]lose[sd]?|[Rr]esolve[sd]?'
-                   r'|[Ff]ix(?:e[sd])?\s+'),
-        'gitlab': (r'(?:[Cc]los(?:e[sd]?|ing)|[Rr]esolv(?:e[sd]?|ing)'
-                   r'|[Ff]ix(?:e[sd]|ing))?\s+')
+        'github': (r'[Cc]lose[sd]?'
+                   r'|[Rr]esolve[sd]?'
+                   r'|[Ff]ix(?:e[sd])?'),
+        'gitlab': (r'[Cc]los(?:e[sd]?|ing)'
+                   r'|[Rr]esolv(?:e[sd]?|ing)'
+                   r'|[Ff]ix(?:e[sd]|ing)?')
     }
 
     @classmethod
@@ -290,35 +292,48 @@ class GitCommitBear(GlobalBear):
 
         if body_close_issue_on_last_line:
             body = body.splitlines()[-1]
-            result_message = ('Body of HEAD commit does not contain any {} '
-                              'reference in the last line.')
-        else:
-            result_message = ('Body of HEAD commit does not contain any {} '
-                              'reference.')
 
-        if body_close_issue_full_url:
-            result_message = result_message.format('full issue')
-            issue_keyword_regex = r'https?://{}\S+/issues/\w+'.format(
-                re.escape(host))
-        else:
-            result_message = result_message.format('issue')
-            issue_keyword_regex = r'#\w+'
+        concat_keywords = [r',', r'\sand\s']
+        concat_regex = '|'.join(kw for kw in concat_keywords)
 
-        concat_keywords = [',', 'and']
-        concat_regex = '|'.join(re.escape(kw) for kw in concat_keywords)
-        joint_regex = r'({1}(?:\s*(?:{0})\s*{1})*)'.format(concat_regex,
-                                                           issue_keyword_regex)
+        joint_regex = (
+            r'(?:{0})\s+((?:\S(?!{1}))*\S(?:\s*(?:{1})\s*(?!{0})(?:\S(?!{1}))*\S)*)'
+            r''.format(
+                self.SUPPORTED_KEYWORD_REGEX[host],
+                concat_regex))
 
-        matches = re.findall(self.SUPPORTED_KEYWORD_REGEX[host] + joint_regex,
-                             body)
+        matches = re.findall(joint_regex, body)
 
         if len(matches) == 0:
-            yield Result(self, result_message)
+            result_message_dict = {
+                (False, False): 'Body of HEAD commit does not contain any '
+                                'issue reference.',
+                (True, False): 'Body of HEAD commit does not contain any full '
+                               'issue URL.',
+                (False, True): 'Body of HEAD commit does not contain any '
+                               'issue reference in the last line.',
+                (True, True): 'Body of HEAD commit does not contain any full '
+                              'issue URL in the last line.'}
+
+            yield Result(
+                self,
+                result_message_dict[(body_close_issue_full_url,
+                                     body_close_issue_on_last_line)])
             return
 
-        issue_regex = re.compile(r'(?:#|\D+/)[1-9][0-9]*')
+        if body_close_issue_full_url:
+            issue_regex = r'https?://{}\S+/issues/[1-9][0-9]*'.format(
+                re.escape(host))
+        else:
+            issue_regex = '#[1-9][0-9]*'
+
+        compiled_issue_regex = re.compile(issue_regex)
+        compiled_concat_regex = re.compile(r'\s*(?:{})\s*'.format(
+            concat_regex))
+
         for match in matches:
-            for issue in re.split(r'\s*(?:{})\s*'.format(concat_regex), match):
-                if not issue_regex.fullmatch(issue):
-                    yield Result(self, 'Invalid issue number at '
-                                       '{}'.format(issue))
+            for issue in re.split(compiled_concat_regex, match):
+                print(issue)
+                if not compiled_issue_regex.fullmatch(issue):
+                    yield Result(self, 'Invalid issue reference: {}'.format(
+                        issue))
