@@ -40,7 +40,7 @@ class KeywordBearDiffTest(unittest.TestCase):
     def test_empty_keyword(self):
         text = ['a == b']
 
-        with execute_bear(self.uut, 'F', text,
+        with execute_bear(self.uut, filename='F', file=text,
                           dependency_results=self.dep_results) as result:
             self.assertEqual(result, [])
 
@@ -49,7 +49,7 @@ class KeywordBearDiffTest(unittest.TestCase):
             'AnnotationBear': {}
         }
         text = ['# todo 123']
-        with execute_bear(self.uut, 'F', text,
+        with execute_bear(self.uut, filename='F', file=text,
                           dependency_results=dep_results) as result:
             self.assertEqual(result[0].diffs, {})
             self.assertEqual(result[0].affected_code[0].start.line, 1)
@@ -57,7 +57,7 @@ class KeywordBearDiffTest(unittest.TestCase):
 
         dep_results = {'AnnotationBear': HiddenResult(
             'AnnotationBear', {'comments': 123})}
-        with execute_bear(self.uut, 'F', text,
+        with execute_bear(self.uut, filename='F', file=text,
                           dependency_results=dep_results) as result:
             self.assertEqual(result[0].diffs, {})
             self.assertEqual(result[0].affected_code[0].start.line, 1)
@@ -65,7 +65,7 @@ class KeywordBearDiffTest(unittest.TestCase):
 
         dep_results = {'AnnotationBear': HiddenResult(
             'AnnotationBear', 123)}
-        with execute_bear(self.uut, 'F', text,
+        with execute_bear(self.uut, filename='F', file=text,
                           dependency_results=dep_results) as result:
             self.assertEqual(result[0].diffs, {})
             self.assertEqual(result[0].affected_code[0].start.line, 1)
@@ -80,7 +80,7 @@ class KeywordBearDiffTest(unittest.TestCase):
             ]
         }
 
-        with execute_bear(self.uut, 'F', text,
+        with execute_bear(self.uut, filename='F', file=text,
                           dependency_results=dep_results) as result:
             self.assertEqual(len(result[0].diffs), 0)
 
@@ -93,7 +93,7 @@ class KeywordBearDiffTest(unittest.TestCase):
             ]
         }
 
-        with execute_bear(self.uut, 'F', text,
+        with execute_bear(self.uut, filename='F', file=text,
                           dependency_results=dep_results) as result:
             self.assertEqual(result[0].diffs['F'].unified_diff,
                              '--- \n'
@@ -108,7 +108,7 @@ class KeywordBearDiffTest(unittest.TestCase):
                 self.annotation_bear_result_type({'comments': comments})
             ]
         }
-        with execute_bear(self.uut, 'F', text,
+        with execute_bear(self.uut, filename='F', file=text,
                           dependency_results=dep_results) as result:
             self.assertEqual(result[0].diffs['F'].unified_diff,
                              '--- \n'
@@ -119,7 +119,7 @@ class KeywordBearDiffTest(unittest.TestCase):
 
     def test_keyword_outside_of_comment(self):
         text = ['todo = 123\n']
-        with execute_bear(self.uut, 'F', text,
+        with execute_bear(self.uut, filename='F', file=text,
                           dependency_results=self.dep_results) as result:
             self.assertEquals(result[0].diffs, {})
 
@@ -136,7 +136,7 @@ class KeywordBearDiffTest(unittest.TestCase):
             ]
         }
 
-        with execute_bear(self.uut, 'F', text,
+        with execute_bear(self.uut, filename='F', file=text,
                           dependency_results=dep_results) as result:
             self.assertEqual(result[0].diffs['F'].unified_diff,
                              '--- \n'
@@ -155,7 +155,7 @@ class KeywordBearDiffTest(unittest.TestCase):
             ]
         }
 
-        with execute_bear(self.uut, 'F', text,
+        with execute_bear(self.uut, filename='F', file=text,
                           dependency_results=dep_results) as result:
             self.assertEqual(result[0].diffs['F'].unified_diff,
                              '--- \n'
@@ -176,7 +176,7 @@ class KeywordBearDiffTest(unittest.TestCase):
             ]
         }
 
-        with execute_bear(self.uut, 'F', text,
+        with execute_bear(self.uut, filename='F', file=text,
                           dependency_results=dep_results) as result:
             self.assertEqual(result[0].diffs['F'].unified_diff,
                              '--- \n'
