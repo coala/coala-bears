@@ -20,6 +20,7 @@ pycodestyle~=2.2
 pydocstyle~=1.1
 pyflakes~=1.4.0
 pylint~=1.6
+pyroma~=2.2.0
 pyyaml~=3.12
 radon==1.4.0
 requests~=2.12
