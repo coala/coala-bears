@@ -480,7 +480,7 @@ def get_first_unindent(indent,
     while line_nr < len(file):
         valid = True
 
-        for comment in annotation_dict["comments"]:
+        for comment in annotation_dict['comments']:
             if(comment.full_range.start.line < line_nr + 1 and
                comment.full_range.end.line >= line_nr + 1):
                 valid = False

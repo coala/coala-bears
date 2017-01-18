@@ -47,8 +47,8 @@ class AnnotationBear(LocalBear):
         multiline_string_delimiters = dict(
             lang_dict['multiline_string_delimiters'])
         multiline_comment_delimiters = dict(
-            lang_dict["multiline_comment_delimiters"])
-        comment_delimiter = dict(lang_dict["comment_delimiter"])
+            lang_dict['multiline_comment_delimiters'])
+        comment_delimiter = dict(lang_dict['comment_delimiter'])
         ranges = ((), (), (), ())
         try:
             ranges = self.find_annotation_ranges(
@@ -63,10 +63,10 @@ class AnnotationBear(LocalBear):
             yield Result(self, str(e), severity=RESULT_SEVERITY.MAJOR,
                          affected_code=(e.code,))
 
-        content = {"singleline strings": ranges[0],
-                   "multiline strings": ranges[1],
-                   "singleline comments": ranges[2],
-                   "multiline comments": ranges[3]}
+        content = {'singleline strings': ranges[0],
+                   'multiline strings': ranges[1],
+                   'singleline comments': ranges[2],
+                   'multiline comments': ranges[3]}
         yield HiddenResult(self, content)
 
     def find_annotation_ranges(self,
@@ -105,12 +105,12 @@ class AnnotationBear(LocalBear):
         multiline_string_range = []
         singleline_comment_range = []
         multiline_comment_range = []
-        fields = ("start_delimiter_range end_delimiter_range"
-                  " content_range full_range")
-        singleline_string = namedtuple("singleline_string", fields)
-        multiline_string = namedtuple("multiline_string", fields)
-        singleline_comment = namedtuple("singleline_string", fields)
-        multiline_comment = namedtuple("multiline_string", fields)
+        fields = ('start_delimiter_range end_delimiter_range'
+                  ' content_range full_range')
+        singleline_string = namedtuple('singleline_string', fields)
+        multiline_string = namedtuple('multiline_string', fields)
+        singleline_comment = namedtuple('singleline_string', fields)
+        multiline_comment = namedtuple('multiline_string', fields)
         position = 0
         while position <= len(text):
 
@@ -223,7 +223,7 @@ class AnnotationBear(LocalBear):
                                         annotations[annotation],
                                         position)
                 else:
-                    selected_end_annotation = "\n"
+                    selected_end_annotation = '\n'
                     end_position = func(file,
                                         filename,
                                         text,
