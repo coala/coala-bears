@@ -70,7 +70,7 @@ def get_all_pip_requirements(bears):
                requirement not in requirements:
                 requirements.append(requirement)
 
-    return sorted(requirements, key=lambda requirement: requirement.package)
+    return requirements
 
 
 def write_requirements(requirements, output):
