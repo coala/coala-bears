@@ -23,7 +23,12 @@ def _get_comments(dependency_results):
         if isinstance(result.contents, str):
             logging.error(result.contents)
         else:
-            yield from result.contents.get('comments', [])
+            dep_contents = result.contents
+            annotation_dict = {}
+            annotation_dict['comments'] = \
+                (dep_contents.get('singleline comments', []) +
+                 dep_contents.get('multiline comments', []))
+            yield from annotation_dict['comments']
 
 
 def generate_diff(comments, file, filename,

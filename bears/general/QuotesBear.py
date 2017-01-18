@@ -74,12 +74,8 @@ class QuotesBear(LocalBear):
         annotation_dict = {}
         s_a = 'singleline strings'
         s_b = 'multiline strings'
-        s_c = 'singleline comments'
-        s_d = 'multiline comments'
-        annotation_dict['strings'] = (dep_contents.get(s_a, []) +
-                                      dep_contents.get(s_b, []))
-        annotation_dict['comments'] = (dep_contents.get(s_c, []) +
-                                       dep_contents.get(s_d, []))
+        annotation_dict['strings'] = (dep_contents[s_a] +
+                                      dep_contents[s_b])
         ranges = annotation_dict['strings']
 
         for string_range in ranges:

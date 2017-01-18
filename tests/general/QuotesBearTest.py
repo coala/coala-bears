@@ -38,11 +38,24 @@ class QuotesBearDiffTest(unittest.TestCase):
             'AnnotationBear':
                 [HiddenResult(
                     'AnnotationBear',
+<<<<<<< HEAD
                     {'multiline strings': (
                         x(SourceRange.from_values(self.filename, 2, 1, 4, 3)))
                     ,'singleline strings': (
                         x(SourceRange.from_values(self.filename, 5, 1, 5, 30)),
                         x(SourceRange.from_values(self.filename, 6, 1, 6, 37)))
+||||||| parent of 2e64834... WIP KeywordBear: Adapt to AnnotationBear changes
+                    {'multiline comments': (), 'multiline strings': (
+                        SourceRange.from_values(self.filename, 2, 1, 4, 3),
+                        SourceRange.from_values(self.filename, 5, 1, 5, 30),
+                        SourceRange.from_values(self.filename, 6, 1, 6, 37))
+=======
+                    {'singleline comments': (), 'multiline strings': (
+                        SourceRange.from_values(self.filename, 2, 1, 4, 3),
+                        SourceRange.from_values(self.filename, 5, 1, 5, 30),
+                        SourceRange.from_values(self.filename, 6, 1, 6, 37))
+                    , 'multiline comments': (), 'singleline strings': ()
+>>>>>>> 2e64834... WIP KeywordBear: Adapt to AnnotationBear changes
                      }
                 )]
         }
