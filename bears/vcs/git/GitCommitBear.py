@@ -3,6 +3,8 @@ import re
 import shutil
 import os
 
+from urllib.parse import urlparse
+
 from coalib.bears.GlobalBear import GlobalBear
 from dependency_management.requirements.PipRequirement import PipRequirement
 from coala_utils.ContextManagers import change_directory
@@ -20,6 +22,15 @@ class GitCommitBear(GlobalBear):
     LICENSE = 'AGPL-3.0'
     ASCIINEMA_URL = 'https://asciinema.org/a/e146c9739ojhr8396wedsvf0d'
     CAN_DETECT = {'Formatting'}
+    SUPPORTED_HOST_KEYWORD_REGEX = {
+        'github': (r'[Cc]lose[sd]?'
+                   r'|[Rr]esolve[sd]?'
+                   r'|[Ff]ix(?:e[sd])?'),
+        'gitlab': (r'[Cc]los(?:e[sd]?|ing)'
+                   r'|[Rr]esolv(?:e[sd]?|ing)'
+                   r'|[Ff]ix(?:e[sd]|ing)?')
+    }
+    CONCATENATION_KEYWORDS = [r',', r'\sand\s']
 
     @classmethod
     def check_prerequisites(cls):
@@ -41,13 +52,39 @@ class GitCommitBear(GlobalBear):
             omit={'self', 'body'})
 
     @classmethod
+    def get_issue_checks_metadata(cls):
+        return FunctionMetadata.from_function(
+            cls.check_issue_reference,
+            omit={'self', 'body'})
+
+    @classmethod
     def get_metadata(cls):
         return FunctionMetadata.merge(
             FunctionMetadata.from_function(
                 cls.run,
                 omit={'self', 'dependency_results'}),
             cls.get_shortlog_checks_metadata(),
-            cls.get_body_checks_metadata())
+            cls.get_body_checks_metadata(),
+            cls.get_issue_checks_metadata())
+
+    @staticmethod
+    def get_host_from_remotes():
+        """
+        Retrieve the first host from the list of git remotes.
+        """
+        remotes, _ = run_shell_command(
+            "git config --get-regex '^remote.*.url$'")
+
+        remotes = [url.split()[-1] for url in remotes.splitlines()]
+        if len(remotes) == 0:
+            return None
+
+        url = remotes[0]
+        if 'git@' in url:
+            netloc = re.findall(r'@(\S+):', url)[0]
+        else:
+            netloc = urlparse(url)[1]
+        return netloc.split('.')[0]
 
     def run(self, allow_empty_commit_message: bool = False, **kwargs):
         """
@@ -66,7 +103,10 @@ class GitCommitBear(GlobalBear):
             self.err('git:', repr(stderr))
             return
 
-        stdout = stdout.rstrip('\n').splitlines()
+        stdout = stdout.rstrip('\n')
+        pos = stdout.find('\n')
+        shortlog = stdout[:pos] if pos != -1 else stdout
+        body = stdout[pos+1:] if pos != -1 else ''
 
         if len(stdout) == 0:
             if not allow_empty_commit_message:
@@ -74,11 +114,14 @@ class GitCommitBear(GlobalBear):
             return
 
         yield from self.check_shortlog(
-            stdout[0],
+            shortlog,
             **self.get_shortlog_checks_metadata().filter_parameters(kwargs))
         yield from self.check_body(
-            stdout[1:],
+            body,
             **self.get_body_checks_metadata().filter_parameters(kwargs))
+        yield from self.check_issue_reference(
+            body,
+            **self.get_issue_checks_metadata().filter_parameters(kwargs))
 
     def check_shortlog(self, shortlog,
                        shortlog_length: int=50,
@@ -174,28 +217,36 @@ class GitCommitBear(GlobalBear):
     def check_body(self, body,
                    body_line_length: int=72,
                    force_body: bool=False,
-                   ignore_length_regex: typed_list(str)=()):
+                   ignore_length_regex: typed_list(str)=(),
+                   body_regex: str=None):
         """
         Checks the given commit body.
 
-        :param body:                The commit body splitted by lines.
+        :param body:                The body of the commit message of HEAD.
         :param body_line_length:    The maximum line-length of the body. The
                                     newline character at each line end does not
                                     count to the length.
         :param force_body:          Whether a body shall exist or not.
         :param ignore_length_regex: Lines matching each of the regular
                                     expressions in this list will be ignored.
+        :param body_regex:          If provided, checks the presence of regex
+                                    in the commit body.
         """
         if len(body) == 0:
             if force_body:
                 yield Result(self, 'No commit message body at HEAD.')
             return
 
-        if body[0] != '':
+        if body[0] != '\n':
             yield Result(self, 'No newline found between shortlog and body at '
                                'HEAD commit. Please add one.')
             return
 
+        if body_regex and not re.search(body_regex, body):
+            yield Result(self, 'No match found in commit message for the '
+                               'regular expression provided: %s' % body_regex)
+
+        body = body.splitlines()
         ignore_regexes = [re.compile(regex) for regex in ignore_length_regex]
         if any((len(line) > body_line_length and
                 not any(regex.search(line) for regex in ignore_regexes))
@@ -203,3 +254,82 @@ class GitCommitBear(GlobalBear):
             yield Result(self, 'Body of HEAD commit contains too long lines. '
                                'Commit body lines should not exceed {} '
                                'characters.'.format(body_line_length))
+
+    def check_issue_reference(self, body,
+                              body_close_issue: bool=False,
+                              body_close_issue_full_url: bool=False,
+                              body_close_issue_on_last_line: bool=False):
+        """
+        Check for matching issue related references and URLs.
+
+        :param body:
+            Body of the commit message of HEAD.
+        :param body_close_issue:
+            Whether to check for the presence of issue reference within
+            the commit body by retrieving host information from git
+            configuration. GitHub and GitLab support auto closing issues with
+            commit messages. Checks for matching keywords in the commit body.
+            By default, if none of ``body_close_issue_full_url`` and
+            ``body_close_issue_on_last_line`` are enabled, checks for presence
+            of short references like ``closes #213``. Otherwise behaves
+            according to other chosen flags.
+            More on keywords follows.
+            [GitHub](https://help.github.com/articles/closing-issues-via-commit-messages/)
+            [GitLab](https://docs.gitlab.com/ce/user/project/issues/automatic_issue_closing.html)
+        :param body_close_issue_full_url:
+            Checks the presence of issue close reference with a full URL
+            related to some issue. Works along with ``body_close_issue``.
+        :param body_close_issue_on_last_line:
+            When enabled, checks for issue close reference presence on the
+            last line of the commit body. Works along with
+            ``body_close_issue``.
+        """
+        if not body_close_issue:
+            return
+
+        host = self.get_host_from_remotes()
+        if host not in self.SUPPORTED_HOST_KEYWORD_REGEX:
+            return
+
+        if body_close_issue_on_last_line:
+            body = body.splitlines()[-1]
+            result_message = ('Body of HEAD commit does not contain any {} '
+                              'reference in the last line.')
+        else:
+            result_message = ('Body of HEAD commit does not contain any {} '
+                              'reference.')
+
+        if body_close_issue_full_url:
+            result_info = 'full issue'
+            compiled_issue_ref_regex = re.compile(
+                r'https?://{}\S+/issues/\w+'.format(re.escape(host)))
+        else:
+            result_info = 'issue'
+            compiled_issue_ref_regex = re.compile(r'#\w+')
+
+        concat_regex = '|'.join(kw for kw in self.CONCATENATION_KEYWORDS)
+        compiled_joint_regex = re.compile(
+            r'(?:{0})\s+'
+            r'((?:\S(?!{1}))*\S(?:\s*(?:{1})\s*(?!{0})(?:\S(?!{1}))*\S)*)'
+            r''.format(
+                self.SUPPORTED_HOST_KEYWORD_REGEX[host],
+                concat_regex))
+
+        matches = compiled_joint_regex.findall(body)
+
+        if len(matches) == 0:
+            yield Result(self, result_message.format(result_info))
+            return
+
+        compiled_issue_num_regex = re.compile(r'(?:#|\D+/)[1-9][0-9]*')
+        compiled_concat_regex = re.compile(
+            r'\s*(?:{})\s*'.format(concat_regex))
+
+        for match in matches:
+            for issue in re.split(compiled_concat_regex, match):
+                if not compiled_issue_ref_regex.match(issue):
+                    yield Result(self, 'Invalid {} reference: '
+                                       '{}'.format(result_info, issue))
+                elif not compiled_issue_num_regex.fullmatch(issue):
+                    yield Result(self, 'Invalid issue number: '
+                                       '{}'.format(issue))
