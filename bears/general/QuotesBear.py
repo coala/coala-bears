@@ -86,4 +86,4 @@ class QuotesBear(LocalBear):
 
             if temp_range.start.line == temp_range.end.line:
                 yield from self.correct_single_line_str(
-                    filename, file, string_range, preferred_quotation)
+                    filename, file, temp_range, preferred_quotation)
