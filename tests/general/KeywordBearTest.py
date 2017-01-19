@@ -35,7 +35,7 @@ class KeywordBearDiffTest(unittest.TestCase):
 
         self.annotation_bear_result_type = namedtuple('result', ['contents'])
         self.dep_results = {'AnnotationBear': HiddenResult(
-            'AnnotationBear', {'comments': ()})}
+            'AnnotationBear', {'singleline comments': ()})}
 
     def test_empty_keyword(self):
         text = ['a == b']
@@ -56,7 +56,7 @@ class KeywordBearDiffTest(unittest.TestCase):
             self.assertEqual(len(result), 1)
 
         dep_results = {'AnnotationBear': HiddenResult(
-            'AnnotationBear', {'comments': 123})}
+            'AnnotationBear', {'singleline comments': 123})}
         with execute_bear(self.uut, 'F', text,
                           dependency_results=dep_results) as result:
             self.assertEqual(result[0].diffs, {})
@@ -76,7 +76,8 @@ class KeywordBearDiffTest(unittest.TestCase):
         comments = [SourceRange.from_values('F', 1, 1, 1, 40)]
         dep_results = {
             'AnnotationBear': [
-                self.annotation_bear_result_type({'comments': comments})
+                self.annotation_bear_result_type(
+                    {'singleline comments': comments})
             ]
         }
 
@@ -89,7 +90,8 @@ class KeywordBearDiffTest(unittest.TestCase):
         comments = [SourceRange.from_values('F', 1, 1, 1, 10)]
         dep_results = {
             'AnnotationBear': [
-                self.annotation_bear_result_type({'comments': comments})
+                self.annotation_bear_result_type(
+                    {'singleline comments': comments})
             ]
         }
 
@@ -105,7 +107,8 @@ class KeywordBearDiffTest(unittest.TestCase):
         comments = [SourceRange.from_values('F', 1, 11, 1, 23)]
         dep_results = {
             'AnnotationBear': [
-                self.annotation_bear_result_type({'comments': comments})
+                self.annotation_bear_result_type(
+                    {'singleline comments': comments})
             ]
         }
         with execute_bear(self.uut, 'F', text,
@@ -132,7 +135,8 @@ class KeywordBearDiffTest(unittest.TestCase):
         comments = [SourceRange.from_values('F', 1, 10, 1, 25)]
         dep_results = {
             'AnnotationBear': [
-                self.annotation_bear_result_type({'comments': comments})
+                self.annotation_bear_result_type(
+                    {'singleline comments': comments})
             ]
         }
 
@@ -151,7 +155,8 @@ class KeywordBearDiffTest(unittest.TestCase):
         comments = [SourceRange.from_values('F', 1, 12, 3, 2)]
         dep_results = {
             'AnnotationBear': [
-                self.annotation_bear_result_type({'comments': comments})
+                self.annotation_bear_result_type(
+                    {'multiline comments': comments})
             ]
         }
 
@@ -172,7 +177,8 @@ class KeywordBearDiffTest(unittest.TestCase):
         comments = [SourceRange.from_values('F', 1, 1, 3, 2)]
         dep_results = {
             'AnnotationBear': [
-                self.annotation_bear_result_type({'comments': comments})
+                self.annotation_bear_result_type(
+                    {'multiline comments': comments})
             ]
         }
 

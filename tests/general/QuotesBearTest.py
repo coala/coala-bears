@@ -1,6 +1,7 @@
 import unittest
 from queue import Queue
 from textwrap import dedent
+from collections import namedtuple
 
 from coalib.results.HiddenResult import HiddenResult, Result
 from bears.general.QuotesBear import QuotesBear
@@ -32,15 +33,18 @@ class QuotesBearDiffTest(unittest.TestCase):
         """).splitlines(True)
 
         self.filename = 'f'
-
+        x = namedtuple('x', 'full_range')
+        mult = []
+        mult.append(x(SourceRange.from_values(self.filename, 2, 1, 4, 3)))
+        sing = []
+        sing.append(x(SourceRange.from_values(self.filename, 5, 1, 5, 30)))
+        sing.append(x(SourceRange.from_values(self.filename, 6, 1, 6, 37)))
         self.dep_results = {
             'AnnotationBear':
                 [HiddenResult(
                     'AnnotationBear',
-                    {'comments': (), 'strings': (
-                        SourceRange.from_values(self.filename, 2, 1, 4, 3),
-                        SourceRange.from_values(self.filename, 5, 1, 5, 30),
-                        SourceRange.from_values(self.filename, 6, 1, 6, 37))
+                    {'multiline strings': (tuple(mult)),
+                     'singleline strings': (tuple(sing))
                      }
                 )]
         }
