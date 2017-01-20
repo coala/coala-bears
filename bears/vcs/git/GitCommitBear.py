@@ -304,7 +304,7 @@ class GitCommitBear(GlobalBear):
                 r'https?://{}\S+/issues/(\S+)'.format(re.escape(host)))
         else:
             result_info = 'issue'
-            issue_ref_regex = r'#(\S+)'
+            issue_ref_regex = r'(?:\w+/\w+)?#(\S+)'
 
         concat_regex = '|'.join(kw for kw in self.CONCATENATION_KEYWORDS)
         compiled_joint_regex = re.compile(

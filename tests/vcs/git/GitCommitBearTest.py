@@ -431,6 +431,23 @@ class GitCommitBearTest(unittest.TestCase):
                          ['Invalid issue number: #notnum'])
         self.assert_no_msgs()
 
+        # Close issues in other repos
+        self.git_commit('Shortlog\n\n'
+                        'First line, blablablablablabla.\n'
+                        'Another line, blablablablablabla.\n'
+                        'Resolve #11 and close github/gitter#32')
+        self.assertEqual(self.run_uut(body_close_issue=True,), [])
+        self.assert_no_msgs()
+
+        # Incorrect close issue other repo pattern
+        self.git_commit('Shortlog\n\n'
+                        'First line, blablablablablabla.\n'
+                        'Another line, blablablablablabla.\n'
+                        'Fix #11 and close github#32')
+        self.assertEqual(self.run_uut(body_close_issue=True,),
+                         ['Invalid issue reference: github#32'])
+        self.assert_no_msgs()
+
         # Last line enforce full URL
         self.git_commit('Shortlog\n\n'
                         'First line, blablablablablabla.\n'
