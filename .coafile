@@ -31,6 +31,10 @@ bears = SpaceConsistencyBear
 bears = GitCommitBear
 shortlog_trailing_period = False
 shortlog_regex = ([^:]*|[^:]+: [A-Z0-9*].*)
+body_close_issue = True
+body_close_issue_full_url = True
+body_close_issue_last_line = True
+body_enforce_issue_reference = False
 
 [LineCounting]
 enabled = False
