@@ -328,9 +328,10 @@ class GitCommitBearTest(unittest.TestCase):
                         'This line is ok.\n'
                         'This line is by far too long (in this case).\n'
                         'This one too, blablablablablablablablabla.')
-        self.assertEqual(self.run_uut(body_close_issue=True,),
-                         ['Body of HEAD commit does not contain any issue '
-                          'reference.'])
+        self.assertEqual(self.run_uut(
+                             body_close_issue=True,
+                             body_close_issue_full_url=True,
+                             body_close_issue_last_line=True), [])
         self.assert_no_msgs()
 
         # Has keyword but no valid issue URL
@@ -456,7 +457,8 @@ class GitCommitBearTest(unittest.TestCase):
         self.assertEqual(self.run_uut(
                              body_close_issue=True,
                              body_close_issue_full_url=True,
-                             body_close_issue_on_last_line=True),
+                             body_close_issue_on_last_line=True,
+                             body_enforce_issue_reference=True),
                          ['Body of HEAD commit does not contain any full issue'
                           ' reference in the last line.'])
         self.assert_no_msgs()

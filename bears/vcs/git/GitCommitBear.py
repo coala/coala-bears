@@ -257,21 +257,21 @@ class GitCommitBear(GlobalBear):
     def check_issue_reference(self, body,
                               body_close_issue: bool=False,
                               body_close_issue_full_url: bool=False,
-                              body_close_issue_on_last_line: bool=False):
+                              body_close_issue_on_last_line: bool=False,
+                              body_enforce_issue_reference: bool=False):
         """
         Check for matching issue related references and URLs.
 
         :param body:
             Body of the commit message of HEAD.
         :param body_close_issue:
-            Whether to check for the presence of issue reference within
-            the commit body by retrieving host information from git
-            configuration. GitHub and GitLab support auto closing issues with
-            commit messages. Checks for matching keywords in the commit body.
-            By default, if none of ``body_close_issue_full_url`` and
-            ``body_close_issue_on_last_line`` are enabled, checks for presence
-            of short references like ``closes #213``. Otherwise behaves
-            according to other chosen flags.
+            GitHub and GitLab support auto closing issues with
+            commit messages. When enabled, this checks for matching keywords
+            in the commit body by retrieving host information from git
+            configuration. By default, if none of ``body_close_issue_full_url``
+            and ``body_close_issue_on_last_line`` are enabled, this checks for
+            presence of short references like ``closes #213``.
+            Otherwise behaves according to other chosen flags.
             More on keywords follows.
             [GitHub](https://help.github.com/articles/closing-issues-via-commit-messages/)
             [GitLab](https://docs.gitlab.com/ce/user/project/issues/automatic_issue_closing.html)
@@ -282,6 +282,9 @@ class GitCommitBear(GlobalBear):
             When enabled, checks for issue close reference presence on the
             last line of the commit body. Works along with
             ``body_close_issue``.
+        :param body_enforce_issue_reference:
+            Whether to enforce presence of issue reference in the body of
+            commit message.
         """
         if not body_close_issue:
             return
@@ -326,7 +329,7 @@ class GitCommitBear(GlobalBear):
 
         matches = compiled_joint_regex.findall(body)
 
-        if len(matches) == 0:
+        if body_enforce_issue_reference and len(matches) == 0:
             yield Result(self, result_message.format(result_info))
             return
 
