@@ -33,8 +33,8 @@ class FormatRBear:
     def create_arguments(filename, file, config_file,
                          r_keep_comments: bool=True,
                          r_keep_blank_lines: bool=True,
-                         r_braces_on_next_line: bool=False,
-                         r_use_arrows: bool=False,
+                         r_braces_on_next_line: bool=None,
+                         r_use_arrows: bool=None,
                          indent_size:
                          int=SpacingHelper.DEFAULT_TAB_WIDTH,
                          r_max_expression_length: int=0):
@@ -79,12 +79,15 @@ class FormatRBear:
         """
         options = {'source="' + escape(filename, '"\\') + '"',
                    'blank=' + _map_to_r_bool(r_keep_blank_lines),
-                   'brace.newline=' + _map_to_r_bool(r_braces_on_next_line),
                    'comment=' + _map_to_r_bool(r_keep_comments),
-                   'arrow=' + _map_to_r_bool(r_use_arrows),
                    'indent=' + str(indent_size)}
         if r_max_expression_length:
             options.add('width.cutoff=' + str(r_max_expression_length))
+        if r_braces_on_next_line is not None:
+            options.add('brace.newline=' +
+                        _map_to_r_bool(r_braces_on_next_line))
+        if r_use_arrows is not None:
+            options.add('arrow=' + _map_to_r_bool(r_use_arrows))
 
         rcode = 'library(formatR);formatR::tidy_source({})'.format(
             ','.join(options))

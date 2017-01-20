@@ -58,6 +58,14 @@ if (TRUE) {
 }
 """
 
+good_file_7 = """1 + 1
+if (TRUE) {
+    x = 1  # inline comments
+} else {
+    x <- 2
+    print("Oh no... ask the right bracket to go away!")
+}
+"""
 
 bad_file_1 = """1+1
 if(TRUE){
@@ -129,3 +137,9 @@ FormatRBearRWidthcutoffTest = verify_local_bear(
     valid_files=(good_file_6,),
     invalid_files=(bad_file_3,),
     settings={'r_max_expression_length': '25'})
+
+FormatRBearDefaultSettingsTest = verify_local_bear(
+    FormatRBear,
+    valid_files=(good_file_7,),
+    invalid_files=(bad_file_3,),
+    settings={})
