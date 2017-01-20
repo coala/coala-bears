@@ -20,6 +20,7 @@
     "tslint": "~3",
     "typescript": ">=1.7.3",
     "ramllint": "~1.2.2",
-    "write-good": "~0.9.1"
+    "write-good": "~0.9.1",
+    "elm": ">=0.18"
   }
 }

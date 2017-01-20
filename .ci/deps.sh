@@ -188,3 +188,7 @@ fi
 echo '' > dummy
 coala-ci --bears CheckstyleBear --files dummy --no-config --bear-dirs bears || true
 coala-ci --bears ScalaLintBear --files dummy --no-config --bear-dirs bears || true
+
+wget -O elm-format.tgz https://github.com/avh4/elm-format/releases/download/0.5.2-alpha/elm-format-0.18-0.5.2-alpha-linux-x64.tgz
+tar -zxvf elm-format.tgz
+export PATH=$PATH:$PWD
