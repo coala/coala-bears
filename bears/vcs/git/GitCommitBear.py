@@ -241,7 +241,7 @@ class GitCommitBear(GlobalBear):
                                'HEAD commit. Please add one.')
             return
 
-        if body_regex and not re.search(body_regex, body):
+        if body_regex and not re.fullmatch(body_regex, body.strip()):
             yield Result(self, 'No match found in commit message for the '
                                'regular expression provided: %s' % body_regex)
 
