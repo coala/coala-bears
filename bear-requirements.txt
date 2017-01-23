@@ -23,7 +23,6 @@ pylint~=1.6
 pyroma~=2.2.0
 pyyaml~=3.12
 radon==1.4.0
-requests~=2.12
 restructuredtext-lint~=0.17.2
 rstcheck~=2.2
 safety~=0.5.1

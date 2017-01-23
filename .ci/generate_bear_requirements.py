@@ -24,6 +24,7 @@ from pyprint.NullPrinter import NullPrinter
 
 from coalib.bears.BEAR_KIND import BEAR_KIND
 from coalib.collecting.Collectors import collect_bears
+from coalib.output.printers.LogPrinter import LogPrinter
 
 from dependency_management.requirements.GemRequirement import GemRequirement
 from dependency_management.requirements.NpmRequirement import NpmRequirement
@@ -64,14 +65,34 @@ def get_args():
     return args
 
 
-def get_all_bears(bear_dirs):
+def get_all_bears(bear_dirs, log_printer):
     local_bears, global_bears = collect_bears(
         bear_dirs,
         ['**'],
         [BEAR_KIND.LOCAL, BEAR_KIND.GLOBAL],
-        NullPrinter(),
+        log_printer,
         warn_if_unused_glob=False)
     return list(itertools.chain(local_bears, global_bears))
+
+
+def get_inherited_requirements():
+    inherited_requirements = set()
+
+    in_inherited = False
+    with open(os.path.join(PROJECT_DIR, 'requirements.txt'), 'r') as file:
+        for line in file.read().splitlines():
+            if 'inherited' in line:
+                in_inherited = True
+                continue
+            if in_inherited:
+                if line.startswith('# '):
+                    requirement = line[2:]
+                    inherited_requirements.add(requirement.replace('-', '_'))
+                    inherited_requirements.add(requirement.replace('_', '-'))
+                else:
+                    in_inherited = False
+
+    return inherited_requirements
 
 
 def get_all_requirements(bears):
@@ -138,7 +159,12 @@ def write_npm_requirements(requirements):
 
 
 def write_pip_requirements(requirements, output):
+    inherited_requirements = get_inherited_requirements()
+
     for requirement in requirements:
+        if requirement.package in inherited_requirements:
+            continue
+
         if requirement.version:
             marker = '==' if requirement.package in PINNED_PACKAGES else '~='
             output.write('{0}{1}{2}\n'.format(requirement.package,
@@ -153,11 +179,14 @@ if __name__ == '__main__':
 
     bear_dirs = [PROJECT_BEAR_DIR]
 
+    printer = NullPrinter()
+    log_printer = LogPrinter(printer)
+
     if args.bear_dirs is not None:
         bear_dirs.extend(args.bear_dirs)
 
     pip_reqs, npm_reqs, gem_reqs = (
-        get_all_requirements(get_all_bears(bear_dirs))
+        get_all_requirements(get_all_bears(bear_dirs, log_printer))
         )
 
     write_gem_requirements(gem_reqs)
