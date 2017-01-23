@@ -1,7 +1,9 @@
+# NOTE: This file is parsed by .ci/generate_bear_requirements.py
 # Use >= for development versions so that source builds always work
 coala>=0.10.0.dev20170113094654
 # Dependencies inherited from coala
 # libclang-py3
 # coala_utils
 # dependency_management
+# requests
 -r bear-requirements.txt
