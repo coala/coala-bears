@@ -12,9 +12,8 @@ bad_file = '''
 import something
 
 
-
 def hello():
-    print("hello world")
+    print ("hello world")
 '''
 
 PycodestyleBearTest = verify_local_bear(
@@ -26,7 +25,7 @@ PycodestyleBearConfigIgnoreTest = verify_local_bear(
     PycodestyleBear,
     valid_files=(good_file, bad_file),
     invalid_files=[],
-    settings={'pycodestyle_ignore': 'E303'})
+    settings={'pycodestyle_ignore': 'E211'})
 
 PycodestyleBearConfigSelectTest = verify_local_bear(
     PycodestyleBear,

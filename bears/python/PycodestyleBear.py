@@ -36,6 +36,8 @@ class PycodestyleBear:
             Limit lines to this length.
         """
         arguments = [r"--format='%(row)d %(col)d %(code)s %(text)s'"]
+        # Ignore E303 as it is already covered by PEP8Bear.
+        arguments.append('--ignore=E303')
 
         if pycodestyle_ignore:
             arguments.append('--ignore=' + pycodestyle_ignore)
