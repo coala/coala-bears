@@ -62,17 +62,24 @@ class InvalidLinkBear(LocalBear):
             [^.:%\s_/?#[\]@\\]+         # Initial part of domain
             \.                          # A required dot `.`
             (
-                (?:[^\s()%\'"`<>|\\]+)  # Path name
+                (?:[^\s()%\/'"`<>|\\]+) # Path name
                                         # This part does not allow
                                         # any parenthesis: balanced or
                                         # unbalanced.
             |                           # OR
-                \([^\s()%\'"`<>|\\]*\)  # Path name contained within ()
+                \([^\s()%\/'"`<>|\\]*\) # Path name contained within ()
                                         # This part allows path names that
                                         # are explicitly enclosed within one
                                         # set of parenthesis.
                                         # An example can be:
                                         # http://wik.org/Hello_(Adele_song)/200
+            |                           # OR
+                /[^\s()\'"`<>|\\]*      # Path name present after `/`
+                                        # This part allows path names that
+                                        # come after `/` to contain
+                                        # `%` symbol.
+                                        # An example:
+                                        # http://www.example.com/abc%123
             )
             *)
                                         # Thus, the whole part above
