@@ -62,12 +62,12 @@ class InvalidLinkBear(LocalBear):
             [^.:%\s_/?#[\]@\\]+         # Initial part of domain
             \.                          # A required dot `.`
             (
-                (?:[^\s()%\'"`<>|\\]+)  # Path name
-                                        # This part does not allow
-                                        # any parenthesis: balanced or
-                                        # unbalanced.
-            |                           # OR
-                \([^\s()%\'"`<>|\\]*\)  # Path name contained within ()
+                (?:[^\s()%\'"`<>|\\\[\]]+)  # Path name
+                                            # This part does not allow
+                                            # any parenthesis: balanced or
+                                            # unbalanced.
+            |                               # OR
+                \([^\s()%\'"`<>|\\\[\]]*\)  # Path name contained within ()
                                         # This part allows path names that
                                         # are explicitly enclosed within one
                                         # set of parenthesis.
