@@ -20,6 +20,7 @@
     "remark-lint": ">=5.1.0",
     "tslint": "~3",
     "typescript": ">=1.7.3",
-    "write-good": "~0.9.1"
+    "write-good": "~0.9.1",
+    "stylelint": "~7.7.1"
 }
 }
