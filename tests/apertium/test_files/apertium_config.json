@@ -1,0 +1,8 @@
+{
+    "monodix": {
+        "paradigmNames":{
+            "message": "Warning : Improper paradigm name found :",
+            "enable" : true
+        }
+    }
+}
