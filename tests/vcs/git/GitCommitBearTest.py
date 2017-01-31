@@ -331,7 +331,7 @@ class GitCommitBearTest(unittest.TestCase):
         self.assertEqual(self.run_uut(
                              body_close_issue=True,
                              body_close_issue_full_url=True,
-                             body_close_issue_last_line=True), [])
+                             body_close_issue_on_last_line=True), [])
         self.assert_no_msgs()
 
         # Has keyword but no valid issue URL
