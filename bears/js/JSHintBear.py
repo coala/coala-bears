@@ -9,14 +9,14 @@ from coala_utils.param_conversion import negate
 def bool_or_str(value):
     try:
         return bool(value)
-    except:
+    except ValueError:
         return str(value)
 
 
 def bool_or_int(value):
     try:
         return bool(value)
-    except:
+    except ValueError:
         return int(value)
 
 
