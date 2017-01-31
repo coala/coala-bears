@@ -13,7 +13,7 @@ esac
 # apt-get commands
 export DEBIAN_FRONTEND=noninteractive
 
-deps="libclang1-3.4 indent mono-mcs chktex r-base julia golang luarocks verilator cppcheck flawfinder"
+deps="libclang1-3.4 indent mono-mcs chktex r-base julia golang-go luarocks verilator cppcheck flawfinder"
 deps_infer="m4 opam"
 
 case $CIRCLE_BUILD_IMAGE in
@@ -30,7 +30,7 @@ case $CIRCLE_BUILD_IMAGE in
     sudo chmod a+x /usr/bin/systemd-detect-virt
 
     # The non-apt go provided by Circle CI is acceptable
-    deps=${deps/golang/}
+    deps=${deps/golang-go/}
     # Add packages which are available in xenial
     # The xenial hlint is >= 1.9.1
     deps="$deps hlint"
