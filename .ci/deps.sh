@@ -1,5 +1,6 @@
 set -e
 set -x
+TERM=dumb
 
 # Choose the python versions to install deps for
 case $CIRCLE_NODE_INDEX in
