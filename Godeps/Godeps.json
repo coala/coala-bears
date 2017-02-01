@@ -1,0 +1,25 @@
+{
+    "ImportPath": ".",
+    "GoVersion": "go1.5",
+    "GodepVersion": "v62",
+    "Deps": [
+        {
+            "ImportPath": "github.com/golang/lint/golint"
+        },
+        {
+            "ImportPath": "golang.org/x/tools/cmd/goimports"
+        },
+        {
+            "ImportPath": "sourcegraph.com/sqs/goreturns"
+        },
+        {
+            "ImportPath": "golang.org/x/tools/cmd/gotype"
+        },
+        {
+            "ImportPath": "github.com/kisielk/gotool"
+        },
+        {
+            "ImportPath": "github.com/kisielk/errcheck"
+        }
+    ]
+}

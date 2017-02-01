@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import configparser
 import locale
 import os
 import platform
@@ -412,6 +413,18 @@ extras_require = {
 required += [req for req in bear_required
              if not any(req.startswith(ignore)
                         for ignore in ignore_requirements)]
+
+python_bears_deps = True
+
+config = configparser.ConfigParser()
+config.read('setup.cfg')
+if 'setup:custom' in config.sections():
+    if config['setup:custom']['python-bears'] == 'False':
+        python_bears_deps = False
+
+if python_bears_deps:
+    required += [req for req in bear_required
+                 if not req.startswith('language-check')]
 
 if extras_require:
     EXTRAS_REQUIRE = extras_require
