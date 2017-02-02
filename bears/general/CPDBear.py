@@ -5,6 +5,7 @@ from coalib.bears.GlobalBear import GlobalBear
 from coalib.misc.Shell import run_shell_command
 from coalib.results.Result import Result
 from coalib.results.SourceRange import SourceRange
+from coalib.bearlib.aspects.Redundancy import Redundancy
 
 
 class CPDBear(GlobalBear):
@@ -127,4 +128,5 @@ class CPDBear(GlobalBear):
                         'that you have more code than you need. Consider'
                         ' refactor your code to remove one of the'
                         ' occurrences. For more information go here:'
-                        'http://tinyurl.com/coala-clone'))
+                        'http://tinyurl.com/coala-clone'),
+                    aspect=Redundancy.Clone(language))
