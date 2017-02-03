@@ -5,6 +5,5 @@ gem "csvlint"
 gem "puppet-lint"
 gem "reek"
 gem "rubocop"
-gem "ruby"
 gem "scss_lint", require: false
 gem "sqlint"
