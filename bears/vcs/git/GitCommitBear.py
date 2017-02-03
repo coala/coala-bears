@@ -135,7 +135,7 @@ class GitCommitBear(GlobalBear):
         :param shortlog_length:          The maximum length of the shortlog.
                                          The newline character at end does not
                                          count to the length.
-        :param regex:                    A regex to check the shortlog with.
+        :param shortlog_regex:           A regex to check the shortlog with.
         :param shortlog_trailing_period: Whether a dot shall be enforced at end
                                          end or not (or ``None`` for "don't
                                          care").
