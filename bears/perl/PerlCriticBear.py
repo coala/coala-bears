@@ -25,8 +25,7 @@ class PerlCriticBear:
     """
 
     LANGUAGES = {'Perl'}
-    REQUIREMENTS = {DistributionRequirement(apt_get='perl'),
-                    DistributionRequirement(apt_get='libperl-critic-perl')}
+    REQUIREMENTS = {DistributionRequirement(apt_get='libperl-critic-perl')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
