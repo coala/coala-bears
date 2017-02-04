@@ -1,5 +1,7 @@
 from coalib.bearlib.abstractions.Linter import linter
 from coalib.settings.Setting import path
+from dependency_management.requirements.DistributionRequirement import (
+    DistributionRequirement)
 
 
 _online_styles = {
@@ -43,6 +45,7 @@ class CheckstyleBear:
     """
 
     LANGUAGES = {'Java'}
+    REQUIREMENTS = {DistributionRequirement(apt_get='default-jre')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
