@@ -17,14 +17,14 @@ addons:
       - avsm  # OPAM stable
       - hvr-ghc  # Haskell
     packages:
-      - cabal-install
+      - cabal-install-1.24
       - chktex
       - clang-3.4
       - cppcheck
       - flawfinder
       - gfortran
       - ghc
-      - haskell-platform
+      - happy
       - indent
       - libblas-dev
       - liblapack-dev
@@ -43,6 +43,8 @@ cache:
   directories:
     # Installed language package caches
     - ~/.cabal
+    - ~/.ghc
+    - ~/.ghc-mod
     - ~/R/Library
     - ~/.julia
     - $TRAVIS_BUILD_DIR/node_modules
@@ -51,8 +53,6 @@ cache:
     # coala managed data
     - ~/nltk_data
     - ~/.local/share/coala-bears
-    # .deb cache
-    - ~/.apt-cache
     # Installed linters
     - ~/infer-linux64-v0.7.0
     - ~/pmd-bin-5.4.1
@@ -66,7 +66,7 @@ env:
     - USE_PPAS="marutter/rdev staticfloat/juliareleases ondrej/golang"
     - R_LIB_USER=~/R/Library
     - LINTR_COMMENT_BOT=false
-    - PATH="$PATH:$TRAVIS_BUILD_DIR/node_modules/.bin:$TRAVIS_BUILD_DIR/vendor/bin:$HOME/dart-sdk/bin:$HOME/.cabal/bin:$HOME/infer-linux64-v0.7.0/infer/bin:$HOME/pmd-bin-5.4.1/bin:$HOME/bakalint-0.4.0:$HOME/.local/tailor/tailor-latest/bin"
+    - PATH="/opt/cabal/1.24/bin:$PATH:$TRAVIS_BUILD_DIR/node_modules/.bin:$TRAVIS_BUILD_DIR/vendor/bin:$HOME/dart-sdk/bin:$HOME/.cabal/bin:$HOME/infer-linux64-v0.7.0/infer/bin:$HOME/pmd-bin-5.4.1/bin:$HOME/bakalint-0.4.0:$HOME/.local/tailor/tailor-latest/bin"
 
 before_install:
   - export TRAVIS_PYTHON_VERSION_MAJOR=${TRAVIS_PYTHON_VERSION%.[0-9]}
@@ -80,9 +80,8 @@ before_install:
   - nvm use 4
   # Remove Ruby directive from Gemfile as this image has 2.2.5
   - sed -i '/^ruby/d' Gemfile
-  - mkdir -p ~/.apt-cache
   - if [[ "$UNSUPPORTED" != true ]]; then bash .ci/deps.sh; fi
-  - if [[ "$UNSUPPORTED" != true ]]; then bash .ci/deps.shellcheck.sh; fi
+  - if [[ "$UNSUPPORTED" != true ]]; then bash .ci/deps.cabal.sh; fi
   # https://github.com/coala/coala/issues/3183
   - cp requirements.txt requirements.orig
   - cat test-requirements.txt docs-requirements.txt bear-requirements.txt >> requirements.txt

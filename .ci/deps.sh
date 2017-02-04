@@ -31,9 +31,6 @@ case $CIRCLE_BUILD_IMAGE in
 
     # The non-apt go provided by Circle CI is acceptable
     deps=${deps/golang-go/}
-    # Add packages which are available in xenial
-    # The xenial hlint is >= 1.9.1
-    deps="$deps hlint"
     # Add packages which are already in the precise image
     deps="$deps g++-4.9 libxml2-utils php-codesniffer"
     # gfortran on CircleCI precise is 4.6 and R irlba compiles ok,
@@ -82,27 +79,14 @@ fi
 # Change environment for flawfinder from python to python2
 sudo sed -i '1s/.*/#!\/usr\/bin\/env python2/' /usr/bin/flawfinder
 
-# Update hlint to latest version (not available in apt)
-if [[ -z "$(which hlint)" ]]; then
-  hlint_deb=$(ls -vr ~/.apt-cache/hlint_1.9.* 2>/dev/null | head -1)
-  if [[ -z "$hlint_deb" ]]; then
-    hlint_deb_filename=hlint_1.9.26-1_amd64.deb
-    # This is the same build as xenial hlint
-    hlint_deb_url="https://launchpad.net/ubuntu/+source/hlint/1.9.26-1/+build/8831318/+files/${hlint_deb_filename}"
-    hlint_deb=~/.apt-cache/$hlint_deb_filename
-    wget -O $hlint_deb $hlint_deb_url
-  fi
-  sudo dpkg -i $hlint_deb
-fi
-
-# cabal update to 1.22.9.0 and install ghc-mod 5.6.0
-if [[ -z "$(which ghc-mod)" ]]; then
-  cabal update && cabal install cabal-install-1.22.9.0
-  cabal install ghc-mod
-fi
-
 # NPM commands
-sudo rm -rf $(which alex)  # Delete ghc-alex as it clashes with npm deps
+ALEX=$(which alex || true)
+# Delete 'alex' if it is not in a node_modules directory,
+# which means it is ghc-alex.
+if [[ -n "$ALEX" && "${ALEX/node_modules/}" == "${ALEX}" ]]; then
+  echo "Removing $ALEX"
+  sudo rm -rf $ALEX
+fi
 npm install
 
 # R commands
