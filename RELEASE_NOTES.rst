@@ -1,3 +1,84 @@
+coala-bears 0.10.0
+==================
+
+This release, we had 97 commits contributed by 42 contributors.
+
+The coala website has been updated to a new, more modern design. You can now
+find a quick overview of bears and their settings at 
+http://coala.io/#!/languages. We also have sample a bear output on the front
+page for some common languages.
+
+Separation of bear dependencies from the ``coala_bears`` package is planned. This
+release will keep the same behavior as previous releases. However to keep
+current installation behavior in the future, please use the pip package index
+option ``[alldeps]`` as in ``pip3 install coala_bears[alldeps]``.
+
+Here are the important changes and additions. This release tracks coala 0.10.
+please see the coala release notes for the improvements in this version.
+
+**New Bears**
+
+Haskell:
+
+- `GhcModBear` - Checks your Haskell code for syntax errors.
+
+Python:
+
+- `PyFlakesBear` - Checks for errors by parsing, making it safe for modules
+  with side effects.
+- `PyromaBear` - Checks how well your code conforms to the python packaging
+  system (pip, distribute, etc).
+- `PythonPackageInitBear` - Checks that modules have an ``__init__.py`` in 
+  their directories.
+
+
+Others:
+
+- `DennisBear` - Checks ``PO`` and ``POT`` files for problems. 
+
+**Bears With New Settings**
+
+You can look up the new settings at http://coala.io/#!/languages.
+
+- `GitCommitBear`
+- `InvalidLinkBear`
+- `MarkdownBear`
+
+**Deprecated Settings**
+
+- `InvalidLinkBear` - ``timeout`` setting has been deprecated. Use 
+  ``network_timeout`` instead.
+
+**Enhancements**
+
+- `InvalidLinkBear` allows per website timeouts. To use, set
+  ``network_timeout`` to a dictionary with website URL and timeout.
+- `InvalidLinkBear` allow multiple URL ignores in ``links_to_ignore``
+  setting by setting it to a string of comma delimited URLs.
+- `InvalidLinkBear` now parses version control system URLs.
+- `CSVLintBear` now outputs the affected line.
+- `XMLBear` now uses severity that matches the underlying linter.
+
+**Bugfixes**
+
+- coala_bears package will refuse to install on unsupported python versions.
+  `Issue 3310 <https://github.com/coala/coala/issues/3310>`_
+- `InvalidLinkBear` now analyses all links in a file. Previously, it would
+   only check the first one.
+   `Issue 1296 <https://github.com/coala/coala-bears/issues/1296>`_
+- `InvalidLinkBear` now parses markdown links properly.
+  `Issue 1338 <https://github.com/coala/coala-bears/issues/1338>`_
+- `KeywordBear` proposes keyword removal patches for all keywords now.
+  Previously, it would only generate a patch for the first keyword.
+  `Issue 1274 <https://github.com/coala/coala-bears/issues/1274>`_
+- `KeywordBear` now outputs the appropriate message if it is run on an
+  unsupported language. Previously, it would throw an unhandled exception.
+  `Issue 1256 <https://github.com/coala/coala-bears/issues/1256>`_
+- `YAPFBear` Default settings now match upstream defaults properly.
+  `Issue 3241 <https://github.com/coala/coala/issues/3241>`_
+- The dependencies of the following bears were bumped due to upstream bugfixes:
+    - `PycodestyleBear`
+
 coala-bears 0.9.2
 =================
 
