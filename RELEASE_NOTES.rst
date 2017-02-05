@@ -13,7 +13,7 @@ release will keep the same behavior as previous releases. However to keep
 current installation behavior in the future, please use the pip package index
 option ``[alldeps]`` as in ``pip3 install coala_bears[alldeps]``.
 
-Here are the important changes and additions. This release tracks coala 0.10
+Here are the important changes and additions. This release tracks coala 0.10.
 please see the coala release notes for the improvements in this version.
 
 **New Bears**
