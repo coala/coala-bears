@@ -230,6 +230,28 @@ class InvalidLinkBearTest(unittest.TestCase):
         for line in brokenlink_at_hash.splitlines():
             self.assertResult(invalid_file=[line])
 
+    def test_xml_namespaces(self):
+        valid_file = """
+        #Namespace and also a valid link
+        <ruleset name="test" xmlns="http://httpbin.org/status/200">
+
+        # xml where xmlns: and xsi:schema are valid links
+        <ruleset name="test" xmlns="http://xmlnamespace.org/status/200"
+        xmlns:xsi="http://xmlnamespace.org/status/200"
+        xsi:schemaLocation="http://xmlnamespace.org/status/200">
+        """.splitlines()
+
+        self.assertResult(valid_file=valid_file)
+
+        invalid_file = """
+        <ruleset name="test" xmlns="http://this.isa.namespace/ruleset/7.0.0"
+        xmlns:xsi="http://this.is.another/kindof/namespace"
+        xsi:schemaLocation="http://this.namespace.dosent/exists/7.0.0"
+        xsi:schemaLocation="http://httpbin.com/404">""".splitlines()
+
+        for line in invalid_file[1:]:
+            self.assertResult(invalid_file=[line])
+
     def test_links_to_ignore(self):
         valid_file = """http://httpbin.org/status/200
         http://httpbin.org/status/201

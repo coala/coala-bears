@@ -80,17 +80,25 @@ class InvalidLinkBear(LocalBear):
                                         # Unbalanced parenthesis
             (?<!\.)(?<!,)               # Exclude trailing `.` or `,` from URL
             """, re.VERBOSE)
-
+        file_context = {}
         for line_number, line in enumerate(file):
+            xmlns_regex = re.compile(r'xmlns:?\w*="(.*)"')
             for match in re.findall(regex, line):
                 link = match[0]
-                context = enum(
-                    pip_vcs_url=False)
-                if link.startswith(('hg+', 'bzr+', 'git+', 'svn+')):
-                    context.pip_vcs_url = True
+                link_context = file_context.get(link)
+                if not link_context:
+                    link_context = enum(
+                        xml_namespace=False,
+                        pip_vcs_url=False)
+                    xmlns_match = xmlns_regex.search(line)
+                    if xmlns_match and link in xmlns_match.groups():
+                        link_context.xml_namespace = True
+                    if link.startswith(('hg+', 'bzr+', 'git+', 'svn+')):
+                        link_context.pip_vcs_url = True
+                    file_context[link] = link_context
                 if not (link_ignore_regex.search(link) or
                         fnmatch(link, link_ignore_list)):
-                    yield link, line_number, context
+                    yield link, line_number, link_context
 
     def analyze_links_in_file(self, file, network_timeout, link_ignore_regex,
                               link_ignore_list):
@@ -149,7 +157,18 @@ class InvalidLinkBear(LocalBear):
 
         for line_number, link, code, context in self.analyze_links_in_file(
                 file, network_timeout, link_ignore_regex, link_ignore_list):
-            if code is None:
+            if context.xml_namespace:
+                if code and 200 <= code < 300:
+                    pass
+                else:
+                    yield Result.from_values(
+                        origin=self,
+                        message=('XML Namespace - '
+                                 '{url}').format(url=link),
+                        file=filename,
+                        line=line_number,
+                        severity=RESULT_SEVERITY.INFO)
+            elif code is None:
                 yield Result.from_values(
                     origin=self,
                     message=('Broken link - unable to connect to '
