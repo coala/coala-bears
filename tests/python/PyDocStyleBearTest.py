@@ -44,6 +44,14 @@ PyDocStyleBearIgnoreSomeTest = verify_local_bear(
     settings={'pydocstyle_ignore': 'D400, D200'},
     tempfile_kwargs={'suffix': '.py'})
 
+# Checks the functionality of add-ignore
+PyDocStyleBearAddIgnoreTest = verify_local_bear(
+    PyDocStyleBear,
+    valid_files=(good_file, bad_file,),
+    invalid_files=(),
+    settings={'pydocstyle_add_ignore': 'D400, D200, D103'},
+    tempfile_kwargs={'suffix': '.py'})
+
 # Checks if an invalid file yields results when a particular error is selected.
 PyDocStyleBearSelectSomeTest = verify_local_bear(
     PyDocStyleBear,
@@ -59,6 +67,14 @@ PyDocStyleBearSelectAbsentErrorTest = verify_local_bear(
     valid_files=(good_file, bad_file,),
     invalid_files=(),
     settings={'pydocstyle_select': 'D500'},
+    tempfile_kwargs={'suffix': '.py'})
+
+# Checks the functionality of add-select
+PyDocStyleBearAddSelectTest = verify_local_bear(
+    PyDocStyleBear,
+    valid_files=(good_file,),
+    invalid_files=(bad_file,),
+    settings={'pydocstyle_add_select': 'D212'},
     tempfile_kwargs={'suffix': '.py'})
 
 PyDocStyleBearSelectAndIgnoreTest = verify_local_bear(
