@@ -6,6 +6,7 @@ from difflib import SequenceMatcher
 
 from coalib.results.Diff import Diff
 from coalib.bears.LocalBear import LocalBear
+from coalib.misc.Enum import enum
 from dependency_management.requirements.PipRequirement import PipRequirement
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.results.Result import Result
@@ -50,8 +51,7 @@ class InvalidLinkBear(LocalBear):
         return splitted_schema
 
     @staticmethod
-    def find_links_in_file(file, network_timeout, link_ignore_regex,
-                           link_ignore_list):
+    def extract_links_from_file(file, link_ignore_regex, link_ignore_list):
         link_ignore_regex = re.compile(link_ignore_regex)
         regex = re.compile(
             r"""
@@ -80,22 +80,35 @@ class InvalidLinkBear(LocalBear):
                                         # Unbalanced parenthesis
             (?<!\.)(?<!,)               # Exclude trailing `.` or `,` from URL
             """, re.VERBOSE)
+
         for line_number, line in enumerate(file):
             for match in re.findall(regex, line):
                 link = match[0]
+                context = enum(
+                    pip_vcs_url=False)
+                if link.startswith(('hg+', 'bzr+', 'git+', 'svn+')):
+                    context.pip_vcs_url = True
                 if not (link_ignore_regex.search(link) or
                         fnmatch(link, link_ignore_list)):
-                    if link.startswith(('hg+', 'bzr+', 'git+', 'svn+')):
-                        link = InvalidLinkBear.parse_pip_vcs_url(link)
-                    host = urlparse(link).netloc
-                    code = InvalidLinkBear.get_status_code(
-                               link,
-                               network_timeout.get(host)
-                               if host in network_timeout
-                               else network_timeout.get('*')
-                               if '*' in network_timeout
-                               else InvalidLinkBear.DEFAULT_TIMEOUT)
-                    yield line_number + 1, link, code
+                    yield link, line_number, context
+
+    def analyze_links_in_file(self, file, network_timeout, link_ignore_regex,
+                              link_ignore_list):
+        for link, line_number, link_context in self.extract_links_from_file(
+                file, link_ignore_regex, link_ignore_list):
+
+            if link_context.pip_vcs_url:
+                link = InvalidLinkBear.parse_pip_vcs_url(link)
+
+            host = urlparse(link).netloc
+            code = InvalidLinkBear.get_status_code(
+                link,
+                network_timeout.get(host)
+                if host in network_timeout
+                else network_timeout.get('*')
+                if '*' in network_timeout
+                else InvalidLinkBear.DEFAULT_TIMEOUT)
+            yield line_number + 1, link, code, link_context
 
     @deprecate_settings(link_ignore_regex='ignore_regex',
                         network_timeout=('timeout', lambda t: {'*': t}))
@@ -134,7 +147,7 @@ class InvalidLinkBear(LocalBear):
                            if not url == '*' else '*': timeout
                            for url, timeout in network_timeout.items()}
 
-        for line_number, link, code in InvalidLinkBear.find_links_in_file(
+        for line_number, link, code, context in self.analyze_links_in_file(
                 file, network_timeout, link_ignore_regex, link_ignore_list):
             if code is None:
                 yield Result.from_values(
