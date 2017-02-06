@@ -5,7 +5,7 @@ from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 tailorconfig = os.path.join(os.path.dirname(__file__),
                             'test_files',
-                            'tailor.yml')
+                            'tailor.yaml')
 
 good_file = """class UpperCamelCase {
   var x: Int
