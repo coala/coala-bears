@@ -1,5 +1,6 @@
 import json
 from collections import OrderedDict
+from re import match
 
 from coala_utils.param_conversion import negate
 from coalib.bearlib import deprecate_settings
@@ -37,10 +38,14 @@ class JSONFormatBear(LocalBear):
             json_content = json.loads(''.join(file),
                                       object_pairs_hook=OrderedDict)
         except JSONDecodeError as err:
+            err_content = match(r'(.*): line (\d+) column (\d+)', str(err))
             yield Result.from_values(
                 self,
-                'This file does not contain parsable JSON. ' + repr(str(err)),
-                file=filename)
+                'This file does not contain parsable JSON. ' +
+                err_content.group(1) + '.',
+                file=filename,
+                line=int(err_content.group(2)),
+                column=int(err_content.group(3)))
             return
 
         corrected = json.dumps(json_content,
