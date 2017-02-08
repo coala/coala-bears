@@ -70,11 +70,16 @@ with prepare_file(config_file,
                                               'yamllint_config': conf_file})
 
 YAMLLintBear3Test = verify_local_bear(YAMLLintBear,
-                                      valid_files=(no_start_yaml_file,),
-                                      invalid_files=(with_start_yaml_file,))
+                                      valid_files=(no_start_yaml_file,
+                                                   with_start_yaml_file,),
+                                      invalid_files=())
 
 YAMLLintBear4Test = verify_local_bear(YAMLLintBear,
+                                      valid_files=(no_start_yaml_file,),
+                                      invalid_files=(with_start_yaml_file,),
+                                      settings={'document_start': False})
+
+YAMLLintBear5Test = verify_local_bear(YAMLLintBear,
                                       valid_files=(with_start_yaml_file,),
                                       invalid_files=(no_start_yaml_file,),
-                                      settings={
-                                          'document_start': True})
+                                      settings={'document_start': True})
