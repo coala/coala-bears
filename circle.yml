@@ -59,7 +59,7 @@ test:
         parallel: true
     - coala-ci -L DEBUG:
         parallel: true
-    - bash .ci/deploy.coverage.sh:
+    - codecov:
         parallel: true
     - rm -rf docs/API && make -C docs clean
     - python setup.py docs:

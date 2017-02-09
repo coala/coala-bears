@@ -127,7 +127,7 @@ script:
       mv .coafile.new .coafile
     fi
   - coala --non-interactive
-  - bash .ci/deploy.coverage.sh
+  - codecov
   - rm -rf docs/API && make -C docs clean
   - python setup.py docs
 

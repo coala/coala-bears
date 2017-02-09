@@ -59,3 +59,12 @@ test_script:
   # https://github.com/appveyor/ci/issues/688
   - "%CMD_IN_ENV% python -m pytest --cov -k \"not ClangASTPrintBear and not ClangCloneDetectionBear and not ClangComplexityBear and not ClangCountVectorCreator and not ClangCountingConditions\""
   - "%CMD_IN_ENV% python setup.py install"
+
+on_success:
+  - codecov
+
+on_failure:
+  - codecov
+
+matrix:
+  fast_finish: true
