@@ -22,6 +22,7 @@ mypy-lang~=0.4.6
 nbformat~=4.1
 nltk~=3.2
 proselint~=0.7.0
+pyang~=1.7.1
 pycodestyle~=2.2
 pydocstyle~=2.0
 pyflakes~=1.5.0
