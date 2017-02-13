@@ -34,6 +34,13 @@ class JSONFormatBear(LocalBear):
         :param escape_unicode: Whether or not to escape unicode values using
                                ASCII.
         """
+        # Output a meaningful message if empty file given as input
+        if len(file) == 0:
+            yield Result.from_values(self,
+                                     'This file is empty.',
+                                     file=filename)
+            return
+
         try:
             json_content = json.loads(''.join(file),
                                       object_pairs_hook=OrderedDict)

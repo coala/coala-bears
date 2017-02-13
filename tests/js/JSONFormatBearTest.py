@@ -54,6 +54,15 @@ class JSONTest(LocalBearTestHelper):
                                 column=5)],
             filename='default')
 
+    def test_exception_empty_file(self):
+        self.check_results(
+            self.uut,
+            [],
+            [Result.from_values('JSONFormatBear',
+                                'This file is empty.',
+                                file='default')],
+            filename='default')
+
 
 JSONFormatBearTest = verify_local_bear(JSONFormatBear,
                                        valid_files=(test_file1, test_file2),
