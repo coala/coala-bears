@@ -13,7 +13,7 @@ class JavaPMDBear:
     complicated expressions.
 
     More information is available at
-    <http://pmd.github.io/pmd-5.4.1/pmd-java/rules/index.html>.
+    <http://pmd.github.io/pmd-5.6.1/pmd-java/rules/index.html>.
     """
 
     LANGUAGES = {'Java'}

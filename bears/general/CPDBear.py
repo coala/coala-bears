@@ -1,3 +1,5 @@
+import os
+import tempfile
 from shutil import which
 from xml.etree import ElementTree
 
@@ -58,7 +60,7 @@ class CPDBear(GlobalBear):
         redundancy.
 
         For more details see:
-        <https://pmd.github.io/pmd-5.4.1/usage/cpd-usage.html>
+        <https://pmd.github.io/pmd-5.6.1/usage/cpd-usage.html>
 
         :param language:
             One of the supported languages of this bear.
@@ -93,11 +95,17 @@ class CPDBear(GlobalBear):
             '--skip-duplicate-files': skip_duplicate_files}
 
         files = ','.join(self.file_dict.keys())
+        temp = tempfile.NamedTemporaryFile('w+t', delete=False)
+        temp.write(str(files))
+        tmp_filename = temp.name
+        temp.close()
+
         executable = which('pmd') or which('run.sh')
         arguments = ('bash', executable, 'cpd', '--skip-lexical-errors',
                      '--minimum-tokens', str(minimum_tokens),
                      '--language', cpd_language,
                      '--files', files,
+                     '--filelist', tmp_filename,
                      '--format', 'xml')
 
         arguments += tuple(option
@@ -105,6 +113,8 @@ class CPDBear(GlobalBear):
                            if enable is True)
 
         stdout_output, _ = run_shell_command(arguments)
+
+        os.remove(tmp_filename)
 
         if stdout_output:
             root = ElementTree.fromstring(stdout_output)
