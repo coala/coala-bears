@@ -47,9 +47,10 @@ install:
   - ECHO "Cached wheels:"
   - ps: "ls \"C:\\wheels\""
   - "%CMD_IN_ENV% pip wheel --use-wheel --wheel-dir C:\\wheels --find-links C:\\wheels -r test-requirements.txt"
-  - "%CMD_IN_ENV% pip wheel --use-wheel --wheel-dir C:\\wheels --find-links C:\\wheels -r requirements.txt"
+  - "%CMD_IN_ENV% set STATICBUILD=true && pip wheel --use-wheel --wheel-dir C:\\wheels --find-links C:\\wheels -r requirements.txt"
   - "%CMD_IN_ENV% pip install --find-links=C:\\wheels -r test-requirements.txt"
-  - "%CMD_IN_ENV% pip install --find-links=C:\\wheels -r requirements.txt"
+  - "%CMD_IN_ENV% set STATICBUILD=true && pip install --find-links=C:\\wheels -r requirements.txt"
+  - "%CMD_IN_ENV% easy_install --wheel-dir C:\\wheels --find-links=C:\\wheels lxml-3.2.1.win32-py3.3.‌exe"
   - "CALL .ci/deps.nltk.cmd"
 
   - ps: "Install-Product node ''"  # Use latest node v5.x.x
