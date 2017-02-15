@@ -32,7 +32,7 @@ case $CIRCLE_BUILD_IMAGE in
     # The non-apt go provided by Circle CI is acceptable
     deps=${deps/golang-go/}
     # Add packages which are already in the precise image
-    deps="$deps g++-4.9 libxml2-utils php-codesniffer"
+    deps="$deps g++-4.9 libxml2-utils php-cli php7.0-cli php-codesniffer"
     # gfortran on CircleCI precise is 4.6 and R irlba compiles ok,
     # but for reasons unknown it fails on trusty without gfortran-4.9
     deps="$deps gfortran-4.9"
