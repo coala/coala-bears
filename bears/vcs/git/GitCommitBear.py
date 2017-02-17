@@ -90,7 +90,7 @@ class GitCommitBear(GlobalBear):
         Check the current git commit message at HEAD.
 
         This bear ensures automatically that the shortlog and body do not
-        exceed a given line-length and that a newline lies between them.
+        exceed a given line-length and that one newline lies between them.
 
         :param allow_empty_commit_message: Whether empty commit messages are
                                            allowed or not.
@@ -104,8 +104,19 @@ class GitCommitBear(GlobalBear):
 
         stdout = stdout.rstrip('\n')
         pos = stdout.find('\n')
+        count = 0
         shortlog = stdout[:pos] if pos != -1 else stdout
-        body = stdout[pos+1:] if pos != -1 else ''
+        pos = pos + 1
+
+        while (stdout[pos+1] == '\n'):
+            count++
+
+        if count == 0:
+            body = stdout[pos+1:] if pos != -1 else ''
+        else
+            yield Result(self,
+                         'There are too many newlines between shortlog '
+                         'and body.')
 
         if len(stdout) == 0:
             if not allow_empty_commit_message:
