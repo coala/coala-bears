@@ -21,6 +21,7 @@ addons:
       - chktex
       - clang-3.4
       - cppcheck
+      - devscripts
       - flawfinder
       - gfortran
       - ghc
