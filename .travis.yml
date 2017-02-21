@@ -59,6 +59,7 @@ cache:
     - ~/bakalint-0.4.0
     - ~/dart-sdk/bin
     - ~/.local/tailor/
+    - ~/.mix
 
 env:
   global:
@@ -100,6 +101,7 @@ before_script:
     if [[ "$TRAVIS_PYTHON_VERSION" != "3.3" ]]; then
       python -m nltk.downloader punkt maxent_treebank_pos_tagger averaged_perceptron_tagger
     fi
+  - cd ~/coala-bears/tests/elixir/bad_code && mix deps.get && mix compile
 
 script:
   - >
