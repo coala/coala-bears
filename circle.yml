@@ -1,3 +1,9 @@
+machine:
+  java:
+    version: oraclejdk8
+  environment:
+    TERM: dumb
+
 dependencies:
   cache_directories:
     - ~/.pyenv/versions/3.4.3
@@ -35,14 +41,11 @@ dependencies:
     - mkdir -p ~/.RLibrary
     - nvm alias default node
   override:
+    - echo $TERM
     - bash .ci/deps.cabal.sh
     - bash .ci/deps.sh:
         timeout: 900  # Allow 15 mins before timing out due to "no output"
     - bash .ci/deps.coala-bears.sh
-
-machine:
-  java:
-    version: oraclejdk8
 
 test:
   override:
