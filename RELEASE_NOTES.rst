@@ -1,3 +1,12 @@
+coala-bears 0.10.1
+==================
+
+Bugfixes:
+
+- Remark dependency has been pinned back to ~5.4 because version 6 changes
+  current behavior and breaks tests. This is a hotfix which will be rolled
+  back when the upstream addresses this.
+ 
 coala-bears 0.10.0
 ==================
 
