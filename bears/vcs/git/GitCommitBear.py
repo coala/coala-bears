@@ -106,6 +106,10 @@ class GitCommitBear(GlobalBear):
         pos = stdout.find('\n')
         shortlog = stdout[:pos] if pos != -1 else stdout
         body = stdout[pos+1:] if pos != -1 else ''
+        if pos != -1:
+            if stdout[pos+2] == '\n':
+                yield Result(self, 'Extra Newlines found.')
+                return
 
         if len(stdout) == 0:
             if not allow_empty_commit_message:
