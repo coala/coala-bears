@@ -16,7 +16,7 @@ class YAMLLintBear:
     """
 
     LANGUAGES = {'YAML'}
-    REQUIREMENTS = {PipRequirement('yamllint', '1.5')}
+    REQUIREMENTS = {PipRequirement('yamllint', '1.6.1')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
