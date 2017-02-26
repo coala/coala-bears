@@ -79,6 +79,11 @@ class CheckstyleBear:
               <https://github.com/noveogroup/android-check>.
             - geosoft - The Java style followed by GeoSoft. More info at
               <http://geosoft.no/development/javastyle.html>
+
+        :param checkstyle_configs: Only spaces are supported, hence a True
+            value
+
+        :param indent_size: Only an indent size of 2 is permitted by bear.
         """
         check_invalid_configuration(
             checkstyle_configs, use_spaces, indent_size)
