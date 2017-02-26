@@ -170,8 +170,3 @@ if [ ! -e ~/.local/tailor/tailor-latest ]; then
   # Provide a constant path for the executable
   ln -s ~/.local/tailor/tailor-* ~/.local/tailor/tailor-latest
 fi
-
-# making coala cache the dependencies downloaded upon first run
-echo '' > dummy
-coala-ci --bears CheckstyleBear --files dummy --no-config --bear-dirs bears || true
-coala-ci --bears ScalaLintBear --files dummy --no-config --bear-dirs bears || true
