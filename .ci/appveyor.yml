@@ -51,6 +51,10 @@ install:
 build: false  # Not a C# project, build stuff at the test step instead.
 
 test_script:
+  # Force DOS format, as Checkstyle configs enable NewlineAtEndOfFile,
+  # which defaults to CRLF on Windows, and Appveyor CI ignores .gitattributes
+  # http://help.appveyor.com/discussions/problems/5687-gitattributes-changes-dont-have-any-effect
+  - unix2dos tests/java/test_files/CheckstyleGood.java
   # Clang DLLs x64 were nowadays installed, but the x64 version hangs, so we
   # exclude according tests. See https://github.com/appveyor/ci/issues/495 and
   # https://github.com/appveyor/ci/issues/688

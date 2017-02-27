@@ -24,24 +24,24 @@ class CheckstyleBearTest(LocalBearTestHelper):
         self.empty_config = os.path.join(test_files,
                                          'checkstyle_empty_config.xml')
 
-    def test_run(self):
-        self.check_validity(self.uut, [], self.good_file)
-        self.check_validity(self.uut, [], self.bad_file, valid=False)
-
     def test_style_google(self):
         self.section['checkstyle_configs'] = 'google'
         self.check_validity(self.uut, [], self.good_file)
+        self.check_validity(self.uut, [], self.bad_file, valid=False)
 
     def test_style_sun(self):
         self.section['checkstyle_configs'] = 'sun'
-        self.check_validity(self.uut, [], self.good_file)
+        self.check_validity(self.uut, [], self.good_file, valid=False)
+        self.check_validity(self.uut, [], self.bad_file, valid=False)
 
     def test_style_android(self):
         self.section['checkstyle_configs'] = 'android-check-easy'
         self.check_validity(self.uut, [], self.good_file)
+        self.check_validity(self.uut, [], self.bad_file, valid=False)
 
         self.section['checkstyle_configs'] = 'android-check-hard'
         self.check_validity(self.uut, [], self.good_file)
+        self.check_validity(self.uut, [], self.bad_file, valid=False)
 
     def test_config_failure_use_spaces(self):
         self.section['checkstyle_configs'] = 'google'
