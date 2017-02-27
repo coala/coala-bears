@@ -23,6 +23,7 @@ htmlcov
 *.egg-info
 .coverage.*
 src
+!tests/rust/test_*/src
 site
 .zanata-cache
 *.exe
