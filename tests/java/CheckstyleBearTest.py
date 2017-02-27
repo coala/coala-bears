@@ -43,10 +43,6 @@ class CheckstyleBearTest(LocalBearTestHelper):
         self.section['checkstyle_configs'] = 'android-check-hard'
         self.check_validity(self.uut, [], self.good_file)
 
-    def test_style_geosoft(self):
-        self.section['checkstyle_configs'] = 'geosoft'
-        self.check_validity(self.uut, [], self.good_file)
-
     def test_config_failure_use_spaces(self):
         self.section['checkstyle_configs'] = 'google'
         self.section.append(Setting('use_spaces', False))

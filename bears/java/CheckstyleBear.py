@@ -11,7 +11,7 @@ _online_styles = {
     'android-check-hard': 'https://raw.githubusercontent.com/noveogroup/' +
     'android-check/master/android-check-plugin/src/main/resources/' +
     'checkstyle/checkstyle-hard.xml',
-    'geosoft': 'http://geosoft.no/development/geosoft_checks.xml'}
+}
 
 # To be deprecated
 known_checkstyles = dict(_online_styles, **{'google': None, 'sun': None})
