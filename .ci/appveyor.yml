@@ -4,6 +4,7 @@ environment:
     # /E:ON and /V:ON options are not enabled in the batch script intepreter
     # See: http://stackoverflow.com/a/13751649/163740
     CMD_IN_ENV: "cmd /E:ON /V:ON /C .\\.ci\\run_with_env.cmd"
+    RUST_TOOLCHAIN: "nightly-2017-07-20-x86_64-pc-windows-msvc"
 
   matrix:
     - PYTHON: "C:\\Python34"
@@ -19,6 +20,13 @@ cache:
   - "node_modules"
   - "C:\\Users\\appveyor\\AppData\\Local\\coala-bears\\coala-bears"
   - "C:\\Users\\appveyor\\AppData\\Roaming\\nltk_data"
+
+# Workaround Appveyor bug:
+# http://help.appveyor.com/discussions/problems/7115-curl-cant-download-files-through-ssl
+init:
+  - ps: >
+      Disable-NetFirewallRule
+      -DisplayName 'Core Networking - Group Policy (LSASS-Out)'
 
 branches:
   except:
@@ -48,6 +56,26 @@ install:
   - ps: "Install-Product node ''"  # Use latest node v5.x.x
   - "npm config set loglevel warn"
   - "npm install"
+
+  - "curl -sSf -o rustup-init.exe https://win.rustup.rs/"
+  - "rustup-init.exe -y --default-toolchain=%RUST_TOOLCHAIN%"
+  # Normally, we shouldn't need the toolchain lib directory in our PATH
+  # https://github.com/rust-lang-nursery/rustup.rs/issues/876
+  # This is actually the sole reason that we really
+  # need the RUST_TOOLCHAIN variable.
+  - "set PATH=%PATH%;C:\\Users\\appveyor\\.cargo\\bin"
+  # Start ignoring YAMLLintBear
+  # because of the line length; plitting up these paths would become unreadable
+  - "set PATH=%PATH%;C:\\Users\\appveyor\\.rustup\\toolchains\\%RUST_TOOLCHAIN%\\bin"
+  - "set PATH=%PATH%;C:\\Users\\appveyor\\.rustup\\toolchains\\%RUST_TOOLCHAIN%\\lib\\rustlib\\x86_64-pc-windows-msvc\\lib"
+  # Stop ignoring YAMLLintBear
+  - "cargo install clippy --vers 0.0.144"
+
+  # Print rust and cargo parameters for quick debugging.
+  - where rustc cargo
+  - rustc -vV
+  - cargo -vV
+  - cargo clippy -V
 
 build: false  # Not a C# project, build stuff at the test step instead.
 
