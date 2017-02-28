@@ -48,6 +48,24 @@ julia -e "Pkg.add(\"Lint\")"
 # Lua commands
 sudo luarocks install luacheck --deps-mode=none
 
+# Rust commands
+RUST_TOOLCHAIN=nightly-2017-07-20
+# Install Rustup
+curl -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain=$RUST_TOOLCHAIN
+# Make sure the specified nightly is the default.
+# This bypasses cache if needed, which the `sh` line above doesn't
+rustup default $RUST_TOOLCHAIN
+# Workaround https://github.com/rust-lang/cargo/issues/2078
+#        and https://github.com/rust-lang/cargo/issues/2429 (explanation)
+# CircleCI gets its SSH agent activated, Travis doesn't need that.
+CLIPPY_VERSION=0.0.144
+if [ -e /home/ubuntu/.ssh/id_circleci_github ]; then
+    eval `ssh-agent`
+    ssh-add /home/ubuntu/.ssh/id_circleci_github
+fi
+cargo install clippy --vers $CLIPPY_VERSION --force
+cargo clippy -V
+
 # PHPMD installation
 if [ ! -e ~/phpmd/phpmd ]; then
   mkdir -p ~/phpmd

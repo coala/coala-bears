@@ -18,6 +18,8 @@ dependencies:
     - ~/bakalint-0.4.0
     - ~/.julia
     - ~/.local/tailor/
+    - ~/.cargo
+    - ~/.rustup
   pre:
     - sudo rm -rf /var/cache/apt/archives
     - sudo ln -s ~/.apt-cache /var/cache/apt/archives
@@ -33,6 +35,7 @@ dependencies:
     - echo 'export PATH=$PATH:~/.local/tailor/tailor-latest/bin' >> ~/.circlerc
     - echo 'export PATH=$PATH:~/elm-format-0.18' >> ~/.circlerc
     - echo 'export PATH=$PATH:~/phpmd' >> ~/.circlerc
+    - echo 'export PATH=$PATH:~/.cargo/bin' >> ~/.circlerc
     - echo 'export R_LIB_USER=~/.RLibrary' >> ~/.circlerc
     - sed -i '/source \/home\/ubuntu\/virtualenvs\//d' ~/.circlerc
     - mkdir -p ~/.RLibrary
@@ -47,6 +50,12 @@ dependencies:
     - bash .ci/deps.sh:
         timeout: 900  # Allow 15 mins before timing out due to "no output"
     - bash .ci/deps.coala-bears.sh
+
+checkout:
+  post:
+    # Workaround https://github.com/rust-lang/cargo/issues/2078
+    #        and https://github.com/rust-lang/cargo/issues/2429 (explanation)
+    - git config --global --unset url.ssh://git@github.com:.insteadof
 
 machine:
   node:
