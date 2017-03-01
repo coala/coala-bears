@@ -4,8 +4,8 @@ coala-bears
 -----------
 
 coala-bears is a Python package containing all the bears that are officially
-supported by coala. It features more than **78 bears** covering
-**54 languages**. Here is a `generated list <https://github.com/coala/bear-docs/>`_
+supported by coala. It features more than **79 bears** covering
+**55 languages**. Here is a `generated list <https://github.com/coala/bear-docs/>`_
 that contains information about each bear, such as the languages it supports and
 what fixes it can apply to your code.
 
@@ -69,35 +69,35 @@ To see what coala can do for your language, run:
 +----------------------------+----------------------------+----------------------------+
 |                        Languages coala provides algorithms for                       |
 +============================+============================+============================+
-| C                          | Latex                      | SQL                        |
+| C                          | Latex                      | sh & bash scripts          |
 +----------------------------+----------------------------+----------------------------+
-| C++                        | Lua                        | Stylus                     |
+| C++                        | Lua                        | SQL                        |
 +----------------------------+----------------------------+----------------------------+
-| C#                         | Markdown                   | Swift                      |
+| C#                         | Markdown                   | Stylus                     |
 +----------------------------+----------------------------+----------------------------+
-| CMake                      | Matlab/Octave              | TypeScript                 |
+| CMake                      | Matlab/Octave              | Swift                      |
 +----------------------------+----------------------------+----------------------------+
-| CoffeeScript               | Natural Language (English) | Verilog                    |
+| CoffeeScript               | Natural Language (English) | Typescript                 |
 +----------------------------+----------------------------+----------------------------+
-| CSS                        | Perl                       | VHDL                       |
+| CSS                        | Perl                       | Verilog                    |
 +----------------------------+----------------------------+----------------------------+
-| Dart                       | PHP                        | Vimscript                  |
+| Dart                       | PHP                        | VHDL                       |
 +----------------------------+----------------------------+----------------------------+
-| Fortran                    | Python 2                   | XML                        |
+| Fortran                    | Python 2                   | Vimscript                  |
 +----------------------------+----------------------------+----------------------------+
-| Go                         | Python 3                   | YAML                       |
+| Go                         | Python 3                   | XML                        |
 +----------------------------+----------------------------+----------------------------+
-| Haskell                    | R                          |                            |
+| Haskell                    | R                          | YAML                       |
 +----------------------------+----------------------------+----------------------------+
 | HTML                       | reStructured Text          |                            |
 +----------------------------+----------------------------+----------------------------+
 | Java                       | Ruby                       |                            |
 +----------------------------+----------------------------+----------------------------+
-| JavaScript                 | Scala                      |                            |
+| JavaScript                 | Rust                       |                            |
 +----------------------------+----------------------------+----------------------------+
-| JSP                        | SCSS                       |                            |
+| JSP                        | Scala                      |                            |
 +----------------------------+----------------------------+----------------------------+
-| Julia                      | sh & bash scripts          |                            |
+| Julia                      | SCSS                       |                            |
 +----------------------------+----------------------------+----------------------------+
 
 The number of bears grows every day! If you want to see any particular
