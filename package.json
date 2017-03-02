@@ -15,7 +15,7 @@
     "happiness": "~7.1.2",
     "jshint": "~2",
     "postcss-cli": "~2",
-    "ramllint": "~1.2.2",
+    "ramllint": ">=1.2.2 <1.2.4",
     "remark-cli": "~2",
     "remark-lint": "~5",
     "stylelint": "~7",
