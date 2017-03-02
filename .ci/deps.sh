@@ -137,6 +137,13 @@ if [ ! -e ~/bakalint-0.4.0/bakalint.pl ]; then
   tar xf ~/bl.tar.gz -C ~/
 fi
 
+# elm-format Installation
+if [ ! -e ~/elm-format-0.18/elm-format ]; then
+  mkdir -p ~/elm-format-0.18
+  curl -fsSL -o elm-format.tgz https://github.com/avh4/elm-format/releases/download/0.5.2-alpha/elm-format-0.17-0.5.2-alpha-linux-x64.tgz
+  tar -xvzf elm-format.tgz -C ~/elm-format-0.18
+fi
+
 # Julia commands
 julia -e "Pkg.add(\"Lint\")"
 
