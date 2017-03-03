@@ -20,10 +20,9 @@ cache:
   - "C:\\Users\\appveyor\\AppData\\Local\\coala-bears\\coala-bears"
   - "C:\\Users\\appveyor\\AppData\\Roaming\\nltk_data"
 
-branches:  # Only build official branches, PRs are built anyway.
-  only:
-    - master
-    - /release.*/
+branches:
+  except:
+    - /^sils\/.*/
 
 install:
   # Prepend newly installed Python to the PATH of this build (this cannot be
