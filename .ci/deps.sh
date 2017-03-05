@@ -174,3 +174,11 @@ if [ ! -e ~/.local/tailor/tailor-latest ]; then
   # Provide a constant path for the executable
   ln -s ~/.local/tailor/tailor-* ~/.local/tailor/tailor-latest
 fi
+
+# PHPMD installation
+if [ ! -e ~/phpmd/phpmd ]; then
+  mkdir -p ~/phpmd
+  curl -fsSL -o phpmd.phar http://static.phpmd.org/php/latest/phpmd.phar
+  sudo chmod +x phpmd.phar
+  sudo mv phpmd.phar ~/phpmd/phpmd
+fi
