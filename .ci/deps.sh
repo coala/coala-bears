@@ -115,7 +115,7 @@ R -q -e 'install.packages("formatR")'
 go get -u github.com/golang/lint/golint
 go get -u golang.org/x/tools/cmd/goimports
 go get -u sourcegraph.com/sqs/goreturns
-go get -u golang.org/x/tools/cmd/gotype
+go get -u go/types
 go get -u github.com/kisielk/errcheck
 
 # Ruby commands

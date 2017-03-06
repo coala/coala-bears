@@ -14,7 +14,7 @@ class GoTypeBear:
     """
     LANGUAGES = {'Go'}
     REQUIREMENTS = {GoRequirement(
-        package='golang.org/x/tools/cmd/gotype', flag='-u')}
+        package='go/types', flag='-u')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
