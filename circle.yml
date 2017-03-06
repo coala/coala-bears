@@ -1,6 +1,5 @@
 dependencies:
   cache_directories:
-    - ~/.apt-cache
     - ~/.pyenv/versions/3.4.3
     - ~/.pyenv/versions/3.5.1
     - ~/coala-bears/node_modules
@@ -9,6 +8,8 @@ dependencies:
     - ~/.RLibrary
     - ~/dart-sdk/bin
     - ~/.cabal
+    - ~/.ghc
+    - ~/.ghc-mod
     - ~/infer-linux64-v0.7.0
     - ~/nltk_data
     - ~/pmd-bin-5.4.1
@@ -32,7 +33,7 @@ dependencies:
     - mkdir -p ~/.RLibrary
     - nvm alias default node
   override:
-    - bash .ci/deps.shellcheck.sh
+    - bash .ci/deps.cabal.sh
     - bash .ci/deps.sh:
         timeout: 900  # Allow 15 mins before timing out due to "no output"
 

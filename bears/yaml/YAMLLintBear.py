@@ -16,7 +16,7 @@ class YAMLLintBear:
     """
 
     LANGUAGES = {'YAML'}
-    REQUIREMENTS = {PipRequirement('yamllint', '1.5')}
+    REQUIREMENTS = {PipRequirement('yamllint', '1.6.1')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
@@ -24,7 +24,7 @@ class YAMLLintBear:
 
     @staticmethod
     def generate_config(filename, file,
-                        document_start: bool=False):
+                        document_start: bool=None):
         """
         :param document_start:
             Use this rule to require or forbid the use of document start
@@ -33,13 +33,10 @@ class YAMLLintBear:
         yamllint_configs = {
             'extends': 'default',
             'rules': {
-                'document-start': {
-                    'present': False
-                 }
-            }
+                'document-start': 'disable' if document_start is None
+                                  else {'present': document_start},
+            },
         }
-        if document_start:
-            yamllint_configs['rules']['document-start']['present'] = True
 
         return yaml.dump(yamllint_configs)
 
