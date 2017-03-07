@@ -37,6 +37,7 @@ addons:
       - opam
       - php-codesniffer
       - verilator
+      - astyle
 
 cache:
   pip: true
