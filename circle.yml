@@ -17,6 +17,7 @@ dependencies:
     - ~/bakalint-0.4.0
     - ~/.julia
     - ~/.local/tailor/
+
   pre:
     - sudo rm -rf /var/cache/apt/archives && sudo ln -s ~/.apt-cache /var/cache/apt/archives && mkdir -p ~/.apt-cache/partial
     - echo 'export PATH=$PATH:~/coala-bears/node_modules/.bin' >> ~/.circlerc

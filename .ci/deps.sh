@@ -171,6 +171,26 @@ if [ ! -e ~/.local/tailor/tailor-latest ]; then
   ln -s ~/.local/tailor/tailor-* ~/.local/tailor/tailor-latest
 fi
 
+wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb
+sudo dpkg -i erlang-solutions_1.0_all.deb
+sudo apt-get update
+sudo apt-get install esl-erlang
+sudo apt-get install elixir
+
+mix local.rebar --force -y
+mix local.hex --force -y
+
+git clone git@github.com:rrrene/credo.git
+cd credo
+mix deps.get
+mix archive.build
+mix archive.install
+
+git clone https://github.com/rrrene/bunt
+cd bunt
+mix archive.build
+mix archive.install
+
 # making coala cache the dependencies downloaded upon first run
 echo '' > dummy
 coala-ci --bears CheckstyleBear --files dummy --no-config --bear-dirs bears || true
