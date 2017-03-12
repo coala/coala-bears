@@ -18,24 +18,37 @@ class LineCountBear(LocalBear):
         return num_blank_lines
 
     def run(self, filename, file, max_lines_per_file: int,
-            exclude_blank_lines: bool=False):
+            exclude_blank_lines: bool=False, min_lines_per_file: int=0):
         """
-        Count the number of lines in a file and ensure that they are
-        smaller than a given size.
+        Count the number of lines in a file and ensure that they lie
+        within the range of given sizes.
 
-        :param max_lines_per_file: Number of lines allowed per file.
-        :param exclude_blank_lines: "True" if blank lines are to be excluded.
+        :param max_lines_per_file: Maximum number of lines allowed per file.
+        :param exclude_blank_lines: ``True`` if blank lines are to be excluded.
+        :param min_lines_per_file: Minimum number of lines allowed per file.
         """
         file_length = len(file)
+
         if exclude_blank_lines:
             num_blank_lines = self._get_blank_line_count(file)
             file_length = file_length - num_blank_lines
+
         if file_length > max_lines_per_file:
             yield Result.from_values(
                 origin=self,
                 message=('This file had {count} lines, which is {extra} '
                          'lines more than the maximum limit specified.'
                          .format(count=file_length,
-                                 extra=file_length-max_lines_per_file)),
+                                 extra=file_length - max_lines_per_file)),
+                severity=RESULT_SEVERITY.NORMAL,
+                file=filename)
+
+        if file_length < min_lines_per_file:
+            yield Result.from_values(
+                origin=self,
+                message=('This file had {count} lines, which is {missing} '
+                         'lines fewer than the minimum required.'
+                         .format(count=file_length,
+                                 missing=min_lines_per_file - file_length)),
                 severity=RESULT_SEVERITY.NORMAL,
                 file=filename)
