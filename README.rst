@@ -27,7 +27,7 @@ To install the **latest stable version** run:
 .. code-block:: bash
 
     $ pip3 install coala-bears
-
+ 
 |Stable|
 
 To install the latest development version run:
