@@ -169,6 +169,7 @@ class PyImportSortBear(LocalBear):
             forced_separate=forced_separate_imports,
             multi_line_output=isort_multi_line_output,
             known_first_party=known_first_party_imports,
+            known_third_party=known_third_party_imports,
             line_length=max_line_length,
             force_to_top=imports_forced_to_top)
 
