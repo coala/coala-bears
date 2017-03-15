@@ -21,3 +21,9 @@ PyImportSortBearIgnoredConfigsTest = verify_local_bear(
      'import abc\nimport xyz\n'),
     settings={'known_standard_library_imports': 'xyz',
               'known_first_party_imports': 'abc'})
+
+PyImportSortBearThirdPartyConfigTest = verify_local_bear(
+    PyImportSortBear,
+    ('import sys\n\nimport datetime\n',),
+    ('import datetime\nimport sys\n',),
+    settings={'known_third_party_imports': 'datetime'})
