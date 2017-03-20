@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dictionary>
+  <alphabet>·ÀÁÂÄÇÈÉÊËÌÍÎÏÑÒÓÔÖÙÚÛÜÚāàáâäçèéêëìíîïīñòóôöõùúûüABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789ş</alphabet>
+  <pardefs>
+
+<pardef n="zero__n">
+  <e>       <p><l></l>          <r><s n="n"/><s n="sg"/></r></p></e>
+  <e>       <p><l>es</l>        <r><s n="n"/><s n="pl"/></r></p></e>
+  <e r="LR"><p><l>s</l>         <r><s n="n"/><s n="pl"/></r></p></e>
+</pardef>
+
+  </pardefs>
+</dictionary>
