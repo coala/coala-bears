@@ -1,4 +1,5 @@
 from coalib.bearlib.abstractions.Linter import linter
+from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from dependency_management.requirements.PipRequirement import PipRequirement
 import yaml
 
@@ -6,7 +7,9 @@ import yaml
 @linter(executable='yamllint',
         output_format='regex',
         output_regex=r'.+:(?P<line>\d+):(?P<column>\d+): '
-                     r'\[(?P<severity>error|warning)\] (?P<message>.+)')
+                     r'\[(?P<severity>error|warning)\] (?P<message>.+)',
+        severity_map={'error': RESULT_SEVERITY.MAJOR,
+                      'warning': RESULT_SEVERITY.NORMAL})
 class YAMLLintBear:
     """
     Check yaml code for errors and possible problems.
