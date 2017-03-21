@@ -17,6 +17,7 @@ class TestLanguage:
     comment_delimiter = '/', '#'
     indent_types = {'{': '}', '<': '>', ':': ''}
     encapsulators = {'(': ')', '[': ']'}
+    indent_keywords = 'if', 'while', 'for'
 
 
 class IndentationBearTest(unittest.TestCase):
@@ -290,4 +291,54 @@ class IndentationBearTest(unittest.TestCase):
 
         valid_file = ('This is a valid specifier: # A comment\n',
                       '\tand so it indents\n')
+        self.verify_bear(valid_file)
+
+    def test_keyword_indents(self):
+        self.section.append(Setting('indent_on_keywords', True))
+
+        valid_file = ('if(something)\n',
+                      '\tdoes get indented\n')
+        invalid_file = (' if(something)\n',
+                        'isnt indented')
+        self.verify_bear(valid_file, invalid_file)
+
+        valid_file = ('if(something)\n',
+                      '\ta statement which spans multilple lines(param1,\n',
+                      '\t                                        param2,',
+                      '\t                                        param3)')
+        invalid_file = ('if(something)\n',
+                        '\ta statement which spans multilple lines(param1,\n',
+                        '                                          param2,',
+                        '                                          param3)')
+        self.verify_bear(valid_file, invalid_file)
+
+        valid_file = ('if (something and\n',
+                      '    something else and\n',
+                      '    something else too)\n',
+                      '\tstill indents')
+        invalid_file = ('if (something and\n',
+                        '    something else and\n',
+                        '    something else too)\n',
+                        'didnt indent')
+        self.verify_bear(valid_file, invalid_file)
+
+        valid_file = ('if without brackets',
+                      '\tstill works')
+        self.verify_bear(valid_file)
+
+        valid_file = ('if_something(condition)\n',
+                      'does not indent')
+        self.verify_bear(valid_file)
+
+        valid_file = ('if(something){\n',
+                      '\tindents normally}')
+        valid_file = ('if something\n',
+                      '\tindents by keyword\n',
+                      'if(something){\n',
+                      '\tindents by specifier}')
+        self.verify_bear(valid_file)
+        valid_file = ('if(something)\n',
+                      '\tif(something else){\n',
+                      '\t\tindents by specifier\n',
+                      '\t}')
         self.verify_bear(valid_file)
