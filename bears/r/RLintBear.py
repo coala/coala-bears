@@ -3,6 +3,8 @@ from coala_utils.string_processing import escape
 from coalib.bearlib.abstractions.Linter import linter
 from dependency_management.requirements.RscriptRequirement import (
     RscriptRequirement)
+from dependency_management.requirements.DistributionRequirement import (
+    DistributionRequirement)
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
@@ -23,7 +25,9 @@ class RLintBear:
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     REQUIREMENTS = {RscriptRequirement(package='lintr', flag='-e',
-                                       repo='http://cran.rstudio.com')}
+                                       repo='http://cran.rstudio.com'),
+                    DistributionRequirement(apt_get='r-base',
+                                            version='>=3.1.1')}
     LICENSE = 'AGPL-3.0'
     CAN_DETECT = {'Syntax', 'Formatting'}
 

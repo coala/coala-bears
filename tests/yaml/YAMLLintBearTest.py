@@ -1,4 +1,4 @@
-from bears.yml.YAMLLintBear import YAMLLintBear
+from bears.yaml.YAMLLintBear import YAMLLintBear
 from coala_utils.ContextManagers import prepare_file
 from coalib.testing.LocalBearTestHelper import verify_local_bear
 
@@ -18,7 +18,7 @@ items:
 ...
 """
 
-no_start_yml_file = """receipt: Oz-Ware Purchase Invoice
+no_start_yaml_file = """receipt: Oz-Ware Purchase Invoice
 date: 2012-08-06
 customer:
     first_name: Dorothy
@@ -30,7 +30,7 @@ items:
       price: 1.47
       quantity: 4"""
 
-with_start_yml_file = """---
+with_start_yaml_file = """---
 receipt: Oz-Ware Purchase Invoice
 date: 2012-08-06
 customer:
@@ -70,11 +70,16 @@ with prepare_file(config_file,
                                               'yamllint_config': conf_file})
 
 YAMLLintBear3Test = verify_local_bear(YAMLLintBear,
-                                      valid_files=(no_start_yml_file,),
-                                      invalid_files=(with_start_yml_file,))
+                                      valid_files=(no_start_yaml_file,
+                                                   with_start_yaml_file,),
+                                      invalid_files=())
 
 YAMLLintBear4Test = verify_local_bear(YAMLLintBear,
-                                      valid_files=(with_start_yml_file,),
-                                      invalid_files=(no_start_yml_file,),
-                                      settings={
-                                          'document_start': True})
+                                      valid_files=(no_start_yaml_file,),
+                                      invalid_files=(with_start_yaml_file,),
+                                      settings={'document_start': False})
+
+YAMLLintBear5Test = verify_local_bear(YAMLLintBear,
+                                      valid_files=(with_start_yaml_file,),
+                                      invalid_files=(no_start_yaml_file,),
+                                      settings={'document_start': True})

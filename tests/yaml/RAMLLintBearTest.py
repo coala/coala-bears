@@ -1,4 +1,4 @@
-from bears.yml.RAMLLintBear import RAMLLintBear
+from bears.yaml.RAMLLintBear import RAMLLintBear
 from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 good_file = """

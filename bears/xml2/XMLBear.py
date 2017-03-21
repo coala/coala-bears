@@ -31,7 +31,7 @@ class XMLBear:
     See http://xmlsoft.org/xmllint.html
     """
     LANGUAGES = {'XML'}
-    REQUIREMENTS = {DistributionRequirement(apt_get='libxml2')}
+    REQUIREMENTS = {DistributionRequirement(apt_get='libxml2-utils')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

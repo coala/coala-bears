@@ -1,5 +1,7 @@
 from coalib.bearlib.abstractions.Linter import linter
 from coalib.settings.Setting import path
+from dependency_management.requirements.DistributionRequirement import (
+    DistributionRequirement)
 
 
 _online_styles = {
@@ -9,7 +11,7 @@ _online_styles = {
     'android-check-hard': 'https://raw.githubusercontent.com/noveogroup/' +
     'android-check/master/android-check-plugin/src/main/resources/' +
     'checkstyle/checkstyle-hard.xml',
-    'geosoft': 'http://geosoft.no/development/geosoft_checks.xml'}
+}
 
 # To be deprecated
 known_checkstyles = dict(_online_styles, **{'google': None, 'sun': None})
@@ -43,6 +45,7 @@ class CheckstyleBear:
     """
 
     LANGUAGES = {'Java'}
+    REQUIREMENTS = {DistributionRequirement(apt_get='default-jre')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
@@ -50,9 +53,9 @@ class CheckstyleBear:
 
     def setup_dependencies(self):
         type(self).checkstyle_jar_file = self.download_cached_file(
-            'http://sourceforge.net/projects/checkstyle/files/checkstyle/6.15'
-            '/checkstyle-6.15-all.jar',
-            'checkstyle.jar')
+            'https://github.com/coala/bear-runtime-deps/raw/master'
+            '/CheckstyleBear/checkstyle-6.15-all.jar',
+            'checkstyle-6.15-all.jar')
 
     def create_arguments(
             self, filename, file, config_file,

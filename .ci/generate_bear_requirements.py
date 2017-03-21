@@ -144,7 +144,7 @@ def write_npm_requirements(requirements):
         req_version = requirement.version
         package_name = requirement.package
         if req_version:
-            if req_version.startswith(">="):
+            if req_version[0] in ('<', '>', '~', '='):
                 npm_dependencies[package_name] = req_version
             else:
                 npm_dependencies[package_name] = "~" + req_version

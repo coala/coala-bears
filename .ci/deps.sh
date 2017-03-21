@@ -13,7 +13,7 @@ esac
 # apt-get commands
 export DEBIAN_FRONTEND=noninteractive
 
-deps="libclang1-3.4 indent mono-mcs chktex r-base julia golang luarocks verilator cppcheck flawfinder"
+deps="libclang1-3.4 indent mono-mcs chktex r-base julia golang-go luarocks verilator cppcheck flawfinder devscripts"
 deps_infer="m4 opam"
 
 case $CIRCLE_BUILD_IMAGE in
@@ -30,12 +30,9 @@ case $CIRCLE_BUILD_IMAGE in
     sudo chmod a+x /usr/bin/systemd-detect-virt
 
     # The non-apt go provided by Circle CI is acceptable
-    deps=${deps/golang/}
-    # Add packages which are available in xenial
-    # The xenial hlint is >= 1.9.1
-    deps="$deps hlint"
+    deps=${deps/golang-go/}
     # Add packages which are already in the precise image
-    deps="$deps g++-4.9 libxml2-utils php-codesniffer"
+    deps="$deps g++-4.9 libxml2-utils php-cli php7.0-cli php-codesniffer"
     # gfortran on CircleCI precise is 4.6 and R irlba compiles ok,
     # but for reasons unknown it fails on trusty without gfortran-4.9
     deps="$deps gfortran-4.9"
@@ -82,27 +79,14 @@ fi
 # Change environment for flawfinder from python to python2
 sudo sed -i '1s/.*/#!\/usr\/bin\/env python2/' /usr/bin/flawfinder
 
-# Update hlint to latest version (not available in apt)
-if [[ -z "$(which hlint)" ]]; then
-  hlint_deb=$(ls -vr ~/.apt-cache/hlint_1.9.* 2>/dev/null | head -1)
-  if [[ -z "$hlint_deb" ]]; then
-    hlint_deb_filename=hlint_1.9.26-1_amd64.deb
-    # This is the same build as xenial hlint
-    hlint_deb_url="https://launchpad.net/ubuntu/+source/hlint/1.9.26-1/+build/8831318/+files/${hlint_deb_filename}"
-    hlint_deb=~/.apt-cache/$hlint_deb_filename
-    wget -O $hlint_deb $hlint_deb_url
-  fi
-  sudo dpkg -i $hlint_deb
-fi
-
-# cabal update to 1.22.9.0 and install ghc-mod 5.6.0
-if [[ -z "$(which ghc-mod)" ]]; then
-  cabal update && cabal install cabal-install-1.22.9.0
-  cabal install ghc-mod
-fi
-
 # NPM commands
-sudo rm -rf $(which alex)  # Delete ghc-alex as it clashes with npm deps
+ALEX=$(which alex || true)
+# Delete 'alex' if it is not in a node_modules directory,
+# which means it is ghc-alex.
+if [[ -n "$ALEX" && "${ALEX/node_modules/}" == "${ALEX}" ]]; then
+  echo "Removing $ALEX"
+  sudo rm -rf $ALEX
+fi
 npm install
 
 # R commands
@@ -115,7 +99,7 @@ R -q -e 'install.packages("formatR")'
 go get -u github.com/golang/lint/golint
 go get -u golang.org/x/tools/cmd/goimports
 go get -u sourcegraph.com/sqs/goreturns
-go get -u golang.org/x/tools/cmd/gotype
+go get -u github.com/jayvdb/gotype
 go get -u github.com/kisielk/errcheck
 
 # Ruby commands
@@ -153,6 +137,13 @@ if [ ! -e ~/bakalint-0.4.0/bakalint.pl ]; then
   tar xf ~/bl.tar.gz -C ~/
 fi
 
+# elm-format Installation
+if [ ! -e ~/elm-format-0.18/elm-format ]; then
+  mkdir -p ~/elm-format-0.18
+  curl -fsSL -o elm-format.tgz https://github.com/avh4/elm-format/releases/download/0.5.2-alpha/elm-format-0.17-0.5.2-alpha-linux-x64.tgz
+  tar -xvzf elm-format.tgz -C ~/elm-format-0.18
+fi
+
 # Julia commands
 julia -e "Pkg.add(\"Lint\")"
 
@@ -186,8 +177,3 @@ if [ ! -e ~/.local/tailor/tailor-latest ]; then
   # Provide a constant path for the executable
   ln -s ~/.local/tailor/tailor-* ~/.local/tailor/tailor-latest
 fi
-
-# making coala cache the dependencies downloaded upon first run
-echo '' > dummy
-coala-ci --bears CheckstyleBear --files dummy --no-config --bear-dirs bears || true
-coala-ci --bears ScalaLintBear --files dummy --no-config --bear-dirs bears || true

@@ -35,7 +35,7 @@ class PycodestyleBear:
         :param max_line_length:
             Limit lines to this length.
         """
-        arguments = [r"--format='%(row)d %(col)d %(code)s %(text)s'"]
+        arguments = [r'--format=%(row)d %(col)d %(code)s %(text)s']
 
         if pycodestyle_ignore:
             arguments.append('--ignore=' + pycodestyle_ignore)

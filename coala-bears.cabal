@@ -1,0 +1,13 @@
+Name: coala-bears
+Version: 0.10
+cabal-version: >= 1.2
+build-type: Simple
+
+-- safe 0.3.9 is needed to coexist with Cabal 1.16
+-- safe 0.3.10 requires Cabal 1.18
+
+-- Note trusty apt package "haskell-platform" includes mtl-2.1.2
+-- which is incompatible with ShellCheck 0.4.1 which needs mtl-2.2.1
+
+library
+  build-depends: base, Cabal>=1.16, safe==0.3.9, cmdargs==0.10.14, ghc-mod==5.6.0.0, hlint==1.9.27, ShellCheck==0.4.1
