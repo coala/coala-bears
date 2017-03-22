@@ -2,11 +2,16 @@ sudo: required
 
 language: python
 python:
-  # 2.7 is rejected by dependency mypy-lang
-  - 3.3
   - 3.4
   - 3.5
   - 3.6
+
+matrix:
+  include:
+    - python: 2.7
+      env: UNSUPPORTED=true
+    - python: 3.3
+      env: UNSUPPORTED=true
 
 dist: trusty
 
@@ -71,13 +76,6 @@ env:
     - PATH="/opt/cabal/1.24/bin:$PATH:$TRAVIS_BUILD_DIR/node_modules/.bin:$TRAVIS_BUILD_DIR/vendor/bin:$HOME/dart-sdk/bin:$HOME/.cabal/bin:$HOME/infer-linux64-v0.7.0/infer/bin:$HOME/pmd-bin-5.4.1/bin:$HOME/bakalint-0.4.0:$HOME/elm-format-0.18:$HOME/.local/tailor/tailor-latest/bin"
 
 before_install:
-  - export TRAVIS_PYTHON_VERSION_MAJOR=${TRAVIS_PYTHON_VERSION%.[0-9]}
-  - export TRAVIS_PYTHON_VERSION_MINOR=${TRAVIS_PYTHON_VERSION#[0-9].}
-  - >
-    if [[ $TRAVIS_PYTHON_VERSION_MINOR < 4 || $TRAVIS_PYTHON_VERSION_MAJOR == 2 ]]; then
-      UNSUPPORTED=true
-    fi
-
   # Remove Ruby directive from Gemfile as this image has 2.2.5
   - sed -i '/^ruby/d' Gemfile
   - if [[ "$UNSUPPORTED" != true ]]; then bash .ci/deps.sh; fi
@@ -87,10 +85,13 @@ before_install:
   - cat test-requirements.txt docs-requirements.txt bear-requirements.txt >> requirements.txt
   - sed -i '/^-r/d' requirements.txt
   # On unsupported versions, coala will be installed in the `script` block
+  # mypy-lang does not install, and 3to2 must be pre-installed
+  # https://bitbucket.org/spirit/guess_language/issues/18
   - >
     if [[ "$UNSUPPORTED" == true ]]; then
-      sed -e '/^coala/d' requirements.txt > requirements.new
-      mv requirements.new requirements.txt
+      pip install 3to2
+      export PIP_NO_COMPILE=1
+      sed -E -i.bak '/^(coala|mypy-lang)/d' requirements.txt bear-requirements.txt
     fi
 
 before_script:
@@ -106,7 +107,7 @@ script:
   - >
     if [[ "$UNSUPPORTED" == true ]]; then
       set -e
-      python setup.py install | tee setup.err
+      python setup.py install --no-compile | tee setup.err
       grep -q 'coala supports only python 3.4 or later' setup.err
       if grep -q 'Traceback (most recent call last)' setup.err; then
         false
