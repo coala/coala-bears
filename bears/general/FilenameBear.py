@@ -19,14 +19,22 @@ class FilenameBear(LocalBear):
                           'snake': to_snakecase,
                           'space': to_spacecase}
 
+    _language_naming_convention = {
+                                   '.java': 'pascal',
+                                   '.js': 'kebab',
+                                   '.py': 'snake',
+                                  }
+
     def run(self, filename, file,
-            file_naming_convention: str='snake',
+            file_naming_convention: str=None,
             ignore_uppercase_filenames: bool=True):
         """
         Checks whether the filename follows a certain naming-convention.
 
         :param file_naming_convention:
             The naming-convention. Supported values are:
+            - ``auto`` to guess the correct convention. Defaults to ``snake``
+            if the correct convention cannot be guessed.
             - ``camel`` (``thisIsCamelCase``)
             - ``kebab`` (``this-is-kebab-case``)
             - ``pascal`` (``ThisIsPascalCase``)
@@ -38,6 +46,23 @@ class FilenameBear(LocalBear):
         """
         head, tail = os.path.split(filename)
         filename_without_extension, extension = os.path.splitext(tail)
+
+        if file_naming_convention is None:
+            self.warn('Please specify a file naming convention explicitly'
+                      ' or use "auto".')
+            file_naming_convention = 'auto'
+        else:
+            file_naming_convention = file_naming_convention.lower()
+
+        if file_naming_convention == 'auto':
+            if extension in self._language_naming_convention:
+                file_naming_convention = self._language_naming_convention[
+                    extension]
+            else:
+                self.warn('The file naming convention could not be guessed. '
+                          'Using the default "snake" naming convention.')
+                file_naming_convention = 'snake'
+
         try:
             new_name = self._naming_convention[file_naming_convention](
                 filename_without_extension)
