@@ -38,6 +38,13 @@ class SpaceConsistencyBearTest(LocalBearTestHelper):
         self.check_validity(self.uut, [''], filename='XYZ/__init__.py')
         self.check_validity(self.uut, [''], filename='/a/camCase')
 
+    def test_kebab_case(self):
+        self.section['file_naming_convention'] = 'kebab'
+        self.check_validity(self.uut, [''], filename='/Home/xyz/x_y.py',
+                            valid=False)
+        self.check_validity(self.uut, [''], filename='XYZ/init.py')
+        self.check_validity(self.uut, [''], filename='/a/kebab-case')
+
     def test_pascal_case(self):
         self.section['file_naming_convention'] = 'pascal'
         self.check_validity(self.uut, [''], filename='/Home/xyz/x_y.py',

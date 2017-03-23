@@ -4,7 +4,7 @@ from coalib.bears.LocalBear import LocalBear
 from coalib.results.Diff import Diff
 from coalib.results.Result import Result
 from coalib.bearlib.naming_conventions import (
-    to_camelcase, to_pascalcase, to_snakecase, to_spacecase)
+    to_camelcase, to_kebabcase, to_pascalcase, to_snakecase, to_spacecase)
 
 
 class FilenameBear(LocalBear):
@@ -14,6 +14,7 @@ class FilenameBear(LocalBear):
     LICENSE = 'AGPL-3.0'
 
     _naming_convention = {'camel': to_camelcase,
+                          'kebab': to_kebabcase,
                           'pascal': to_pascalcase,
                           'snake': to_snakecase,
                           'space': to_spacecase}
@@ -27,6 +28,7 @@ class FilenameBear(LocalBear):
         :param file_naming_convention:
             The naming-convention. Supported values are:
             - ``camel`` (``thisIsCamelCase``)
+            - ``kebab`` (``this-is-kebab-case``)
             - ``pascal`` (``ThisIsPascalCase``)
             - ``snake`` (``this_is_snake_case``)
             - ``space`` (``This Is Space Case``)
