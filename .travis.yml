@@ -43,6 +43,7 @@ addons:
       - opam
       - php-codesniffer
       - verilator
+      - mp3check
 
 cache:
   pip: true
