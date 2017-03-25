@@ -7,6 +7,7 @@ import unittest
 import unittest.mock
 
 from bears.general.InvalidLinkBear import InvalidLinkBear
+from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.settings.Section import Section
 
 
@@ -86,6 +87,23 @@ class InvalidLinkBearTest(unittest.TestCase):
                 outputs = list(uut.run('testline', [line]))
                 self.assertEqual(num, len(outputs))
 
+    def assertSeverity(self, file, severity, settings={}):
+        """
+        Test the warnings in each line of the file to match the
+        given severity.
+        :param file: The ``file`` to be checked.
+        :param severity: The severity level of the warnings in each
+                         line of the file.
+        """
+        severity_tag = RESULT_SEVERITY.reverse[severity]
+        with requests_mock.Mocker() as m:
+            uut = InvalidLinkBear(self.section, Queue())
+            m.add_matcher(custom_matcher)
+            outputs = list(uut.run('testfile', file, **settings))
+            for out in outputs:
+                out_dict = out.to_string_dict()
+                self.assertEqual(severity_tag, out_dict['severity'])
+
     def test_run(self):
         # Valid Links
         valid_file = """
@@ -143,6 +161,24 @@ class InvalidLinkBearTest(unittest.TestCase):
 
         for line in invalid_file.splitlines():
             self.assertResult(invalid_file=[line])
+
+    def test_severity(self):
+        normal_severity_file = """
+        http://httpbin.org/status/404
+        http://httpbin.org/status/410
+        http://httpbin.org/status/500
+        http://httpbin.org/status/503
+        http://httpbin.org/status/301
+        http://httpbin.org/status/302
+        """.splitlines()
+
+        self.assertSeverity(normal_severity_file, RESULT_SEVERITY.NORMAL)
+
+        major_severity_file = """
+        http://coalaisthebest.com
+        """.splitlines()
+
+        self.assertSeverity(major_severity_file, RESULT_SEVERITY.MAJOR)
 
     def test_check_prerequisites(self):
         with requests_mock.Mocker() as m:
@@ -251,6 +287,33 @@ class InvalidLinkBearTest(unittest.TestCase):
 
         for line in invalid_file[1:]:
             self.assertResult(invalid_file=[line])
+
+        info_severity_file = """
+        <ruleset name="test" xmlns="http://this.is.a.namespace/ruleset/7.0.0"
+        xmlns:xsi="http://this.is.another/kindof/namespace"
+        xsi:schemaLocation="http://this.is.a.namespace/ruleset/7.0.0"/>
+
+        <ruleset name="test" xmlns="http://a.new.namespace/ruleset/7.0.0"
+        xmlns:xsi="http://another.namespace/ruleset/7.0.0"
+        xsi:schemaLocation="http://another.namespace/ruleset/7.0.0"/>
+
+        <layer-list xmlns:android="http://schema.android.com/apk/res/android"/>
+
+        # Multiple ocurrences of namespaces
+        <stylesheet xmlns="http://one.more.namespace/xsl/transform"
+        xmlns:html="http://httpbin.com/200"
+        xsi:schemaLocation="http://this.is.a.namespace/ruleset/7.0.0
+                            http://another.namespace/ruleset/7.0.0
+                            http://one.more.namespace/xsl/transform"/>
+        """.splitlines()
+
+        self.assertSeverity(info_severity_file, RESULT_SEVERITY.INFO)
+
+        normal_severity_file = """
+        xsi:schemaLocation="http://httpbin.com/404"
+        """.splitlines()
+
+        self.assertSeverity(normal_severity_file, RESULT_SEVERITY.NORMAL)
 
     def test_links_to_ignore(self):
         valid_file = """http://httpbin.org/status/200
