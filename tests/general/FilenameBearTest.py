@@ -6,7 +6,7 @@ from coalib.output.printers.LOG_LEVEL import LOG_LEVEL
 from coalib.settings.Section import Section
 
 
-class SpaceConsistencyBearTest(LocalBearTestHelper):
+class FilenameBearTest(LocalBearTestHelper):
 
     def setUp(self):
         self.section = Section('test section')
