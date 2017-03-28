@@ -14,7 +14,7 @@ class PuppetLintBear:
     '''
 
     LANGUAGES = {'Puppet'}
-    REQUIREMENTS = {GemRequirement('puppet-lint', '2')}
+    REQUIREMENTS = {GemRequirement('puppet-lint', '2.1.1')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
