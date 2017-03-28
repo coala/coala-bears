@@ -68,23 +68,22 @@ class YapfBear(LocalBear):
             Prevents splitting consecutive brackets. Only relevant when
             ``dedent_closing_brackets`` is set.
             Example:
-            If ``True``,
+            If ``True``::
 
-            ```
-            call_func_that_takes_a_dict(
-                {
+                call_func_that_takes_a_dict(
+                    {
+                        'key1': 'value1',
+                        'key2': 'value2',
+                    }
+                )
+
+            would reformat to::
+
+                call_func_that_takes_a_dict({
                     'key1': 'value1',
                     'key2': 'value2',
-                }
-            )
-            ```
-            would reformat to:
-            ```
-            call_func_that_takes_a_dict({
-                'key1': 'value1',
-                'key2': 'value2',
-            })
-            ```
+                })
+
         :param join_multiple_lines:
             Joins short lines into one line.
         :param spaces_around_power_operator:

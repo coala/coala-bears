@@ -57,66 +57,60 @@ class GNUIndentBear:
         :param blank_lines_after_declarations:
             Forces blank lines after the declarations.
 
-            Example:
-                If ``blank_lines_after_declarations = True`` then
-                ```
+            Example: If ``blank_lines_after_declarations = True`` then::
+
                 int a;
                 return ...;
-                ```
-                changes to
-                ```
+
+            changes to::
+
                 int a;
 
                 return ...;
-                ```
 
         :param blank_lines_after_procedures:
             Force blank lines after procedure bodies.
         :param blank_lines_after_commas:
             Forces newline after comma in declaration.
 
-            Example:
-                If ``blank_lines_after_commas = True`` then
-                ```
+            Example: If ``blank_lines_after_commas = True`` then::
+
                 int a, b;
-                ```
-                changes to
-                ```
+
+            changes to::
+
                 int a,
-                  b;
-                ```
+                b;
+
         :param braces_on_if_line:
             Puts the brace ``{`` on same line with if.
 
-            Example:
-                If ``braces_on_if_line = True``  then
-                ```
+            Example: If ``braces_on_if_line = True``  then::
+
                 if (x > 0)
                 {
-                ```
-                changes to
-                ```
+
+            changes to::
+
                 if (x > 0) {
-                ```
+
         :param braces_on_func_def_line:
             Puts the brace `{` on same line with the function declaration.
         :param cuddle_else:
             Cuddle else and preceding ``}``.
 
-            Example:
-                If ``cuddle_else = True`` then
-                ```
+            Example: If ``cuddle_else = True`` then::
+
                 if (...) {
                     ....
                 }
                 else {
-                ```
-                changes to
-                ```
+
+            changes to::
+
                 if (...) {
                     ....
                 } else {
-                ```
 
         :param while_and_brace_on_same_line:
             Cuddles while of ``do {} while``; and preceding ``}``.
@@ -134,17 +128,16 @@ class GNUIndentBear:
             Forces variables names to be aligned in column ``n`` with
             ``n = declaration_indent``  in declaration.
 
-            Example:
-                If ``declaration_indent = 8`` then,
-                ```
+            Example: If ``declaration_indent = 8`` then::
+
                 int a;
                 float b;
-                ```
-                changes to
-                ```
+
+            changes to::
+
                 int     a;
                 float   b;
-                ```
+
         :param brace_indent:
             Specifies the number of spaces by which braces are indented. Its
             default value is 2.

@@ -133,69 +133,68 @@ class CoffeeLintBear:
         :param force_braces:
             Prohibits implicit braces when declaring object literals.
 
-            Example: If ``force_braces = True`` then
-            ```
-            1:2, 3:4
-            ```
-            is prohibited, whereas
-            ```
-            {1:2, 3:4}
-            ```
+            Example: If ``force_braces = True`` then::
+
+                1:2, 3:4
+
+            is prohibited, whereas::
+
+                {1:2, 3:4}
+
             is accepted.
         :param allow_implicit_parentheses:
             Allows implicit parentheses.
         :param allow_interpolation_in_single_quotes:
             Allows string interpolation in a single quoted string.
 
-            Example: If ``allow_interpolation_in_single_quotes = False`` then
-            ```
-            f = '#{bar}'
-            ```
-            is prohibited, whereas
-            ```
-            f = "#{bar}"
-            ```
+            Example: If ``allow_interpolation_in_single_quotes = False`` then::
+
+                f = '#{bar}'
+
+            is prohibited, whereas::
+
+                f = "#{bar}"
+
             is correct.
         :param allow_stand_alone_at_sign:
             Allows the use of stand alone  ``@``.
 
-            Example: If ``allow_stand_alone_at_sign = False``
-            ```
-            @ notok
-            not(@).ok
-            @::
-            ```
-            are prohibited, whereas
-            ```
-            @alright
-            @(fn)
-            @ok()
-            @[ok]
-            @ok()
-            ```
-            are accepted.
+            Example: If ``allow_stand_alone_at_sign = False``::
+
+                @ notok
+                not(@).ok
+                @::
+
+            are prohibited, whereas::
+
+                @alright
+                @(fn)
+                @ok()
+                @[ok]
+                @ok()
+
         :param allow_throwing_strings:
             Allows throwing string literals or interpolation.
 
-            Example: If ``allow_throwing_strings = False``
-            ```
-            throw 'my error'
-            throw "#{1234}"
-            ```
+            Example: If ``allow_throwing_strings = False``::
+
+                throw 'my error'
+                throw "#{1234}"
+
             will not be permitted.
         :param allow_trailing_semicolons:
             Prohibits trailing semicolons when ``False`` since they are
             not useful. The semicolon is meaningful only if there's another
             instruction on the same line.
 
-            Example: If ``allow_trailing_semicolon = False``
-            ```
-            x = '1234'; console.log(x)
-            ```
-            Here the semicolon is meaningful.
-            ```
-            alert('end of line');
-            ```
+            Example: If ``allow_trailing_semicolon = False``::
+
+                x = '1234'; console.log(x)
+
+            Here the semicolon is meaningful::
+
+                alert('end of line');
+
             This semicolon is redundant.
         :param allow_trailing_whitespaces:
             Checks whether to allow trailing whitespacess in the code or not.
@@ -215,18 +214,18 @@ class CoffeeLintBear:
         :param enforce_parentheses_on_non_empty_constructors:
             Requires constructors with parameters to include parentheses.
 
-            Example:
-            ```
-            class Foo
-            # Warn about missing parentheses here
-            a = new Foo
-            b = new bar.foo.Foo
-            # The parentheses make it clear no parameters are intended
-            c = new Foo()
-            d = new bar.foo.Foo()
-            e = new Foo 1, 2
-            f = new bar.foo.Foo 1, 2
-            ```
+            Example::
+
+                class Foo
+                # Warn about missing parentheses here
+                a = new Foo
+                b = new bar.foo.Foo
+                # The parentheses make it clear no parameters are intended
+                c = new Foo()
+                d = new bar.foo.Foo()
+                e = new Foo 1, 2
+                f = new bar.foo.Foo 1, 2
+
         :param consistent_line_endings_style:
             The option to ``line_endings``, its value is either ``unix`` or
             ``windows``.

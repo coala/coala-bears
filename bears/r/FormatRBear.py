@@ -47,15 +47,15 @@ class FormatRBear:
             Determines whether a brace should be placed on the next line.
 
             Example:
-            If ``True``,
-            ```
-            if (...) {
-            ```
-            changes to
-            ```
-            if (...)
-            {
-            ```
+            If ``True``::
+
+                if (...) {
+
+            changes to::
+
+                if (...)
+                {
+
             If ``False`` the brace is placed on the same line.
         :param r_use_arrows:
             Determines whether the assignment operator ``=`` should be replaced
@@ -67,15 +67,14 @@ class FormatRBear:
         :param r_max_expression_length:
             Maximum number of characters for an expression.
 
-            Example: If ``20`` then
-            ```
-            1 + 1 + 1 + 1 + 1 + 1 + 1
-            ```
-            changes to
-            ```
-            1 + 1 + 1 + 1 + 1 + 1 +
-                1
-            ```
+            Example: If ``20`` then::
+
+                1 + 1 + 1 + 1 + 1 + 1 + 1
+
+            changes to::
+
+                1 + 1 + 1 + 1 + 1 + 1 +
+                    1
         """
         options = {'source="' + escape(filename, '"\\') + '"',
                    'blank=' + _map_to_r_bool(r_keep_blank_lines),
