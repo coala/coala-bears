@@ -126,6 +126,7 @@ def write_gem_requirements(requirements):
     for requirement in requirements:
         gem_dependencies.append(
             {'name' : requirement.package,
+             'version' : requirement.version,
              'required' : requirement.require})
 
     gemfile_string = template.render(
