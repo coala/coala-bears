@@ -39,7 +39,7 @@ class FilenameBear(LocalBear):
         head, tail = os.path.split(filename)
         filename_without_extension, extension = os.path.splitext(tail)
         try:
-            new_name = self._naming_convention[file_naming_convention](
+            new_name = self._naming_convention[file_naming_convention.lower()](
                 filename_without_extension)
         except KeyError:
             self.err('Invalid file-naming-convention provided: ' +

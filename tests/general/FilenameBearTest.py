@@ -68,3 +68,9 @@ class SpaceConsistencyBearTest(LocalBearTestHelper):
         self.section['ignore_uppercase_filenames'] = 'nope'
 
         self.check_validity(self.uut, [''], filename='/LICENSE', valid=False)
+
+    def test_upper_case(self):
+        self.section['file_naming_convention'] = 'Snake'
+        self.check_validity(self.uut, [''], filename='/Home/xyz/x_y.py')
+        self.check_validity(self.uut, [''], filename='XYZ/__init__.py')
+        self.check_validity(self.uut, [''], filename='/a/pyCase', valid=False)
