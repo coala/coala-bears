@@ -173,6 +173,7 @@ class CoffeeLintBear:
                 @[ok]
                 @ok()
 
+            are accepted.
         :param allow_throwing_strings:
             Allows throwing string literals or interpolation.
 
