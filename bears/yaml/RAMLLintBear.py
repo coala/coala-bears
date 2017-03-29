@@ -15,7 +15,8 @@ class RAMLLintBear:
     """
 
     LANGUAGES = {'RAML'}
-    REQUIREMENTS = {NpmRequirement('ramllint', '>=1.2.2 <1.2.4')}
+    REQUIREMENTS = {NpmRequirement('ramllint',
+                                   '>=1.2.2 <1.2.4 || >=1.2.5 <1.3.0')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
