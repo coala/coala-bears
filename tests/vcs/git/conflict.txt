@@ -1,0 +1,15 @@
+# A file with merge conflict markers
+print 'Line 1 does something'
+print 'No issues till here'
+<<<<<<< HEAD: mergetest
+print 'This is my third line'
+print 'Original fourth line unchanged'
+=========
+print 'This is a fourth line I am adding'
+>>>>>>> 4e2b407f501b68f8588aa645acafffa0224b9b78: mergetest
+
+<<<<<<< HEAD: mergetest
+print 'Fifth line that could be removed in the next commit'
+=========
+>>>>>>> 4e2b407f501b68f8588aa645acafffa0224b9b78: mergetest
+print 'Let me know how this looks'

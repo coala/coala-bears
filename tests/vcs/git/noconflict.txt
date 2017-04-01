@@ -1,0 +1,7 @@
+# A file without merge conflict markers
+print 'Line 1 does something'
+print 'No issues till here'
+print 'This is my third line'
+print 'Original fourth line unchanged'
+
+print 'Fifth line that could be removed in the next commit'
