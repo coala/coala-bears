@@ -1,6 +1,0 @@
-Collecting coala
-  Downloading coala-0.10.0.tar.gz (2.0MB)
-    Complete output from command python setup.py egg_info:
-    coala supports only python 3.4 or later.
-    
-    ----------------------------------------
