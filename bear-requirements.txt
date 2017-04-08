@@ -1,6 +1,7 @@
 HTTPolice~=0.5.2
 aenum~=2.0.8
 apertium-lint~=0.29
+attrs==17.2.0
 autoflake~=0.7
 autopep8~=1.2
 bandit~=1.2

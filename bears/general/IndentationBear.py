@@ -67,7 +67,12 @@ class IndentationBear(LocalBear):
         """
         lang_settings_dict = LanguageDefinition(
             language, coalang_dir=coalang_dir)
-        annotation_dict = dependency_results[AnnotationBear.name][0].contents
+        dep_contents = dependency_results[AnnotationBear.name][0].contents
+        annotation_dict = {}
+        annotation_dict['strings'] = (dep_contents.singleline_strings +
+                                      dep_contents.multiline_strings)
+        annotation_dict['comments'] = (dep_contents.singleline_comments +
+                                       dep_contents.multiline_comments)
         # sometimes can't convert strings with ':' to dict correctly
         if ':' in dict(lang_settings_dict['indent_types']).keys():
             indent_types = dict(lang_settings_dict['indent_types'])
@@ -151,8 +156,8 @@ class IndentationBear(LocalBear):
                 new_line = (prev_indent + ' '*indent +
                             insert*(indent_levels[line] - prev_indent_level) +
                             indented_file[line].lstrip())
-                indented_file[line] = new_line if new_line.strip() != ''\
-                    else '\n'
+                indented_file[line] = (new_line if new_line.strip() != ''
+                                       else '\n')
         return indented_file
 
     def get_absolute_indent_of_range(self,
@@ -168,7 +173,7 @@ class IndentationBear(LocalBear):
         :param encaps_pos:      A tuple ofSourceRanges of code regions
                                 trapped in between a matching pair of
                                 encapsulators.
-        :param annotation_dict: A dictionary containing sourceranges of all the
+        :param annotation_dict: A dictionary containing dicts of all the
                                 strings and comments within a file.
         :return:                A tuple of tuples with first element as the
                                 range of encapsulator and second element as the
@@ -196,7 +201,7 @@ class IndentationBear(LocalBear):
         :param filename:        Name of the file that needs to be checked.
         :param indent_types:    A dictionary with keys as start of indent and
                                 values as their corresponding closing indents.
-        :param annotation_dict: A dictionary containing sourceranges of all the
+        :param annotation_dict: A dictionary containing dicts of all the
                                 strings and comments within a file.
         :param encapsulators:   A tuple of sourceranges of all encapsulators of
                                 a language.
@@ -255,7 +260,7 @@ class IndentationBear(LocalBear):
                                 block has begun.
         :param close_specifier: A character or string indicating that the block
                                 has ended.
-        :param annotation_dict: A dictionary containing sourceranges of all the
+        :param annotation_dict: A dictionary containing dicts of all the
                                 strings and comments within a file.
         :return:                A tuple with the first source range being
                                 the range of the outermost indentation while
@@ -324,7 +329,7 @@ class IndentationBear(LocalBear):
         :param filename:         Name of the file that needs to be checked.
         :param indent_specifier: A character or string indicating that the
                                  indentation should begin.
-        :param annotation_dict: A dictionary containing sourceranges of all the
+        :param annotation_dict: A dictionary containing dicts of all the
                                 strings and comments within a file.
         :param encapsulators:   A tuple of sourceranges of all encapsulators of
                                 a language.
@@ -372,7 +377,7 @@ class IndentationBear(LocalBear):
         :param file:            File that needs to be checked in the form of
                                 a list of strings.
         :param sequence:        Sequence whose validity is to be checked.
-        :param annotation_dict: A dictionary containing sourceranges of all the
+        :param annotation_dict: A dictionary containing dicts of all the
                                 strings and comments within a file.
         :param encapsulators:   A tuple of SourceRanges of code regions
                                 trapped in between a matching pair of
@@ -394,22 +399,23 @@ class IndentationBear(LocalBear):
 
             # ignore if within string
             for string in annotation_dict['strings']:
-                if(gt_eq(sequence_position, string.start) and
-                   lt_eq(sequence_position, string.end)):
+                if(gt_eq(sequence_position, string.full_range.start) and
+                   lt_eq(sequence_position, string.full_range.end)):
                     valid = False
 
             # ignore if within comments
             for comment in annotation_dict['comments']:
-                if(gt_eq(sequence_position, comment.start) and
-                   lt_eq(sequence_position, comment.end)):
+                if(gt_eq(sequence_position, comment.full_range.start) and
+                   lt_eq(sequence_position, comment.full_range.end)):
                     valid = False
 
-                if(comment.start.line == sequence_position.line and
-                        comment.end.line == sequence_position.line and
-                        check_ending):
-                    sequence_line_text = sequence_line_text[
-                        :comment.start.column - 1] + sequence_line_text[
-                        comment.end.column-1:]
+                if(comment.full_range.start.line == sequence_position.line
+                        and comment.full_range.end.line ==
+                        sequence_position.line and check_ending):
+                    sequence_line_text = (sequence_line_text[
+                        :comment.full_range.start.column - 1] +
+                        sequence_line_text[comment.full_range.end.column-1:
+                                           ])
 
             if encapsulators:
                 for encapsulator in encapsulators:
@@ -462,7 +468,7 @@ def get_first_unindent(indent,
     :param file:            A tuple of strings.
     :param start_line:      The line from where to start searching for
                             unindent.
-    :param annotation_dict: A dictionary containing sourceranges of all the
+    :param annotation_dict: A dictionary containing dicts of all the
                             strings and comments within a file.
     :param encapsulators:   A tuple of SourceRanges of code regions trapped in
                             between a matching pair of encapsulators.
@@ -476,12 +482,12 @@ def get_first_unindent(indent,
         valid = True
 
         for comment in annotation_dict['comments']:
-            if(comment.start.line < line_nr + 1 and
-               comment.end.line >= line_nr + 1):
+            if(comment.full_range.start.line < line_nr + 1 and
+               comment.full_range.end.line >= line_nr + 1):
                 valid = False
 
-            first_char = file[line_nr].lstrip()[0] if file[line_nr].strip()\
-                else ''
+            first_char = (file[line_nr].lstrip()[0] if file[line_nr].strip()
+                          else '')
             if first_char in comments:
                 valid = False
 

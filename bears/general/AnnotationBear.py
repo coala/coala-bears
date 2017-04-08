@@ -1,3 +1,5 @@
+import attr
+
 from coalib.bearlib.languages.LanguageDefinition import LanguageDefinition
 from coalib.bears.LocalBear import LocalBear
 from coalib.results.HiddenResult import HiddenResult
@@ -23,10 +25,12 @@ class AnnotationBear(LocalBear):
         :param coalang_dir:
             External directory for coalang file.
         :return:
-            One HiddenResult containing a dictionary with keys being 'strings'
-            or 'comments' and values being a tuple of SourceRanges pointing to
-            the strings and a tuple of SourceRanges pointing to all comments
-            respectively. The ranges do include string quotes or the comment
+            One HiddenResult containing a dictionary with keys being
+            'singleline strings', 'multiline strings', 'singleline comments'
+            and 'multiline comments' and values being a dictionary with
+            keys ```'start_delimiter_range', 'end_delimiter_range'
+            'content_range', 'full_range'```.
+            The ranges do include string quotes or the comment
             starting separator but not anything before (e.g. when using
             ``u"string"``, the ``u`` will not be in the source range).
         """
@@ -44,9 +48,9 @@ class AnnotationBear(LocalBear):
         multiline_comment_delimiters = dict(
             lang_dict['multiline_comment_delimiters'])
         comment_delimiter = dict(lang_dict['comment_delimiter'])
-        string_ranges = comment_ranges = ()
+        ranges = []
         try:
-            string_ranges, comment_ranges = self.find_annotation_ranges(
+            ranges = self.find_annotation_ranges(
                 file,
                 filename,
                 string_delimiters,
@@ -58,7 +62,7 @@ class AnnotationBear(LocalBear):
             yield Result(self, str(e), severity=RESULT_SEVERITY.MAJOR,
                          affected_code=(e.code,))
 
-        content = {'strings': string_ranges, 'comments': comment_ranges}
+        content = AnnotationContent(ranges)
         yield HiddenResult(self, content)
 
     def find_annotation_ranges(self,
@@ -88,66 +92,99 @@ class AnnotationBear(LocalBear):
             A dictionary containing the various ways to define multi-line
             comments in a language.
         :return:
-            Two tuples first containing a tuple of strings, the second a tuple
-            of comments.
+            Four tuples containing dictionary for singleline strings,
+            multiline strings, singleline comments and multiline comments
+            respectively.
         """
         text = ''.join(file)
-        strings_range = []
-        comments_range = []
+        annotations_range = []
         position = 0
+
         while position <= len(text):
 
             def get_new_position():
-                _range, end_position = self.get_range_end_position(
-                    file,
-                    filename,
-                    text,
-                    multiline_string_delimiters,
-                    position,
-                    self.get_multiline)
-                if end_position and _range:
-                    strings_range.append(_range)
+                end_position, start_delim, end_delim = (
+                    self.get_range_end_position(
+                        file,
+                        filename,
+                        text,
+                        multiline_string_delimiters,
+                        position,
+                        self.get_multiline))
+                if end_position:
+                    seperate_ranges = get_seperate_ranges(file,
+                                                          filename,
+                                                          start_delim,
+                                                          end_delim,
+                                                          position,
+                                                          end_position)
+                    annotations_range.append(AnnotationRange(
+                        'multiline_string', seperate_ranges))
                     return end_position + 1
 
-                _range, end_position = self.get_range_end_position(
-                    file,
-                    filename,
-                    text,
-                    string_delimiters,
-                    position,
-                    self.get_singleline_strings)
-                if end_position and _range:
-                    strings_range.append(_range)
+                end_position, start_delim, end_delim = (
+                    self.get_range_end_position(
+                        file,
+                        filename,
+                        text,
+                        string_delimiters,
+                        position,
+                        self.get_singleline_strings))
+                if end_position:
+                    seperate_ranges = get_seperate_ranges(file,
+                                                          filename,
+                                                          start_delim,
+                                                          end_delim,
+                                                          position,
+                                                          end_position)
+                    annotations_range.append(AnnotationRange(
+                        'singleline_string', seperate_ranges))
                     return end_position + 1
 
-                _range, end_position = self.get_range_end_position(
-                    file,
-                    filename,
-                    text,
-                    multiline_comment_delimiters,
-                    position,
-                    self.get_multiline)
-                if end_position and _range:
-                    comments_range.append(_range)
+                end_position, start_delim, end_delim = (
+                    self.get_range_end_position(
+                        file,
+                        filename,
+                        text,
+                        multiline_comment_delimiters,
+                        position,
+                        self.get_multiline))
+                if end_position:
+                    seperate_ranges = get_seperate_ranges(file,
+                                                          filename,
+                                                          start_delim,
+                                                          end_delim,
+                                                          position,
+                                                          end_position)
+                    annotations_range.append(AnnotationRange(
+                        'multiline_comment', seperate_ranges))
                     return end_position + 1
 
-                _range, end_position = self.get_range_end_position(
-                    file,
-                    filename,
-                    text,
-                    comment_delimiter,
-                    position,
-                    self.get_singleline_comment,
-                    single_comment=True)
-                if end_position and _range:
-                    comments_range.append(_range)
+                end_position, start_delim, end_delim = (
+                    self.get_range_end_position(
+                        file,
+                        filename,
+                        text,
+                        comment_delimiter,
+                        position,
+                        self.get_singleline_comment,
+                        single_comment=True))
+                if end_position:
+                    seperate_ranges = get_seperate_ranges(file,
+                                                          filename,
+                                                          start_delim,
+                                                          end_delim,
+                                                          position,
+                                                          end_position)
+                    annotations_range.append(AnnotationRange(
+                        'singleline_comment', seperate_ranges))
                     return end_position + 1
 
                 return position + 1
 
             position = get_new_position()
 
-        return tuple(strings_range), tuple(comments_range)
+        return annotations_range
 
     @staticmethod
     def get_range_end_position(file,
@@ -157,26 +194,27 @@ class AnnotationBear(LocalBear):
                                position,
                                func,
                                single_comment=False):
-        _range = end_position = None
+        selected_annotation = end_position = selected_end_annotation = None
         for annotation in annotations.keys():
             if text[position:].startswith(annotation):
+                selected_annotation = annotation
                 if not single_comment:
-                    ret_val = func(file,
-                                   filename,
-                                   text,
-                                   annotation,
-                                   annotations[annotation],
-                                   position)
+                    selected_end_annotation = annotations[selected_annotation]
+                    end_position = func(file,
+                                        filename,
+                                        text,
+                                        annotation,
+                                        annotations[annotation],
+                                        position)
                 else:
-                    ret_val = func(file,
-                                   filename,
-                                   text,
-                                   annotation,
-                                   position)
-                if ret_val:
-                    _range, end_position = ret_val[0], ret_val[1]
+                    selected_end_annotation = '\n'
+                    end_position = func(file,
+                                        filename,
+                                        text,
+                                        annotation,
+                                        position)
 
-        return _range, end_position
+        return end_position, selected_annotation, selected_end_annotation
 
     @staticmethod
     def get_multiline(file,
@@ -200,8 +238,7 @@ class AnnotationBear(LocalBear):
         :param position:
             An integer identifying the position where the annotation started.
         :return:
-            A SourceRange object holding the range of the multi-line annotation
-            and the end_position of the annotation as an integer.
+            The end_position of the annotation as an integer.
         """
         end_end = get_end_position(annotation_end,
                                    text,
@@ -212,11 +249,7 @@ class AnnotationBear(LocalBear):
                 AbsolutePosition(file, position))
             raise NoCloseError(annotation_start, _range)
 
-        return (SourceRange.from_absolute_position(
-                    filename,
-                    AbsolutePosition(file, position),
-                    AbsolutePosition(file, end_end)),
-                end_end)
+        return end_end
 
     @staticmethod
     def get_singleline_strings(file,
@@ -239,8 +272,7 @@ class AnnotationBear(LocalBear):
         :position:
             An integer identifying the position where the string started.
         :return:
-            A SourceRange object identifying the range of the single-line
-            string and the end_position of the string as an integer.
+            The end_position of the string as an integer.
         """
         end_position = get_end_position(string_end,
                                         text,
@@ -254,11 +286,7 @@ class AnnotationBear(LocalBear):
                 AbsolutePosition(file, position))
             raise NoCloseError(string_start, _range)
         if newline > end_position:
-            return (SourceRange.from_absolute_position(
-                        filename,
-                        AbsolutePosition(file, position),
-                        AbsolutePosition(file, end_position)),
-                    end_position)
+            return end_position
 
     @staticmethod
     def get_singleline_comment(file, filename, text, comment, position):
@@ -275,19 +303,14 @@ class AnnotationBear(LocalBear):
         :position:
             An integer identifying the position where the string started.
         :return:
-            A SourceRange object identifying the range of the single-line
-            comment and the end_position of the comment as an integer.
+            The end_position of the comment as an integer.
         """
         end_position = get_end_position('\n',
                                         text,
                                         position + len(comment) - 1)
         if end_position == -1:
             end_position = len(text) - 1
-        return (SourceRange.from_absolute_position(
-                    filename,
-                    AbsolutePosition(file, position),
-                    AbsolutePosition(file, end_position)),
-                end_position)
+        return end_position
 
 
 def get_end_position(end_marker, text, position):
@@ -300,8 +323,93 @@ def get_end_position(end_marker, text, position):
     return end_position
 
 
+def get_seperate_ranges(file,
+                        filename,
+                        start_delim,
+                        end_delim,
+                        start_position,
+                        end_position):
+    ranges = []
+    ranges.append(SourceRange.from_absolute_position(
+        filename,
+        AbsolutePosition(file, start_position),
+        AbsolutePosition(file, start_position + len(start_delim) - 1)))
+
+    ranges.append(SourceRange.from_absolute_position(
+        filename,
+        AbsolutePosition(file, end_position - len(end_delim) + 1),
+        AbsolutePosition(file, end_position)))
+
+    if start_position + 1 == end_position:  # empty string so no content
+        ranges.append([])
+    else:
+        ranges.append(SourceRange.from_absolute_position(
+            filename,
+            AbsolutePosition(file, start_position + len(start_delim)),
+            AbsolutePosition(file, end_position - len(end_delim))))
+
+    ranges.append(SourceRange.from_absolute_position(
+        filename,
+        AbsolutePosition(file, start_position),
+        AbsolutePosition(file, end_position)))
+
+    return ranges
+
+
 class NoCloseError(Exception):
 
     def __init__(self, annotation, code):
         Exception.__init__(self, annotation + ' has no closure')
         self.code = code
+
+
+@attr.s
+class AnnotationRange:
+
+    AnnotationType = attr.ib(convert=str)
+    range = attr.ib()
+    start_delimiter_range = attr.ib(init=False)
+    end_delimiter_range = attr.ib(init=False)
+    content_range = attr.ib(init=False)
+    full_range = attr.ib(init=False)
+
+    def __attrs_post_init__(self):
+        if len(self.range) == 4:
+            self.start_delimiter_range = self.range[0]
+            self.end_delimiter_range = self.range[1]
+            self.content_range = self.range[2]
+            self.full_range = self.range[3]
+        else:
+            self.start_delimiter_range = []
+            self.end_delimiter_range = []
+            self.content_range = []
+            self.full_range = []
+
+
+@attr.s
+class AnnotationContent:
+
+    singleline_strings = attr.ib(init=False)
+    multiline_strings = attr.ib(init=False)
+    singleline_comments = attr.ib(init=False)
+    multiline_comments = attr.ib(init=False)
+    ranges = attr.ib()
+
+    def __attrs_post_init__(self):
+        single_strings = []
+        multi_strings = []
+        single_comments = []
+        multi_comments = []
+        for range in self.ranges:
+            if range.AnnotationType == 'singleline_string':
+                single_strings.append(range)
+            elif range.AnnotationType == 'multiline_string':
+                multi_strings.append(range)
+            elif range.AnnotationType == 'multiline_comment':
+                multi_comments.append(range)
+            elif range.AnnotationType == 'singleline_comment':
+                single_comments.append(range)
+        self.singleline_strings = single_strings
+        self.multiline_strings = multi_strings
+        self.singleline_comments = single_comments
+        self.multiline_comments = multi_comments

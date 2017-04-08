@@ -62,21 +62,27 @@ class QuotesBear(LocalBear):
         :param preferred_quotation: Your preferred quotation character, e.g.
                                     ``"`` or ``'``.
         """
-        if not isinstance(dependency_results[AnnotationBear.name][0],
-                          HiddenResult):
+        if (not dependency_results or
+            not isinstance(dependency_results[AnnotationBear.name],
+                           HiddenResult)):
             return
-        if isinstance(dependency_results[AnnotationBear.name][0].contents,
+        if isinstance(dependency_results[AnnotationBear.name].contents,
                       str):
-            self.err(dependency_results[AnnotationBear.name][0].contents)
+            self.err(dependency_results[AnnotationBear.name].contents)
             return
 
-        ranges = dependency_results[AnnotationBear.name][0].contents['strings']
+        dep_contents = dependency_results[AnnotationBear.name].contents
+        annotation_dict = {}
+        annotation_dict['strings'] = (dep_contents.singleline_strings +
+                                      dep_contents.multiline_strings)
+        ranges = annotation_dict['strings']
 
         for string_range in ranges:
-            if (file[string_range.start.line-1][string_range.start.column-1] ==
+            temp_range = string_range.full_range
+            if (file[temp_range.start.line-1][temp_range.start.column-1] ==
                     preferred_quotation):
                 continue
 
-            if string_range.start.line == string_range.end.line:
+            if temp_range.start.line == temp_range.end.line:
                 yield from self.correct_single_line_str(
-                    filename, file, string_range, preferred_quotation)
+                    filename, file, temp_range, preferred_quotation)
