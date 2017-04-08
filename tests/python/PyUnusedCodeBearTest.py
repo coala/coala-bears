@@ -34,6 +34,19 @@ import sys
 sys.exit(0)
 """
 
+with_unused_variables = """
+def main():
+    x = 10
+    y = 11
+    print(y)
+"""
+
+without_unused_variables = """
+def main():
+    y = 11
+    print(y)
+"""
+
 PyAllUnusedImportTest = verify_local_bear(
                 PyUnusedCodeBear,
                 valid_files=[valid_import,
@@ -52,3 +65,15 @@ PyUnusedCodeBearTest = verify_local_bear(
                 invalid_files=[invalid_imports,
                                invalid_from_import],
                 settings={'remove_all_unused_imports': False})
+
+PyUnusedVariablesTest = verify_local_bear(
+                PyUnusedCodeBear,
+                valid_files=[without_unused_variables],
+                invalid_files=[with_unused_variables],
+                settings={'remove_unused_variables': True})
+
+PyUnusedVariablesBearTest = verify_local_bear(
+                PyUnusedCodeBear,
+                valid_files=[with_unused_variables],
+                invalid_files=[],
+                settings={'remove_unused_variables': False})

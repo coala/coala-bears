@@ -15,7 +15,8 @@ class PyUnusedCodeBear(LocalBear):
     CAN_DETECT = {'Unused Code'}
 
     def run(self, filename, file,
-            remove_all_unused_imports: bool=False):
+            remove_all_unused_imports: bool=False,
+            remove_unused_variables: bool=True):
         """
         Detects unused code. By default this functionality is limited to:
 
@@ -24,13 +25,15 @@ class PyUnusedCodeBear(LocalBear):
 
         :param remove_all_unused_imports:
             True removes all unused imports - might have side effects
+        :param remove_unused_variables:
+            True removes unused variables - might have side effects
         """
 
         corrected = autoflake.fix_code(
                        ''.join(file),
                        additional_imports=None,
                        remove_all_unused_imports=remove_all_unused_imports,
-                       remove_unused_variables=True
+                       remove_unused_variables=remove_unused_variables
                        ).splitlines(True)
 
         for diff in Diff.from_string_arrays(file, corrected).split_diff():
