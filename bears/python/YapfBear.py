@@ -10,11 +10,6 @@ from coalib.results.Diff import Diff
 
 
 class YapfBear(LocalBear):
-    """
-    Check and correct formatting of Python code using ``yapf`` utility.
-
-    See <https://github.com/google/yapf> for more information.
-    """
     LANGUAGES = {'Python', 'Python 2', 'Python 3'}
     AUTHORS = {'The coala developers'}
     REQUIREMENTS = {PipRequirement('yapf', '0.14.0')}
@@ -46,6 +41,9 @@ class YapfBear(LocalBear):
             based_on_style: str='pep8',
             prefer_line_break_after_opening_bracket: bool=True):
         """
+        Check and correct formatting of Python code using ``yapf`` utility.
+        See <https://github.com/google/yapf> for more information.
+
         :param max_line_length:
             Maximum number of characters for a line.
         :param indent_size:
