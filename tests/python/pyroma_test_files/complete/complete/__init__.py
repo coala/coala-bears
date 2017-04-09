@@ -1,3 +1,3 @@
 import os
 
-print(os.__doc__)
+os.__doc__
