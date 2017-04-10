@@ -2,10 +2,8 @@ from queue import Queue
 
 from bears.haskell.GhcModBear import GhcModBear
 from coalib.testing.LocalBearTestHelper import LocalBearTestHelper
-from coalib.testing.LocalBearTestHelper import verify_local_bear
 from coalib.testing.BearTestHelper import generate_skip_decorator
 from coalib.settings.Section import Section
-from coalib.settings.Setting import Setting
 
 
 # A simple hello world program!

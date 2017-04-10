@@ -15,6 +15,14 @@ language = python
 default_actions = *: ApplyPatchAction
 preferred_quotation = '
 
+[flakes]
+# Do not set default_action to ApplyPatchAction as it may lead to some
+# required imports being removed which might result in coala behaving weirdly.
+default_action: *: ShowPatchAction
+bears = PyUnusedCodeBear
+language = Python
+remove_all_unused_imports = true
+
 [autopep8]
 bears = PEP8Bear, PycodestyleBear
 default_actions = PEP8Bear: ApplyPatchAction

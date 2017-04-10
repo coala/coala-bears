@@ -1,5 +1,4 @@
 import os
-import re
 from queue import Queue
 from shutil import which
 from unittest.case import skipIf
@@ -7,7 +6,6 @@ from unittest.case import skipIf
 from bears.css.StyleLintBear import StyleLintBear
 from coalib.testing.LocalBearTestHelper import LocalBearTestHelper
 from coalib.settings.Section import Section
-from coalib.settings.Setting import Setting
 
 
 @skipIf(which('stylelint') is None, 'Stylelint is not installed')

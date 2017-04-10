@@ -1,5 +1,3 @@
-import platform
-
 from coalib.bearlib.abstractions.Linter import linter
 from dependency_management.requirements.DistributionRequirement import (
     DistributionRequirement)

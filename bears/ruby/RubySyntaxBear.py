@@ -1,5 +1,4 @@
 from coalib.bearlib.abstractions.Linter import linter
-from dependency_management.requirements.GemRequirement import GemRequirement
 from dependency_management.requirements.DistributionRequirement import (
     DistributionRequirement)
 

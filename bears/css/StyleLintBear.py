@@ -1,4 +1,3 @@
-import os
 import json
 from coalib.bearlib.abstractions.Linter import linter
 from dependency_management.requirements.NpmRequirement import NpmRequirement
