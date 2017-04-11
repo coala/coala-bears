@@ -104,6 +104,7 @@ def create_upload_parser():
 def main():
     args = create_upload_parser().parse_args()
 
+    os.chdir(os.path.join(os.path.dirname(__file__), '..'))
     os.makedirs(os.path.join('bears', 'upload'), exist_ok=True)
 
     bear_version = VERSION

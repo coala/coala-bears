@@ -26,10 +26,14 @@ class TouchTest(unittest.TestCase):
 
 class CreateFileFromTemplateTest(unittest.TestCase):
 
+    BASE_TEST_PATH = os.path.abspath(os.path.join(
+        os.path.dirname(__file__),
+        'generate_package_input_files'))
+
     SUBST_FILE = os.path.join(
-        'tests', 'generate_package_input_files', 'substituted_file.py')
+        BASE_TEST_PATH, 'substituted_file.py')
     TEMPL_FILE = os.path.join(
-        'tests', 'generate_package_input_files', 'template_file.py.in')
+        BASE_TEST_PATH, 'template_file.py.in')
 
     def test_output_file(self):
         data = {'who': 'George', 'sport': 'swimming'}
@@ -85,11 +89,17 @@ class PerformUploadTest(unittest.TestCase):
 
 class MainTest(unittest.TestCase):
 
+    BEARS_PATH = os.path.abspath(os.path.join(
+        os.path.dirname(__file__), '..', 'bears'))
+    BEARS_UPLOAD_PATH = os.path.join(BEARS_PATH, 'upload')
     CSS_BEAR_SETUP_PATH = os.path.join(
-        'bears', 'upload', 'CSSLintBear', 'setup.py')
-    NO_BEAR_PATH = os.path.join('bears', 'BadBear', 'InvalidBear.py')
+        BEARS_UPLOAD_PATH, 'CSSLintBear', 'setup.py')
+    NO_BEAR_PATH = os.path.join(BEARS_PATH,
+                                'BadBear', 'InvalidBear.py')
 
     def setUp(self):
+        self.orig_dir = os.getcwd()
+
         self.argv = ['generate_package.py']
         argv_patcher = patch.object(sys, 'argv', self.argv)
         self.addCleanup(argv_patcher.stop)
@@ -97,7 +107,7 @@ class MainTest(unittest.TestCase):
 
     def test_main(self):
         main()
-        self.assertTrue(os.path.exists(os.path.join('bears', 'upload')))
+        self.assertTrue(os.path.exists(self.BEARS_UPLOAD_PATH))
         with open(self.CSS_BEAR_SETUP_PATH) as fl:
             setup_py = fl.read()
         self.assertIn('Check code for syntactical or semantical', setup_py)
@@ -136,12 +146,14 @@ class MainTest(unittest.TestCase):
 
     def test_no_bear_object(self):
         if not os.path.exists(self.NO_BEAR_PATH):
-            os.makedirs(os.path.join('bears', 'BadBear'))
+            os.makedirs(os.path.join(self.BEARS_PATH, 'BadBear'))
             touch(self.NO_BEAR_PATH)
         main()
         self.assertFalse(os.path.exists(os.path.join(
-            'bears', 'upload', 'BadBear')))
-        shutil.rmtree(os.path.join('bears', 'BadBear'))
+            self.BEARS_UPLOAD_PATH, 'BadBear')))
+        shutil.rmtree(os.path.join(self.BEARS_PATH, 'BadBear'))
 
     def tearDown(self):
-        shutil.rmtree(os.path.join('bears', 'upload'))
+        shutil.rmtree(os.path.join(self.BEARS_UPLOAD_PATH))
+
+        os.chdir(self.orig_dir)
