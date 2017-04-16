@@ -20,6 +20,7 @@
     "remark-cli": "~2",
     "remark-lint": "~5",
     "stylelint": "~7",
+    "stylint": "~1.5.9",
     "tslint": "~3",
     "typescript": ">=1.7.3",
     "write-good": "~0.9.1"
