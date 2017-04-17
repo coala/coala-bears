@@ -31,6 +31,18 @@ class GitCommitBear(GlobalBear):
     }
     CONCATENATION_KEYWORDS = [r',', r'\sand\s']
 
+    _nltk_data_downloaded = False
+
+    def setup_dependencies(self):
+        if not self._nltk_data_downloaded and bool(
+                self.section.get('shortlog_check_imperative', True)):
+            nltk.download([
+                'punkt',
+                'maxent_treebank_pos_tagger',
+                'averaged_perceptron_tagger',
+            ])
+            type(self)._nltk_data_downloaded = True
+
     @classmethod
     def check_prerequisites(cls):
         if shutil.which('git') is None:
@@ -193,25 +205,19 @@ class GitCommitBear(GlobalBear):
             A list of tuples having 2 elements (invalid word, parts of speech)
             or an empty list if no invalid words are found.
         """
-        try:
-            words = nltk.word_tokenize(nltk.sent_tokenize(paragraph)[0])
-            # VBZ : Verb, 3rd person singular present, like 'adds', 'writes'
-            #       etc
-            # VBD : Verb, Past tense , like 'added', 'wrote' etc
-            # VBG : Verb, Present participle, like 'adding', 'writing'
-            word, tag = nltk.pos_tag(['I'] + words)[1:2][0]
-            if(tag.startswith('VBZ') or
-               tag.startswith('VBD') or
-               tag.startswith('VBG') or
-               word.endswith('ing')):  # Handle special case for VBG
-                return (word, tag)
-            else:
-                return None
-        except LookupError as error:  # pragma: no cover
-            self.err('NLTK data missing, install by running following '
-                     'commands `python3 -m nltk.downloader punkt'
-                     ' maxent_treebank_pos_tagger averaged_perceptron_tagger`')
-            return
+        words = nltk.word_tokenize(nltk.sent_tokenize(paragraph)[0])
+        # VBZ : Verb, 3rd person singular present, like 'adds', 'writes'
+        #       etc
+        # VBD : Verb, Past tense , like 'added', 'wrote' etc
+        # VBG : Verb, Present participle, like 'adding', 'writing'
+        word, tag = nltk.pos_tag(['I'] + words)[1:2][0]
+        if(tag.startswith('VBZ') or
+           tag.startswith('VBD') or
+           tag.startswith('VBG') or
+           word.endswith('ing')):  # Handle special case for VBG
+            return (word, tag)
+        else:
+            return None
 
     def check_body(self, body,
                    body_line_length: int=72,

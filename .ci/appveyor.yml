@@ -42,7 +42,6 @@ install:
 
 
   - "%CMD_IN_ENV% pip install --cache-dir=C:\\pip_cache -r requirements.txt -r test-requirements.txt"
-  - "CALL .ci/deps.nltk.cmd"
 
   - ps: "Install-Product node ''"  # Use latest node v5.x.x
   - "npm config set loglevel warn"
