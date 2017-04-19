@@ -1,4 +1,10 @@
 from coalib.bearlib.abstractions.Linter import linter
+from dependency_management.requirements.DistributionRequirement import (
+    DistributionRequirement)
+from dependency_management.requirements.AnyOneOfRequirements import (
+    AnyOneOfRequirements)
+from dependency_management.requirements.CabalRequirement import (
+     CabalRequirement)
 
 
 @linter(executable='shellcheck', output_format='regex',
@@ -14,6 +20,12 @@ class ShellCheckBear:
     """
 
     LANGUAGES = {'sh', 'bash', 'ksh', 'dash'}
+    REQUIREMENTS = {AnyOneOfRequirements(
+            [CabalRequirement('shellcheck', '0.4.1'),
+             DistributionRequirement('shellcheck')
+             ]
+        ),
+    }
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
