@@ -1,3 +1,4 @@
+import os
 from bears.c_languages.CPPCheckBear import CPPCheckBear
 from coalib.testing.LocalBearTestHelper import verify_local_bear
 
@@ -26,10 +27,12 @@ int main() {
     return 0;
 }"""
 
+test_dir = os.path.join(os.path.dirname(__file__), 'test_files')
 
 CPPCheckBearTest1 = verify_local_bear(CPPCheckBear,
                                       valid_files=(good_file, warn_file),
-                                      invalid_files=(bad_file,))
+                                      invalid_files=(bad_file,),
+                                      settings={'include_paths': test_dir})
 
 CPPCheckBearTest2 = verify_local_bear(CPPCheckBear,
                                       valid_files=(good_file,),

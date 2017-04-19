@@ -29,17 +29,24 @@ class CPPCheckBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file,
-                         enable: typed_list(str)=[]):
+                         enable: typed_list(str)=[],
+                         include_paths: str=None):
         """
         :param enable:
             Choose specific issues to report. Issues that can be
             reported are: all, warning, style, performance,
             portability, information, unusedFunction,
             missingInclude
+        :param include_paths:
+            Specify include paths to make sure cppcheck
+            can find all the relevant code.
         """
         args = ('--template={line}:{severity}:{id}:{message}',)
 
         if enable:
             args += ('--enable=' + ','.join(enable),)
+
+        if include_paths:
+            args += include_paths,
 
         return args + (filename,)
