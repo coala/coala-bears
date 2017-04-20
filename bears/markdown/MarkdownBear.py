@@ -65,7 +65,7 @@ class MarkdownBear:
                          horizontal_rule: str='*',
                          horizontal_rule_spaces: bool=False,
                          horizontal_rule_repeat: int=3,
-                         max_line_length: int=80):
+                         max_line_length: int=None):
         """
         :param bullets:
             Character to use for bullets in lists. Can be "-", "*" or "+".
@@ -127,16 +127,23 @@ class MarkdownBear:
             'ruleSpaces': horizontal_rule_spaces,       # Bool
             'ruleRepetition': horizontal_rule_repeat,   # int
         }
-        remark_configs_plugins = {
-            'maximumLineLength': max_line_length        # int
-        }
+        remark_configs_plugins = {}
+
+        if max_line_length:
+            remark_configs_plugins['maximumLineLength'] = max_line_length
 
         config_json = json.dumps(remark_configs_settings)
         # Remove { and } as remark adds them on its own
         settings = config_json[1:-1]
-        config_json = json.dumps(remark_configs_plugins)
-        plugins = 'lint=' + config_json[1:-1]
-        return '--no-color', '--quiet', '--setting', settings, '--use', plugins
+
+        args = ['--no-color', '--quiet', '--setting', settings]
+
+        if remark_configs_plugins:
+            config_json = json.dumps(remark_configs_plugins)
+            plugins = 'lint=' + config_json[1:-1]
+            args += ['--use', plugins]
+
+        return args
 
     def process_output(self, output, filename, file):
         stdout, stderr = output
