@@ -110,6 +110,8 @@ class InvalidLinkBearTest(unittest.TestCase):
         http://httpbin.org/status/200
         http://httpbin.org/status/201
         http://httpbin.org/status/401  # Unauthorized
+        http://httpbin.org/status%20is/200
+        https://encrypted.google.com/search?hl=en&q=cpp+%25s+error/200
 
         # Parentheses
         https://en.wikipedia.org/wiki/Hello_(Adele_song)/200
@@ -138,6 +140,9 @@ class InvalidLinkBearTest(unittest.TestCase):
         http://www.%s.com
         http://www.%d.com
         http://www.%f.com
+        http://httpbin.org/%s/status/520
+        https://encrypted.google.com/search?hl=en&q=cpp+%s+error
+        http://www.%20.com
 
         # Redirect
         http://httpbin.org/status/301

@@ -73,12 +73,48 @@ class InvalidLinkBear(LocalBear):
                                         # set of parenthesis.
                                         # An example can be:
                                         # http://wik.org/Hello_(Adele_song)/200
-            )
-            *)
-                                        # Thus, the whole part above
+            )                           # Thus, the whole part above
                                         # prevents matching of
                                         # Unbalanced parenthesis
+            (
+                (%?[0-9]+)              # A ``%`` sign (0 or 1 times)
+                                        # followed by any number
+                                        # Restricts URLs to end with
+                                        # a number (HTTP Status Code)
+                [^\s()%\'"`<>|\\]+      # Same regex for path name
+            |                           # OR
+                \([^\s()%\'"`<>|\\]*\)  # Same regex for path name
+                                        # contained within ()
+                ([^\s()%\'"`<>|\\]*)    # Same regex for path name
+                                        # for including HTTP Status Codes
+            )
             (?<!\.)(?<!,)               # Exclude trailing `.` or `,` from URL
+            )                           # First part of the regex ends here
+                                        # Covers URLs with or without
+                                        # placeholders but with necessary
+                                        # HTTP Status Codes at the end
+            |                           # OR (Second part of regex begins here)
+                                        # Covers URLs without any
+                                        # numbers at the end
+                                        # Essential for URLs with placeholders
+                                        # but without HTTP Status Codes
+            (((https?://                # http:// or https:// as only these
+                                        # are supported by the ``requests``
+                                        # library
+            [^.:%\s_/?#[\]@\\]+         # Initial part of domain
+            \.                          # A required dot `.`
+            (
+                (?:[^\s()%\'"`<>|\\]+)  # Same regex for path name
+            |                           # OR
+                \([^\s()%\'"`<>|\\]*\)  # Same regex for path name
+                                        # contained within ()
+            )
+            ))                          # Thus, the whole part above
+                                        # prevents matching of
+                                        # Unbalanced parenthesis
+            (?!(.))                     # Negative lookahead to match URLs not
+                                        # followed by any character
+            (?<!\.)(?<!,))              # Exclude trailing `.` or `,` from URL
             """, re.VERBOSE)
         file_context = {}
         for line_number, line in enumerate(file):
