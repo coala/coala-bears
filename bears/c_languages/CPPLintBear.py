@@ -3,6 +3,12 @@ from dependency_management.requirements.PipRequirement import PipRequirement
 from coalib.settings.Setting import typed_list
 
 
+def check_invalid_configuration(use_spaces, indent_size):
+    if (not use_spaces or indent_size != 2):
+        return False
+    return True
+
+
 @linter(executable='cpplint',
         use_stdout=False,
         use_stderr=True,
@@ -26,14 +32,22 @@ class CPPLintBear:
     def create_arguments(filename, file, config_file,
                          max_line_length: int=79,
                          cpplint_ignore: typed_list(str)=(),
-                         cpplint_include: typed_list(str)=()):
+                         cpplint_include: typed_list(str)=(),
+                         use_spaces: bool=True,
+                         indent_size: int=2):
         """
         :param max_line_length: Maximum number of characters for a line.
         :param cpplint_ignore:  List of checkers to ignore.
         :param cpplint_include: List of checkers to explicitly enable.
+        :param use_spaces: Bool value whether to use spaces or not.
+        :param indent_size: Size of indentation when spaces are used.
         """
-        ignore = ','.join('-'+part.strip() for part in cpplint_ignore)
-        include = ','.join('+'+part.strip() for part in cpplint_include)
-        return ('--filter=' + ignore + ',' + include,
-                '--linelength=' + str(max_line_length),
-                filename)
+        if check_invalid_configuration(use_spaces, indent_size):
+            ignore = ','.join('-'+part.strip() for part in cpplint_ignore)
+            include = ','.join('+'+part.strip() for part in cpplint_include)
+            return ('--filter=' + ignore + ',' + include,
+                    '--linelength=' + str(max_line_length),
+                    filename)
+        else:
+            raise ValueError("CPPLint doesn't support indent_size!=2 or "
+                             'not using spaces.')
