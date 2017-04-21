@@ -481,3 +481,38 @@ class GitCommitBearTest(unittest.TestCase):
                          self.gitdir)
         os.chdir(self.gitdir)
         os.rmdir(no_git_dir)
+
+    def test_nltk_download_disabled(self):
+        # setUp has already initialised GitCommitBear.
+        self.assertTrue(GitCommitBear._nltk_data_downloaded)
+
+        section = Section('commit')
+        section.append(Setting('shortlog_check_imperative', 'False'))
+
+        GitCommitBear._nltk_data_downloaded = False
+        GitCommitBear(None, section, self.msg_queue)
+        self.assertFalse(GitCommitBear._nltk_data_downloaded)
+
+        # reset
+        GitCommitBear._nltk_data_downloaded = True
+
+    def test_nltk_download(self):
+        # setUp has already initialised GitCommitBear.
+        self.assertTrue(GitCommitBear._nltk_data_downloaded)
+
+        section = Section('commit')
+        section.append(Setting('shortlog_check_imperative', 'True'))
+
+        GitCommitBear._nltk_data_downloaded = False
+        GitCommitBear(None, section, self.msg_queue)
+        self.assertTrue(GitCommitBear._nltk_data_downloaded)
+
+    def test_nltk_download_default(self):
+        # setUp has already initialised GitCommitBear.
+        self.assertTrue(GitCommitBear._nltk_data_downloaded)
+
+        section = Section('commit')
+
+        GitCommitBear._nltk_data_downloaded = False
+        GitCommitBear(None, section, self.msg_queue)
+        self.assertTrue(GitCommitBear._nltk_data_downloaded)
