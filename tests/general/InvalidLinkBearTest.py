@@ -152,6 +152,9 @@ class InvalidLinkBearTest(unittest.TestCase):
 
         invalid_file = """http://coalaisthebest.com/
         http://httpbin.org/status/404
+        http://httpbin.org/status/405
+        http://httpbin.org/status/406
+        http://httpbin.org/status/408
         http://httpbin.org/status/410
         http://httpbin.org/status/500
         http://httpbin.org/status/503

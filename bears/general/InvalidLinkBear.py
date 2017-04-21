@@ -177,8 +177,8 @@ class InvalidLinkBear(LocalBear):
                     line=line_number,
                     severity=RESULT_SEVERITY.MAJOR)
             elif not 200 <= code < 300:
-                # HTTP status 404, 410 or 50x
-                if code in (404, 410) or 500 <= code < 600:
+                # HTTP status 404, 405, 406, 408, 410 or 50x
+                if code in (404, 405, 406, 408, 410) or 500 <= code < 600:
                     yield Result.from_values(
                         origin=self,
                         message=('Broken link - unable to connect to {url} '
