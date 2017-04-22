@@ -7,6 +7,7 @@ from coalib.testing.LocalBearTestHelper import verify_local_bear, execute_bear
 from coalib.testing.BearTestHelper import generate_skip_decorator
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.settings.Section import Section
+from coalib.settings.Setting import Setting
 
 test_file = """
 ---
@@ -49,6 +50,10 @@ items:
       descrip: Water Bucket (Filled)
       price: 1.47
       quantity: 4
+..."""
+
+bad_max_line_length = """---
+receipt: Oz-Ware This line-length is beyond 50 chars
 ..."""
 
 config_file = """
@@ -117,4 +122,15 @@ class YAMLLintBearSeverityTest(unittest.TestCase):
                                  ' (1 > 0) (empty-lines)')
                 self.assertEqual(results[0].affected_code[0].start.line, 1)
                 self.assertEqual(results[0].affected_code[0].end.line, 1)
+                self.assertEqual(results[0].severity, RESULT_SEVERITY.MAJOR)
+
+    def test_bad_max_line_length(self):
+        self.section.append(Setting('max_line_length', 50))
+        content = bad_max_line_length.splitlines()
+        with prepare_file(content, None) as (file, fname):
+            with execute_bear(self.uut, fname, file) as results:
+                self.assertEqual(results[0].message, 'line too long '
+                                 '(52 > 50 characters) (line-length)')
+                self.assertEqual(results[0].affected_code[0].start.line, 2)
+                self.assertEqual(results[0].affected_code[0].end.line, 2)
                 self.assertEqual(results[0].severity, RESULT_SEVERITY.MAJOR)

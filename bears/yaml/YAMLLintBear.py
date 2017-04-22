@@ -27,17 +27,24 @@ class YAMLLintBear:
 
     @staticmethod
     def generate_config(filename, file,
-                        document_start: bool=None):
+                        document_start: bool=None,
+                        max_line_length: int=80):
         """
         :param document_start:
             Use this rule to require or forbid the use of document start
             marker (---).
+        :param max_line_length:
+            Maximum number of characters for a line, the newline character
+            being excluded.
         """
         yamllint_configs = {
             'extends': 'default',
             'rules': {
                 'document-start': 'disable' if document_start is None
                                   else {'present': document_start},
+                'line-length': {
+                    'max': max_line_length,
+                    },
             },
         }
 
