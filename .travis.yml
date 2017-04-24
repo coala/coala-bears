@@ -25,6 +25,7 @@ addons:
       - cabal-install-1.24
       - chktex
       - clang-3.4
+      - cloc
       - cppcheck
       - devscripts
       - flawfinder
