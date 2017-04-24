@@ -4,7 +4,7 @@ from coalib.settings.Setting import typed_list
 
 
 @linter(executable='pydocstyle',
-        use_stdout=False,
+        use_stdout=True,
         use_stderr=True,
         output_format='regex',
         output_regex=r'.*:(?P<line>\d+) .+:\n\s+(?P<message>.*)')
@@ -13,7 +13,7 @@ class PyDocStyleBear:
     Checks python docstrings.
     """
     LANGUAGES = {'Python', 'Python 2', 'Python 3'}
-    REQUIREMENTS = {PipRequirement('pydocstyle', '1.1')}
+    REQUIREMENTS = {PipRequirement('pydocstyle', '2.0')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
