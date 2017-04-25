@@ -1,6 +1,6 @@
 from coalib.bearlib.abstractions.Linter import linter
-from dependency_management.requirements.DistributionRequirement import (
-    DistributionRequirement)
+from dependency_management.requirements.LuarocksRequirement import (
+    LuarocksRequirement)
 
 
 @linter(executable='luacheck',
@@ -17,7 +17,7 @@ class LuaLintBear:
     """
 
     LANGUAGES = {'Lua'}
-    REQUIREMENTS = {DistributionRequirement(apt_get='luarocks')}
+    REQUIREMENTS = {LuarocksRequirement('luacheck')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
