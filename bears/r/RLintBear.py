@@ -24,8 +24,7 @@ class RLintBear:
     LANGUAGES = {'R'}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
-    REQUIREMENTS = {RscriptRequirement(package='lintr', flag='-e',
-                                       repo='http://cran.rstudio.com'),
+    REQUIREMENTS = {RscriptRequirement('lintr'),
                     DistributionRequirement(apt_get='r-base',
                                             version='>=3.1.1')}
     LICENSE = 'AGPL-3.0'

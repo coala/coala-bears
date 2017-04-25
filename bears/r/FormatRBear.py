@@ -22,8 +22,7 @@ class FormatRBear:
     LANGUAGES = {'R'}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
-    REQUIREMENTS = {RscriptRequirement(package='formatR', flag='-e',
-                                       repo='http://cran.rstudio.com')}
+    REQUIREMENTS = {RscriptRequirement('formatR')}
     LICENSE = 'AGPL-3.0'
     ASCIINEMA_URL = 'https://asciinema.org/a/0y0oxtak18v492jdyfqwpw1n4'
     CAN_FIX = {'Formatting'}
