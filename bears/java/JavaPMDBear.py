@@ -17,21 +17,13 @@ class JavaPMDBear:
     """
 
     LANGUAGES = {'Java'}
+    REQUIREMENTS = {MavenRequirement('net.sourceforge.pmd:pmd', '5.6.0'),
+                    DistributionRequirement('bash')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
     CAN_DETECT = {'Code Simplification', 'Unreachable Code', 'Smell',
                   'Duplication'}
-
-    @classmethod
-    def check_prerequisites(cls):  # pragma: no cover
-        if which('bash') is None:
-            return 'bash is not installed.'
-        elif which('pmd') is None and which('run.sh') is None:
-            return ('PMD is missing. Make sure to install it from '
-                    '<https://pmd.github.io/>')
-        else:
-            return True
 
     @staticmethod
     @deprecate_settings(allow_unnecessary_code=('check_unnecessary', negate),
