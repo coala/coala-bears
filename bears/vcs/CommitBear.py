@@ -1,11 +1,9 @@
 
 import abc
 import logging
-import nltk
 import re
 from contextlib import redirect_stdout
 
-from giturlparse import parse
 
 from coalib.bears.GlobalBear import GlobalBear
 from coalib.results.Result import Result
@@ -16,8 +14,15 @@ from dependency_management.requirements.PipRequirement import PipRequirement
 
 class _CommitBear(GlobalBear):
     __metaclass__ = abc.ABCMeta
-    REQUIREMENTS = {PipRequirement('nltk', '3.2'),
-                    PipRequirement('git-url-parse', '1.1.0')}
+    REQUIREMENTS = {
+        PythonImportRequirement('nltk',
+                                '3.2',
+                                ['nltk.download',
+                                 'nltk.pos_tag',
+                                 'nltk.sent_tokenize',
+                                 'nltk.word_tokenize']),
+        PipRequirement('git-url-parse', '1.1.0', ['parse']),
+    }
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

@@ -1,6 +1,8 @@
 from coalib.bearlib.abstractions.Linter import linter
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from dependency_management.requirements.PipRequirement import PipRequirement
+from dependency_management.requirements.PythonImportRequirement import (
+        PythonImportRequirement)
 import yaml
 
 
@@ -19,7 +21,10 @@ class YAMLLintBear:
     """
 
     LANGUAGES = {'YAML'}
-    REQUIREMENTS = {PipRequirement('yamllint', '1.6.1')}
+    REQUIREMENTS = {PipRequirement('yamllint', '1.6.1'),
+                    PythonImportRequirement('pyyaml',
+                                            '3.12',
+                                            ['yaml.dump'])}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

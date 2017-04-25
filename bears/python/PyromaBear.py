@@ -2,13 +2,17 @@ import os.path
 import pyroma
 
 from coalib.bears.GlobalBear import GlobalBear
-from dependency_management.requirements.PipRequirement import PipRequirement
+from dependency_management.requirements.PythonImportRequirement import (
+                PythonImportRequirement)
 from coalib.results.Result import Result
 
 
 class PyromaBear(GlobalBear):
     LANGUAGES = {'Python', 'Python 3'}
-    REQUIREMENTS = {PipRequirement('pyroma', '2.2.0')}
+    REQUIREMENTS = {PythonImportRequirement('pyroma',
+                                            '2.2.0',
+                                            ['pyroma.projectdata.get_data',
+                                             'pyroma.ratings.rate'])}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

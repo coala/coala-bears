@@ -3,7 +3,8 @@ from isort import SortImports
 from coalib.bearlib import deprecate_settings
 from coalib.bearlib.spacing.SpacingHelper import SpacingHelper
 from coalib.bears.LocalBear import LocalBear
-from dependency_management.requirements.PipRequirement import PipRequirement
+from dependency_management.requirements.PythonImportRequirement import (
+                PythonImportRequirement)
 from coalib.results.Diff import Diff
 from coalib.results.Result import Result
 from coalib.settings.Setting import typed_list
@@ -12,7 +13,9 @@ from coalib.settings.Setting import typed_list
 class PyImportSortBear(LocalBear):
 
     LANGUAGES = {'Python', 'Python 3', 'Python 2'}
-    REQUIREMENTS = {PipRequirement('isort', '4.2')}
+    REQUIREMENTS = {PythonImportRequirement('isort',
+                                            '4.2',
+                                            ['isort.SortImports'])}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

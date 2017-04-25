@@ -3,7 +3,8 @@ from yapf.yapflib.yapf_api import FormatCode
 from coalib.bearlib import deprecate_settings
 from coalib.bearlib.spacing.SpacingHelper import SpacingHelper
 from coalib.bears.LocalBear import LocalBear
-from dependency_management.requirements.PipRequirement import PipRequirement
+from dependency_management.requirements.PythonImportRequirement import (
+                                PythonImportRequirement)
 from coala_utils.ContextManagers import prepare_file
 from coalib.results.Result import Result
 from coalib.results.Diff import Diff
@@ -12,7 +13,11 @@ from coalib.results.Diff import Diff
 class YapfBear(LocalBear):
     LANGUAGES = {'Python', 'Python 2', 'Python 3'}
     AUTHORS = {'The coala developers'}
-    REQUIREMENTS = {PipRequirement('yapf', '0.21.0')}
+    REQUIREMENTS = {
+        PythonImportRequirement('yapf',
+                                '0.21.0',
+                                ['yapf.yapflib.yapf_api.FormatCode']),
+    }
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
     CAN_FIX = {'Formatting'}

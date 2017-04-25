@@ -5,7 +5,8 @@ from guess_language import guess_language
 
 from coalib.bearlib import deprecate_settings
 from coalib.bears.LocalBear import LocalBear
-from dependency_management.requirements.PipRequirement import PipRequirement
+from dependency_management.requirements.PythonImportRequirement import (
+        PythonImportRequirement)
 from coalib.results.Diff import Diff
 from coalib.results.Result import Result
 from coalib.results.SourceRange import SourceRange
@@ -14,8 +15,10 @@ from coalib.settings.Setting import typed_list
 
 class LanguageToolBear(LocalBear):
     LANGUAGES = {'Natural Language'}
-    REQUIREMENTS = {PipRequirement('guess-language-spirit', '0.5.2'),
-                    PipRequirement('language-check', '1.0')}
+    REQUIREMENTS = {PythonImportRequirement('guess-language-spirit',
+                                            '0.5.2',
+                                            ['guess_language.guess_language']),
+                    PythonImportRequirement('language-check', '1.0')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

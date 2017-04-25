@@ -3,7 +3,8 @@ import nbformat
 
 from coalib.bearlib.spacing.SpacingHelper import SpacingHelper
 from coalib.bears.LocalBear import LocalBear
-from dependency_management.requirements.PipRequirement import PipRequirement
+from dependency_management.requirements.PythonImportRequirement import (
+                PythonImportRequirement)
 from coalib.results.Diff import Diff
 from coalib.results.Result import Result
 from coalib.settings.Setting import typed_list
@@ -64,8 +65,14 @@ def autopep8_fix_code_cell(source, options=None, apply_config=None):
 
 class PEP8NotebookBear(LocalBear):
     LANGUAGES = {'Python', 'Python 2', 'Python 3'}
-    REQUIREMENTS = {PipRequirement('autopep8', '1.2'),
-                    PipRequirement('nbformat', '4.1')}
+    REQUIREMENTS = {PythonImportRequirement('autopep8',
+                                            '1.2',
+                                            ['autopep8.fix_code']),
+                    PythonImportRequirement('nbformat',
+                                            '4.1',
+                                            ['nbformat.NO_CONVERT',
+                                             'nbformat.reads',
+                                             'nbformat.writes'])}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
