@@ -2,8 +2,12 @@ from coala_utils.string_processing.Core import escape
 from coalib.bearlib import deprecate_settings
 from coalib.bearlib.abstractions.Linter import linter
 from coalib.bearlib.spacing.SpacingHelper import SpacingHelper
+from dependency_management.requirements.AnyOneOfRequirements import (
+    AnyOneOfRequirements)
 from dependency_management.requirements.RscriptRequirement import (
     RscriptRequirement)
+from dependency_management.requirements.DistributionRequirement import (
+    DistributionRequirement)
 
 
 def _map_to_r_bool(py_bool):
@@ -22,7 +26,16 @@ class FormatRBear:
     LANGUAGES = {'R'}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
-    REQUIREMENTS = {RscriptRequirement('formatR')}
+    REQUIREMENTS = {
+        AnyOneOfRequirements(
+            [DistributionRequirement(
+                apt_get='r-cran-formatr',
+                zypper='R-formatR',
+             ),
+             RscriptRequirement('formatR'),
+             ]
+        )
+    }
     LICENSE = 'AGPL-3.0'
     ASCIINEMA_URL = 'https://asciinema.org/a/0y0oxtak18v492jdyfqwpw1n4'
     CAN_FIX = {'Formatting'}
