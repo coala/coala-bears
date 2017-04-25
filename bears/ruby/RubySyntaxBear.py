@@ -15,7 +15,7 @@ class RubySyntaxBear:
     Checks the code with ``ruby -wc`` on each file separately.
     """
     LANGUAGES = {'Ruby'}
-    REQUIREMENTS = {DistributionRequirement(apt_get='ruby')}
+    REQUIREMENTS = {DistributionRequirement('ruby')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

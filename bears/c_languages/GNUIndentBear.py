@@ -21,7 +21,7 @@ class GNUIndentBear:
     """
 
     LANGUAGES = {'C', 'C++'}
-    REQUIREMENTS = {DistributionRequirement(apt_get='indent')}
+    REQUIREMENTS = {DistributionRequirement('indent')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

@@ -23,7 +23,16 @@ class VerilogLintBear:
     <http://www.veripool.org/projects/verilator/wiki/Manual-verilator>.
     """
     LANGUAGES = {'Verilog'}
-    REQUIREMENTS = {DistributionRequirement(apt_get='verilator')}
+    REQUIREMENTS = {
+        DistributionRequirement(
+            apt_get='verilator',
+            brew=None,
+            dnf='verilator',
+            portage=None,
+            yum='verilator',
+            zypper='verilator',
+        ),
+    }
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

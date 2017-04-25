@@ -15,7 +15,13 @@ class CSharpLintBear:
     """
 
     LANGUAGES = {'C#'}
-    REQUIREMENTS = {DistributionRequirement(apt_get='mono-mcs')}
+    REQUIREMENTS = {
+        DistributionRequirement(
+            'mono',
+            apt_get='mono-mcs',
+            portage='dev-lang/mono',
+        ),
+    }
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
