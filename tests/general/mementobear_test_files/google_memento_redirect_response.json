@@ -1,0 +1,5 @@
+{
+    "Link": "<http://google.com>;rel=\"original\" ,<http://timetravel.mementoweb.org/timemap/link/http://google.com>;rel=\"timemap\"; type=\"application/link-format\",<http://web.archive.org/web/20170421070653/http://www.google.com/>;rel=\"memento last\"; datetime=\"Fri, 21 Apr 2017 07:06:53 GMT\",<http://web.archive.bibalex.org:80/web/19981111184551/http://google.com/>;rel=\"memento first\"; datetime=\"Wed, 11 Nov 1998 18:45:51 GMT\"",
+    "Vary": "Accept-Datetime",
+    "Location": "http://web.archive.org/web/20170421070937/https://www.google.com/"
+}
