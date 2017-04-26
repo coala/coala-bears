@@ -1,4 +1,3 @@
-import autopep8
 import sys
 
 from coalib.bearlib import deprecate_settings
@@ -46,6 +45,8 @@ class PEP8Bear(LocalBear):
         if not max_line_length:
             max_line_length = sys.maxsize
 
+        autopep8 = list(self.__class__.REQUIREMENTS)[0]
+        autopep8.is_importable()
         options = {'ignore': pep_ignore,
                    'select': pep_select,
                    'max_line_length': max_line_length,

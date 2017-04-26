@@ -1,5 +1,3 @@
-import autoflake
-
 from coalib.bears.LocalBear import LocalBear
 from dependency_management.requirements.PythonImportRequirement import (
                 PythonImportRequirement)
@@ -50,6 +48,8 @@ class PyUnusedCodeBear(
         :param remove_unused_variables:
             ``False`` keeps unused variables
         """
+        autoflake = list(self.__class__.REQUIREMENTS)[0]
+        autoflake.is_importable()
         corrected = autoflake.fix_code(
                        ''.join(file),
                        additional_imports=None,

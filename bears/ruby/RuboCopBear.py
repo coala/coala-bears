@@ -1,5 +1,4 @@
 import json
-import yaml
 
 from coalib.bearlib import deprecate_settings
 from coalib.bearlib.abstractions.Linter import linter
@@ -186,6 +185,10 @@ class RuboCopBear:
         if rubocop_config:
             return None
 
+        for requirement in list(__class__.REQUIREMENTS):
+            if isinstance(requirement, PythonImportRequirement):
+                yaml = requirement
+        yaml.is_importable()
         naming_convention = {'camel': 'camelCase', 'snake': 'snake_case'}
         options = {
             'Style/AccessModifierIndentation': {

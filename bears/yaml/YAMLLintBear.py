@@ -3,7 +3,6 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from dependency_management.requirements.PipRequirement import PipRequirement
 from dependency_management.requirements.PythonImportRequirement import (
         PythonImportRequirement)
-import yaml
 
 
 @linter(executable='yamllint',
@@ -43,6 +42,10 @@ class YAMLLintBear:
             Maximum number of characters for a line, the newline character
             being excluded.
         """
+        for requirement in list(__class__.REQUIREMENTS):
+            if isinstance(requirement, PythonImportRequirement):
+                yaml = requirement
+        yaml.is_importable()
         yamllint_configs = {
             'extends': 'default',
             'rules': {

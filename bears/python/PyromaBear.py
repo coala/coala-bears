@@ -1,5 +1,4 @@
 import os.path
-import pyroma
 
 from coalib.bears.GlobalBear import GlobalBear
 from dependency_management.requirements.PythonImportRequirement import (
@@ -28,7 +27,8 @@ class PyromaBear(GlobalBear):
 
         See <https://bitbucket.org/regebro/pyroma/> for more information.
         """
-
+        pyroma = list(self.__class__.REQUIREMENTS)[0]
+        pyroma.is_importable()
         setup_files = [setup_file for setup_file in self.file_dict
                        if os.path.basename(setup_file) == 'setup.py']
 
@@ -37,8 +37,8 @@ class PyromaBear(GlobalBear):
                          ' not contain a setup file.')
         else:
             for setup_file in setup_files:
-                data = pyroma.projectdata.get_data(os.path.dirname(setup_file))
-                rating = pyroma.ratings.rate(data)
+                data = pyroma.get_data(os.path.dirname(setup_file))
+                rating = pyroma.rate(data)
                 messages = rating[1]
 
                 for message in messages:

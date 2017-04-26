@@ -1,6 +1,4 @@
 import logging
-import radon.complexity
-import radon.visitors
 
 from coalib.bears.LocalBear import LocalBear
 from dependency_management.requirements.PythonImportRequirement import (
@@ -40,6 +38,8 @@ class RadonBear(LocalBear):
         :param radon_ranks_major:     The ranks (given by radon) to
                                       treat as severity MAJOR.
         """
+        radon = list(self.__class__.REQUIREMENTS)[0]
+        radon.is_importable()
         severity_map = {
             RESULT_SEVERITY.INFO: radon_ranks_info,
             RESULT_SEVERITY.NORMAL: radon_ranks_normal,

@@ -1,5 +1,3 @@
-from yapf.yapflib.yapf_api import FormatCode
-
 from coalib.bearlib import deprecate_settings
 from coalib.bearlib.spacing.SpacingHelper import SpacingHelper
 from coalib.bears.LocalBear import LocalBear
@@ -120,6 +118,8 @@ class YapfBear(LocalBear):
             If True, splitting right after a open bracket will not be
             preferred.
         """
+        yapf = list(self.__class__.REQUIREMENTS)[0]
+        yapf.is_importable()
         if not file:
             # Yapf cannot handle zero-byte files well, and adds a redundent
             # newline into the file. To avoid this, we don't parse zero-byte
@@ -157,7 +157,7 @@ space_between_ending_comma_and_closing_bracket= \
         try:
             with prepare_file(options.splitlines(keepends=True),
                               None) as (file_, fname):
-                corrected = FormatCode(
+                corrected = yapf.FormatCode(
                     ''.join(file), style_config=fname)[0].splitlines(True)
         except SyntaxError as err:
             if isinstance(err, IndentationError):

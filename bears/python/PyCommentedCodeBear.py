@@ -1,5 +1,3 @@
-import eradicate
-
 from coalib.bears.LocalBear import LocalBear
 from dependency_management.requirements.PythonImportRequirement import (
                                         PythonImportRequirement)
@@ -13,7 +11,7 @@ class PyCommentedCodeBear(LocalBear):
     REQUIREMENTS = {PythonImportRequirement(
                                     'eradicate',
                                     '0.1.6',
-                                    ['eradicat.filter_comented_out_code']
+                                    ['eradicate.filter_commented_out_code']
                                     )}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
@@ -24,6 +22,8 @@ class PyCommentedCodeBear(LocalBear):
         """
         Detects commented out source code in Python.
         """
+        eradicate = list(self.__class__.REQUIREMENTS)[0]
+        eradicate.is_importable()
         corrected = tuple(eradicate.filter_commented_out_code(''.join(file)))
 
         for diff in Diff.from_string_arrays(file, corrected).split_diff():

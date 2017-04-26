@@ -1,5 +1,3 @@
-from isort import SortImports
-
 from coalib.bearlib import deprecate_settings
 from coalib.bearlib.spacing.SpacingHelper import SpacingHelper
 from coalib.bears.LocalBear import LocalBear
@@ -49,13 +47,15 @@ class PyImportSortBear(LocalBear):
         return import_stmts
 
     def _get_diff(self):
+        isort = list(self.__class__.REQUIREMENTS)[0]
+        isort.is_importable()
         if self.treat_seperated_imports_independently:
             import_stmts = PyImportSortBear._seperate_imports(self.file)
             sorted_imps = []
             for units in import_stmts:
-                sort_imports = SortImports(file_contents=''.
-                                           join([x[1] for x in units]),
-                                           **self.isort_settings)
+                sort_imports = isort.SortImports(file_contents=''.
+                                                 join([x[1] for x in units]),
+                                                 **self.isort_settings)
                 sort_imports = sort_imports.output.splitlines(True)
                 sorted_imps.append((units, sort_imports))
 
@@ -70,8 +70,8 @@ class PyImportSortBear(LocalBear):
             if diff.modified != diff._file:
                 return diff
         else:
-            sort_imports = SortImports(file_contents=''.join(self.file),
-                                       **self.isort_settings)
+            sort_imports = isort.SortImports(file_contents=''.join(self.file),
+                                             **self.isort_settings)
 
             new_file = tuple(sort_imports.output.splitlines(True))
             if new_file != tuple(self.file):
@@ -212,6 +212,8 @@ class PyImportSortBear(LocalBear):
             Treat import statements seperated by one or more blank line or any
             statement other than an import statement as an independent bunch.
         """
+        isort = list(self.__class__.REQUIREMENTS)[0]
+        isort.is_importable()
         isort_settings = dict(
             use_parentheses=use_parentheses_in_import,
             force_alphabetical_sort=force_alphabetical_sort_in_import,

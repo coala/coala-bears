@@ -1,5 +1,3 @@
-import yaml
-
 from coalib.bearlib import deprecate_settings
 from coalib.bearlib.abstractions.Linter import linter
 from dependency_management.requirements.GemRequirement import GemRequirement
@@ -232,6 +230,10 @@ class SCSSLintBear:
             an infix operator. The different value for this setting are ``1``,
             ``0`` or a number greater that ``1``.
         """
+        for requirement in list(__class__.REQUIREMENTS):
+            if isinstance(requirement, PythonImportRequirement):
+                yaml = requirement
+        yaml.is_importable()
         naming_convention_map = {
             'camel': 'camel_case',
             'snake': 'snake_case',

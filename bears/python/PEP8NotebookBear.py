@@ -1,6 +1,3 @@
-import autopep8
-import nbformat
-
 from coalib.bearlib.spacing.SpacingHelper import SpacingHelper
 from coalib.bears.LocalBear import LocalBear
 from dependency_management.requirements.PythonImportRequirement import (
@@ -19,7 +16,7 @@ from coalib.settings.Setting import typed_list
 # matches the notebook format specification.
 
 
-def notebook_node_from_string_list(string_list):
+def notebook_node_from_string_list(string_list, nbformat):
     """
     Reads a notebook from a string list and returns the NotebookNode
     object.
@@ -31,7 +28,7 @@ def notebook_node_from_string_list(string_list):
     return nbformat.reads(''.join(string_list), nbformat.NO_CONVERT)
 
 
-def notebook_node_to_string_list(notebook_node):
+def notebook_node_to_string_list(notebook_node, nbformat):
     """
     Writes a NotebookNode to a list of strings.
 
@@ -41,7 +38,7 @@ def notebook_node_to_string_list(notebook_node):
     return nbformat.writes(notebook_node, nbformat.NO_CONVERT).splitlines(True)
 
 
-def autopep8_fix_code_cell(source, options=None, apply_config=None):
+def autopep8_fix_code_cell(source, autopep8, options=None, apply_config=None):
     """
     Applies autopep8.fix_code and takes care of newline characters.
 
@@ -98,21 +95,29 @@ class PEP8NotebookBear(LocalBear):
         :param local_pep8_config: Set to true if autopep8 should use a config
                                   file as if run normally from this directory.
         """
+        for requirement in list(self.__class__.REQUIREMENTS):
+            if requirement.package == 'autopep8':
+                autopep8 = requirement
+            else:
+                nbformat = requirement
+        autopep8.is_importable()
+        nbformat.is_importable()
         options = {'ignore': pep_ignore,
                    'select': pep_select,
                    'max_line_length': max_line_length,
                    'indent_size': indent_size}
-        notebook_node = notebook_node_from_string_list(file)
+        notebook_node = notebook_node_from_string_list(file, nbformat)
         cells = notebook_node['cells']
 
         for cell in cells:
             if cell['cell_type'] != 'code':
                 continue
             cell['source'] = autopep8_fix_code_cell(cell['source'],
+                                                    autopep8,
                                                     local_pep8_config,
                                                     options)
 
-        corrected = notebook_node_to_string_list(notebook_node)
+        corrected = notebook_node_to_string_list(notebook_node, nbformat)
 
         # If newline at eof in `file` but not in `corrected`, add
         # final newline character to `corrected` to make sure this difference
