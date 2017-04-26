@@ -159,7 +159,7 @@ class IndentationBearTest(unittest.TestCase):
                       '}\n')
 
         invalid_file = ('{\n',
-                        # Start ignoring SpaceConsistencyBearW
+                        # Start ignoring SpaceConsistencyBear
                         '    4 spaces of indentation\n'
                         # Stop ignoring
                         '}\n')
