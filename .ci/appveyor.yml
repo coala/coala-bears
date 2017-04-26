@@ -56,7 +56,7 @@ test_script:
   - unix2dos tests/java/test_files/CheckstyleBad.java
   - unix2dos tests/java/test_files/CheckstyleGood.java
   - appveyor DownloadFile https://github.com/coala/bear-runtime-deps/raw/master/CheckstyleBear/checkstyle-7.6-all.jar checkstyle-7.6-all.jar
-  - java -jar checkstyle-7.6-all.jar -c '/google_checks.xml' tests/java/test_files/CheckstyleBad.java
+  - java -jar checkstyle-7.6-all.jar -c /google_checks.xml tests/java/test_files/CheckstyleBad.java
   # Clang DLLs x64 were nowadays installed, but the x64 version hangs, so we
   # exclude according tests. See https://github.com/appveyor/ci/issues/495 and
   # https://github.com/appveyor/ci/issues/688
