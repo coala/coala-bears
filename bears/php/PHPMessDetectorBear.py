@@ -2,6 +2,10 @@ from coalib.bearlib.abstractions.Linter import linter
 from coalib.settings.Setting import typed_list
 from dependency_management.requirements.DistributionRequirement import (
     DistributionRequirement)
+from dependency_management.requirements.AnyOneOfRequirements import (
+    AnyOneOfRequirements)
+from dependency_management.requirements.ComposerRequirement import (
+    ComposerRequirement)
 
 
 @linter(executable='phpmd',
@@ -19,7 +23,15 @@ class PHPMessDetectorBear:
     """
 
     LANGUAGES = {'PHP'}
-    REQUIREMENTS = {DistributionRequirement(apt_get='phpmd')}
+    REQUIREMENTS = {
+        AnyOneOfRequirements(
+            [DistributionRequirement(apt_get='phpmd',
+                                     dnf='php-phpmd-PHP-PMD',
+                                     ),
+             ComposerRequirement('phpmd/phpmd'),
+             ],
+        ),
+    }
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
