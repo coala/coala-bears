@@ -155,5 +155,77 @@ class MainTest(unittest.TestCase):
 
     def tearDown(self):
         shutil.rmtree(os.path.join(self.BEARS_UPLOAD_PATH))
+        os.chdir(self.orig_dir)
 
+
+class MainSpecificBearsTest(unittest.TestCase):
+
+    BEARS_PATH = os.path.abspath(os.path.join(
+        os.path.dirname(__file__), '..', 'bears'))
+    BEARS_UPLOAD_PATH = os.path.join(BEARS_PATH, 'upload')
+    CSS_BEAR_SETUP_PATH = os.path.join(
+        BEARS_UPLOAD_PATH, 'CSSLintBear', 'setup.py')
+    coala_BEAR_SETUP_PATH = os.path.join(
+        BEARS_UPLOAD_PATH, 'coalaBear', 'setup.py')
+
+    def setUp(self):
+        self.orig_dir = os.getcwd()
+
+        self.argv = ['generate_package.py', '-b', 'CSSLintBear', 'coalaBear']
+        argv_patcher = patch.object(sys, 'argv', self.argv)
+        self.addCleanup(argv_patcher.stop)
+        self.argv_mock = argv_patcher.start()
+
+    def test_sp_main(self):
+        main()
+        self.assertTrue(os.path.exists(self.BEARS_UPLOAD_PATH))
+        with open(self.CSS_BEAR_SETUP_PATH) as fl:
+            setup_py = fl.read()
+        self.assertIn('Check code for syntactical or semantical', setup_py)
+        with open(self.coala_BEAR_SETUP_PATH) as fl:
+            setup_py = fl.read()
+        self.assertIn('None', setup_py)
+
+    def test_sp_main_bear_version_prod(self):
+        fake_prod_version = '99.99.99'
+        with patch('bears.generate_package.VERSION', fake_prod_version):
+            main()
+        with open(self.CSS_BEAR_SETUP_PATH) as fl:
+            setup_py = fl.read()
+        self.assertIn(fake_prod_version, setup_py)
+        self.assertNotIn(VERSION, setup_py)
+        with open(self.coala_BEAR_SETUP_PATH) as fl:
+            setup_py = fl.read()
+        self.assertIn(fake_prod_version, setup_py)
+        self.assertNotIn(VERSION, setup_py)
+
+    def test_sp_main_bear_version_dev(self):
+        fake_dev_version = '13.37.0.dev133713371337'
+        with patch('bears.generate_package.VERSION', fake_dev_version):
+            main()
+        with open(self.CSS_BEAR_SETUP_PATH) as fl:
+            setup_py = fl.read()
+        self.assertNotIn(fake_dev_version, setup_py)
+        self.assertIn('13.37.0', setup_py)
+        with open(self.coala_BEAR_SETUP_PATH) as fl:
+            setup_py = fl.read()
+        self.assertNotIn(fake_dev_version, setup_py)
+        self.assertIn('13.37.0', setup_py)
+
+    @patch('bears.generate_package.perform_upload')
+    def test_sp_upload(self, call_mock):
+        self.argv.append('--upload')
+        main()
+        for call_object in call_mock.call_args_list:
+            self.assertRegex(call_object[0][0], r'.+Bear')
+
+    @patch('bears.generate_package.perform_register')
+    def test_sp_register(self, call_mock):
+        self.argv.append('--register')
+        main()
+        for call_object in call_mock.call_args_list:
+            self.assertRegex(call_object[0][0], r'.+Bear')
+
+    def tearDown(self):
+        shutil.rmtree(os.path.join(self.BEARS_UPLOAD_PATH))
         os.chdir(self.orig_dir)

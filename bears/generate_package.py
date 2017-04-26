@@ -98,6 +98,8 @@ def create_upload_parser():
                         action='store_true')
     parser.add_argument('-u', '--upload', help='Upload the packages on PyPi',
                         action='store_true')
+    parser.add_argument('-b', '--bear', help='Name of the bear to upload',
+                        nargs='+')
     return parser
 
 
@@ -114,7 +116,28 @@ def main():
     else:
         bear_version = repr(bear_version) + '.' + str(int(time.time()))
 
-    for bear_file_name in sorted(set(glob('bears/**/*Bear.py'))):
+    bear_files = []
+    local_files = sorted(set(glob('bears/**/*Bear.py')))
+
+    """
+    File names in local_files will be of pattern 'bears/somefolder/somebear.py'
+    Example: 'bears/css/CSSLintBear.py'
+    To check if the input bear exist, we need to check if it is
+    installed (i.e present in local_files)
+    Input will be just bearname, we need to extract the bearname from the
+    filename and then compare to check if input bear exists
+    """
+    if args.bear:
+        for bearname in args.bear:
+            for bear_file in local_files:
+                installed_bear = bear_file.split('/')[-1].strip('.py')
+                if bearname == installed_bear:
+                    bear_files.append(bear_file)
+                    break
+    else:
+        bear_files = local_files
+
+    for bear_file_name in bear_files:
         bear_object = next(iimport_objects(
             bear_file_name, attributes='kind', local=True),
             None)
