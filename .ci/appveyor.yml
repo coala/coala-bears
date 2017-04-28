@@ -24,6 +24,9 @@ branches:
   except:
     - /^sils\/.*/
 
+init:
+  - ps: $Env:PATH = 'c:\tools\composer\;' + $Env:PATH
+
 install:
   # Prepend newly installed Python to the PATH of this build (this cannot be
   # done from inside the powershell script as it would require to restart
@@ -46,6 +49,29 @@ install:
   - ps: "Install-Product node ''"  # Use latest node v5.x.x
   - "npm config set loglevel warn"
   - "npm install"
+  # Enable Windows Update
+  # This is required for one of the dependencies of the Chocolatey PHP package
+  - sc config wuauserv start=auto
+  - net start wuauserv
+  # The following installs and sets up PHP
+  - cinst -y php
+  - copy C:\tools\php71\php.ini-production C:\tools\php71\php.ini
+  - echo date.timezone="UTC" >> C:\tools\php71\php.ini
+  - echo extension_dir=ext >> C:\tools\php71\php.ini
+  - echo extension=php_openssl.dll >> C:\tools\php71\php.ini
+  - SET PATH=C:\tools\php71\;%PATH%
+  # Prepare Composer
+  - ps: If ((Test-Path c:\tools\composer) -eq $False) {
+        New-Item -Path c:\tools\composer -ItemType 'directory' }
+  - ps: If ((Test-Path c:\tools\composer\composer.phar) -eq $False) {
+        appveyor DownloadFile https://getcomposer.org/composer.phar
+        -FileName c:\tools\composer\composer.phar }
+  - ps: Set-Content -Path c:\tools\composer\composer.bat -Value (
+        '@php c:\tools\composer\composer.phar %*')
+  - SET PATH=C:\projects\coala-bears\vendor\bin\;%PATH%
+  - composer --version
+  # composer dependencies installation (TODO-make a common installation script for all CI)
+  - composer require "phpstan/phpstan"
 
 build: false  # Not a C# project, build stuff at the test step instead.
 
