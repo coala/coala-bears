@@ -15,9 +15,10 @@ language = python
 default_actions = *: ApplyPatchAction
 preferred_quotation = '
 
-[autopep8]
-bears = PEP8Bear
-default_actions = PEP8Bear: ApplyPatchAction
+# pep8 disabled on `release/0.9` branch
+# [autopep8]
+# bears = PEP8Bear
+# default_actions = PEP8Bear: ApplyPatchAction
 
 [linelength]  # Sometimes autopep8 makes too long lines, need to check after!
 bears = LineLengthBear
