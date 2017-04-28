@@ -30,4 +30,4 @@ nbformat>=4.1
 scspell3k~=2.0
 mypy-lang~=0.4
 rstcheck~=2.2
-safety~=0.5
+safety~=0.5.1
