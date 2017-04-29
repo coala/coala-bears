@@ -96,13 +96,14 @@ class KeywordBear(LocalBear):
         '''
         comments = list(_get_comments(dependency_results))
 
-        simple_keywords_regex = re.compile(
-            '(' + '|'.join(re.escape(key) for key in keywords) + ')',
-            re.IGNORECASE)
+        if keywords:
+            simple_keywords_regex = re.compile(
+                '(' + '|'.join(re.escape(key) for key in keywords) + ')',
+                re.IGNORECASE)
 
-        message = "The line contains the keyword '{}'."
-        yield from self.check_keywords(filename, file, comments,
-                                       simple_keywords_regex, message)
+            message = "The line contains the keyword '{}'."
+            yield from self.check_keywords(filename, file, comments,
+                                           simple_keywords_regex, message)
 
         if regex_keyword is not '':
             regex = re.compile(regex_keyword)
