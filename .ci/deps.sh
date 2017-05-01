@@ -28,8 +28,8 @@ case $CIRCLE_BUILD_IMAGE in
 
     # The non-apt go provided by Circle CI is acceptable
     deps=${deps/golang/}
-    # Add libxml2-utils
-    deps="$deps libxml2-utils"
+    # Add dependencies not on Trusty image
+    deps="$deps libxml2-utils php-codesniffer"
     ;;
 esac
 
