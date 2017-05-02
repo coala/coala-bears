@@ -1,3 +1,75 @@
+coala-bears 0.11.0
+==================
+
+This release has been brought to you by 30 contributors contributing over 101
+commits.
+
+**New Bears**
+
+CSS:
+
+- ``StyleLintBear`` - Lints css files using stylelint
+
+Elm:
+
+- ``ElmLintBear`` - Formats source code according to given set of rules.
+
+Generic:
+
+- ``LicenseCheckBear`` - Checks given files for license. Searches start or
+  end of files for lines belonging to various licenses.
+- ``DuplicateFileBear`` - Checks for duplicate files.
+
+Enhancements:
+
+- ``FilenameBear`` can now recognize kebab-case naming convention.
+- ``FilenameBear`` can predict naming conventions for wide-spread languages like
+  java, javascript and python. Set the ``file_naming_convention`` to ``auto`` to
+  use this feature.
+- ``GitCommitBear`` can now enforce issue reference in commits.
+- ``GitCommitBear`` now recognizes ``user/repo#12`` type issue references.
+- ``JSONFormatBear`` notifies if run on empty files.
+- ``JSONFormatBear`` tells the lines and columns at which the error occured instead
+  of showing it in the error message.
+
+**New settings**
+
+- ``LineCountBear`` can now exclude blank lines in counting the number of lines
+  in a file. The new setting name is ``exclude_blank_lines`` and it is disabled
+  by default i.e. ``False``.
+- ``PyUnusedCodeBear`` can remove unused variables, see setting
+  ``remove_unused_variable``.
+- ``ShellCheckBear`` can ignore specific rules by providing those in
+  the ``ignore_actions`` setting.
+- ``YAMLLintBear`` can now be configured to check for maximum characters in a
+  line, by default it is set to 80.
+
+**Default Setting Modifications**
+
+- ``LanguageToolBear`` - ``language`` setting is changed to
+  ``natural_language``, please update your settings, it'll be deprecated
+  completely in next release.
+- ``MarkdownBear`` - ``max_line_length`` setting is changed to ``None`` instead
+  of 80.
+  `Issue 1581 <https://github.com/coala/coala-bears/issues/1581>`_
+- ``YAMLLintBear`` - ``document_start`` setting is changed to ``None``, not
+  forbiding the usage of document start marker(---) by default.
+  `Issue 1417 <https://github.com/coala/coala-bears/issues/1417>`_
+
+**Bug Fixes**
+
+- ``InvalidLinkBear`` now extracts links from markdown correctly.
+  `Issue 1338 <https://github.com/coala/coala-bears/issues/1338>`_
+- ``InvalidLinkBear`` now extracts all the links in a line. Earlier it used to
+  extract only the first match.
+- ``PyCodeStyleBear`` now uses user settings along with default settings.
+  Earlier it used to ignore default settings if user changed one of them.
+- ``PyImportSortBear`` now correctly supports option ``known_third_party_imports``.
+  `Issue 1510 <https://github.com/coala/coala-bears/issues/1510>`_
+- ``KeywordBear`` doesn't report false results when unsetting it. Previously,
+  it used to match any text instead of matching nothing.
+  `Issue 1689 <https://github.com/coala/coala-bears/issues/1689>`_
+
 coala-bears 0.10.1
 ==================
 
