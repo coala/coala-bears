@@ -92,5 +92,5 @@ class CheckstyleBear:
                 _online_styles[checkstyle_configs],
                 checkstyle_configs + '.xml')
 
-        return ('-jar', self.checkstyle_jar_file, '-c',
+        return ('-jar', type(self).checkstyle_jar_file, '-c',
                 checkstyle_configs, filename)
