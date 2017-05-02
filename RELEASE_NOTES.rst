@@ -6,14 +6,14 @@ Bugfixes:
 - Remark dependency has been pinned back to ~5.4 because version 6 changes
   current behavior and breaks tests. This is a hotfix which will be rolled
   back when the upstream addresses this.
- 
+
 coala-bears 0.10.0
 ==================
 
 This release, we had 97 commits contributed by 42 contributors.
 
 The coala website has been updated to a new, more modern design. You can now
-find a quick overview of bears and their settings at 
+find a quick overview of bears and their settings at
 http://coala.io/#!/languages. We also have sample a bear output on the front
 page for some common languages.
 
@@ -37,13 +37,13 @@ Python:
   with side effects.
 - `PyromaBear` - Checks how well your code conforms to the python packaging
   system (pip, distribute, etc).
-- `PythonPackageInitBear` - Checks that modules have an ``__init__.py`` in 
+- `PythonPackageInitBear` - Checks that modules have an ``__init__.py`` in
   their directories.
 
 
 Others:
 
-- `DennisBear` - Checks ``PO`` and ``POT`` files for problems. 
+- `DennisBear` - Checks ``PO`` and ``POT`` files for problems.
 
 **Bears With New Settings**
 
@@ -55,7 +55,7 @@ You can look up the new settings at http://coala.io/#!/languages.
 
 **Deprecated Settings**
 
-- `InvalidLinkBear` - ``timeout`` setting has been deprecated. Use 
+- `InvalidLinkBear` - ``timeout`` setting has been deprecated. Use
   ``network_timeout`` instead.
 
 **Enhancements**
