@@ -46,21 +46,28 @@ class XMLBear:
     _output_regex = re.compile(
         r'.*:(?P<line>\d+):.*(?P<severity>error|warning)\s?: '
         r'(?P<message>.*)\n.*\n.*')
+    _diff_severity = RESULT_SEVERITY.INFO
 
-    @staticmethod
-    def create_arguments(filename, file, config_file,
+    def create_arguments(self, filename, file, config_file,
                          xml_schema: path='',
-                         xml_dtd: path_or_url=''):
+                         xml_dtd: path_or_url='',
+                         xml_style: str=''):
         """
         :param xml_schema: ``W3C XML Schema`` file used for validation.
         :param xml_dtd:    ``Document type Definition (DTD)`` file or
                            url used for validation.
+        :param xml_style:  ``XML Style Specification`` Relevant args are
+                           c14n, c14n11, exc-c14n and oldxml10.
         """
         args = (filename,)
         if xml_schema:
             args += ('-schema', xml_schema)
         if xml_dtd:
             args += ('-dtdvalid', xml_dtd)
+        styles = ('c14n', 'c14n11', 'exc-c14n', 'oldxml10')
+        if xml_style in styles:
+            args += ('--'+xml_style,)
+            self._diff_severity = RESULT_SEVERITY.MAJOR
 
         return args
 
@@ -74,7 +81,7 @@ class XMLBear:
                     output_regex=self._output_regex),
                 self.process_output_corrected(
                     stdout, filename, file,
-                    diff_severity=RESULT_SEVERITY.INFO,
+                    diff_severity=self._diff_severity,
                     result_message='XML can be formatted better.'))
         else:
             # Return issues from stderr if stdout is empty

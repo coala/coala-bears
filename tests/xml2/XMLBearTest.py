@@ -79,6 +79,13 @@ XMLBearDTDUrlTest = verify_local_bear(
     settings={'xml_dtd': dtd_url},
     tempfile_kwargs={'suffix': '.xml'})
 
+XMLBearStyleTest = verify_local_bear(
+    XMLBear,
+    valid_files=(valid_xml_file,),
+    invalid_files=(invalid_xml_chars,),
+    settings={'xml_style': 'oldxml10'},
+    tempfile_kwargs={'suffix': '.xml'})
+
 
 @generate_skip_decorator(XMLBear)
 class XMLBearSeverityTest(unittest.TestCase):
