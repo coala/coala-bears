@@ -1,3 +1,11 @@
+coala-bears 0.10.2
+==================
+
+Bugfixes:
+
+- KeywordBear doesn't report false results when unsetting it. Previously,
+  it used to match every alphabet instead of matching nothing.
+
 coala-bears 0.10.1
 ==================
 
