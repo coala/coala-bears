@@ -162,15 +162,6 @@ You can also drop an email at our
 -----
 
 =======
-Authors
-=======
-
-coala is maintained by a growing community. Please take a look at the
-meta information in `setup.py <setup.py>`__ for the current maintainers.
-
------
-
-=======
 License
 =======
 
