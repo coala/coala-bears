@@ -15,10 +15,9 @@ def get_testfile_path(name):
 
 
 def load_testfile(name):
-    with open(get_testfile_path(name),'r') as file:
-        output=file.readlines()
+    with open(get_testfile_path(name), 'r') as file:
+        output = file.readlines()
     return output
-
 
 
 @generate_skip_decorator(LicenseCheckBear)
