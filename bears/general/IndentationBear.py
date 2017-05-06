@@ -17,7 +17,7 @@ class IndentationBear(LocalBear):
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
     CAN_FIX = {'Formatting'}
-    BEAR_DEPS = {AnnotationBear}  # pragma: no cover
+    BEAR_DEPS = {AnnotationBear}
 
     @deprecate_settings(indent_size='tab_width')
     def run(self,
