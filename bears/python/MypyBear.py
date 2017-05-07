@@ -125,7 +125,7 @@ class MypyBear:
         elif language.lower() not in ('python 3', 'python'):
             # Ideally, this would fail the check, but there's no good
             # way to fail from create_arguments.
-            # See https://github.com/coala-analyzer/coala/issues/2573
+            # See https://github.com/coala/coala/issues/2573
             self.err(
                 'Language needs to be "Python", "Python 2" or "Python 3". '
                 'Assuming Python 3.')
