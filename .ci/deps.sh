@@ -99,8 +99,9 @@ R -q -e 'install.packages("formatR")'
 go get -u github.com/golang/lint/golint
 go get -u golang.org/x/tools/cmd/goimports
 go get -u sourcegraph.com/sqs/goreturns
-go get -u github.com/jayvdb/gotype
+go get -u golang.org/x/tools/cmd/gotype
 go get -u github.com/kisielk/errcheck
+go get -u github.com/BurntSushi/toml/cmd/tomlv
 
 # Ruby commands
 bundle install --path=vendor/bundle --binstubs=vendor/bin --jobs=8 --retry=3
@@ -173,4 +174,12 @@ if [ ! -e ~/.local/tailor/tailor-latest ]; then
   PREFIX=$HOME/.local bash ./install.sh
   # Provide a constant path for the executable
   ln -s ~/.local/tailor/tailor-* ~/.local/tailor/tailor-latest
+fi
+
+# PHPMD installation
+if [ ! -e ~/phpmd/phpmd ]; then
+  mkdir -p ~/phpmd
+  curl -fsSL -o phpmd.phar http://static.phpmd.org/php/latest/phpmd.phar
+  sudo chmod +x phpmd.phar
+  sudo mv phpmd.phar ~/phpmd/phpmd
 fi

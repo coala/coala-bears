@@ -4,6 +4,8 @@ from coalib.bearlib.abstractions.Linter import linter
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.results.Result import Result
 from coalib.settings.Setting import path
+from dependency_management.requirements.DistributionRequirement import (
+        DistributionRequirement)
 
 
 @linter(executable='tailor',
@@ -19,6 +21,7 @@ class TailorBear:
     For more information on the analysis visit <https://tailor.sh/>
     """
     LANGUAGES = {'Swift'}
+    REQUIREMENT = {DistributionRequirement(brew='tailor')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

@@ -239,3 +239,12 @@ class KeywordBearDiffTest(unittest.TestCase):
                 self.assertIn(log.output[0],
                               'ERROR:root:coalang specification'
                               ' for anything not found.')
+
+    def test_empty_keywords_list(self):
+        self.section.append(Setting('keywords', ''))
+
+        text = ['bears = KeywordBear\n']
+
+        with execute_bear(self.uut, filename='F', file=text,
+                          dependency_results=self.dep_results) as result:
+            self.assertEqual(len(result), 0)

@@ -1,6 +1,8 @@
 from shutil import which
 
 from coalib.bearlib.abstractions.Linter import linter
+from dependency_management.requirements.DistributionRequirement import (
+    DistributionRequirement)
 
 
 @linter(executable='perl',
@@ -30,6 +32,7 @@ class VHDLLintBear:
     """
 
     LANGUAGES = {'VHDL'}
+    REQUIREMENTS = {DistributionRequirement('perl')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

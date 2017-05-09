@@ -19,7 +19,7 @@ class HTMLLintBear:
 
     _html_lint = which('html_lint.py')
 
-    LANGUAGES = {'HTML'}
+    LANGUAGES = {'HTML', 'Jinja2', 'PHP'}
     REQUIREMENTS = {PipRequirement('html-linter', '0.3.0')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}

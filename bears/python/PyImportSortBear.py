@@ -18,6 +18,64 @@ class PyImportSortBear(LocalBear):
     LICENSE = 'AGPL-3.0'
     CAN_FIX = {'Formatting'}
 
+    @staticmethod
+    def _seperate_imports(file):
+        import_stmts = []
+        tmp = []
+        paren = False
+        for lineno, lines in enumerate(file, start=1):
+            if 'import' in lines.split() or paren:
+                # To ensure that
+                # from x import ( y,
+                #                 z) type of imports are not treated as
+                # different sections
+                if '(' in lines and ')' not in lines:
+                    paren = True
+                if ')' in lines:
+                    paren = False
+                tmp.append((lineno, lines))
+            else:
+                if tmp:
+                    import_stmts.append(tmp)
+                tmp = []
+        # To ensure that if the last line of a file is an import statement
+        # it doesn't get ignored
+        if tmp:
+            import_stmts.append(tmp)
+            tmp = []
+        return import_stmts
+
+    def _get_diff(self):
+        if self.treat_seperated_imports_independently:
+            import_stmts = PyImportSortBear._seperate_imports(self.file)
+            sorted_imps = []
+            for units in import_stmts:
+                sort_imports = SortImports(file_contents=''.
+                                           join([x[1] for x in units]),
+                                           **self.isort_settings)
+                sort_imports = sort_imports.output.splitlines(True)
+                sorted_imps.append((units, sort_imports))
+
+            diff = Diff(self.file)
+            for old, new in sorted_imps:
+                start = old[0][0]
+                end = start + len(old) - 1
+                diff.delete_lines(start, end)
+                assert isinstance(new, list)
+                diff.add_lines(start, list(new))
+
+            if diff.modified != diff._file:
+                return diff
+        else:
+            sort_imports = SortImports(file_contents=''.join(self.file),
+                                       **self.isort_settings)
+
+            new_file = tuple(sort_imports.output.splitlines(True))
+            if new_file != tuple(self.file):
+                diff = Diff.from_string_arrays(self.file, new_file)
+                return diff
+        return None
+
     @deprecate_settings(indent_size='tab_width')
     def run(self, filename, file,
             use_parentheses_in_import: bool=True,
@@ -47,7 +105,8 @@ class PyImportSortBear(LocalBear):
             known_third_party_imports: typed_list(str)=(),
             known_standard_library_imports: typed_list(str)=None,
             max_line_length: int=79,
-            imports_forced_to_top: typed_list(str)=()):
+            imports_forced_to_top: typed_list(str)=(),
+            treat_seperated_imports_independently: bool=False):
         """
         Raise issues related to sorting imports, segregating imports into
         various sections, and also adding comments on top of each import
@@ -145,6 +204,9 @@ class PyImportSortBear(LocalBear):
             dependencies that occur in many projects.
         :param max_line_length:
             Maximum number of characters for a line.
+        :param treat_seperated_imports_independently:
+            Treat import statements seperated by one or more blank line or any
+            statement other than an import statement as an independent bunch.
         """
         isort_settings = dict(
             use_parentheses=use_parentheses_in_import,
@@ -169,6 +231,7 @@ class PyImportSortBear(LocalBear):
             forced_separate=forced_separate_imports,
             multi_line_output=isort_multi_line_output,
             known_first_party=known_first_party_imports,
+            known_third_party=known_third_party_imports,
             line_length=max_line_length,
             force_to_top=imports_forced_to_top)
 
@@ -176,12 +239,15 @@ class PyImportSortBear(LocalBear):
             isort_settings['known_standard_library'] = (
                 known_standard_library_imports)
 
-        sort_imports = SortImports(file_contents=''.join(file),
-                                   **isort_settings)
-        new_file = tuple(sort_imports.output.splitlines(True))
+        self.isort_settings = isort_settings
+        self.file = file
+        self.filename = filename
+        self.treat_seperated_imports_independently = \
+            treat_seperated_imports_independently
 
-        if new_file != tuple(file):
-            diff = Diff.from_string_arrays(file, new_file)
+        diff = self._get_diff()
+
+        if diff:
             yield Result(self,
                          'Imports can be sorted.',
                          affected_code=diff.affected_code(filename),

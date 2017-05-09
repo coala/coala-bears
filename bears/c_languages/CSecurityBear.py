@@ -28,7 +28,7 @@ class CSecurityBear:
     """
 
     LANGUAGES = {'C', 'C++'}
-    REQUIREMENTS = {DistributionRequirement(apt_get='flawfinder')}
+    REQUIREMENTS = {DistributionRequirement('flawfinder')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

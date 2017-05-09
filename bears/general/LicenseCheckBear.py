@@ -16,8 +16,14 @@ class LicenseCheckBear:
     in accordance with the ``licensecheck_tail`` option.
     """
     LANGUAGES = {'All'}
-    REQUIREMENTS = {DistributionRequirement(apt_get='devscripts',
-                                            dnf='licensecheck')}
+    REQUIREMENTS = {
+        DistributionRequirement(
+            apt_get='devscripts',
+            dnf='licensecheck',
+            portage=None,
+            zypper='devscripts',
+        ),
+    }
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

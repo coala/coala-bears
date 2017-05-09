@@ -1,6 +1,10 @@
 from coalib.bearlib.abstractions.Linter import linter
+from dependency_management.requirements.AnyOneOfRequirements import (
+    AnyOneOfRequirements)
 from dependency_management.requirements.CabalRequirement import (
     CabalRequirement)
+from dependency_management.requirements.DistributionRequirement import (
+    DistributionRequirement)
 
 
 @linter(executable='ghc-mod',
@@ -15,7 +19,13 @@ class GhcModBear:
     """
 
     LANGUAGES = {'Haskell'}
-    REQUIREMENTS = {CabalRequirement(package='ghc-mod', version='5.6.0')}
+    REQUIREMENTS = {
+        AnyOneOfRequirements(
+            [CabalRequirement('ghc-mod', '5.6.0'),
+             DistributionRequirement('ghc-mod')
+             ]
+        ),
+    }
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
