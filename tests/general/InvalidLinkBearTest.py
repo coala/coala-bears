@@ -7,6 +7,7 @@ import unittest
 import unittest.mock
 
 from bears.general.InvalidLinkBear import InvalidLinkBear
+from coalib.testing.LocalBearTestHelper import LocalBearTestHelper
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.settings.Section import Section
 
@@ -53,7 +54,7 @@ def custom_matcher(request):
     return resp
 
 
-class InvalidLinkBearTest(unittest.TestCase):
+class InvalidLinkBearTest(LocalBearTestHelper):
     """
     The tests are mocked (don't actually connect to internet) and
     return the int conversion of the last three chars of
@@ -145,22 +146,23 @@ class InvalidLinkBearTest(unittest.TestCase):
 
         # Example.com URLs should be ignored
         http://sub.example.com/404
-        http://sub.example.com/something/404
         """.splitlines()
 
         self.assertResult(valid_file=valid_file)
 
-        invalid_file = """http://coalaisthebest.com/
+        invalid_file = """
+        http://coalaisthebest.com/
         http://httpbin.org/status/404
         http://httpbin.org/status/410
         http://httpbin.org/status/500
         http://httpbin.org/status/503
-        http://www.notexample.com/404
-        http://exampe.com/404
-        http://example.co.in/404"""
+        """.splitlines()
 
-        for line in invalid_file.splitlines():
-            self.assertResult(invalid_file=[line])
+        with requests_mock.Mocker() as m:
+            m.add_matcher(custom_matcher)
+            self.check_line_result_count(InvalidLinkBear(self.section,
+                                                         Queue()),
+                                         invalid_file, [1, 1, 1, 1, 1])
 
     def test_severity(self):
         normal_severity_file = """
