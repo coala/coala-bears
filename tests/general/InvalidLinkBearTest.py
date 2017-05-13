@@ -9,6 +9,7 @@ import unittest.mock
 from bears.general.InvalidLinkBear import InvalidLinkBear
 from coalib.testing.LocalBearTestHelper import LocalBearTestHelper
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
+from coalib.results.Result import Result
 from coalib.settings.Section import Section
 
 
@@ -54,6 +55,20 @@ def custom_matcher(request):
     return resp
 
 
+class InvalidLinkBearTestPrerequisites(unittest.TestCase):
+
+    def test_check_prerequisites(self):
+        with requests_mock.Mocker() as m:
+            m.add_matcher(custom_matcher)
+            self.assertTrue(InvalidLinkBear.check_prerequisites())
+
+            m.head(InvalidLinkBear.check_connection_url,
+                   exc=requests.exceptions.RequestException)
+
+            self.assertTrue(InvalidLinkBear.check_prerequisites() ==
+                            'You are not connected to the internet.')
+
+
 class InvalidLinkBearTest(LocalBearTestHelper):
     """
     The tests are mocked (don't actually connect to internet) and
@@ -64,29 +79,13 @@ class InvalidLinkBearTest(LocalBearTestHelper):
     """
 
     def setUp(self):
+        self.ib_check_prerequisites = InvalidLinkBear.check_prerequisites
         self.section = Section('')
+        InvalidLinkBear.check_prerequisites = lambda *args: True
+        self.uut = InvalidLinkBear(self.section, Queue())
 
-    def assertResult(self, valid_file=None, invalid_file=None, settings={}):
-        with requests_mock.Mocker() as m:
-            InvalidLinkBear.check_prerequisites = lambda *args: True
-            uut = InvalidLinkBear(self.section, Queue())
-            m.add_matcher(custom_matcher)
-            if valid_file:
-                out = list(uut.run('valid', valid_file, **settings))
-                self.assertEqual(out, [])
-            if invalid_file:
-                out = list(uut.run('invalid', invalid_file, **settings))
-                self.assertNotEqual(out, [])
-                self.assertNotEqual(out, None)
-
-    def assertResultCount(self, test_file, expected_num):
-        with requests_mock.Mocker() as m:
-            InvalidLinkBear.check_prerequisites = lambda *args: True
-            uut = InvalidLinkBear(self.section, Queue())
-            m.add_matcher(custom_matcher)
-            for line, num in zip(test_file, expected_num):
-                outputs = list(uut.run('testline', [line]))
-                self.assertEqual(num, len(outputs))
+    def tearDown(self):
+        InvalidLinkBear.check_prerequisites = self.ib_check_prerequisites
 
     def assertSeverity(self, file, severity, settings={}):
         """
@@ -98,9 +97,8 @@ class InvalidLinkBearTest(LocalBearTestHelper):
         """
         severity_tag = RESULT_SEVERITY.reverse[severity]
         with requests_mock.Mocker() as m:
-            uut = InvalidLinkBear(self.section, Queue())
             m.add_matcher(custom_matcher)
-            outputs = list(uut.run('testfile', file, **settings))
+            outputs = list(self.uut.run('testfile', file, **settings))
             for out in outputs:
                 out_dict = out.to_string_dict()
                 self.assertEqual(severity_tag, out_dict['severity'])
@@ -148,8 +146,6 @@ class InvalidLinkBearTest(LocalBearTestHelper):
         http://sub.example.com/404
         """.splitlines()
 
-        self.assertResult(valid_file=valid_file)
-
         invalid_file = """
         http://coalaisthebest.com/
         http://httpbin.org/status/404
@@ -160,8 +156,9 @@ class InvalidLinkBearTest(LocalBearTestHelper):
 
         with requests_mock.Mocker() as m:
             m.add_matcher(custom_matcher)
-            self.check_line_result_count(InvalidLinkBear(self.section,
-                                                         Queue()),
+            self.check_validity(self.uut, valid_file)
+
+            self.check_line_result_count(self.uut,
                                          invalid_file, [1, 1, 1, 1, 1])
 
     def test_severity(self):
@@ -182,13 +179,7 @@ class InvalidLinkBearTest(LocalBearTestHelper):
 
         self.assertSeverity(major_severity_file, RESULT_SEVERITY.MAJOR)
 
-    def test_check_prerequisites(self):
-        with requests_mock.Mocker() as m:
-            m.add_matcher(custom_matcher)
-            self.assertTrue(InvalidLinkBear.check_prerequisites())
-
     def test_redirect_threshold(self):
-
         long_url_redirect = """
         https://bitbucket.org/api/301
         https://bitbucket.org/api/302
@@ -198,12 +189,26 @@ class InvalidLinkBearTest(LocalBearTestHelper):
         http://httpbin.org/status/301
         """.splitlines()
 
-        self.assertResult(valid_file=long_url_redirect,
-                          invalid_file=short_url_redirect,
-                          settings={'follow_redirects': 'yeah'})
+        with requests_mock.Mocker() as m:
+            m.add_matcher(custom_matcher)
+
+            self.check_validity(self.uut, long_url_redirect,
+                                settings={'follow_redirects': 'true'})
+
+            self.check_results(
+                self.uut,
+                short_url_redirect,
+                [Result.from_values(
+                    'InvalidLinkBear',
+                    'This link redirects to http://httpbin.org/get',
+                    severity=RESULT_SEVERITY.NORMAL,
+                    line=2,
+                    file='short_url_redirect_text'
+                )],
+                settings={'follow_redirects': 'true'},
+                filename='short_url_redirect_text')
 
     def test_multiple_results_per_line(self):
-
         test_file = """
         http://httpbin.org/status/410
         http://httpbin.org/status/200
@@ -212,9 +217,12 @@ class InvalidLinkBearTest(LocalBearTestHelper):
         http://httpbin.org/status/200 http://httpbin.org/status/201
         """.splitlines()
 
-        expected_num_results = [0, 1, 0, 2, 1, 0]
+        with requests_mock.Mocker() as m:
+            m.add_matcher(custom_matcher)
 
-        self.assertResultCount(test_file, expected_num_results)
+            expected_num_results = [1, 0, 2, 1, 0]
+            self.check_line_result_count(self.uut, test_file,
+                                         expected_num_results)
 
     def test_pip_vcs_url(self):
         with_at = """
@@ -224,16 +232,12 @@ class InvalidLinkBearTest(LocalBearTestHelper):
         bzr+http://httpbin.org/status/200@master
         """.splitlines()
 
-        self.assertResult(valid_file=with_at)
-
         with_hash = """
         git+http://httpbin.org/status/200#egg=coala-bears
         svn+http://httpbin.org/status/200#egg=coala-bears
         hg+http://httpbin.org/status/200#egg=coala-bears
         bzr+http://httpbin.org/status/200#egg=coala-bears
         """.splitlines()
-
-        self.assertResult(valid_file=with_hash)
 
         with_at_hash = """
         git+http://httpbin.org/status/200@master#egg=coala-bears
@@ -242,31 +246,39 @@ class InvalidLinkBearTest(LocalBearTestHelper):
         bzr+http://httpbin.org/status/200@master#egg=coala-bears
         """.splitlines()
 
-        self.assertResult(valid_file=with_at_hash)
-
         brokenlink_at = """git+http://httpbin.org/status/404@master
         svn+http://httpbin.org/status/404@master
         hg+http://httpbin.org/status/404@master
-        bzr+http://httpbin.org/status/404@master"""
-
-        for line in brokenlink_at.splitlines():
-            self.assertResult(invalid_file=[line])
+        bzr+http://httpbin.org/status/404@master
+        """.splitlines()
 
         brokenlink_hash = """git+http://httpbin.org/status/404#egg=coala-bears
         svn+http://httpbin.org/status/404#egg=coala-bears
         hg+http://httpbin.org/status/404#egg=coala-bears
-        bzr+http://httpbin.org/status/404#egg=coala-bears"""
-
-        for line in brokenlink_hash.splitlines():
-            self.assertResult(invalid_file=[line])
+        bzr+http://httpbin.org/status/404#egg=coala-bears
+        """.splitlines()
 
         brokenlink_at_hash = """git+http://httpbin.org/status/404@master#egg=coala-bears
         svn+http://httpbin.org/status/404@master#egg=coala-bears
         hg+http://httpbin.org/status/404@master#egg=coala-bears
-        bzr+http://httpbin.org/status/404@master#egg=coala-bears"""
+        bzr+http://httpbin.org/status/404@master#egg=coala-bears
+        """.splitlines()
 
-        for line in brokenlink_at_hash.splitlines():
-            self.assertResult(invalid_file=[line])
+        with requests_mock.Mocker() as m:
+            m.add_matcher(custom_matcher)
+
+            self.check_validity(self.uut, with_at)
+            self.check_validity(self.uut, with_hash)
+            self.check_validity(self.uut, with_at_hash)
+
+            self.check_line_result_count(self.uut, brokenlink_at,
+                                         [1, 1, 1, 1])
+
+            self.check_line_result_count(self.uut, brokenlink_hash,
+                                         [1, 1, 1, 1])
+
+            self.check_line_result_count(self.uut, brokenlink_at_hash,
+                                         [1, 1, 1, 1])
 
     def test_xml_namespaces(self):
         valid_file = """
@@ -279,16 +291,19 @@ class InvalidLinkBearTest(LocalBearTestHelper):
         xsi:schemaLocation="http://xmlnamespace.org/status/200">
         """.splitlines()
 
-        self.assertResult(valid_file=valid_file)
-
         invalid_file = """
         <ruleset name="test" xmlns="http://this.isa.namespace/ruleset/7.0.0"
         xmlns:xsi="http://this.is.another/kindof/namespace"
         xsi:schemaLocation="http://this.namespace.dosent/exists/7.0.0"
         xsi:schemaLocation="http://httpbin.com/404">""".splitlines()
 
-        for line in invalid_file[1:]:
-            self.assertResult(invalid_file=[line])
+        with requests_mock.Mocker() as m:
+            m.add_matcher(custom_matcher)
+
+            self.check_validity(self.uut, valid_file)
+
+            self.check_line_result_count(self.uut, invalid_file,
+                                         [1, 1, 1, 1])
 
         info_severity_file = """
         <ruleset name="test" xmlns="http://this.is.a.namespace/ruleset/7.0.0"
@@ -340,8 +355,11 @@ class InvalidLinkBearTest(LocalBearTestHelper):
                            'http://example.co.in/404'
                           ]
 
-        self.assertResult(valid_file=valid_file,
-                          settings={'link_ignore_list': link_ignore_list})
+        with requests_mock.Mocker() as m:
+            m.add_matcher(custom_matcher)
+            self.check_validity(self.uut, valid_file,
+                                settings={'link_ignore_list': link_ignore_list}
+                                )
 
     def test_variable_timeouts(self):
         nt = {
@@ -364,24 +382,18 @@ class InvalidLinkBearTest(LocalBearTestHelper):
         with unittest.mock.patch(
                 'tests.general.InvalidLinkBearTest.requests.head',
                 return_value=response(status_code=200)) as mock:
-            uut = InvalidLinkBear(self.section, Queue())
-            self.assertEqual([x.message
-                              for x in list(uut.run('file', file_contents,
-                                                    network_timeout=nt))], [])
+            self.check_validity(self.uut, file_contents,
+                                settings={'network_timeout': nt})
 
             with self.assertLogs(logging.getLogger()) as log:
-                self.assertEqual([x.message
-                                  for x in list(uut.run('file', file_contents,
-                                                        timeout=20))], [])
+                self.check_validity(self.uut, file_contents,
+                                    settings={'timeout': 20})
                 self.assertEqual(log.output,
                                  ['WARNING:root:The setting `timeout` is '
                                   'deprecated. Please use `network_timeout` '
                                   'instead.'])
 
-            self.assertEqual([x.message
-                              for x in list(uut.run('file',
-                                                    ['https://gitmate.io']))],
-                             [])
+            self.check_validity(self.uut, ['https://gitmate.io'])
             mock.assert_has_calls([
                 unittest.mock.call('https://facebook.com/', timeout=2,
                                    allow_redirects=False),
