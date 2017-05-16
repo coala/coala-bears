@@ -21,7 +21,8 @@ class PycodestyleBear:
     @staticmethod
     def create_arguments(
             filename, file, config_file,
-            pycodestyle_ignore: str='',
+            pycodestyle_ignore: str='E121, E123, E126, E133, E226, E241, '
+                                    'E242, E704, W503',
             pycodestyle_select: str='',
             max_line_length: int=79):
         """
