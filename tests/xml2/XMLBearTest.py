@@ -43,11 +43,15 @@ dtd_file = os.path.join(os.path.dirname(__file__),
 schema_file = os.path.join(os.path.dirname(__file__),
                            'test_files',
                            'note.xsd')
+relaxng_file = os.path.join(os.path.dirname(__file__),
+                            'test_files',
+                            'note.rng')
 
 valid_xml_path = load_testdata('note.xml')
 valid_xml_url = load_testdata('concept-valid.xml')
 invalid_xml_schema = load_testdata('xsd-error.xml')
 invalid_xml_dtd = load_testdata('dtd-error.xml')
+invalid_xml_relaxng = load_testdata('rng-error.xml')
 invalid_xml_url = load_testdata('concept-invalid.xml')
 
 dtd_url = 'http://docs.oasis-open.org/dita/v1.0.1/dtd/concept.dtd'
@@ -77,6 +81,13 @@ XMLBearDTDUrlTest = verify_local_bear(
     valid_files=(valid_xml_url,),
     invalid_files=(invalid_xml_url,),
     settings={'xml_dtd': dtd_url},
+    tempfile_kwargs={'suffix': '.xml'})
+
+XMLBearRelaxNGTest = verify_local_bear(
+    XMLBear,
+    valid_files=(valid_xml_path,),
+    invalid_files=(invalid_xml_relaxng,),
+    settings={'xml_relaxng': relaxng_file},
     tempfile_kwargs={'suffix': '.xml'})
 
 

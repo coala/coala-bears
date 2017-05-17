@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar ns="http://www.w3schools.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <start>
+    <element name="note">
+      <attribute name="xsi:noNamespaceSchemaLocation"/>
+      <element name="to">
+        <data type="NCName"/>
+      </element>
+      <element name="from">
+        <data type="NCName"/>
+      </element>
+      <element name="heading">
+        <data type="NCName"/>
+      </element>
+      <element name="body">
+        <text/>
+      </element>
+    </element>
+  </start>
+</grammar>
