@@ -14,6 +14,6 @@ if (options.quiet !== true)
 var x=2
 """
 
-HappinessLintBear = verify_local_bear(HappinessLintBear,
-                                      valid_files=(good_file,),
-                                      invalid_files=(bad_file,))
+HappinessLintBearTest = verify_local_bear(HappinessLintBear,
+                                          valid_files=(good_file,),
+                                          invalid_files=(bad_file,))

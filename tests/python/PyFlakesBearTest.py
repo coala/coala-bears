@@ -10,6 +10,6 @@ import os
 print("Hi")
 """
 
-PyFlakesBear = verify_local_bear(PyFlakesBear,
-                                 valid_files=(good_file,),
-                                 invalid_files=(bad_file,))
+PyFlakesBearTest = verify_local_bear(PyFlakesBear,
+                                     valid_files=(good_file,),
+                                     invalid_files=(bad_file,))

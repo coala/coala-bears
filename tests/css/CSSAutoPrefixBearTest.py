@@ -16,6 +16,6 @@ bad_file = """
 }
 """
 
-CSSAutoPrefixBear = verify_local_bear(CSSAutoPrefixBear,
-                                      valid_files=(good_file,),
-                                      invalid_files=(bad_file,))
+CSSAutoPrefixBearTest = verify_local_bear(CSSAutoPrefixBear,
+                                          valid_files=(good_file,),
+                                          invalid_files=(bad_file,))
