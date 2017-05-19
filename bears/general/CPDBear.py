@@ -76,7 +76,7 @@ class CPDBear(GlobalBear):
         """
         language = language.lower()
 
-        if language not in self.lowered_lang_dict:  # pragma: no cover
+        if language not in self.lowered_lang_dict:
             self.err('This bear does not support files with the extension '
                      "'{}'.".format(language))
             return

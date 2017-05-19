@@ -2,6 +2,7 @@ import os
 import unittest
 
 from queue import Queue
+import logging
 
 
 from bears.general.CPDBear import CPDBear
@@ -50,3 +51,17 @@ class CPDBearTest(unittest.TestCase):
         result = list(self.uut.run_bear_from_section([], {}))
 
         self.assertNotEqual(result, [])
+
+    def test_unsupported_language(self):
+        self.section.update_setting(
+            key='language', new_value='unsupported_language')
+
+        self.uut = CPDBear({'file_name': 'hello world  \n'},
+                           self.section,
+                           self.queue)
+
+        list(self.uut.run_bear_from_section([], {}))
+        self.assertEqual(
+            self.uut.message_queue.queue[0].log_level, logging.ERROR)
+        self.assertIn('unsupported_language',
+                      self.uut.message_queue.queue[0].message)
