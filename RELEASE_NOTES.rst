@@ -1,3 +1,75 @@
+coala-bears 0.11.0
+==================
+
+This release has been brought to you by 30 contributors contributing over 101
+commits.
+
+**New Bears**
+
+CSS:
+
+- ``StyleLintBear`` - Lints css files using stylelint
+
+Elm:
+
+- ``ElmLintBear`` - Formats source code according to given set of rules.
+
+Generic:
+
+- ``LicenseCheckBear`` - Checks given files for license. Searches start or
+  end of files for lines belonging to various licenses.
+- ``DuplicateFileBear`` - Checks for duplicate files.
+
+Enhancements:
+
+- ``FilenameBear`` can now recognize kebab-case naming convention.
+- ``FilenameBear`` can predict naming conventions for wide-spread languages like
+  java, javascript and python. Set the ``file_naming_convention`` to ``auto`` to
+  use this feature.
+- ``GitCommitBear`` can now enforce issue reference in commits.
+- ``GitCommitBear`` now recognizes ``user/repo#12`` type issue references.
+- ``JSONFormatBear`` notifies if run on empty files.
+- ``JSONFormatBear`` tells the lines and columns at which the error occured instead
+  of showing it in the error message.
+
+**New settings**
+
+- ``LineCountBear`` can now exclude blank lines in counting the number of lines
+  in a file. The new setting name is ``exclude_blank_lines`` and it is disabled
+  by default i.e. ``False``.
+- ``PyUnusedCodeBear`` can remove unused variables, see setting
+  ``remove_unused_variable``.
+- ``ShellCheckBear`` can ignore specific rules by providing those in
+  the ``ignore_actions`` setting.
+- ``YAMLLintBear`` can now be configured to check for maximum characters in a
+  line, by default it is set to 80.
+
+**Default Setting Modifications**
+
+- ``LanguageToolBear`` - ``language`` setting is changed to
+  ``natural_language``, please update your settings, it'll be deprecated
+  completely in next release.
+- ``MarkdownBear`` - ``max_line_length`` setting is changed to ``None`` instead
+  of 80.
+  `Issue 1581 <https://github.com/coala/coala-bears/issues/1581>`_
+- ``YAMLLintBear`` - ``document_start`` setting is changed to ``None``, not
+  forbiding the usage of document start marker(---) by default.
+  `Issue 1417 <https://github.com/coala/coala-bears/issues/1417>`_
+
+**Bug Fixes**
+
+- ``InvalidLinkBear`` now extracts links from markdown correctly.
+  `Issue 1338 <https://github.com/coala/coala-bears/issues/1338>`_
+- ``InvalidLinkBear`` now extracts all the links in a line. Earlier it used to
+  extract only the first match.
+- ``PyCodeStyleBear`` now uses user settings along with default settings.
+  Earlier it used to ignore default settings if user changed one of them.
+- ``PyImportSortBear`` now correctly supports option ``known_third_party_imports``.
+  `Issue 1510 <https://github.com/coala/coala-bears/issues/1510>`_
+- ``KeywordBear`` doesn't report false results when unsetting it. Previously,
+  it used to match any text instead of matching nothing.
+  `Issue 1689 <https://github.com/coala/coala-bears/issues/1689>`_
+
 coala-bears 0.10.1
 ==================
 
@@ -6,14 +78,14 @@ Bugfixes:
 - Remark dependency has been pinned back to ~5.4 because version 6 changes
   current behavior and breaks tests. This is a hotfix which will be rolled
   back when the upstream addresses this.
- 
+
 coala-bears 0.10.0
 ==================
 
 This release, we had 97 commits contributed by 42 contributors.
 
 The coala website has been updated to a new, more modern design. You can now
-find a quick overview of bears and their settings at 
+find a quick overview of bears and their settings at
 http://coala.io/#!/languages. We also have sample a bear output on the front
 page for some common languages.
 
@@ -37,13 +109,13 @@ Python:
   with side effects.
 - `PyromaBear` - Checks how well your code conforms to the python packaging
   system (pip, distribute, etc).
-- `PythonPackageInitBear` - Checks that modules have an ``__init__.py`` in 
+- `PythonPackageInitBear` - Checks that modules have an ``__init__.py`` in
   their directories.
 
 
 Others:
 
-- `DennisBear` - Checks ``PO`` and ``POT`` files for problems. 
+- `DennisBear` - Checks ``PO`` and ``POT`` files for problems.
 
 **Bears With New Settings**
 
@@ -55,7 +127,7 @@ You can look up the new settings at http://coala.io/#!/languages.
 
 **Deprecated Settings**
 
-- `InvalidLinkBear` - ``timeout`` setting has been deprecated. Use 
+- `InvalidLinkBear` - ``timeout`` setting has been deprecated. Use
   ``network_timeout`` instead.
 
 **Enhancements**

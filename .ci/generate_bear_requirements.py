@@ -43,6 +43,7 @@ PROJECT_BEAR_DIR = os.path.abspath(os.path.join(PROJECT_DIR, 'bears'))
 PINNED_PACKAGES = (
    'radon',
    'click',
+   'lxml',
 )
 
 env = Environment(loader=FileSystemLoader(THIS_DIR))
