@@ -114,7 +114,7 @@ class SCSSLintBear:
             Ensure hexadecimal colors are valid (either three or six digits).
         :param allow_id_selector:
             Allows using ID selectors.
-        :param allow_important_rule_in_property:
+        :param allow_important_rule_in_properties:
             Allows using ``!important`` in properties.
         :param use_spaces:
             Use spaces for indentation (tabs otherwise).
