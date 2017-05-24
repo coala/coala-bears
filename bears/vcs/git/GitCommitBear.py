@@ -35,7 +35,7 @@ class GitCommitBear(GlobalBear):
 
     def setup_dependencies(self):
         if not self._nltk_data_downloaded and bool(
-                self.section.get('shortlog_check_imperative', True)):
+                self.section.get('shortlog_imperative_check', True)):
             nltk.download([
                 'punkt',
                 'maxent_treebank_pos_tagger',
