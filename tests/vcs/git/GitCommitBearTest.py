@@ -487,7 +487,7 @@ class GitCommitBearTest(unittest.TestCase):
         self.assertTrue(GitCommitBear._nltk_data_downloaded)
 
         section = Section('commit')
-        section.append(Setting('shortlog_check_imperative', 'False'))
+        section.append(Setting('shortlog_imperative_check', 'False'))
 
         GitCommitBear._nltk_data_downloaded = False
         GitCommitBear(None, section, self.msg_queue)
@@ -501,7 +501,7 @@ class GitCommitBearTest(unittest.TestCase):
         self.assertTrue(GitCommitBear._nltk_data_downloaded)
 
         section = Section('commit')
-        section.append(Setting('shortlog_check_imperative', 'True'))
+        section.append(Setting('shortlog_imperative_check', 'True'))
 
         GitCommitBear._nltk_data_downloaded = False
         GitCommitBear(None, section, self.msg_queue)
