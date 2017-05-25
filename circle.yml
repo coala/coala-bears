@@ -10,7 +10,7 @@ dependencies:
     - ~/.cabal
     - ~/.ghc
     - ~/.ghc-mod
-    - ~/infer-linux64-v0.7.0
+    - ~/infer-linux64-v0.10.0
     - ~/nltk_data
     - ~/pmd-bin-5.4.1
     - ~/.local/share/coala-bears
@@ -24,7 +24,7 @@ dependencies:
     - echo 'export LINTR_COMMENT_BOT=false' >> ~/.circlerc
     - echo 'export PATH=$PATH:~/dart-sdk/bin' >> ~/.circlerc
     - echo 'export PATH=$PATH:~/.cabal/bin' >> ~/.circlerc
-    - echo 'export PATH=$PATH:~/infer-linux64-v0.7.0/infer/bin' >> ~/.circlerc
+    - echo 'export PATH=$PATH:~/infer-linux64-v0.10.0/infer/bin' >> ~/.circlerc
     - echo 'export PATH=$PATH:~/pmd-bin-5.4.1/bin' >> ~/.circlerc
     - echo 'export PATH=$PATH:~/bakalint-0.4.0' >> ~/.circlerc
     - echo 'export PATH=$PATH:~/.local/tailor/tailor-latest/bin' >> ~/.circlerc
