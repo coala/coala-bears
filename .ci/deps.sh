@@ -155,6 +155,7 @@ if [ ! -e ~/infer-linux64-v0.7.0/infer/bin ]; then
   cd ~/infer-linux64-v0.7.0
   opam init --y
   opam update
+  opam pin add --yes --no-action atdgen 1.10.0
   opam pin add --yes --no-action infer .
   opam install --deps-only --yes infer
   ./build-infer.sh java
