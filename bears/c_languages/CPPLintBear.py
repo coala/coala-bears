@@ -6,6 +6,8 @@ from coalib.settings.Setting import typed_list
 @linter(executable='cpplint',
         use_stdout=False,
         use_stderr=True,
+        executable_check_fail_info='Please see https://pypi.python.org/pypi/cpplint '
+                                   'for more information about this.',
         output_format='regex',
         output_regex=r'.+:(?P<line>\d+): (?P<message>.+)')
 class CPPLintBear:
