@@ -24,7 +24,7 @@ class coalaBear(LocalBear):
             corrected += [re.sub(wrong_spelling,
                                  lambda match: 'c' + match.group(1),
                                  line)]
-        diffs = Diff.from_string_arrays(file, corrected).split_diff()
+        diffs = Diff.from_string_arrays(file, corrected).split_diff(-1)
         for diff in diffs:
             yield Result(self,
                          '``coala`` is always written with a lower case ``c``',
