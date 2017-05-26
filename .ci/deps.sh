@@ -29,6 +29,7 @@ if [ ! -e ~/dart-sdk/lib ]; then
   unzip -n ~/dart-sdk.zip -d ~/
 fi
 
+
 # VHDL Bakalint Installation
 if [ ! -e ~/bakalint-0.4.0/bakalint.pl ]; then
   wget "http://downloads.sourceforge.net/project/fpgalibre/bakalint/0.4.0/bakalint-0.4.0.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Ffpgalibre%2Ffiles%2Fbakalint%2F0.4.0%2F&ts=1461844926&use_mirror=netcologne" -O ~/bl.tar.gz
