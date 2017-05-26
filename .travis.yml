@@ -65,7 +65,7 @@ cache:
     - ~/pmd-bin-5.4.1
     - ~/bakalint-0.4.0
     - ~/elm-format-0.18
-    - ~/dart-sdk/bin
+    - ~/dart-sdk
     - ~/.local/tailor/
     - ~/phpmd
 

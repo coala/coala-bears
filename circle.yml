@@ -7,7 +7,7 @@ dependencies:
     - ~/coala-bears/.bundle
     - ~/coala-bears/vendor
     - ~/.RLibrary
-    - ~/dart-sdk/bin
+    - ~/dart-sdk
     - ~/.cabal
     - ~/.ghc
     - ~/.ghc-mod
