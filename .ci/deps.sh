@@ -89,6 +89,10 @@ if [[ -n "$ALEX" && "${ALEX/node_modules/}" == "${ALEX}" ]]; then
 fi
 npm install
 
+# Phan commands
+git clone https://github.com/etsy/phan.git;
+composer install;
+
 # R commands
 echo '.libPaths( c( "'"$R_LIB_USER"'", .libPaths()) )' >> .Rprofile
 echo 'options(repos=structure(c(CRAN="http://cran.rstudio.com")))' >> .Rprofile
