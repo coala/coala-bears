@@ -20,5 +20,16 @@ class HappinessLintBear:
     CAN_DETECT = {'Syntax'}
 
     @staticmethod
-    def create_arguments(filename, file, config_file):
+    def create_arguments(
+            filename, file, config_file,
+            use_spaces: bool=False):
+
+        # Refer to https://github.com/coala/coala-bears/issues/1754
+        # use_spaces = true conflicts with HappinessLintBear as
+        # it requires tab indentations.
+        if (use_spaces):
+            raise ValueError(
+                'Please set `use_spaces=False` with HappinessLintBear'
+                'to avoid conflicts with other Bears'
+            )
         return filename,
