@@ -18,6 +18,7 @@ import itertools
 import json
 import os
 import sys
+from collections import OrderedDict
 
 from jinja2 import Environment, FileSystemLoader
 from pyprint.NullPrinter import NullPrinter
@@ -155,9 +156,13 @@ def write_npm_requirements(requirements):
 
     package_json_string = template.render(
         dependencies=npm_dependencies, version="0.8.0")
+    pretty_json = json.dumps(
+        json.loads(package_json_string, object_pairs_hook=OrderedDict),
+        indent=2)
 
     with open(os.path.join(PROJECT_DIR, "package.json"), 'w') as file:
-        file.write(package_json_string)
+        file.write(pretty_json)
+        file.write('\n')
 
 
 def write_pip_requirements(requirements, output):
