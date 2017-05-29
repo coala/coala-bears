@@ -108,12 +108,16 @@ class URLBear(LocalBear):
             [^.:%\s_/?#[\]@\\]+         # Initial part of domain
             \.                          # A required dot `.`
             (
-                (?:[^\s()%\'"`<>|\\\[\]]+)  # Path name
-                                            # This part does not allow
-                                            # any parenthesis: balanced or
-                                            # unbalanced.
-            |                               # OR
-                \([^\s()%\'"`<>|\\\[\]]*\)  # Path name contained within ()
+                ((?:%[A-Fa-f0-9][A-Fa-f0-9])*[^\s()%\'"`<>|\\\[\]]+)
+                                        # Path name
+                                        # This part allows precentage
+                                        # encoding like %3F
+                                        # and does not allow
+                                        # any parenthesis: balanced or
+                                        # unbalanced.
+            |                           # OR
+                \((?:%[A-Fa-f0-9][A-Fa-f0-9])*[^\s()%\'"`<>|\\\[\]]*\)
+                                        # Path name contained within ()
                                         # This part allows path names that
                                         # are explicitly enclosed within one
                                         # set of parenthesis.
