@@ -1,3 +1,13 @@
+coala-bears 0.11.1
+==================
+
+VintBear has been removed because of a number of dependency circumstances
+causing the bears to become unusable. We will readd VintBear in a following
+bugfix release as soon as the bug is fixed upstream.
+
+For more information and progress, please subscribe to
+`this issue` <https://github.com/coala/coala-bears/issues/1788>_.
+
 coala-bears 0.11.0
 ==================
 
