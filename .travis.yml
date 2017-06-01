@@ -89,7 +89,9 @@ before_install:
   - if [[ "$UNSUPPORTED" != true ]]; then bash .ci/deps.java.sh; fi
   # https://github.com/coala/coala/issues/3183
   - cp requirements.txt requirements.orig
-  - cat test-requirements.txt docs-requirements.txt bear-requirements.txt >> requirements.txt
+  - >
+    cat test-requirements.txt docs-requirements.txt
+    bear-requirements.txt >> requirements.txt
   - sed -i '/^-r/d' requirements.txt
   # On unsupported versions, coala will be installed in the `script` block
   # mypy-lang does not install, and 3to2 must be pre-installed
@@ -98,7 +100,8 @@ before_install:
     if [[ "$UNSUPPORTED" == true ]]; then
       pip install 3to2
       export PIP_NO_COMPILE=1
-      sed -E -i.bak '/^(coala|mypy-lang)/d' requirements.txt bear-requirements.txt
+      sed -i.bak '/^coala/d' requirements.txt
+      sed -i.bak '/^mypy-lang/d' requirements.txt bear-requirements.txt
     fi
 
 before_script:

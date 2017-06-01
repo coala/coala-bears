@@ -1,5 +1,9 @@
 install:
-  - if ! pip3 -V ; then wget -O - https://bootstrap.pypa.io/get-pip.py | python3; fi
+  - >
+    if ! pip3 -V ; then
+      wget -O - https://bootstrap.pypa.io/get-pip.py
+      python3 get-pip.py
+    fi
 
 docker:
   as_root: true
@@ -8,7 +12,8 @@ docker:
 merge:
   fast-forward: only
   script:
-    - python3 .ci/adjust_version_number.py bears/VERSION -b `date --utc +%Y%m%d%H%M%S`
+    - DATE=`date --utc +%Y%m%d%H%M%S`
+    - python3 .ci/adjust_version_number.py bears/VERSION -b "$DATE"
     - bash .ci/deploy.pypi.sh
 
 release:
