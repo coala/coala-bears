@@ -41,3 +41,4 @@ Gemfile.lock
 *.swp
 venv
 bears/upload/
+.coala-invalidlinkbear-status-code-cache
