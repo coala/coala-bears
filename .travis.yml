@@ -79,8 +79,12 @@ env:
 before_install:
   # Remove Ruby directive from Gemfile as this image has 2.2.5
   - sed -i '/^ruby/d' Gemfile
+  - if [[ "$UNSUPPORTED" != true ]]; then bash .ci/deps.apt.sh; fi
   - if [[ "$UNSUPPORTED" != true ]]; then bash .ci/deps.sh; fi
   - if [[ "$UNSUPPORTED" != true ]]; then bash .ci/deps.cabal.sh; fi
+  - if [[ "$UNSUPPORTED" != true ]]; then bash .ci/deps.r.sh; fi
+  - if [[ "$UNSUPPORTED" != true ]]; then bash .ci/deps.opam.sh; fi
+  - if [[ "$UNSUPPORTED" != true ]]; then bash .ci/deps.java.sh; fi
   # https://github.com/coala/coala/issues/3183
   - cp requirements.txt requirements.orig
   - cat test-requirements.txt docs-requirements.txt bear-requirements.txt >> requirements.txt
@@ -123,7 +127,7 @@ script:
       mv .coafile.new .coafile
     fi
   - coala --non-interactive
-  - bash .ci/deploy.coverage.sh
+  - codecov
   - rm -rf docs/API && make -C docs clean
   - python setup.py docs
 

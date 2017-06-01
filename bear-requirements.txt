@@ -1,3 +1,4 @@
+apertium-lint~=0.29
 autoflake~=0.6.6
 autopep8~=1.2
 bandit~=1.2
@@ -11,6 +12,7 @@ guess-language-spirit~=0.5.2
 html-linter~=0.3.0
 isort~=4.2
 language-check~=1.0
+lxml==3.6.0
 munkres3~=1.0
 mypy-lang~=0.4.6
 nbformat~=4.1
@@ -24,10 +26,10 @@ pyroma~=2.2.0
 pyyaml~=3.12
 radon==1.4.0
 restructuredtext-lint~=1.0.0
-rstcheck~=2.2
+rstcheck~=3.1
 safety~=0.5.1
 scspell3k~=2.0
-vim-vint~=0.3.10
+vim-vint~=0.3.12
 vulture~=0.10.0
 yamllint~=1.6.1
 yapf~=0.14.0

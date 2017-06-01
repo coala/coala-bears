@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dictionary>
+  <alphabet>·ÀÁÂÄÇÈÉÊËÌÍÎÏÑÒÓÔÖÙÚÛÜÚāàáâäçèéêëìíîïīñòóôöõùúûüABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789ş</alphabet>
+  <pardefs>
+
+<pardef n="ö">
+  <e>       <p><l>ö</l>         <r>ö</r></p></e>
+  <e r="LR"><p><l>oe</l>        <r>ö</r></p></e>
+</pardef>
+
+  </pardefs>
+</dictionary>

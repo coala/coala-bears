@@ -19,9 +19,16 @@ class GofmtBear:
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
-    CAN_FIX = {'Formatting'}
+    CAN_FIX = {'Formatting', 'Code Simplification'}
     ASCIINEMA_URL = 'https://asciinema.org/a/94812'
 
     @staticmethod
-    def create_arguments(filename, file, config_file):
-        return ()
+    def create_arguments(filename, file, config_file,
+                         simplify: bool=False):
+        """
+        :param simplify: Tries to simplify code
+        """
+        args = ()
+        if simplify:
+            args += ('-s',)
+        return args

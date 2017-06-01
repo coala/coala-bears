@@ -23,7 +23,7 @@ class RSTcheckBear:
     """
 
     LANGUAGES = {'reStructuredText'}
-    REQUIREMENTS = {PipRequirement('rstcheck', '2.2')}
+    REQUIREMENTS = {PipRequirement('rstcheck', '3.1')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

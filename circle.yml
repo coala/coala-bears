@@ -35,6 +35,11 @@ dependencies:
     - mkdir -p ~/.RLibrary
     - nvm alias default node
   override:
+    - bash .ci/deps.apt.sh
+    - bash .ci/deps.pip.sh
+    - bash .ci/deps.java.sh
+    - bash .ci/deps.opam.sh
+    - bash .ci/deps.r.sh
     - bash .ci/deps.cabal.sh
     - bash .ci/deps.sh:
         timeout: 900  # Allow 15 mins before timing out due to "no output"
@@ -54,7 +59,7 @@ test:
         parallel: true
     - coala-ci -L DEBUG:
         parallel: true
-    - bash .ci/deploy.coverage.sh:
+    - codecov:
         parallel: true
     - rm -rf docs/API && make -C docs clean
     - python setup.py docs:

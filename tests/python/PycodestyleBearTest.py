@@ -22,6 +22,12 @@ PycodestyleBearTest = verify_local_bear(
     valid_files=(good_file,),
     invalid_files=(bad_file,))
 
+PycodestyleBearNoIgnoreTest = verify_local_bear(
+    PycodestyleBear,
+    valid_files=(good_file,),
+    invalid_files=(bad_file,),
+    settings={'pycodestyle_ignore': ''})
+
 PycodestyleBearConfigIgnoreTest = verify_local_bear(
     PycodestyleBear,
     valid_files=(good_file, bad_file),
