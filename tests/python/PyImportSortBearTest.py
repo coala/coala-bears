@@ -95,7 +95,7 @@ from coalib.results.Diff import Diff
                          diff.modified)
 
         self.assertEqual(list(self.uut.run('',
-                                           ['import curses\n', 'import this\n',
+                                           ['import curses\n', 'import io\n',
                                             'coala = "coala"\n'],
                                            **settings)), [])
 
