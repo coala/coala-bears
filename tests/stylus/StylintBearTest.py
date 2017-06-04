@@ -145,6 +145,42 @@ class StylintBearTest(LocalBearTestHelper):
             filename=get_testfile_path(filename),
             settings={'stylint_config': get_testfile_path('.stylintrc')})
 
+    def test_bad_placeholder_space_color(self):
+        filename = 'test_bad_placeholder_space_color.styl'
+        file_contents = load_testfile(filename)
+        self.check_results(
+            self.uut,
+            file_contents,
+            [Result.from_values('StylintBear',
+                                message='always use a placeholder variable '
+                                        'when extending',
+                                file=get_testfile_path(filename),
+                                line=4,
+                                severity=RESULT_SEVERITY.NORMAL),
+             Result.from_values('StylintBear',
+                                message='hexidecimal color should '
+                                        'be a variable',
+                                file=get_testfile_path(filename),
+                                line=6,
+                                column=8,
+                                severity=RESULT_SEVERITY.NORMAL),
+             Result.from_values('StylintBear',
+                                message='line comments require a space '
+                                        'after //',
+                                file=get_testfile_path(filename),
+                                line=8,
+                                column=2,
+                                severity=RESULT_SEVERITY.NORMAL),
+             Result.from_values('StylintBear',
+                                message='commas must be followed '
+                                        'by a space for readability',
+                                file=get_testfile_path(filename),
+                                line=9,
+                                column=6,
+                                severity=RESULT_SEVERITY.NORMAL),
+             ],
+            filename=get_testfile_path(filename))
+
     def test_valid_file(self):
         filename = 'test_valid_file.styl'
         file_contents = load_testfile(filename)
