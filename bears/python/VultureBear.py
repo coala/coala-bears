@@ -9,7 +9,7 @@ from coalib.results.Result import Result
 
 class VultureBear(GlobalBear):
     LANGUAGES = {'Python', 'Python 3'}
-    REQUIREMENTS = {PipRequirement('vulture', '0.10.0')}
+    REQUIREMENTS = {PipRequirement('vulture', '0.14.0')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
