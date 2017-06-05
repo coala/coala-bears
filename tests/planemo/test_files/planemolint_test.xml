@@ -1,0 +1,25 @@
+
+<tool id="random_lines1" name="Select random lines" version="2.0.1">
+  <description>from a file</description>
+  <command interpreter="python">random_lines_two_pass.py "${input}" "${out_file1}" "${num_lines}"
+  #if str( $seed_source.seed_source_selector ) == "set_seed":
+      --seed "${seed_source.seed}"
+  #end if
+  </command>
+  <inputs>
+    <param name="num_lines" size="5" type="integer" value="1" label="Randomly select" help="lines"/>
+    <param format="txt" name="input" type="data" label="from"/>
+    <conditional name="seed_source">
+      <param name="seed_source_selector" type="select" label="Set a random seed">
+        <option value="no_seed" selected="True">Don't set seed</option>
+        <option value="set_seed">Set seed</option>
+      </param>
+      <when value="no_seed">
+        <!-- Do nothing here -->
+      </when>
+      <when value="set_seed">
+        <param name="seed" type="text" label="Random seed" />
+      </when>
+    </conditional>
+  </inputs>
+</tool>
