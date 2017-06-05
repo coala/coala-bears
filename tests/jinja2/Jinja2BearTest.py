@@ -36,7 +36,7 @@ class Jinja2BearSpacingDiffTest(unittest.TestCase):
                              '--- \n'
                              '+++ \n'
                              '@@ -1 +1 @@\n'
-                             '-foo {{var }} bar'
+                             '-foo {{var }} bar\n'
                              '+foo {{ var }} bar')
 
     def test_control_spacing(self):
