@@ -179,7 +179,7 @@ License
 |AGPL|
 
 
-.. |Stable| image:: https://img.shields.io/badge/latest%20stable-0.10.0-green.svg
+.. |Stable| image:: https://img.shields.io/badge/latest%20stable-0.11.1-green.svg
 .. |PyPI| image:: https://img.shields.io/pypi/v/coala-bears.svg
    :target: https://pypi.python.org/pypi/coala-bears
 .. |Linux| image:: https://img.shields.io/circleci/project/coala/coala-bears/master.svg?label=linux%20build
