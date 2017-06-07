@@ -70,6 +70,12 @@ test:
     # and node 1 has python 3.4.3
     - ? |
           if [ $CIRCLE_NODE_INDEX == 1 ] ; then
+            pip install -r docs-requirements.txt
+          fi
+      :
+        parallel: true
+    - ? |
+          if [ $CIRCLE_NODE_INDEX == 1 ] ; then
             python setup.py docs
           fi
       :
