@@ -6,7 +6,7 @@ from dependency_management.requirements.NpmRequirement import NpmRequirement
 @linter(executable='stylelint',
         output_format='regex',
         output_regex=r'\s*(?P<filename>.+)\s*(?P<line>\d+):(?P<column>\d+)\s*'
-                     r'(\D)\s*(?P<message>.+)',
+                     r'\D\s*(?P<message>.+)',
         config_suffix='.json')
 class StyleLintBear:
     """
