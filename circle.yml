@@ -1,5 +1,6 @@
 dependencies:
   cache_directories:
+    - docs/_build
     - ~/.pyenv/versions/3.4.3
     - ~/.pyenv/versions/3.5.1
     - ~/coala-bears/node_modules
@@ -61,6 +62,5 @@ test:
         parallel: true
     - codecov:
         parallel: true
-    - rm -rf docs/API && make -C docs clean
     - python setup.py docs:
         parallel: true

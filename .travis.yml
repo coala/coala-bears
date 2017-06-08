@@ -47,6 +47,7 @@ addons:
 cache:
   pip: true
   directories:
+    - docs/_build
     # Installed language package caches
     - ~/.cabal
     - ~/.ghc
@@ -128,7 +129,6 @@ script:
     fi
   - coala --non-interactive
   - codecov
-  - rm -rf docs/API && make -C docs clean
   - python setup.py docs
 
 notifications:
