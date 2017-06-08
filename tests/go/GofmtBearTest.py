@@ -58,6 +58,10 @@ class GofmtBearTest(LocalBearTestHelper):
                 results[0].apply(fdict)
                 self.assertEqual(''.join(fdict[fname]), out_file1)
 
+GofmtBearTest = verify_local_bear(
+    GofmtBear,
+    ('package main\n\nfunc main() {\n\treturn 1\n}',),
+    ('package main\nfunc main() {\n\treturn 1\n}',))
     def test_with_simplify(self):
         content = simplify_in_file1.splitlines()
         with prepare_file(content, None) as (file, fname):
@@ -66,3 +70,4 @@ class GofmtBearTest(LocalBearTestHelper):
                 fdict = {fname: file}
                 results[0].apply(fdict)
                 self.assertEqual(''.join(fdict[fname]), simplify_out_file1)
+
