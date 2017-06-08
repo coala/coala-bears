@@ -43,6 +43,17 @@ with open('requirements.txt') as requirements:
 with open('bear-requirements.txt') as requirements:
     bear_required = requirements.read().splitlines()
 
+version = sys.version_info  # Checks if python version is <3.4
+# If yes changes the vim-vint~=x.x to vim-vint=x.x
+if(version[0] == 3 and version[1] <= 4):
+    vim_pkg = 'vim-vint'
+    vim_package_line = [line for line in bear_required if vim_pkg in line]
+    if (vim_package_line):
+        for package in vim_package_line:
+            bear_required.remove(package)
+            vim_pkg = package.replace('~', '=')
+            bear_required.append(vim_pkg)
+
 with open('test-requirements.txt') as requirements:
     test_required = requirements.read().splitlines()
 
