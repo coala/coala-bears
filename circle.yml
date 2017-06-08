@@ -66,5 +66,11 @@ test:
         parallel: true
     - codecov:
         parallel: true
-    - python setup.py docs:
+    # sphinx fails with python 3.5.1 due to an issue in typing package,
+    # and node 1 has python 3.4.3
+    - ? |
+          if [ $CIRCLE_NODE_INDEX == 1 ] ; then
+            python setup.py docs
+          fi
+      :
         parallel: true
