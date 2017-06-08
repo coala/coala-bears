@@ -1,3 +1,4 @@
+import os
 from bears.java.JavaPMDBear import JavaPMDBear
 from coalib.testing.LocalBearTestHelper import verify_local_bear
 
@@ -23,6 +24,7 @@ bad_file = """
 class Hello {
   int test() {
     String s = null;
+    String bla = new String();
     return s.length();
   }
 }
@@ -32,3 +34,11 @@ class Hello {
 JavaPMDBearTest = verify_local_bear(
     JavaPMDBear, valid_files=(good_file,), invalid_files=(bad_file,),
     tempfile_kwargs={'suffix': '.java'})
+
+test_files = os.path.join(os.path.dirname(__file__), 'test_files')
+custom_rule_set = os.path.join(test_files, 'custom_rule_set.xml')
+
+JavaPMDBearTest2 = verify_local_bear(
+    JavaPMDBear, valid_files=(good_file,), invalid_files=(bad_file,),
+    tempfile_kwargs={'suffix': '.java'},
+    settings={'rule_set_file': custom_rule_set})
