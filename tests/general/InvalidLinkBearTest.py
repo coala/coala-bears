@@ -115,6 +115,9 @@ class InvalidLinkBearTest(LocalBearTestHelper):
         # Parentheses
         https://en.wikipedia.org/wiki/Hello_(Adele_song)/200
 
+        # Percentage after forward slash
+        https://img.shields.io/badge/Maintained%3F-yes-green.svg
+
         # Quotes
         "https://github.com/coala/coala-bears/issues/200"
         'http://httpbin.org/status/203'
