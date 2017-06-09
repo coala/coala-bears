@@ -1,0 +1,13 @@
+{
+  "rules": {
+    "period-in-list-item": false,
+    "ng-word": {
+      "words": ["shit"]
+    },
+    "unexpanded-acronym": {
+      "min_acronym_len": 3,
+      "max_acronym_len": 5,
+      "ignore_acronyms": ["WHO"]
+    }
+  }
+}
