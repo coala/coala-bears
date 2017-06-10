@@ -15,17 +15,17 @@ class PyUnusedCodeBear(LocalBear):
     CAN_DETECT = {'Unused Code'}
 
     def run(self, filename, file,
-            remove_all_unused_imports: bool=False,
+            remove_all_unused_imports: bool=True,
             remove_unused_variables: bool=True):
         """
         Detects unused code. By default this functionality is limited to:
 
         - Unneeded pass statements.
-        - Unneeded builtin imports.
+        - All unused imports - might have side effects
         - Unused variables - might have side effects
 
         :param remove_all_unused_imports:
-            True removes all unused imports - might have side effects
+            ``False`` removes only unused builtin imports
         :param remove_unused_variables:
             ``False`` keeps unused variables
         """

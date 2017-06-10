@@ -21,7 +21,6 @@ preferred_quotation = '
 default_action: *: ShowPatchAction
 bears = PyUnusedCodeBear
 language = Python
-remove_all_unused_imports = true
 
 [autopep8]
 bears = PEP8Bear, PycodestyleBear
