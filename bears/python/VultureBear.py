@@ -15,6 +15,7 @@ class VultureBear(GlobalBear):
     LICENSE = 'AGPL-3.0'
     ASCIINEMA_URL = 'https://asciinema.org/a/82256'
     CAN_DETECT = {'Unused Code'}
+    SEE_MORE = 'https://github.com/jendrikseipp/vulture'
 
     EXECUTABLE = 'vulture'
     OUTPUT_REGEX = re.compile(
@@ -29,8 +30,6 @@ class VultureBear(GlobalBear):
     def run(self):
         """
         Check Python code for unused variables and functions using `vulture`.
-
-        See <https://bitbucket.org/jendrikseipp/vulture> for more information.
         """
         stdout_output, _ = run_shell_command(
             (self.EXECUTABLE,) +
