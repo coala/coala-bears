@@ -22,20 +22,20 @@ class MypyBearTest(LocalBearTestHelper):
     def test_variable(self):
         self.check_validity(self.uut,
                             ['a = 1  # type: int'], valid=True)
-        self.check_validity(self.uut,
-                            ["a = 'abc'  # type: int"], valid=False)
+        self.check_invalidity(self.uut,
+                              ["a = 'abc'  # type: int"])
 
     def test_call_sum(self):
         self.check_validity(self.uut,
                             ['sum([1, 2, 3])'], valid=True)
-        self.check_validity(self.uut,
-                            ['sum(1, 2, 3)'], valid=False)
+        self.check_invalidity(self.uut,
+                              ['sum(1, 2, 3)'])
 
     def test_py2(self):
         self.check_validity(self.uut,
                             ['print(123)'], valid=True)
-        self.check_validity(self.uut,
-                            ['print 123'], valid=False)
+        self.check_invalidity(self.uut,
+                              ['print 123'])
         self.section.append(Setting('language', 'Python 2'))
         self.check_validity(self.uut,
                             ['print 123'], valid=True)
@@ -43,8 +43,8 @@ class MypyBearTest(LocalBearTestHelper):
     def test_py2_version(self):
         self.check_validity(self.uut,
                             ['print(123)'], valid=True)
-        self.check_validity(self.uut,
-                            ['print 123'], valid=False)
+        self.check_invalidity(self.uut,
+                              ['print 123'])
         self.section.append(Setting('python_version', '2.7'))
         self.check_validity(self.uut,
                             ['print 123'], valid=True)
@@ -69,7 +69,7 @@ class MypyBearTest(LocalBearTestHelper):
         """).splitlines()
         self.check_validity(self.uut, source, valid=True)
         self.section.append(Setting('check_untyped_function_bodies', 'true'))
-        self.check_validity(self.uut, source, valid=False)
+        self.check_invalidity(self.uut, source)
 
     def test_allow_untyped_functions(self):
         source = dedent("""
@@ -78,7 +78,7 @@ class MypyBearTest(LocalBearTestHelper):
         """).splitlines()
         self.check_validity(self.uut, source, valid=True)
         self.section.append(Setting('allow_untyped_functions', 'false'))
-        self.check_validity(self.uut, source, valid=False)
+        self.check_invalidity(self.uut, source)
 
     def test_allow_untyped_calls(self):
         source = dedent("""
@@ -89,7 +89,7 @@ class MypyBearTest(LocalBearTestHelper):
         """).splitlines()
         self.check_validity(self.uut, source, valid=True)
         self.section.append(Setting('allow_untyped_calls', 'false'))
-        self.check_validity(self.uut, source, valid=False)
+        self.check_invalidity(self.uut, source)
 
     def test_strict_optional(self):
         source = dedent("""
@@ -101,7 +101,7 @@ class MypyBearTest(LocalBearTestHelper):
         """).splitlines()
         self.check_validity(self.uut, source, valid=True)
         self.section.append(Setting('strict_optional', 'true'))
-        self.check_validity(self.uut, source, valid=False)
+        self.check_invalidity(self.uut, source)
 
     def test_discarded_note(self):
         source = dedent("""

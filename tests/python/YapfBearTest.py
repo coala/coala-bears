@@ -20,9 +20,9 @@ class YapfBearTest(LocalBearTestHelper):
         self.check_validity(self.uut,
                             ["x = {'a': 37, 'b': 42, 'c': 927}\n", '\n',
                              "y = 'hello ' 'world'\n"], valid=True)
-        self.check_validity(self.uut,
-                            ["x = {  'a':37,'b':42,\n", "'c':927}\n", '\n',
-                             "y = 'hello ''world'\n"], valid=False)
+        self.check_invalidity(self.uut,
+                              ["x = {  'a':37,'b':42,\n", "'c':927}\n", '\n',
+                               "y = 'hello ''world'\n"])
 
     def test_eof_handling(self):
         self.check_validity(self.uut, [], valid=True)
@@ -32,19 +32,19 @@ class YapfBearTest(LocalBearTestHelper):
         self.check_validity(self.uut, ['\n'], valid=True)
 
     def test_invalid_python(self):
-        results = self.check_validity(
-            self.uut, ['def a():', ' b=1', '  bad indent'], valid=False)
+        results = self.check_invalidity(
+            self.uut, ['def a():', ' b=1', '  bad indent'])
         self.assertEqual(len(results), 1, str(results))
         self.assertIn('unexpected indent', results[0].message)
 
-        results = self.check_validity(
-            self.uut, ['def a():', '    b=1', '\ttab error'], valid=False)
+        results = self.check_invalidity(
+            self.uut, ['def a():', '    b=1', '\ttab error'])
         self.assertEqual(len(results), 1, str(results))
         self.assertIn('inconsistent use of tabs and spaces in indentation',
                       results[0].message)
 
-        results = self.check_validity(
-            self.uut, ['def a(:', '    b=1', '\ttab error'], valid=False)
+        results = self.check_invalidity(
+            self.uut, ['def a(:', '    b=1', '\ttab error'])
         self.assertEqual(len(results), 1, str(results))
         self.assertIn('syntax errors', results[0].message)
 
@@ -65,10 +65,9 @@ class YapfBearTest(LocalBearTestHelper):
                              '    def f(self):\n',
                              '        return 37 * -+2\n'],
                             valid=True)
-        self.check_validity(self.uut,
-                            ['class foo(object):\n', '    def f(self):\n',
-                             '        return 37 * -+2\n'],
-                            valid=False)
+        self.check_invalidity(self.uut,
+                              ['class foo(object):\n', '    def f(self):\n',
+                               '        return 37 * -+2\n'])
 
     def test_allow_multiline_lambdas(self):
         self.section.append(Setting('allow_multiline_lambdas', True))

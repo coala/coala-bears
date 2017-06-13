@@ -28,38 +28,32 @@ class FilenameBearTest(LocalBearTestHelper):
         self.section['file_naming_convention'] = 'snake'
         self.check_validity(self.uut, [''], filename='/Home/xyz/x_y.py')
         self.check_validity(self.uut, [''], filename='XYZ/__init__.py')
-        self.check_validity(self.uut, [''], filename='/a/camCase', valid=False)
+        self.check_invalidity(self.uut, [''], filename='/a/camCase')
 
     def test_camel_case(self):
         self.section['file_naming_convention'] = 'camel'
-        self.check_validity(self.uut, [''], filename='/Home/xyz/x_y.py',
-                            valid=False)
+        self.check_invalidity(self.uut, [''], filename='/Home/xyz/x_y.py')
         self.check_validity(self.uut, [''], filename='XYZ/__init__.py')
         self.check_validity(self.uut, [''], filename='/a/camCase')
 
     def test_kebab_case(self):
         self.section['file_naming_convention'] = 'kebab'
-        self.check_validity(self.uut, [''], filename='/Home/xyz/x_y.py',
-                            valid=False)
+        self.check_invalidity(self.uut, [''], filename='/Home/xyz/x_y.py')
         self.check_validity(self.uut, [''], filename='XYZ/init.py')
         self.check_validity(self.uut, [''], filename='/a/kebab-case')
 
     def test_pascal_case(self):
         for convention in ('Pascal', 'pascal', 'PASCAL'):
             self.section['file_naming_convention'] = convention
-            self.check_validity(self.uut, [''], filename='/Home/xyz/x_y.py',
-                                valid=False)
+            self.check_invalidity(self.uut, [''], filename='/Home/xyz/x_y.py')
             self.check_validity(self.uut, [''], filename='XYZ/__Init__.py')
             self.check_validity(self.uut, [''], filename='/a/PascalCase')
 
     def test_space_case(self):
         self.section['file_naming_convention'] = 'space'
-        self.check_validity(self.uut, [''], filename='/Home/xyz/x_y.py',
-                            valid=False)
-        self.check_validity(self.uut, [''], filename='XYZ/__Init__.py',
-                            valid=False)
-        self.check_validity(self.uut, [''], filename='/a/camCase',
-                            valid=False)
+        self.check_invalidity(self.uut, [''], filename='/Home/xyz/x_y.py')
+        self.check_invalidity(self.uut, [''], filename='XYZ/__Init__.py')
+        self.check_invalidity(self.uut, [''], filename='/a/camCase')
         self.check_validity(self.uut, [''], filename='/a/Space Case')
 
     def test_ignore_upper(self):
@@ -68,24 +62,19 @@ class FilenameBearTest(LocalBearTestHelper):
 
         self.section['ignore_uppercase_filenames'] = 'nope'
 
-        self.check_validity(self.uut, [''], filename='/LICENSE', valid=False)
+        self.check_invalidity(self.uut, [''], filename='/LICENSE')
 
     def test_default_naming_java(self):
         self.section['file_naming_convention'] = 'auto'
-        self.check_validity(self.uut, [''], filename='/Home/xyz/x_y.java',
-                            valid=False)
-        self.check_validity(self.uut, [''], filename='/Home/xyz/x-y.java',
-                            valid=False)
-        self.check_validity(self.uut, [''], filename='/Home/xyz/x y.java',
-                            valid=False)
+        self.check_invalidity(self.uut, [''], filename='/Home/xyz/x_y.java')
+        self.check_invalidity(self.uut, [''], filename='/Home/xyz/x-y.java')
+        self.check_invalidity(self.uut, [''], filename='/Home/xyz/x y.java')
         self.check_validity(self.uut, [''], filename='/Home/xyz/XY.java')
 
     def test_default_naming_javascript(self):
         self.section['file_naming_convention'] = 'auto'
-        self.check_validity(self.uut, [''], filename='/Home/xyz/x_y.js',
-                            valid=False)
-        self.check_validity(self.uut, [''], filename='/Home/xyz/x y.js',
-                            valid=False)
+        self.check_invalidity(self.uut, [''], filename='/Home/xyz/x_y.js')
+        self.check_invalidity(self.uut, [''], filename='/Home/xyz/x y.js')
         self.check_validity(self.uut, [''], filename='/Home/xyz/XY.js')
         self.check_validity(self.uut, [''], filename='/Home/xyz/x-y.js')
 
@@ -93,7 +82,7 @@ class FilenameBearTest(LocalBearTestHelper):
         self.section['file_naming_convention'] = 'auto'
         self.check_validity(self.uut, [''], filename='/Home/xyz/x_y.py')
         self.check_validity(self.uut, [''], filename='XYZ/__init__.py')
-        self.check_validity(self.uut, [''], filename='/a/x y.py', valid=False)
+        self.check_invalidity(self.uut, [''], filename='/a/x y.py')
 
     def test_none_file_naming_convention_warning(self):
         self.uut.execute('filename', [])

@@ -27,21 +27,21 @@ class CheckstyleBearTest(LocalBearTestHelper):
     def test_style_google(self):
         self.section['checkstyle_configs'] = 'google'
         self.check_validity(self.uut, [], self.good_file)
-        self.check_validity(self.uut, [], self.bad_file, valid=False)
+        self.check_invalidity(self.uut, [], self.bad_file)
 
     def test_style_sun(self):
         self.section['checkstyle_configs'] = 'sun'
-        self.check_validity(self.uut, [], self.good_file, valid=False)
-        self.check_validity(self.uut, [], self.bad_file, valid=False)
+        self.check_invalidity(self.uut, [], self.good_file)
+        self.check_invalidity(self.uut, [], self.bad_file)
 
     def test_style_android(self):
         self.section['checkstyle_configs'] = 'android-check-easy'
         self.check_validity(self.uut, [], self.good_file)
-        self.check_validity(self.uut, [], self.bad_file, valid=False)
+        self.check_invalidity(self.uut, [], self.bad_file)
 
         self.section['checkstyle_configs'] = 'android-check-hard'
         self.check_validity(self.uut, [], self.good_file)
-        self.check_validity(self.uut, [], self.bad_file, valid=False)
+        self.check_invalidity(self.uut, [], self.bad_file)
 
     def test_config_failure_use_spaces(self):
         self.section['checkstyle_configs'] = 'google'

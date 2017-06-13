@@ -55,16 +55,14 @@ class HaskellLintBearTest(LocalBearTestHelper):
                             tempfile_kwargs={'suffix': '.hs'})
 
     def test_invalid(self):
-        results = self.check_validity(self.uut, bad_single_line_file,
-                                      valid=False,
-                                      tempfile_kwargs={'suffix': '.hs'})
+        results = self.check_invalidity(self.uut, bad_single_line_file,
+                                        tempfile_kwargs={'suffix': '.hs'})
         self.assertEqual(len(results), 1, str(results))
         self.assertIn('Redundant bracket',
                       results[0].message)
 
-        results = self.check_validity(self.uut, bad_multiple_line_file,
-                                      valid=False,
-                                      tempfile_kwargs={'suffix': '.hs'})
+        results = self.check_invalidity(self.uut, bad_multiple_line_file,
+                                        tempfile_kwargs={'suffix': '.hs'})
         self.assertEqual(len(results), 2, str(results))
         self.assertIn('Redundant $',
                       results[0].message)

@@ -30,7 +30,7 @@ class PySafetyBearTest(LocalBearTestHelper):
             'bears.python.requirements.PySafetyBear.safety.check',
             return_value=[Vulnerability('bar', '<0.2', '0.1', vuln_data)],
         ) as check:
-            self.check_validity(self.uut, ['foo<2', 'bar==0.1'], valid=False)
+            self.check_invalidity(self.uut, ['foo<2', 'bar==0.1'])
             check.assert_called_once_with(packages=[Package('bar', '0.1')])
 
     def test_with_cve_vulnerability(self):
@@ -42,7 +42,7 @@ class PySafetyBearTest(LocalBearTestHelper):
             'bears.python.requirements.PySafetyBear.safety.check',
             return_value=[Vulnerability('baz', '<2.0', '1.10', vuln_data)],
         ) as check:
-            self.check_validity(self.uut, ['baz==1.10', '-e .'], valid=False)
+            self.check_invalidity(self.uut, ['baz==1.10', '-e .'])
             check.assert_called_once_with(packages=[Package('baz', '1.10')])
 
     def test_with_no_requirements(self):

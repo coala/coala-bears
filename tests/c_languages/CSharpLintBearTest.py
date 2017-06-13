@@ -26,4 +26,4 @@ class CSharpLintBearTest(LocalBearTestHelper):
         self.check_validity(self.uut, [], self.test_file1)
 
         # Test a file with issues
-        self.check_validity(self.uut, [], self.test_file2, valid=False)
+        self.check_invalidity(self.uut, [], self.test_file2)

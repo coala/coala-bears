@@ -20,4 +20,4 @@ class StyleLintBearTest(LocalBearTestHelper):
 
     def test_run(self):
         self.check_validity(self.uut, [], self.good_file)
-        self.check_validity(self.uut, [], self.bad_file, valid=False)
+        self.check_invalidity(self.uut, [], self.bad_file)

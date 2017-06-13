@@ -24,7 +24,7 @@ class DennisBearTest(LocalBearTestHelper):
         self.check_validity(self.uut, [], self.valid_test_file)
 
     def test_invalid(self):
-        self.check_validity(self.uut, [], self.invalid_test_file, valid=False)
+        self.check_invalidity(self.uut, [], self.invalid_test_file)
         # Test without ignoring W302
         self.section.append(Setting('allow_untranslated', 'False'))
-        self.check_validity(self.uut, [], self.valid_test_file, valid=False)
+        self.check_invalidity(self.uut, [], self.valid_test_file)

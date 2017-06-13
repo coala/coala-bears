@@ -72,25 +72,22 @@ class GhcModBearTest(LocalBearTestHelper):
                             tempfile_kwargs={'suffix': '.hs'})
 
     def test_invalid(self):
-        results = self.check_validity(self.uut, not_string_3,
-                                      valid=False,
-                                      tempfile_kwargs={'suffix': '.hs'})
+        results = self.check_invalidity(self.uut, not_string_3,
+                                        tempfile_kwargs={'suffix': '.hs'})
         self.assertEqual(len(results), 1, str(results))
         # to check for the seperator
         self.assertIn('. ', results[0].message)
         self.assertIn('No instance for (Num String) arising from the literal ',
                       results[0].message)
-        results = self.check_validity(self.uut,
-                                      count_lines_bracket_missing,
-                                      valid=False,
-                                      tempfile_kwargs={'suffix': '.hs'})
+        results = self.check_invalidity(self.uut,
+                                        count_lines_bracket_missing,
+                                        tempfile_kwargs={'suffix': '.hs'})
         self.assertEqual(len(results), 1, str(results))
         self.assertIn('parse error (possibly incorrect indentation '
                       'or mismatched brackets)', results[0].message)
-        results = self.check_validity(self.uut,
-                                      last_but_one_list_type_error,
-                                      valid=False,
-                                      tempfile_kwargs={'suffix': '.hs'})
+        results = self.check_invalidity(self.uut,
+                                        last_but_one_list_type_error,
+                                        tempfile_kwargs={'suffix': '.hs'})
         self.assertEqual(len(results), 1, str(results))
         self.assertIn("Couldn't match expected type",
                       results[0].message)

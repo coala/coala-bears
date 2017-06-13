@@ -27,10 +27,10 @@ class ApertiumLintBearTest(LocalBearTestHelper):
         self.check_validity(self.uut, [], self.good_file)
 
         self.section.append(Setting('apertiumlint_config', ''))
-        self.check_validity(self.uut, [], self.bad_file, valid=False)
+        self.check_invalidity(self.uut, [], self.bad_file)
 
         self.section.append(Setting('apertiumlint_config', self.config_file))
-        self.check_validity(self.uut, [], self.bad_file, valid=False)
+        self.check_invalidity(self.uut, [], self.bad_file)
 
     def test_paradigm_names(self):
         self.section.append(Setting('paradigm_names', 'False'))
