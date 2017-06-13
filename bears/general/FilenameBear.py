@@ -27,7 +27,9 @@ class FilenameBear(LocalBear):
 
     def run(self, filename, file,
             file_naming_convention: str=None,
-            ignore_uppercase_filenames: bool=True):
+            ignore_uppercase_filenames: bool=True,
+            filename_prefix: str='',
+            filename_suffix: str=''):
         """
         Checks whether the filename follows a certain naming-convention.
 
@@ -43,6 +45,12 @@ class FilenameBear(LocalBear):
         :param ignore_uppercase_filenames:
             Whether or not to ignore fully uppercase filenames completely,
             e.g. COPYING, LICENSE etc.
+        :param filename_prefix:
+            Check whether the filename uses a certain prefix.
+            The file's extension is ignored.
+        :param filename_suffix:
+            Check whether the filename uses a certain suffix.
+            The file's extension is ignored.
         """
         head, tail = os.path.split(filename)
         filename_without_extension, extension = os.path.splitext(tail)
@@ -63,6 +71,8 @@ class FilenameBear(LocalBear):
                           'Using the default "snake" naming convention.')
                 file_naming_convention = 'snake'
 
+        messages = []
+
         try:
             new_name = self._naming_convention[file_naming_convention](
                 filename_without_extension)
@@ -71,15 +81,33 @@ class FilenameBear(LocalBear):
                      file_naming_convention)
             return
 
+        if new_name != filename_without_extension:
+            messages.append(
+                'Filename does not follow {} naming-convention.'.format(
+                    file_naming_convention))
+
+        if not filename_without_extension.startswith(filename_prefix):
+            new_name = filename_prefix + new_name
+            messages.append(
+                'Filename does not use the prefix {!r}.'.format(
+                    filename_prefix))
+
+        if not filename_without_extension.endswith(filename_suffix):
+            new_name = new_name + filename_suffix
+            messages.append(
+                'Filename does not use the suffix {!r}.'.format(
+                    filename_suffix))
+
         if ignore_uppercase_filenames and filename_without_extension.isupper():
             return
 
-        if new_name != filename_without_extension:
+        if messages:
             diff = Diff(file, rename=os.path.join(head, new_name + extension))
+            message = ('\n'.join('- ' + mes for mes in messages)
+                       if len(messages) > 1 else messages[0])
 
             yield Result(
                 self,
-                'Filename does not follow {} naming-convention.'.format(
-                    file_naming_convention),
+                message,
                 diff.affected_code(filename),
                 diffs={filename: diff})

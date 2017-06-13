@@ -2,6 +2,7 @@ from queue import Queue
 
 from bears.general.FilenameBear import FilenameBear
 from coalib.testing.LocalBearTestHelper import LocalBearTestHelper
+from coalib.results.Result import RESULT_SEVERITY, Result
 from coalib.output.printers.LOG_LEVEL import LOG_LEVEL
 from coalib.settings.Section import Section
 
@@ -107,3 +108,46 @@ class FilenameBearTest(LocalBearTestHelper):
         self.assertEqual(log.message,
                          'The file naming convention could not be guessed. '
                          'Using the default "snake" naming convention.')
+
+    def test_file_prefix(self):
+        self.section['filename_prefix'] = 'pre'
+        self.check_invalidity(
+            self.uut, [''], filename='filename.xyz')
+        self.check_validity(
+            self.uut, [''], filename='prefilename.xyz')
+        self.check_results(
+            self.uut,
+            [''],
+            [Result.from_values('FilenameBear',
+                                "Filename does not use the prefix 'pre'.",
+                                severity=RESULT_SEVERITY.NORMAL,
+                                file='filename.xyz')],
+            filename='filename.xyz')
+
+    def test_file_suffix(self):
+        self.section['filename_suffix'] = 'fix'
+        self.check_invalidity(
+            self.uut, [''], filename='filename.xyz')
+        self.check_validity(
+            self.uut, [''], filename='filenamesuffix.xyz')
+        self.check_results(
+            self.uut,
+            [''],
+            [Result.from_values('FilenameBear',
+                                "Filename does not use the suffix 'fix'.",
+                                severity=RESULT_SEVERITY.NORMAL,
+                                file='filename.xyz')],
+            filename='filename.xyz')
+
+    def test_file_prefix_suffix(self):
+        self.section['filename_prefix'] = 'pre'
+        self.section['filename_suffix'] = 'fix'
+        self.check_results(
+            self.uut,
+            [''],
+            [Result.from_values('FilenameBear',
+                                "- Filename does not use the prefix 'pre'.\n"
+                                "- Filename does not use the suffix 'fix'.",
+                                severity=RESULT_SEVERITY.NORMAL,
+                                file='filename.xyz')],
+            filename='filename.xyz')
