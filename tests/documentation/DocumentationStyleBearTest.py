@@ -21,6 +21,8 @@ def test(test_file, expected_file):
         test_file_content = load_testfile(test_file).splitlines(True)
 
         arguments = {'language': 'python', 'docstyle': 'default'}
+        if test_file == 'good_file3.py.test':
+            arguments.update({'allow_missing_func_desc': 'True'})
         section = Section('test-section')
         for key, value in arguments.items():
             section[key] = value
@@ -53,3 +55,4 @@ class DocumentationStyleBearTest(unittest.TestCase):
     test_bad5 = test('bad_file5.py.test', 'bad_file5.py.test.correct')
     test_good1 = test('good_file.py.test', 'good_file.py.test')
     test_good2 = test('good_file2.py.test', 'good_file2.py.test')
+    test_good3 = test('good_file3.py.test', 'good_file3.py.test')

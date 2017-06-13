@@ -18,8 +18,11 @@ class DocumentationStyleBear(LocalBear):
     LICENSE = 'AGPL-3.0'
     ASCIINEMA_URL = 'https://asciinema.org/a/7sfk3i9oxs1ixg2ncsu3pym0u'
     CAN_DETECT = {'Documentation'}
+    CAN_FIX = {'Documentation'}
 
-    def run(self, filename, file, language: str, docstyle: str='default'):
+    def run(self, filename, file, language: str,
+            docstyle: str='default', allow_missing_func_desc: str=False,
+            indent_size: int=4):
         """
         Checks for certain in-code documentation styles.
 
@@ -38,6 +41,10 @@ class DocumentationStyleBear(LocalBear):
         :param docstyle: The docstyle to use. For example ``default`` or
                          ``doxygen``. Docstyles are language dependent, meaning
                          not every language is supported by a certain docstyle.
+        :param allow_missing_func_desc: When set ``True`` this will allow
+                         functions with missing descriptions, allowing
+                         functions to start with params.
+        :param indent_size: Number of spaces per indentation level.
         """
         for doc_comment in extract_documentation(file, language, docstyle):
             parsed = doc_comment.parse()
@@ -47,8 +54,16 @@ class DocumentationStyleBear(LocalBear):
             # description.
             main_description = next(metadata)
 
-            # 1 empty line shall follow main description (except it's empty or
-            # no annotations follow).
+            if main_description.desc == '\n' and not allow_missing_func_desc:
+                warning_desc = """
+Missing function description.
+Please set allow_missing_func_desc = True to ignore this warning.
+"""
+            else:
+                warning_desc = 'Documentation does not have correct style.'
+
+            # one empty line shall follow main description (except it's empty
+            # or no annotations follow).
             if main_description.desc.strip() != '':
                 main_description = main_description._replace(
                     desc='\n' + main_description.desc.strip() + '\n' *
@@ -70,13 +85,13 @@ class DocumentationStyleBear(LocalBear):
                         stripped_desc.insert(0, '')
 
                 # Indent with 4 spaces.
-                stripped_desc = ('' if line == '' else ' ' * 4 + line for line
-                                 in stripped_desc)
+                stripped_desc = ('' if line == '' else ' ' * indent_size
+                                 + line for line in stripped_desc)
 
                 new_desc = '\n'.join(stripped_desc)
 
                 # Strip away trailing whitespaces and obsolete newlines (except
-                # 1 newline which is mandatory).
+                # one newline which is mandatory).
                 new_desc = new_desc.rstrip() + '\n'
 
                 new_metadata.append(m._replace(desc=new_desc.lstrip(' ')))
@@ -100,6 +115,6 @@ class DocumentationStyleBear(LocalBear):
 
                 yield Result(
                     origin=self,
-                    message='Documentation does not have correct style.',
+                    message=warning_desc,
                     affected_code=(diff.range(filename),),
                     diffs={filename: diff})

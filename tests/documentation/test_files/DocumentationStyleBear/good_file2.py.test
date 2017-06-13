@@ -1,7 +1,7 @@
-def empty():
+def docstring_missing_descriptions(dummy):
     """
-    this is heavy
+    This contains missing descriptions of parsed metadata.
 
-    :param x:
+    :param dummy:
     :return:
-    """; return 88
+    """ return None

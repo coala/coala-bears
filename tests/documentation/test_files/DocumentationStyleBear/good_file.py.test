@@ -1,12 +1,12 @@
-def hello_there(x):
+def docstring_accepted(dummy):
     """
-    hello
+    This is the accepted standard of a docstring.
 
-    :param x:
-        4 space indent
-        just a second test
+    :param dummy:
+        first line description
+        second line description
     :return:
-        4 space indent
-        following lines are 4 space indented
+        first line description
+        second line description
     """
     return None

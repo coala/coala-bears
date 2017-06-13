@@ -1,8 +1,9 @@
-def empty():
+def docstring_improper_alignment():
     """
-        first line not correctly aligned.
+        First line not correctly aligned.
         But second can be aligned differently.
+    		Tabs are used here instead of spaces.
 
     :param x:
     :return:
-    """; return 88
+    """ return None

@@ -1,4 +1,4 @@
-def myfunc(a, b, x):
+def docstring_missing_descriptions(a, b, x):
     """
 
     :param a:slope

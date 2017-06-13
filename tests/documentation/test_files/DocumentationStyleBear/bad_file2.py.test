@@ -1,15 +1,21 @@
-def x():
-    return 55
+def docstring_missing():
+    return None
 
 
-def qr():
+def docstring_testcase(dummy):
     """
-       this is heavy
+       Improper 3 indents.
 
-    :param x:
-        ss
-    :return:abc"""; return 88
+    :param dummy:
+        dummy description
+    :return:nothing""" return None
 
 
-def w():
-    """ Hello world """
+def docstring_singleliner():
+    """ This is singleliner docstring. """
+
+
+def docstring_inline():
+    """
+    Docstring followed by an inline docstring.
+    """  # This is inline docstring

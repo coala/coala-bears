@@ -1,12 +1,12 @@
-def hello_there(x):
+def improper_indents(indents):
     """
-    hello and no following empty lines
+    Contains improper indents and no following empty line below.
 
-    :param x:
+    :param indents:
         5 space indent
-        just a second test
+        4 space indent
     :return:
         3 space indent
-        following lines are 4 space indented
+        4 space indent
     """
     return None
