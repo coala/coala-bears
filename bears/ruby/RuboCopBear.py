@@ -81,7 +81,8 @@ class RuboCopBear:
                         ignore_unused_block_args_if_empty: bool=True,
                         allow_unused_block_keyword_arguments: bool=False,
                         ignore_unused_method_args_if_empty: bool=True,
-                        allow_unused_method_keyword_args: bool=False):
+                        allow_unused_method_keyword_args: bool=False,
+                        rubocop_config: str=''):
         """
         Not all settings added.
         Notable settings missing: Rails settings.
@@ -174,6 +175,9 @@ class RuboCopBear:
         :param allow_unused_method_keyword_args:
             Allows unused keyword arguments in a method.
         """
+        if rubocop_config:
+            return None
+
         naming_convention = {'camel': 'camelCase', 'snake': 'snake_case'}
         options = {
             'Style/AccessModifierIndentation': {
