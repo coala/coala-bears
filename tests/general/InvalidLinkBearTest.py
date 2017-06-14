@@ -103,22 +103,42 @@ class InvalidLinkBearTest(LocalBearTestHelper):
                 out_dict = out.to_string_dict()
                 self.assertEqual(severity_tag, out_dict['severity'])
 
-    def test_run(self):
-        # Valid Links
+    def test_valid_url(self):
         valid_file = """
         http://httpbin.org/status/200
         http://httpbin.org/status/201
         http://httpbin.org/status/401  # Unauthorized
+        """.splitlines()
 
+        with requests_mock.Mocker() as m:
+            m.add_matcher(custom_matcher)
+            self.check_validity(self.uut, valid_file)
+
+    def test_parentheses_url(self):
+        valid_file = """
         # Parentheses
         https://en.wikipedia.org/wiki/Hello_(Adele_song)/200
+        """.splitlines()
 
+        with requests_mock.Mocker() as m:
+            m.add_matcher(custom_matcher)
+            self.check_validity(self.uut, valid_file)
+
+    def test_quoted_url(self):
+        valid_file = """
         # Quotes
         "https://github.com/coala/coala-bears/issues/200"
         'http://httpbin.org/status/203'
         ('http://httpbin.org/status/200').install_command()
         `https://coala.io/200`
+        """.splitlines()
 
+        with requests_mock.Mocker() as m:
+            m.add_matcher(custom_matcher)
+            self.check_validity(self.uut, valid_file)
+
+    def test_in_markdown_url(self):
+        valid_file = """
         # Markup/down stuff
         <http://httpbin.org/status/202>
         http://httpbin.org/status/204.....
@@ -127,25 +147,58 @@ class InvalidLinkBearTest(LocalBearTestHelper):
         |http://httpbin.org/status/200|
         <h3>Something http://httpbin.org/status/200</h3>
         repo=\\"http://httpbin.org/status/200\\"
+        """.splitlines()
 
+        with requests_mock.Mocker() as m:
+            m.add_matcher(custom_matcher)
+            self.check_validity(self.uut, valid_file)
+
+    def test_template_url(self):
+        valid_file = """
         # Templated URLs can't be checked
         "http://httpbin.org/{status}/404".format(...)
         "http://httpbin.org/$status/404"
+        """.splitlines()
 
+        with requests_mock.Mocker() as m:
+            m.add_matcher(custom_matcher)
+            self.check_validity(self.uut, valid_file)
+
+    def test_not_an_url(self):
+        valid_file = """
         # Not a link
         http://not a link dot com
         http://www.%s.com
         http://www.%d.com
         http://www.%f.com
+        """.splitlines()
 
+        with requests_mock.Mocker() as m:
+            m.add_matcher(custom_matcher)
+            self.check_validity(self.uut, valid_file)
+
+    def test_redirect_url(self):
+        valid_file = """
         # Redirect
         http://httpbin.org/status/301
         http://httpbin.org/status/302
+        """.splitlines()
 
+        with requests_mock.Mocker() as m:
+            m.add_matcher(custom_matcher)
+            self.check_validity(self.uut, valid_file)
+
+    def test_example_url(self):
+        valid_file = """
         # Example.com URLs should be ignored
         http://sub.example.com/404
         """.splitlines()
 
+        with requests_mock.Mocker() as m:
+            m.add_matcher(custom_matcher)
+            self.check_validity(self.uut, valid_file)
+
+    def test_invalid_url(self):
         invalid_file = """
         http://coalaisthebest.com/
         http://httpbin.org/status/404
@@ -156,8 +209,6 @@ class InvalidLinkBearTest(LocalBearTestHelper):
 
         with requests_mock.Mocker() as m:
             m.add_matcher(custom_matcher)
-            self.check_validity(self.uut, valid_file)
-
             self.check_line_result_count(self.uut,
                                          invalid_file, [1, 1, 1, 1, 1])
 
