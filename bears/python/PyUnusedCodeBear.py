@@ -22,11 +22,12 @@ class PyUnusedCodeBear(LocalBear):
 
         - Unneeded pass statements.
         - Unneeded builtin imports.
+        - Unused variables - might have side effects
 
         :param remove_all_unused_imports:
             True removes all unused imports - might have side effects
         :param remove_unused_variables:
-            True removes unused variables - might have side effects
+            ``False`` keeps unused variables
         """
 
         corrected = autoflake.fix_code(
