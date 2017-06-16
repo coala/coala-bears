@@ -49,7 +49,7 @@ class FilenameBear(LocalBear):
         
         if ignore_uppercase_filenames and filename_without_extension.isupper():
             return
-        
+
         if file_naming_convention is None:
             self.warn('Please specify a file naming convention explicitly'
                       ' or use "auto".')
