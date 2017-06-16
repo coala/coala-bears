@@ -46,7 +46,10 @@ class FilenameBear(LocalBear):
         """
         head, tail = os.path.split(filename)
         filename_without_extension, extension = os.path.splitext(tail)
-
+        
+        if ignore_uppercase_filenames and filename_without_extension.isupper():
+            return
+        
         if file_naming_convention is None:
             self.warn('Please specify a file naming convention explicitly'
                       ' or use "auto".')
@@ -69,9 +72,6 @@ class FilenameBear(LocalBear):
         except KeyError:
             self.err('Invalid file-naming-convention provided: ' +
                      file_naming_convention)
-            return
-
-        if ignore_uppercase_filenames and filename_without_extension.isupper():
             return
 
         if new_name != filename_without_extension:
