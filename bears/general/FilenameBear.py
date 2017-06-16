@@ -46,7 +46,7 @@ class FilenameBear(LocalBear):
         """
         head, tail = os.path.split(filename)
         filename_without_extension, extension = os.path.splitext(tail)
-        
+
         if ignore_uppercase_filenames and filename_without_extension.isupper():
             return
 
