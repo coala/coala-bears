@@ -6,6 +6,7 @@ import requests_mock
 import unittest
 
 from bears.general.MementoBear import MementoBear
+from bears.general.URLBear import URLBear
 
 from coalib.results.Result import Result
 from coalib.settings.Section import Section
@@ -45,7 +46,7 @@ def custom_matcher(request):
 
     # the connection check url needs to be explicitly
     # set to 200
-    if request.url == MementoBear.check_connection_url:
+    if request.url == URLBear.check_connection_url:
         status_code = 200
     elif request.url.startswith('http://timetravel.mementoweb.org/timegate/'):
         # All memento timegate urls return 200
@@ -129,7 +130,7 @@ class MementoBearTestPrerequisites(unittest.TestCase):
     def test_check_prerequisites(self):
         with requests_mock.Mocker() as m:
             m.add_matcher(custom_matcher)
-            self.assertTrue(MementoBear.check_prerequisites())
+            self.assertTrue(URLBear.check_prerequisites())
 
 
 class MementoBearTest(LocalBearTestHelper):
@@ -142,13 +143,13 @@ class MementoBearTest(LocalBearTestHelper):
     """
 
     def setUp(self):
-        self.mb_check_prerequisites = MementoBear.check_prerequisites
+        self.ub_check_prerequisites = URLBear.check_prerequisites
         self.section = Section('')
-        MementoBear.check_prerequisites = lambda *args: True
+        URLBear.check_prerequisites = lambda *args: True
         self.uut = MementoBear(self.section, Queue())
 
     def tearDown(self):
-        MementoBear.check_prerequisites = self.mb_check_prerequisites
+        URLBear.check_prerequisites = self.ub_check_prerequisites
 
     def test_dead_links(self):
         valid_file = """
@@ -283,9 +284,6 @@ class MementoBearTest(LocalBearTestHelper):
 
     def test_links_to_ignore(self):
         valid_file = """
-        # web.archive.org should be ignored
-        http://web.archive.org/web/*/spiegel.com
-
         http://coalaisthebest.compile
         http://facebook.com/coala
 
