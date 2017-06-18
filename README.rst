@@ -47,17 +47,6 @@ To also install all bears for coala at once run:
 
     $ pip3 install coala-bears
 
-You can also use ``cib`` (coala Installs Bears), which is an experimental bear
-manager that lets you install, upgrade, uninstall, check dependencies, etc.
-for bears. To install it, run:
-
-.. code-block:: bash
-
-    $ pip3 install cib
-
-For usage instructions, consult
-`this link <http://api.coala.io/en/latest/Developers/Bear_Installation_Tool.html>`__.
-
 Be sure to use the latest version of pip, the default pip from Debian doesn't
 support our dependency version number specifiers. You will have to `use a
 virtualenv <https://github.com/coala/coala/wiki/FAQ#installation-is-failing-help>`__
