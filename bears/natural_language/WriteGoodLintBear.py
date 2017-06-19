@@ -45,17 +45,17 @@ class WriteGoodLintBear:
         Using ``False`` will enable the check.
 
         :param allow_passive_voice:     Allows passive voice.
-        :param allow_so_beginning:      Allows ``So`` at the beginning of
+        :param allow_so_beginning:      Allows "So" at the beginning of
                                         the sentence.
         :param allow_adverbs:           Allows adverbs that can weaken the
-                                        meaning, such as: ``really``,
-                                        ``very``, ``extremely``, etc.
+                                        meaning, such as: "really",
+                                        "very", "extremely", etc.
         :param allow_repeated_words:    Allows lexical illusions – cases
                                         where a word is repeated.
-        :param allow_there_is:          Allows ``There is`` or ``There are``
+        :param allow_there_is:          Allows "There is" or "There are"
                                         at the beginning of the sentence.
-        :param allow_ambiguous_words:   Allows ``weasel words`` for example
-                                        ``often``, ``probably``
+        :param allow_ambiguous_words:   Allows "weasel words" for example
+                                        "often" and "probably".
         :param allow_extra_words:       Allows wordy phrases and unnecessary
                                         words.
         :param allow_cliche_phrases:    Allows common cliche phrases in the
