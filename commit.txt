@@ -1,6 +1,5 @@
-.coafile: Add YAMLLintBear in .coafile
+Add YAMLLintBear in .coafile
 
 When running coala over a code add YAMLLintBear in .coafile to fix any style issues raised  by coala
-
 Fixes https://github.com/coala/bear-docs/issues/39
  
