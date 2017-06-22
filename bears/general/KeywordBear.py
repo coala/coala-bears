@@ -85,7 +85,7 @@ class KeywordBear(LocalBear):
             keywords: list=['todo', 'fixme'],
             regex_keyword: str='',
             dependency_results: dict=None):
-        '''
+        """
         Checks the code files for given keywords.
 
         :param keywords:
@@ -93,7 +93,7 @@ class KeywordBear(LocalBear):
             Default are TODO and FIXME.
         :param regex_keyword:
             A regular expression to search for matching keywords in a file.
-        '''
+        """
         comments = list(_get_comments(dependency_results))
 
         if keywords:
@@ -118,17 +118,17 @@ class KeywordBear(LocalBear):
                        comments,
                        regex,
                        message):
-        '''
+        """
         Checks for the presence of keywords according to regex in a given file.
 
         :param regex:
-           A regular expression which is used to search matching
-           keywords in a file.
+            A regular expression which is used to search matching
+            keywords in a file.
         :param message:
-           A message to be displayed to the user when a keyword in a given file
-           results in a match. It may have an unnamed placeholder for the
-           keyword.
-        '''
+            A message to be displayed to the user when a keyword in a given
+            file results in a match. It may have an unnamed placeholder for the
+            keyword.
+        """
 
         for line_number, line in enumerate(file, start=1):
             for keyword in regex.finditer(line):
