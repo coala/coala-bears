@@ -1,10 +1,3 @@
-install:
-  - >
-    if ! pip3 -V ; then
-      wget -O - https://bootstrap.pypa.io/get-pip.py
-      python3 get-pip.py
-    fi
-
 docker:
   as_root: true
   image: "coala/rultor-python"
