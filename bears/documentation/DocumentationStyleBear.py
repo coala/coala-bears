@@ -98,7 +98,7 @@ Please set allow_missing_func_desc = True to ignore this warning.
 
             new_comment = DocumentationComment.from_metadata(
                 new_metadata, doc_comment.docstyle_definition,
-                doc_comment.marker, doc_comment.indent, doc_comment.range)
+                doc_comment.marker, doc_comment.indent, doc_comment.position)
 
             if new_comment != doc_comment:
                 # Something changed, let's apply a result.
