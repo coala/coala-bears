@@ -3,6 +3,15 @@ from coalib.results.Result import Result
 from dependency_management.requirements.PipRequirement import PipRequirement
 from vulture import Vulture
 
+CONFIDENCE_MAP = {
+    'attribute': 70,
+    'class': 70,
+    'function': 70,
+    'import': 95,
+    'property': 70,
+    'variable': 70,
+}
+
 
 def _find_unused_code(filenames):
     """
@@ -23,7 +32,8 @@ def _find_unused_code(filenames):
         yield Result.from_values(origin='VultureBear',
                                  message=message,
                                  file=item.filename,
-                                 line=item.lineno)
+                                 line=item.lineno,
+                                 confidence=CONFIDENCE_MAP[item.typ])
 
 
 class VultureBear(GlobalBear):

@@ -72,3 +72,55 @@ class VultureBearTest(unittest.TestCase):
             return a
         """
         self.assertEqual(len(self.get_results(bad_file)), 1)
+
+    def test_import_confidence(self):
+        bad_file = """
+        from os import *
+        import subprocess
+        """
+        result = self.get_results(bad_file)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].confidence, 95)
+
+    def test_class_confidence(self):
+        bad_file = """
+        class Name:
+
+            def __init__(self, name):
+                self.name = name
+                self.sur_name = 'Something'
+
+        """
+        result = self.get_results(bad_file)
+        self.assertEqual(len(result), 2)
+        self.assertEqual(result[0].confidence, 70)
+
+    def test_func_confidence(self):
+        bad_file = """
+        def hello(name):
+            print('Hello World')
+        """
+        result = self.get_results(bad_file)
+        self.assertEqual(len(result), 2)
+        self.assertEqual(result[0].confidence, 70)
+
+    def test_prop_confidence(self):
+        bad_file = """
+        class Bar(object):
+            @property
+            def prop(self):
+                pass
+
+        c = Bar()
+        """
+        result = self.get_results(bad_file)
+        self.assertEqual(len(result), 2)
+        self.assertEqual(result[0].confidence, 70)
+
+    def test_var_confidence(self):
+        bad_file = """
+        name = 'Foo Bar'
+        """
+        result = self.get_results(bad_file)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].confidence, 70)
