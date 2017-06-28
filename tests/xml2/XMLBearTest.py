@@ -8,6 +8,7 @@ from coalib.testing.LocalBearTestHelper import verify_local_bear, execute_bear
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.settings.Section import Section
 from coala_utils.ContextManagers import prepare_file
+from coalib.settings.Setting import Setting
 
 
 def load_testdata(filename):
@@ -34,6 +35,10 @@ invalid_xml_chars = """<?xml version="1.0"?>
 
 valid_xml_chars = """<?xml version="1.0"?>
 <a>hey and hi</a>
+"""
+
+invalid_xml_file_c14n = """<?xml version="1.0"?>
+<a/>
 """
 
 dtd_file = os.path.join(os.path.dirname(__file__),
@@ -98,3 +103,29 @@ class XMLBearSeverityTest(unittest.TestCase):
         with prepare_file(content, None) as (file, fname):
             with execute_bear(self.uut, fname, file) as results:
                 self.assertEqual(results[0].severity, RESULT_SEVERITY.MAJOR)
+
+
+@generate_skip_decorator(XMLBear)
+class XMLBearStyleTest(unittest.TestCase):
+
+    def setUp(self):
+        self.section = Section('name')
+        self.uut = XMLBear(self.section, Queue())
+
+    def test_xml_style_errors(self):
+        self.section.append(Setting('xml_style', 'c14n'))
+        content = invalid_xml_file_c14n.splitlines()
+        with prepare_file(content, None) as (file, fname):
+            with execute_bear(self.uut, fname, file) as results:
+                self.assertEqual(results[0].message,
+                                 'XML can be formatted better.')
+                self.assertEqual(results[0].severity, RESULT_SEVERITY.MAJOR)
+
+    def test_unrecognised_xml_style_name(self):
+        self.section.append(Setting('xml_style', 'wrong-args'))
+        content = invalid_xml_file.splitlines()
+        with prepare_file(content, None) as (file, fname):
+            with execute_bear(self.uut, fname, file) as results:
+                self.assertEqual(results[0].message,
+                                 'XML can be formatted better.')
+                self.assertEqual(results[0].severity, RESULT_SEVERITY.INFO)
