@@ -7,3 +7,4 @@ gem "reek"
 gem "rubocop", "0.47.1"
 gem "scss_lint", require: false
 gem "sqlint"
+gem "travis", "1.8.8"
