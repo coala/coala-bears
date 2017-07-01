@@ -35,4 +35,4 @@ scspell3k~=2.0
 vim-vint~=0.3.12
 vulture~=0.14.0
 yamllint~=1.6.1
-yapf~=0.14.0
+yapf~=0.16.0

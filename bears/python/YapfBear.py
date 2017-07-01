@@ -12,7 +12,7 @@ from coalib.results.Diff import Diff
 class YapfBear(LocalBear):
     LANGUAGES = {'Python', 'Python 2', 'Python 3'}
     AUTHORS = {'The coala developers'}
-    REQUIREMENTS = {PipRequirement('yapf', '0.14.0')}
+    REQUIREMENTS = {PipRequirement('yapf', '0.16.0')}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
     CAN_FIX = {'Formatting'}
