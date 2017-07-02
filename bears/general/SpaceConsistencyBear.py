@@ -19,7 +19,8 @@ class SpaceConsistencyBear(LocalBear):
             use_spaces: bool,
             allow_trailing_whitespace: bool=False,
             indent_size: int=SpacingHelper.DEFAULT_TAB_WIDTH,
-            enforce_newline_at_EOF: bool=True):
+            enforce_newline_at_EOF: bool=True,
+            allow_trailing_blanklines: bool=False):
         '''
         Check and correct spacing for all textual data. This includes usage of
         tabs vs. spaces, trailing whitespace and (missing) newlines before
@@ -33,10 +34,32 @@ class SpaceConsistencyBear(LocalBear):
                                           level.
         :param enforce_newline_at_EOF:    Whether to enforce a newline at the
                                           End Of File.
+        :param allow_trailing_blanklines: Whether to allow trailing blank lines
+                                          before End Of File
         '''
         spacing_helper = SpacingHelper(indent_size)
         result_texts = []
         additional_info_texts = []
+
+        if not allow_trailing_blanklines:
+            for line_number, line in zip(reversed(range(1, len(file)+1)),
+                                         reversed(file)):
+                replacement = line
+
+                if replacement.strip() == '':
+                    replacement = ''
+                    result_texts.append('Trailing blankline.')
+                    additional_info_texts.append(
+                        'Your source code contains trailing blankline.'
+                        'Those usually have no meaning. Please consider '
+                        'removing them.')
+                    yield from self.correct_single_line(
+                        filename, file, line, line_number, replacement,
+                        result_texts, additional_info_texts)
+                    result_texts = []
+                    additional_info_texts = []
+                else:
+                    break
 
         for line_number, line in enumerate(file, start=1):
             replacement = line
@@ -78,17 +101,47 @@ class SpaceConsistencyBear(LocalBear):
                     result_texts.append('Spaces used instead of tabs.')
 
             if len(result_texts) > 0:
-                diff = Diff(file)
-                diff.change_line(line_number, line, replacement)
-                inconsistencies = ''.join('\n- ' + string
-                                          for string in result_texts)
-                yield Result.from_values(
-                    self,
-                    'Line contains following spacing inconsistencies:'
-                    + inconsistencies,
-                    diffs={filename: diff},
-                    file=filename,
-                    line=line_number,
-                    additional_info='\n\n'.join(additional_info_texts))
+                yield from self.correct_single_line(
+                    filename, file, line, line_number, replacement,
+                    result_texts, additional_info_texts)
                 result_texts = []
                 additional_info_texts = []
+
+    def correct_single_line(self,
+                            filename,
+                            file,
+                            line,
+                            line_number,
+                            replacement,
+                            result_texts,
+                            additional_info_texts):
+        '''
+        Correct the spacing for textual data of a given single line
+
+        :param filename:
+            The filename of the file to correct the line in.
+        :param file:
+            The file contents as list of lines.
+        :param line:
+            The string of the line.
+        :param line_number:
+            The line number of file to be corrected.
+        :param replacement:
+            Corrected replacement string text for the line.
+        :param result_texts:
+            List containing description of the spacing correction.
+        :param additional_info_texts:
+            List containing additional info about the correction.
+        '''
+        diff = Diff(file)
+        diff.change_line(line_number, line, replacement)
+        inconsistencies = ''.join('\n- ' + string
+                                  for string in result_texts)
+        yield Result.from_values(
+            self,
+            'Line contains following spacing inconsistencies:'
+            + inconsistencies,
+            diffs={filename: diff},
+            file=filename,
+            line=line_number,
+            additional_info='\n\n'.join(additional_info_texts))

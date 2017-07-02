@@ -35,6 +35,7 @@ class SpaceConsistencyBearTest(LocalBearTestHelper):
         self.section.append(Setting('use_spaces', 'true'))
         self.section.append(Setting('allow_trailing_whitespace', 'false'))
         self.section.append(Setting('enforce_newline_at_EOF', 'false'))
+        self.section.append(Setting('allow_trailing_blanklines', 'true'))
 
         self.check_validity(self.uut, ['    t'])
         self.check_invalidity(self.uut, ['t \n'])
@@ -44,6 +45,7 @@ class SpaceConsistencyBearTest(LocalBearTestHelper):
         self.section.append(Setting('use_spaces', 'false'))
         self.section.append(Setting('allow_trailing_whitespace', 'true'))
         self.section.append(Setting('enforce_newline_at_EOF', 'false'))
+        self.section.append(Setting('allow_trailing_blanklines', 'true'))
 
         self.check_invalidity(self.uut, ['    t'])
         self.check_validity(self.uut, ['t \n'])
@@ -53,6 +55,7 @@ class SpaceConsistencyBearTest(LocalBearTestHelper):
         self.section.append(Setting('use_spaces', 'true'))
         self.section.append(Setting('allow_trailing_whitespace', 'true'))
         self.section.append(Setting('enforce_newline_at_EOF', 'true'))
+        self.section.append(Setting('allow_trailing_blanklines', 'false'))
 
         self.check_validity(self.uut,
                             ['hello world  \n'],
@@ -62,6 +65,7 @@ class SpaceConsistencyBearTest(LocalBearTestHelper):
                              "    print('funny')\n",
                              "    print('funny end.')\n"],
                             force_linebreaks=False)
+
         self.check_invalidity(self.uut,
                               [' no hello world'],
                               force_linebreaks=False)
@@ -69,4 +73,35 @@ class SpaceConsistencyBearTest(LocalBearTestHelper):
                               ['def unfunny_code():\n',
                                "    print('funny')\n",
                                "    print('the result is not funny...')"],
+                              force_linebreaks=False)
+
+    def test_allow_trailing_blanklines(self):
+        self.section.append(Setting('use_spaces', 'true'))
+        self.section.append(Setting('allow_trailing_whitespace', 'true'))
+        self.section.append(Setting('enforce_newline_at_EOF', 'false'))
+        self.section.append(Setting('allow_trailing_blanklines', 'false'))
+
+        self.check_invalidity(self.uut,
+                              ['\n'],
+                              force_linebreaks=False)
+        self.check_validity(self.uut,
+                            ['hello world   \n'],
+                            force_linebreaks=False)
+        self.check_invalidity(self.uut,
+                              ['hello world   \n',
+                               '\n'],
+                              force_linebreaks=False)
+        self.check_validity(self.uut,
+                            ['hello world   \n',
+                             '\n',
+                             '    \n',
+                             'hello my world\n'],
+                            force_linebreaks=False)
+        self.check_invalidity(self.uut,
+                              ['hello world   \n',
+                               '\n',
+                               '    \n',
+                               'hello my world\n',
+                               '\n',
+                               '\n'],
                               force_linebreaks=False)
