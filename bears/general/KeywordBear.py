@@ -11,9 +11,6 @@ from bears.general.AnnotationBear import AnnotationBear
 
 
 def _get_comments(dependency_results):
-    if not dependency_results:
-        return
-
     annotation_bear_results = dependency_results.get('AnnotationBear')
     if (not annotation_bear_results or
             not isinstance(annotation_bear_results, list)):
