@@ -22,7 +22,8 @@ KeywordBearTest = verify_local_bear(
     valid_files=(test_file,),
     invalid_files=('test line todo',
                    'test line warNING'),
-    settings={'keywords': 'todo, warning'})
+    settings={'keywords': 'todo, warning',
+              'language': 'c'})
 
 
 class KeywordBearDiffTest(unittest.TestCase):
