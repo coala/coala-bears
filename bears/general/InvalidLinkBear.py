@@ -1,5 +1,7 @@
 import re
 import requests
+import vlermv
+import shutil
 from urllib.parse import urlparse
 
 from difflib import SequenceMatcher
@@ -19,7 +21,8 @@ from coalib.settings.Setting import typed_dict
 class InvalidLinkBear(LocalBear):
     DEFAULT_TIMEOUT = 15
     LANGUAGES = {'All'}
-    REQUIREMENTS = {PipRequirement('requests', '2.12')}
+    REQUIREMENTS = {PipRequirement('requests', '2.12'),
+                    PipRequirement('vlermv', '1.4.2')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
@@ -36,6 +39,7 @@ class InvalidLinkBear(LocalBear):
                 if code is None else True)
 
     @staticmethod
+    @vlermv.Vlermv.memoize('./.coala-invalidlinkbear-status-code-cache')
     def get_status_code(url, timeout):
         try:
             code = requests.head(url, allow_redirects=False,
@@ -43,6 +47,11 @@ class InvalidLinkBear(LocalBear):
             return code
         except requests.exceptions.RequestException:
             pass
+
+    @staticmethod
+    def clear_status_code_cache():
+        shutil.rmtree('./.coala-invalidlinkbear-status-code-cache',
+                      ignore_errors=True)
 
     @staticmethod
     def parse_pip_vcs_url(link):
@@ -211,3 +220,6 @@ class InvalidLinkBear(LocalBear):
                             file=filename,
                             line=line_number,
                             severity=RESULT_SEVERITY.NORMAL)
+
+        # Clear the status code cache after the file has been analyzed
+        InvalidLinkBear.clear_status_code_cache()

@@ -3,6 +3,7 @@ import logging
 from queue import Queue
 import requests
 import requests_mock
+import time
 import unittest
 import unittest.mock
 
@@ -86,6 +87,7 @@ class InvalidLinkBearTest(LocalBearTestHelper):
 
     def tearDown(self):
         InvalidLinkBear.check_prerequisites = self.ib_check_prerequisites
+        InvalidLinkBear.clear_status_code_cache()
 
     def assertSeverity(self, file, severity, settings={}):
         """
@@ -211,6 +213,32 @@ class InvalidLinkBearTest(LocalBearTestHelper):
             m.add_matcher(custom_matcher)
             self.check_line_result_count(self.uut,
                                          invalid_file, [1, 1, 1, 1, 1])
+
+    def test_cache(self):
+        def time_matcher(request):
+            # Delay for 10 seconds
+            resp = requests.Response()
+            resp.status_code = 200
+            resp.raw = io.BytesIO()
+
+            time.sleep(0.1)
+            return resp
+
+        valid_file = ['http://coala.io' for i in range(30)]
+
+        with requests_mock.Mocker() as m:
+            m.add_matcher(time_matcher)
+
+            start_time = time.time()
+            self.check_validity(self.uut, valid_file)
+            elapsed_time = time.time() - start_time
+
+            # Normally the process just takes < 0.15 seconds,
+            # if it longer, it's probably caused by caching issue or
+            # the machine is busy.
+            if elapsed_time > 2:
+                raise Exception('Time limit exceeded (%s elapsed)' %
+                                elapsed_time)
 
     def test_severity(self):
         normal_severity_file = """
