@@ -19,7 +19,7 @@ class RuboCopBear:
     """
 
     LANGUAGES = {'Ruby'}
-    REQUIREMENTS = {GemRequirement('rubocop', '0.47.1'),
+    REQUIREMENTS = {GemRequirement('rubocop', '0.49.1'),
                     PipRequirement('pyyaml', '3.12')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
@@ -36,7 +36,7 @@ class RuboCopBear:
     def create_arguments(filename, file, config_file, rubocop_config: str=''):
         # Need both stdin and filename. Explained in this comment:
         # https://github.com/bbatsov/rubocop/pull/2146#issuecomment-131403694
-        args = (filename, '--stdin', '--format=json')
+        args = ('--stdin', filename, '--format=json')
         if rubocop_config:
             args += ('--config', rubocop_config)
         else:
