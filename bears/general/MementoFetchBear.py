@@ -80,7 +80,7 @@ class MementoFetchBear(LocalBear):
         return urls
 
     def run(self, filename, file, dependency_results=dict(),
-            follow_redirects: bool=True):
+            follow_redirects: bool = True):
         """
         Find links in any text file and give its archive information.
 
