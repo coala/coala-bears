@@ -8,14 +8,57 @@ from dependency_management.requirements.PipRequirement import PipRequirement
 from coalib.bearlib import deprecate_settings
 from coalib.settings.Setting import typed_list
 from coalib.results.HiddenResult import HiddenResult
+from coalib.results.Result import Result
+from coalib.results.SourceRange import SourceRange
 from coalib.parsing.Globbing import fnmatch
 from coalib.settings.Setting import typed_dict
+from coala_utils.decorators import (enforce_signature, generate_ordering,
+                                    generate_repr)
 
 
 class LINK_CONTEXT(Flag):
     no_context = 0
     xml_namespace = 1
     pip_vcs_url = 2
+
+
+@generate_repr(('id', hex),
+               'origin',
+               'affected_code',
+               'message',
+               'link',
+               'http_status_code',
+               'link_context')
+@generate_ordering('affected_code',
+                   'link',
+                   'http_status_code',
+                   'link_context',
+                   'contents',
+                   'severity',
+                   'confidence',
+                   'origin',
+                   'message_base',
+                   'message_arguments',
+                   'aspect',
+                   'additional_info',
+                   'debug_msg')
+class URLResult(HiddenResult):
+
+    @enforce_signature
+    def __init__(self, origin, affected_code,
+                 link: str,
+                 http_status_code: (int, None),
+                 link_context: LINK_CONTEXT):
+
+        Result.__init__(self, origin,
+                        '%s responds with HTTP %s' % (link, http_status_code),
+                        affected_code)
+
+        self.contents = [affected_code[0].start.line, link, http_status_code,
+                         link_context]
+        self.link = link
+        self.http_status_code = http_status_code
+        self.link_context = link_context
 
 
 class URLBear(LocalBear):
@@ -151,4 +194,6 @@ class URLBear(LocalBear):
 
         for line_number, link, code, context in self.analyze_links_in_file(
                 file, network_timeout, link_ignore_regex, link_ignore_list):
-            yield HiddenResult(self, [line_number, link, code, context])
+            affected_code = SourceRange.from_values(filename, line_number)
+
+            yield URLResult(self, (affected_code,), link, code, context)
