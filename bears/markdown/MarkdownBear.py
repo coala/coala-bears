@@ -100,7 +100,7 @@ class MarkdownBear:
             Whether to add space between pipes in a table.
         :param list_increment:
             Whether an ordered lists numbers should be incremented.
-        :param markdown_horizontal_rule:
+        :param horizontal_rule:
             The horizontal rule character. Can be '*', '_' or '-'.
         :param horizontal_rule_spaces:
             Whether spaces should be added between horizontal rule characters.
