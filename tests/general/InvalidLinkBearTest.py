@@ -7,7 +7,7 @@ import unittest
 import unittest.mock
 
 from bears.general.InvalidLinkBear import InvalidLinkBear
-from bears.general.URLBear import URLBear
+from bears.general.URLHeadBear import URLHeadBear
 from coalib.testing.LocalBearTestHelper import LocalBearTestHelper
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.results.Result import Result
@@ -37,7 +37,7 @@ def custom_matcher(request):
     change_url = False
     # the connection check url needs to be explicitly
     # set to 200
-    if request.url == URLBear.check_connection_url:
+    if request.url == URLHeadBear.check_connection_url:
         status_code = 200
     else:
         try:
@@ -61,12 +61,12 @@ class InvalidLinkBearTestPrerequisites(unittest.TestCase):
     def test_check_prerequisites(self):
         with requests_mock.Mocker() as m:
             m.add_matcher(custom_matcher)
-            self.assertTrue(URLBear.check_prerequisites())
+            self.assertTrue(URLHeadBear.check_prerequisites())
 
-            m.head(URLBear.check_connection_url,
+            m.head(URLHeadBear.check_connection_url,
                    exc=requests.exceptions.RequestException)
 
-            self.assertTrue(URLBear.check_prerequisites() ==
+            self.assertTrue(URLHeadBear.check_prerequisites() ==
                             'You are not connected to the internet.')
 
 
@@ -80,13 +80,13 @@ class InvalidLinkBearTest(LocalBearTestHelper):
     """
 
     def setUp(self):
-        self.ub_check_prerequisites = URLBear.check_prerequisites
+        self.ub_check_prerequisites = URLHeadBear.check_prerequisites
         self.section = Section('')
-        URLBear.check_prerequisites = lambda *args: True
+        URLHeadBear.check_prerequisites = lambda *args: True
         self.uut = InvalidLinkBear(self.section, Queue())
 
     def tearDown(self):
-        URLBear.check_prerequisites = self.ub_check_prerequisites
+        URLHeadBear.check_prerequisites = self.ub_check_prerequisites
 
     def assertSeverity(self, file, severity, settings={}):
         """
@@ -99,10 +99,10 @@ class InvalidLinkBearTest(LocalBearTestHelper):
         severity_tag = RESULT_SEVERITY.reverse[severity]
         with requests_mock.Mocker() as m:
             m.add_matcher(custom_matcher)
-            dep_bear = URLBear(self.section, Queue())
-            deps_results = dict(URLBear=list(dep_bear.run('testfile',
-                                                          file,
-                                                          **settings)))
+            dep_bear = URLHeadBear(self.section, Queue())
+            deps_results = dict(URLHeadBear=list(dep_bear.run('testfile',
+                                                              file,
+                                                              **settings)))
 
             outputs = list(self.uut.run('testfile', file, deps_results,
                                         **settings))

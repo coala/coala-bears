@@ -1,6 +1,6 @@
 import requests
 
-from bears.general.URLBear import URLBear
+from bears.general.URLHeadBear import URLHeadBear
 
 from coalib.bears.LocalBear import LocalBear
 from coalib.results.Result import Result
@@ -19,7 +19,7 @@ class MementoBear(LocalBear):
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
     CAN_DETECT = {'Documentation'}
-    BEAR_DEPS = {URLBear}
+    BEAR_DEPS = {URLHeadBear}
 
     @staticmethod
     def check_archive(mc, link):
@@ -62,12 +62,12 @@ class MementoBear(LocalBear):
         `do_not_ever_open = 'https://api.acme.inc/delete-all-data'` wiping out
         all your data.
 
-        :param dependency_results: Results given by URLBear.
+        :param dependency_results: Results given by URLHeadBear.
         :param follow_redirects:   Set to true to check all redirect urls.
         """
         self._mc = MementoClient()
 
-        for result in dependency_results.get(URLBear.name, []):
+        for result in dependency_results.get(URLHeadBear.name, []):
             line_number, link, code, context = result.contents
 
             if not (code and 200 <= code < 400):

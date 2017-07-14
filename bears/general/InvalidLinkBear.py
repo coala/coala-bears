@@ -2,7 +2,7 @@ import requests
 
 from difflib import SequenceMatcher
 
-from bears.general.URLBear import URLBear
+from bears.general.URLHeadBear import URLHeadBear
 from coalib.results.Diff import Diff
 from coalib.bears.LocalBear import LocalBear
 from dependency_management.requirements.PipRequirement import PipRequirement
@@ -18,7 +18,7 @@ class InvalidLinkBear(LocalBear):
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
     CAN_DETECT = {'Documentation'}
-    BEAR_DEPS = {URLBear}
+    BEAR_DEPS = {URLHeadBear}
 
     def run(self, filename, file, dependency_results=dict(),
             follow_redirects: bool=False):
@@ -39,7 +39,7 @@ class InvalidLinkBear(LocalBear):
         :param dependency_results: Results given by URLBear.
         :param follow_redirects: Set to true to autocorrect redirects.
         """
-        for result in dependency_results.get(URLBear.name, []):
+        for result in dependency_results.get(URLHeadBear.name, []):
             line_number, link, code, context = result.contents
             if context is context.xml_namespace:
                 if code and 200 <= code < 300:
