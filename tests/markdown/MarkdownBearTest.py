@@ -22,6 +22,16 @@ test_file3 = """1. abcdefghijklm
 2. nopqrstuvwxyz
 """
 
+test_file4 = """# Hello
+
+Read more [This link does not exist](#world).
+"""
+
+test_file5 = """# world
+
+Read more [This link exists](#world).
+"""
+
 MarkdownBearTest = verify_local_bear(MarkdownBear,
                                      valid_files=(test_file2,),
                                      invalid_files=(test_file1,))
@@ -55,3 +65,21 @@ class MarkdownBearMaxLineLengthMessageTest(unittest.TestCase):
                                  'Line must be at most 10 characters'
                                  '  maximum-line-length  remark-lint')
                 self.assertEqual(results[0].severity, RESULT_SEVERITY.NORMAL)
+
+    def test_invalid_link(self):
+        content = test_file4.splitlines()
+        self.section.append(Setting('check_links', True))
+        with prepare_file(content, None) as (file, fname):
+            with execute_bear(self.uut, fname, file) as results:
+                self.assertEqual(results[0].message,
+                                 'Link to unknown heading: `world`'
+                                 '  remark-validate-links  '
+                                 'remark-validate-links')
+                self.assertEqual(results[0].severity, RESULT_SEVERITY.NORMAL)
+
+    def test_valid_link(self):
+        content = test_file5.splitlines()
+        self.section.append(Setting('check_links', True))
+        with prepare_file(content, None) as (file, fname):
+            with execute_bear(self.uut, fname, file) as results:
+                self.assertEqual(results, [])

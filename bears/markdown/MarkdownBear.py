@@ -8,7 +8,6 @@ from coalib.bearlib import deprecate_settings
 
 
 @linter(executable='remark',
-        use_stdin=True,
         use_stdout=True,
         use_stderr=True)
 class MarkdownBear:
@@ -21,7 +20,8 @@ class MarkdownBear:
 
     LANGUAGES = {'Markdown'}
     REQUIREMENTS = {NpmRequirement('remark-cli', '2'),
-                    NpmRequirement('remark-lint', '5')}
+                    NpmRequirement('remark-lint', '5'),
+                    NpmRequirement('remark-validate-links', '5')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
@@ -65,7 +65,8 @@ class MarkdownBear:
                          horizontal_rule: str='*',
                          horizontal_rule_spaces: bool=False,
                          horizontal_rule_repeat: int=3,
-                         max_line_length: int=None):
+                         max_line_length: int=None,
+                         check_links: bool=False):
         """
         :param bullets:
             Character to use for bullets in lists. Can be "-", "*" or "+".
@@ -108,6 +109,8 @@ class MarkdownBear:
             The number of times the horizontal rule character will be repeated.
         :param max_line_length:
             The maximum line length allowed.
+        :param check_links:
+            Checks if links to headings and files in markdown are valid.
         """
         remark_configs_settings = {
             'bullet': bullets,                          # - or *
@@ -136,12 +139,15 @@ class MarkdownBear:
         # Remove { and } as remark adds them on its own
         settings = config_json[1:-1]
 
-        args = ['--no-color', '--quiet', '--setting', settings]
+        args = [filename, '--no-color', '--quiet', '--setting', settings]
 
         if remark_configs_plugins:
             config_json = json.dumps(remark_configs_plugins)
             plugins = 'lint=' + config_json[1:-1]
             args += ['--use', plugins]
+
+        if check_links:
+            args += ['--use', 'validate-links']
 
         return args
 
