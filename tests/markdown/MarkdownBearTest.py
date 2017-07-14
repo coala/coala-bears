@@ -9,10 +9,10 @@ from coalib.settings.Section import Section
 from coalib.settings.Setting import Setting
 from coala_utils.ContextManagers import prepare_file
 
+
 test_file1 = """1. abc
 1. def
 """
-
 
 test_file2 = """1. abc
 2. def
