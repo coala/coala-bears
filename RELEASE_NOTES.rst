@@ -388,7 +388,7 @@ Here are the important changes and additions:
 - Settings unification - most bears have seen API changes. Settings' names
   are now consistent across bears. This supports backwards
   compatibility, however (but with a deprecation notice). You can find the
-  whole list `here <http://dpaste.com/3EP5GCV>`_.
+  whole list `here <http://dpaste.com/3EP5GCV>`__.
 
 **New Features**
 
@@ -530,7 +530,7 @@ coala-bears 0.1.0 beta
 coala-bears is a Python package containing all the bears that are used by coala.
 It has been split from `coala <https://github.com/coala/coala>`_.
 With the initial release, it features 56 bears covering 32 languages.
-You can see all of them `here <https://gist.github.com/Adrianzatreanu/cf2d0c8b2ecd542a4860>`_
+You can see all of them `here <https://gist.github.com/Adrianzatreanu/cf2d0c8b2ecd542a4860>`__
 with a brief description each.
 
 coala-bears has bears for famous languages, such as:
