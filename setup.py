@@ -46,14 +46,21 @@ with open('bear-requirements.txt') as requirements:
 with open('test-requirements.txt') as requirements:
     test_required = requirements.read().splitlines()
 
+with open('ignore.txt') as ignore:
+    ignore_requirements = ignore.read().splitlines()
+
 with open('README.rst') as readme:
     long_description = readme.read()
 
 extras_require = {
     'alldeps': bear_required,
 }
+
+# For the average user we leave out some of the more complicated requirements,
+# e.g. language-check (needs java).
 required += [req for req in bear_required
-             if not req.startswith('language-check')]
+             if not any(req.startswith(ignore)
+                        for ignore in ignore_requirements)]
 
 
 if __name__ == '__main__':
