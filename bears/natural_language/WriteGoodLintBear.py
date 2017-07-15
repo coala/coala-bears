@@ -54,8 +54,8 @@ class WriteGoodLintBear:
                                         where a word is repeated.
         :param allow_there_is:          Allows ``There is`` or ``There are``
                                         at the beginning of the sentence.
-        :param allow_ambiguous_words:   Allows ``weasel words`` for example
-                                        ``often``, ``probably``
+        :param allow_ambiguous_words:   Allows "weasel words" for example
+                                        "often", "probably"
         :param allow_extra_words:       Allows wordy phrases and unnecessary
                                         words.
         :param allow_cliche_phrases:    Allows common cliche phrases in the
