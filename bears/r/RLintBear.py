@@ -29,6 +29,7 @@ class RLintBear:
                                             version='>=3.1.1')}
     LICENSE = 'AGPL-3.0'
     CAN_DETECT = {'Syntax', 'Formatting'}
+    SEE_MORE = 'https://github.com/jimhester/lintr'
 
     @staticmethod
     def create_arguments(filename, file, config_file):
