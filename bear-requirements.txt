@@ -1,4 +1,5 @@
 aenum~=2.0.8
+ansible-lint~=3.4.12
 apertium-lint~=0.29
 autoflake~=0.6.6
 autopep8~=1.2
