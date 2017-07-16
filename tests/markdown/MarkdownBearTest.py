@@ -62,8 +62,7 @@ class MarkdownBearTest(unittest.TestCase):
         with prepare_file(content, None) as (file, fname):
             with execute_bear(self.uut, fname, file) as results:
                 self.assertEqual(results[0].message,
-                                 'Line must be at most 10 characters'
-                                 '  maximum-line-length  remark-lint')
+                                 'Line must be at most 10 characters')
                 self.assertEqual(results[0].severity, RESULT_SEVERITY.NORMAL)
 
     def test_invalid_link(self):
@@ -72,9 +71,7 @@ class MarkdownBearTest(unittest.TestCase):
         with prepare_file(content, None) as (file, fname):
             with execute_bear(self.uut, fname, file) as results:
                 self.assertEqual(results[0].message,
-                                 'Link to unknown heading: `world`'
-                                 '  remark-validate-links  '
-                                 'remark-validate-links')
+                                 'Link to unknown heading: `world`')
                 self.assertEqual(results[0].severity, RESULT_SEVERITY.NORMAL)
 
     def test_valid_link(self):

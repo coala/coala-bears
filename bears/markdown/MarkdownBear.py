@@ -29,7 +29,7 @@ class MarkdownBear:
 
     _output_regex = re.compile(
         r'\s*(?P<line>\d+):(?P<column>\d+)'
-        r'\s*(?P<severity>warning)\s*(?P<message>.*)')
+        r'\s*(?P<severity>warning)\s*(?P<message>.+?)(?:  .*|\n|$)')
 
     @staticmethod
     @deprecate_settings(bullets='markdown_bullets',
