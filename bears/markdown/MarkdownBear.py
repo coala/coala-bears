@@ -130,10 +130,10 @@ class MarkdownBear:
             'ruleSpaces': horizontal_rule_spaces,       # Bool
             'ruleRepetition': horizontal_rule_repeat,   # int
         }
-        remark_configs_plugins = {}
+        remark_lint_configs = {}
 
         if max_line_length:
-            remark_configs_plugins['maximumLineLength'] = max_line_length
+            remark_lint_configs['maximumLineLength'] = max_line_length
 
         config_json = json.dumps(remark_configs_settings)
         # Remove { and } as remark adds them on its own
@@ -141,10 +141,10 @@ class MarkdownBear:
 
         args = [filename, '--no-color', '--quiet', '--setting', settings]
 
-        if remark_configs_plugins:
-            config_json = json.dumps(remark_configs_plugins)
-            plugins = 'lint=' + config_json[1:-1]
-            args += ['--use', plugins]
+        if remark_lint_configs:
+            config_json = json.dumps(remark_lint_configs)
+            lint = 'lint=' + config_json[1:-1]
+            args += ['--use', lint]
 
         if check_links:
             args += ['--use', 'validate-links']
