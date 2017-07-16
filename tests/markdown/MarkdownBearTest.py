@@ -50,7 +50,7 @@ MarkdownBearMaxLineLengthSettingTest = verify_local_bear(
 
 
 @generate_skip_decorator(MarkdownBear)
-class MarkdownBearMaxLineLengthMessageTest(unittest.TestCase):
+class MarkdownBearTest(unittest.TestCase):
 
     def setUp(self):
         self.section = Section('name')
