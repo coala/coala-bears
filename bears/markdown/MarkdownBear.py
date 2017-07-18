@@ -112,7 +112,7 @@ class MarkdownBear:
         :param check_links:
             Checks if links to headings and files in markdown are valid.
         """
-        remark_configs_settings = {
+        remark_configs = {
             'bullet': bullets,                          # - or *
             'closeAtx': closed_headings,                # Bool
             'setext': setext_headings,                  # Bool
@@ -135,7 +135,7 @@ class MarkdownBear:
         if max_line_length:
             remark_lint_configs['maximumLineLength'] = max_line_length
 
-        config_json = json.dumps(remark_configs_settings)
+        config_json = json.dumps(remark_configs)
         # Remove { and } as remark adds them on its own
         settings = config_json[1:-1]
 
