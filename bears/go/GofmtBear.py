@@ -17,7 +17,7 @@ class GofmtBear:
     LANGUAGES = {'Go'}
     REQUIREMENTS = {GoRequirement(package='golang.org/cmd/gofmt', flag='-u')}
     AUTHORS = {'The coala developers'}
-    AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
+    AUTHORS_EMAILS = {'coala-devel@googlegroups.com'} 
     LICENSE = 'AGPL-3.0'
     CAN_FIX = {'Formatting', 'Code Simplification'}
     ASCIINEMA_URL = 'https://asciinema.org/a/94812'
