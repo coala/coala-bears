@@ -4,9 +4,23 @@ from coalib.bears.LocalBear import LocalBear
 from dependency_management.requirements.PipRequirement import PipRequirement
 from coalib.results.Diff import Diff
 from coalib.results.Result import Result
+from coalib.bearlib.aspects import map_setting_to_aspect
+from coalib.bearlib.aspects.Redundancy import (
+    Redundancy,
+    UnusedImport,
+    UnusedLocalVariable,
+)
 
 
-class PyUnusedCodeBear(LocalBear):
+class PyUnusedCodeBear(
+        LocalBear,
+        aspects={
+            'fix': [
+                UnusedImport,
+                UnusedLocalVariable,
+            ]},
+        languages=['Python'],
+        ):
     LANGUAGES = {'Python', 'Python 2', 'Python 3'}
     REQUIREMENTS = {PipRequirement('autoflake', '0.6.6')}
     AUTHORS = {'The coala developers'}
@@ -14,6 +28,9 @@ class PyUnusedCodeBear(LocalBear):
     LICENSE = 'AGPL-3.0'
     CAN_DETECT = {'Unused Code'}
 
+    @map_setting_to_aspect(
+        remove_all_unused_imports=UnusedImport.remove_non_standard_import,
+        remove_unused_variables=UnusedLocalVariable)
     def run(self, filename, file,
             remove_all_unused_imports: bool=True,
             remove_unused_variables: bool=True):
@@ -29,7 +46,6 @@ class PyUnusedCodeBear(LocalBear):
         :param remove_unused_variables:
             ``False`` keeps unused variables
         """
-
         corrected = autoflake.fix_code(
                        ''.join(file),
                        additional_imports=None,
@@ -41,4 +57,5 @@ class PyUnusedCodeBear(LocalBear):
             yield Result(self,
                          'This file contains unused source code.',
                          affected_code=(diff.range(filename),),
-                         diffs={filename: diff})
+                         diffs={filename: diff},
+                         aspect=Redundancy('py'))
