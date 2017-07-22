@@ -7,3 +7,9 @@ def docstring_improper_alignment():
     :param x:
     :return:
     """ return None
+
+"""This is one liner having extra whitespaces"""
+
+"""This is malformed one liner docstring"""
+
+"""This is multi-liner docstring"""

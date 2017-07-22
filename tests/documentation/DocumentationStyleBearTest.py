@@ -16,13 +16,13 @@ def load_testfile(filename):
         return fl.read()
 
 
-def test(test_file, expected_file):
+def test(test_file, expected_file, optional_setting=None):
     def test_function(self):
         test_file_content = load_testfile(test_file).splitlines(True)
 
         arguments = {'language': 'python', 'docstyle': 'default'}
-        if test_file == 'good_file3.py.test':
-            arguments.update({'allow_missing_func_desc': 'True'})
+        if optional_setting:
+            arguments.update(optional_setting)
         section = Section('test-section')
         for key, value in arguments.items():
             section[key] = value
@@ -49,10 +49,13 @@ def test(test_file, expected_file):
 
 class DocumentationStyleBearTest(unittest.TestCase):
     test_bad1 = test('bad_file.py.test', 'bad_file.py.test.correct')
-    test_bad2 = test('bad_file2.py.test', 'bad_file2.py.test.correct')
-    test_bad3 = test('bad_file3.py.test', 'bad_file3.py.test.correct')
+    test_bad2 = test('bad_file2.py.test', 'bad_file2.py.test.correct',
+                     {'expand_one_liners': 'True'})
+    test_bad3 = test('bad_file3.py.test', 'bad_file3.py.test.correct',
+                     {'expand_one_liners': 'True'})
     test_bad4 = test('bad_file4.py.test', 'bad_file4.py.test.correct')
     test_bad5 = test('bad_file5.py.test', 'bad_file5.py.test.correct')
     test_good1 = test('good_file.py.test', 'good_file.py.test')
     test_good2 = test('good_file2.py.test', 'good_file2.py.test')
-    test_good3 = test('good_file3.py.test', 'good_file3.py.test')
+    test_good3 = test('good_file3.py.test', 'good_file3.py.test',
+                      {'allow_missing_func_desc': 'True'})

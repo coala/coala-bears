@@ -20,8 +20,11 @@ class DocumentationStyleBear(DocBaseClass, LocalBear):
     CAN_DETECT = {'Documentation'}
     CAN_FIX = {'Documentation'}
 
-    def process_documentation(self, parsed, allow_missing_func_desc: str=False,
-                              indent_size: int=4):
+    def process_documentation(self,
+                              parsed,
+                              allow_missing_func_desc: str=False,
+                              indent_size: int=4,
+                              expand_one_liners: str=False):
         """
         This fixes the parsed documentation comment.
 
@@ -32,6 +35,8 @@ class DocumentationStyleBear(DocBaseClass, LocalBear):
             descriptions, allowing functions to start with params.
         :param indent_size:
             Number of spaces per indentation level.
+        :param expand_one_liners:
+            When set ``True`` this will expand one liner docstrings.
         :return:
             A tuple of fixed parsed documentation comment and warning_desc.
         """
@@ -54,9 +59,13 @@ class DocumentationStyleBear(DocBaseClass, LocalBear):
         # one empty line shall follow main description (except it's empty
         # or no annotations follow).
         if main_description.desc.strip() != '':
-            main_description = main_description._replace(
-                desc='\n' + main_description.desc.strip() + '\n' *
-                     (1 if len(parsed) == 1 else 2))
+            if not expand_one_liners and len(parsed) == 1:
+                main_description = main_description._replace(
+                    desc=main_description.desc.strip())
+            else:
+                main_description = main_description._replace(
+                    desc='\n' + main_description.desc.strip() + '\n' *
+                         (1 if len(parsed) == 1 else 2))
 
         new_metadata = [main_description]
         for m in metadata:
@@ -87,7 +96,7 @@ class DocumentationStyleBear(DocBaseClass, LocalBear):
 
     def run(self, filename, file, language: str,
             docstyle: str='default', allow_missing_func_desc: str=False,
-            indent_size: int=4):
+            indent_size: int=4, expand_one_liners: str=False):
         """
         Checks for certain in-code documentation styles.
 
@@ -110,13 +119,16 @@ class DocumentationStyleBear(DocBaseClass, LocalBear):
                          functions with missing descriptions, allowing
                          functions to start with params.
         :param indent_size: Number of spaces per indentation level.
+        :param expand_one_liners: When set ``True`` this will expand one liner
+                         docstrings.
         """
 
         for doc_comment in self.extract(file, language, docstyle):
             parsed = doc_comment.parse()
 
             (new_metadata, warning_desc) = self.process_documentation(
-                                parsed, allow_missing_func_desc, indent_size)
+                                parsed, allow_missing_func_desc, indent_size,
+                                expand_one_liners)
 
             new_comment = DocumentationComment.from_metadata(
                 new_metadata, doc_comment.docstyle_definition,
