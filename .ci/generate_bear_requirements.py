@@ -25,7 +25,6 @@ from pyprint.NullPrinter import NullPrinter
 
 from coalib.bears.BEAR_KIND import BEAR_KIND
 from coalib.collecting.Collectors import collect_bears
-from coalib.output.printers.LogPrinter import LogPrinter
 
 from dependency_management.requirements.GemRequirement import GemRequirement
 from dependency_management.requirements.NpmRequirement import NpmRequirement
@@ -66,12 +65,11 @@ def get_args():
     return args
 
 
-def get_all_bears(bear_dirs, log_printer):
+def get_all_bears(bear_dirs):
     local_bears, global_bears = collect_bears(
         bear_dirs,
         ['**'],
         [BEAR_KIND.LOCAL, BEAR_KIND.GLOBAL],
-        log_printer,
         warn_if_unused_glob=False)
     return list(itertools.chain(local_bears, global_bears))
 
@@ -186,15 +184,11 @@ if __name__ == '__main__':
 
     bear_dirs = [PROJECT_BEAR_DIR]
 
-    printer = NullPrinter()
-    log_printer = LogPrinter(printer)
-
     if args.bear_dirs is not None:
         bear_dirs.extend(args.bear_dirs)
 
     pip_reqs, npm_reqs, gem_reqs = (
-        get_all_requirements(get_all_bears(bear_dirs, log_printer))
-        )
+        get_all_requirements(get_all_bears(bear_dirs)))
 
     write_gem_requirements(gem_reqs)
 
