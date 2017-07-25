@@ -36,12 +36,9 @@ class RuboCopBear:
     def create_arguments(filename, file, config_file, rubocop_config: str=''):
         # Need both stdin and filename. Explained in this comment:
         # https://github.com/bbatsov/rubocop/pull/2146#issuecomment-131403694
-
         """
-        :param rubocop_config: Path to a custom configuration file.
-        
+      	:param rubocop_config: Path to a custom configuration file.
         """
-
         args = ('--stdin', filename, '--format=json')
         if rubocop_config:
             args += ('--config', rubocop_config)
