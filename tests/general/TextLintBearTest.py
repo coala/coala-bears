@@ -134,7 +134,7 @@ class TextLintBearTest(LocalBearTestHelper):
             filename=get_testfile_path(file_name))
 
     def test_bad_alex_no_dead_link(self):
-        file_name = 'bad_alex_no_dead_link.adoc'
+        file_name = 'bad_alex_no_dead_link.md'
         file_contents = load_testfile(file_name)
         self.check_results(
             self.uut,
