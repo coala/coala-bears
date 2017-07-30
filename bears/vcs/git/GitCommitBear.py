@@ -3,6 +3,7 @@ import re
 import shutil
 import os
 from urllib.parse import urlparse
+from pyisemail import is_email
 
 from coalib.bears.GlobalBear import GlobalBear
 from dependency_management.requirements.PipRequirement import PipRequirement
@@ -15,7 +16,8 @@ from coalib.settings.Setting import typed_list
 
 class GitCommitBear(GlobalBear):
     LANGUAGES = {'Git'}
-    REQUIREMENTS = {PipRequirement('nltk', '3.2')}
+    REQUIREMENTS = {PipRequirement('nltk', '3.2'),
+                    PipRequirement('pyisemail', '1.3.1')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
@@ -48,6 +50,12 @@ class GitCommitBear(GlobalBear):
             return 'git is not installed.'
         else:
             return True
+
+    @classmethod
+    def get_auth_email_checks_metadata(cls):
+        return FunctionMetadata.from_function(
+            cls.check_auth_email,
+            omit={'self', 'auth_email'})
 
     @classmethod
     def get_shortlog_checks_metadata(cls):
@@ -96,19 +104,23 @@ class GitCommitBear(GlobalBear):
             netloc = urlparse(url)[1]
         return netloc.split('.')[0]
 
-    def run(self, allow_empty_commit_message: bool = False, **kwargs):
+    def run(self, allow_empty_commit_message: bool = False,
+            auth_email_check: bool=True, **kwargs):
         """
         Check the current git commit message at HEAD.
 
         This bear ensures automatically that the shortlog and body do not
         exceed a given line-length and that a newline lies between them.
 
+        :param auth_email_check:      If True, it will check validity of
+                                      author's email.
         :param allow_empty_commit_message: Whether empty commit messages are
                                            allowed or not.
         """
         with change_directory(self.get_config_dir() or os.getcwd()):
             stdout, stderr = run_shell_command('git log -1 --pretty=%B')
-
+            auth_email = run_shell_command(
+                'git --no-pager log -n 1 --format=\'%ae\'')[0][:-1]
         if stderr:
             self.err('git:', repr(stderr))
             return
@@ -123,6 +135,11 @@ class GitCommitBear(GlobalBear):
                 yield Result(self, 'HEAD commit has no message.')
             return
 
+        if auth_email_check:
+            yield from self.check_auth_email(
+                auth_email,
+                **self.get_auth_email_checks_metadata(
+                    ).filter_parameters(kwargs))
         yield from self.check_shortlog(
             shortlog,
             **self.get_shortlog_checks_metadata().filter_parameters(kwargs))
@@ -132,6 +149,26 @@ class GitCommitBear(GlobalBear):
         yield from self.check_issue_reference(
             body,
             **self.get_issue_checks_metadata().filter_parameters(kwargs))
+
+    def check_auth_email(self, auth_email,
+                         email_dns_check: bool=False):
+        """
+        Checks validity of author's email
+
+        :param email_dns_check:       If True, it will confirm the domain
+                                      in author's email is valid.
+        """
+        email_check = is_email(auth_email)
+        if email_dns_check and email_check:
+            email_check = is_email(auth_email, diagnose=True,
+                                   check_dns=True).ERROR_CODES
+
+        if type(email_check) is bool and not email_check:
+            yield Result(self,
+                         'Commit\'s author has syntactically wrong email.')
+        elif email_dns_check and email_check:
+            yield Result(self,
+                         'Commit\'s author has email using invalid domain.')
 
     def check_shortlog(self, shortlog,
                        shortlog_length: int=50,
@@ -222,7 +259,9 @@ class GitCommitBear(GlobalBear):
                    body_line_length: int=72,
                    force_body: bool=False,
                    ignore_length_regex: typed_list(str)=(),
-                   body_regex: str=None):
+                   body_regex: str=None,
+                   body_email_check: bool=True,
+                   email_dns_check: bool=False):
         """
         Checks the given commit body.
 
@@ -235,6 +274,10 @@ class GitCommitBear(GlobalBear):
                                     expressions in this list will be ignored.
         :param body_regex:          If provided, checks the presence of regex
                                     in the commit body.
+        :param body_email_check:    If True, it checks if emails are in valid
+                                    format or not.
+        :param email_dns_check:     If True, it checks if domains in the emails
+                                    are valid or not.
         """
         if len(body) == 0:
             if force_body:
@@ -258,6 +301,23 @@ class GitCommitBear(GlobalBear):
             yield Result(self, 'Body of HEAD commit contains too long lines. '
                                'Commit body lines should not exceed {} '
                                'characters.'.format(body_line_length))
+
+        if body_email_check:
+            result_message = 'Body contains these invalid emails:\n'
+            invalid_emails = []
+            for line in body:
+                for email in re.findall(r'\S+@\S+\.\S+', line):
+                    email_check = is_email(email)
+                    if email_dns_check and email_check:
+                        email_check = is_email(email, diagnose=True,
+                                               check_dns=True).ERROR_CODES
+                    if type(email_check) is bool and not email_check:
+                        invalid_emails.append(email + ' - Invalid syntax')
+                    elif email_dns_check and email_check:
+                        invalid_emails.append(email + ' - Invalid domain')
+            if invalid_emails:
+                result_message += '\n'.join(invalid_emails)
+                yield Result(self, result_message)
 
     def check_issue_reference(self, body,
                               body_close_issue: bool=False,

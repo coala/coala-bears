@@ -66,6 +66,9 @@ class GitCommitBearTest(unittest.TestCase):
         self.run_git_command('config', 'user.email coala@coala.io')
         self.run_git_command('config', 'user.name coala')
 
+        self.passed_object = unittest.mock.Mock(ERROR_CODES={})
+        self.failing_object = unittest.mock.Mock(ERROR_CODES={'a': 'b'})
+
     @staticmethod
     def _windows_rmtree_remove_readonly(func, path, excinfo):
         os.chmod(path, stat.S_IWRITE)
@@ -125,10 +128,55 @@ class GitCommitBearTest(unittest.TestCase):
                          [])
         self.assert_no_msgs()
 
+    def test_auth_email_checks(self):
+        syntax_msg = 'Commit\'s author has syntactically wrong email.'
+        dns_msg = 'Commit\'s author has email using invalid domain.'
+        # Setting invalid user.email
+        self.run_git_command('config',
+                             'user.email invalid#!format!*!@ema!*8.l.com')
+
+        # Invalid email with no dns check
+        self.git_commit('Shortlog\n\n'
+                        'some text\n'
+                        'Fix 2017')
+        self.assertEqual(self.run_uut(),
+                         [syntax_msg])
+
+        # Setting back to original configuration
+        self.run_git_command('config', 'user.email coala@coala.io')
+
+        # Valid email with no dns check
+        self.git_commit('Shortlog\n\n'
+                        'some text\n'
+                        'Fix 2017')
+        self.assertEqual(self.run_uut(), [])
+
+        # Test successful DNS lookup
+        with unittest.mock.patch('bears.vcs.git.GitCommitBear.is_email',
+                                 return_value=self.passed_object):
+            self.git_commit('Shortlog\n\n'
+                            'some text\n'
+                            'Fix 2017')
+            self.assertEqual(self.run_uut(email_dns_check=True), [])
+            self.assert_no_msgs()
+
+        # Test failing DNS lookup
+        with unittest.mock.patch('bears.vcs.git.GitCommitBear.is_email',
+                                 return_value=self.failing_object):
+            self.git_commit('Shortlog\n\n'
+                            'some text\n'
+                            'Fix 2017')
+            self.assertEqual(self.run_uut(email_dns_check=True),
+                             [dns_msg])
+
+        # Test for not running auth_email_check
+        self.assertEqual(self.run_uut(auth_email_check=False), [])
+        self.assert_no_msgs()
+
     @unittest.mock.patch('bears.vcs.git.GitCommitBear.run_shell_command',
                          return_value=('one-liner-message\n', ''))
     def test_pure_oneliner_message(self, patch):
-        self.assertEqual(self.run_uut(), [])
+        self.assertEqual(self.run_uut(auth_email_check=False), [])
         self.assert_no_msgs()
 
     def test_shortlog_checks_length(self):
@@ -286,6 +334,48 @@ class GitCommitBearTest(unittest.TestCase):
                         'CLOSE 2017')
         self.assertEqual(self.run_uut(
                              body_regex=r'TICKER\s*CLOSE\s+[1-9][0-9]*'), [])
+        self.assert_no_msgs()
+
+        # Testing invalid emails based on format only
+        self.git_commit('Shortlog\n\n'
+                        'invalid#!format!*!@E1&main*.com\n'
+                        'another.*invalid@&&&format**!..co\n'
+                        'Fix 2017')
+        message = 'Body contains these invalid emails:\n'
+        message += 'invalid#!format!*!@E1&main*.com - Invalid syntax\n'
+        message += 'another.*invalid@&&&format**!..co - Invalid syntax'
+
+        self.assertEqual(self.run_uut(), [message])
+
+        # Test successful DNS lookup
+        with unittest.mock.patch('bears.vcs.git.GitCommitBear.is_email',
+                                 return_value=self.passed_object):
+            self.git_commit('Shortlog\n\n'
+                            'validdomain@gmail.com\n'
+                            'validdomain2@yahoo.com\n'
+                            'Fix 2017')
+            self.assertEqual(self.run_uut(email_dns_check=True), [])
+            self.assert_no_msgs()
+
+        # Test failing DNS lookup
+        with unittest.mock.patch('bears.vcs.git.GitCommitBear.is_email',
+                                 return_value=self.failing_object):
+            self.git_commit('Shortlog\n\n'
+                            'invaliddomain@gggmail.com\n'
+                            'invaliddomain2@foofoofoofoo.com\n'
+                            'Fix 2017')
+            message = 'Body contains these invalid emails:\n'
+            message += 'invaliddomain@gggmail.com - Invalid domain\n'
+            message += 'invaliddomain2@foofoofoofoo.com - Invalid domain'
+            self.assertEqual(self.run_uut(auth_email_check=False,
+                                          email_dns_check=True), [message])
+
+        # Test with body_email_check set to False
+        self.git_commit('Shortlog\n\n'
+                        'invalid#!format!*!@email.com\n'
+                        'another.*invalid@format.co\n'
+                        'Fix 2017')
+        self.assertEqual(self.run_uut(body_email_check=False), [])
         self.assert_no_msgs()
 
     def test_check_issue_reference(self):
