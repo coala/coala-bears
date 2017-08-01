@@ -33,10 +33,10 @@ class RuboCopBear:
                     'convention': RESULT_SEVERITY.INFO}
 
     @staticmethod
-    def create_arguments(filename, file, config_file,
-    					 rubocop_config: str=''):
+    def create_arguments(filename, file, config_file, 
+                         rubocop_config: str=''):
         """
-      	:param rubocop_config: Path to a custom configuration file.
+        :param rubocop_config: Path to a custom configuration file.
         """
         args = ('--stdin', filename, '--format=json')
         if rubocop_config:
