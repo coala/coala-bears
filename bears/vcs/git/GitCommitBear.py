@@ -38,7 +38,6 @@ class GitCommitBear(GlobalBear):
                 self.section.get('shortlog_imperative_check', True)):
             nltk.download([
                 'punkt',
-                'maxent_treebank_pos_tagger',
                 'averaged_perceptron_tagger',
             ])
             type(self)._nltk_data_downloaded = True
