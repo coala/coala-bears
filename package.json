@@ -15,6 +15,7 @@
     "eslint": "~2",
     "eslint-plugin-import": "~1",
     "happiness": "~7.1.2",
+    "htmlhint": "~0.9.13",
     "jshint": "~2",
     "postcss-cli": "~2",
     "pug-lint": "~2.4.0",
