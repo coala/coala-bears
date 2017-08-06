@@ -101,8 +101,7 @@ class ApertiumLintBear:
         :param repeated_attributes_pardef:
             This issue is responsible for checking any repeated entries in
             the attributes associated with an entry in the parameter
-            definition section
-            n monodix files.
+            definition in monodix files.
         :param repeated_entries_pardef:
             This issue is responsible for detecting repeated entries in the
             parameter definition entries for a given paradigm in monodix files.
