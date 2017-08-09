@@ -14,7 +14,7 @@ from memento_client import MementoClient
 class MementoBear(LocalBear):
     DEFAULT_TIMEOUT = 15
     LANGUAGES = {'All'}
-    REQUIREMENTS = {PipRequirement('memento_client', '0.5.3')}
+    REQUIREMENTS = {PipRequirement('memento_client', '0.6.1')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
