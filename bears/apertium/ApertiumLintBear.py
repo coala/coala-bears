@@ -178,7 +178,7 @@ class ApertiumLintBear:
             attribute to be 'tl' in all the `<out>` tags.
         :param macro_names:
             This issue detects multiple def-macro names in transfer files.
-        :param defLabel_closed:
+        :param def_Label_closed:
             This function lints and reports if any other value has been used
             instead of the two valid ones: [true, false] in the closed
             attribute in `<def-label>` .
