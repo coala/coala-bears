@@ -151,19 +151,32 @@ class GitCommitBear(GlobalBear):
             **self.get_issue_checks_metadata().filter_parameters(kwargs))
 
     def check_auth_email(self, auth_email,
-                         email_dns_check: bool=False):
+                         email_dns_check: bool=False,
+                         allow_noreply: bool=False):
         """
         Checks validity of author's email
 
         :param email_dns_check:       If True, it will confirm the domain
                                       in author's email is valid.
+        :param allow_noreply:         If True, it will allow user to have
+                                      noreply emails.
         """
-        email_check = is_email(auth_email)
-        if email_dns_check and email_check:
-            email_check = is_email(auth_email, diagnose=True,
-                                   check_dns=True).ERROR_CODES
+        noreply_block = False
+        if not allow_noreply:
+            domain = auth_email[auth_email.index('@')+1:]
+            if 'noreply' in domain:
+                noreply_block = True
 
-        if type(email_check) is bool and not email_check:
+        if not noreply_block:
+            email_check = is_email(auth_email)
+            if email_dns_check and email_check:
+                email_check = is_email(auth_email, diagnose=True,
+                                       check_dns=True).ERROR_CODES
+        if noreply_block:
+            yield Result(self,
+                         'Commit\'s author are not allowed to use noreply '
+                         'emails')
+        elif type(email_check) is bool and not email_check:
             yield Result(self,
                          'Commit\'s author has syntactically wrong email.')
         elif email_dns_check and email_check:
@@ -261,7 +274,8 @@ class GitCommitBear(GlobalBear):
                    ignore_length_regex: typed_list(str)=(),
                    body_regex: str=None,
                    body_email_check: bool=True,
-                   email_dns_check: bool=False):
+                   email_dns_check: bool=False,
+                   allow_noreply: bool=False):
         """
         Checks the given commit body.
 
@@ -278,6 +292,8 @@ class GitCommitBear(GlobalBear):
                                     format or not.
         :param email_dns_check:     If True, it checks if domains in the emails
                                     are valid or not.
+        :param allow_noreply:       If True, it will allow user to have
+                                    noreply emails.
         """
         if len(body) == 0:
             if force_body:
@@ -307,11 +323,21 @@ class GitCommitBear(GlobalBear):
             invalid_emails = []
             for line in body:
                 for email in re.findall(r'\S+@\S+\.\S+', line):
-                    email_check = is_email(email)
-                    if email_dns_check and email_check:
-                        email_check = is_email(email, diagnose=True,
-                                               check_dns=True).ERROR_CODES
-                    if type(email_check) is bool and not email_check:
+                    noreply_block = False
+                    if not allow_noreply:
+                        domain = email[email.index('@')+1:]
+                        if 'noreply' in domain:
+                            noreply_block = True
+
+                    if not noreply_block:
+                        email_check = is_email(email)
+                        if email_dns_check and email_check:
+                            email_check = is_email(email,
+                                                   diagnose=True,
+                                                   check_dns=True).ERROR_CODES
+                    if noreply_block:
+                        invalid_emails.append(email + ' - Noreply email')
+                    elif type(email_check) is bool and not email_check:
                         invalid_emails.append(email + ' - Invalid syntax')
                     elif email_dns_check and email_check:
                         invalid_emails.append(email + ' - Invalid domain')

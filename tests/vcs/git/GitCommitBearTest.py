@@ -131,6 +131,8 @@ class GitCommitBearTest(unittest.TestCase):
     def test_auth_email_checks(self):
         syntax_msg = 'Commit\'s author has syntactically wrong email.'
         dns_msg = 'Commit\'s author has email using invalid domain.'
+        noreply_msg = 'Commit\'s author are not allowed to use noreply'
+        noreply_msg += ' emails'
         # Setting invalid user.email
         self.run_git_command('config',
                              'user.email invalid#!format!*!@ema!*8.l.com')
@@ -141,6 +143,18 @@ class GitCommitBearTest(unittest.TestCase):
                         'Fix 2017')
         self.assertEqual(self.run_uut(),
                          [syntax_msg])
+
+        # Setting a noreply email
+        self.run_git_command('config',
+                             'user.email user@noreply.github.com')
+        # noreply check
+        self.git_commit('Shortlog\n\n'
+                        'some text\n'
+                        'Fix 2017')
+        self.assertEqual(self.run_uut(),
+                         [noreply_msg])
+        # allow noreply
+        self.assertEqual(self.run_uut(allow_noreply=True), [])
 
         # Setting back to original configuration
         self.run_git_command('config', 'user.email coala@coala.io')
@@ -335,6 +349,27 @@ class GitCommitBearTest(unittest.TestCase):
         self.assertEqual(self.run_uut(
                              body_regex=r'TICKER\s*CLOSE\s+[1-9][0-9]*'), [])
         self.assert_no_msgs()
+
+        # Testing noreply emails
+        self.git_commit('Shortlog\n\n'
+                        'user@noreply.domain.com.com\n'
+                        'someemail@noreply.user.co\n'
+                        'someemail@valid.com\n'
+                        'Fix 2017')
+        message = 'Body contains these invalid emails:\n'
+        message += 'user@noreply.domain.com.com - Noreply email\n'
+        message += 'someemail@noreply.user.co - Noreply email'
+
+        self.assertEqual(self.run_uut(), [message])
+
+        # Testing allow noreply
+        self.git_commit('Shortlog\n\n'
+                        'user@noreply.domain.com.com\n'
+                        'someemail@noreply.user.co\n'
+                        'someemail@valid.com\n'
+                        'Fix 2017')
+
+        self.assertEqual(self.run_uut(allow_noreply=True), [])
 
         # Testing invalid emails based on format only
         self.git_commit('Shortlog\n\n'
