@@ -1,4 +1,5 @@
 from queue import Queue
+from unittest.mock import patch
 
 from bears.elm.ElmLintBear import ElmLintBear
 from coalib.results.Result import Result
@@ -143,3 +144,15 @@ class ElmLintBearTest(LocalBearTestHelper):
                 [],
                 filename=fname,
                 create_tempfile=False)
+
+    @patch('bears.elm.ElmLintBear.which')
+    def test_check_prerequisites(self, mock_method):
+        mock_method.return_value = None
+        self.assertEqual(
+            ElmLintBear.check_prerequisites(),
+            'elm-format is missing. Download it from '
+            'https://github.com/avh4/elm-format/blob/master/README.md'
+            '#for-elm-018 and put it into your PATH.')
+
+        mock_method.return_value = 'path/to/elm-format'
+        self.assertEqual(ElmLintBear.check_prerequisites(), True)

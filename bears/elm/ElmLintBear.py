@@ -24,7 +24,7 @@ class ElmLintBear:
     CAN_DETECT = {'Syntax', 'Formatting'}
 
     @classmethod
-    def check_prerequisites(cls):  # pragma: no cover
+    def check_prerequisites(cls):
         if which('elm-format') is None:
             return ('elm-format is missing. Download it from '
                     'https://github.com/avh4/elm-format/blob/master/README.md'
