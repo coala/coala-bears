@@ -1,4 +1,4 @@
-from coalib.bearlib.languages.documentation.DocumentationComment import (
+ from coalib.bearlib.languages.documentation.DocumentationComment import (
     DocumentationComment)
 from coalib.bearlib.languages.documentation.DocstyleDefinition import (
     DocstyleDefinition)
