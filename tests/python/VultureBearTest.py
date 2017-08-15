@@ -1,3 +1,4 @@
+import os
 import unittest
 from queue import Queue
 from textwrap import dedent
@@ -7,6 +8,15 @@ from coala_utils.ContextManagers import prepare_file
 from coalib.settings.Section import Section
 
 from bears.python.VultureBear import VultureBear
+
+
+def get_testfile_path(name):
+    return os.path.join(os.path.dirname(__file__), 'vulture_test_files', name)
+
+
+def load_testfile(name):
+    with open(get_testfile_path(name)) as f:
+        return f.read()
 
 
 class VultureBearTest(unittest.TestCase):
@@ -42,85 +52,59 @@ class VultureBearTest(unittest.TestCase):
 
             return list(self.uut.run())
 
+    def verify_results(self, test_file, expected):
+        detected = dict((item.message, (item.affected_code[0].start.line,
+                                        item.affected_code[0].end.line,
+                                        item.confidence))
+                        for item in self.get_results(load_testfile(test_file)))
+        self.assertEqual(detected, expected)
+
     def test_used_variable(self):
-        good_file = """
-        x = 2
-        print(x)
-        """
-        self.assertEqual(len(self.get_results(good_file)), 0)
+        self.verify_results('used_variable.py', {})
 
     def test_unused_variable(self):
-        bad_file = """
-        b = 10
-        a = 12
-        print(a)
-        """
-        self.assertEqual(len(self.get_results(bad_file)), 1)
+        self.verify_results('unused_variable.py', {
+            "unused variable 'b'": (1, 1, 60)
+        })
 
-    def test_unused_parameter(self):
-        bad_file = """
-        def test(a):
-            return 1
+    def test_unused_arg(self):
+        self.verify_results('unused_arg.py', {
+            "unused variable 'a'": (1, 1, 100)
+        })
 
-        test(1)
-        """
-        self.assertEqual(len(self.get_results(bad_file)), 1)
+    def test_import(self):
+        self.verify_results('unused_import.py', {
+            "unused import 'subprocess'": (2, 2, 90)
+        })
 
-    def test_unused_function(self):
-        bad_file = """
-        def test(a):
-            return a
-        """
-        self.assertEqual(len(self.get_results(bad_file)), 1)
+    def test_class(self):
+        self.verify_results('unused_class.py', {
+            "unused class 'Name'": (1, 5, 60),
+            "unused attribute 'name'": (4, 4, 60),
+            "unused attribute 'surname'": (5, 5, 60)
+        })
 
-    def test_import_confidence(self):
-        bad_file = """
-        from os import *
-        import subprocess
-        """
-        result = self.get_results(bad_file)
-        self.assertEqual(len(result), 1)
-        self.assertEqual(result[0].confidence, 95)
+    def test_function(self):
+        self.verify_results('unused_function.py', {
+            "unused function 'hello'": (1, 2, 60)
+        })
 
-    def test_class_confidence(self):
-        bad_file = """
-        class Name:
+    def test_property(self):
+        self.verify_results('unused_property.py', {
+            "unused property 'prop'": (3, 5, 60)
+        })
 
-            def __init__(self, name):
-                self.name = name
-                self.sur_name = 'Something'
+    def test_unsatisfiable_while(self):
+        self.verify_results('unsatisfiable_while.py', {
+            "unsatisfiable 'while' condition": (5, 7, 100)
+        })
 
-        """
-        result = self.get_results(bad_file)
-        self.assertEqual(len(result), 2)
-        self.assertEqual(result[0].confidence, 70)
+    def test_unsatisfiable_if(self):
+        self.verify_results('unsatisfiable_if.py', {
+            "unsatisfiable 'if' condition": (1, 2, 100)
+        })
 
-    def test_func_confidence(self):
-        bad_file = """
-        def hello(name):
-            print('Hello World')
-        """
-        result = self.get_results(bad_file)
-        self.assertEqual(len(result), 2)
-        self.assertEqual(result[0].confidence, 70)
-
-    def test_prop_confidence(self):
-        bad_file = """
-        class Bar(object):
-            @property
-            def prop(self):
-                pass
-
-        c = Bar()
-        """
-        result = self.get_results(bad_file)
-        self.assertEqual(len(result), 2)
-        self.assertEqual(result[0].confidence, 70)
-
-    def test_var_confidence(self):
-        bad_file = """
-        name = 'Foo Bar'
-        """
-        result = self.get_results(bad_file)
-        self.assertEqual(len(result), 1)
-        self.assertEqual(result[0].confidence, 70)
+    def test_unreachable_else(self):
+        self.verify_results('unreachable_else.py', {
+            "unreachable 'else' block": (3, 6, 100)
+        })
