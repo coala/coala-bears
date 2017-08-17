@@ -1,4 +1,4 @@
-from coalib.bearlib.languages.documentation.DocumentationComment import (
+ from coalib.bearlib.languages.documentation.DocumentationComment import (
     DocumentationComment)
 from coalib.bearlib.languages.documentation.DocstyleDefinition import (
     DocstyleDefinition)
@@ -111,16 +111,21 @@ class DocumentationStyleBear(DocBaseClass, LocalBear):
                 also 4 space indent
                 following lines are also 4 space indented
 
-        :param language: The programming language of the file(s).
-        :param docstyle: The docstyle to use. For example ``default`` or
-                         ``doxygen``. Docstyles are language dependent, meaning
-                         not every language is supported by a certain docstyle.
-        :param allow_missing_func_desc: When set ``True`` this will allow
-                         functions with missing descriptions, allowing
-                         functions to start with params.
-        :param indent_size: Number of spaces per indentation level.
-        :param expand_one_liners: When set ``True`` this will expand one liner
-                         docstrings.
+        :param language: 
+	    The programming language of the file(s).
+        :param docstyle: 
+	    The docstyle to use. For example ``default`` or
+            ``doxygen``. Docstyles are language dependent, meaning
+            not every language is supported by a certain docstyle.
+        :param allow_missing_func_desc: 
+	    When set ``True`` this will allow
+            functions with missing descriptions, allowing
+            functions to start with params.
+        :param indent_size: 
+	    Number of spaces per indentation level.
+        :param expand_one_liners: 
+	    When set ``True`` this will expand one liner
+            docstrings.
         """
 
         for doc_comment in self.extract(file, language, docstyle):
