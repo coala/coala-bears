@@ -1,4 +1,5 @@
 from queue import Queue
+from textwrap import dedent
 import os.path
 import unittest
 
@@ -47,6 +48,24 @@ def test(test_file, expected_file, optional_setting=None):
     return test_function
 
 
+def test_MalformedComment(test_data, message, optional_setting=None):
+    def test_MalformedComment_function(self):
+        arguments = {'language': 'python', 'docstyle': 'default'}
+        if optional_setting:
+            arguments.update(optional_setting)
+        section = Section('test-section')
+        for key, value in arguments.items():
+            section[key] = value
+        with execute_bear(
+                DocumentationStyleBear(section, Queue()),
+                'dummy_file',
+                test_data,
+                **arguments) as results:
+            self.assertEqual(results[0].message, message)
+
+    return test_MalformedComment_function
+
+
 class DocumentationStyleBearTest(unittest.TestCase):
     test_bad1 = test('bad_file.py.test', 'bad_file.py.test.correct')
     test_bad2 = test('bad_file2.py.test', 'bad_file2.py.test.correct',
@@ -59,3 +78,20 @@ class DocumentationStyleBearTest(unittest.TestCase):
     test_good2 = test('good_file2.py.test', 'good_file2.py.test')
     test_good3 = test('good_file3.py.test', 'good_file3.py.test',
                       {'allow_missing_func_desc': 'True'})
+
+    test_malformed_comment_python = test_MalformedComment(
+        ['"""\n',
+         'This will yield MalformedComment'],
+        dedent("""\
+             Please check the docstring for faulty markers. A starting
+             marker has been found, but no instance of DocComment is
+             returned."""))
+
+    test_malformed_comment_java = test_MalformedComment(
+        ['\n',
+         '/** This will yield MalformedComment\n'],
+        dedent("""\
+             Please check the docstring for faulty markers. A starting
+             marker has been found, but no instance of DocComment is
+             returned."""),
+        {'language': 'java'})

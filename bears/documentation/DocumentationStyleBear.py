@@ -1,5 +1,5 @@
 from coalib.bearlib.languages.documentation.DocumentationComment import (
-    DocumentationComment)
+    DocumentationComment, MalformedComment)
 from coalib.bearlib.languages.documentation.DocstyleDefinition import (
     DocstyleDefinition)
 from coalib.bearlib.languages.documentation.DocBaseClass import (
@@ -124,22 +124,29 @@ class DocumentationStyleBear(DocBaseClass, LocalBear):
         """
 
         for doc_comment in self.extract(file, language, docstyle):
-            parsed = doc_comment.parse()
-
-            (new_metadata, warning_desc) = self.process_documentation(
-                                parsed, allow_missing_func_desc, indent_size,
-                                expand_one_liners)
-
-            new_comment = DocumentationComment.from_metadata(
-                new_metadata, doc_comment.docstyle_definition,
-                doc_comment.marker, doc_comment.indent, doc_comment.position)
-
-            if new_comment != doc_comment:
-                # Something changed, let's apply a result.
-                diff = self.generate_diff(file, doc_comment, new_comment)
-
-                yield Result(
+            if isinstance(doc_comment, MalformedComment):
+                yield Result.from_values(
                     origin=self,
-                    message=warning_desc,
-                    affected_code=(diff.range(filename),),
-                    diffs={filename: diff})
+                    message=doc_comment.message,
+                    file=filename,
+                    line=doc_comment.line + 1)
+            else:
+                parsed = doc_comment.parse()
+
+                (new_metadata, warning_desc) = self.process_documentation(
+                            parsed, allow_missing_func_desc, indent_size,
+                            expand_one_liners)
+
+                new_comment = DocumentationComment.from_metadata(
+                    new_metadata, doc_comment.docstyle_definition,
+                    doc_comment.marker, doc_comment.indent,
+                    doc_comment.position)
+
+                if new_comment != doc_comment:
+                    # Something changed, let's apply a result.
+                    diff = self.generate_diff(file, doc_comment, new_comment)
+                    yield Result(
+                        origin=self,
+                        message=warning_desc,
+                        affected_code=(diff.range(filename),),
+                        diffs={filename: diff})
