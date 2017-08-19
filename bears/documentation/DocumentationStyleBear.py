@@ -21,15 +21,15 @@ class DocumentationStyleBear(DocBaseClass, LocalBear):
     CAN_FIX = {'Documentation'}
 
     def process_documentation(self,
-                              parsed,
+                              doc_comment: DocumentationComment,
                               allow_missing_func_desc: str=False,
                               indent_size: int=4,
                               expand_one_liners: str=False):
         """
         This fixes the parsed documentation comment.
 
-        :param parsed:
-            Contains parsed documentation comment.
+        :param doc_comment:
+            Contains instance of DocumentationComment.
         :param allow_missing_func_desc:
             When set ``True`` this will allow functions with missing
             descriptions, allowing functions to start with params.
@@ -40,6 +40,7 @@ class DocumentationStyleBear(DocBaseClass, LocalBear):
         :return:
             A tuple of fixed parsed documentation comment and warning_desc.
         """
+        parsed = doc_comment.parse()
         # Assuming that the first element is always the only main
         # description.
         metadata = iter(parsed)
@@ -92,7 +93,36 @@ class DocumentationStyleBear(DocBaseClass, LocalBear):
             new_desc = new_desc.rstrip() + '\n'
 
             new_metadata.append(m._replace(desc=new_desc.lstrip(' ')))
-        return (new_metadata, warning_desc)
+
+        new_comment = DocumentationComment.from_metadata(
+            new_metadata, doc_comment.docstyle_definition,
+            doc_comment.marker, doc_comment.indent, doc_comment.position)
+
+        # Instantiate default padding.
+        class_padding = doc_comment.docstyle_definition.class_padding
+        function_padding = doc_comment.docstyle_definition.function_padding
+        # Check if default padding exist in the coalang file.
+        if (class_padding != DocstyleDefinition.ClassPadding('', '') and
+                function_padding != DocstyleDefinition.FunctionPadding(
+                    '', '')):
+            # Check docstring_type
+            if doc_comment.docstring_type == 'class':
+                new_comment.top_padding = class_padding.top_padding
+                new_comment.bottom_padding = class_padding.bottom_padding
+            elif doc_comment.docstring_type == 'function':
+                new_comment.top_padding = function_padding.top_padding
+                new_comment.bottom_padding = function_padding.bottom_padding
+            else:
+                # Keep paddings as they are originally.
+                new_comment.top_padding = doc_comment.top_padding
+                new_comment.bottom_padding = doc_comment.bottom_padding
+        else:
+            # If there's no default paddings defined. Keep padding as
+            # they are originally.
+            new_comment.top_padding = doc_comment.top_padding
+            new_comment.bottom_padding = doc_comment.bottom_padding
+
+        return (new_comment, warning_desc)
 
     def run(self, filename, file, language: str,
             docstyle: str='default', allow_missing_func_desc: str=False,
@@ -131,18 +161,15 @@ class DocumentationStyleBear(DocBaseClass, LocalBear):
                     file=filename,
                     line=doc_comment.line + 1)
             else:
-                parsed = doc_comment.parse()
+                (new_comment, warning_desc) = self.process_documentation(
+                                doc_comment, allow_missing_func_desc,
+                                indent_size, expand_one_liners)
 
-                (new_metadata, warning_desc) = self.process_documentation(
-                            parsed, allow_missing_func_desc, indent_size,
-                            expand_one_liners)
-
-                new_comment = DocumentationComment.from_metadata(
-                    new_metadata, doc_comment.docstyle_definition,
-                    doc_comment.marker, doc_comment.indent,
-                    doc_comment.position)
-
-                if new_comment != doc_comment:
+                # Cache cleared so a fresh docstring is assembled
+                doc_comment.assemble.cache_clear()
+                # Assembled docstring check, because paddings are only
+                # amended after assemble()
+                if new_comment.assemble() != doc_comment.assemble():
                     # Something changed, let's apply a result.
                     diff = self.generate_diff(file, doc_comment, new_comment)
                     yield Result(

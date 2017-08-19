@@ -1,0 +1,15 @@
+class HelloWorld {
+
+   /**
+    *Java docstyle test.
+    *There's no official standard for how paddings are in java.
+    *Hence, in this case paddings are preserved as original.
+    *
+    *@param  name the name to which to say hello
+    *@raises  IOException throws IOException
+    *@return      the concatenated string
+    */
+    public String sayHello(String name) throws IOException {
+        return "Hello, " + name;
+    }
+}

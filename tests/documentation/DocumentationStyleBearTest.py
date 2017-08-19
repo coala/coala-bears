@@ -78,6 +78,8 @@ class DocumentationStyleBearTest(unittest.TestCase):
     test_good2 = test('good_file2.py.test', 'good_file2.py.test')
     test_good3 = test('good_file3.py.test', 'good_file3.py.test',
                       {'allow_missing_func_desc': 'True'})
+    test_bad_java = test('bad_file.java.test', 'bad_file.java.test.correct',
+                         {'language': 'java'})
 
     test_malformed_comment_python = test_MalformedComment(
         ['"""\n',

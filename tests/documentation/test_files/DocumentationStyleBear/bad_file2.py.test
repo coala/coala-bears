@@ -14,6 +14,7 @@ def docstring_testcase(dummy):
 def docstring_singleliner():
     """ This is singleliner docstring. """
 
+    return None
 
 def docstring_inline():
     """

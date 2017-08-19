@@ -4,5 +4,6 @@ def docstring_missing_description(dummy):
         a function starting with `param`
         in this case allow_missing_func_desc = True
     """
+    return None
 
 """This is one-liner docstring"""

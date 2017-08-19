@@ -8,5 +8,24 @@ def docstring_missing_descriptions(a, b, x):
     :param x:
     :return:
     """
-
     return a * x + b
+
+
+class docstring_class_improper_paddings(dummy):
+    """
+    Docstring has improper paddings. `class` type docstrings
+    should be followed by 1 blank line at the bottom.
+
+    :param dummy:
+        dummy description.
+    """
+
+    def docstring_function_improper_paddings:
+        """
+        Docstring has improper paddings. `function` type docstrings
+        should never be followed by any blank lines.
+
+        :return:
+            None
+        """
+        return None

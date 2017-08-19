@@ -30,9 +30,11 @@ class docstring_if_indented():
             """
             This is `if` indented block function.
             """
+            return None
     else:
         def hello_venus(self):
             """This is `if` indented block function."""
+            return None
 
 
 def docstring_inner_function(dummy):
