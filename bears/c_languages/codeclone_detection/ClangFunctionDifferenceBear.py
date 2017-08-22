@@ -92,7 +92,7 @@ class ClangFunctionDifferenceBear(GlobalBear):
             poly_postprocessing: bool=True,
             exp_postprocessing: bool=False,
             extra_include_paths: path_list=()):
-        '''
+        """
         Retrieves similarities for code clone detection. Those can be reused in
         another bear to produce results.
 
@@ -129,7 +129,7 @@ class ClangFunctionDifferenceBear(GlobalBear):
         :param exp_postprocessing:  If set to true, the difference value of big
                                     function pairs will be reduced using an
                                     exponential approach.
-        '''
+        """
         self.debug('Using the following counting conditions:')
         for key, val in counting_conditions.items():
             self.debug(' *', key.__name__, '(weighting: {})'.format(val))
