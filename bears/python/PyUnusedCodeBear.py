@@ -22,7 +22,7 @@ class PyUnusedCodeBear(
         languages=['Python'],
         ):
     LANGUAGES = {'Python', 'Python 2', 'Python 3'}
-    REQUIREMENTS = {PipRequirement('autoflake', '0.6.6')}
+    REQUIREMENTS = {PipRequirement('autoflake', '0.7')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
