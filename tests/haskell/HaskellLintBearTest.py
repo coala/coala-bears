@@ -49,9 +49,9 @@ class HaskellLintBearTest(LocalBearTestHelper):
         self.uut = HaskellLintBear(self.section, Queue())
 
     def test_valid(self):
-        self.check_validity(self.uut, good_single_line_file, valid=True,
+        self.check_validity(self.uut, good_single_line_file,
                             tempfile_kwargs={'suffix': '.hs'})
-        self.check_validity(self.uut, good_multiple_line_file, valid=True,
+        self.check_validity(self.uut, good_multiple_line_file,
                             tempfile_kwargs={'suffix': '.hs'})
 
     def test_invalid(self):

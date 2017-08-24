@@ -63,12 +63,11 @@ class GhcModBearTest(LocalBearTestHelper):
         self.uut = GhcModBear(self.section, Queue())
 
     def test_valid(self):
-        self.check_validity(self.uut, hello_world_file, valid=True,
+        self.check_validity(self.uut, hello_world_file,
                             tempfile_kwargs={'suffix': '.hs'})
-        self.check_validity(self.uut, count_lines, valid=True,
+        self.check_validity(self.uut, count_lines,
                             tempfile_kwargs={'suffix': '.hs'})
         self.check_validity(self.uut, last_but_one_list,
-                            valid=True,
                             tempfile_kwargs={'suffix': '.hs'})
 
     def test_invalid(self):
