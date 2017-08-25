@@ -15,7 +15,7 @@ class URLBearTestPrerequisites(unittest.TestCase):
     def test_check_prerequisites(self):
         with requests_mock.Mocker() as m:
             m.add_matcher(custom_matcher)
-            self.assertTrue(URLBear.check_prerequisites())
+            self.assertEqual(URLBear.check_prerequisites(), True)
 
             m.head(URLBear.check_connection_url,
                    exc=requests.exceptions.RequestException)
