@@ -2,6 +2,7 @@ from queue import Queue
 from textwrap import dedent
 
 from bears.python.MypyBear import MypyBear
+from coalib.bearlib.languages import Language
 from coalib.testing.BearTestHelper import generate_skip_decorator
 from coalib.testing.LocalBearTestHelper import LocalBearTestHelper
 from coalib.settings.Section import Section
@@ -37,6 +38,7 @@ class MypyBearTest(LocalBearTestHelper):
         self.check_invalidity(self.uut,
                               ['print 123'])
         self.section.append(Setting('language', 'Python 2'))
+        self.section.language = Language['Python 2']
         self.check_validity(self.uut,
                             ['print 123'])
 
@@ -50,7 +52,8 @@ class MypyBearTest(LocalBearTestHelper):
                             ['print 123'])
 
     def test_bad_language(self):
-        self.section.append(Setting('language', 'Piet'))
+        self.section.append(Setting('language', 'Java'))
+        self.section.language = Language['Java']
         self.check_validity(self.uut,
                             ['1 + 1'])
         while not self.queue.empty():

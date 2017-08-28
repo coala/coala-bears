@@ -3,6 +3,7 @@ import textwrap
 import sys
 
 from coalib.bearlib.abstractions.Linter import linter
+from coalib.settings.Setting import language
 from dependency_management.requirements.PipRequirement import PipRequirement
 
 
@@ -106,7 +107,7 @@ class MypyBear:
 
     @add_param_docs(FLAG_MAP)
     def create_arguments(self, filename, file, config_file,
-                         language: str='Python 3',
+                         language: language=language('Python 3'),
                          python_version: str=None,
                          allow_untyped_functions: bool=True,
                          allow_untyped_calls: bool=True,
@@ -120,9 +121,9 @@ class MypyBear:
             Set the specific Python version, e.g. ``3.5``.
         """
         args = ['-m', 'mypy']
-        if language.lower() == 'python 2':
+        if 'python 2' in language:
             args.append('--py2')
-        elif language.lower() not in ('python 3', 'python'):
+        elif 'python 3' not in language:
             # Ideally, this would fail the check, but there's no good
             # way to fail from create_arguments.
             # See https://github.com/coala/coala/issues/2573
