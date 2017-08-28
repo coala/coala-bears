@@ -5,12 +5,13 @@ from coalib.bears.GlobalBear import GlobalBear
 from coalib.misc.Shell import run_shell_command
 from coalib.results.Result import Result
 from coalib.results.SourceRange import SourceRange
+from coalib.settings.Setting import language
 
 
 class CPDBear(GlobalBear):
 
     language_dict = {'C#': 'cs',
-                     'C++': 'cpp',
+                     'CPP': 'cpp',
                      'JavaScript': 'ecmascript',
                      'Fortran': 'fortran',
                      'Go': 'go',
@@ -20,16 +21,13 @@ class CPDBear(GlobalBear):
                      'Octave': 'matlab',
                      'Objective-C': 'objectivec',
                      'PHP': 'php',
-                     'PL/SQL': 'plsql',
+                     'PLSQL': 'plsql',
                      'Python': 'python',
                      'Python 2': 'python',
                      'Python 3': 'python',
                      'Ruby': 'ruby',
                      'Scala': 'scala',
                      'Swift': 'swift'}
-
-    lowered_lang_dict = {key.lower(): value
-                         for key, value in language_dict.items()}
 
     LANGUAGES = set(language_dict.keys())
     AUTHORS = {'The coala developers'}
@@ -47,7 +45,7 @@ class CPDBear(GlobalBear):
         else:
             return True
 
-    def run(self, language: str, minimum_tokens: int=20,
+    def run(self, language: language, minimum_tokens: int=20,
             ignore_annotations: bool=False, ignore_identifiers: bool=True,
             ignore_literals: bool=False, ignore_usings: bool=False,
             skip_duplicate_files: bool=True):
@@ -74,9 +72,11 @@ class CPDBear(GlobalBear):
             Ignore multiple copies of files of the same name and length in
             comparison.
         """
-        language = language.lower()
-
-        if language not in self.lowered_lang_dict:
+        for supported_lang in self.language_dict:
+            if supported_lang in language:
+                cpd_language = self.language_dict[supported_lang]
+                break
+        else:
             self.err('This bear does not support files with the extension '
                      "'{}'.".format(language))
             return
@@ -92,7 +92,7 @@ class CPDBear(GlobalBear):
         executable = which('pmd') or which('run.sh')
         arguments = ('bash', executable, 'cpd', '--skip-lexical-errors',
                      '--minimum-tokens', str(minimum_tokens),
-                     '--language', self.lowered_lang_dict[language],
+                     '--language', cpd_language,
                      '--files', files,
                      '--format', 'xml')
 
