@@ -13,8 +13,8 @@ class PythonPackageInitBear(GlobalBear):
 
     def run(self):
         """
-        Looks for missing __init__.py files in directories containing python
-        files.
+        Looks for missing __init__.py files in directories containing
+        python files.
         """
         dirs = {os.path.split(filename)[0]
                 for filename in self.file_dict.keys()
