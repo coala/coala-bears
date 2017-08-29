@@ -15,13 +15,14 @@ class URLBearTestPrerequisites(unittest.TestCase):
     def test_check_prerequisites(self):
         with requests_mock.Mocker() as m:
             m.add_matcher(custom_matcher)
-            self.assertTrue(URLBear.check_prerequisites())
+            self.assertEqual(URLBear.check_prerequisites(),
+                             'You are not connected to the internet.')
 
             m.head(URLBear.check_connection_url,
                    exc=requests.exceptions.RequestException)
 
-            self.assertTrue(URLBear.check_prerequisites() ==
-                            'You are not connected to the internet.')
+            self.assertEqual(URLBear.check_prerequisites(),
+                             'You are not connected to the internet.')
 
 
 class URLBearTest(unittest.TestCase):
