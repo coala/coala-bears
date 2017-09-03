@@ -38,7 +38,7 @@ class DocumentationStyleBear(DocBaseClass, LocalBear):
         :param expand_one_liners:
             When set ``True`` this will expand one liner docstrings.
         :return:
-            An instance of DocumentationComment.
+            An instance of a processed/fixed DocumentationComment.
         """
         parsed = doc_comment.parse()
         # Assuming that the first element is always the only main
