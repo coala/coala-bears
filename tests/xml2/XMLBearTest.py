@@ -3,6 +3,7 @@ import unittest
 
 from queue import Queue
 from bears.xml2.XMLBear import XMLBear
+from coala_utils.string_processing.Core import escape
 from coalib.testing.BearTestHelper import generate_skip_decorator
 from coalib.testing.LocalBearTestHelper import verify_local_bear, execute_bear
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
@@ -66,14 +67,14 @@ XMLBearSchemaTest = verify_local_bear(
     XMLBear,
     valid_files=(valid_xml_path,),
     invalid_files=(invalid_xml_schema,),
-    settings={'xml_schema': schema_file},
+    settings={'xml_schema': escape(schema_file, '\\')},
     tempfile_kwargs={'suffix': '.xml'})
 
 XMLBearDTDPathTest = verify_local_bear(
     XMLBear,
     valid_files=(valid_xml_path,),
     invalid_files=(invalid_xml_dtd,),
-    settings={'xml_dtd': dtd_file},
+    settings={'xml_dtd': escape(dtd_file, '\\')},
     tempfile_kwargs={'suffix': '.xml'})
 
 XMLBearDTDUrlTest = verify_local_bear(
