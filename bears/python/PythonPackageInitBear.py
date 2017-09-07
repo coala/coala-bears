@@ -5,9 +5,6 @@ from coalib.bears.GlobalBear import GlobalBear
 
 
 class PythonPackageInitBear(GlobalBear):
-    """
-    Looks for missing __init__.py files in directories containing python files.
-    """
 
     LANGUAGES = {'Python', 'Python 3', 'Python 2'}
     AUTHORS = {'The coala developers'}
@@ -15,6 +12,10 @@ class PythonPackageInitBear(GlobalBear):
     LICENSE = 'AGPL-3.0'
 
     def run(self):
+        """
+        Looks for missing __init__.py files in directories
+        containing python files.
+        """
         dirs = {os.path.split(filename)[0]
                 for filename in self.file_dict.keys()
                 if filename.endswith('.py')}
