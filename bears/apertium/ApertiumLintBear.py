@@ -193,7 +193,7 @@ class ApertiumLintBear:
             binary values, 'yes' or 'no'. This function is responsible for
             making sure that no other value is used for the same.
         :param repeated_program:
-            Every modes file consits of various programs and there is always a
+            Every modes file consists of various programs and there is always a
             chance that a certain program may unintentionally get repeated.
         :param validate_program:
             This function validates every program mentioned in the modes file.
@@ -217,7 +217,7 @@ class ApertiumLintBear:
                    'paradigmNames': {'message': 'Warning : Improper paradigm '
                                      'name found :',
                                      'enable': paradigm_names},
-                   'rTagData': {'message': 'Warning : Inconsitency in <r> '
+                   'rTagData': {'message': 'Warning : Inconsistency in <r> '
                                 'text for pardef :',
                                 'enable': r_tag_data},
                    'repeatedAttributesPardef': {'message': 'Warning : Repeated'
