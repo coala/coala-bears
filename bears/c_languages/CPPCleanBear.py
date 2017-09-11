@@ -24,4 +24,4 @@ class CPPCleanBear:
     @staticmethod
     def create_arguments(filename, file, config_file, include_path: str=''):
         return ('--include-path=' + include_path,
-                    filename)
+                filename)
