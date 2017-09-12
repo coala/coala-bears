@@ -1,5 +1,6 @@
 from coalib.bearlib.abstractions.Linter import linter
 from dependency_management.requirements.PipRequirement import PipRequirement
+from coalib.settings.Setting import typed_list
 
 
 @linter(executable='cppclean',
@@ -22,5 +23,13 @@ class CPPCleanBear:
     CAN_DETECT = {'Smell', 'Unused Code', 'Security'}
 
     @staticmethod
-    def create_arguments(filename, file, config_file):
-        return filename,
+    def create_arguments(filename,
+                         file,
+                         config_file,
+                         include_paths: typed_list(str)=()):
+        args = [filename]
+        for include_path in include_paths:
+            args.append('--include-path')
+            args.append(include_path)
+
+        return args
