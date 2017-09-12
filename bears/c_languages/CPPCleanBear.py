@@ -22,5 +22,6 @@ class CPPCleanBear:
     CAN_DETECT = {'Smell', 'Unused Code', 'Security'}
 
     @staticmethod
-    def create_arguments(filename, file, config_file):
-        return filename,
+    def create_arguments(filename, file, config_file, include_path: str=''):
+        return ('--include-path=' + include_path,
+                filename)
