@@ -8,6 +8,7 @@ from coalib.testing.LocalBearTestHelper import verify_local_bear, execute_bear
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.settings.Section import Section
 from coala_utils.ContextManagers import prepare_file
+from coala_utils.string_processing import escape
 
 
 def get_testfile_path(filename):
@@ -63,14 +64,14 @@ XMLBearSchemaTest = verify_local_bear(
     XMLBear,
     valid_files=(valid_xml_path,),
     invalid_files=(invalid_xml_schema,),
-    settings={'xml_schema': schema_file_path},
+    settings={'xml_schema': escape(schema_file_path, '\\')},
     tempfile_kwargs={'suffix': '.xml'})
 
 XMLBearDTDPathTest = verify_local_bear(
     XMLBear,
     valid_files=(valid_xml_path,),
     invalid_files=(invalid_xml_dtd,),
-    settings={'xml_dtd': dtd_file_path},
+    settings={'xml_dtd': escape(dtd_file_path, '\\')},
     tempfile_kwargs={'suffix': '.xml'})
 
 XMLBearDTDUrlTest = verify_local_bear(
@@ -84,7 +85,7 @@ XMLBearRelaxNGTest = verify_local_bear(
     XMLBear,
     valid_files=(valid_xml_path,),
     invalid_files=(invalid_xml_relaxng,),
-    settings={'xml_relaxng': relaxng_file_path},
+    settings={'xml_relaxng': escape(relaxng_file_path, '\\')},
     tempfile_kwargs={'suffix': '.xml'})
 
 
