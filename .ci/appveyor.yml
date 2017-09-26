@@ -59,6 +59,7 @@ test_script:
   # Clang DLLs x64 were nowadays installed, but the x64 version hangs, so we
   # exclude according tests. See https://github.com/appveyor/ci/issues/495 and
   # https://github.com/appveyor/ci/issues/688
+  - xmllint --version
   - >
     "%CMD_IN_ENV% python -m pytest
     --cov -k "not ClangASTPrintBear and not ClangCloneDetectionBear and

@@ -8,12 +8,17 @@ from coalib.testing.LocalBearTestHelper import verify_local_bear, execute_bear
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.settings.Section import Section
 from coala_utils.ContextManagers import prepare_file
+from coala_utils.string_processing import escape
+
+
+def get_testfile_path(testfile):
+    return os.path.join(os.path.dirname(__file__),
+                        'test_files',
+                        testfile)
 
 
 def load_testdata(filename):
-    path = os.path.join(os.path.dirname(__file__),
-                        'test_files',
-                        filename)
+    path = get_testfile_path(filename)
     with open(path) as f:
         return f.read()
 
@@ -36,16 +41,9 @@ valid_xml_chars = """<?xml version="1.0"?>
 <a>hey and hi</a>
 """
 
-dtd_file = os.path.join(os.path.dirname(__file__),
-                        'test_files',
-                        'note.dtd')
-
-schema_file = os.path.join(os.path.dirname(__file__),
-                           'test_files',
-                           'note.xsd')
-relaxng_file = os.path.join(os.path.dirname(__file__),
-                            'test_files',
-                            'note.rng')
+dtd_file_path = get_testfile_path('note.dtd')
+schema_file_path = get_testfile_path('note.xsd')
+relaxng_file_path = get_testfile_path('note.rng')
 
 valid_xml_path = load_testdata('note.xml')
 valid_xml_url = load_testdata('concept-valid.xml')
@@ -66,14 +64,14 @@ XMLBearSchemaTest = verify_local_bear(
     XMLBear,
     valid_files=(valid_xml_path,),
     invalid_files=(invalid_xml_schema,),
-    settings={'xml_schema': schema_file},
+    settings={'xml_schema': escape(schema_file_path, '\\')},
     tempfile_kwargs={'suffix': '.xml'})
 
 XMLBearDTDPathTest = verify_local_bear(
     XMLBear,
     valid_files=(valid_xml_path,),
     invalid_files=(invalid_xml_dtd,),
-    settings={'xml_dtd': dtd_file},
+    settings={'xml_dtd': escape(dtd_file_path, '\\')},
     tempfile_kwargs={'suffix': '.xml'})
 
 XMLBearDTDUrlTest = verify_local_bear(
@@ -87,7 +85,7 @@ XMLBearRelaxNGTest = verify_local_bear(
     XMLBear,
     valid_files=(valid_xml_path,),
     invalid_files=(invalid_xml_relaxng,),
-    settings={'xml_relaxng': relaxng_file},
+    settings={'xml_relaxng': escape(relaxng_file_path, '\\')},
     tempfile_kwargs={'suffix': '.xml'})
 
 
