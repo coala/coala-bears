@@ -68,9 +68,9 @@ class PHPCodeSnifferBear:
             True if spaces are to be used instead of tabs.
         :param allow_multiple_statements_per_line:
             Allows having multiple statements on one line.
-        :param force_lower_case_keyword:
+        :param force_lower_case_keywords:
             Checks that ``PHP`` keywords are lowercase.
-        :param force_lower_case_constant:
+        :param force_lower_case_constants:
             Checks that all uses of ``true``, ``false`` and ``null`` are
             lowercase.
         :param blank_line_after_namespace_declaration:
@@ -84,7 +84,7 @@ class PHPCodeSnifferBear:
             on the same line as the class name, that the opening brace for a
             class is on the next line, and that the closing brace for a class
             is on the next line after the body. Allows splitting implements
-            list accross multiple lines.
+            list across multiple lines.
         :param check_property_declaration:
             Ensures that visibility is declared on all properties, that the
             ``var`` keyword is not used to declare a property, that there is
@@ -95,7 +95,7 @@ class PHPCodeSnifferBear:
         :param function_declaration_argument_spacing:
             Number of spaces between arguments in function declaration.
         :param allow_multiline_function_declaration:
-            Allows argument lists to be split accross multiple lines correctly
+            Allows argument lists to be split across multiple lines correctly
             indented.
         """
         rules_map = {'Generic.WhiteSpace.DisallowTabIndent':
