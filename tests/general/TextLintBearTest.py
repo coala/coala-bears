@@ -17,7 +17,8 @@ def get_testfile_path(name):
 with open(get_testfile_path(name)) as f1:
     return f1.readlines()
 
-def close_testfile(name):
+
+def close_testfile():
     f1.close()
 
 @generate_skip_decorator(TextLintBear)
