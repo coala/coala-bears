@@ -14,14 +14,12 @@ def get_testfile_path(name):
                         'textlint_test_files',
                         name)
 
-
 def load_testfile(name):
     with open(get_testfile_path(name)) as f1:
-    return f1.readlines()
+        return f1.readlines()
 
-
-def close_testfile():
-    f1.close()
+def close_file(file_name):
+    file_name.close()
 
 
 @generate_skip_decorator(TextLintBear)

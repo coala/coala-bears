@@ -1,0 +1,5 @@
+TextLintBearTest.py
+        In above file, load_testfile() needs to be changed, and changed
+        it. Add another function called close_testfile() to close the file
+Closes :  https://github.com/coala/coala-bears/issues/2048
+
