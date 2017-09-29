@@ -4,15 +4,16 @@ from dependency_management.requirements.NpmRequirement import NpmRequirement
 @linter(executable = 'standard',
 	output_format = 'regex',
 	output_regex = r'\s*[^:]+:(?P<line>\d+):(?P<column>\d+):'
-					r'\s*(?P<message>.+)')
+				r'\s*(?P<message>.+)')
 
 class JSStandardBear:
 	
 	"""
 	One JavaScript Style to Rule Them All.
 
-	No decisions to make.
-	No .eslintrc, .jshintrc, or .jscsrc files to manage.
+		-No decisions to make.
+		-No .eslintrc, .jshintrc, or .jscsrc files to manage.
+	
 	It just works.
 	"""
 
