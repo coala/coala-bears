@@ -11,9 +11,8 @@ class JSStandardBear:
 	"""
 	One JavaScript Style to Rule Them All.
 
-		-No decisions to make.
-		-No .eslintrc, .jshintrc, or .jscsrc files to manage.
-	
+	-No decisions to make.
+	-No .eslintrc, .jshintrc, or .jscsrc files to manage.	
 	It just works.
 	"""
 
