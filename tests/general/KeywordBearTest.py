@@ -122,7 +122,7 @@ class KeywordBearDiffTest(unittest.TestCase):
         text = ['todo = 123\n']
         with execute_bear(self.uut, filename='F', file=text,
                           dependency_results=self.dep_results) as result:
-            self.assertEquals(result[0].diffs, {})
+            self.assertEqual(result[0].diffs, {})
 
     def test_keyword_between_code(self):
         self.section.append(Setting('language', 'c'))
