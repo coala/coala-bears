@@ -7,8 +7,6 @@ from coalib.bearlib.languages.documentation.DocBaseClass import (
 from coalib.bears.LocalBear import LocalBear
 from coalib.results.Result import Result
 
-from textwrap import dedent
-
 
 class DocumentationStyleBear(DocBaseClass, LocalBear):
     LANGUAGES = {language for docstyle, language in
@@ -48,12 +46,10 @@ class DocumentationStyleBear(DocBaseClass, LocalBear):
         main_description = next(metadata)
 
         if main_description.desc == '\n' and not allow_missing_func_desc:
-            # Triple quoted string literals doesn't look good. It breaks
-            # the line of flow. Hence we use dedent.
-            warning_desc = dedent("""\
-            Missing function description.
-            Please set allow_missing_func_desc = True to ignore this warning.
-            """)
+            warning_desc = (
+                'Missing function description.\n'
+                'Please set allow_missing_func_desc = True to ignore this '
+                'warning.')
         else:
             warning_desc = 'Documentation does not have correct style.'
 
