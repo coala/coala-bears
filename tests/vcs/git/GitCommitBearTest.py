@@ -334,6 +334,12 @@ class GitCommitBearTest(unittest.TestCase):
                              body_close_issue_on_last_line=True), [])
         self.assert_no_msgs()
 
+        # No keywords, no issues, no body
+        self.git_commit('Shortlog only')
+        self.assertEqual(self.run_uut(body_close_issue=True,
+                                      body_close_issue_on_last_line=True), [])
+        self.assert_no_msgs()
+
         # Has keyword but no valid issue URL
         self.git_commit('Shortlog\n\n'
                         'First line, blablablablablabla.\n'

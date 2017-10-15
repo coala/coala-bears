@@ -299,7 +299,8 @@ class GitCommitBear(GlobalBear):
             return
 
         if body_close_issue_on_last_line:
-            body = body.splitlines()[-1]
+            if body:
+                body = body.splitlines()[-1]
             result_message = ('Body of HEAD commit does not contain any {} '
                               'reference in the last line.')
         else:
