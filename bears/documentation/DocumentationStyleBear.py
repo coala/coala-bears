@@ -78,7 +78,8 @@ class DocumentationStyleBear(DocBaseClass, LocalBear):
                 if stripped_desc[0] != '':
                     stripped_desc.insert(0, '')
 
-            # Indent with 4 spaces.
+            # Indent only first line with 4 spaces, everything else may have
+            # stylistic extra indents.
             stripped_desc = ('' if line == '' else ' ' * indent_size
                              + line for line in stripped_desc)
 
