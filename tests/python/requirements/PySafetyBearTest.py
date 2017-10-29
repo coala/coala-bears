@@ -60,3 +60,16 @@ class PySafetyBearTest(LocalBearTestHelper):
         ) as check:
             self.check_validity(self.uut, ['foo', 'bar>2'])
             assert not check.called
+
+    def test_with_no_description(self):
+        vuln_data = {
+            'cve': 'CVE-2016-9999',
+        }
+        with mock.patch(
+            'bears.python.requirements.PySafetyBear.safety.check',
+            return_value=[Vulnerability(
+                'baz', '<0.12.10', '0.10.0', vuln_data)],
+        ) as check:
+            self.check_invalidity(self.uut, ['baz==0.10.0', '-e .'])
+            check.assert_called_once_with(packages=[Package(
+                'baz', '0.10.0')])
