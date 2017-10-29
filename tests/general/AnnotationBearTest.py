@@ -49,7 +49,7 @@ class AnnotationBearTest(unittest.TestCase):
         compare = (SourceRange.from_absolute_position(
                                     'F',
                                     AbsolutePosition(text, text[0].find('#')),
-                                    AbsolutePosition(text, len(text[0]) - 1)),)
+                                    AbsolutePosition(text, len(text[0]) - 2)),)
         with execute_bear(self.python_uut, 'F', text) as result:
             self.assertEqual(result[0].contents['strings'], ())
             self.assertEqual(result[0].contents['comments'], compare)
@@ -71,7 +71,7 @@ class AnnotationBearTest(unittest.TestCase):
     def test_string_with_comments(self):
         text = ['some #comment\n', "with 'string' in  next line"]
         comment_start = text[0].find('#')
-        comment_end = len(text[0]) - 1
+        comment_end = len(text[0]) - 2
         string_start = ''.join(text).find("'")
         string_end = ''.join(text).find("'", string_start + 1)
         compare = [(SourceRange.from_absolute_position(
