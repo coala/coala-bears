@@ -16,7 +16,7 @@ class JSStandardBear:
     """
 
     LANGUAGES = {'JavaScript', 'JSX'}
-    REQUIREMENTS = {NpmRequirement('standard', '7')}
+    REQUIREMENTS = {NpmRequirement('standard', '10')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

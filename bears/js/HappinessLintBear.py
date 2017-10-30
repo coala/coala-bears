@@ -12,7 +12,7 @@ class HappinessLintBear:
     See <https://github.com/JedWatson/happiness/> for more information.
     """
     LANGUAGES = {'JavaScript'}
-    REQUIREMENTS = {NpmRequirement('happiness', '7.1.2')}
+    REQUIREMENTS = {NpmRequirement('happiness', '10')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

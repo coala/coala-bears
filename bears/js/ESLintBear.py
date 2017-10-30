@@ -18,9 +18,9 @@ class ESLintBear:
     """
 
     LANGUAGES = {'JavaScript', 'JSX'}
-    REQUIREMENTS = {NpmRequirement('eslint', '2'),
-                    NpmRequirement('babel-eslint', '6'),
-                    NpmRequirement('eslint-plugin-import', '1')}
+    REQUIREMENTS = {NpmRequirement('eslint', '3'),
+                    NpmRequirement('babel-eslint', '8'),
+                    NpmRequirement('eslint-plugin-import', '2')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
@@ -58,15 +58,29 @@ class ESLintBear:
         return '{"extends": "eslint:recommended"}'
 
     def process_output(self, output, filename, file):
-        if output[1]:
+        def warn_issue(message):
             self.warn('While running {0}, some issues were found:'
                       .format(self.__class__.__name__))
-            self.warn(output[1])
+            self.warn(message)
+
+        # Taking output from stderr for ESLint 2 program errors.
+        # ESLint 2 is no longer supported, but it is here so that anyone
+        # with ESLint 2 will still see any errors that were emitted.
+        if output[1]:  # pragma: no cover
+            warn_issue(output[1])
 
         if not file or not output[0]:
             return
 
-        output = json.loads(output[0])
+        # Handling program errors
+        # such as malformed config file or missing plugin
+        # that are not in json format.
+        try:
+            output = json.loads(output[0])
+        except ValueError:
+            warn_issue(output[0])
+            return
+
         lines = ''.join(file)
 
         assert len(output) == 1
