@@ -4,7 +4,7 @@ from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 good_file = """
 var x = 2;
-if (6 > 7 !== true) console.log('done');
+if (x > 7) console.log('done');
 console.log(x);
 """
 

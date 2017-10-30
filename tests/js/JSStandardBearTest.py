@@ -17,7 +17,7 @@ if (baz === 2 && x !== 1) {
   bar = bar === 1
     ? bar
     : 1
-  if ((x = 33)) {
+  if ((x === 33)) {
     console.log(bar + "hello 'world'")
   }
 } else {
