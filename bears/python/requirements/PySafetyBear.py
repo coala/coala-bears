@@ -74,12 +74,20 @@ class PySafetyBear(LocalBear):
                 version_spec_match.end(1) + 1,
             )
 
-            yield Result(
-                self,
-                message_template.format(vuln=vulnerability),
-                additional_info=vulnerability.description,
-                affected_code=(source_range, ),
-            )
+            try:
+                yield Result(
+                    self,
+                    message_template.format(vuln=vulnerability),
+                    additional_info=vulnerability.description,
+                    affected_code=(source_range, ),
+                )
+            except KeyError:
+                yield Result(
+                    self,
+                    message_template.format(vuln=vulnerability),
+                    additional_info='',
+                    affected_code=(source_range, ),
+                )
 
     @staticmethod
     def try_parse_requirements(lines: typed_list(str)):
