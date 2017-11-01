@@ -23,7 +23,7 @@ class PySafetyBearTest(LocalBearTestHelper):
 
     def test_with_vulnerability(self):
         vuln_data = {
-            'description': 'foo',
+            'advisory': 'foo',
             'changelog': 'bar',
         }
         with mock.patch(
@@ -35,7 +35,7 @@ class PySafetyBearTest(LocalBearTestHelper):
 
     def test_with_cve_vulnerability(self):
         vuln_data = {
-            'description': 'foo',
+            'advisory': 'foo',
             'cve': 'CVE-2016-9999',
         }
         with mock.patch(
