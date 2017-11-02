@@ -77,7 +77,7 @@ class PySafetyBear(LocalBear):
             yield Result(
                 self,
                 message_template.format(vuln=vulnerability),
-                additional_info=vulnerability.description,
+                additional_info=vulnerability.data['advisory'],
                 affected_code=(source_range, ),
             )
 
