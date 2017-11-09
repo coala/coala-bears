@@ -249,6 +249,17 @@ class GitCommitBearTest(unittest.TestCase):
                           'HEAD commit. Please add one.'])
         self.assert_no_msgs()
 
+        # Adding remote for github
+        self.run_git_command('remote', 'add', 'test',
+                             'https://github.com/user/repo.git')
+
+        # Force no body
+        self.git_commit('Shortlog and issue ref. only\n\n'
+                        'Closes #1112')
+        self.assertEqual(self.run_uut(body_close_issue=True,
+                                      body_close_issue_on_last_line=True), [])
+        self.assert_no_msgs()
+
         # And now too long lines.
         self.git_commit('Shortlog\n\n'
                         'This line is ok.\n'
