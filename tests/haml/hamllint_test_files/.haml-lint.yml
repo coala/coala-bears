@@ -1,0 +1,10 @@
+linters:
+    LineLength:
+        enabled: true
+        max: 80
+    TrailingWhitespace:
+        enabled: false
+    RuboCop:
+        enabled: false
+        cops:
+            - Style/IfUnlessModifier
