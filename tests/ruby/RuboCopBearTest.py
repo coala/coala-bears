@@ -42,7 +42,7 @@ class RuboCopBearTest(LocalBearTestHelper):
         self.check_results(
             self.uut,
             file_contents,
-            [Result.from_values('RuboCopBear (Style/MethodName)',
+            [Result.from_values('RuboCopBear (Naming/MethodName)',
                                 message='Use snake_case for method names.',
                                 file=get_testfile_path(filename),
                                 line=1,
@@ -60,7 +60,7 @@ class RuboCopBearTest(LocalBearTestHelper):
         self.check_results(
             self.uut,
             file_contents,
-            [Result.from_values('RuboCopBear (Style/MethodName)',
+            [Result.from_values('RuboCopBear (Naming/MethodName)',
                                 message='Use camelCase for method names.',
                                 file=get_testfile_path(filename),
                                 line=1,

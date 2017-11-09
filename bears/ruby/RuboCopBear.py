@@ -19,7 +19,7 @@ class RuboCopBear:
     """
 
     LANGUAGES = {'Ruby'}
-    REQUIREMENTS = {GemRequirement('rubocop', '0.49.1'),
+    REQUIREMENTS = {GemRequirement('rubocop', '0.51.0'),
                     PipRequirement('pyyaml', '3.12')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
