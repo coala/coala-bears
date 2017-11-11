@@ -59,6 +59,8 @@ npm_requirements:
     version: ~5
   remark-validate-links:
     version: ~5
+  sass-lint:
+    version: ~1.12.1
   standard:
     version: ~10
   stylelint:

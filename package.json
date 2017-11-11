@@ -24,6 +24,7 @@
     "remark-cli": "~2",
     "remark-lint": "~5",
     "remark-validate-links": "~5",
+    "sass-lint": "~1.12.1",
     "standard": "~10",
     "stylelint": "~7",
     "stylint": "~1.5.9",

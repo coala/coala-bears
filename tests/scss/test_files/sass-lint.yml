@@ -1,0 +1,4 @@
+# Config file to allow !important to ensure it's loaded
+
+rules:
+  no-important: 0
