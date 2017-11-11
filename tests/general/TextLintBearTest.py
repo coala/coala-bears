@@ -8,7 +8,7 @@ from coalib.settings.Section import Section
 from coalib.testing.BearTestHelper import generate_skip_decorator
 from coalib.testing.LocalBearTestHelper import LocalBearTestHelper
 
-
+@@ -13,6 +13,7 @@
 def get_testfile_path(name):
     return os.path.join(os.path.dirname(__file__),
                         'textlint_test_files',
@@ -16,7 +16,12 @@ def get_testfile_path(name):
 
 
 def load_testfile(name):
-    return open(get_testfile_path(name)).readlines()
+    with open(get_testfile_path(name)) as f1:
+        return f1.readlines()
+
+
+def close_file(file_name):
+    file_name.close()
 
 
 @generate_skip_decorator(TextLintBear)
