@@ -39,6 +39,7 @@ class CSSCombBear:
                         use_space_before_combinator: int=1,
                         use_space_between_declarations: int=None,
                         use_space_after_opening_brace: int=None,
+                        use_space_before_opening_brace: int=1,
                         use_space_before_closing_brace: int=None,
                         use_space_after_selector_delimiter: int=1,
                         use_space_before_selector_delimiter: int=1,
@@ -180,6 +181,8 @@ class CSSCombBear:
             Set the number of spaces between declarations.
         :param use_space_after_opening_brace:
             Set the number of spaces after ``{``.
+        :param use_space_before_opening_brace:
+            Set the number of spaces before ``{``.
         :param use_space_before_closing_brace:
             Set the number of spaces before ``}``.
         :param use_space_after_selector_delimiter:
@@ -256,6 +259,7 @@ class CSSCombBear:
                 'space-before-combinator': use_space_before_combinator,
                 'space-between-declarations': use_space_between_declarations,
                 'space-after-opening-brace': use_space_after_opening_brace,
+                'space-before-opening-brace': use_space_before_opening_brace,
                 'space-before-closing-brace': use_space_before_closing_brace,
                 'space-after-selector-delimiter':
                     use_space_after_selector_delimiter,

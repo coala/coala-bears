@@ -77,6 +77,13 @@ class CSSCombBearTest(LocalBearTestHelper):
         bad_file = ['p> a { color: panda; }']
         self.check_invalidity(self.uut, bad_file)
 
+    def test_space_before_opening_brace(self):
+        good_file = ['a { color: red; }']
+        self.check_validity(self.uut, good_file)
+
+        bad_file = ['a{ color: red; }']
+        self.check_invalidity(self.uut, bad_file)
+
     def test_trailing_whitespace(self):
         good_file = ['a { color: red; }']
         self.check_validity(self.uut, good_file)
