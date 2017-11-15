@@ -27,10 +27,17 @@ class HTMLLintBear:
     CAN_DETECT = {'Syntax', 'Formatting'}
 
     @staticmethod
-    def create_arguments(filename, file, config_file,
-                         htmllint_ignore: typed_list(str)=()):
+    def create_arguments(filename, file, config_file, use_spaces: bool,
+                         htmllint_ignore: typed_list(str)=[]):
         """
         :param htmllint_ignore: List of checkers to ignore.
+        :param use_spaces: True if spaces are to be used instead of tabs.
         """
-        ignore = ','.join(part.strip() for part in htmllint_ignore)
+        additional_ignore = []
+        if not use_spaces:
+            additional_ignore.append('tabs')
+
+        ignore = ','.join(part.strip()
+                          for part in htmllint_ignore + additional_ignore)
+
         return HTMLLintBear._html_lint, '--disable=' + ignore, filename
