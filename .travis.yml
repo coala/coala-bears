@@ -116,7 +116,10 @@ script:
   - bash .ci/tests.sh
   # Ensure bear requirements are in sync with the bear PipRequirement
   - .ci/generate_bear_requirements.py
-  - git diff --exit-code bear-requirements.txt Gemfile package.json
+  - git clone https://github.com/moremoban/setupmobans ../setupmobans
+  - git clone https://gitlab.com/coala/mobans ../coala-mobans
+  - moban
+  - git diff --exit-code
   # https://github.com/coala/coala-bears/issues/1037
   - >
     if [[ "$TRAVIS_PULL_REQUEST" != "false" ]]; then

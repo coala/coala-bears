@@ -20,7 +20,7 @@ import os
 import sys
 from collections import OrderedDict
 
-from jinja2 import Environment, FileSystemLoader
+from yaml import dump
 from pyprint.NullPrinter import NullPrinter
 
 from coalib.bears.BEAR_KIND import BEAR_KIND
@@ -30,9 +30,7 @@ from dependency_management.requirements.GemRequirement import GemRequirement
 from dependency_management.requirements.NpmRequirement import NpmRequirement
 from dependency_management.requirements.PipRequirement import PipRequirement
 
-NPM_REQUIREMENTS_TEMPLATE_FILE = "package.json.jinja2"
-
-GEM_REQUIREMENTS_TEMPLATE_FILE = "Gemfile.jinja2"
+BEAR_REQUIREMENTS_YAML = "bear-requirements.yaml"
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -45,18 +43,14 @@ PINNED_PACKAGES = (
    'lxml',
 )
 
-env = Environment(loader=FileSystemLoader(THIS_DIR))
-env.filters['jsonify'] = json.dumps
-
-
 def get_args():
     parser = argparse.ArgumentParser(
-        description='This program generates a pip requirement file for '
+        description='This program generates a yaml requirement file for '
                     'installation of linters that are used by the bears.')
     parser.add_argument('--output', '-o',
                         help='name of file to generate, or - for stdout',
                         default=os.path.join(PROJECT_DIR,
-                                             'bear-requirements.txt'))
+                                             BEAR_REQUIREMENTS_YAML))
     parser.add_argument('--bear-dirs', '-d', nargs='+', metavar='DIR',
                         help='additional directories which may contain bears')
 
@@ -118,65 +112,60 @@ def get_all_requirements(bears):
         )
 
 
-def write_gem_requirements(requirements):
-    gem_dependencies = []
-    template = env.get_template(GEM_REQUIREMENTS_TEMPLATE_FILE)
+def _to_entry(obj, version=None):
+    entry = {}
+
+    if version:
+        entry['version'] = version
+    elif obj.version:
+        entry['version'] = obj.version
+    else:
+        return True
+
+    return entry
+
+
+def get_gem_requirements(requirements):
+    gem_dependencies = {}
 
     for requirement in requirements:
-        gem_dependencies.append(
-            {'name': requirement.package,
-             'version': requirement.version,
-             }
-        )
+        gem_dependencies[requirement.package] = _to_entry(requirement)
 
-    gemfile_string = template.render(
-        gems=gem_dependencies
-        )
-
-    with open(os.path.join(PROJECT_DIR, "Gemfile"), 'w') as file:
-        file.write(gemfile_string)
+    return gem_dependencies
 
 
-def write_npm_requirements(requirements):
+def get_npm_requirements(requirements):
     npm_dependencies = {}
-    template = env.get_template(NPM_REQUIREMENTS_TEMPLATE_FILE)
 
     for requirement in requirements:
-        req_version = requirement.version
         package_name = requirement.package
+        req_version = requirement.version
         if req_version:
-            if req_version[0] in ('<', '>', '~', '='):
-                npm_dependencies[package_name] = req_version
-            else:
-                npm_dependencies[package_name] = "~" + req_version
-        else:
-            npm_dependencies[package_name] = "*"
+            if req_version[0] not in ('<', '>', '~', '='):
+                req_version = "~" + req_version
+        npm_dependencies[package_name] = _to_entry(requirement, req_version)
 
-    package_json_string = template.render(
-        dependencies=npm_dependencies, version="0.8.0")
-    pretty_json = json.dumps(
-        json.loads(package_json_string, object_pairs_hook=OrderedDict),
-        indent=2)
-
-    with open(os.path.join(PROJECT_DIR, "package.json"), 'w') as file:
-        file.write(pretty_json)
-        file.write('\n')
+    return npm_dependencies
 
 
-def write_pip_requirements(requirements, output):
+def get_pip_requirements(requirements):
     inherited_requirements = get_inherited_requirements()
+
+    pip_requirements = {}
 
     for requirement in requirements:
         if requirement.package in inherited_requirements:
             continue
 
+        package_name = requirement.package
+        req_version = None
         if requirement.version:
             marker = '==' if requirement.package in PINNED_PACKAGES else '~='
-            output.write('{0}{1}{2}\n'.format(requirement.package,
-                                              marker,
-                                              requirement.version))
-        else:
-            output.write(requirement.package + '\n')
+            req_version = '{0}{1}'.format(marker, requirement.version)
+
+        pip_requirements[package_name] = _to_entry(requirement, req_version)
+
+    return pip_requirements
 
 
 if __name__ == '__main__':
@@ -190,9 +179,11 @@ if __name__ == '__main__':
     pip_reqs, npm_reqs, gem_reqs = (
         get_all_requirements(get_all_bears(bear_dirs)))
 
-    write_gem_requirements(gem_reqs)
-
-    write_npm_requirements(npm_reqs)
+    requirements = {}
+    requirements['overrides'] = 'coala-build.yaml'
+    requirements['pip_requirements'] = get_pip_requirements(pip_reqs)
+    requirements['npm_requirements'] = get_npm_requirements(npm_reqs)
+    requirements['gem_requirements'] = get_gem_requirements(gem_reqs)
 
     output = None
 
@@ -201,5 +192,5 @@ if __name__ == '__main__':
     else:
         output = open(args.output, 'w')
 
-    write_pip_requirements(pip_reqs, output)
+    dump(requirements, output, default_flow_style=False)
     output.close()

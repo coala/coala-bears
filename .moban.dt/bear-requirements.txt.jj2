@@ -1,0 +1,3 @@
+{% for package, data in pip_requirements.items() | sort %}
+{{ package }}{{ data.version }}
+{% endfor %}{# for package, data in pip_requirements.items() #}

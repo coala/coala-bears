@@ -69,7 +69,7 @@ ignore = *.py
 
 [all.yml]
 bears = YAMLLintBear
-files = *.yml, .ci/*.yml, tests/**/*.yml
+files = *.yml, *.yaml, .ci/*.yml, tests/**/*.yml
 
 [bash]
 bears = ShellCheckBear
@@ -77,3 +77,9 @@ files = .ci/*.sh
 ignore = .ci/deps.pip.sh
 shell = bash
 shellcheck_ignore = SC2046, SC2154, SC2155
+
+[jinja2]
+bears = Jinja2Bear
+files = **.jj2
+# Bug in handling of ".. list | sort"
+ignore = .moban.dt/Gemfile.jj2, .moban.dt/bear-requirements.txt.jj2, .moban.dt/package.json.jj2

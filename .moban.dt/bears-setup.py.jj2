@@ -1,0 +1,19 @@
+{% extends 'coala-setup.py.jj2' %}
+
+{% block custom_requirements %}
+with open('bear-requirements.txt') as requirements:
+    bear_required = requirements.read().splitlines()
+
+with open('ignore.txt') as ignore:
+    ignore_requirements = ignore.read().splitlines()
+
+extras_require = {
+    'alldeps': bear_required,
+}
+
+# For the average user we leave out some of the more complicated requirements,
+# e.g. language-check (needs java).
+required += [req for req in bear_required
+             if not any(req.startswith(ignore)
+                        for ignore in ignore_requirements)]
+{% endblock %}

@@ -1,0 +1,10 @@
+source 'https://rubygems.org'
+ruby '2.2.2'
+
+{% for name, data in gem_requirements.items() | sort %}
+{% if data is mapping %}
+gem "{{ name + '", "' + data.version + '", require: false' }}
+{% else %}
+gem "{{ name + '", require: false' }}
+{% endif %}{# if data is mapping #}
+{% endfor %}{# for name, data in gem_requirements.items() #}

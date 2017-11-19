@@ -1,18 +1,23 @@
 #!/usr/bin/env python3
 
 import locale
+import platform
 import sys
 from subprocess import call
 
 import setuptools.command.build_py
-from bears import Constants
 from setuptools import find_packages, setup
 from setuptools.command.test import test as TestCommand
 
 try:
-    locale.getlocale()
+    lc = locale.getlocale()
+    pf = platform.system()
+    if pf != 'Windows' and lc == (None, None):
+        locale.setlocale(locale.LC_ALL, 'C.UTF-8')
 except (ValueError, UnicodeError):
     locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+
+VERSION = '0.12.0.dev99999999999999'
 
 
 class PyTestCommand(TestCommand):
@@ -25,8 +30,10 @@ class PyTestCommand(TestCommand):
 
 
 class BuildDocsCommand(setuptools.command.build_py.build_py):
-    apidoc_command = ('sphinx-apidoc', '-f', '-o', 'docs/API',
-                      'bears')
+    apidoc_command = (
+        'sphinx-apidoc', '-f', '-o', 'docs/API',
+        'bears'
+    )
     make_command = ('make', '-C', 'docs', 'html', 'SPHINXOPTS=-W')
 
     def run(self):
@@ -40,17 +47,19 @@ with open('requirements.txt') as requirements:
     required = requirements.read().splitlines()
     required.remove('-r bear-requirements.txt')
 
-with open('bear-requirements.txt') as requirements:
-    bear_required = requirements.read().splitlines()
-
 with open('test-requirements.txt') as requirements:
     test_required = requirements.read().splitlines()
 
-with open('ignore.txt') as ignore:
-    ignore_requirements = ignore.read().splitlines()
-
 with open('README.rst') as readme:
     long_description = readme.read()
+
+extras_require = None
+data_files = None
+with open('bear-requirements.txt') as requirements:
+    bear_required = requirements.read().splitlines()
+
+with open('ignore.txt') as ignore:
+    ignore_requirements = ignore.read().splitlines()
 
 extras_require = {
     'alldeps': bear_required,
@@ -62,12 +71,12 @@ required += [req for req in bear_required
              if not any(req.startswith(ignore)
                         for ignore in ignore_requirements)]
 
-
 if __name__ == '__main__':
     setup(name='coala-bears',
-          version=Constants.VERSION,
+          version=VERSION,
           description='Bears for coala (Code Analysis Application)',
           author='The coala developers',
+          author_email='coala-devel@googlegroups.com',
           maintainer='Lasse Schuirmann, Fabian Neuschmidt, Mischa Kr\xfcger',
           maintainer_email=('lasse.schuirmann@gmail.com, '
                             'fabian@neuschmidt.de, '
@@ -83,8 +92,13 @@ if __name__ == '__main__':
                         'bears.scala': ['scalastyle.jar',
                                         'scalastyle_config.xml']},
           license='AGPL-3.0',
+          data_files=data_files,
           long_description=long_description,
-          entry_points={'coalabears': ['coala_official_bears = bears']},
+          entry_points={
+              'coalabears': [
+                  'coala_official_bears = bears',
+              ],
+          },
           # from http://pypi.python.org/pypi?%3Aaction=list_classifiers
           classifiers=[
               'Development Status :: 4 - Beta',
