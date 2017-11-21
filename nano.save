@@ -1,0 +1,3 @@
+DuplicatefileBearTest.py: Deprecated assertEquals
+
+assertEquals has been deprecated. Replace assertEquals to assertEqual

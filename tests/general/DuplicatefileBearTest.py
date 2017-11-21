@@ -44,22 +44,22 @@ class DuplicateFileBearTest(unittest.TestCase):
             'smallFirst.txt'), combined.split())
         self.assertIn(get_absolute_test_path(
             'smallSecond.txt'), combined.split())
-        self.assertEquals(results[0].severity, RESULT_SEVERITY.INFO)
+        self.assertEqual(results[0].severity, RESULT_SEVERITY.INFO)
 
     def test_results_no_duplicates(self):
         results = self.get_results([self.test_files[2],
                                     self.test_files[3]])
         messages = [result.message for result in results]
-        self.assertEquals(messages, [])
+        self.assertEqual(messages, [])
 
     def test_results_empty(self):
         results = self.get_results([])
         messages = [result.message for result in results]
-        self.assertEquals(messages, ['You did not add any file to compare'])
-        self.assertEquals(results[0].severity, RESULT_SEVERITY.MAJOR)
+        self.assertEqual(messages, ['You did not add any file to compare'])
+        self.assertEqual(results[0].severity, RESULT_SEVERITY.MAJOR)
 
     def test_result_single(self):
         results = self.get_results([self.test_files[0]])
         messages = [result.message for result in results]
-        self.assertEquals(messages, ['You included only one file'])
-        self.assertEquals(results[0].severity, RESULT_SEVERITY.MAJOR)
+        self.assertEqual(messages, ['You included only one file'])
+        self.assertEqual(results[0].severity, RESULT_SEVERITY.MAJOR)
