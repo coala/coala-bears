@@ -16,7 +16,6 @@ def get_testfile_path(name):
 
 
 def load_testfile(name):
-    #return open(get_testfile_path(name)).readlines()
     with open(get_testfile_path(name)) as fl:
         return fl.readlines()
 
