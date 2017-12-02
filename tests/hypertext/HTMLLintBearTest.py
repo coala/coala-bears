@@ -27,3 +27,10 @@ HTMLLintBearIgnoreQuotationTest = verify_local_bear(
     invalid_files=(test_file,),
     settings={'htmllint_ignore': 'quotation'},
     tempfile_kwargs={'suffix': '.html'})
+
+HTMLLintBearDisableCheckerTest = verify_local_bear(
+    HTMLLintBear,
+    valid_files=(test_file,),
+    invalid_files=(),
+    settings={'enable_optional_tag': 'false'},
+    tempfile_kwargs={'suffix': '.html'})
