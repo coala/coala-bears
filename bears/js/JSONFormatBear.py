@@ -11,6 +11,43 @@ from coalib.results.Diff import Diff
 from coalib.results.Result import Result
 
 
+class FloatWrapper():
+    """
+    Wrapper for floats, which allows you to keep float representation
+    from initial file.
+    """
+
+    def __init__(self, s):
+        self.s = s
+
+    def __repr__(self):
+        return self.s
+
+    def get_s(self):
+        return self.s
+
+
+def create_float_wrapper(obj):
+    """
+    Wraps obj by FloatWrapper.
+
+    :param obj:
+        Float from initial json file.
+    """
+    return FloatWrapper(obj)
+
+
+def default_floats(obj):
+    """
+    Handler for FloatWrapper objects, which return float from the initial file.
+
+    :param obj:
+        FloatWrapper object.
+    """
+    if isinstance(obj, FloatWrapper):
+        return obj.get_s()
+
+
 class JSONFormatBear(LocalBear):
 
     LANGUAGES = {'JSON'}
@@ -43,7 +80,8 @@ class JSONFormatBear(LocalBear):
 
         try:
             json_content = json.loads(''.join(file),
-                                      object_pairs_hook=OrderedDict)
+                                      object_pairs_hook=OrderedDict,
+                                      parse_float=create_float_wrapper)
         except JSONDecodeError as err:
             err_content = match(r'(.*): line (\d+) column (\d+)', str(err))
             yield Result.from_values(
@@ -58,7 +96,8 @@ class JSONFormatBear(LocalBear):
         corrected = json.dumps(json_content,
                                sort_keys=json_sort,
                                indent=indent_size,
-                               ensure_ascii=escape_unicode
+                               ensure_ascii=escape_unicode,
+                               default=default_floats
                                ).splitlines(True)
         # Because of a bug in several python versions we have to correct
         # whitespace here.
