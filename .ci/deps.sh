@@ -61,3 +61,10 @@ wget "https://downloads.sourceforge.net/project/astyle/astyle/astyle%203.0.1/ast
 tar -xvzf ~/astyle.tar.gz -C ~/
 make -C ~/astyle/build/gcc
 sudo make install -C ~/astyle/build/gcc
+
+# oclint installation
+if [ ! -e ~/oclint-0.13/bin/oclint ]; then
+wget "https://github.com/oclint/oclint/releases/download/v0.13/oclint-0.13-x86_64-linux-4.4.0-93-generic.tar.gz"
+tar -xvzf  oclint-0.13-x86_64-linux-4.4.0-93-generic.tar.gz -C ~/
+sudo chmod +x ~/oclint-0.13/bin/oclint
+fi

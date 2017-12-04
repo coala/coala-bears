@@ -34,6 +34,7 @@ dependencies:
     - echo 'export PATH=$PATH:~/elm-format-0.18' >> ~/.circlerc
     - echo 'export PATH=$PATH:~/phpmd' >> ~/.circlerc
     - echo 'export R_LIB_USER=~/.RLibrary' >> ~/.circlerc
+    - echo 'export PATH=$PATH:~/oclint-0.13/bin' >> ~/.circlerc
     - sed -i '/source \/home\/ubuntu\/virtualenvs\//d' ~/.circlerc
     - mkdir -p ~/.RLibrary
     - nvm alias default node
