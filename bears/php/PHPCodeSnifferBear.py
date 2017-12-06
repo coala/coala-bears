@@ -129,6 +129,7 @@ class PHPCodeSnifferBear:
  <rule ref="Generic.Files.LineLength">
   <properties>
    <property name="lineLimit" value="{max_line_length}"/>
+   <property name="absoluteLineLimit" value="{absolute_line_length}"/>
   </properties>
  </rule>
  <rule ref="Generic.Files.LineEndings">
@@ -162,6 +163,7 @@ class PHPCodeSnifferBear:
  </rule>
 </ruleset>
 '''.format(max_line_length=max_line_length,
+           absolute_line_length=0,
            line_ending_character=line_ending_character,
            indent_size=indent_size,
            some_rules=rules,
