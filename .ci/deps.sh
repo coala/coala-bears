@@ -61,3 +61,8 @@ wget "https://downloads.sourceforge.net/project/astyle/astyle/astyle%203.0.1/ast
 tar -xvzf ~/astyle.tar.gz -C ~/
 make -C ~/astyle/build/gcc
 sudo make install -C ~/astyle/build/gcc
+
+# phpcbf installation
+# On ubuntu:14.04 this seems the best way to install `phpcbf`
+# With ubuntu:16.04 `php-codesniffer` contains `phpcbf`
+sudo pear install PHP_CodeSniffer
