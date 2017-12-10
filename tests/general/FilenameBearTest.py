@@ -151,3 +151,42 @@ class FilenameBearTest(LocalBearTestHelper):
                                 severity=RESULT_SEVERITY.NORMAL,
                                 file='filename.xyz')],
             filename='filename.xyz')
+
+    def test_file_with_too_long_filename(self):
+        msg = 'Filename is too long ({} > {}).'
+        filename_test1 = '_filenamewhichistoolong'*15 + '.xyz'
+        filename_test2 = '_filenamewhichistoolong'*10 + '.xyz'
+        filename_test3 = '_validfilenamelength'*13
+        max_filename_length = 260
+        self.check_invalidity(
+            self.uut, [''], filename=filename_test1)
+        self.check_validity(
+            self.uut, [''], filename=filename_test2)
+        self.check_validity(
+            self.uut, [''], filename=filename_test3)
+        self.check_results(
+            self.uut,
+            [''],
+            [Result.from_values('FilenameBear',
+                                msg.format(len(filename_test1),
+                                           max_filename_length),
+                                severity=RESULT_SEVERITY.NORMAL,
+                                file=filename_test1)],
+            filename=filename_test1)
+
+    def test_message_too_long_file_with_other_errors(self):
+        self.section['filename_prefix'] = 'pre'
+        filename_test1 = '_filenamewhichistoolong'*15 + '.xyz'
+        max_filename_length = 260
+        msg = ("- Filename does not use the prefix 'pre'.\n"
+               '- Filename is too long ({} > {}).'
+               )
+        self.check_results(
+            self.uut,
+            [''],
+            [Result.from_values('FilenameBear',
+                                msg.format(len(filename_test1),
+                                           max_filename_length),
+                                severity=RESULT_SEVERITY.NORMAL,
+                                file=filename_test1)],
+            filename=filename_test1)

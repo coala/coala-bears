@@ -26,6 +26,7 @@ class FilenameBear(LocalBear):
                                   }
 
     def run(self, filename, file,
+            max_filename_length: int=260,
             file_naming_convention: str=None,
             ignore_uppercase_filenames: bool=True,
             filename_prefix: str='',
@@ -42,6 +43,8 @@ class FilenameBear(LocalBear):
             - ``pascal`` (``ThisIsPascalCase``)
             - ``snake`` (``this_is_snake_case``)
             - ``space`` (``This Is Space Case``)
+        :param max_filename_length:
+            Maximum filename length on both Windows and Unix-like systems.
         :param ignore_uppercase_filenames:
             Whether or not to ignore fully uppercase filenames completely,
             e.g. COPYING, LICENSE etc.
@@ -97,6 +100,12 @@ class FilenameBear(LocalBear):
             messages.append(
                 'Filename does not use the suffix {!r}.'.format(
                     filename_suffix))
+
+        if len(filename) > max_filename_length:
+            messages.append(
+                'Filename is too long ({} > {}).'.format(
+                    len(filename),
+                    max_filename_length))
 
         if ignore_uppercase_filenames and filename_without_extension.isupper():
             return
