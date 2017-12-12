@@ -17,7 +17,7 @@ def touch(file_name):
     """
     Creates an empty file. An existing file remains untouched.
 
-    :param file_name: Name of the file.
+    :param file_name: Name of tooohe file.
     """
     open(file_name, 'a').close()
 
