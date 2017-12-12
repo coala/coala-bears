@@ -1,37 +1,35 @@
+import os
+from queue import Queue
+
 from bears.c_languages.CPPCheckBear import CPPCheckBear
-from coalib.testing.LocalBearTestHelper import verify_local_bear
-
-good_file = """
-using namespace std;
-int main() {
-    cout << "Hello, world!" << endl;
-    return 0;
-}"""
-
-warn_file = """
-void f1(struct fred_t *p)
-{
-    int x;
-    if (p)
-        do_something(x);
-}"""
-
-bad_file = """
-#define f(c) { \
-    char s[10]; \
-    s[c] = 42; \
-}
-int main() {
-    f(100);
-    return 0;
-}"""
+from coalib.testing.BearTestHelper import generate_skip_decorator
+from coalib.testing.LocalBearTestHelper import LocalBearTestHelper
+from coalib.settings.Section import Section
+from coalib.settings.Setting import Setting
 
 
-CPPCheckBearTest1 = verify_local_bear(CPPCheckBear,
-                                      valid_files=(good_file, warn_file),
-                                      invalid_files=(bad_file,))
+def get_absolute_test_path(file):
+    return os.path.join(os.path.dirname(__file__),
+                        'cppcheck_test_files', file)
 
-CPPCheckBearTest2 = verify_local_bear(CPPCheckBear,
-                                      valid_files=(good_file,),
-                                      invalid_files=(warn_file, bad_file),
-                                      settings={'enable': 'unusedFunction'})
+
+@generate_skip_decorator(CPPCheckBear)
+class CPPCheckBearTest(LocalBearTestHelper):
+
+    def setUp(self):
+        self.section = Section('cppcheck')
+        self.uut = CPPCheckBear(self.section, Queue())
+        self.good_file = get_absolute_test_path('good_file.cpp')
+        self.bad_file = get_absolute_test_path('bad_file.cpp')
+        self.warn_file = get_absolute_test_path('warn_file.cpp')
+
+    def test_default(self):
+        self.check_validity(self.uut, [], self.good_file)
+        self.check_invalidity(self.uut, [], self.bad_file)
+        self.check_validity(self.uut, [], self.warn_file)
+
+    def test_enable(self):
+        self.section.append(Setting('enable', 'unusedFunction'))
+        self.check_validity(self.uut, [], self.good_file)
+        self.check_invalidity(self.uut, [], self.bad_file)
+        self.check_invalidity(self.uut, [], self.warn_file)
