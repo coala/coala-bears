@@ -8,6 +8,7 @@ from coalib.settings.Setting import typed_list
 @linter(executable='cppcheck',
         use_stdout=False,
         use_stderr=True,
+        global_bear=True,
         output_format='regex',
         output_regex=r'(?P<line>\d+):(?P<severity>[a-zA-Z]+):'
                      r'(?P<origin>[a-zA-Z]+):(?P<message>.*)',
@@ -27,8 +28,7 @@ class CPPCheckBear:
     LICENSE = 'AGPL-3.0'
     CAN_DETECT = {'Security', 'Unused Code', 'Unreachable Code', 'Smell'}
 
-    @staticmethod
-    def create_arguments(filename, file, config_file,
+    def create_arguments(self, config_file,
                          enable: typed_list(str)=[]):
         """
         :param enable:
@@ -38,8 +38,9 @@ class CPPCheckBear:
             missingInclude
         """
         args = ('--template={line}:{severity}:{id}:{message}',)
+        files = tuple(self.file_dict.keys())
 
         if enable:
             args += ('--enable=' + ','.join(enable),)
 
-        return args + (filename,)
+        return args + files
