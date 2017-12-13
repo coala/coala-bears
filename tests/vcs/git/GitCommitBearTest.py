@@ -37,7 +37,6 @@ class GitCommitBearTest(unittest.TestCase):
         """
         Runs the unit-under-test (via `self.uut.run()`) and collects the
         messages of the yielded results as a list.
-
         :param args:   Positional arguments to forward to the run function.
         :param kwargs: Keyword arguments to forward to the run function.
         :return:       A list of the message strings.
@@ -113,6 +112,15 @@ class GitCommitBearTest(unittest.TestCase):
         self.assertEqual(git_error[:4], 'git:')
 
         self.assert_no_msgs()
+
+    def test_extra_newlines_between_shortlog_body(self):
+        self.git_commit(
+            'Extra newlines\n\n\n'
+            'between shortlog and body'
+            'blablabla.')
+
+        self.assertEqual(self.run_uut(),
+                         ['Extra Newlines found.'])
 
     def test_empty_message(self):
         self.git_commit('')
