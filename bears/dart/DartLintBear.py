@@ -1,5 +1,6 @@
 from coalib.bearlib.abstractions.Linter import linter
-
+from dependency_management.requirements.DistributionRequirement import (
+    DistributionRequirement)
 
 @linter(executable='dartanalyzer',
         output_format='regex',
@@ -13,6 +14,7 @@ class DartLintBear:
     /path/to/dart-sdk/bin is in your ``PATH``.
     """
     LANGUAGES = {'Dart'}
+    REQUIREMENTS = {DistributionRequirement(apt_get='default-jre')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
