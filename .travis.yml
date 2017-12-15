@@ -80,6 +80,7 @@ cache:
     - ~/dart-sdk/bin
     - ~/.local/tailor/
     - ~/phpmd
+    - ~/.mix
 
 env:
   global:
@@ -89,6 +90,7 @@ env:
     - LINTR_COMMENT_BOT=false
     - PATH="/opt/cabal/1.24/bin:$PATH:$TRAVIS_BUILD_DIR/node_modules/.bin:$TRAVIS_BUILD_DIR/vendor/bin:$HOME/dart-sdk/bin:$HOME/.cabal/bin:$HOME/infer-linux64-v0.7.0/infer/bin:$HOME/pmd-bin-5.4.1/bin:$HOME/bakalint-0.4.0:$HOME/elm-format-0.18:$HOME/.local/tailor/tailor-latest/bin:$HOME/phpmd"
 
+    - cd ~/coala-bears/tests/elixir && mix deps.get && mix compile
 before_install:
   - nvm install 6.10.2
   # Remove Ruby directive from Gemfile as this image has 2.2.5

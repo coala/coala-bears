@@ -62,3 +62,24 @@ wget "https://downloads.sourceforge.net/project/astyle/astyle/astyle%203.0.1/ast
 tar -xvzf ~/astyle.tar.gz -C ~/
 make -C ~/astyle/build/gcc
 sudo make install -C ~/astyle/build/gcc
+
+# Elixir commands
+wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb
+sudo dpkg -i erlang-solutions_1.0_all.deb
+sudo apt-get update
+sudo apt-get install erlang
+sudo apt-get install elixir
+
+mix local.rebar --force -y
+mix local.hex --force
+
+git clone git@github.com:rrrene/credo.git
+cd credo
+mix deps.get
+mix archive.build
+mix archive.install
+
+git clone https://github.com/rrrene/bunt
+cd bunt
+mix archive.build
+mix archive.install
