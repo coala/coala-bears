@@ -288,6 +288,13 @@ class GitCommitBearTest(unittest.TestCase):
                              body_regex=r'TICKER\s*CLOSE\s+[1-9][0-9]*'), [])
         self.assert_no_msgs()
 
+    def test_extra_newlines_between_shortlog_and_body(self):
+        commit = 'Shortlog\n\n\nBody\n\nCloses #1010101'
+        self.git_commit(commit)
+        print(self.run_uut())
+        self.assertEqual(self.run_uut(),
+                         ['More than one newline between shortlog and body'])
+
     def test_check_issue_reference(self):
         # Commit with no remotes configured
         self.git_commit('Shortlog\n\n'
