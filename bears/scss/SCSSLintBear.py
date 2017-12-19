@@ -1,5 +1,6 @@
 import yaml
 
+from coalib.bearlib import deprecate_settings
 from coalib.bearlib.abstractions.Linter import linter
 from dependency_management.requirements.GemRequirement import GemRequirement
 from dependency_management.requirements.PipRequirement import PipRequirement
@@ -31,6 +32,7 @@ class SCSSLintBear:
         return filename, '--config', config_file
 
     @staticmethod
+    @deprecate_settings(check_url_format='check_ulrs_format')
     def generate_config(filename, file,
                         space_around_bang: list=[True, False],
                         allow_chained_classes: bool=False,
@@ -61,7 +63,7 @@ class SCSSLintBear:
                         use_placeholder_selector_in_extend: bool=True,
                         max_properties: int=10,
                         allow_unit_on_zero_values: bool=False,
-                        check_ulrs_format: bool=True,
+                        check_url_format: bool=True,
                         urls_in_quotes: bool=True,
                         allow_unnecesseary_parent_reference: bool=False,
                         allow_unnecessary_mantissa: bool=False,
@@ -152,7 +154,7 @@ class SCSSLintBear:
             Enforces a limit on the number of properties in a rule set.
         :param allow_unit_on_zero_values:
             Allow omitting length units on zero values.
-        :param check_urls_format:
+        :param check_url_format:
             URLs should be valid and not contain protocols or domain names.
         :param urls_in_quotes:
             URLs should always be enclosed within quotes.
@@ -303,7 +305,7 @@ class SCSSLintBear:
                                      'include_nested': False,
                                      'max_properties': max_properties},
                    'ZeroUnit': {'enabled': not allow_unit_on_zero_values},
-                   'UrlFormat': {'enabled': check_ulrs_format},
+                   'UrlFormat': {'enabled': check_url_format},
                    'UrlQuotes': {'enabled': urls_in_quotes},
                    'UnnecessaryMantissa': {
                        'enabled': not allow_unnecessary_mantissa},
