@@ -20,7 +20,7 @@ bad_file = """
 bad_file2 = '''
 $value: 5px;
 
-.foo {
+ .foo {
   padding: $value;
 }
 
@@ -57,6 +57,6 @@ SCSSLintBearTest = verify_local_bear(SCSSLintBear,
 
 SCSSLintBearChainedClassesTest = verify_local_bear(
     SCSSLintBear,
-    valid_files=(bad_file2, good_file2),
-    invalid_files=(bad_file,),
+    valid_files=(good_file, good_file2),
+    invalid_files=(bad_file, bad_file2),
     settings={'allow_chained_classes': True})
