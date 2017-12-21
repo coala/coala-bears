@@ -52,6 +52,7 @@ addons:
       - ocaml
       - opam
       - php-codesniffer
+      - pychecker
       - verilator
 
 cache:
