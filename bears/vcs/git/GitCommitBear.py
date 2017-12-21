@@ -118,6 +118,10 @@ class GitCommitBear(GlobalBear):
         shortlog = stdout[:pos] if pos != -1 else stdout
         body = stdout[pos+1:] if pos != -1 else ''
 
+        if pos != -1 and body[1] is '\n':
+            yield Result(self, 'More than one newline between'
+                                ' shortlog and body')
+
         if len(stdout) == 0:
             if not allow_empty_commit_message:
                 yield Result(self, 'HEAD commit has no message.')
