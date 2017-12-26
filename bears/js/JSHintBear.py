@@ -35,7 +35,7 @@ class JSHintBear:
     """
 
     LANGUAGES = {'JavaScript'}
-    REQUIREMENTS = {NpmRequirement('jshint', '2')}
+    REQUIREMENTS = {NpmRequirement('jshint', '2.9.5')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
@@ -135,6 +135,7 @@ class JSHintBear:
                         allow_variable_shadowing: bool_or_str=False,
                         allow_unused_variables: bool_or_str=False,
                         allow_latedef: bool_or_str=False,
+                        enforce_trailing_comma: bool=False,
                         es_version: bool_or_int=5,
                         jshint_config: str=''):
         """
@@ -310,6 +311,9 @@ class JSHintBear:
             This option allows the use of a variable before it was defined.
             Setting this option to "nofunc" will allow function declarations to
             be ignored.
+        :param enforce_trailing_comma:
+            This option warns when a comma is not placed after the last element
+            in an array or object literal.
         :param es_version:
             This option is used to specify the ECMAScript version to which the
             code must adhere to.
@@ -384,6 +388,7 @@ class JSHintBear:
                        'shadow': allow_variable_shadowing,
                        'unused': not allow_unused_variables,
                        'latedef': allow_latedef,
+                       'trailingcomma': enforce_trailing_comma,
                        'esversion': es_version}
 
             return json.dumps(options)
