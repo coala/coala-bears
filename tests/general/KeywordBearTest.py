@@ -249,3 +249,48 @@ class KeywordBearDiffTest(unittest.TestCase):
         with execute_bear(self.uut, filename='F', file=text,
                           dependency_results=self.dep_results) as result:
             self.assertEqual(len(result), 0)
+
+    def test_multiple_patches(self):
+        self.section.append(Setting('language', 'c'))
+        self.section.append(Setting('keywords', 'warning'))
+
+        text = ["//warning Don't use foo/bar in every example\n",
+                "int warning = 0; //Now I won't give warning\n",
+                '//Hacked, sorry that was your last warning']
+
+        comments = [SourceRange.from_values('F', 1, 1, 1, 44),
+                    SourceRange.from_values('F', 2, 18, 2, 47),
+                    SourceRange.from_values('F', 3, 1, 3, 42)]
+
+        dep_results = {
+            'AnnotationBear': [
+                self.annotation_bear_result_type({'comments': comments})
+            ]
+        }
+
+        with execute_bear(self.uut, filename='F', file=text,
+                          dependency_results=dep_results) as result:
+            self.assertEqual(len(result), 4)
+            self.assertEqual(result[0].diffs['F'].unified_diff,
+                             '--- \n'
+                             '+++ \n'
+                             '@@ -1,3 +1,2 @@\n'
+                             "-//warning Don't use foo/bar in every example\n"
+                             " int warning = 0; //Now I won't give warning\n"
+                             ' //Hacked, sorry that was your last warning')
+            self.assertEqual(result[1].diffs, {})
+            self.assertEqual(result[2].diffs['F'].unified_diff,
+                             '--- \n'
+                             '+++ \n'
+                             '@@ -1,3 +1,3 @@\n'
+                             " //warning Don't use foo/bar in every example\n"
+                             "-int warning = 0; //Now I won't give warning\n"
+                             '+int warning = 0;\n'
+                             ' //Hacked, sorry that was your last warning')
+            self.assertEqual(result[3].diffs['F'].unified_diff,
+                             '--- \n'
+                             '+++ \n'
+                             '@@ -1,3 +1,2 @@\n'
+                             " //warning Don't use foo/bar in every example\n"
+                             " int warning = 0; //Now I won't give warning\n"
+                             '-//Hacked, sorry that was your last warning')
