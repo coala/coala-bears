@@ -101,8 +101,7 @@ class ApertiumLintBear:
         :param repeated_attributes_pardef:
             This issue is responsible for checking any repeated entries in
             the attributes associated with an entry in the parameter
-            definition section
-            n monodix files.
+            definition in monodix files.
         :param repeated_entries_pardef:
             This issue is responsible for detecting repeated entries in the
             parameter definition entries for a given paradigm in monodix files.
@@ -193,7 +192,7 @@ class ApertiumLintBear:
             binary values, 'yes' or 'no'. This function is responsible for
             making sure that no other value is used for the same.
         :param repeated_program:
-            Every modes file consits of various programs and there is always a
+            Every modes file consists of various programs and there is always a
             chance that a certain program may unintentionally get repeated.
         :param validate_program:
             This function validates every program mentioned in the modes file.
@@ -217,7 +216,7 @@ class ApertiumLintBear:
                    'paradigmNames': {'message': 'Warning : Improper paradigm '
                                      'name found :',
                                      'enable': paradigm_names},
-                   'rTagData': {'message': 'Warning : Inconsitency in <r> '
+                   'rTagData': {'message': 'Warning : Inconsistency in <r> '
                                 'text for pardef :',
                                 'enable': r_tag_data},
                    'repeatedAttributesPardef': {'message': 'Warning : Repeated'
