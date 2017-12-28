@@ -55,6 +55,9 @@ class FilenameBear(LocalBear):
         head, tail = os.path.split(filename)
         filename_without_extension, extension = os.path.splitext(tail)
 
+        if ignore_uppercase_filenames and filename_without_extension.isupper():
+            return
+
         if file_naming_convention is None:
             self.warn('Please specify a file naming convention explicitly'
                       ' or use "auto".')
@@ -97,9 +100,6 @@ class FilenameBear(LocalBear):
             messages.append(
                 'Filename does not use the suffix {!r}.'.format(
                     filename_suffix))
-
-        if ignore_uppercase_filenames and filename_without_extension.isupper():
-            return
 
         if messages:
             diff = Diff(file, rename=os.path.join(head, new_name + extension))
