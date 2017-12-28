@@ -3,9 +3,11 @@ from queue import Queue
 from textwrap import dedent
 
 from coalib.results.HiddenResult import HiddenResult, Result
+from bears.general.AnnotationBear import AnnotationContent, AnnotationRange
 from bears.general.QuotesBear import QuotesBear
 from coalib.results.SourceRange import SourceRange
 from coalib.settings.Section import Section
+from bears.general.AnnotationBear import AnnotationBear
 from coalib.testing.LocalBearTestHelper import execute_bear
 
 
@@ -32,26 +34,32 @@ class QuotesBearDiffTest(unittest.TestCase):
         """).splitlines(True)
 
         self.filename = 'f'
-
+        ranges = []
+        ranges.append(
+            AnnotationRange(
+                'multiline_string', [[], [], [], SourceRange.from_values(
+                    self.filename, 2, 1, 4, 3)]))
+        ranges.append(AnnotationRange('singleline_string', [
+                      [], [], [], SourceRange.from_values(
+                        self.filename, 5, 1, 5, 30)]))
+        ranges.append(AnnotationRange('singleline_string', [
+                      [], [], [], SourceRange.from_values(
+                        self.filename, 6, 1, 6, 37)]))
         self.dep_results = {
-            'AnnotationBear':
-                [HiddenResult(
+            AnnotationBear.name:
+                HiddenResult(
                     'AnnotationBear',
-                    {'comments': (), 'strings': (
-                        SourceRange.from_values(self.filename, 2, 1, 4, 3),
-                        SourceRange.from_values(self.filename, 5, 1, 5, 30),
-                        SourceRange.from_values(self.filename, 6, 1, 6, 37))
-                     }
-                )]
+                    AnnotationContent(ranges)
+                )
         }
 
     def test_error_handling(self):
-        dep_results = {'AnnotationBear': [Result('test', 'test')]}
+        dep_results = {AnnotationBear.name: Result('test', 'test')}
         with execute_bear(self.uut, self.filename, self.double_quote_file,
                           dependency_results=dep_results) as results:
             self.assertEqual(len(results), 0)
 
-        dep_results = {'AnnotationBear': [HiddenResult('a', 'error!')]}
+        dep_results = {AnnotationBear.name: HiddenResult('a', 'error!')}
         with execute_bear(self.uut, self.filename, self.double_quote_file,
                           dependency_results=dep_results) as results:
             self.assertEqual(len(results), 0)
