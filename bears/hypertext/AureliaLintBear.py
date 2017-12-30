@@ -2,6 +2,7 @@ from coalib.bearlib.abstractions.Linter import linter
 from dependency_management.requirements.NpmRequirement import NpmRequirement
 
 
+
 @linter(executable='template-lint',
         output_format='regex',
         output_regex=r'L(?P<line>\d+)C(?P<column>\d+): (?P<message>.*)')
