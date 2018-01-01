@@ -21,7 +21,7 @@ class CPDBearTest(unittest.TestCase):
             'code_duplication_samples'))
 
         self.section = Section('default')
-        self.section.append(Setting('language', 'java'))
+        self.section.append(Setting('programming_language', 'Java'))
         self.section.language = Language['Java']
         self.queue = Queue()
 
@@ -55,7 +55,7 @@ class CPDBearTest(unittest.TestCase):
 
     def test_unsupported_language(self):
         self.section.update_setting(
-            key='language', new_value='html')
+            key='programming_language', new_value='html')
         self.section.language = Language['html']
 
         self.uut = CPDBear({'file_name': 'hello world  \n'},
@@ -64,6 +64,6 @@ class CPDBearTest(unittest.TestCase):
 
         list(self.uut.run_bear_from_section([], {}))
         self.assertEqual(
-            self.uut.message_queue.queue[0].log_level, logging.ERROR)
-        self.assertIn('Hypertext Markup Language',
-                      self.uut.message_queue.queue[0].message)
+            self.uut.message_queue.queue[0].log_level, logging.WARNING)
+        self.assertEqual('This bear has no support for html.',
+                         self.uut.message_queue.queue[0].message)
