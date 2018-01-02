@@ -37,6 +37,7 @@ class JavaPMDBear:
     @deprecate_settings(allow_unnecessary_code=('check_unnecessary', negate),
                         allow_unused_code=('check_unused', negate))
     def create_arguments(filename, file, config_file,
+                         pmd_config: str = None,
                          check_best_practices: bool = True,
                          check_braces: bool = True,
                          check_clone_implementation: bool = True,
@@ -50,6 +51,8 @@ class JavaPMDBear:
                          allow_unnecessary_code: bool = False,
                          allow_unused_code: bool = False):
         """
+        :param pmd_config:
+            Allows custom rulesets other than default.
         :param check_best_practices:
             Checks for best practices.
         :param check_braces:
@@ -78,21 +81,24 @@ class JavaPMDBear:
         :param allow_unused_code:
             Allows unused code.
         """
-        options = {
-            'java-basic': check_best_practices,
-            'java-braces': check_braces,
-            'java-clone': check_clone_implementation,
-            'java-codesize': check_code_size,
-            'java-comments': check_comments,
-            'java-controversial': check_controversial,
-            'java-design': check_design,
-            'java-imports': check_imports,
-            'java-naming': check_naming,
-            'java-optimizations': check_optimizations,
-            'java-strings': check_strings,
-            'java-unnecessary': not allow_unnecessary_code,
-            'java-unusedcode': not allow_unused_code}
-        rules = ','.join(key for key in options if options[key])
+        if pmd_config:
+            rules = pmd_config
+        else:
+            options = {
+                'java-basic': check_best_practices,
+                'java-braces': check_braces,
+                'java-clone': check_clone_implementation,
+                'java-codesize': check_code_size,
+                'java-comments': check_comments,
+                'java-controversial': check_controversial,
+                'java-design': check_design,
+                'java-imports': check_imports,
+                'java-naming': check_naming,
+                'java-optimizations': check_optimizations,
+                'java-strings': check_strings,
+                'java-unnecessary': not allow_unnecessary_code,
+                'java-unusedcode': not allow_unused_code}
+            rules = ','.join(key for key in options if options[key])
 
         executable = which('pmd') or which('run.sh')  # Mac vs. Unix
         return executable, 'pmd', '-R', rules, '-d', filename
