@@ -52,6 +52,19 @@ def diff_from_clang_fixit(fixit, file):
     return Diff.from_string_arrays(file, new_file)
 
 
+def sourcerange_from_clang_range(range):
+    """
+    Creates a SourceRange from a clang SourceRange object.
+
+    :param range: A cindex.SourceRange object.
+    """
+    return SourceRange.from_values(range.start.file.name,
+                                   range.start.line,
+                                   range.start.column,
+                                   range.end.line,
+                                   range.end.column)
+
+
 class ClangBear(LocalBear):
     LANGUAGES = {'C', 'C++', 'Objective-C', 'Objective-C++', 'OpenMP',
                  'OpenCL', 'CUDA'}
@@ -84,7 +97,7 @@ class ClangBear(LocalBear):
                         2: RESULT_SEVERITY.NORMAL,
                         3: RESULT_SEVERITY.MAJOR,
                         4: RESULT_SEVERITY.MAJOR}.get(diag.severity)
-            affected_code = tuple(SourceRange.from_clang_range(range)
+            affected_code = tuple(sourcerange_from_clang_range(range)
                                   for range in diag.ranges)
 
             diffs = None
