@@ -30,11 +30,11 @@ def clang_available(cls):
 
 def diff_from_clang_fixit(fixit, file):
     """
-    Creates a Diff object from a given clang fixit and the file contents.
+    Creates a ``Diff`` object from a given clang fixit and the file contents.
 
-    :param fixit: A cindex.Fixit object.
+    :param fixit: A ``cindex.Fixit`` object.
     :param file:  A list of lines in the file to apply the fixit to.
-    :return:      The corresponding Diff object.
+    :return:      The corresponding ``Diff`` object.
     """
     assert isinstance(file, (list, tuple))
 
@@ -54,9 +54,9 @@ def diff_from_clang_fixit(fixit, file):
 
 def sourcerange_from_clang_range(range):
     """
-    Creates a SourceRange from a clang SourceRange object.
+    Creates a ``SourceRange`` from a clang ``SourceRange`` object.
 
-    :param range: A cindex.SourceRange object.
+    :param range: A ``cindex.SourceRange`` object.
     """
     return SourceRange.from_values(range.start.file.name,
                                    range.start.line,
