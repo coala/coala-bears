@@ -1,7 +1,8 @@
 import unittest
 from unittest.mock import patch
 
-from bears.c_languages.ClangBear import ClangBear
+from bears.c_languages.ClangBear import (
+    ClangBear, diff_from_clang_fixit)
 from coalib.settings.Section import Section
 from coalib.testing.LocalBearTestHelper import verify_local_bear
 
@@ -14,6 +15,25 @@ class ClangBearUtilitiesTest(unittest.TestCase):
         self.assertRaisesRegex(RuntimeError,
                                r'ClangBear requires clang 3\.4\.0',
                                ClangBear, Section('test-section'), None)
+
+    def test_from_clang_fixit(self):
+        try:
+            from clang.cindex import Index, LibclangError
+        except ImportError as err:
+            raise unittest.case.SkipTest(str(err))
+
+        joined_file = 'struct { int f0; }\nx = { f0 :1 };\n'
+        file = joined_file.splitlines(True)
+        fixed_file = ['struct { int f0; }\n', 'x = { .f0 = 1 };\n']
+        try:
+            tu = Index.create().parse('t.c', unsaved_files=[
+                ('t.c', joined_file)])
+        except LibclangError as err:
+            raise unittest.case.SkipTest(str(err))
+
+        fixit = tu.diagnostics[0].fixits[0]
+        clang_fixed_file = diff_from_clang_fixit(fixit, file).modified
+        self.assertEqual(fixed_file, clang_fixed_file)
 
 
 ClangBearTest = verify_local_bear(

@@ -28,6 +28,30 @@ def clang_available(cls):
         return str(error)
 
 
+def diff_from_clang_fixit(fixit, file):
+    """
+    Creates a Diff object from a given clang fixit and the file contents.
+
+    :param fixit: A cindex.Fixit object.
+    :param file:  A list of lines in the file to apply the fixit to.
+    :return:      The corresponding Diff object.
+    """
+    assert isinstance(file, (list, tuple))
+
+    oldvalue = '\n'.join(file[fixit.range.start.line-1:
+                              fixit.range.end.line])
+    endindex = fixit.range.end.column - len(file[fixit.range.end.line-1])-1
+
+    newvalue = (oldvalue[:fixit.range.start.column-1] +
+                fixit.value +
+                oldvalue[endindex:])
+    new_file = (file[:fixit.range.start.line-1] +
+                type(file)(newvalue.splitlines(True)) +
+                file[fixit.range.end.line:])
+
+    return Diff.from_string_arrays(file, new_file)
+
+
 class ClangBear(LocalBear):
     LANGUAGES = {'C', 'C++', 'Objective-C', 'Objective-C++', 'OpenMP',
                  'OpenCL', 'CUDA'}
@@ -68,7 +92,7 @@ class ClangBear(LocalBear):
             if len(fixits) > 0:
                 # FIXME: coala doesn't support choice of diffs, for now
                 # append first one only, often there's only one anyway
-                diffs = {filename: Diff.from_clang_fixit(fixits[0], file)}
+                diffs = {filename: diff_from_clang_fixit(fixits[0], file)}
 
                 # No affected code yet? Let's derive it from the fix!
                 if len(affected_code) == 0:
