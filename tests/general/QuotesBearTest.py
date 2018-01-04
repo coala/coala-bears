@@ -23,6 +23,14 @@ class QuotesBearDiffTest(unittest.TestCase):
         'A single quoted string with " in it'
         """).splitlines(True)
 
+        self.no_quote_file = dedent("""
+        '''
+        Multiline string
+        '''
+        "a string with double quotes!"
+        "A double quoted string"
+        """).splitlines(True)
+
         self.single_quote_file = dedent("""
         '''
         Multiline string
@@ -97,3 +105,44 @@ class QuotesBearDiffTest(unittest.TestCase):
                              '-"a string with double quotes!"\n'
                              "+'a string with double quotes!'\n"
                              " 'A single quoted string with \" in it'\n")
+
+        self.section['preferred_quotation'] = '"'
+        with execute_bear(self.uut, self.filename, self.double_quote_file,
+                          dependency_results=self.dep_results,
+                          force_preferred_quotation=True) as results:
+            res_list = list(results)
+            self.assertEqual(len(res_list), 1)
+            self.assertEqual(res_list[0].diffs[self.filename].unified_diff,
+                             '--- \n'
+                             '+++ \n'
+                             '@@ -3,4 +3,4 @@\n'
+                             ' Multiline string\n'
+                             " '''\n"
+                             ' "a string with double quotes!"\n'
+                             "-'A single quoted string with \" in it'\n"
+                             '+"A single quoted string with \\" in it"\n')
+
+        self.section['preferred_quotation'] = "'"
+        with execute_bear(self.uut, self.filename, self.no_quote_file,
+                          dependency_results=self.dep_results) as results:
+            res_list = list(results)
+            self.assertEqual(len(res_list), 2)
+            self.assertEqual(res_list[0].diffs[self.filename].unified_diff,
+                             '--- \n'
+                             '+++ \n'
+                             '@@ -2,5 +2,5 @@\n'
+                             " '''\n"
+                             ' Multiline string\n'
+                             " '''\n"
+                             '-"a string with double quotes!"\n'
+                             "+'a string with double quotes!'\n"
+                             ' "A double quoted string"\n')
+            self.assertEqual(res_list[1].diffs[self.filename].unified_diff,
+                             '--- \n'
+                             '+++ \n'
+                             '@@ -3,4 +3,4 @@\n'
+                             ' Multiline string\n'
+                             " '''\n"
+                             ' "a string with double quotes!"\n'
+                             '-"A double quoted string"\n'
+                             "+'A double quoted string\"\n'")
