@@ -24,7 +24,7 @@ what fixes it can apply to your code.
 Installation
 ============
 
-To install the **latest stable version** run:
+To install the **latest stable version**, run:
 
 .. code-block:: bash
 
@@ -32,7 +32,7 @@ To install the **latest stable version** run:
 
 |Stable|
 
-To install the latest development version run:
+To install the latest development version, run:
 
 .. code-block:: bash
 
@@ -41,7 +41,7 @@ To install the latest development version run:
 The latest code from the master branch is automatically deployed as the
 development version in PyPI.
 
-To also install all bears for coala at once run:
+To also install all bears for coala at once, run:
 
 .. code-block:: bash
 
