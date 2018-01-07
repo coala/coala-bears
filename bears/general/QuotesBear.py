@@ -11,7 +11,7 @@ class QuotesBear(LocalBear):
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
-    CAN_DETECT = {'Formatting'}
+    CAN_FIX = {'Formatting'}
 
     def correct_single_line_str(self, filename, file, sourcerange,
                                 preferred_quotation,
