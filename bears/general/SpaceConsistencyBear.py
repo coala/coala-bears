@@ -25,14 +25,14 @@ class SpaceConsistencyBear(LocalBear):
         tabs vs. spaces, trailing whitespace and (missing) newlines before
         the end of the file.
 
-        :param use_spaces:                True if spaces are to be used instead
-                                          of tabs.
-        :param allow_trailing_whitespace: Whether to allow trailing whitespace
-                                          or not.
-        :param indent_size:               Number of spaces per indentation
-                                          level.
-        :param enforce_newline_at_EOF:    Whether to enforce a newline at the
-                                          End Of File.
+        :param use_spaces:
+            True if spaces are to be used instead of tabs.
+        :param allow_trailing_whitespace:
+            Whether to allow trailing whitespace or not.
+        :param indent_size:
+            Number of spaces per indentation level.
+        :param enforce_newline_at_EOF:
+            Whether to enforce a newline at the End Of File.
         '''
         spacing_helper = SpacingHelper(indent_size)
         result_texts = []
