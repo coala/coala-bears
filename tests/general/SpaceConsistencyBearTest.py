@@ -1,7 +1,9 @@
 from queue import Queue
 
+import coalib.bearlib.aspects as coala_aspects
 from bears.general.SpaceConsistencyBear import (
     SpaceConsistencyBear, SpacingHelper)
+from coalib.bearlib.aspects.collections import AspectList
 from coalib.testing.LocalBearTestHelper import LocalBearTestHelper
 from coalib.settings.Section import Section
 from coalib.settings.Setting import Setting
@@ -11,15 +13,8 @@ class SpaceConsistencyBearTest(LocalBearTestHelper):
 
     def setUp(self):
         self.section = Section('test section')
+        self.section.language = 'Python'
         self.uut = SpaceConsistencyBear(self.section, Queue())
-
-    def test_needed_settings(self):
-        self.section.append(Setting('use_spaces', 'true'))
-
-        needed_settings = self.uut.get_non_optional_settings()
-        self.assertEqual(len(needed_settings),
-                         1 + len(SpacingHelper.get_non_optional_settings()))
-        self.assertIn('use_spaces', needed_settings)
 
     def test_defaults(self):
         # use_spaces is no default, need to set it explicitly.
@@ -70,3 +65,42 @@ class SpaceConsistencyBearTest(LocalBearTestHelper):
                                "    print('funny')\n",
                                "    print('the result is not funny...')"],
                               force_linebreaks=False)
+
+    def test_aspects_space(self):
+        self.section.aspects = AspectList([
+            coala_aspects['Indentation']('Python', indent_type='space')
+        ])
+
+        self.check_validity(self.uut, ['    t'])
+        self.check_invalidity(self.uut, ['\tt\n'])
+
+    def test_aspects_tabs(self):
+        self.section.aspects = AspectList([
+            coala_aspects['Indentation']('Python', indent_type='tab')
+        ])
+
+        self.check_invalidity(self.uut, ['   t'])
+        self.check_validity(self.uut, ['\tt\n'])
+
+    def test_aspects_tab_size(self):
+        self.section.aspects = AspectList([
+            coala_aspects['Indentation']('Python',
+                                         indent_size=2, indent_type='space')
+        ])
+
+        self.check_validity(self.uut,
+                            ['def validghost():\n',
+                             "  print('boo!')\n"],
+                            force_linebreaks=False)
+        self.check_invalidity(self.uut,
+                              ['def invalidghost():\n',
+                               "   print('boo.')\n"],
+                              force_linebreaks=False)
+
+    def test_aspects_nondefault(self):
+        self.section.aspects = AspectList([
+            coala_aspects['NewlineAtEOF']('Python', newline_at_EOF='false')
+        ])
+
+        self.check_validity(self.uut, ['t\n'])
+        self.check_validity(self.uut, ['t'])

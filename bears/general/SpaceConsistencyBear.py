@@ -3,9 +3,25 @@ from coalib.bearlib.spacing.SpacingHelper import SpacingHelper
 from coalib.bears.LocalBear import LocalBear
 from coalib.results.Diff import Diff
 from coalib.results.Result import Result
+from coalib.bearlib.aspects import map_setting_to_aspect
+from coalib.bearlib.aspects.Formatting import (
+    Formatting,
+    TrailingSpace,
+    Indentation,
+    NewlineAtEOF,
+)
 
 
-class SpaceConsistencyBear(LocalBear):
+class SpaceConsistencyBear(
+        LocalBear,
+        aspects={
+            'detect': [
+                Indentation,
+                NewlineAtEOF,
+                TrailingSpace,
+            ]},
+        languages=['Python']):
+
     LANGUAGES = {'All'}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
@@ -13,10 +29,15 @@ class SpaceConsistencyBear(LocalBear):
     CAN_FIX = {'Formatting'}
 
     @deprecate_settings(indent_size='tab_width')
+    @map_setting_to_aspect(
+        enforce_newline_at_EOF=NewlineAtEOF.newline_at_EOF,
+        allow_trailing_whitespace=TrailingSpace.allow_trailing_spaces,
+        indent_size=Indentation.indent_size,
+        use_spaces=Indentation.indent_type == 'space',)
     def run(self,
             filename,
             file,
-            use_spaces: bool,
+            use_spaces: bool=True,
             allow_trailing_whitespace: bool=False,
             indent_size: int=SpacingHelper.DEFAULT_TAB_WIDTH,
             enforce_newline_at_EOF: bool=True):
@@ -37,6 +58,12 @@ class SpaceConsistencyBear(LocalBear):
         spacing_helper = SpacingHelper(indent_size)
         result_texts = []
         additional_info_texts = []
+
+        aspect = (self.section.aspects and (
+                  self.section.aspects.get('Indentation').indent_type
+                  == 'space'))
+        if aspect:
+            use_spaces = True
 
         for line_number, line in enumerate(file, start=1):
             replacement = line
@@ -89,6 +116,7 @@ class SpaceConsistencyBear(LocalBear):
                     diffs={filename: diff},
                     file=filename,
                     line=line_number,
+                    aspect=Formatting('Python'),
                     additional_info='\n\n'.join(additional_info_texts))
                 result_texts = []
                 additional_info_texts = []
