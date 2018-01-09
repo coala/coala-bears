@@ -1,4 +1,5 @@
 import re
+import logging
 
 from coalib.bears.LocalBear import LocalBear
 from coalib.results.Result import Result
@@ -17,17 +18,26 @@ class LineCountBear(LocalBear):
             list(filter(lambda x: re.match(r'^\s*$', x), file)))
         return num_blank_lines
 
-    def run(self, filename, file, max_lines_per_file: int,
+    def run(self, filename, file, min_lines_per_file: int,
+            max_lines_per_file: int,
             exclude_blank_lines: bool = False,
             ):
         """
-        Count the number of lines in a file and ensure that they are
-        smaller than a given size.
+        Count the number of lines in a file and ensure that they lie within
+        the range of given sizes.
 
+        :param min_lines_per_file: Minimum number of lines required per file.
         :param max_lines_per_file: Maximum number of lines allowed per file.
         :param exclude_blank_lines: ``True`` if blank lines are to be excluded.
         """
         file_length = len(file)
+        if min_lines_per_file > max_lines_per_file:
+            logging.error('Allowed maximum lines per file ({}) is smaller '
+                          'than minimum lines per file ({})'
+                          .format(max_lines_per_file,
+                                  min_lines_per_file))
+            return
+
         if exclude_blank_lines:
             num_blank_lines = self._get_blank_line_count(file)
             file_length = file_length - num_blank_lines
@@ -40,4 +50,13 @@ class LineCountBear(LocalBear):
                          .format(count=file_length,
                                  extra=file_length-max_lines_per_file)),
                 severity=RESULT_SEVERITY.NORMAL,
+                file=filename)
+
+        elif file_length < min_lines_per_file:
+            yield Result.from_values(
+                origin=self,
+                message=('This file has {} lines, while {} lines are '
+                         'required.'
+                         .format(file_length,
+                                 min_lines_per_file)),
                 file=filename)
