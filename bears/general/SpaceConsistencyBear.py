@@ -18,6 +18,7 @@ class SpaceConsistencyBear(LocalBear):
             file,
             use_spaces: bool,
             allow_trailing_whitespace: bool=False,
+            allow_leading_blanklines: bool=False,
             indent_size: int=SpacingHelper.DEFAULT_TAB_WIDTH,
             enforce_newline_at_EOF: bool=True):
         '''
@@ -29,6 +30,9 @@ class SpaceConsistencyBear(LocalBear):
             True if spaces are to be used instead of tabs.
         :param allow_trailing_whitespace:
             Whether to allow trailing whitespace or not.
+        :param allow_leading_blanklines:
+            Whether to allow leading blanklines
+            at start of file or not.
         :param indent_size:
             Number of spaces per indentation level.
         :param enforce_newline_at_EOF:
@@ -38,7 +42,50 @@ class SpaceConsistencyBear(LocalBear):
         result_texts = []
         additional_info_texts = []
 
-        for line_number, line in enumerate(file, start=1):
+        def get_blanklines_nr_end():
+            line_nr_end = False
+            enumerated_zip_obj = zip(range(1, len(file) + 1),
+                                     file)
+            enumerated_tuple = tuple(enumerated_zip_obj)
+
+            for line_number, line in enumerated_tuple:
+                replacement = line
+                if replacement.strip() == '':
+                    line_nr_end = line_number
+                else:
+                    break
+
+            return line_nr_end
+
+        if allow_leading_blanklines:
+            start_line_of_file = 1
+
+        else:
+            blanklines_nr_end = get_blanklines_nr_end()
+            start_line_of_file = 1
+            if blanklines_nr_end:
+                start_line_of_file = blanklines_nr_end + 1
+                result_texts.append('Leading blanklines.')
+                additional_info_texts.append(
+                    'Your source code contains leading blanklines.'
+                    'Those usually have no meaning. Please consider'
+                    'removing them.')
+                diff = Diff(file)
+                diff.delete_lines(1, blanklines_nr_end)
+                inconsistencies = ''.join('\n- ' + string
+                                          for string in result_texts)
+                yield Result.from_values(
+                    self,
+                    'Line contains following spacing inconsistencies:'
+                    + inconsistencies,
+                    diffs={filename: diff},
+                    file=filename,
+                    additional_info='\n\n'.join(additional_info_texts))
+                result_texts = []
+                additional_info_texts = []
+
+        for line_number, line in enumerate(file[start_line_of_file - 1:],
+                                           start=start_line_of_file):
             replacement = line
 
             if enforce_newline_at_EOF:

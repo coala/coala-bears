@@ -1,4 +1,3 @@
-
 from bears.c_languages.ClangBear import ClangBear
 from coalib.testing.LocalBearTestHelper import verify_local_bear
 
