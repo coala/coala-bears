@@ -35,7 +35,7 @@ class JSHintBear:
     """
 
     LANGUAGES = {'JavaScript'}
-    REQUIREMENTS = {NpmRequirement('jshint', '2')}
+    REQUIREMENTS = {NpmRequirement('jshint', '2.9.5')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
