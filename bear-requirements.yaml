@@ -1,4 +1,6 @@
 gem_requirements:
+  brakeman:
+    version: 4.1.1
   csvlint: true
   haml_lint:
     version: 0.27.0
