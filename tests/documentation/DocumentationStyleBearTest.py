@@ -60,10 +60,46 @@ def test_MalformedComment(test_data, message, optional_setting=None):
                 DocumentationStyleBear(section, Queue()),
                 'dummy_file',
                 test_data,
+                use_spaces=True,
+                **arguments) as results:
+            self.assertEqual(results[0].message, message)
+
+        with execute_bear(
+                DocumentationStyleBear(section, Queue()),
+                'dummy_file',
+                test_data,
+                use_spaces=False,
                 **arguments) as results:
             self.assertEqual(results[0].message, message)
 
     return test_MalformedComment_function
+
+
+def test_use_spaces(test_data, message, optional_setting=None):
+    def test_use_spaces_function(self):
+        arguments = {'language': 'python', 'docstyle': 'default'}
+        if optional_setting:
+            arguments.update(optional_setting)
+        section = Section('test-section')
+        for key, value in arguments.items():
+            section[key] = value
+
+        with execute_bear(
+                DocumentationStyleBear(section, Queue()),
+                'dummy_file',
+                test_data,
+                **arguments) as results:
+            self.assertEqual(results[0].message, message)
+
+        with execute_bear(
+                DocumentationStyleBear(section, Queue()),
+                'dummy_file',
+                test_data,
+                use_spaces=False,
+                **arguments) as results:
+            self.assertEqual(results[0].message, message)
+
+    return test_use_spaces_function
 
 
 class DocumentationStyleBearTest(unittest.TestCase):
@@ -97,3 +133,13 @@ class DocumentationStyleBearTest(unittest.TestCase):
              marker has been found, but no instance of DocComment is
              returned."""),
         {'language': 'java'})
+
+    test_use_spaces_comment = test_use_spaces(
+        ['"""\n',
+         ':param a:'
+         '    Is just a param'
+         '"""'],
+        dedent("""\
+             Missing function description.
+             Please set allow_missing_func_desc = True to ignore this warning.
+             """))

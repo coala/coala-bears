@@ -24,7 +24,8 @@ class DocumentationStyleBear(DocBaseClass, LocalBear):
                               doc_comment: DocumentationComment,
                               allow_missing_func_desc: str=False,
                               indent_size: int=4,
-                              expand_one_liners: str=False):
+                              expand_one_liners: str=False,
+                              use_spaces: bool=True):
         """
         This fixes the parsed documentation comment.
 
@@ -37,6 +38,8 @@ class DocumentationStyleBear(DocBaseClass, LocalBear):
             Number of spaces per indentation level.
         :param expand_one_liners:
             When set ``True`` this will expand one liner docstrings.
+        :param use_spaces:
+            Decides whether spaces are used for indentation or tabs.
         :return:
             An instance of a processed/fixed DocumentationComment.
         """
@@ -82,9 +85,9 @@ class DocumentationStyleBear(DocBaseClass, LocalBear):
                 if stripped_desc[0] != '':
                     stripped_desc.insert(0, '')
 
-            # Indent with 4 spaces.
-            stripped_desc = ('' if line == '' else ' ' * indent_size
-                             + line for line in stripped_desc)
+            indent = ' ' if use_spaces else '\t'
+            stripped_desc = ('' if line == '' else indent * indent_size +
+                             line for line in stripped_desc)
 
             new_desc = '\n'.join(stripped_desc)
 
@@ -126,7 +129,8 @@ class DocumentationStyleBear(DocBaseClass, LocalBear):
 
     def run(self, filename, file, language: str,
             docstyle: str='default', allow_missing_func_desc: str=False,
-            indent_size: int=4, expand_one_liners: str=False):
+            indent_size: int=4, expand_one_liners: str=False,
+            use_spaces: bool=True):
         """
         Checks for certain in-code documentation styles.
 
@@ -156,6 +160,8 @@ class DocumentationStyleBear(DocBaseClass, LocalBear):
         :param expand_one_liners:
             When set ``True`` this will expand one liner
             docstrings.
+        :param use_spaces:
+            Decides whether spaces are used for indentation or tabs.
         """
 
         for doc_comment in self.extract(file, language, docstyle):
@@ -168,7 +174,7 @@ class DocumentationStyleBear(DocBaseClass, LocalBear):
             else:
                 (new_comment, warning_desc) = self.process_documentation(
                                 doc_comment, allow_missing_func_desc,
-                                indent_size, expand_one_liners)
+                                indent_size, expand_one_liners, use_spaces)
 
                 # Cache cleared so a fresh docstring is assembled
                 doc_comment.assemble.cache_clear()
