@@ -126,6 +126,9 @@ class GitCommitBear(GlobalBear):
         yield from self.check_shortlog(
             shortlog,
             **self.get_shortlog_checks_metadata().filter_parameters(kwargs))
+        yield from self.check_revert_commit(
+            shortlog,
+            body)
         yield from self.check_body(
             body,
             **self.get_body_checks_metadata().filter_parameters(kwargs))
@@ -353,3 +356,11 @@ class GitCommitBear(GlobalBear):
                 elif not compiled_issue_no_regex.fullmatch(reference.group(1)):
                     yield Result(self, 'Invalid issue number: '
                                        '{}'.format(issue))
+
+    def check_revert_commit(self, shortlog, body):
+        """
+        Check for revert commits
+        and that they have a reason
+        """
+        if shortlog.startswith('Revert') and len(body) == 0:
+            yield Result(self, 'Revert commit does not have a reason')
