@@ -4,7 +4,7 @@
   "dependencies": {
     "alex": "~3",
     "autoprefixer": "~6",
-    "babel-eslint": "~8",
+    "babel-eslint": "~8.0",
     "bootlint": "~0",
     "coffeelint": "~1",
     "complexity-report": "~2.0.0-alpha",
