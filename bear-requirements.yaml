@@ -47,6 +47,8 @@ npm_requirements:
     version: ~3
   eslint-plugin-import:
     version: ~2
+  gherkin-lint:
+    version: ~2
   happiness:
     version: ~10
   htmlhint:
