@@ -28,7 +28,7 @@ class TextLintBear:
                                    '1.0.1'),
                     NpmRequirement('textlint-rule-date-weekday-mismatch',
                                    '1.0.5'),
-                    NpmRequirement('textlint-rule-ginger', '2.1.0'),
+                    NpmRequirement('textlint-rule-ginger', '>=2.1.0 <2.1.2'),
                     NpmRequirement('textlint-rule-max-comma', '1.0.4'),
                     NpmRequirement('textlint-rule-max-number-of-lines',
                                    '1.0.3'),
