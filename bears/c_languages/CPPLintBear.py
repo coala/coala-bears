@@ -28,9 +28,12 @@ class CPPLintBear:
                          cpplint_ignore: typed_list(str)=(),
                          cpplint_include: typed_list(str)=()):
         """
-        :param max_line_length: Maximum number of characters for a line.
-        :param cpplint_ignore:  List of checkers to ignore.
-        :param cpplint_include: List of checkers to explicitly enable.
+        :param max_line_length:
+            Maximum number of characters for a line.
+        :param cpplint_ignore:
+            List of checkers to ignore.
+        :param cpplint_include:
+            List of checkers to explicitly enable.
         """
         ignore = ','.join('-'+part.strip() for part in cpplint_ignore)
         include = ','.join('+'+part.strip() for part in cpplint_include)
