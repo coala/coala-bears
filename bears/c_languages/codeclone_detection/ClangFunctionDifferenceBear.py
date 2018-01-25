@@ -87,7 +87,7 @@ class ClangFunctionDifferenceBear(GlobalBear):
     REQUIREMENTS = ClangBear.REQUIREMENTS | {PipRequirement('munkres3', '1.0')}
 
     def run(self,
-            counting_conditions: counting_condition_dict=default_cc_dict,
+            counting_conditions: default_cc_dict=counting_condition_dict,
             average_calculation: bool=False,
             poly_postprocessing: bool=True,
             exp_postprocessing: bool=False,
