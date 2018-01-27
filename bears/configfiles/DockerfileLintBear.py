@@ -29,8 +29,16 @@ class DockerfileLintBear:
         'info': RESULT_SEVERITY.INFO}
 
     @staticmethod
-    def create_arguments(filename, file, config_file):
-        return '--json', '-f', filename
+    def create_arguments(filename, file, config_file,
+                         dockerfile_lint_rule_file: str=''):
+        """
+        :param dockerfile_lint_rule_file:
+            A yaml rule file for `dockerfile_lint`.
+        """
+        args = ('--json', '-f', filename)
+        if dockerfile_lint_rule_file:
+            args += ('-r', dockerfile_lint_rule_file)
+        return args
 
     def process_output(self, output, filename, file):
         output = json.loads(output)
