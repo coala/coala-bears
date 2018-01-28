@@ -1,4 +1,5 @@
 import shutil
+import logging
 
 from guess_language import guess_language
 
@@ -45,7 +46,8 @@ class LanguageToolBear(LocalBear):
         :param natural_language:           A locale representing the language
                                            you want to have checked. If set to
                                            'auto' the language is guessed.
-                                           If the language cannot be guessed,
+                                           If the language cannot be guessed or
+                                           an unsupported language is guessed,
                                            'en-US' is used.
         :param languagetool_disable_rules: List of rules to disable checks for.
         '''
@@ -57,12 +59,19 @@ class LanguageToolBear(LocalBear):
         natural_language = (guess_language(joined_text)
                             if natural_language == 'auto'
                             else natural_language)
-        natural_language = 'en-US' if not natural_language \
-                           else natural_language
 
-        tool = LanguageTool(natural_language, motherTongue='en_US')
+        try:
+            tool = LanguageTool(natural_language, motherTongue='en_US')
+        except ValueError:
+            # Using 'en-US' if guessed language is not supported
+            logging.warn(
+                "Changing the `natural_language` setting to 'en-US' as "
+                '`language_check` failed to guess a valid language.'
+            )
+            natural_language = 'en-US'
+            tool = LanguageTool(natural_language, motherTongue='en_US')
+
         tool.disabled.update(languagetool_disable_rules)
-
         matches = tool.check(joined_text)
         for match in matches:
             if not match.replacements:
