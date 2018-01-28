@@ -1,3 +1,5 @@
+import sys
+
 from coalib.bearlib.abstractions.Linter import linter
 from dependency_management.requirements.PipRequirement import PipRequirement
 from coalib.settings.Setting import typed_list
@@ -30,11 +32,15 @@ class CPPLintBear:
         """
         :param max_line_length:
             Maximum number of characters for a line.
+            When set to 0 allows infinite line length.
         :param cpplint_ignore:
             List of checkers to ignore.
         :param cpplint_include:
             List of checkers to explicitly enable.
         """
+        if not max_line_length:
+            max_line_length = sys.maxsize
+
         ignore = ','.join('-'+part.strip() for part in cpplint_ignore)
         include = ','.join('+'+part.strip() for part in cpplint_include)
         return ('--filter=' + ignore + ',' + include,
