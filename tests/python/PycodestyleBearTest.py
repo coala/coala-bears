@@ -54,3 +54,30 @@ PycodestyleBearLineLengthTest = verify_local_bear(
     invalid_files=(),
     settings={'max_line_length': 200}
 )
+
+bad_file_2 = '''
+x = "http://a.domain.de"
+
+
+
+
+y = 5
+'''
+
+PycodestyleBearIgnoreRegexTest = verify_local_bear(
+    PycodestyleBear,
+    valid_files=('x = "ftps://a.domain.de"',
+                 'x = "ftp://a.domain.de"',),
+    invalid_files=(bad_file_2,),
+    settings={'max_line_length': 5,
+              'ignore_regex': 'ftps?://'}
+)
+
+
+PycodestyleBearDefaultRegexTest = verify_local_bear(
+    PycodestyleBear,
+    valid_files=('x = "http://a.domain.de"',
+                 'x = "https://a.domain.de"',),
+    invalid_files=('y = "htttps"',),
+    settings={'max_line_length': 4}
+)
