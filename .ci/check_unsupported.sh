@@ -13,7 +13,8 @@ sed -i.bak -E '/^(mypy|guess-language-spirit)/d' bear-requirements.txt
 
 # pylint installs pytest-runner, and 2.12 creates a version mismatch
 # https://github.com/pytest-dev/pytest-runner/issues/40
-pip install 'pytest-runner==2.12'
+# pbr failing on py33
+pip install 'pytest-runner==2.12' 'pbr~=4.0.0'
 
 python setup.py install | tee setup.log
 
