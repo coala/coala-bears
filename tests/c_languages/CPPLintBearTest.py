@@ -22,14 +22,14 @@ CPPLintBearIgnoreConfigTest = verify_local_bear(
     CPPLintBear,
     valid_files=(test_file,),
     invalid_files=(),
-    settings={'cpplint_ignore': 'legal'},
+    settings={'cpplint_ignore': 'legal/copyright'},
     tempfile_kwargs={'suffix': '.cpp'})
 
 CPPLintBearLineLengthConfigTest = verify_local_bear(
     CPPLintBear,
     valid_files=(),
     invalid_files=(test_file,),
-    settings={'cpplint_ignore': 'legal',
+    settings={'cpplint_ignore': 'legal/copyright',
               'max_line_length': '13'},
     tempfile_kwargs={'suffix': '.cpp'})
 
