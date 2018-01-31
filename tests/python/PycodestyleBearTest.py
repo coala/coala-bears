@@ -17,6 +17,9 @@ def hello():
     print("hello world")
 '''
 
+file_with_very_long_line = ('def ' + 'h' * 1000 + '():\n' +
+                            '    print("hello")')
+
 PycodestyleBearTest = verify_local_bear(
     PycodestyleBear,
     valid_files=(good_file,),
@@ -54,3 +57,9 @@ PycodestyleBearLineLengthSettingTest = verify_local_bear(
     invalid_files=(),
     settings={'max_line_length': 200}
 )
+
+PycodestyleBearInfiniteLineLengthTest = verify_local_bear(
+    PycodestyleBear,
+    valid_files=(file_with_very_long_line,),
+    invalid_files=(),
+    settings={'max_line_length': 0})

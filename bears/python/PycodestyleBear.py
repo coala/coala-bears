@@ -1,3 +1,5 @@
+import sys
+
 from coalib.bearlib.abstractions.Linter import linter
 from coalib.settings.Setting import typed_list
 
@@ -37,9 +39,13 @@ class PycodestyleBear:
             these errors are going to be detected.
             See ``pydocstyle`` documentation for a complete list of errors.
         :param max_line_length:
-            Limit lines to this length.
+            Limit lines to this length. Allows infinite line length when
+            set to 0.
         """
         arguments = [r'--format=%(row)d %(col)d %(code)s %(text)s']
+
+        if not max_line_length:
+            max_line_length = sys.maxsize
 
         if pycodestyle_ignore:
             ignore = ','.join(part.strip() for part in pycodestyle_ignore)
