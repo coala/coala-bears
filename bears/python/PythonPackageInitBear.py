@@ -5,7 +5,6 @@ from coalib.bears.GlobalBear import GlobalBear
 
 
 class PythonPackageInitBear(GlobalBear):
-
     LANGUAGES = {'Python', 'Python 3', 'Python 2'}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
