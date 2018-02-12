@@ -23,7 +23,7 @@ class PyLintBear:
     separately.
     """
     LANGUAGES = {'Python', 'Python 2', 'Python 3'}
-    REQUIREMENTS = {PipRequirement('pylint', '1.6.0')}
+    REQUIREMENTS = {PipRequirement('pylint', '1.7.4')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
