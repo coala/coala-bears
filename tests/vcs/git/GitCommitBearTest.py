@@ -95,11 +95,13 @@ class GitCommitBearTest(unittest.TestCase):
         metadata = GitCommitBear.get_metadata()
         self.assertEqual(
             metadata.name,
-            "<Merged signature of 'run', 'check_shortlog', 'check_body'"
-            ", 'check_issue_reference'>")
+            "<Merged signature of 'run', 'check_revert', 'check_shortlog'"
+            ", 'check_body', 'check_issue_reference'>")
 
         # Test if at least one parameter of each signature is used.
         self.assertIn('allow_empty_commit_message', metadata.optional_params)
+        self.assertIn('allow_revert_commits_without_reason',
+                      metadata.optional_params)
         self.assertIn('shortlog_length', metadata.optional_params)
         self.assertIn('body_line_length', metadata.optional_params)
         self.assertIn('body_close_issue', metadata.optional_params)
@@ -123,6 +125,68 @@ class GitCommitBearTest(unittest.TestCase):
 
         self.assertEqual(self.run_uut(allow_empty_commit_message=True),
                          [])
+        self.assert_no_msgs()
+
+    def test_revert_checks(self):
+        self.git_commit('Test commit')
+        commit_hash, _ = run_shell_command('git rev-parse HEAD')
+        self.git_commit('Revert "Test commit"\n\n'
+                        'Abcdef blablabla commit ' + str(commit_hash) + '\n\n'
+                        'Reason for the revert commit is explained here.\n')
+        self.assertEqual(self.run_uut(),
+                         ['Invalid revert commit.'])
+        self.assert_no_msgs()
+
+        self.git_commit('Test commit1\n\n'
+                        'This is body of test commit1\n')
+        commit_hash, _ = run_shell_command('git rev-parse HEAD')
+
+        self.git_commit('Revert "Another Test commit2"\n\n'
+                        'This reverts commit ' + str(commit_hash) + '\n\n'
+                        'Reason for the revert commit is explained here.\n')
+        self.assertEqual(
+            self.run_uut(),
+            ['Shortlog of revert commit does not match the original commit.'])
+        self.assert_no_msgs()
+
+        self.git_commit('Test commit3')
+        commit_hash, _ = run_shell_command('git rev-parse HEAD')
+        self.git_commit('Revert "Test commit3"\n\n'
+                        'This reverts commit ' + str(commit_hash) + '\n\n')
+        self.assertEqual(self.run_uut(),
+                         ['Revert commit does not have a reason.'])
+        self.assert_no_msgs()
+
+        self.git_commit('Revert "Test commit3"\n\n'
+                        'This reverts commit ' + str(commit_hash) + '\n\n')
+        self.assertEqual(
+            self.run_uut(allow_revert_commits_without_reason=True),
+            [])
+        self.assert_no_msgs()
+
+        self.git_commit('Revert "Test commit3"\n\n'
+                        'This reverts commit ' + str(commit_hash) + '\n\n'
+                        'Reason for the revert commit is explained here.\n')
+        self.assertEqual(self.run_uut(), [])
+        self.assert_no_msgs()
+
+        invalid_commit_hash = '0000000000000000000000000000000000000000'
+        self.git_commit('Revert "Test commit3"\n\n'
+                        'This reverts commit ' + invalid_commit_hash + '\n\n'
+                        'Reason for the revert commit is explained here.\n')
+        self.assertEqual(self.run_uut(),
+                         ['Invalid sha for reverted commit.'])
+        self.assert_no_msgs()
+
+        self.git_commit('Test commit4\n\n'
+                        'This is body of test commit1\n')
+        commit_hash, _ = run_shell_command('git rev-parse HEAD')
+        self.git_commit('Revert "Another Test commit5"\n\n'
+                        'This reverts commit ' + str(commit_hash) + '\n\n'
+                        'Reason for the revert commit is explained here.\n')
+        self.assertEqual(
+            self.run_uut(),
+            ['Shortlog of revert commit does not match the original commit.'])
         self.assert_no_msgs()
 
     @unittest.mock.patch('bears.vcs.git.GitCommitBear.run_shell_command',
