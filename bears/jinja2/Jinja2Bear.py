@@ -112,11 +112,17 @@ class Jinja2Bear(LocalBear):
 
     VARIABLE_REGEX = re.compile(
         r'(?P<open>{{)(?P<content>.*?)(?P<close>}})')
+    STATEMENT_REGEX = re.compile(
+        r'(?P<open>{%[+-]?)'
+        r'(?P<content>(?![+-]?\s*for)'
+        r'(?![+-]?\s*if)(?![+-]?\s*endfor)'
+        r'(?![+-]?\s*endif).*?)'
+        r'(?P<close>[+-]?%})')
     CONTROL_START_REGEX = re.compile(
-        r'(?P<open>{%)(?P<content>\s*(for|if).*?)(?P<close>%})')
+        r'(?P<open>{%[+-]?)(?P<content>\s*(for|if).*?)(?P<close>[+-]?%})')
     CONTROL_END_REGEX = re.compile(
-        r'(?P<open>{%)(?P<content>\s*end(for|if)\s*?)'
-        r'(?P<close>%})(?P<label>{#.*?#})?')
+        r'(?P<open>{%[+-]?)(?P<content>\s*end(for|if)\s*?)'
+        r'(?P<close>[+-]?%})(?P<label>{#.*?#})?')
 
     def handle_control_spacing_issue(self, file, filename, line, line_number,
                                      control_spacing, match_object):
@@ -182,6 +188,44 @@ class Jinja2Bear(LocalBear):
                     column=m.start(0) + 1,
                     end_line=line_number,
                     end_column=m.end(0) + 1,
+                    diffs=diff)
+
+    def check_for_statement_spacing_issues(self,
+                                           file,
+                                           filename,
+                                           line,
+                                           line_number,
+                                           statement_spacing):
+        """
+        Checks any statement in the given line for spacing issues.
+
+        :param file:
+            The content of the file currently being inspected.
+        :param filename:
+            The name of the file currently being inspected.
+        :param line:
+            The content of the line currently being inspected.
+        :param line_number:
+            The current line number.
+        :param statement_spacing:
+            The number of spaces required on each side of a statement tag.
+        """
+        for match in self.STATEMENT_REGEX.finditer(line):
+            content = match.group('content')
+            if not has_required_spacing(content, statement_spacing):
+                diff = generate_spacing_diff(
+                    file, filename, line, line_number, match,
+                    statement_spacing)
+                yield Result.from_values(
+                    origin=self,
+                    message='Statement block not spaced with '
+                            '{} spaces on each side.'.format(
+                                statement_spacing),
+                    file=filename,
+                    line=line_number,
+                    column=match.start() + 1,
+                    end_line=line_number,
+                    end_column=match.end() + 1,
                     diffs=diff)
 
     def check_control_start_tags(self,
@@ -310,6 +354,7 @@ class Jinja2Bear(LocalBear):
             filename,
             file,
             variable_spacing: int=1,
+            statement_spacing: int=1,
             control_spacing: int=1):
         """
         Check `Jinja2 templates <http://jinja.pocoo.org>`_ for syntax,
@@ -321,6 +366,10 @@ class Jinja2Bear(LocalBear):
             this: ``{{ var_name }}``. This can be set to any number of spaces
             via the setting ``variable_spacing``.
             Malformatted variable tags are detected and fixes suggested.
+        * Statement spacing:
+            Statement tags should be padded with one space on each side, like
+            this: ``{% statement %}``. This can be set to any number of spaces
+            via the setting ``statement_spacing``.
         * Control spacing:
             Like variable spacing, but for control blocks, i.e. ``if`` and
             ``for`` constructs. Looks at both start and end block.
@@ -345,6 +394,9 @@ class Jinja2Bear(LocalBear):
         :param variable_spacing:
             The number of spaces a variable block should be spaced with.
             Default is 1.
+        :param statement_spacing:
+            The number of spaces a statement block should be spaced with.
+            Default is 1.
         :param control_spacing:
             The number of spaces a control block should be spaced with.
             Default is 1.
@@ -359,6 +411,9 @@ class Jinja2Bear(LocalBear):
 
             yield from self.check_for_variable_spacing_issues(
                 file, filename, line, line_number, variable_spacing)
+
+            yield from self.check_for_statement_spacing_issues(
+                file, filename, line, line_number, statement_spacing)
 
             yield from self.check_control_start_tags(
                 file, filename, line, line_number, control_spacing)
