@@ -40,7 +40,7 @@ class LanguageToolBear(LocalBear):
             file,
             natural_language: str='auto',
             languagetool_disable_rules: typed_list(str)=()):
-        '''
+        """
         Checks the code with LanguageTool.
 
         :param natural_language:           A locale representing the language
@@ -50,7 +50,7 @@ class LanguageToolBear(LocalBear):
                                            an unsupported language is guessed,
                                            'en-US' is used.
         :param languagetool_disable_rules: List of rules to disable checks for.
-        '''
+        """
         # Defer import so the check_prerequisites can be run without
         # language_check being there.
         from language_check import LanguageTool, correct
