@@ -7,6 +7,10 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.results.SourceRange import SourceRange
 from coalib.settings.Setting import typed_list
 
+from dependency_management.requirements.PipRequirement import PipRequirement
+
+from pkg_resources import get_distribution
+
 
 def clang_available(cls):
     """
@@ -14,6 +18,9 @@ def clang_available(cls):
 
     :return: True if Clang is available, a description of the error else.
     """
+    if get_distribution('libclang-py3').version != '3.4.0':
+        return ClangBear.name + ' requires clang 3.4.0'
+
     try:
         Index.create()
         return True
@@ -25,7 +32,7 @@ class ClangBear(LocalBear):
     LANGUAGES = {'C', 'C++', 'Objective-C', 'Objective-C++', 'OpenMP',
                  'OpenCL', 'CUDA'}
     # Depends on libclang-py3, which is a dependency of coala
-    REQUIREMENTS = set()
+    REQUIREMENTS = {PipRequirement('libclang-py3', '3.4.0')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
