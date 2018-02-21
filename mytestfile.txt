@@ -1,0 +1,1 @@
+This is just a test file added to work on make a WIP PR for https://github.com/coala/coala-bears/pull/2233
