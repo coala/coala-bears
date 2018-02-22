@@ -48,7 +48,7 @@ PycodestyleBearLineLengthTest = verify_local_bear(
     invalid_files=(long_line,)
 )
 
-PycodestyleBearLineLengthTest = verify_local_bear(
+PycodestyleBearLineLengthSettingTest = verify_local_bear(
     PycodestyleBear,
     valid_files=(long_line,),
     invalid_files=(),
