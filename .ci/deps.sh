@@ -20,6 +20,7 @@ go get -u sourcegraph.com/sqs/goreturns
 go get -u golang.org/x/tools/cmd/gotype
 go get -u github.com/kisielk/errcheck
 go get -u github.com/BurntSushi/toml/cmd/tomlv
+go get -u github.com/alecthomas/gometalinter
 
 # Ruby commands
 bundle install --path=vendor/bundle --binstubs=vendor/bin --jobs=8 --retry=3
@@ -62,3 +63,6 @@ wget "https://downloads.sourceforge.net/project/astyle/astyle/astyle%203.0.1/ast
 tar -xvzf ~/astyle.tar.gz -C ~/
 make -C ~/astyle/build/gcc
 sudo make install -C ~/astyle/build/gcc
+
+# gometalinter installation
+gometalinter --install
