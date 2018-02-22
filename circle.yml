@@ -54,6 +54,15 @@ machine:
   java:
     version: oraclejdk8
 
+jobs:
+  build:
+    branches:
+      only:
+        - master
+        - coala/*
+    command:
+      - bash .ci/buildci.sh
+
 test:
   override:
     - python setup.py bdist_wheel:
