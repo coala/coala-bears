@@ -13,8 +13,6 @@ class DockerfileLintBear:
     in Dockerfiles. It also checks LABEL rules against docker images.
 
     Uses ``dockerfile_lint`` to provide the analysis.
-    See <https://github.com/projectatomic/dockerfile_lint#dockerfile-lint> for
-    more information .
     """
     LANGUAGES = {'Dockerfile'}
     REQUIREMENTS = {NpmRequirement('dockerfile_lint', '0.2.7')}
@@ -22,6 +20,7 @@ class DockerfileLintBear:
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
     CAN_DETECT = {'Syntax', 'Smell'}
+    SEE_MORE = 'https://github.com/projectatomic/dockerfile_lint'
 
     severity_map = {
         'error': RESULT_SEVERITY.MAJOR,
