@@ -1,0 +1,2 @@
+This file contains copyright notice along with the author name.
+Copyright 2018 The coala developers and hence this file should not give any output.
