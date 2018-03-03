@@ -79,31 +79,6 @@ class GitCommitBearTest(unittest.TestCase):
             onerror = None
         shutil.rmtree(self.gitdir, onerror=onerror)
 
-    def test_check_prerequisites(self):
-        _shutil_which = shutil.which
-        try:
-            shutil.which = lambda *args, **kwargs: None
-            self.assertEqual(GitCommitBear.check_prerequisites(),
-                             'git is not installed.')
-
-            shutil.which = lambda *args, **kwargs: 'path/to/git'
-            self.assertTrue(GitCommitBear.check_prerequisites())
-        finally:
-            shutil.which = _shutil_which
-
-    def test_get_metadata(self):
-        metadata = GitCommitBear.get_metadata()
-        self.assertEqual(
-            metadata.name,
-            "<Merged signature of 'run', 'check_shortlog', 'check_body'"
-            ", 'check_issue_reference'>")
-
-        # Test if at least one parameter of each signature is used.
-        self.assertIn('allow_empty_commit_message', metadata.optional_params)
-        self.assertIn('shortlog_length', metadata.optional_params)
-        self.assertIn('body_line_length', metadata.optional_params)
-        self.assertIn('body_close_issue', metadata.optional_params)
-
     def test_git_failure(self):
         # In this case use a reference to a non-existing commit, so just try
         # to log all commits on a newly created repository.
@@ -123,12 +98,6 @@ class GitCommitBearTest(unittest.TestCase):
 
         self.assertEqual(self.run_uut(allow_empty_commit_message=True),
                          [])
-        self.assert_no_msgs()
-
-    @unittest.mock.patch('bears.vcs.git.GitCommitBear.run_shell_command',
-                         return_value=('one-liner-message\n', ''))
-    def test_pure_oneliner_message(self, patch):
-        self.assertEqual(self.run_uut(), [])
         self.assert_no_msgs()
 
     def test_shortlog_checks_length(self):
@@ -609,38 +578,3 @@ class GitCommitBearTest(unittest.TestCase):
                          self.gitdir)
         os.chdir(self.gitdir)
         os.rmdir(no_git_dir)
-
-    def test_nltk_download_disabled(self):
-        # setUp has already initialised GitCommitBear.
-        self.assertTrue(GitCommitBear._nltk_data_downloaded)
-
-        section = Section('commit')
-        section.append(Setting('shortlog_imperative_check', 'False'))
-
-        GitCommitBear._nltk_data_downloaded = False
-        GitCommitBear(None, section, self.msg_queue)
-        self.assertFalse(GitCommitBear._nltk_data_downloaded)
-
-        # reset
-        GitCommitBear._nltk_data_downloaded = True
-
-    def test_nltk_download(self):
-        # setUp has already initialised GitCommitBear.
-        self.assertTrue(GitCommitBear._nltk_data_downloaded)
-
-        section = Section('commit')
-        section.append(Setting('shortlog_imperative_check', 'True'))
-
-        GitCommitBear._nltk_data_downloaded = False
-        GitCommitBear(None, section, self.msg_queue)
-        self.assertTrue(GitCommitBear._nltk_data_downloaded)
-
-    def test_nltk_download_default(self):
-        # setUp has already initialised GitCommitBear.
-        self.assertTrue(GitCommitBear._nltk_data_downloaded)
-
-        section = Section('commit')
-
-        GitCommitBear._nltk_data_downloaded = False
-        GitCommitBear(None, section, self.msg_queue)
-        self.assertTrue(GitCommitBear._nltk_data_downloaded)

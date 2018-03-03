@@ -6,7 +6,7 @@ TERM=dumb
 # apt-get commands
 export DEBIAN_FRONTEND=noninteractive
 
-deps="libclang1-3.4 indent mono-mcs chktex r-base julia golang-go luarocks verilator cppcheck flawfinder devscripts"
+deps="libclang1-3.4 indent mono-mcs chktex r-base julia golang-go luarocks verilator cppcheck flawfinder devscripts mercurial"
 deps_infer="m4 opam"
 
 case $CIRCLE_BUILD_IMAGE in

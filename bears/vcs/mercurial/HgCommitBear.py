@@ -6,22 +6,21 @@ from coala_utils.ContextManagers import change_directory
 from coalib.misc.Shell import run_shell_command
 
 
-class GitCommitBear(_CommitBear):
-    LANGUAGES = {'Git'}
-    ASCIINEMA_URL = 'https://asciinema.org/a/e146c9739ojhr8396wedsvf0d'
+class HgCommitBear(_CommitBear):
+    LANGUAGES = {'Hg'}
+    CAN_DETECT = {'Formatting'}
 
     @classmethod
     def check_prerequisites(cls):
-        if shutil.which('git') is None:
-            return 'git is not installed.'
+        if shutil.which('hg') is None:
+            return 'hg is not installed.'
         else:
             return True
 
     def get_remotes():
-        remotes, _ = run_shell_command(
-            "git config --get-regex '^remote.*.url$'")
+        remotes, _ = run_shell_command('hg paths')
         return remotes
 
     def get_head_commit(self):
         with change_directory(self.get_config_dir() or os.getcwd()):
-            return run_shell_command('git log -1 --pretty=%B')
+            return run_shell_command('hg log -l 1 --template "{desc}"')
