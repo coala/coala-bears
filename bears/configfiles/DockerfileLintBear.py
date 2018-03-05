@@ -17,7 +17,7 @@ class DockerfileLintBear:
     more information .
     """
     LANGUAGES = {'Dockerfile'}
-    REQUIREMENTS = {NpmRequirement('dockerfile_lint', '0')}
+    REQUIREMENTS = {NpmRequirement('dockerfile_lint', '0.2.7')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
