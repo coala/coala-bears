@@ -1,0 +1,207 @@
+version: 2
+jobs:
+    python-3.5: &build
+        docker:
+            - image: circleci/jdk8:0.1.1
+
+        steps:
+            - checkout
+            - restore_cache:
+                  key: coala-bears-dep-{{checksum "requirements.txt"}}
+
+            - run:
+                  name: dependencies
+                  command: |
+                    sudo apt-get update
+                    sudo apt-get install -y software-properties-common curl \
+                    python-software-properties
+                    sudo add-apt-repository -y ppa:hvr/ghc
+                    sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+                    sudo add-apt-repository -y ppa:avsm/ppa
+                    echo 'export TERM=dumb' >> $BASH_ENV
+                    echo 'export LANG=en_US.UTF-8' >> $BASH_ENV
+                    echo 'export LANGUAGE=en_US:en' >> $BASH_ENV
+                    echo 'export LC_ALL=en_US.UTF-8' >> $BASH_ENV
+                    curl -sL https://deb.nodesource.com/setup_8.x |
+                    sudo -E bash  -
+                    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg |
+                    sudo apt-key add -
+                    echo "deb https://dl.yarnpkg.com/debian/ stable main" |
+                    sudo tee /etc/apt/sources.list.d/yarn.list
+                    sudo apt-get update
+                    sudo apt-get install -y python3.4-venv git bzip2 \
+                    cabal-install-1.24 clang-3.4 libreadline-dev libblas-dev \
+                    gfortran ghc happy indent liblapack-dev language-pack-en \
+                    libperl-critic-perl libxml2-utils menhir php-codesniffer \
+                    build-essential texinfo libbz2-dev libcurl4-openssl-dev \
+                    libexpat-dev sqlite3 zlib1g-dev git-core ruby libssl-dev \
+                    libsqlite3-dev libxslt1-dev libffi-dev yarn python3-dev \
+                    libgdbm-dev libncurses5-dev automake libtool bison \
+                    libncursesw5-dev libc6-dev tk-dev libncurses-dev \
+                    ca-certificates
+
+            - run:
+                  name: virtual-env
+                  command: |
+                    if [ ! -d "$HOME/.venv" ]; then
+                    python3 -m venv ~/.venv
+                    fi
+                    echo 'source $HOME/.venv/bin/activate' >> $BASH_ENV
+
+            - run:
+                  name: pre
+                  command: |
+                    sudo rm -rf /var/cache/apt/archives
+                    sudo ln -s $HOME/.apt-cache /var/cache/apt/archives
+                    mkdir -p $HOME/.apt-cache/partial
+                    mkdir -p $HOME/.RLibrary
+                    mkdir -p $HOME/go
+                    curl -o- https://raw.githubusercontent.com\
+                    /creationix/nvm/v0.33.8/install.sh | bash
+                    echo 'export NVM_DIR=$HOME/.nvm' >> $BASH_ENV
+                    export NVM_DIR=$HOME/.nvm
+                    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+                    nvm install 6.10.2
+                    nvm alias default node
+                    echo 'export PATH=/usr/lib/go-1.9/bin:$PATH' >> $BASH_ENV
+                    echo 'export GOPATH=$HOME/go' >> $BASH_ENV
+                    echo 'export PATH=$GOPATH/bin:$PATH' >> $BASH_ENV
+                    echo 'source $NVM_DIR/nvm.sh' >> $BASH_ENV
+                    echo 'export PATH=/opt/cabal/bin:$PATH' >> $BASH_ENV
+                    echo 'export PATH=$HOME/project/node_modules/.bin:$PATH'\
+                    >> $BASH_ENV
+                    echo 'export PATH=$HOME/project/vendor/bin:$PATH' >>\
+                    $BASH_ENV
+                    echo 'export LINTR_COMMENT_BOT=false' >> $BASH_ENV
+                    echo 'export PATH=$HOME/dart-sdk/bin:$PATH' >> $BASH_ENV
+                    echo 'export PATH=$HOME/.cabal/bin:$PATH' >> $BASH_ENV
+                    echo 'export PATH=$HOME/infer-linux64-v0.7.0/infer/bin'\
+                    ':$PATH' >> $BASH_ENV
+                    echo 'export PATH=$HOME/pmd-bin-5.4.1/bin:$PATH' >>\
+                    $BASH_ENV
+                    echo 'export PATH=$HOME/bakalint-0.4.0:$PATH' >> $BASH_ENV
+                    echo 'export PATH=$HOME/elm-format-0.18:$PATH' >>\
+                    $BASH_ENV
+                    echo 'export PATH=$HOME/.local/tailor/tailor-latest/bin:'\
+                    '$PATH' >> $BASH_ENV
+                    echo 'export PATH=$HOME/phpmd:$PATH' >> $BASH_ENV
+                    echo 'export R_LIB_USER=$HOME/.RLibrary' >> $BASH_ENV
+                    echo 'export PATH=/usr/local/rvm/gems/ruby-2.2.2/bin:'\
+                    '$PATH' >> $BASH_ENV
+
+            - run:
+                  name: aptDependencies
+                  command: bash .ci/deps.apt.sh
+
+            - run:
+                  name: generalDependencies
+                  command: |
+                    gpg --keyserver hkp://keys.gnupg.net --recv-keys \
+                    409B6B1796C275462A1703113804BB82D39DC0E3 \
+                    7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+                    curl -sSL https://get.rvm.io | bash -s stable
+                    source /etc/profile.d/rvm.sh
+                    echo 'source /etc/profile.d/rvm.sh' >> $BASH_ENV
+                    rvm install 2.2.2
+                    rvm use 2.2.2 --default
+                    ruby -v
+                    rvm rvmrc warning ignore /root/project/Gemfile
+                    gem install bundler
+                    bash .ci/deps.sh
+
+            - run:
+                  name: cabalDependencies
+                  command: bash .ci/deps.cabal.sh
+
+            - run:
+                  name: dependenciesPip
+                  command: |
+                    if [ ! -d "$HOME/.pyenv" ]; then
+                    git clone https://github.com/pyenv/pyenv.git /tmp/pyenv
+                    mkdir -p ~/.pyenv
+                    cp -R /tmp/pyenv/* ~/.pyenv
+                    fi
+                    echo 'export PYENV_ROOT=$HOME/.pyenv' >> $BASH_ENV
+                    echo 'export PATH=$PYENV_ROOT/bin:$PATH' >> $BASH_ENV
+                    source $BASH_ENV
+                    eval "$(pyenv init -)"
+                    bash .ci/deps.pip.sh
+
+            - run:
+                  name: javaDependencies
+                  command: bash .ci/deps.java.sh
+
+            - run:
+                  name: opamDependencies
+                  command: bash .ci/deps.opam.sh
+
+            - run:
+                  name: RDependencies
+                  command: bash .ci/deps.r.sh
+
+            - run:
+                  name: bearsDependencies
+                  command: bash .ci/deps.coala-bears.sh
+
+            - run:
+                  name: codecov
+                  when: always
+                  command: codecov
+
+            - run:
+                  name: coala-ci
+                  when: always
+                  command: coala-ci -L DEBUG
+
+            - run:
+                  name: setup
+                  when: always
+                  command: python setup.py bdist_wheel
+
+            - run:
+                  name: allDependencies
+                  when: always
+                  command: pip install $(ls ./dist/*.whl)"[alldeps]"
+
+            - run:
+                  name: sphinx-build
+                  when: always
+                  command: |
+                    if [ $CIRCLE_JOB == "python-3.4" ] ; then
+                        python setup.py docs
+                    fi
+
+            - run:
+                  name: tests
+                  when: always
+                  command: bash .ci/tests.sh
+
+            - save_cache:
+                  key: coala-bears-dep-{{checksum "requirements.txt"}}
+                  paths:
+                      - "docs/_build"
+                      - "../.pyenv"
+                      - "node_modules"
+                      - "../.RLibrary"
+                      - "../.cabal"
+                      - "../nltk_data"
+                      - "../infer-linux64-v0.7.0"
+                      - "../pmd-bin-5.4.1"
+                      - "../.local/share/coala-bears"
+                      - "../bakalint-0.4.0"
+                      - "../.julia"
+                      - "../.local/tailor"
+                      - "project/vendor"
+                      - "project/.bundle"
+                      - "project/node_modules"
+                      - "../.ghc"
+                      - "../.ghc-mod"
+
+    python-3.4: *build
+
+workflows:
+    version: 2
+    test:
+        jobs:
+            - python-3.5
+            - python-3.4

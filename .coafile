@@ -69,7 +69,7 @@ ignore = *.py
 
 [all.yml]
 bears = YAMLLintBear
-files = *.yml, *.yaml, .ci/*.yml, tests/**/*.yml
+files = *.yml, *.yaml, .ci/*.yml, tests/**/*.yml, .circleci/config.yml
 
 [bash]
 bears = ShellCheckBear
