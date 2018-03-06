@@ -3,7 +3,7 @@
   "version": "0.8.0",
   "dependencies": {
     "alex": "~3",
-    "autoprefixer": "~6",
+    "autoprefixer": "~7.2.0",
     "babel-eslint": "~8.0",
     "bootlint": "~0",
     "coffeelint": "~1",

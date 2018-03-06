@@ -13,7 +13,7 @@ class CSSAutoPrefixBear:
     """
     LANGUAGES = {'CSS'}
     REQUIREMENTS = {NpmRequirement('postcss-cli', '2'),
-                    NpmRequirement('autoprefixer', '6')}
+                    NpmRequirement('autoprefixer', '7.2.0')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
