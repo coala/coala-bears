@@ -32,7 +32,7 @@ npm_requirements:
   csslint:
     version: ~1
   dockerfile_lint:
-    version: ~0.2.7
+    version: ~0.3.2
   elm:
     version: ~0.18
   eslint:

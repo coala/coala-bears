@@ -10,7 +10,7 @@
     "complexity-report": "~2.0.0-alpha",
     "csscomb": "~4.2.0",
     "csslint": "~1",
-    "dockerfile_lint": "~0.2.7",
+    "dockerfile_lint": "~0.3.2",
     "elm": "~0.18",
     "eslint": "~3",
     "eslint-plugin-import": "~2",

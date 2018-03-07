@@ -15,7 +15,7 @@ class DockerfileLintBear:
     Uses ``dockerfile_lint`` to provide the analysis.
     """
     LANGUAGES = {'Dockerfile'}
-    REQUIREMENTS = {NpmRequirement('dockerfile_lint', '0.2.7')}
+    REQUIREMENTS = {NpmRequirement('dockerfile_lint', '0.3.2')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

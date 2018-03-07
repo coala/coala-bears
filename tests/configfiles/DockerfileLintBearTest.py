@@ -5,7 +5,7 @@ from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 good_file = """
 FROM ubuntu:14.04
-MAINTAINER coala
+LABEL MAINTAINER coala
 LABEL Name coala-docker
 LABEL Version 0.1
 
@@ -28,7 +28,7 @@ apt-get -y -qq upgrade
 
 good_file2 = """
 FROM ubuntu
-MAINTAINER coala
+LABEL MAINTAINER coala
 LABEL Name coala-docker
 LABEL Version 0.1
 
@@ -51,7 +51,7 @@ curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 
 good_file3 = """
 FROM kali
-MAINTAINER coala
+LABEL MAINTAINER coala
 LABEL Name coala-docker
 LABEL Version 0.1
 EXPOSE 5432

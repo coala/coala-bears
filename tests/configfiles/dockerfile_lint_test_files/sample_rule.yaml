@@ -72,15 +72,6 @@
       rules: []
   required_instructions:
     -
-      instruction: "MAINTAINER"
-      count: 1
-      level: "info"
-      message: "Maintainer is not defined"
-      description: "The MAINTAINER line is useful for identifying the author in the form of MAINTAINER Joe Smith <joe.smith@example.com>"
-      reference_url:
-        - "https://docs.docker.com/engine/reference/builder/"
-        - "#maintainer"
-    -
       instruction: "EXPOSE"
       count: 1
       level: "info"
