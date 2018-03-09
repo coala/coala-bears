@@ -11,6 +11,7 @@ if [[ -n "$ALEX" && "${ALEX/node_modules/}" == "${ALEX}" ]]; then
   sudo rm -rf $ALEX
 fi
 npm install
+npm list --depth=0
 
 # GO commands
 go get -u github.com/golang/lint/golint
