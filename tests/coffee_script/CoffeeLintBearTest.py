@@ -265,6 +265,10 @@ invalid_file = """
 var test
 """
 
+infinite_line_length_file = """# File to check long line length support
+""" + 'number   = 42; ' * 1000 + """number   = 42
+console.log number
+"""
 
 CoffeeLintBearTest = verify_local_bear(CoffeeLintBear,
                                        valid_files=(good_file,),
@@ -407,3 +411,10 @@ CoffeeLintBearCyclomaticComplexityTest = verify_local_bear(
     valid_files=(good_file_cyclomatic_complexity,),
     invalid_files=(bad_file_cyclomatic_complexity,),
     settings={'cyclomatic_complexity': 1})
+
+
+CoffeeLintBearInfiniteLineLengthTest = verify_local_bear(
+    CoffeeLintBear,
+    valid_files=(infinite_line_length_file,),
+    invalid_files=(),
+    settings={'max_line_length': 0})
