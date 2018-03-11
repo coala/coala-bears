@@ -1,4 +1,5 @@
 import autopep8
+import pycodestyle
 
 from coalib.bearlib import deprecate_settings
 from coalib.bearlib.spacing.SpacingHelper import SpacingHelper
@@ -42,14 +43,69 @@ class PEP8Bear(LocalBear):
                    'max_line_length': max_line_length,
                    'indent_size': indent_size}
 
+        errors = self.list_pep8_errors(source=file, options=options)
+
         corrected = autopep8.fix_code(''.join(file),
                                       apply_config=local_pep8_config,
                                       options=options).splitlines(True)
 
-        diffs = Diff.from_string_arrays(file, corrected).split_diff()
+        diffs = enumerate(
+            Diff.from_string_arrays(file, corrected).split_diff())
 
-        for diff in diffs:
+        for i, diff in diffs:
             yield Result(self,
-                         'The code does not comply to PEP8.',
+                         'The code does not comply to PEP8.\n{}'
+                         .format(errors[i]['info'] if i < len(errors) else ''),
                          affected_code=(diff.range(filename),),
                          diffs={filename: diff})
+
+    def list_pep8_errors(self, source, options):
+        """
+        Generates and returns a list of PEP8 errors on source.
+
+        :param source:  The source file to perform check upon.
+        :param options: A dictionary of PEP8 options.
+        :return:        A list of PEP8 errors.
+        """
+        checker = pycodestyle.Checker(
+            '', lines=source, reporter=ListReport, **options)
+        checker.check_all()
+        return checker.report.get_error_list()
+
+
+class ListReport(pycodestyle.BaseReport):
+    """
+    Custom pycodestyle report class.
+    Original idea from autopep8's _execute_pep8 method.
+    """
+
+    def __init__(self, options):
+        super(ListReport, self).__init__(options)
+        self.__pep8_errors = []
+
+    def error(self, line_number, offset, text, check):
+        """
+        Collects PEP8 errors in a list.
+        Overrides pycodestyle.BaseReport.error method.
+
+        :param line_number: Number of the current line.
+        :param offset:      Offset of line from the original due to multiline
+                            strings.
+        :param text:        PEP8 error text.
+        """
+        code = super(ListReport, self).error(
+            line_number, offset, text, check)
+        if code:
+            self.__pep8_errors.append(
+                {'id': code,
+                 'line': line_number,
+                 'column': offset + 1,
+                 'info': text})
+
+    def get_error_list(self):
+        """
+        Getter.
+
+        :return: A list of PEP8 errors
+        """
+        return self.__pep8_errors
