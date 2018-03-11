@@ -32,7 +32,7 @@ class PyLintBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file,
-                         pylint_disable: typed_list(str)=None,
+                         pylint_disable: typed_list(str)='',
                          pylint_enable: typed_list(str)=None,
                          pylint_cli_options: str='',
                          pylint_rcfile: str=''):
@@ -49,8 +49,6 @@ class PyLintBear:
                 '--msg-template="L{line}C{column}: {msg_id} - {msg}"')
         if pylint_disable:
             args += ('--disable=' + ','.join(pylint_disable),)
-        if pylint_enable:
-            args += ('--enable=' + ','.join(pylint_enable),)
         if pylint_cli_options:
             args += tuple(shlex.split(pylint_cli_options))
         if pylint_rcfile:
