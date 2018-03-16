@@ -56,7 +56,9 @@ class QuotesBear(LocalBear):
         diff.change_line(sourcerange.start.line,
                          file[sourcerange.start.line - 1],
                          replacement)
-        yield Result(self, 'You do not use the preferred quotation marks.',
+        yield Result(self,
+                     ('You do not use the preferred quotation marks.'
+                      ' Preferred mark: {}'.format(preferred_quotation)),
                      diff.affected_code(filename), diffs={filename: diff})
 
     def run(self, filename, file, dependency_results,
