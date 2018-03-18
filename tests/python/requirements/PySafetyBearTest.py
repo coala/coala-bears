@@ -1,11 +1,44 @@
 from queue import Queue
 from unittest import mock
+import unittest
 
 from safety.safety import Vulnerability
 
-from bears.python.requirements.PySafetyBear import PySafetyBear, Package
+from bears.python.requirements.PySafetyBear import (
+    PySafetyBear,
+    Package,
+    cve_key_checker
+)
 from coalib.settings.Section import Section
 from coalib.testing.LocalBearTestHelper import LocalBearTestHelper
+
+Vuln1 = Vulnerability(name='bottle', spec='<0.12.10',
+                      version='0.10.1',
+                      data={'cve': 'CVE-2016-9964',
+                            'id': 'pyup.io-25642',
+                            'advisory': 'redirect() in '
+                            'bottle.py in '
+                            'bottle 0.12.10 doesn\'t filter '
+                            'a "\\r\\n" sequence, which leads '
+                            'to a CRLF attack, as demonstrated '
+                            'by a redirect("233\\r\\nSet-Cookie: name=salt") '
+                            'call.',
+                            'v': '<0.12.10',
+                            'specs': ['<0.12.10']})
+
+Vuln2 = Vulnerability(name='locustio', spec='<0.7',
+                      version='0.5.1',
+                      data={'cve': None, 'id': 'pyup.io-25878',
+                            'advisory': 'locustio before 0.7 uses pickle.',
+                            'v': '<0.7',
+                            'specs': ['<0.7']})
+
+Vuln3 = Vulnerability(name='locustio', spec='<0.7',
+                      version='0.5.1',
+                      data={'id': 'pyup.io-25878',
+                            'advisory': 'locustio before 0.7 uses pickle.',
+                            'v': '<0.7',
+                            'specs': ['<0.7']})
 
 
 class PySafetyBearTest(LocalBearTestHelper):
@@ -60,3 +93,17 @@ class PySafetyBearTest(LocalBearTestHelper):
         ) as check:
             self.check_validity(self.uut, ['foo', 'bar>2'])
             assert not check.called
+
+
+class cveKeyCheckerFunctionTest(unittest.TestCase):
+    def test_cve_key_with_value(self):
+        myresult = cve_key_checker(Vuln1)
+        self.assertEqual(myresult, True)
+
+    def test_cve_key_without_value(self):
+        myresult = cve_key_checker(Vuln2)
+        self.assertEqual(myresult, None)
+
+    def test_without_cve_key(self):
+        myresult = cve_key_checker(Vuln3)
+        self.assertEqual(myresult, None)

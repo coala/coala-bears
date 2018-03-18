@@ -11,6 +11,16 @@ from coalib.results.SourceRange import SourceRange
 from coalib.settings.Setting import typed_list
 
 
+def cve_key_checker(vulnerability):
+    if 'cve' in vulnerability.data:
+        if vulnerability.data['cve'] is None:
+            return None
+        else:
+            return True
+    else:
+        return None
+
+
 # the safety module expects an object that looks like this
 # (not importing it from there because it's in a private-ish location)
 Package = namedtuple('Package', ('key', 'version'))
@@ -49,7 +59,7 @@ class PySafetyBear(LocalBear):
             return
 
         for vulnerability in safety.check(packages=packages):
-            if vulnerability.is_cve:
+            if cve_key_checker(vulnerability):
                 message_template = (
                     '{vuln.name}{vuln.spec} is vulnerable to {vuln.cve_id} '
                     'and your project is using {vuln.version}.'
