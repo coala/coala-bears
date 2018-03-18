@@ -1,3 +1,5 @@
+import sys
+
 from coalib.bearlib.abstractions.Linter import linter
 from dependency_management.requirements.PipRequirement import PipRequirement
 from coalib.settings.Setting import path
@@ -21,11 +23,19 @@ class CMakeLintBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file,
+                         max_line_length: int=80,
                          cmakelint_config: path=''):
         """
+        :param max_line_length:
+             Maximum number of characters for a line.
+             When set to 0 allows infinite line length.
         :param cmakelint_config: The location of the cmakelintrc config file.
         """
+        if not max_line_length:
+            max_line_length = sys.maxsize
+
         args = ()
         if cmakelint_config:
-            args += ('--config=' + cmakelint_config,)
+            args += ('--config=' + cmakelint_config,
+                     '--linelength=' + str(max_line_length),)
         return args + (filename,)
