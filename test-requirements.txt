@@ -1,5 +1,6 @@
 coverage~=4.2.0
 codecov~=2.0.5
+pip<=9.0.1
 pytest~=3.0
 pytest-cov~=2.4
 pytest-env~=0.6.0
