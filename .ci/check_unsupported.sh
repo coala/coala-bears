@@ -11,6 +11,10 @@ set -x
 # mypy-lang and guess-language-spirit do not install on unsupported versions
 sed -i.bak -E '/^(mypy-lang|guess-language-spirit)/d' bear-requirements.txt
 
+# pylint installs pytest-runner, and 2.12 creates a version mismatch
+# https://github.com/pytest-dev/pytest-runner/issues/40
+pip install 'pytest-runner==2.12'
+
 python setup.py install | tee setup.log
 
 retval=$?
