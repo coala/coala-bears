@@ -127,6 +127,8 @@ pip_requirements:
     version: ~=1.2
   bandit:
     version: ~=1.2
+  bandit:
+    version: 18.4a4
   cmakelint:
     version: ~=1.3
   cppclean:
