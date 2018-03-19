@@ -31,6 +31,7 @@ class LineCountBear(LocalBear):
         if exclude_blank_lines:
             num_blank_lines = self._get_blank_line_count(file)
             file_length = file_length - num_blank_lines
+
         if file_length > max_lines_per_file:
             yield Result.from_values(
                 origin=self,
