@@ -18,8 +18,8 @@ class LineCountBear(LocalBear):
             list(filter(lambda x: re.match(r'^\s*$', x), file)))
         return num_blank_lines
 
-    def run(self, filename, file, min_lines_per_file: int,
-            max_lines_per_file: int,
+    def run(self, filename, file, min_lines_per_file: int = 1,
+            max_lines_per_file: int = 1000,
             exclude_blank_lines: bool = False,
             ):
         """

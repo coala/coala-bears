@@ -69,7 +69,6 @@ class LineCountBearTest(LocalBearTestHelper):
             filename='default')
 
     def test_default_min_lines_per_file(self):
-        self.section.append(Setting('min_lines_per_file', 1))
         self.section.append(Setting('max_lines_per_file', 2))
         self.section.append(Setting('exclude_blank_lines', True))
         self.check_results(
