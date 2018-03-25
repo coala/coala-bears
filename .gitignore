@@ -43,3 +43,4 @@ Gemfile.lock
 venv
 bears/upload/
 rultor_secrets.sh
+.pytest_cache
