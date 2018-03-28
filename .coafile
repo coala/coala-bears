@@ -70,3 +70,10 @@ ignore = *.py
 [all.yml]
 bears = YAMLLintBear
 files = *.yml, .ci/*.yml, tests/**/*.yml
+
+[bash]
+bears = ShellCheckBear
+files = .ci/*.sh
+ignore = .ci/deps.pip.sh
+shell = bash
+shellcheck_ignore = SC2046, SC2154, SC2155
