@@ -37,6 +37,7 @@ node_modules
 vendor
 Goopfile.lock
 Gemfile.lock
+package-lock.json
 .Rhistory
 .Rprofile
 *.swp
