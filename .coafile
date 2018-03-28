@@ -56,7 +56,7 @@ files = **.rst
 [TODOS]
 enabled = False
 bears = KeywordBear
-language = python3
+language = python 3
 
 # Note that the ci_keywords and cs_keywords are only used here because coala
 # 0.8.x (current stable release) needs them.
