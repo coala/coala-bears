@@ -2,8 +2,10 @@ from queue import Queue
 import os.path
 
 from coalib.settings.Section import Section
+from coalib.settings.Setting import Setting
 from coalib.results.Result import Result
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
+from coalib.testing.BearTestHelper import generate_skip_decorator
 from coalib.testing.LocalBearTestHelper import (
     LocalBearTestHelper, verify_local_bear)
 
@@ -24,17 +26,24 @@ def load_testfile(name, splitlines=False):
     return contents
 
 
-def test(testfilename, expected_results):
-    def test_function(self):
-        bear = BanditBear(Section(''), Queue())
-        self.check_results(bear, load_testfile(testfilename, True),
-                           expected_results, get_testfile_path(testfilename),
-                           create_tempfile=False)
-    return test_function
-
-
+@generate_skip_decorator(BanditBear)
 class BanditBearTest(LocalBearTestHelper):
-    test_assert = test(
+
+    def setUp(self):
+        self.section = Section('bandit')
+        self.queue = Queue()
+        self.uut = BanditBear(self.section, self.queue)
+
+    def execute_test(testfilename, expected_results):
+        def test_function(self):
+            self.check_results(self.uut,
+                               load_testfile(testfilename, True),
+                               expected_results,
+                               get_testfile_path(testfilename),
+                               create_tempfile=False)
+        return test_function
+
+    test_assert = execute_test(
         'assert.py',
         [Result.from_values('B101', 'Use of assert detected. The enclosed '
                             'code will be removed when compiling to optimised '
@@ -42,13 +51,13 @@ class BanditBearTest(LocalBearTestHelper):
                             end_line=1, severity=RESULT_SEVERITY.INFO,
                             confidence=90)])
 
-    test_exec_py2_py = test(
+    test_exec_py2_py = execute_test(
         'exec-py2.py',
         [Result.from_values('BanditBear', 'syntax error while parsing AST '
                             'from file', get_testfile_path('exec-py2.py'),
                             severity=RESULT_SEVERITY.MAJOR)])
 
-    test_jinja2_templating = test(
+    test_jinja2_templating = execute_test(
         'jinja2_templating.py',
         [Result.from_values('B701', 'Using jinja2 templates with '
                             'autoescape=False is dangerous and can lead to '
@@ -78,6 +87,47 @@ class BanditBearTest(LocalBearTestHelper):
                             end_line=16, severity=RESULT_SEVERITY.MAJOR,
                             confidence=90)])
 
+    def test_bandit_select_tests1(self):
+        file_test_content = load_testfile('httpoxy_cgihandler_assert.py', True)
+        file_test = get_testfile_path('httpoxy_cgihandler_assert.py')
+        self.section.append(Setting('bandit_select_tests', 'B101, B412'))
+        result = [Result.from_values('B101', 'Use of assert detected. The '
+                                     'enclosed code will be removed when '
+                                     'compiling to optimised byte code.',
+                                     file_test, 8, end_line=8,
+                                     severity=RESULT_SEVERITY.INFO,
+                                     confidence=90),
+                  Result.from_values('B412', 'Consider possible security '
+                                     'implications associated with wsgiref.'
+                                     'handlers.CGIHandler module.',
+                                     file_test, 12, end_line=12,
+                                     severity=RESULT_SEVERITY.MAJOR,
+                                     confidence=90)]
+        self.check_results(self.uut, file_test_content, result, file_test,
+                           create_tempfile=False)
+
+    def test_bandit_select_tests2(self):
+        file_test_content = load_testfile('httpoxy_cgihandler_assert.py', True)
+        file_test = get_testfile_path('httpoxy_cgihandler_assert.py')
+        self.section.append(Setting('bandit_select_tests', 'B101'))
+        result = [Result.from_values('B101', 'Use of assert detected. The '
+                                     'enclosed code will be removed when '
+                                     'compiling to optimised byte code.',
+                                     file_test, 8, end_line=8,
+                                     severity=RESULT_SEVERITY.INFO,
+                                     confidence=90)]
+        self.check_results(self.uut, file_test_content, result, file_test,
+                           create_tempfile=False)
+
+    def test_bandit_select_ignore_same_tests1(self):
+        file_test_content = load_testfile('httpoxy_cgihandler_assert.py', True)
+        file_test = get_testfile_path('httpoxy_cgihandler_assert.py')
+        self.section.append(Setting('bandit_skip_tests', 'B101'))
+        self.section.append(Setting('bandit_select_tests', 'B101'))
+        result = []
+        self.check_results(self.uut, file_test_content, result, file_test,
+                           create_tempfile=False)
+
 # The following test will ignore some error codes, so "good" and "bad" doesn't
 # reflect the actual code quality.
 
@@ -92,7 +142,7 @@ BanditBearSkipErrorCodesTest1 = verify_local_bear(
     BanditBear,
     valid_files=tuple(load_testfile(file) for file in good_files),
     invalid_files=tuple(load_testfile(file) for file in bad_files),
-    settings={'bandit_skipped_tests': ','.join(skipped_error_codes)},
+    settings={'bandit_skip_tests': ','.join(skipped_error_codes)},
     tempfile_kwargs={'suffix': '.py'})
 
 
@@ -104,5 +154,5 @@ BanditBearSkipErrorCodesTest2 = verify_local_bear(
     BanditBear,
     valid_files=tuple(load_testfile(file) for file in good_files),
     invalid_files=tuple(load_testfile(file) for file in bad_files),
-    settings={'bandit_skipped_tests': ''},
+    settings={'bandit_skip_tests': ''},
     tempfile_kwargs={'suffix': '.py'})

@@ -1,5 +1,9 @@
 import json
+import re
 
+from bears.python.ChecksSelector.ChecksSelector import set_checks
+
+from coalib.bearlib import deprecate_settings
 from coalib.bearlib.abstractions.Linter import linter
 from dependency_management.requirements.PipRequirement import PipRequirement
 from coalib.results.Result import Result
@@ -7,7 +11,9 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.settings.Setting import typed_list
 
 
-@linter(executable='bandit')
+@linter(executable='bandit',
+        use_stdout=True,
+        use_stderr=True)
 class BanditBear:
     """
     Performs security analysis on Python source code, utilizing the ``ast``
@@ -21,21 +27,28 @@ class BanditBear:
     CAN_DETECT = {'Security'}
 
     @staticmethod
+    @deprecate_settings(bandit_skip_tests='bandit_skipped_tests')
     def create_arguments(filename, file, config_file,
-                         bandit_skipped_tests: typed_list(str) = (
+                         bandit_skip_tests: typed_list(str) = (
                              'B105', 'B106', 'B107', 'B404', 'B603', 'B606',
                              'B607'),
-                         ):
+                         bandit_select_tests: typed_list(str) = ()):
         """
-        :param bandit_skipped_tests:
-            The IDs of the tests ``bandit`` shall not perform. You can get
-            information about the available builtin codes at
+        :param bandit_skip_tests:
+            The IDs of the tests ``bandit`` shall not perform.
+        :param bandit_select_tests:
+            The IDs of the tests ``bandit`` shall perform.
+            You can get information about the available builtin codes at
             https://github.com/openstack/bandit#usage.
         """
         args = (filename, '-f', 'json')
 
-        if bandit_skipped_tests:
-            args += ('-s', ','.join(bandit_skipped_tests))
+        select = set_checks(ignore='--skip',
+                            ignore_check=bandit_skip_tests,
+                            select='--tests',
+                            select_check=bandit_select_tests)
+        if select:
+            args += select
 
         return args
 
@@ -48,7 +61,23 @@ class BanditBear:
                       'LOW': 50}
 
     def process_output(self, output, filename, file):
-        output = json.loads(output)
+        def err_issue(message):
+            self.err('While running {0}, some issues were found:'
+                     .format(self.__class__.__name__))
+            self.err(message)
+
+        stdout, stderr = output
+        # Taking output from stderr in case bandit shows errors
+        # such as selected test ID and skipped test ID are same.
+        err_pattern = re.compile(r'ERROR\s(?P<error>.*)')
+        match = err_pattern.search(stderr)
+        if match:
+            err_issue(match.group('error'))
+
+        if not stdout:
+            return
+
+        output = json.loads(stdout)
 
         for error in output['errors']:
             yield Result.from_values(
