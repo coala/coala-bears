@@ -52,6 +52,7 @@ class GNUIndentBear:
         """
         :param max_line_length:
             Maximum number of characters for a line.
+            When set to 0, infinite line length is allowed.
         :param use_spaces:
             True if spaces are to be used, else tabs.
         :param blank_lines_after_declarations:
@@ -188,6 +189,11 @@ class GNUIndentBear:
         indent_style_option += (('--linux-style',)
                                 if linux_style and indent_style_option is ()
                                 else ())
+
+        # The limit is set to a number which equals to int max in C
+        if not max_line_length:
+            max_line_length = 2147483647
+
         # If a style is chosen the other configs aren't passed to `indent`
         return (indent_style_option if indent_style_option is not ()
                 else indent_options) + tuple(shlex.split(indent_cli_options))
