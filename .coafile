@@ -1,4 +1,4 @@
-[Default]
+[all]
 files = *.py, bears/**/*.py, tests/**/*.py, bears/*.py.in
 ignore = tests/python/test_files/pylint_test.py, tests/python/bandit_test_files/*,
          tests/python/vulture_test_files/*
@@ -6,7 +6,7 @@ ignore = tests/python/test_files/pylint_test.py, tests/python/bandit_test_files/
 max_line_length = 79
 use_spaces = True
 
-[python]
+[all.python]
 # Patches may conflict with autopep8 so putting them in own section so they
 # will be executed sequentially; also we need the LineLengthBear to double
 # check the line length because PEP8Bear sometimes isn't able to correct the
@@ -16,26 +16,26 @@ language = python
 default_actions = *: ApplyPatchAction
 preferred_quotation = '
 
-[flakes]
+[all.flakes]
 # Do not set default_action to ApplyPatchAction as it may lead to some
 # required imports being removed which might result in coala behaving weirdly.
 default_action: *: ShowPatchAction
 bears = PyUnusedCodeBear
 language = Python
 
-[autopep8]
+[all.autopep8]
 bears = PEP8Bear, PycodestyleBear
 default_actions = PEP8Bear: ApplyPatchAction
 
-[linelength]  # Sometimes autopep8 makes too long lines, need to check after!
+[all.linelength]  # Sometimes autopep8 makes too long lines, need to check after!
 bears = LineLengthBear
 ignore_length_regex = ^.*https?://
 
-[CI]
+[all.CI]
 files = .ci/*
 bears = SpaceConsistencyBear
 
-[commit]
+[all.commit]
 bears = GitCommitBear
 shortlog_trailing_period = False
 shortlog_regex = ([^:]*|[^:]+: [A-Z0-9*].*)
@@ -44,7 +44,7 @@ body_close_issue_full_url = True
 body_close_issue_on_last_line = True
 body_enforce_issue_reference = False
 
-[LineCounting]
+[all.LineCounting]
 enabled = False
 bears = LineCountBear
 max_lines_per_file = 1000
@@ -53,7 +53,7 @@ max_lines_per_file = 1000
 bear = reSTLintBear
 files = **.rst
 
-[TODOS]
+[all.TODOS]
 enabled = False
 bears = KeywordBear
 language = python3
@@ -63,10 +63,10 @@ language = python3
 ci_keywords, keywords = \#TODO, \# TODO, \#FIXME, \# FIXME
 cs_keywords =
 
-[PythonPackageInit]
+[all.PythonPackageInit]
 bears = PythonPackageInitBear
 ignore = *.py
 
-[yml]
+[all.yml]
 bears = YAMLLintBear
 files = *.yml, .ci/*.yml, tests/**/*.yml
