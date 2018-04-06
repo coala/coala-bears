@@ -1,0 +1,2 @@
+bottle==0.10.0
+locustio==0.5.1
