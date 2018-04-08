@@ -25,7 +25,7 @@ class LineCountBear(LocalBear):
         smaller than a given size.
 
         :param max_lines_per_file: Maximum number of lines allowed per file.
-        :param exclude_blank_lines: "True" if blank lines are to be excluded.
+        :param exclude_blank_lines: ``True`` if blank lines are to be excluded.
         """
         file_length = len(file)
         if exclude_blank_lines:
