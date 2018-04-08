@@ -24,13 +24,17 @@ class PrettierLintBear:
     CAN_FIX = {'Formatting'}
     SEE_MORE = 'https://prettier.io/'
 
-    regex = re.compile(r'L(?P<line>\d+)C(?P<column>\d+): (?P<message>.*)')
+    regex = re.compile(
+        r'(?P<message>SyntaxError:.*) '
+        r'\((?P<line>\d+):(?P<column>\d+)\)')
 
     def process_output(self, output, filename, file):
         stdout, stderr = output
-        yield from self.process_output_corrected(stdout, filename, file)
-        yield from self.process_output_regex(stderr, filename, file,
-                                             self.regex)
+        if stdout == '\n':
+            yield from self.process_output_regex(stderr, filename, file,
+                                                 self.regex)
+        else:
+            yield from self.process_output_corrected(stdout, filename, file)
 
     @staticmethod
     def create_arguments(filename, file, config_file):

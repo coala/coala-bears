@@ -26,7 +26,10 @@ function b(object, key) {
 
 bad_quotes = """const a = () => 'Foo bar';"""
 
-bad_parentheses = """function b(){
+bad_syntax_function = """function b(){
+"""
+
+bad_syntax_if = """if x y
 """
 
 good_parentheses = """function b() {}
@@ -47,5 +50,6 @@ PrettierLintBear = verify_local_bear(PrettierLintBear,
                                                   good_indent,),
                                      invalid_files=(bad_file,
                                                     bad_quotes,
-                                                    bad_parentheses,
-                                                    bad_indent,))
+                                                    bad_indent,
+                                                    bad_syntax_if,
+                                                    bad_syntax_function,))
