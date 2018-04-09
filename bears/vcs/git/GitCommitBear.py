@@ -3,7 +3,10 @@ import re
 import shutil
 import os
 import logging
+import json
 from urllib.parse import urlparse
+from urllib.request import urlopen
+from urllib.error import HTTPError, URLError
 from contextlib import redirect_stdout
 
 from coalib.bears.GlobalBear import GlobalBear
@@ -101,6 +104,70 @@ class GitCommitBear(GlobalBear):
         else:
             netloc = urlparse(url)[1]
         return netloc.split('.')[0]
+
+    @staticmethod
+    def get_owner_from_url(url):
+        return urlparse(url)[2].split('/')[1]
+
+    @staticmethod
+    def get_repository_from_url(url):
+        return urlparse(url)[2].split('/')[2]
+
+    @staticmethod
+    def get_owner_from_remote(remote):
+        """
+        Retrieve the owner from the specified remote.
+        """
+        url, _ = run_shell_command(
+                "git config --get-regex '^remote.{}.url$'".format(remote))
+        url = url.split()
+        if len(url) == 0:
+            return None
+        url = url[-1]
+
+        if 'git@' in url:
+            user = re.findall(r':(.*?)/', url)[0]
+        else:
+            user = urlparse(url)[2].split('/')[1]
+        return user
+
+    @staticmethod
+    def get_repository_from_remote(remote):
+        """
+        Retrieve the owner from the specified remote.
+        """
+        url, _ = run_shell_command(
+                "git config --get-regex '^remote.{}.url$'".format(remote))
+        url = url.split()
+        if len(url) == 0:
+            return None
+        url = url[-1]
+
+        if 'git@' in url:
+            repository = re.findall(r'/(.*?).git', url)[0]
+        else:
+            repository = urlparse(url)[2].split('/')[2][:-4]
+        return repository
+
+    @staticmethod
+    def is_issue_open(owner, repo, issue_id):
+        github_get_issue_api = 'https://api.github.com/repos/{}/{}/issues/{}'
+        try:
+            data = urlopen(
+                github_get_issue_api.format(owner, repo, issue_id)).read()
+        except HTTPError as error:
+            if error.code == 401:
+                logging.warning('Invalid authentication details '
+                                'thus issue state cannot be determined')
+            return -1
+        except URLError as error:
+            logging.warning('The specified remote doesn\'t exists '
+                            'thus issue state cannot be determined')
+            return -1
+        except Exception as error:
+            logging.warning('Unable to determine issue state')
+            return -1
+        return json.loads(data.decode('utf-8'))['state'] == 'open'
 
     def run(self, allow_empty_commit_message: bool = False, **kwargs):
         """
@@ -269,7 +336,9 @@ class GitCommitBear(GlobalBear):
                               body_close_issue: bool=False,
                               body_close_issue_full_url: bool=False,
                               body_close_issue_on_last_line: bool=False,
-                              body_enforce_issue_reference: bool=False):
+                              body_enforce_issue_reference: bool=False,
+                              body_enforce_issue_open: bool=False,
+                              remote: str=None):
         """
         Check for matching issue related references and URLs.
 
@@ -353,7 +422,27 @@ class GitCommitBear(GlobalBear):
         for match in matches:
             for issue in re.split(compiled_concat_regex, match):
                 reference = compiled_issue_ref_regex.fullmatch(issue)
-                if not reference:
+                if reference and body_enforce_issue_open:
+                    if re.search(r'^#.*', issue) and remote is not None:
+                        if not self.is_issue_open(
+                                self.get_owner_from_remote(remote),
+                                self.get_repository_from_remote(remote),
+                                issue[1:]):
+                            yield Result(self, 'Issue {} is closed'
+                                               .format(issue))
+                    elif re.search(r'^#.*', issue) and remote is None:
+                        logging.warning('Remote is not specified '
+                                        'unable to get issue state.'
+                                        'Please use a full url or '
+                                        'specify remote.')
+                    else:
+                        if not self.is_issue_open(
+                                self.get_owner_from_url(issue),
+                                self.get_repository_from_url(issue),
+                                re.findall(r'/([0-9]*?)$', issue)[0]):
+                            yield Result(self, 'Issue {} is closed'
+                                               .format(issue))
+                elif not reference:
                     yield Result(self, 'Invalid {} reference: '
                                        '{}'.format(result_info, issue))
                 elif not compiled_issue_no_regex.fullmatch(reference.group(1)):
