@@ -2,7 +2,9 @@ import nltk
 import re
 import shutil
 import os
+import logging
 from urllib.parse import urlparse
+from contextlib import redirect_stdout
 
 from coalib.bears.GlobalBear import GlobalBear
 from dependency_management.requirements.PipRequirement import PipRequirement
@@ -36,11 +38,15 @@ class GitCommitBear(GlobalBear):
     def setup_dependencies(self):
         if not self._nltk_data_downloaded and bool(
                 self.section.get('shortlog_imperative_check', True)):
-            nltk.download([
-                'punkt',
-                'averaged_perceptron_tagger',
-            ])
-            type(self)._nltk_data_downloaded = True
+            logger = logging.getLogger()
+            logger.write = lambda msg: logger.debug(
+                msg) if msg != '\n' else None
+            with redirect_stdout(logger):
+                nltk.download([
+                    'punkt',
+                    'averaged_perceptron_tagger'
+                ])
+                type(self)._nltk_data_downloaded = True
 
     @classmethod
     def check_prerequisites(cls):

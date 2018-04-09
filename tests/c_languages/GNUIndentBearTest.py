@@ -86,6 +86,11 @@ int main()
 }"""
 
 
+test_file11 = ('int\nmain ()\n' +
+               '{\n' +
+               ' ' * 1000 + 'return 0;\n' +
+               '}')
+
 GNUIndentBearTest = verify_local_bear(
     GNUIndentBear,
     valid_files=(test_file1,),
@@ -141,3 +146,10 @@ GNUIndentBearKandRStyleTest = verify_local_bear(
     valid_files=(test_file10,),
     invalid_files=(test_file1,),
     settings={'k_and_r_style': 'true'})
+
+GNUIndentBearInfiniteLineLengthTest = verify_local_bear(
+    GNUIndentBear,
+    valid_files=(test_file11,),
+    invalid_files=(),
+    settings={'use_spaces': 'true', 'indent_size': '1000',
+              'max_line_length': '0'})

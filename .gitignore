@@ -43,4 +43,3 @@ Gemfile.lock
 *.swp
 venv
 bears/upload/
-rultor_secrets.sh
