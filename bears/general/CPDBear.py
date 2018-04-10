@@ -5,7 +5,6 @@ from coalib.bears.GlobalBear import GlobalBear
 from coalib.misc.Shell import run_shell_command
 from coalib.results.Result import Result
 from coalib.results.SourceRange import SourceRange
-from coalib.settings.Setting import language
 
 
 class CPDBear(GlobalBear):
@@ -45,7 +44,7 @@ class CPDBear(GlobalBear):
         else:
             return True
 
-    def run(self, language: language, minimum_tokens: int=20,
+    def run(self, programming_language: str, minimum_tokens: int=20,
             ignore_annotations: bool=False, ignore_identifiers: bool=True,
             ignore_literals: bool=False, ignore_usings: bool=False,
             skip_duplicate_files: bool=True):
@@ -56,7 +55,7 @@ class CPDBear(GlobalBear):
         For more details see:
         <https://pmd.github.io/pmd-5.4.1/usage/cpd-usage.html>
 
-        :param language:
+        :param programming_language:
             One of the supported languages of this bear.
         :param minimum_tokens:
             The minimum token length which should be reported as a duplicate.
@@ -73,12 +72,12 @@ class CPDBear(GlobalBear):
             comparison.
         """
         for supported_lang in self.language_dict:
-            if supported_lang in language:
+            if supported_lang in programming_language:
                 cpd_language = self.language_dict[supported_lang]
                 break
         else:
-            self.err('This bear does not support files with the extension '
-                     "'{}'.".format(language))
+            self.warn('This bear has no support for ' +
+                      programming_language + '.')
             return
 
         options = {
