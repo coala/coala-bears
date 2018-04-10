@@ -313,6 +313,19 @@ class GitCommitBearTest(unittest.TestCase):
         self.run_git_command('remote', 'set-url', 'test',
                              'git@github.com:user/repo.git')
 
+        # Issue already closed
+        self.git_commit('Shortlog\n\n'
+                        'First line, blablablablablabla.\n'
+                        'Another line, blablablablablabla.\n'
+                        'Fixed https://github.com/coala/coala/issues/5326')
+        self.assertEqual(self.run_uut(
+                             body_close_issue=True,
+                             body_close_issue_full_url=True,
+                             body_enforce_issue_open=True),
+                         ['Issue https://github.com/coala/coala/issues/5326'
+                          ' is closed'])
+        self.assert_no_msgs()
+
         # GitHub host with an issue
         self.git_commit('Shortlog\n\n'
                         'First line, blablablablablabla.\n'
