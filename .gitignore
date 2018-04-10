@@ -28,6 +28,7 @@ site
 .zanata-cache
 *.exe
 .cache
+.pytest_cache
 *.eggs
 node_modules
 *.log
