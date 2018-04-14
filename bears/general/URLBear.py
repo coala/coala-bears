@@ -132,7 +132,7 @@ class URLBear(LocalBear):
 
     @deprecate_settings(link_ignore_regex='ignore_regex')
     def run(self, filename, file,
-            link_ignore_regex: str = '([.\/]example\.com|\{|\$)',
+            link_ignore_regex: str = r'([.\/]example\.com|\{|\$)',
             link_ignore_list: typed_list(str) = '',
             ):
         """
