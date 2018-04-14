@@ -18,9 +18,10 @@ class RadonBear(LocalBear):
     CAN_DETECT = {'Complexity'}
 
     def run(self, filename, file,
-            radon_ranks_info: typed_list(str)=(),
-            radon_ranks_normal: typed_list(str)=('C', 'D'),
-            radon_ranks_major: typed_list(str)=('E', 'F')):
+            radon_ranks_info: typed_list(str) = (),
+            radon_ranks_normal: typed_list(str) = ('C', 'D'),
+            radon_ranks_major: typed_list(str) = ('E', 'F'),
+            ):
         """
         Uses radon to compute complexity of a given file.
 

@@ -32,8 +32,9 @@ class PyUnusedCodeBear(
         remove_all_unused_imports=UnusedImport.remove_non_standard_import,
         remove_unused_variables=UnusedLocalVariable)
     def run(self, filename, file,
-            remove_all_unused_imports: bool=True,
-            remove_unused_variables: bool=True):
+            remove_all_unused_imports: bool = True,
+            remove_unused_variables: bool = True,
+            ):
         """
         Detects unused code. By default this functionality is limited to:
 

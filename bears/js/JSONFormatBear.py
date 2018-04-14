@@ -23,9 +23,10 @@ class JSONFormatBear(LocalBear):
     @deprecate_settings(indent_size='tab_width',
                         escape_unicode=('keep_unicode', negate))
     def run(self, filename, file,
-            json_sort: bool=False,
-            indent_size: int=SpacingHelper.DEFAULT_TAB_WIDTH,
-            escape_unicode: bool=True):
+            json_sort: bool = False,
+            indent_size: int = SpacingHelper.DEFAULT_TAB_WIDTH,
+            escape_unicode: bool = True,
+            ):
         """
         Raises issues for any deviations from the pretty-printed JSON.
 

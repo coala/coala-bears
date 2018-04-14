@@ -72,8 +72,10 @@ class DocGrammarBear(DocBaseClass, LocalBear):
                 'Documentation has invalid Grammar/Spelling')
 
     def run(self, filename, file, language: str,
-            docstyle: str='default', locale: str='en-US',
-            languagetool_disable_rules: typed_list(str)=()):
+            docstyle: str = 'default',
+            locale: str = 'en-US',
+            languagetool_disable_rules: typed_list(str) = (),
+            ):
         """
         Checks the main description and comments description of documentation
         with LanguageTool. LanguageTool finds many errors that a simple spell

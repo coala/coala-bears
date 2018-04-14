@@ -21,7 +21,8 @@ class HappinessLintBear:
 
     @classmethod
     def create_arguments(cls, filename, file, config_file,
-                         use_spaces: bool=False):
+                         use_spaces: bool = False,
+                         ):
         if use_spaces:
             raise ValueError(
                 '"use_spaces=True" is incompatible with {}, '

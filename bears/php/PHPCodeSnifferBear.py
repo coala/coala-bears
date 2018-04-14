@@ -43,20 +43,21 @@ class PHPCodeSnifferBear:
 
     @staticmethod
     def generate_config(filename, file,
-                        max_line_length: int=79,
-                        line_ending_character: str='\\n',
-                        indent_size: int=SpacingHelper.DEFAULT_TAB_WIDTH,
-                        use_spaces: bool=True,
-                        allow_multiple_statements_per_line: bool=False,
-                        force_lower_case_keywords: bool=True,
-                        force_lower_case_constants: bool=True,
-                        blank_line_after_namespace_declaration: bool=True,
-                        check_use_blocks: bool=True,
-                        check_class_declaration: bool=True,
-                        check_property_declaration: bool=True,
-                        force_scope_modifier_on_method: bool=True,
-                        function_declaration_argument_spacing: int=1,
-                        allow_multiline_function_declaration: bool=True):
+                        max_line_length: int = 79,
+                        line_ending_character: str = '\\n',
+                        indent_size: int = SpacingHelper.DEFAULT_TAB_WIDTH,
+                        use_spaces: bool = True,
+                        allow_multiple_statements_per_line: bool = False,
+                        force_lower_case_keywords: bool = True,
+                        force_lower_case_constants: bool = True,
+                        blank_line_after_namespace_declaration: bool = True,
+                        check_use_blocks: bool = True,
+                        check_class_declaration: bool = True,
+                        check_property_declaration: bool = True,
+                        force_scope_modifier_on_method: bool = True,
+                        function_declaration_argument_spacing: int = 1,
+                        allow_multiline_function_declaration: bool = True,
+                        ):
         """
         :param max_line_length:
             Maximum number of characters for a line.

@@ -15,7 +15,9 @@ class PinRequirementsBear(LocalBear):
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
 
-    def run(self, filename, file, require_patch: bool=False):
+    def run(self, filename, file,
+            require_patch: bool = False,
+            ):
         """
         Checks if requirements are properly pinned. It will always raise an
         issue if the minor version is not given. If you do not wish that, do

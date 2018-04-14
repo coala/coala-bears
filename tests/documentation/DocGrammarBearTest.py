@@ -12,9 +12,10 @@ from coalib.testing.BearTestHelper import generate_skip_decorator
 from bears.documentation.DocGrammarBear import DocGrammarBear
 
 
-def make_docstring(main_desc: str='',
-                   param_desc: str='',
-                   return_desc: str=''):
+def make_docstring(main_desc: str = '',
+                   param_desc: str = '',
+                   return_desc: str = '',
+                   ):
     """
     This assembles a simple docstring having a main description, a parameter
     description and a return description. This makes the tests readibilty

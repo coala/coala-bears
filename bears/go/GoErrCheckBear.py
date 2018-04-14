@@ -28,10 +28,11 @@ class GoErrCheckBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file,
-                         ignore: typed_list(str)=[],
-                         ignorepkg: typed_list(str)=[],
-                         asserts: bool=False,
-                         blank: bool=False):
+                         ignore: typed_list(str) = [],
+                         ignorepkg: typed_list(str) = [],
+                         asserts: bool = False,
+                         blank: bool = False,
+                         ):
         """
         Bear configuration arguments.
 

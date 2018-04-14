@@ -22,9 +22,10 @@ class BanditBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file,
-                         bandit_skipped_tests: typed_list(str)=
-                         ('B105', 'B106', 'B107', 'B404', 'B603', 'B606',
-                          'B607')):
+                         bandit_skipped_tests: typed_list(str) = (
+                             'B105', 'B106', 'B107', 'B404', 'B603', 'B606',
+                             'B607'),
+                         ):
         """
         :param bandit_skipped_tests:
             The IDs of the tests ``bandit`` shall not perform. You can get

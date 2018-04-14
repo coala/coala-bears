@@ -26,7 +26,8 @@ class HTTPoliceLintBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file,
-                         httpolice_silence_ids: typed_list(str)=[]):
+                         httpolice_silence_ids: typed_list(str) = [],
+                         ):
         """
         :param httpolice_silence_ids:
             Silences the given list of notice IDs. You can get more information

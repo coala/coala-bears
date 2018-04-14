@@ -20,11 +20,12 @@ class PEP8Bear(LocalBear):
 
     @deprecate_settings(indent_size='tab_width')
     def run(self, filename, file,
-            max_line_length: int=79,
-            indent_size: int=SpacingHelper.DEFAULT_TAB_WIDTH,
-            pep_ignore: typed_list(str)=(),
-            pep_select: typed_list(str)=(),
-            local_pep8_config: bool=False):
+            max_line_length: int = 79,
+            indent_size: int = SpacingHelper.DEFAULT_TAB_WIDTH,
+            pep_ignore: typed_list(str) = (),
+            pep_select: typed_list(str) = (),
+            local_pep8_config: bool = False,
+            ):
         """
         Detects and fixes PEP8 incompliant code. This bear will not change
         functionality of the code in any way.

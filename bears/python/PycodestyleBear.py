@@ -24,12 +24,13 @@ class PycodestyleBear:
     @staticmethod
     def create_arguments(
             filename, file, config_file,
-            pycodestyle_ignore: typed_list(str)=(
+            pycodestyle_ignore: typed_list(str) = (
                 'E121', 'E123', 'E126', 'E133', 'E226',
                 'E241', 'E242', 'E704', 'W503', 'W504',
             ),
-            pycodestyle_select: typed_list(str)=(),
-            max_line_length: int=79):
+            pycodestyle_select: typed_list(str) = (),
+            max_line_length: int = 79,
+            ):
         """
         :param pycodestyle_ignore:
             Comma separated list of errors to ignore.

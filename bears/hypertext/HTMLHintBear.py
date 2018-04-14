@@ -24,26 +24,27 @@ class HTMLHintBear:
 
     @staticmethod
     def generate_config(filename, file,
-                        enforce_lowercase_tagname: bool=True,
-                        enforce_lowercase_attribute: bool=True,
-                        require_attribute_value_in_double_quotes: bool=False,
-                        prohibit_empty_value_for_attribute: bool=False,
-                        prohibit_attribute_duplication: bool=True,
-                        require_doctype_at_beginning: bool=True,
-                        enforce_tag_pair: bool=True,
-                        enforce_self_close_empty_tag: bool=True,
-                        require_escaped_special_characters: bool=False,
-                        require_unique_attribute_id: bool=True,
-                        require_title_tag: bool=True,
-                        prohibit_script_in_head: bool=False,
-                        require_alt_attribute: bool=True,
-                        enforce_id_class_naming_convention: str=None,
-                        prohibit_inline_style: bool=True,
-                        require_relative_links_in_href: bool=None,
-                        prohibit_unsafe_characters: bool=True,
-                        prohibit_inline_script: bool=False,
-                        prohibit_style_tag: bool=False,
-                        htmlhint_config: str=''):
+                        enforce_lowercase_tagname: bool = True,
+                        enforce_lowercase_attribute: bool = True,
+                        require_attribute_value_in_double_quotes: bool = False,
+                        prohibit_empty_value_for_attribute: bool = False,
+                        prohibit_attribute_duplication: bool = True,
+                        require_doctype_at_beginning: bool = True,
+                        enforce_tag_pair: bool = True,
+                        enforce_self_close_empty_tag: bool = True,
+                        require_escaped_special_characters: bool = False,
+                        require_unique_attribute_id: bool = True,
+                        require_title_tag: bool = True,
+                        prohibit_script_in_head: bool = False,
+                        require_alt_attribute: bool = True,
+                        enforce_id_class_naming_convention: str = None,
+                        prohibit_inline_style: bool = True,
+                        require_relative_links_in_href: bool = None,
+                        prohibit_unsafe_characters: bool = True,
+                        prohibit_inline_script: bool = False,
+                        prohibit_style_tag: bool = False,
+                        htmlhint_config: str = '',
+                        ):
         """
         :param enforce_lowercase_tagname:
             Enforce the tagnames to be written in lowercase.
@@ -167,7 +168,9 @@ class HTMLHintBear:
             return json.dumps(options)
 
     @staticmethod
-    def create_arguments(filename, file, config_file, htmlhint_config: str=''):
+    def create_arguments(filename, file, config_file,
+                         htmlhint_config: str = '',
+                         ):
         """
         :param htmlhint_config:
             The path to a custom ``.htmlhintrc`` config file.

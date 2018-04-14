@@ -49,9 +49,10 @@ class XMLBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file,
-                         xml_schema: path='',
-                         xml_dtd: path_or_url='',
-                         xml_relaxng: path=''):
+                         xml_schema: path = '',
+                         xml_dtd: path_or_url = '',
+                         xml_relaxng: path = '',
+                         ):
         """
         :param xml_schema: ``W3C XML Schema`` file used for validation.
         :param xml_dtd:    ``Document type Definition (DTD)`` file or

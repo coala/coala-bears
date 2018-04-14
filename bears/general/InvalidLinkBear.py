@@ -20,8 +20,10 @@ class InvalidLinkBear(LocalBear):
     CAN_DETECT = {'Documentation'}
     BEAR_DEPS = {URLHeadBear}
 
-    def run(self, filename, file, dependency_results=dict(),
-            follow_redirects: bool=False):
+    def run(self, filename, file,
+            dependency_results=dict(),
+            follow_redirects: bool = False,
+            ):
         """
         Find links in any text file and check if they are valid.
 

@@ -17,9 +17,10 @@ class SpaceConsistencyBear(LocalBear):
             filename,
             file,
             use_spaces: bool,
-            allow_trailing_whitespace: bool=False,
-            indent_size: int=SpacingHelper.DEFAULT_TAB_WIDTH,
-            enforce_newline_at_EOF: bool=True):
+            allow_trailing_whitespace: bool = False,
+            indent_size: int = SpacingHelper.DEFAULT_TAB_WIDTH,
+            enforce_newline_at_EOF: bool = True,
+            ):
         '''
         Check and correct spacing for all textual data. This includes usage of
         tabs vs. spaces, trailing whitespace and (missing) newlines before

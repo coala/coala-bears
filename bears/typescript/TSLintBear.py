@@ -27,7 +27,9 @@ class TSLintBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file,
-                         tslint_config: path='', rules_dir: path=''):
+                         tslint_config: path = '',
+                         rules_dir: path = '',
+                         ):
         """
         :param tslint_config: Path to configuration file.
         :param rules_dir:     Rules directory

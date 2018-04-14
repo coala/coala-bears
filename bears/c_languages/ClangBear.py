@@ -77,7 +77,9 @@ class ClangBear(LocalBear):
 
     check_prerequisites = classmethod(clang_available)
 
-    def run(self, filename, file, clang_cli_options: typed_list(str)=None):
+    def run(self, filename, file,
+            clang_cli_options: typed_list(str) = None,
+            ):
         """
         Check code for syntactical or semantical problems using Clang.
 

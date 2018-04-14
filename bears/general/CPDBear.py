@@ -45,10 +45,14 @@ class CPDBear(GlobalBear):
         else:
             return True
 
-    def run(self, language: language, minimum_tokens: int=20,
-            ignore_annotations: bool=False, ignore_identifiers: bool=True,
-            ignore_literals: bool=False, ignore_usings: bool=False,
-            skip_duplicate_files: bool=True):
+    def run(self, language: language,
+            minimum_tokens: int = 20,
+            ignore_annotations: bool = False,
+            ignore_identifiers: bool = True,
+            ignore_literals: bool = False,
+            ignore_usings: bool = False,
+            skip_duplicate_files: bool = True,
+            ):
         """
         Checks for similar code that looks as it could be replaced to reduce
         redundancy.

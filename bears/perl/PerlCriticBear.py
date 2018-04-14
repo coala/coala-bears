@@ -41,7 +41,8 @@ class PerlCriticBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file,
-                         perlcritic_profile: str=''):
+                         perlcritic_profile: str = '',
+                         ):
         """
         :param perlcritic_profile: Location of the perlcriticrc config file.
         """

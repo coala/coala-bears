@@ -87,11 +87,12 @@ class ClangFunctionDifferenceBear(GlobalBear):
     REQUIREMENTS = ClangBear.REQUIREMENTS | {PipRequirement('munkres3', '1.0')}
 
     def run(self,
-            counting_conditions: counting_condition_dict=default_cc_dict,
-            average_calculation: bool=False,
-            poly_postprocessing: bool=True,
-            exp_postprocessing: bool=False,
-            extra_include_paths: path_list=()):
+            counting_conditions: counting_condition_dict = default_cc_dict,
+            average_calculation: bool = False,
+            poly_postprocessing: bool = True,
+            exp_postprocessing: bool = False,
+            extra_include_paths: path_list = (),
+            ):
         """
         Retrieves similarities for code clone detection. Those can be reused in
         another bear to produce results.

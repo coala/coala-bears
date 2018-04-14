@@ -107,12 +107,13 @@ class MypyBear:
 
     @add_param_docs(FLAG_MAP)
     def create_arguments(self, filename, file, config_file,
-                         language: language=language('Python 3'),
-                         python_version: str=None,
-                         allow_untyped_functions: bool=True,
-                         allow_untyped_calls: bool=True,
-                         check_untyped_function_bodies: bool=False,
-                         strict_optional: bool=False):
+                         language: language = language('Python 3'),
+                         python_version: str = None,
+                         allow_untyped_functions: bool = True,
+                         allow_untyped_calls: bool = True,
+                         check_untyped_function_bodies: bool = False,
+                         strict_optional: bool = False,
+                         ):
         """
         :param language:
             Set to ``Python`` or ``Python 3`` to check Python 3.x source.

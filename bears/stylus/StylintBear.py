@@ -43,38 +43,39 @@ class StylintBear:
 
     @staticmethod
     def generate_config(filename, file,
-                        block_keyword: bool=None,
-                        brackets: bool=False,
-                        colons_for_property_declaration: bool=True,
-                        color_variables_for_hex_values: bool=True,
-                        spaces_after_commas: bool=True,
-                        spaces_after_comments: bool=True,
-                        allow_trailing_whitespace: bool=False,
-                        no_css_literals: bool=False,
-                        max_selector_depth: bool=False,
-                        check_duplicates: bool=True,
-                        efficient_properties: bool=True,
-                        extend_preference: str=None,
-                        indent_size: int=0,
-                        leading_zero: bool=None,
-                        max_errors: int=0,
-                        max_warnings: int=0,
-                        mixed_spaces_and_tabs: bool=False,
-                        variable_naming_convention: str=None,
-                        strict_naming_convention: bool=False,
-                        none_keyword: bool=False,
-                        check_no_important_keyword: bool=True,
-                        spaces_inside_parentheses: bool=None,
-                        placeholder: bool=True,
-                        prefix_vars_with_dollar: bool=True,
-                        semicolons: bool=False,
-                        sort_order: str='alphabetical',
-                        stacked_properties: bool=False,
-                        check_property_validity: bool=True,
-                        preferred_quotation: str=None,
-                        zero_units: bool=False,
-                        z_index_normalize_base: int=0,
-                        stylint_config: str=''):
+                        block_keyword: bool = None,
+                        brackets: bool = False,
+                        colons_for_property_declaration: bool = True,
+                        color_variables_for_hex_values: bool = True,
+                        spaces_after_commas: bool = True,
+                        spaces_after_comments: bool = True,
+                        allow_trailing_whitespace: bool = False,
+                        no_css_literals: bool = False,
+                        max_selector_depth: bool = False,
+                        check_duplicates: bool = True,
+                        efficient_properties: bool = True,
+                        extend_preference: str = None,
+                        indent_size: int = 0,
+                        leading_zero: bool = None,
+                        max_errors: int = 0,
+                        max_warnings: int = 0,
+                        mixed_spaces_and_tabs: bool = False,
+                        variable_naming_convention: str = None,
+                        strict_naming_convention: bool = False,
+                        none_keyword: bool = False,
+                        check_no_important_keyword: bool = True,
+                        spaces_inside_parentheses: bool = None,
+                        placeholder: bool = True,
+                        prefix_vars_with_dollar: bool = True,
+                        semicolons: bool = False,
+                        sort_order: str = 'alphabetical',
+                        stacked_properties: bool = False,
+                        check_property_validity: bool = True,
+                        preferred_quotation: str = None,
+                        zero_units: bool = False,
+                        z_index_normalize_base: int = 0,
+                        stylint_config: str = '',
+                        ):
         """
         :param block_keyword:
             When ``True`` expect the ``@block`` keyword when defining block
@@ -281,7 +282,9 @@ class StylintBear:
             return json.dumps(options)
 
     @staticmethod
-    def create_arguments(filename, file, config_file, stylint_config: str=''):
+    def create_arguments(filename, file, config_file,
+                         stylint_config: str = '',
+                         ):
         """
         :param stylint_config:
             The location of the ``.stylintrc`` config file.

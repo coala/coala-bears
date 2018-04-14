@@ -31,8 +31,9 @@ class LicenseCheckBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file,
-                         licensecheck_lines: int=60,
-                         licensecheck_tail: int=5000):
+                         licensecheck_lines: int = 60,
+                         licensecheck_tail: int = 5000,
+                         ):
         """
         :param licensecheck_lines:
             Specify how many lines of the file header should be parsed for

@@ -102,7 +102,9 @@ class GitCommitBear(GlobalBear):
             netloc = urlparse(url)[1]
         return netloc.split('.')[0]
 
-    def run(self, allow_empty_commit_message: bool = False, **kwargs):
+    def run(self,
+            allow_empty_commit_message: bool = False,
+            **kwargs):
         """
         Check the current git commit message at HEAD.
 
@@ -140,11 +142,12 @@ class GitCommitBear(GlobalBear):
             **self.get_issue_checks_metadata().filter_parameters(kwargs))
 
     def check_shortlog(self, shortlog,
-                       shortlog_length: int=50,
-                       shortlog_regex: str='',
-                       shortlog_trailing_period: bool=None,
-                       shortlog_imperative_check: bool=True,
-                       shortlog_wip_check: bool=True):
+                       shortlog_length: int = 50,
+                       shortlog_regex: str = '',
+                       shortlog_trailing_period: bool = None,
+                       shortlog_imperative_check: bool = True,
+                       shortlog_wip_check: bool = True,
+                       ):
         """
         Checks the given shortlog.
 
@@ -225,10 +228,11 @@ class GitCommitBear(GlobalBear):
             return None
 
     def check_body(self, body,
-                   body_line_length: int=72,
-                   force_body: bool=False,
-                   ignore_length_regex: typed_list(str)=(),
-                   body_regex: str=None):
+                   body_line_length: int = 72,
+                   force_body: bool = False,
+                   ignore_length_regex: typed_list(str) = (),
+                   body_regex: str = None,
+                   ):
         """
         Checks the given commit body.
 
@@ -266,10 +270,11 @@ class GitCommitBear(GlobalBear):
                                'characters.'.format(body_line_length))
 
     def check_issue_reference(self, body,
-                              body_close_issue: bool=False,
-                              body_close_issue_full_url: bool=False,
-                              body_close_issue_on_last_line: bool=False,
-                              body_enforce_issue_reference: bool=False):
+                              body_close_issue: bool = False,
+                              body_close_issue_full_url: bool = False,
+                              body_close_issue_on_last_line: bool = False,
+                              body_enforce_issue_reference: bool = False,
+                              ):
         """
         Check for matching issue related references and URLs.
 

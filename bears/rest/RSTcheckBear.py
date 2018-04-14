@@ -33,9 +33,10 @@ class RSTcheckBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file,
-                         code_block_language_ignore: list=(),
-                         directive_ignore: typed_list(str)=(),
-                         role_ignore: typed_list(str)=()):
+                         code_block_language_ignore: list = (),
+                         directive_ignore: typed_list(str) = (),
+                         role_ignore: typed_list(str) = (),
+                         ):
         """
         :param code_block_language_ignore:
             Comma seperated list for languages of which code blocks

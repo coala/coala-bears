@@ -25,9 +25,10 @@ class IndentationBear(LocalBear):
             file,
             dependency_results: dict,
             language: str,
-            use_spaces: bool=True,
-            indent_size: int=SpacingHelper.DEFAULT_TAB_WIDTH,
-            coalang_dir: str=None):
+            use_spaces: bool = True,
+            indent_size: int = SpacingHelper.DEFAULT_TAB_WIDTH,
+            coalang_dir: str = None,
+            ):
         """
         It is a generic indent bear, which looks for a start and end
         indent specifier, example: ``{ : }`` where "{" is the start indent

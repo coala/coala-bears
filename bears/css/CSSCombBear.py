@@ -26,28 +26,29 @@ class CSSCombBear:
 
     @staticmethod
     def generate_config(filename, file,
-                        enforce_semicolon: bool=True,
-                        use_block_indentation: int=4,
-                        use_color_case: str='upper',
-                        allow_color_shorthand: bool=None,
-                        allow_leading_zero_in_dimensions: bool=True,
-                        preferred_quotation: str="'",
-                        prohibit_empty_rulesets: bool=True,
-                        use_space_after_colon: int=1,
-                        use_space_before_colon: int=0,
-                        use_space_after_combinator: int=1,
-                        use_space_before_combinator: int=1,
-                        use_space_between_declarations: int=None,
-                        use_space_after_opening_brace: int=None,
-                        use_space_before_opening_brace: int=1,
-                        use_space_before_closing_brace: int=None,
-                        use_space_after_selector_delimiter: int=1,
-                        use_space_before_selector_delimiter: int=1,
-                        prohibit_trailing_whitespace: bool=True,
-                        prohibit_units_in_zero_valued_dimensions: bool=True,
-                        vendor_prefix_align: bool=None,
-                        use_lines_between_rulesets: int=1,
-                        csscomb_config: str=''):
+                        enforce_semicolon: bool = True,
+                        use_block_indentation: int = 4,
+                        use_color_case: str = 'upper',
+                        allow_color_shorthand: bool = None,
+                        allow_leading_zero_in_dimensions: bool = True,
+                        preferred_quotation: str = "'",
+                        prohibit_empty_rulesets: bool = True,
+                        use_space_after_colon: int = 1,
+                        use_space_before_colon: int = 0,
+                        use_space_after_combinator: int = 1,
+                        use_space_before_combinator: int = 1,
+                        use_space_between_declarations: int = None,
+                        use_space_after_opening_brace: int = None,
+                        use_space_before_opening_brace: int = 1,
+                        use_space_before_closing_brace: int = None,
+                        use_space_after_selector_delimiter: int = 1,
+                        use_space_before_selector_delimiter: int = 1,
+                        prohibit_trailing_whitespace: bool = True,
+                        prohibit_units_in_zero_valued_dimensions: bool = True,
+                        vendor_prefix_align: bool = None,
+                        use_lines_between_rulesets: int = 1,
+                        csscomb_config: str = '',
+                        ):
         """
         :param enforce_semicolon:
             Whether to add a semicolon after the last value/mixin.
@@ -278,7 +279,8 @@ class CSSCombBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file,
-                         csscomb_config: str=''):
+                         csscomb_config: str = '',
+                         ):
         """
         :param csscomb_config:
             The location of the ``.csscomb.json`` config file.

@@ -15,7 +15,9 @@ class MatlabIndentationBear(LocalBear):
     CAN_DETECT = {'Formatting'}
 
     @deprecate_settings(indent_size='tab_width')
-    def run(self, filename, file, indent_size: int=2):
+    def run(self, filename, file,
+            indent_size: int = 2,
+            ):
         """
         This bear features a simple algorithm to calculate the right
         indentation for Matlab/Octave code. However, it will not handle hanging

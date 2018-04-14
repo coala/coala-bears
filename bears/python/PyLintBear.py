@@ -32,10 +32,11 @@ class PyLintBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file,
-                         pylint_disable: typed_list(str)=None,
-                         pylint_enable: typed_list(str)=None,
-                         pylint_cli_options: str='',
-                         pylint_rcfile: str=''):
+                         pylint_disable: typed_list(str) = None,
+                         pylint_enable: typed_list(str) = None,
+                         pylint_cli_options: str = '',
+                         pylint_rcfile: str = '',
+                         ):
         """
         :param pylint_disable:     Disable the message, report, category or
                                    checker with the given id(s).

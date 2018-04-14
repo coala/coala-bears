@@ -18,7 +18,8 @@ class LineCountBear(LocalBear):
         return num_blank_lines
 
     def run(self, filename, file, max_lines_per_file: int,
-            exclude_blank_lines: bool=False):
+            exclude_blank_lines: bool = False,
+            ):
         """
         Count the number of lines in a file and ensure that they are
         smaller than a given size.

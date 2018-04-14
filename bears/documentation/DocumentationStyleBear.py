@@ -22,10 +22,11 @@ class DocumentationStyleBear(DocBaseClass, LocalBear):
 
     def process_documentation(self,
                               doc_comment: DocumentationComment,
-                              allow_missing_func_desc: str=False,
-                              indent_size: int=4,
-                              expand_one_liners: str=False,
-                              use_spaces: bool=True):
+                              allow_missing_func_desc: str = False,
+                              indent_size: int = 4,
+                              expand_one_liners: str = False,
+                              use_spaces: bool = True,
+                              ):
         """
         This fixes the parsed documentation comment.
 
@@ -128,9 +129,12 @@ class DocumentationStyleBear(DocBaseClass, LocalBear):
         return (new_comment, warning_desc)
 
     def run(self, filename, file, language: str,
-            docstyle: str='default', allow_missing_func_desc: str=False,
-            indent_size: int=4, expand_one_liners: str=False,
-            use_spaces: bool=True):
+            docstyle: str = 'default',
+            allow_missing_func_desc: str = False,
+            indent_size: int = 4,
+            expand_one_liners: str = False,
+            use_spaces: bool = True,
+            ):
         """
         Checks for certain in-code documentation styles.
 

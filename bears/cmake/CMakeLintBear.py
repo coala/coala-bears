@@ -21,7 +21,8 @@ class CMakeLintBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file,
-                         cmakelint_config: path=''):
+                         cmakelint_config: path = '',
+                         ):
         """
         :param cmakelint_config: The location of the cmakelintrc config file.
         """

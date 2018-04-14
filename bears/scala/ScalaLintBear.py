@@ -35,7 +35,8 @@ class ScalaLintBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file,
-                         scalalint_config: str=scalastyle_config_file):
+                         scalalint_config: str = scalastyle_config_file,
+                         ):
         """
         :param scalalint_config: Path to a custom configuration file.
         """

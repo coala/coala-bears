@@ -24,7 +24,8 @@ class GofmtBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file,
-                         simplify: bool=False):
+                         simplify: bool = False,
+                         ):
         """
         :param simplify: Tries to simplify code
         """

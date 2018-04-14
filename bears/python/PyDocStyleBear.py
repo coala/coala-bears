@@ -20,10 +20,11 @@ class PyDocStyleBear:
     CAN_DETECT = {'Formatting', 'Documentation'}
 
     def create_arguments(self, filename, file, config_file,
-                         pydocstyle_select: typed_list(str)=(),
-                         pydocstyle_ignore: typed_list(str)=(),
-                         pydocstyle_add_ignore: typed_list(str)=(),
-                         pydocstyle_add_select: typed_list(str)=()):
+                         pydocstyle_select: typed_list(str) = (),
+                         pydocstyle_ignore: typed_list(str) = (),
+                         pydocstyle_add_ignore: typed_list(str) = (),
+                         pydocstyle_add_select: typed_list(str) = (),
+                         ):
         """
         :param pydocstyle_select:
             List of checked errors by specifying which errors to check for.

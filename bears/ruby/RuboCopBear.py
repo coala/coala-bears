@@ -33,7 +33,9 @@ class RuboCopBear:
                     'convention': RESULT_SEVERITY.INFO}
 
     @staticmethod
-    def create_arguments(filename, file, config_file, rubocop_config: str=''):
+    def create_arguments(filename, file, config_file,
+                         rubocop_config: str = '',
+                         ):
         # Need both stdin and filename. Explained in this comment:
         # https://github.com/bbatsov/rubocop/pull/2146#issuecomment-131403694
         args = ('--stdin', filename, '--format=json')
@@ -49,40 +51,43 @@ class RuboCopBear:
                         method_naming_convention='method_name_case',
                         variable_naming_convention='variable_name_case')
     def generate_config(filename, file,
-                        access_modifier_indentation: str='indent',
-                        preferred_alias: str='prefer_alias',
-                        align_hash_rocket_by: str='key',
-                        align_colon_by: str='key',
-                        inspect_last_argument_hash: str='always_inspect',
-                        align_parameters: str='with_first_parameter',
-                        class_check: str='is_a?',
-                        comment_keywords: tuple=('TODO',
-                                                 'FIXME',
-                                                 'OPTIMIZE',
-                                                 'HACK',
-                                                 'REVIEW'),
-                        min_if_unless_guard: int=1,
-                        indent_size: int=2,
-                        method_naming_convention: str='snake',
-                        string_literals: str='single_quotes',
-                        variable_naming_convention: str='snake',
-                        max_class_length: int=100,
-                        class_length_count_comments: bool=False,
-                        max_module_length: int=100,
-                        module_length_count_comments: bool=False,
-                        cyclomatic_complexity: int=6,
-                        max_line_length: int=79,
-                        line_length_allow_here_doc: bool=True,
-                        line_length_allow_uri: bool=True,
-                        max_method_length: int=10,
-                        method_length_count_comments: bool=False,
-                        max_parameters: int=5,
-                        count_keyword_args: bool=True,
-                        ignore_unused_block_args_if_empty: bool=True,
-                        allow_unused_block_keyword_arguments: bool=False,
-                        ignore_unused_method_args_if_empty: bool=True,
-                        allow_unused_method_keyword_args: bool=False,
-                        rubocop_config: str=''):
+                        access_modifier_indentation: str = 'indent',
+                        preferred_alias: str = 'prefer_alias',
+                        align_hash_rocket_by: str = 'key',
+                        align_colon_by: str = 'key',
+                        inspect_last_argument_hash: str = 'always_inspect',
+                        align_parameters: str = 'with_first_parameter',
+                        class_check: str = 'is_a?',
+                        comment_keywords: tuple = (
+                            'TODO',
+                            'FIXME',
+                            'OPTIMIZE',
+                            'HACK',
+                            'REVIEW',
+                        ),
+                        min_if_unless_guard: int = 1,
+                        indent_size: int = 2,
+                        method_naming_convention: str = 'snake',
+                        string_literals: str = 'single_quotes',
+                        variable_naming_convention: str = 'snake',
+                        max_class_length: int = 100,
+                        class_length_count_comments: bool = False,
+                        max_module_length: int = 100,
+                        module_length_count_comments: bool = False,
+                        cyclomatic_complexity: int = 6,
+                        max_line_length: int = 79,
+                        line_length_allow_here_doc: bool = True,
+                        line_length_allow_uri: bool = True,
+                        max_method_length: int = 10,
+                        method_length_count_comments: bool = False,
+                        max_parameters: int = 5,
+                        count_keyword_args: bool = True,
+                        ignore_unused_block_args_if_empty: bool = True,
+                        allow_unused_block_keyword_arguments: bool = False,
+                        ignore_unused_method_args_if_empty: bool = True,
+                        allow_unused_method_keyword_args: bool = False,
+                        rubocop_config: str = '',
+                        ):
         """
         Not all settings added.
         Notable settings missing: Rails settings.

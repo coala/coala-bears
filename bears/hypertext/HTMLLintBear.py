@@ -28,7 +28,8 @@ class HTMLLintBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file, use_spaces: bool,
-                         htmllint_ignore: typed_list(str)=[]):
+                         htmllint_ignore: typed_list(str) = [],
+                         ):
         """
         :param htmllint_ignore: List of checkers to ignore.
         :param use_spaces: True if spaces are to be used instead of tabs.

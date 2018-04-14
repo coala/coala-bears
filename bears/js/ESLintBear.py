@@ -34,7 +34,8 @@ class ESLintBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file,
-                         eslint_config: str=''):
+                         eslint_config: str = '',
+                         ):
         """
         :param eslint_config: The location of the .eslintrc config file.
         """

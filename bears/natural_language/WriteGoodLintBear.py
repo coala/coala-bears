@@ -33,14 +33,15 @@ class WriteGoodLintBear:
                         allow_extra_words=('check_extra_words', negate),
                         allow_cliche_phrases=('check_cliche_exists', negate))
     def create_arguments(filename, file, config_file,
-                         allow_passive_voice: bool=True,
-                         allow_so_beginning: bool=True,
-                         allow_adverbs: bool=True,
-                         allow_repeated_words: bool=True,
-                         allow_there_is: bool=True,
-                         allow_ambiguous_words: bool=True,
-                         allow_extra_words: bool=True,
-                         allow_cliche_phrases: bool=True):
+                         allow_passive_voice: bool = True,
+                         allow_so_beginning: bool = True,
+                         allow_adverbs: bool = True,
+                         allow_repeated_words: bool = True,
+                         allow_there_is: bool = True,
+                         allow_ambiguous_words: bool = True,
+                         allow_extra_words: bool = True,
+                         allow_cliche_phrases: bool = True,
+                         ):
         """
         Using ``False`` will enable the check.
 

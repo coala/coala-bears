@@ -22,7 +22,8 @@ class GoLintBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file,
-                         golint_cli_options: str=''):
+                         golint_cli_options: str = '',
+                         ):
         """
         :param golint_cli_options: Any other flags you wish to pass to golint.
         """

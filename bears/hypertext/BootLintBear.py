@@ -27,7 +27,8 @@ class BootLintBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file,
-                         bootlint_ignore: typed_list(str)=[]):
+                         bootlint_ignore: typed_list(str) = [],
+                         ):
         """
         :param bootlint_ignore: List of checkers to ignore.
         """

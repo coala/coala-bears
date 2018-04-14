@@ -18,9 +18,10 @@ class LineLengthBear(LocalBear):
     def run(self,
             filename,
             file,
-            max_line_length: int=79,
-            indent_size: int=SpacingHelper.DEFAULT_TAB_WIDTH,
-            ignore_length_regex: typed_list(str)=()):
+            max_line_length: int = 79,
+            indent_size: int = SpacingHelper.DEFAULT_TAB_WIDTH,
+            ignore_length_regex: typed_list(str) = (),
+            ):
         '''
         Yields results for all lines longer than the given maximum line length.
 

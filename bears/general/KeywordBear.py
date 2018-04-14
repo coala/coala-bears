@@ -79,9 +79,10 @@ class KeywordBear(LocalBear):
     def run(self,
             filename,
             file,
-            keywords: list=['todo', 'fixme'],
-            regex_keyword: str='',
-            dependency_results: dict=None):
+            keywords: list = ['todo', 'fixme'],
+            regex_keyword: str = '',
+            dependency_results: dict = None,
+            ):
         """
         Checks the code files for given keywords.
 

@@ -32,8 +32,9 @@ class ShellCheckBear:
     CAN_DETECT = {'Syntax', 'Security', 'Undefined Element', 'Unused Code'}
 
     @staticmethod
-    def create_arguments(filename, file, config_file, shell: str='sh',
-                         shellcheck_ignore: list=None):
+    def create_arguments(filename, file, config_file, shell: str = 'sh',
+                         shellcheck_ignore: list = None,
+                         ):
         """
         :param shell: Target shell being used.
         :param shellcheck_ignore: List of linting rules that should be ignored.

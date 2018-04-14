@@ -29,7 +29,8 @@ class DockerfileLintBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file,
-                         dockerfile_lint_rule_file: str=''):
+                         dockerfile_lint_rule_file: str = '',
+                         ):
         """
         :param dockerfile_lint_rule_file:
             A yaml rule file for `dockerfile_lint`.

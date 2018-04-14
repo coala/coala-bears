@@ -15,7 +15,8 @@ class QuotesBear(LocalBear):
 
     def correct_single_line_str(self, filename, file, sourcerange,
                                 preferred_quotation,
-                                force_preferred_quotation: bool=False):
+                                force_preferred_quotation: bool = False,
+                                ):
         """
         Corrects a given single line string assuming it does not use the
         preferred quotation. If the preferred quotation mark is used inside the
@@ -62,8 +63,9 @@ class QuotesBear(LocalBear):
                      diff.affected_code(filename), diffs={filename: diff})
 
     def run(self, filename, file, dependency_results,
-            preferred_quotation: str='"',
-            force_preferred_quotation: bool=False):
+            preferred_quotation: str = '"',
+            force_preferred_quotation: bool = False,
+            ):
         """
         Checks and corrects your quotation style.
 

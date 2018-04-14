@@ -29,7 +29,8 @@ class CPPCheckBear:
     CAN_DETECT = {'Security', 'Unused Code', 'Unreachable Code', 'Smell'}
 
     def create_arguments(self, config_file,
-                         enable: typed_list(str)=[]):
+                         enable: typed_list(str) = [],
+                         ):
         """
         :param enable:
             Choose specific issues to report. Issues that can be

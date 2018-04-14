@@ -27,36 +27,40 @@ class PugLintBear:
 
     @staticmethod
     def generate_config(filename, file,
-                        prohibit_block_expansion: bool=True,
-                        prohibit_class_attribute_with_static_value: bool=True,
-                        prohibit_class_literals_before_attributes: bool=True,
-                        prohibit_class_literals_before_id_literals: bool=True,
-                        prohibit_class_literals: bool=True,
-                        prohibit_duplicate_attributes: bool=True,
-                        prohibit_html_text: bool=True,
-                        prohibit_id_attribute_with_static_value: bool=True,
-                        prohibit_id_literals_before_attributes: bool=True,
-                        prohibit_id_literals: bool=True,
-                        prohibit_legacy_mixin_call: bool=True,
-                        prohibit_multiple_line_breaks: bool=False,
-                        prohibit_spaces_inside_attribute_brackets: bool=True,
-                        prohibit_string_interpolation: bool=True,
-                        prohibit_tag_interpolation: bool=True,
-                        prohibit_specific_attributes: typed_list(str)=None,
-                        prohibit_specific_tags: typed_list(str)=None,
-                        enforce_class_literals_before_attributes: bool=False,
-                        enforce_class_literals_before_id_literals: bool=False,
-                        enforce_id_literals_before_attributes: bool=False,
-                        enforce_lower_case_attributes: bool=True,
-                        enforce_lower_case_tags: bool=True,
-                        enforce_spaces_inside_attribute_brackets: bool=False,
-                        enforce_strict_equality_operators: bool=True,
-                        validate_div_tags: bool=True,
-                        validate_extensions: bool=True,
-                        validate_self_closing_tags: bool=True,
-                        preferred_quotation: str="'",
-                        max_lines_per_file: int=None,
-                        puglint_config: str=''):
+                        prohibit_block_expansion: bool = True,
+                        prohibit_class_attribute_with_static_value:
+                            bool = True,
+                        prohibit_class_literals_before_attributes: bool = True,
+                        prohibit_class_literals_before_id_literals:
+                            bool = True,
+                        prohibit_class_literals: bool = True,
+                        prohibit_duplicate_attributes: bool = True,
+                        prohibit_html_text: bool = True,
+                        prohibit_id_attribute_with_static_value: bool = True,
+                        prohibit_id_literals_before_attributes: bool = True,
+                        prohibit_id_literals: bool = True,
+                        prohibit_legacy_mixin_call: bool = True,
+                        prohibit_multiple_line_breaks: bool = False,
+                        prohibit_spaces_inside_attribute_brackets: bool = True,
+                        prohibit_string_interpolation: bool = True,
+                        prohibit_tag_interpolation: bool = True,
+                        prohibit_specific_attributes: typed_list(str) = None,
+                        prohibit_specific_tags: typed_list(str) = None,
+                        enforce_class_literals_before_attributes: bool = False,
+                        enforce_class_literals_before_id_literals:
+                            bool = False,
+                        enforce_id_literals_before_attributes: bool = False,
+                        enforce_lower_case_attributes: bool = True,
+                        enforce_lower_case_tags: bool = True,
+                        enforce_spaces_inside_attribute_brackets: bool = False,
+                        enforce_strict_equality_operators: bool = True,
+                        validate_div_tags: bool = True,
+                        validate_extensions: bool = True,
+                        validate_self_closing_tags: bool = True,
+                        preferred_quotation: str = "'",
+                        max_lines_per_file: int = None,
+                        puglint_config: str = '',
+                        ):
         """
         :param prohibit_block_expansion:
             When ``True``, disallow any block expansion operators.
@@ -226,7 +230,9 @@ class PugLintBear:
             return json.dumps(options)
 
     @staticmethod
-    def create_arguments(filename, file, config_file, puglint_config: str=''):
+    def create_arguments(filename, file, config_file,
+                         puglint_config: str = '',
+                         ):
         """
         :param puglint_config:
             The location of a custom ``.pug-lintrc`` config file.

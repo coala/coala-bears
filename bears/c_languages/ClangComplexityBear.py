@@ -76,7 +76,9 @@ class ClangComplexityBear(LocalBear):
                 yield from self.complexities(child, filename)
 
     @deprecate_settings(cyclomatic_complexity='max_complexity')
-    def run(self, filename, file, cyclomatic_complexity: int=8):
+    def run(self, filename, file,
+            cyclomatic_complexity: int = 8,
+            ):
         """
         Check for all functions if they are too complicated using the
         cyclomatic complexity metric.

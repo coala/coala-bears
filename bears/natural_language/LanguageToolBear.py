@@ -38,8 +38,9 @@ class LanguageToolBear(LocalBear):
     def run(self,
             filename,
             file,
-            natural_language: str='auto',
-            languagetool_disable_rules: typed_list(str)=()):
+            natural_language: str = 'auto',
+            languagetool_disable_rules: typed_list(str) = (),
+            ):
         """
         Checks the code with LanguageTool.
 

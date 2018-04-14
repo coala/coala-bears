@@ -54,33 +54,34 @@ class TextLintBear:
 
     @staticmethod
     def generate_config(filename, file,
-                        check_todos: bool=None,
-                        dont_start_with_duplicated_conjunction: bool=True,
-                        no_empty_section: bool=True,
-                        check_date_weekday_mismatch: bool=True,
-                        check_grammar: bool=True,
-                        max_lines_per_file: int=300,
-                        max_comma_per_sentence: int=4,
-                        no_good_words: typed_list(str)=[],
-                        period_in_list_item: bool=True,
-                        minimum_acronym_length: int=3,
-                        maximum_acronym_length: int=5,
-                        ignore_acronyms: typed_list(str)=[],
-                        check_with_rousseau: bool=True,
-                        check_with_alex: bool=True,
-                        check_common_misspellings: bool=True,
-                        allow_passive_voice: bool=True,
-                        allow_so_beginning: bool=True,
-                        allow_adverbs: bool=True,
-                        allow_repeated_words: bool=True,
-                        allow_there_is: bool=True,
-                        allow_ambiguous_words: bool=True,
-                        allow_extra_words: bool=True,
-                        allow_cliche_phrases: bool=True,
-                        check_relative_links: bool=False,
-                        base_uri: str='',
-                        link_ignore_list: typed_list(str)=[],
-                        textlint_config: str=''):
+                        check_todos: bool = None,
+                        dont_start_with_duplicated_conjunction: bool = True,
+                        no_empty_section: bool = True,
+                        check_date_weekday_mismatch: bool = True,
+                        check_grammar: bool = True,
+                        max_lines_per_file: int = 300,
+                        max_comma_per_sentence: int = 4,
+                        no_good_words: typed_list(str) = [],
+                        period_in_list_item: bool = True,
+                        minimum_acronym_length: int = 3,
+                        maximum_acronym_length: int = 5,
+                        ignore_acronyms: typed_list(str) = [],
+                        check_with_rousseau: bool = True,
+                        check_with_alex: bool = True,
+                        check_common_misspellings: bool = True,
+                        allow_passive_voice: bool = True,
+                        allow_so_beginning: bool = True,
+                        allow_adverbs: bool = True,
+                        allow_repeated_words: bool = True,
+                        allow_there_is: bool = True,
+                        allow_ambiguous_words: bool = True,
+                        allow_extra_words: bool = True,
+                        allow_cliche_phrases: bool = True,
+                        check_relative_links: bool = False,
+                        base_uri: str = '',
+                        link_ignore_list: typed_list(str) = [],
+                        textlint_config: str = '',
+                        ):
         """
         :param check_todos:
             This rule checks for occurrences of ``- [ ]``
@@ -232,7 +233,9 @@ class TextLintBear:
             return json.dumps(parent_config)
 
     @staticmethod
-    def create_arguments(filename, file, config_file, textlint_config: str=''):
+    def create_arguments(filename, file, config_file,
+                         textlint_config: str = '',
+                         ):
         """
         :param textlint_config:
             The location of the ``.textlintrc`` config file.

@@ -90,7 +90,8 @@ class URLHeadBear(LocalBear):
 
     @deprecate_settings(network_timeout=('timeout', lambda t: {'*': t}))
     def run(self, filename, file, dependency_results=dict(),
-            network_timeout: typed_dict(str, int, DEFAULT_TIMEOUT)=dict()):
+            network_timeout: typed_dict(str, int, DEFAULT_TIMEOUT) = dict(),
+            ):
         """
         Find links in any text file and tells its head response and
         status code.

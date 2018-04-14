@@ -59,8 +59,10 @@ class CheckstyleBear:
 
     def create_arguments(
             self, filename, file, config_file,
-            checkstyle_configs: known_checkstyle_or_path='google',
-            use_spaces: bool=True, indent_size: int=2):
+            checkstyle_configs: known_checkstyle_or_path = 'google',
+            use_spaces: bool = True,
+            indent_size: int = 2,
+            ):
         """
         :param checkstyle_configs:
             A file containing configs to use in ``checkstyle``. It can also

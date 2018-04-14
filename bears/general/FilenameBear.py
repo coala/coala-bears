@@ -26,11 +26,12 @@ class FilenameBear(LocalBear):
                                   }
 
     def run(self, filename, file,
-            max_filename_length: int=260,
-            file_naming_convention: str=None,
-            ignore_uppercase_filenames: bool=True,
-            filename_prefix: str='',
-            filename_suffix: str=''):
+            max_filename_length: int = 260,
+            file_naming_convention: str = None,
+            ignore_uppercase_filenames: bool = True,
+            filename_prefix: str = '',
+            filename_suffix: str = '',
+            ):
         """
         Checks whether the filename follows a certain naming-convention.
 

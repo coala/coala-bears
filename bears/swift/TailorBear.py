@@ -48,15 +48,16 @@ class TailorBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file,
-                         max_line_length: int=79,
-                         max_class_length: int=0,
-                         max_closure_length: int=0,
-                         max_file_length: int=0,
-                         max_function_length: int=0,
-                         max_name_length: int=0,
-                         max_struct_length: int=0,
-                         min_name_length: int=1,
-                         tailor_config: path=''):
+                         max_line_length: int = 79,
+                         max_class_length: int = 0,
+                         max_closure_length: int = 0,
+                         max_file_length: int = 0,
+                         max_function_length: int = 0,
+                         max_name_length: int = 0,
+                         max_struct_length: int = 0,
+                         min_name_length: int = 1,
+                         tailor_config: path = '',
+                         ):
         """
         Bear configuration arguments.
         Using '0' will disable the check.

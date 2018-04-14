@@ -353,9 +353,10 @@ class Jinja2Bear(LocalBear):
     def run(self,
             filename,
             file,
-            variable_spacing: int=1,
-            statement_spacing: int=1,
-            control_spacing: int=1):
+            variable_spacing: int = 1,
+            statement_spacing: int = 1,
+            control_spacing: int = 1,
+            ):
         """
         Check `Jinja2 templates <http://jinja.pocoo.org>`_ for syntax,
         formatting and documentation issues.
