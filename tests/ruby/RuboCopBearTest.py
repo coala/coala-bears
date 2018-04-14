@@ -52,8 +52,7 @@ class RuboCopBearTest(LocalBearTestHelper):
                                 severity=RESULT_SEVERITY.INFO)],
             filename=get_testfile_path(filename))
 
-
-# bad file becomes good and vice-versa
+    # bad file becomes good and vice-versa
     def test_bad_config_file(self):
         filename = 'good_file.rb'
         file_contents = load_testfile(filename)
