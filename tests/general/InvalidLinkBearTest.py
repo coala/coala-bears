@@ -316,7 +316,8 @@ class InvalidLinkBearTest(LocalBearTestHelper):
         bzr+http://httpbin.org/status/404#egg=coala-bears
         """.splitlines()
 
-        brokenlink_at_hash = """git+http://httpbin.org/status/404@master#egg=coala-bears
+        brokenlink_at_hash = """
+        git+http://httpbin.org/status/404@master#egg=coala-bears
         svn+http://httpbin.org/status/404@master#egg=coala-bears
         hg+http://httpbin.org/status/404@master#egg=coala-bears
         bzr+http://httpbin.org/status/404@master#egg=coala-bears
