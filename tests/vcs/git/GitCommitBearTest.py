@@ -277,7 +277,7 @@ class GitCommitBearTest(unittest.TestCase):
         self.assertEqual(self.run_uut(
                              body_regex=r'Fix\s+[1-9][0-9]*\s*'),
                          ['No match found in commit message for the regular '
-                          'expression provided: Fix\s+[1-9][0-9]*\s*'])
+                          r'expression provided: Fix\s+[1-9][0-9]*\s*'])
         self.assert_no_msgs()
 
         # Matching with regexp, fully matched
