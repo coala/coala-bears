@@ -61,15 +61,15 @@ class URLResultTest(unittest.TestCase):
 
     def test_urlresult_wrong_type_link(self):
         msg = ('link must be an instance of one of '
-               '\(<class \'str\'>,\) \(provided value: 17072017\)')
+               r'\(<class \'str\'>,\) \(provided value: 17072017\)')
         with self.assertRaisesRegex(TypeError, msg):
             URLResult(URLBear, self.affected_code, 17072017,
                       LINK_CONTEXT.no_context)
 
     def test_urlresult_wrong_type_link_context(self):
         msg = ('link_context must be an instance of one of '
-               '\(<aenum \'LINK_CONTEXT\'>,\)'
-               ' \(provided value: \'LINK_CONTEXT\.no_context\'\)')
+               r'\(<aenum \'LINK_CONTEXT\'>,\)'
+               r' \(provided value: \'LINK_CONTEXT\.no_context\'\)')
         with self.assertRaisesRegex(TypeError, msg):
             URLResult(URLBear, self.affected_code, 'url',
                       'LINK_CONTEXT.no_context')
@@ -78,12 +78,13 @@ class URLResultTest(unittest.TestCase):
         repr_result = repr(URLResult(URLBear, self.affected_code,
                                      'http://google.com',
                                      LINK_CONTEXT.no_context))
-        repr_regex = ('<URLResult object\(id=.+, origin=\'bearclass\', '
-                      'affected_code=\(<SourceRange object\(start=<SourcePosit'
-                      'ion object\(file=\'.+\', line=1, column=None\) at .+>, '
-                      'end=<SourcePosition object\(file=\'.+\', line=1, column'
-                      '=None\) at .+>\) at .+>,\), message=\'Found '
-                      'http://google.com with context: LINK_CONTEXT.no_contex'
-                      't\', link=\'http://google.com\', link_context=<LINK_CON'
-                      'TEXT.no_context: 0>\) at .+>')
+        repr_regex = (
+            r'<URLResult object\(id=.+, origin=\'bearclass\', '
+            r'affected_code=\(<SourceRange object\(start=<SourcePosit'
+            r'ion object\(file=\'.+\', line=1, column=None\) at .+>, '
+            r'end=<SourcePosition object\(file=\'.+\', line=1, column'
+            r'=None\) at .+>\) at .+>,\), message=\'Found '
+            r'http://google.com with context: LINK_CONTEXT.no_contex'
+            r't\', link=\'http://google.com\', link_context=<LINK_CON'
+            r'TEXT.no_context: 0>\) at .+>')
         self.assertRegex(repr_result, repr_regex)
