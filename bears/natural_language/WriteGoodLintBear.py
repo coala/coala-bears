@@ -7,7 +7,7 @@ from coala_utils.param_conversion import negate
 @linter(executable='write-good',
         output_format='regex',
         output_regex=r'(?P<message>.*)\s*on\s*line\s*(?P<line>\d+)\s*at\s'
-                      'column\s*(?P<column>\d+)'
+                     r'column\s*(?P<column>\d+)'
         )
 class WriteGoodLintBear:
     """
