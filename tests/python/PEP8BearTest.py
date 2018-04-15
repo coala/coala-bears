@@ -23,6 +23,11 @@ class PEP8BearTest(LocalBearTestHelper):
         self.check_invalidity(self.uut,
                               ['a = 1 + 1 + 1 + 1 + 1 + 1 + 1'])
 
+    def test_infinite_line_length(self):
+        valid_file = ['a =' + ' 1 +' * 100 + ' 1']
+        self.section.append(Setting('max_line_length', '0'))
+        self.check_validity(self.uut, valid_file)
+
     def test_indent_level(self):
         test_code = ['def func():\n',
                      '    pass\n']
