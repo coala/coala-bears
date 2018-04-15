@@ -42,6 +42,7 @@ class XMLBear:
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
     CAN_DETECT = {'Formatting', 'Syntax'}
+    CAN_FIX = {'Formatting'}
 
     _output_regex = re.compile(
         r'.*:(?P<line>\d+):.*(?P<severity>error|warning)\s?: '
