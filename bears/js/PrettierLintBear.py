@@ -21,6 +21,7 @@ class PrettierLintBear:
     CAN_DETECT = {'Consistency', 'Correctness', 'Whitespace',
                   'Parentheses', 'Strings', 'Empty lines',
                   'Multi-line objects'}
+    CAN_FIX = {'Formatting'}
     SEE_MORE = 'https://prettier.io/'
 
     regex = re.compile(r'L(?P<line>\d+)C(?P<column>\d+): (?P<message>.*)')
