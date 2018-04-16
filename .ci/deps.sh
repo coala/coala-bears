@@ -58,7 +58,7 @@ if [ ! -e ~/phpmd/phpmd ]; then
 fi
 
 # astyle installation
-wget "https://downloads.sourceforge.net/project/astyle/astyle/astyle%203.0.1/astyle_3.0.1_linux.tar.gz?r=&ts=1499017588&use_mirror=excellmedia" -O ~/astyle.tar.gz
+wget "https://downloads.sourceforge.net/project/astyle/astyle/astyle%203.0.1/astyle_3.0.1_linux.tar.gz?r=&ts=1499017588&use_mirror=excellmedia" -O ~/astyle.tar.gz --no-check-certificate
 tar -xvzf ~/astyle.tar.gz -C ~/
 make -C ~/astyle/build/gcc
 sudo make install -C ~/astyle/build/gcc

@@ -83,7 +83,6 @@ cache:
 
 env:
   global:
-    - CIRCLE_NODE_INDEX=-1  # Avoid accidentially being a CircleCI worker
     - USE_PPAS="marutter/rdev staticfloat/juliareleases ondrej/golang"
     - R_LIB_USER=~/R/Library
     - LINTR_COMMENT_BOT=false
