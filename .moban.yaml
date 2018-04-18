@@ -26,7 +26,7 @@ configuration:
 targets:
   - setup.py: bears-setup.py.jj2
   - requirements.txt: requirements.txt.jj2
-  - test-requirements.txt: test-requirements.txt.jj2
+  - test-requirements.txt: bears-test-requirements.txt.jj2
   - bears/VERSION: VERSION.jj2
   - Gemfile: Gemfile.jj2
   - package.json: package.json.jj2

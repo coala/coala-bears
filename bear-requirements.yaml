@@ -1,3 +1,6 @@
+# This is an automatically generated file.
+# And should not be edited by hand.
+overrides: coala-build.yaml
 gem_requirements:
   brakeman:
     version: ~>4.1.1
@@ -114,7 +117,6 @@ npm_requirements:
     version: '>=1.7.3'
   write-good:
     version: ~0.9.1
-overrides: coala-build.yaml
 pip_requirements:
   HTTPolice:
     version: ~=0.5.2

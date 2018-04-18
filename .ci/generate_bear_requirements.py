@@ -14,13 +14,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import argparse
+import copy
 import itertools
 import json
 import os
 import sys
-from collections import OrderedDict
 
-from yaml import dump
+from ruamel.yaml import YAML, RoundTripDumper
+from ruamel.yaml.comments import CommentedMap
 from pyprint.NullPrinter import NullPrinter
 
 from coalib.bears.BEAR_KIND import BEAR_KIND
@@ -29,6 +30,10 @@ from coalib.collecting.Collectors import collect_bears
 from dependency_management.requirements.GemRequirement import GemRequirement
 from dependency_management.requirements.NpmRequirement import NpmRequirement
 from dependency_management.requirements.PipRequirement import PipRequirement
+
+yaml = YAML(typ='rt')
+yaml.default_flow_style = False
+yaml.Dumper = RoundTripDumper
 
 BEAR_REQUIREMENTS_YAML = "bear-requirements.yaml"
 _VERSION_OPERATORS = ('<', '>', '~', '=', '-', '!')
@@ -51,6 +56,11 @@ def get_args():
     parser.add_argument('--bear-dirs', '-d', nargs='+', metavar='DIR',
                         help='additional directories which may contain bears')
 
+    parser.add_argument('--check', '-c', action='store_true',
+                        help='performs a dry run, and reports differences.')
+    parser.add_argument('--update', '-u', action='store_true',
+                        help='updates "bear-requirements.yaml" '
+                             'instead of overwriting')
     args = parser.parse_args()
 
     return args
@@ -144,6 +154,47 @@ def get_pip_requirements(requirements):
     return _get_requirements(requirements, '~=', inherited_requirements)
 
 
+def deep_update(target, src):
+    for key, value in src.items():
+        if key not in target:
+            target[key] = copy.deepcopy(value)
+        else:
+            if isinstance(value, list):
+                target[key].extend(value)
+            elif isinstance(value, dict):
+                deep_update(target[key], value)
+            elif isinstance(value, set):
+                target[key].update(value.copy())
+            else:
+                target[key] = copy.copy(value)
+
+
+def deep_diff(target, src):
+    errors = []
+    for key, value in src.items():
+        if key not in target:
+            errors.append((key, 'Missing'))
+        elif target[key] != value:
+            if isinstance(value, list):
+                if [x for x in value if x not in target[key]]:
+                    errors.append(key)
+            elif isinstance(value, dict):
+                if target[key] != value:
+                    errors.append((key, deep_diff(target[key], value)))
+            elif isinstance(value, set):
+                if set(target[key]).symmetric_difference(value):
+                    errors.append(key)
+            else:
+                errors.append((key, target[key]))
+    return errors
+
+
+def sort_requirements(req_dict):
+    for key in ['pip_requirements', 'npm_requirements', 'gem_requirements']:
+        req_dict[key] = CommentedMap(sorted(req_dict[key].items(),
+                                            key=lambda t: t[0]))
+
+
 if __name__ == '__main__':
     args = get_args()
 
@@ -155,18 +206,45 @@ if __name__ == '__main__':
     pip_reqs, npm_reqs, gem_reqs = (
         get_all_requirements(get_all_bears(bear_dirs)))
 
-    requirements = {}
-    requirements['overrides'] = 'coala-build.yaml'
-    requirements['pip_requirements'] = get_pip_requirements(pip_reqs)
-    requirements['npm_requirements'] = get_npm_requirements(npm_reqs)
-    requirements['gem_requirements'] = get_gem_requirements(gem_reqs)
+    requirements = CommentedMap()
+    requirements.yaml_set_start_comment(
+        'This is an automatically generated file.\n'
+        'And should not be edited by hand.')
 
-    output = None
+    requirements['overrides'] = 'coala-build.yaml'
+    requirements['gem_requirements'] = get_gem_requirements(gem_reqs)
+    requirements['npm_requirements'] = get_npm_requirements(npm_reqs)
+    requirements['pip_requirements'] = get_pip_requirements(pip_reqs)
+
+    if args.update or args.check:
+        input_file_path = os.path.join(PROJECT_DIR, BEAR_REQUIREMENTS_YAML)
+
+        try:
+            input_file = open(input_file_path, 'r')
+        except FileNotFoundError:
+            print('bear-requirements.yaml not found. '
+                  'Run without flags to generate it.')
+            exit(1)
+
+        input_requirments = yaml.load(input_file)
+
+        new_requirments = copy.deepcopy(input_requirments)
+        deep_update(new_requirments, requirements)
+
+        if args.update:
+            requirements = new_requirments
+
+        if args.check:
+            changed = deep_diff(input_requirments, new_requirments)
+            if changed:
+                yaml.dump(changed, sys.stdout)
+                exit(1)
 
     if args.output == '-':
         output = sys.stdout
     else:
         output = open(args.output, 'w')
 
-    dump(requirements, output, default_flow_style=False)
+    sort_requirements(requirements)
+    yaml.dump(requirements, output)
     output.close()
