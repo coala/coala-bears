@@ -21,6 +21,7 @@ munkres3~=1.0
 mypy-lang~=0.4.6
 nbformat~=4.1
 nltk~=3.2
+optimage~=0.3.0
 proselint~=0.7.0
 pycodestyle~=2.2
 pydocstyle~=2.0
