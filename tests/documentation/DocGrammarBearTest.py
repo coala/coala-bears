@@ -20,7 +20,6 @@ def make_docstring(main_desc: str = '',
     This assembles a simple docstring having a main description, a parameter
     description and a return description. This makes the tests readibilty
     clean.
-
     :param main_desc:
         Contains the main description of the docstring.
     :param param_desc:
@@ -46,24 +45,23 @@ def test(test_data, expected_data, optional_setting=None):
         arguments = {'language': 'python', 'docstyle': 'default'}
         if optional_setting:
             arguments.update(optional_setting)
-        section = Section('test-section')
-        for key, value in arguments.items():
-            section[key] = value
+            section = Section('test-section')
+            for key, value in arguments.items():
+                section[key] = value
 
-        with execute_bear(
-                DocGrammarBear(section, Queue()),
-                'dummy_filename',
-                test_data,
-                **arguments) as results:
+                with execute_bear(
+                    DocGrammarBear(section, Queue()),
+                    'dummy_filename',
+                    test_data,
+                    **arguments) as results:
 
-            diff = Diff(test_data)
-            for result in results:
+                diff = Diff(test_data)
+                for result in results:
                 # Only the given test file should contain a patch.
                 self.assertEqual(len(result.diffs), 1)
 
                 diff += result.diffs['dummy_filename']
-
-        self.assertEqual(expected_data, diff.modified)
+                self.assertEqual(expected_data, diff.modified)
 
     return test_function
 
@@ -121,11 +119,11 @@ class DocGrammarBearTest(unittest.TestCase):
     test_language_french = unittest.skipIf(
         platform.system() == 'Windows',
         'language-check fails for different locale on windows')(
-            test(
-                make_docstring(main_desc='il monte en haut si il veut.\n'),
-                make_docstring(main_desc='Il monte s’il veut.\n'),
-                {'locale': 'fr',
-                 'languagetool_disable_rules': 'FRENCH_WHITESPACE'}))
+        test(
+            make_docstring(main_desc='il monte en haut si il veut.\n'),
+            make_docstring(main_desc='Il monte s’il veut.\n'),
+            {'locale': 'fr',
+            'languagetool_disable_rules': 'FRENCH_WHITESPACE'}))
 
     # explicit language test cases to check the breakage of DocGrammarBear.
     test_java_explicit = test([
