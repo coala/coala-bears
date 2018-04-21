@@ -44,6 +44,7 @@ class PySafetyBear(LocalBear):
     AUTHORS_EMAILS = {'bence@underyx.me'}
     LICENSE = 'AGPL'
     CAN_DETECT = {'Security'}
+     ASCIINEMA_URL = 'https://asciinema.org/a/89021'
 
     def run(self, filename, file):
         """
