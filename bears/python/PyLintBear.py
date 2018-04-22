@@ -8,6 +8,7 @@ from coalib.settings.Setting import typed_list
 
 
 @linter(executable='pylint',
+        normalize_column_numbers=True,
         output_format='regex',
         output_regex=r'L(?P<line>\d+)C(?P<column>\d+): (?P<message>'
                      r'(?P<origin>(?P<severity>[WFECRI])\d+) - .*)',
