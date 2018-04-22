@@ -10,7 +10,6 @@ from coalib.settings.Setting import typed_list
 
 
 class PyImportSortBear(LocalBear):
-
     LANGUAGES = {'Python', 'Python 3', 'Python 2'}
     REQUIREMENTS = {PipRequirement('isort', '4.2')}
     AUTHORS = {'The coala developers'}

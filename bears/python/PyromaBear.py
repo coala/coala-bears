@@ -24,7 +24,6 @@ class PyromaBear(GlobalBear):
 
         See <https://bitbucket.org/regebro/pyroma/> for more information.
         """
-
         setup_files = [setup_file for setup_file in self.file_dict
                        if os.path.basename(setup_file) == 'setup.py']
 
