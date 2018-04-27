@@ -62,3 +62,8 @@ wget "https://downloads.sourceforge.net/project/astyle/astyle/astyle%203.0.1/ast
 tar -xvzf ~/astyle.tar.gz -C ~/
 make -C ~/astyle/build/gcc
 sudo make install -C ~/astyle/build/gcc
+
+# ktlint installation
+curl -sSLO https://github.com/shyiko/ktlint/releases/download/0.15.0/ktlint
+sudo chmod a+x ktlint
+sudo mv ktlint /usr/local/bin/
