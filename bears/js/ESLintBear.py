@@ -5,6 +5,8 @@ from dependency_management.requirements.NpmRequirement import NpmRequirement
 from coalib.results.Diff import Diff
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.results.Result import Result
+from coalib.settings.Setting import typed_list
+from coalib.settings.Setting import language
 
 
 @linter(executable='eslint',
@@ -17,10 +19,14 @@ class ESLintBear:
     Find out more at <http://eslint.org/docs/rules/>.
     """
 
-    LANGUAGES = {'JavaScript', 'JSX'}
+    LANGUAGES = {'JavaScript', 'JSX', 'Markdown', 'Typescript', 'HTML'}
     REQUIREMENTS = {NpmRequirement('eslint', '3'),
                     NpmRequirement('babel-eslint', '8.0'),
-                    NpmRequirement('eslint-plugin-import', '2')}
+                    NpmRequirement('eslint-plugin-import', '2'),
+                    NpmRequirement('typescript-eslint-parser', '12.0.0'),
+                    NpmRequirement('eslint-plugin-typescript', '0.8.1'),
+                    NpmRequirement('eslint-plugin-markdown', '1.0.0-beta.6'),
+                    NpmRequirement('eslint-plugin-html', '3.2.2')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
@@ -32,9 +38,11 @@ class ESLintBear:
                     1: RESULT_SEVERITY.NORMAL,
                     0: RESULT_SEVERITY.INFO}
 
-    @staticmethod
-    def create_arguments(filename, file, config_file,
+    def create_arguments(self, filename, file, config_file,
                          eslint_config: str = '',
+                         language: language = language('JavaScript'),
+                         global_vars: typed_list(str) = (),
+                         eslint_env: typed_list(str) = (),
                          ):
         """
         :param eslint_config: The location of the .eslintrc config file.
@@ -46,6 +54,25 @@ class ESLintBear:
             '--stdin',
             '--stdin-filename=' + filename,
         )
+
+        if 'Markdown' in language:
+            args += ('--plugin', 'markdown',)
+        elif 'Typescript' in language:
+            args += ('--parser', 'typescript-eslint-parser',
+                     '--plugin', 'typescript')
+        elif 'HTML' in language:
+            args += ('--plugin', 'html')
+        elif 'Javascript' not in language:
+            self.err(
+                'Language needs to be either Markdown, HTML, TypeScript '
+                'or JavaScript. Assuming JavaScript.')
+
+        if eslint_env:
+            for env in eslint_env:
+                args += ('--env', env)
+        if global_vars:
+            for var in global_vars:
+                args += ('--global', var)
 
         if eslint_config:
             args += ('--config', eslint_config)

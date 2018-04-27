@@ -45,8 +45,14 @@ npm_requirements:
     version: ~0.18
   eslint:
     version: ~3
+  eslint-plugin-html:
+    version: ~3.2.2
   eslint-plugin-import:
     version: ~2
+  eslint-plugin-markdown:
+    version: ~1.0.0-beta.6
+  eslint-plugin-typescript:
+    version: ~0.8.1
   gherkin-lint:
     version: ~2
   happiness:
@@ -121,6 +127,8 @@ npm_requirements:
     version: ~3
   typescript:
     version: '>=1.7.3'
+  typescript-eslint-parser:
+    version: ~12.0.0
   write-good:
     version: ~0.9.1
 pip_requirements:

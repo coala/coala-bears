@@ -13,7 +13,10 @@
     "dockerfile_lint": "~0.3.2",
     "elm": "~0.18",
     "eslint": "~3",
+    "eslint-plugin-html": "~3.2.2",
     "eslint-plugin-import": "~2",
+    "eslint-plugin-markdown": "~1.0.0-beta.6",
+    "eslint-plugin-typescript": "~0.8.1",
     "gherkin-lint": "~2",
     "happiness": "~10",
     "htmlhint": "~0.9.13",
@@ -51,6 +54,7 @@
     "textlint-rule-write-good": "~1.6.0",
     "tslint": "~3",
     "typescript": ">=1.7.3",
+    "typescript-eslint-parser": "~12.0.0",
     "write-good": "~0.9.1"
   }
 }
