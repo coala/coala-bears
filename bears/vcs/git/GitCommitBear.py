@@ -3,8 +3,9 @@ import re
 import shutil
 import os
 import logging
-from urllib.parse import urlparse
 from contextlib import redirect_stdout
+
+from giturlparse import parse
 
 from coalib.bears.GlobalBear import GlobalBear
 from dependency_management.requirements.PipRequirement import PipRequirement
@@ -17,7 +18,8 @@ from coalib.settings.Setting import typed_list
 
 class GitCommitBear(GlobalBear):
     LANGUAGES = {'Git'}
-    REQUIREMENTS = {PipRequirement('nltk', '3.2')}
+    REQUIREMENTS = {PipRequirement('nltk', '3.2'),
+                    PipRequirement('giturlparse', '0.9.1')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
@@ -96,10 +98,8 @@ class GitCommitBear(GlobalBear):
             return None
 
         url = remotes[0]
-        if 'git@' in url:
-            netloc = re.findall(r'@(\S+):', url)[0]
-        else:
-            netloc = urlparse(url)[1]
+        parsed_url = parse(url)
+        netloc = parsed_url.host
         return netloc.split('.')[0]
 
     def run(self,
