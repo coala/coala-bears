@@ -157,8 +157,7 @@ class GitCommitBear(GlobalBear):
                                          count to the length.
         :param shortlog_regex:           A regex to check the shortlog with.
         :param shortlog_trailing_period: Whether a dot shall be enforced at end
-                                         end or not (or ``None`` for "don't
-                                         care").
+                                         or not (or ``None`` for "don't care").
         :param shortlog_wip_check:       Whether a "WIP" in the shortlog text
                                          should yield a result or not.
         """
