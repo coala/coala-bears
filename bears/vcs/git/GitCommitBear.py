@@ -25,6 +25,16 @@ class GitCommitBear(GlobalBear):
     LICENSE = 'AGPL-3.0'
     ASCIINEMA_URL = 'https://asciinema.org/a/e146c9739ojhr8396wedsvf0d'
     CAN_DETECT = {'Formatting'}
+    ISSUE_INFO = {
+        'github': {
+            'issue': r'(?:\w+/\w+)?#(\S+)',
+            'full issue': r'https?://github\S+/issues/(\S+)',
+        },
+        'gitlab': {
+            'issue': r'(?:\w+/\w+)?#(\S+)',
+            'full issue': r'https?://gitlab\S+/issues/(\S+)',
+        },
+    }
     SUPPORTED_HOST_KEYWORD_REGEX = {
         'github': (r'[Cc]lose[sd]?'
                    r'|[Rr]esolve[sd]?'
@@ -305,8 +315,14 @@ class GitCommitBear(GlobalBear):
             return
 
         host = self.get_host_from_remotes()
-        if host not in self.SUPPORTED_HOST_KEYWORD_REGEX:
+        if (host not in self.SUPPORTED_HOST_KEYWORD_REGEX or
+                host not in self.ISSUE_INFO):
             return
+
+        if body_close_issue_full_url:
+            self.issue_type = 'full issue'
+        else:
+            self.issue_type = 'issue'
 
         if body_close_issue_on_last_line:
             if body:
@@ -317,13 +333,7 @@ class GitCommitBear(GlobalBear):
             result_message = ('Body of HEAD commit does not contain any {} '
                               'reference.')
 
-        if body_close_issue_full_url:
-            result_info = 'full issue'
-            issue_ref_regex = (
-                r'https?://{}\S+/issues/(\S+)'.format(re.escape(host)))
-        else:
-            result_info = 'issue'
-            issue_ref_regex = r'(?:\w+/\w+)?#(\S+)'
+        result_message = result_message.format(self.issue_type)
 
         concat_regex = '|'.join(kw for kw in self.CONCATENATION_KEYWORDS)
         compiled_joint_regex = re.compile(
@@ -346,10 +356,11 @@ class GitCommitBear(GlobalBear):
         matches = compiled_joint_regex.findall(body)
 
         if body_enforce_issue_reference and len(matches) == 0:
-            yield Result(self, result_message.format(result_info))
+            yield Result(self, result_message)
             return
 
-        compiled_issue_ref_regex = re.compile(issue_ref_regex)
+        compiled_issue_ref_regex = re.compile(
+            self.ISSUE_INFO[host][self.issue_type])
         compiled_issue_no_regex = re.compile(r'[1-9][0-9]*')
         compiled_concat_regex = re.compile(
             r'\s*(?:{})\s*'.format(concat_regex))
@@ -359,7 +370,7 @@ class GitCommitBear(GlobalBear):
                 reference = compiled_issue_ref_regex.fullmatch(issue)
                 if not reference:
                     yield Result(self, 'Invalid {} reference: '
-                                       '{}'.format(result_info, issue))
+                                       '{}'.format(self.issue_type, issue))
                 elif not compiled_issue_no_regex.fullmatch(reference.group(1)):
                     yield Result(self, 'Invalid issue number: '
                                        '{}'.format(issue))
