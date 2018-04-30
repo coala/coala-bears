@@ -28,6 +28,7 @@ class RLintBear:
                     DistributionRequirement(apt_get='r-base',
                                             version='>=3.1.1')}
     LICENSE = 'AGPL-3.0'
+    ASCIINEMA_URL = 'https://asciinema.org/a/178910'
     CAN_DETECT = {'Syntax', 'Formatting'}
     SEE_MORE = 'https://github.com/jimhester/lintr'
 
