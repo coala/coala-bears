@@ -300,14 +300,136 @@ class GitCommitBearTest(unittest.TestCase):
         self.run_git_command('remote', 'add', 'test',
                              'https://bitbucket.com/user/repo.git')
 
-        # Unsupported Host - Bitbucket
         self.git_commit('Shortlog\n\n'
                         'First line, blablablablablabla.\n'
                         'Another line, blablablablablabla.\n'
                         'Closes #1112')
         self.assertEqual(self.run_uut(
                              body_close_issue=True,
-                             body_close_issue_full_url=True), [])
+                             body_close_issue_full_url=True),
+                         ['Host bitbucket does not support full issue '
+                          'reference.'])
+
+        self.git_commit('Shortlog\n\n'
+                        'First line, blablablablablabla.\n'
+                        'Another line, blablablablablabla.\n'
+                        'Closes #1112')
+        self.assertEqual(self.run_uut(
+                             body_close_issue=True), [])
+
+        self.git_commit('Shortlog\n\n'
+                        'First line, blablablablablabla.\n'
+                        'Another line, blablablablablabla.\n'
+                        'Resolves https://bitbucket.org/user/repo/issues/1/')
+        self.assertEqual(self.run_uut(
+                             body_close_issue=True),
+                         ['Invalid issue reference: '
+                          'https://bitbucket.org/user/repo/issues/1/'])
+
+        self.git_commit('Shortlog\n\n'
+                        'First line, blablablablablabla.\n'
+                        'Another line, blablablablablabla.\n'
+                        'Resolves https://bitbucket.org/user/repo/issues/1/')
+        self.assertEqual(self.run_uut(
+                             body_close_issue=True,
+                             body_close_issue_full_url=True),
+                         ['Host bitbucket does not support full issue '
+                          'reference.'])
+
+        # Adding BitBucket's ssh remote for testing
+        self.run_git_command('remote', 'set-url', 'test',
+                             'git@bitbucket.org:user/repo.git')
+
+        self.git_commit('Shortlog\n\n'
+                        'First line, blablablablablabla.\n'
+                        'Another line, blablablablablabla.\n'
+                        'Closes #1112')
+        self.assertEqual(self.run_uut(
+                             body_close_issue=True,
+                             body_close_issue_full_url=True),
+                         ['Host bitbucket does not support full issue '
+                          'reference.'])
+
+        self.git_commit('Shortlog\n\n'
+                        'First line, blablablablablabla.\n'
+                        'Another line, blablablablablabla.\n'
+                        'Closes #1112')
+        self.assertEqual(self.run_uut(
+                             body_close_issue=True), [])
+
+        self.git_commit('Shortlog\n\n'
+                        'First line, blablablablablabla.\n'
+                        'Another line, blablablablablabla.\n'
+                        'Fix issue #1112')
+        self.assertEqual(self.run_uut(
+                             body_close_issue=True,
+                             body_enforce_issue_reference=True), [])
+
+        self.git_commit('Shortlog\n\n'
+                        'First line, blablablablablabla.\n'
+                        'Another line, blablablablablabla.\n'
+                        'Resolving    bug#1112')
+        self.assertEqual(self.run_uut(
+                             body_close_issue=True,
+                             body_enforce_issue_reference=True),
+                         ['Invalid issue reference: bug#1112'])
+
+        self.git_commit('Shortlog\n\n'
+                        'First line, blablablablablabla.\n'
+                        'Another line, blablablablablabla.\n'
+                        'Fixed randomkeyword#1112')
+        self.assertEqual(self.run_uut(
+                             body_close_issue=True,
+                             body_enforce_issue_reference=True),
+                         ['Invalid issue reference: randomkeyword#1112'])
+
+        self.git_commit('Shortlog\n\n'
+                        'First line, blablablablablabla.\n'
+                        'Another line, blablablablablabla.\n'
+                        'Closes#1112')
+        self.assertEqual(self.run_uut(
+                             body_close_issue=True,
+                             body_enforce_issue_reference=True),
+                         ['Body of HEAD commit does not contain any '
+                          'issue reference.'])
+
+        self.git_commit('Shortlog\n\n'
+                        'First line, blablablablablabla.\n'
+                        'Another line, blablablablablabla.\n'
+                        'Closes bug bug#1112')
+        self.assertEqual(self.run_uut(
+                             body_close_issue=True,
+                             body_enforce_issue_reference=True),
+                         ['Invalid issue reference: bug'])
+
+        self.git_commit('Shortlog\n\n'
+                        'First line, blablablablablabla.\n'
+                        'Another line, blablablablablabla.\n'
+                        'Closesticket #1112')
+        self.assertEqual(self.run_uut(
+                             body_close_issue=True,
+                             body_enforce_issue_reference=True),
+                         ['Body of HEAD commit does not contain any '
+                          'issue reference.'])
+
+        self.git_commit('Shortlog\n\n'
+                        'First line, blablablablablabla.\n'
+                        'Another line, blablablablablabla.\n'
+                        'Resolves https://bitbucket.org/user/repo/issues/1/')
+        self.assertEqual(self.run_uut(
+                             body_close_issue=True),
+                         ['Invalid issue reference: '
+                          'https://bitbucket.org/user/repo/issues/1/'])
+
+        self.git_commit('Shortlog\n\n'
+                        'First line, blablablablablabla.\n'
+                        'Another line, blablablablablabla.\n'
+                        'Resolves https://bitbucket.org/user/repo/issues/1/')
+        self.assertEqual(self.run_uut(
+                             body_close_issue=True,
+                             body_close_issue_full_url=True),
+                         ['Host bitbucket does not support full issue '
+                          'reference.'])
 
         # Adding GitHub remote for testing, ssh way :P
         self.run_git_command('remote', 'set-url', 'test',

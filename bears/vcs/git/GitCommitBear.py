@@ -34,6 +34,10 @@ class GitCommitBear(GlobalBear):
             'issue': r'(?:\w+/\w+)?#(\S+)',
             'full issue': r'https?://gitlab\S+/issues/(\S+)',
         },
+        'bitbucket': {
+            'issue': r'#(\d+)',
+            'full issue': None,
+        },
     }
     SUPPORTED_HOST_KEYWORD_REGEX = {
         'github': (r'[Cc]lose[sd]?'
@@ -41,7 +45,11 @@ class GitCommitBear(GlobalBear):
                    r'|[Ff]ix(?:e[sd])?'),
         'gitlab': (r'[Cc]los(?:e[sd]?|ing)'
                    r'|[Rr]esolv(?:e[sd]?|ing)'
-                   r'|[Ff]ix(?:e[sd]|ing)?')
+                   r'|[Ff]ix(?:e[sd]|ing)?'),
+        'bitbucket': (r'(?:[Cc]los(?:e[sd]?|ing)'
+                      r'|[Rr]esolv(?:e[sd]?|ing)'
+                      r'|[Ff]ix(?:e[sd]|ing)?'
+                      r'(?:[ \t]+(?:bug|issue|ticket))?)'),
     }
     CONCATENATION_KEYWORDS = [r',', r'\sand\s']
 
@@ -323,6 +331,11 @@ class GitCommitBear(GlobalBear):
             self.issue_type = 'full issue'
         else:
             self.issue_type = 'issue'
+
+        if self.ISSUE_INFO[host][self.issue_type] is None:
+            yield Result(self, 'Host {} does not support {} '
+                               'reference.'.format(host, self.issue_type))
+            return
 
         if body_close_issue_on_last_line:
             if body:
