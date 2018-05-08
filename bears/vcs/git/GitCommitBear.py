@@ -19,7 +19,7 @@ from coalib.settings.Setting import typed_list
 class GitCommitBear(GlobalBear):
     LANGUAGES = {'Git'}
     REQUIREMENTS = {PipRequirement('nltk', '3.2'),
-                    PipRequirement('giturlparse', '0.9.1')}
+                    PipRequirement('git-url-parse', '1.1.0')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
@@ -117,7 +117,7 @@ class GitCommitBear(GlobalBear):
 
         url = remotes[0]
         parsed_url = parse(url)
-        netloc = parsed_url.host
+        netloc = parsed_url.resource
         return netloc.split('.')[0]
 
     def run(self,

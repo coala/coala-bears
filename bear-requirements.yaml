@@ -139,8 +139,8 @@ pip_requirements:
     version: ~=0.1.2
   eradicate:
     version: ~=0.1.6
-  giturlparse:
-    version: ~=0.9.1
+  git-url-parse:
+    version: ~=1.1.0
   guess-language-spirit:
     version: ~=0.5.2
   html-linter:
