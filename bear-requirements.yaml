@@ -194,4 +194,4 @@ pip_requirements:
   yamllint:
     version: ~=1.6.1
   yapf:
-    version: ~=0.16.0
+    version: ~=0.21.0
