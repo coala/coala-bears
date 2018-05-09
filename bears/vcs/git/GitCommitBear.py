@@ -76,6 +76,12 @@ class GitCommitBear(GlobalBear):
             return True
 
     @classmethod
+    def get_revert_checks_metadata(cls):
+        return FunctionMetadata.from_function(
+            cls.check_revert,
+            omit={'self', 'shortlog', 'body'})
+
+    @classmethod
     def get_shortlog_checks_metadata(cls):
         return FunctionMetadata.from_function(
             cls.check_shortlog,
@@ -99,6 +105,7 @@ class GitCommitBear(GlobalBear):
             FunctionMetadata.from_function(
                 cls.run,
                 omit={'self', 'dependency_results'}),
+            cls.get_revert_checks_metadata(),
             cls.get_shortlog_checks_metadata(),
             cls.get_body_checks_metadata(),
             cls.get_issue_checks_metadata())
@@ -149,6 +156,10 @@ class GitCommitBear(GlobalBear):
                 yield Result(self, 'HEAD commit has no message.')
             return
 
+        yield from self.check_revert(
+            shortlog,
+            body,
+            **self.get_revert_checks_metadata().filter_parameters(kwargs))
         yield from self.check_shortlog(
             shortlog,
             **self.get_shortlog_checks_metadata().filter_parameters(kwargs))
@@ -158,6 +169,59 @@ class GitCommitBear(GlobalBear):
         yield from self.check_issue_reference(
             body,
             **self.get_issue_checks_metadata().filter_parameters(kwargs))
+
+    def check_revert(self, shortlog, body,
+                     allow_revert_commits_without_reason: bool = False):
+        """
+        Validates revert commits.
+
+        :param shortlog:
+            The shortlog message string.
+        :param body:
+            The body of the commit message of HEAD.
+        :param allow_revert_commits_without_reason:
+            Whether reason is needed for revert commits.
+        """
+        if not shortlog.startswith('Revert '):
+            return
+
+        shortlog_start_index = shortlog.find('"')
+        shortlog_end_index = shortlog.rfind('"')
+        reverted_shortlog = shortlog[shortlog_start_index +
+                                     1: shortlog_end_index]
+
+        body = body.strip('\n')
+        blankline = body.find('\n\n')
+        headline = body[:blankline] if blankline != -1 else body
+
+        if not headline.startswith('This reverts '):
+            yield Result(self, 'Invalid revert commit.')
+            return
+
+        sha_regex = re.compile(r'([0-9a-f]{40})')
+        commit_sha = re.findall(sha_regex, headline)[0]
+        command = ('git log -n 1 ' +
+                   str(commit_sha) + ' --pretty=%B')
+        previous_commit_stdout, previous_commit_stderr = run_shell_command(
+            command)
+
+        if previous_commit_stderr:
+            yield Result(self, 'Invalid sha for reverted commit.')
+            return
+
+        previous_commit_stdout = previous_commit_stdout.rstrip('\n')
+        position = previous_commit_stdout.find('\n')
+        old_shortlog = previous_commit_stdout[:position] if position != - \
+            1 else previous_commit_stdout
+
+        if old_shortlog != reverted_shortlog:
+            yield Result(self, 'Shortlog of revert commit does '
+                         'not match the original commit.')
+
+        reason = body[blankline+1:] if blankline != -1 else ''
+
+        if not allow_revert_commits_without_reason and len(reason) == 0:
+            yield Result(self, 'Revert commit does not have a reason.')
 
     def check_shortlog(self, shortlog,
                        shortlog_length: int = 50,
