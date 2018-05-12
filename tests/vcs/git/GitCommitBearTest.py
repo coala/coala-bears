@@ -504,7 +504,7 @@ class GitCommitBearTest(unittest.TestCase):
         self.assertEqual(self.run_uut(
                              body_close_issue=True,
                              body_close_issue_full_url=True),
-                         ['Invalid issue number: '
+                         ['Invalid full issue reference: '
                           'https://gitlab.com/user/repo/issues/not_num'])
         self.assert_no_msgs()
 
@@ -526,7 +526,7 @@ class GitCommitBearTest(unittest.TestCase):
                         'Another line, blablablablablabla.\n'
                         'Resolve #11 and close #notnum')
         self.assertEqual(self.run_uut(body_close_issue=True,),
-                         ['Invalid issue number: #notnum'])
+                         ['Invalid issue reference: #notnum'])
         self.assert_no_msgs()
 
         # Close issues in other repos

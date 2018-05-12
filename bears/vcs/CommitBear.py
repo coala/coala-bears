@@ -24,12 +24,12 @@ class _CommitBear(GlobalBear):
     CAN_DETECT = {'Formatting'}
     ISSUE_INFO = {
         'github': {
-            'issue': r'(?:\w+/\w+)?#(\S+)',
-            'full issue': r'https?://github\S+/issues/(\S+)',
+            'issue': r'(?:\w+/\w+)?#(\d+)',
+            'full issue': r'https?://github\S+/issues/(\d+)',
         },
         'gitlab': {
-            'issue': r'(?:\w+/\w+)?#(\S+)',
-            'full issue': r'https?://gitlab\S+/issues/(\S+)',
+            'issue': r'(?:\w+/\w+)?#(\d+)',
+            'full issue': r'https?://gitlab\S+/issues/(\d+)',
         },
         'bitbucket': {
             'issue': r'#(\d+)',
