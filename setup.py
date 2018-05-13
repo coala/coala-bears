@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import locale
+import os
 import platform
 import sys
 from subprocess import call
@@ -14,10 +15,21 @@ try:
     pf = platform.system()
     if pf != 'Windows' and lc == (None, None):
         locale.setlocale(locale.LC_ALL, 'C.UTF-8')
-except (ValueError, UnicodeError):
+except (ValueError, UnicodeError, locale.Error):
     locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
 VERSION = '0.12.0.dev99999999999999'
+
+SETUP_COMMANDS = {}
+
+
+def set_python_path(path):
+    if 'PYTHONPATH' in os.environ:
+        user_paths = os.environ['PYTHONPATH'].split(os.pathsep)
+        user_paths.insert(0, path)
+        os.environ['PYTHONPATH'] = os.pathsep.join(user_paths)
+    else:
+        os.environ['PYTHONPATH'] = path
 
 
 class PyTestCommand(TestCommand):
@@ -42,31 +54,63 @@ class PyTestCommand(TestCommand):
         sys.exit(errno)
 
 
+SETUP_COMMANDS['test'] = PyTestCommand
+
+
 class BuildDocsCommand(setuptools.command.build_py.build_py):
-    apidoc_command = (
-        'sphinx-apidoc', '-f', '-o', 'docs/API',
-        'bears'
-    )
-    make_command = ('make', '-C', 'docs', 'html', 'SPHINXOPTS=-W')
+
+    def initialize_options(self):
+        setup_dir = os.path.join(os.getcwd(), __dir__)
+        docs_dir = os.path.join(setup_dir, 'docs')
+        source_docs_dir = os.path.join(setup_dir, 'docs/API')
+
+        set_python_path(setup_dir)
+
+        self.apidoc_commands = list()
+
+        self.apidoc_commands.append((
+            'sphinx-apidoc', '-f', '-o', source_docs_dir,
+            os.path.join(setup_dir, 'bears')
+        ))
+
+        self.make_command = (
+            'make', '-C',
+            docs_dir,
+            'html', 'SPHINXOPTS=-W',
+        )
+
+        # build_lib & optimize is set to these as a
+        # work around for "AttributeError"
+        self.build_lib = ''
+        self.optimize = 2
 
     def run(self):
-        err_no = call(self.apidoc_command)
-        if not err_no:
-            err_no = call(self.make_command)
+        for command in self.apidoc_commands:
+            err_no = call(command)
+            if err_no:
+                sys.exit(err_no)
+        err_no = call(self.make_command)
         sys.exit(err_no)
 
 
-with open('requirements.txt') as requirements:
+SETUP_COMMANDS['docs'] = BuildDocsCommand
+
+__dir__ = os.path.dirname(__file__)
+filename = os.path.join(__dir__, 'requirements.txt')
+with open(filename) as requirements:
     required = requirements.read().splitlines()
     required.remove('-r bear-requirements.txt')
 
-with open('test-requirements.txt') as requirements:
+filename = os.path.join(__dir__, 'test-requirements.txt')
+with open(filename) as requirements:
     test_required = requirements.read().splitlines()
 
-with open('README.rst') as readme:
+filename = os.path.join(__dir__, 'README.rst')
+with open(filename) as readme:
     long_description = readme.read()
 
 extras_require = None
+EXTRAS_REQUIRE = {}
 data_files = None
 with open('bear-requirements.txt') as requirements:
     bear_required = requirements.read().splitlines()
@@ -84,6 +128,11 @@ required += [req for req in bear_required
              if not any(req.startswith(ignore)
                         for ignore in ignore_requirements)]
 
+if extras_require:
+    EXTRAS_REQUIRE = extras_require
+SETUP_COMMANDS.update({
+})
+
 if __name__ == '__main__':
     setup(name='coala-bears',
           version=VERSION,
@@ -98,7 +147,7 @@ if __name__ == '__main__':
           platforms='any',
           packages=find_packages(exclude=('build.*', 'tests', 'tests.*')),
           install_requires=required,
-          extras_require=extras_require,
+          extras_require=EXTRAS_REQUIRE,
           tests_require=test_required,
           package_data={'bears': ['VERSION'],
                         'bears.java': ['checkstyle.jar', 'google_checks.xml'],
@@ -131,10 +180,11 @@ if __name__ == '__main__':
               'Programming Language :: Python :: Implementation :: CPython',
               'Programming Language :: Python :: 3.4',
               'Programming Language :: Python :: 3.5',
+              'Programming Language :: Python :: 3.6',
               'Programming Language :: Python :: 3 :: Only',
 
               'Topic :: Scientific/Engineering :: Information Analysis',
               'Topic :: Software Development :: Quality Assurance',
               'Topic :: Text Processing :: Linguistic'],
-          cmdclass={'docs': BuildDocsCommand,
-                    'test': PyTestCommand})
+          cmdclass=SETUP_COMMANDS,
+          )
