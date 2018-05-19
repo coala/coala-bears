@@ -67,8 +67,8 @@ class InvalidLinkBear(LocalBear):
                 if code in (404, 410) or 500 <= code < 600:
                     yield Result.from_values(
                         origin=self,
-                        message=('Broken link - unable to connect to {url} '
-                                 '(HTTP Error: {code})'
+                        message=('Broken link - HTTP Error: {code} '
+                                 'generated when connecting to {url}'
                                  ).format(url=link, code=code),
                         file=filename,
                         line=line_number,
