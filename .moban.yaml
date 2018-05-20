@@ -6,6 +6,7 @@ build_version: 0.12.0.dev99999999999999
 current_version: 0.12.0.dev
 version: 0.12.0.dev
 release: 0.12.0.dev
+test_pyversion: 3.4
 branch: master
 package_module: bears
 docs_output_dir: docs/API
@@ -28,3 +29,5 @@ targets:
   - Gemfile: Gemfile.jj2
   - package.json: package.json.jj2
   - bear-requirements.txt: bear-requirements.txt.jj2
+  - .ci/appveyor.yml: ci/appveyor.yml.jj2
+  - .ci/run_with_env.cmd: run_with_env.cmd
