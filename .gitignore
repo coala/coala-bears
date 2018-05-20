@@ -42,3 +42,4 @@ Gemfile.lock
 *.swp
 venv
 bears/upload/
+package-lock.json
