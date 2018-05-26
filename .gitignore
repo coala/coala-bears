@@ -14,7 +14,6 @@ MANIFEST
 _build
 coverage.xml
 htmlcov
-*.orig
 *.diff
 *.kdev4
 *.patch
@@ -43,3 +42,5 @@ Gemfile.lock
 venv
 bears/upload/
 package-lock.json
+.pytest_cache
+
