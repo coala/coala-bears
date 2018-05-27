@@ -134,10 +134,11 @@ before_install:
   - if [[ "$UNSUPPORTED" != true ]]; then bash .ci/deps.java.sh; fi
   # https://github.com/coala/coala/issues/3183
   - cp requirements.txt requirements.orig
-  - >
-    cat test-requirements.txt docs-requirements.txt
-    bear-requirements.txt >> requirements.txt
-  - sed -i '/^-r/d' requirements.txt
+  - printf '%s\n%s\n%s\n'
+           "$(cat test-requirements.txt)"
+           "$(grep -v '^-r' docs-requirements.txt)"
+           "$(cat bear-requirements.txt requirements.txt)"
+           > requirements.txt
 
 before_script:
   - mv requirements.orig requirements.txt
