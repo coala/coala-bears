@@ -44,4 +44,3 @@ venv
 bears/upload/
 package-lock.json
 .pytest_cache
-
