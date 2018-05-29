@@ -39,6 +39,7 @@ install:
   # Check that we have the expected version and architecture for Python
   - "python --version"
   - "python -c \"import struct; print(struct.calcsize('P') * 8)\""
+  - "pear install PHP_CodeSniffer"
 
   - "%CMD_IN_ENV% python -m pip install --cache-dir=C:\\pip_cache \
      -r requirements.txt -r test-requirements.txt"
