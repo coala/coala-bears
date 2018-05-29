@@ -20,6 +20,7 @@ go get -u sourcegraph.com/sqs/goreturns
 go get -u golang.org/x/tools/cmd/gotype
 go get -u github.com/kisielk/errcheck
 go get -u github.com/BurntSushi/toml/cmd/tomlv
+go get -u github.com/shurcooL/markdownfmt
 
 # Ruby commands
 bundle install --path=vendor/bundle --binstubs=vendor/bin --jobs=8 --retry=3
