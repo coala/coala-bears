@@ -2,8 +2,8 @@ set -e
 set -x
 
 # PMD commands
-if [ ! -e ~/pmd-bin-5.4.1/bin ]; then
-  wget -nc -O ~/pmd.zip https://github.com/pmd/pmd/releases/download/pmd_releases%2F5.4.1/pmd-bin-5.4.1.zip
+if [ ! -e ~/pmd-bin-5.6.1/bin ]; then
+  wget -nc -O ~/pmd.zip https://github.com/pmd/pmd/releases/download/pmd_releases%2F5.6.1/pmd-bin-5.6.1.zip
   unzip ~/pmd.zip -d ~/
 fi
 
