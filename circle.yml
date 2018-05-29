@@ -54,6 +54,8 @@ machine:
     version: 6.10.2
   java:
     version: oraclejdk8
+  environment:
+    TERM: dumb
 
 test:
   override:

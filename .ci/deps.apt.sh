@@ -1,8 +1,6 @@
 set -e
 set -x
 
-TERM=dumb
-
 # apt-get commands
 export DEBIAN_FRONTEND=noninteractive
 

@@ -1,6 +1,5 @@
 set -e
 set -x
-TERM=dumb
 
 # NPM commands
 ALEX=$(which alex || true)
