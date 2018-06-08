@@ -19,7 +19,6 @@ configuration:
     - .moban.dt/
     - .ci/
     - ../coala-mobans/templates/
-    - ../setupmobans/templates/
   configuration: .moban.yaml
   configuration_dir: ../coala-mobans/
 targets:

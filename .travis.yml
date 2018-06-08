@@ -6,24 +6,53 @@ python:
   - 3.5
   - 3.6
 
+stages:
+  - test
+  - moban
+  - name: unsupported
+    if: branch = master AND type = push
+
+.check_moban: &check_moban
+  python: 3.6
+  stage: moban
+  before_install: false
+  install: pip install moban
+  before_script: false
+  script: .misc/check_moban.sh
+  after_success: false
+  after_failure: false
+  if: branch != master OR type = pull_request
+
 jobs:
   include:
     - python: 2.7
-      env: UNSUPPORTED=true PIP_NO_COMPILE=1
+      stage: unsupported
+      env: PIP_NO_COMPILE=1
       addons: false
       before_install: true
       install: pip install 3to2
       before_script: true
       script: .ci/check_unsupported.sh
-      if: branch = master AND type = push
     - python: 3.3
-      env: UNSUPPORTED=true PIP_NO_COMPILE=1
+      stage: unsupported
+      env: PIP_NO_COMPILE=1
       addons: false
       before_install: true
       install: true
       before_script: true
       script: .ci/check_unsupported.sh
+    - python: 3.6
+      stage: moban
+      install: pip install moban
+      before_install: false
+      before_script: false
+      script: .misc/check_moban.sh
+      after_success: false
+      after_failure: false
       if: branch = master AND type = push
+    - *check_moban
+  allow_failures:
+    - *check_moban
 
 dist: trusty
 
@@ -116,9 +145,6 @@ script:
   - bash .ci/tests.sh
   # Ensure bear requirements are in sync with the bear PipRequirement
   - .ci/generate_bear_requirements.py
-  - git clone https://github.com/moremoban/setupmobans ../setupmobans
-  - git clone https://gitlab.com/coala/mobans ../coala-mobans
-  - moban
   - git diff --exit-code
   # https://github.com/coala/coala-bears/issues/1037
   - >
