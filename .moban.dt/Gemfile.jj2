@@ -1,5 +1,4 @@
 source 'https://rubygems.org'
-ruby '2.2.2'
 
 {% for name, data in gem_requirements.items() | sort %}
 {% if data is mapping %}

@@ -1,5 +1,4 @@
 source 'https://rubygems.org'
-ruby '2.2.2'
 
 gem "brakeman", "4.1.1", require: false
 gem "csvlint", require: false
