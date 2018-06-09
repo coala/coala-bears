@@ -15,6 +15,11 @@ entry_points:
   coalabears:
     - coala_official_bears = bears
 
+gitignore_extra_rulesets:
+  - node
+  - R
+  - ruby
+
 configuration:
   template_dir:
     - .moban.dt/
@@ -24,6 +29,7 @@ configuration:
   configuration: .moban.yaml
   configuration_dir: ../coala-mobans/
 targets:
+  - .gitignore: bears-gitignore.jj2
   - setup.py: bears-setup.py.jj2
   - requirements.txt: requirements.txt.jj2
   - test-requirements.txt: bears-test-requirements.txt.jj2

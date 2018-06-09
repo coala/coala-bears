@@ -1,0 +1,9 @@
+{% extends 'gitignore.jj2' %}
+{% block extra %}
+bears/upload/
+
+.Rhistory
+
+Gemfile.lock
+{% include 'gitignore/coala.gitignore' %}
+{% endblock %}
