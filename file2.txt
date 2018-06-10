@@ -1,0 +1,3 @@
+This commit is used to create a pull request
+in coala/coala-bears repository to test
+https://github.com/coala/coala-bears/pull/2501
