@@ -13,6 +13,8 @@ _online_styles = {
     'checkstyle/checkstyle-hard.xml',
 }
 
+_checkstyle_version = '6.19'
+
 # To be deprecated
 known_checkstyles = dict(_online_styles, **{'google': None, 'sun': None})
 
@@ -52,9 +54,10 @@ class CheckstyleBear:
     CAN_DETECT = {'Formatting', 'Smell'}
 
     def setup_dependencies(self):
+        version = _checkstyle_version
         type(self).checkstyle_jar_file = self.download_cached_file(
-            'http://sourceforge.net/projects/checkstyle/files/checkstyle/6.19'
-            '/checkstyle-6.19-all.jar',
+            'https://github.com/checkstyle/checkstyle/releases/download/'
+            'checkstyle-%s/checkstyle-%s-all.jar' % (version, version),
             'checkstyle-6.19.jar')
 
     def create_arguments(
