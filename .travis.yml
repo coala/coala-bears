@@ -128,6 +128,7 @@ before_install:
   - sed -i '/^ruby/d' Gemfile
   - if [[ "$UNSUPPORTED" != true ]]; then bash .ci/deps.apt.sh; fi
   - if [[ "$UNSUPPORTED" != true ]]; then bash .ci/deps.sh; fi
+  - if [[ "$UNSUPPORTED" != true ]]; then bash .ci/deps.go.sh; fi
   - if [[ "$UNSUPPORTED" != true ]]; then bash .ci/deps.cabal.sh; fi
   - if [[ "$UNSUPPORTED" != true ]]; then bash .ci/deps.r.sh; fi
   - if [[ "$UNSUPPORTED" != true ]]; then bash .ci/deps.opam.sh; fi
