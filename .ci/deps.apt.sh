@@ -54,7 +54,7 @@ elif [ -n "$USE_PPAS" ]; then
   done
 fi
 
-deps_perl="perl libperl-critic-perl"
+deps_perl="libperl-critic-perl"
 
 sudo apt-get -y update
 sudo apt-get -y --no-install-recommends install $deps $deps_perl $deps_infer
