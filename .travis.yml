@@ -78,11 +78,18 @@ addons:
       - ghc
       - happy
       - indent
+      - libarpack2
       - libblas-dev
+      - libcolamd2.8.0
+      - libfftw3-3
       - liblapack-dev
+      - libopenblas-base
+      - libpaper-utils
       - libperl-critic-perl
+      - libumfpack5.6.2
       - libxml2-utils
       - luarocks
+      - mercurial
       - menhir
       - mono-mcs
       - ocaml
