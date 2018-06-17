@@ -1,0 +1,2 @@
+parameters:
+	Dirset: %rootDir%/../coala-bears/tests/php/test_files/

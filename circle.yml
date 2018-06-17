@@ -37,6 +37,7 @@ dependencies:
     - sed -i '/source \/home\/ubuntu\/virtualenvs\//d' ~/.circlerc
     - mkdir -p ~/.RLibrary
     - nvm alias default node
+    - composer require "phpstan/phpstan"
   override:
     - bash .ci/deps.apt.sh
     - bash .ci/deps.pip.sh
@@ -54,6 +55,8 @@ machine:
     version: 6.10.2
   java:
     version: oraclejdk8
+  php:
+    version: 7.1.0
 
 test:
   override:
