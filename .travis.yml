@@ -6,6 +6,18 @@ python:
   - 3.5
   - 3.6
 
+.disable_global: &disable_global
+  addons: false
+  cache: pip
+  before_install: false
+  install: false
+  before_script: false
+  script: false
+  after_success: false
+  after_failure: false
+  before_deploy: false
+  deploy: false
+
 stages:
   - test
   - moban
@@ -13,16 +25,11 @@ stages:
     if: branch = master AND type = push
 
 .check_moban: &check_moban
+  <<: *disable_global
   python: 3.6
   stage: moban
-  addons: false
-  cache: pip
-  before_install: false
   install: pip install moban
-  before_script: false
   script: .ci/check_moban.sh
-  after_success: false
-  after_failure: false
   if: branch != master OR type = pull_request
 
 jobs:
