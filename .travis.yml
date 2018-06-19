@@ -19,6 +19,8 @@ python:
   deploy: false
 
 stages:
+  - name: sentinel
+    if: branch != master OR type = pull_request
   - test
   - moban
   - name: unsupported
@@ -34,6 +36,19 @@ stages:
 
 jobs:
   include:
+    - stage: sentinel
+      # All other jobs will be cancelled if the sentinel job fails
+      <<: *disable_global
+      python: 3.6
+      install: pip install ".[alldeps]"
+      script: coala --non-interactive -V
+
+    - stage: test
+      # The sentinel job isnt active on master pushes, so the
+      # job is re-added to the bottom of the test matrix
+      python: 3.6
+      if: branch = master AND type = push
+
     - python: 2.7
       stage: unsupported
       env: PIP_NO_COMPILE=1
