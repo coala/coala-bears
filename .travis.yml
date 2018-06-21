@@ -67,6 +67,7 @@ addons:
       - avsm  # OPAM stable
       - hvr-ghc  # Haskell
     packages:
+      - aspcud
       - cabal-install-1.24
       - chktex
       - clang-3.4
