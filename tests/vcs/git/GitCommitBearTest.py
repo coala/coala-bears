@@ -6,6 +6,7 @@ import unittest
 import unittest.mock
 from queue import Queue
 from tempfile import mkdtemp
+from pathlib import Path
 
 from coalib.testing.BearTestHelper import generate_skip_decorator
 from bears.vcs.git.GitCommitBear import GitCommitBear
@@ -99,6 +100,67 @@ class GitCommitBearTest(unittest.TestCase):
         self.assertEqual(self.run_uut(allow_empty_commit_message=True),
                          [])
         self.assert_no_msgs()
+
+    def test_github_pull_request_temporary_merge_commit_check(self):
+        self.run_git_command('remote', 'add', 'upstream',
+                             'https://github.com/coala/coala-quickstart.git')
+        run_shell_command('git fetch upstream pull/259/merge:pytest36')
+        run_shell_command('git checkout pytest36')
+        self.assertEqual(self.run_uut(), [])
+
+        run_shell_command('git fetch upstream pull/257/merge:patch-1')
+        run_shell_command('git checkout patch-1')
+        self.assertEqual(self.run_uut(),
+                         ["Shortlog of HEAD commit isn't in imperative"
+                          " mood! Bad words are 'Fixed'"])
+
+        self.git_commit('Simple git commit')
+        self.assertEqual(self.run_uut(), [])
+
+    def test_github_PR_merge_commit_check_offline(self):
+        Path('testfile1.txt').touch()
+        run_shell_command('git add testfile1.txt')
+        run_shell_command('git commit -m "First commit"')
+        commit_hash1, _ = run_shell_command('git rev-parse HEAD')
+        commit_hash1 = commit_hash1.strip('\n')
+
+        run_shell_command('git checkout -b feature1 master')
+        Path('testfile2.txt').touch()
+        run_shell_command('git add testfile2.txt')
+        run_shell_command('git commit -m "Second commit"')
+        commit_hash2, _ = run_shell_command('git rev-parse HEAD')
+        commit_hash2 = commit_hash2.strip('\n')
+
+        run_shell_command('git checkout master')
+        run_shell_command('git merge --no-ff feature1')
+        command = ('git commit --amend -m "Merge %s into %s"'
+                   % (commit_hash1, commit_hash2))
+        run_shell_command(command)
+
+        self.assertEqual(self.run_uut(), [])
+
+        Path('testfile3.txt').touch()
+        run_shell_command('git add testfile3.txt')
+        run_shell_command('git commit -m "Adding First commit"')
+        commit_hash1, _ = run_shell_command('git rev-parse HEAD')
+        commit_hash1 = commit_hash1.strip('\n')
+
+        run_shell_command('git checkout -b feature2 master')
+        Path('testfile4.txt').touch()
+        run_shell_command('git add testfile4.txt')
+        run_shell_command('git commit -m "Second commit"')
+        commit_hash2, _ = run_shell_command('git rev-parse HEAD')
+        commit_hash2 = commit_hash2.strip('\n')
+
+        run_shell_command('git checkout master')
+        run_shell_command('git merge --no-ff feature2')
+        command = ('git commit --amend -m "Merge %s into %s"'
+                   % (commit_hash1, commit_hash2))
+        run_shell_command(command)
+
+        self.assertEqual(self.run_uut(),
+                         ["Shortlog of HEAD commit isn't in imperative"
+                          " mood! Bad words are 'Adding'"])
 
     def test_shortlog_checks_length(self):
         self.git_commit('Commit messages that nearly exceed default limit..')

@@ -161,12 +161,6 @@ script:
   # Ensure bear requirements are in sync with the bear PipRequirement
   - .ci/generate_bear_requirements.py
   - git diff --exit-code
-  # https://github.com/coala/coala-bears/issues/1037
-  - >
-    if [[ "$TRAVIS_PULL_REQUEST" != "false" ]]; then
-      sed -e '/bears = GitCommitBear/d' .coafile > .coafile.new
-      mv .coafile.new .coafile
-    fi
   - coala --non-interactive
   - codecov
   - python setup.py docs
