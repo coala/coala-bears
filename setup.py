@@ -64,7 +64,7 @@ class BuildDocsCommand(setuptools.command.build_py.build_py):
         setup_dir = os.path.join(os.getcwd(), __dir__)
         docs_dir = os.path.join(setup_dir, 'docs')
         source_docs_dir = os.path.join(docs_dir,
-                                       'source/')
+                                       'API')
 
         set_python_path(setup_dir)
 
@@ -128,6 +128,8 @@ def read_requirements(filename):
                 line = egg_name.replace('-', '==')
 
             data.append(line)
+
+    return data
 
 
 required = read_requirements('requirements.txt')
