@@ -28,7 +28,7 @@ pydocstyle~=2.0
 pyflakes~=1.5.0
 pylint~=1.7.2
 pyroma~=2.2.0
-pyyaml~=3.12
+pyyaml~=4.1.0
 radon==1.4.0
 restructuredtext-lint~=1.0.0
 rstcheck~=3.1
