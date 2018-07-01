@@ -3,6 +3,10 @@ import json
 from coalib.bearlib.abstractions.Linter import linter
 from dependency_management.requirements.DistributionRequirement import (
     DistributionRequirement)
+from dependency_management.requirements.AnyOneOfRequirements import (
+    AnyOneOfRequirements)
+from dependency_management.requirements.CabalRequirement import (
+    CabalRequirement)
 from coalib.results.Diff import Diff
 from coalib.results.Result import Result
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
@@ -19,7 +23,12 @@ class HaskellLintBear:
     """
 
     LANGUAGES = {'Haskell'}
-    REQUIREMENTS = {DistributionRequirement(apt_get='hlint')}
+    REQUIREMENTS = {AnyOneOfRequirements(
+        [CabalRequirement(package='hlint', version='1.9.35'),
+         DistributionRequirement(apt_get='hlint')
+         ]
+    )
+    }
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
