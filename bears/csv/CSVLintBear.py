@@ -12,7 +12,7 @@ class CSVLintBear:
     """
 
     LANGUAGES = {'CSV'}
-    REQUIREMENTS = {GemRequirement('csvlint')}
+    REQUIREMENTS = {GemRequirement('csvlint', '0.4.0')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
