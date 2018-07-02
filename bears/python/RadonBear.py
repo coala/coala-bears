@@ -12,7 +12,7 @@ from coalib.settings.Setting import typed_list
 
 class RadonBear(LocalBear):
     LANGUAGES = {'Python', 'Python 2', 'Python 3'}
-    REQUIREMENTS = {PipRequirement('radon', '1.4.0')}
+    REQUIREMENTS = {PipRequirement('radon', '==1.4.0')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

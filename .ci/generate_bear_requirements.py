@@ -31,6 +31,7 @@ from dependency_management.requirements.NpmRequirement import NpmRequirement
 from dependency_management.requirements.PipRequirement import PipRequirement
 
 BEAR_REQUIREMENTS_YAML = "bear-requirements.yaml"
+_VERSION_OPERATORS = ('<', '>', '~', '=', '-', '!')
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -38,10 +39,6 @@ PROJECT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 PROJECT_BEAR_DIR = os.path.abspath(os.path.join(PROJECT_DIR, 'bears'))
 
-PINNED_PACKAGES = (
-   'radon',
-   'lxml',
-)
 
 def get_args():
     parser = argparse.ArgumentParser(
@@ -112,60 +109,39 @@ def get_all_requirements(bears):
         )
 
 
-def _to_entry(obj, version=None):
+def _to_entry(requirement, default_operator):
     entry = {}
-
-    if version:
-        entry['version'] = version
-    elif obj.version:
-        entry['version'] = obj.version
-    else:
+    if not requirement.version:
         return True
 
+    if requirement.version[0].isdigit():
+        entry['version'] = default_operator + requirement.version
+    else:
+        assert requirement.version[0] in _VERSION_OPERATORS, \
+               'Unknown version operator in %s' % requirement.version
+        entry['version'] = requirement.version
     return entry
 
 
+def _get_requirements(requirements, default_operator, exclude=[]):
+    return dict(
+        (requirement.package, _to_entry(requirement, default_operator))
+        for requirement in requirements
+        if requirement.package not in exclude
+    )
+
+
 def get_gem_requirements(requirements):
-    gem_dependencies = {}
-
-    for requirement in requirements:
-        gem_dependencies[requirement.package] = _to_entry(requirement)
-
-    return gem_dependencies
+    return _get_requirements(requirements, '~>')
 
 
 def get_npm_requirements(requirements):
-    npm_dependencies = {}
-
-    for requirement in requirements:
-        package_name = requirement.package
-        req_version = requirement.version
-        if req_version:
-            if req_version[0] not in ('<', '>', '~', '='):
-                req_version = "~" + req_version
-        npm_dependencies[package_name] = _to_entry(requirement, req_version)
-
-    return npm_dependencies
+    return _get_requirements(requirements, '~')
 
 
 def get_pip_requirements(requirements):
     inherited_requirements = get_inherited_requirements()
-
-    pip_requirements = {}
-
-    for requirement in requirements:
-        if requirement.package in inherited_requirements:
-            continue
-
-        package_name = requirement.package
-        req_version = None
-        if requirement.version:
-            marker = '==' if requirement.package in PINNED_PACKAGES else '~='
-            req_version = '{0}{1}'.format(marker, requirement.version)
-
-        pip_requirements[package_name] = _to_entry(requirement, req_version)
-
-    return pip_requirements
+    return _get_requirements(requirements, '~=', inherited_requirements)
 
 
 if __name__ == '__main__':
