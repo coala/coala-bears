@@ -14,7 +14,7 @@ class SQLintBear:
     """
 
     LANGUAGES = {'SQL'}
-    REQUIREMENTS = {GemRequirement('sqlint')}
+    REQUIREMENTS = {GemRequirement('sqlint', '0.1.5')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
