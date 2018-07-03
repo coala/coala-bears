@@ -4,14 +4,15 @@ environment:
     # /E:ON and /V:ON options are not enabled in the batch script intepreter
     # See: http://stackoverflow.com/a/13751649/163740
     CMD_IN_ENV: "cmd /E:ON /V:ON /C .\\.ci\\run_with_env.cmd"
+    PIP_CACHE_DIR: C:\pip_cache
 
   matrix:
     - PYTHON: "C:\\Python34"
-      PYTHON_VERSION: "3.4"
+      PYTHON_VERSION: "3.4.4"
       PYTHON_ARCH: "32"
 
     - PYTHON: "C:\\Python34-x64"
-      PYTHON_VERSION: "3.4"
+      PYTHON_VERSION: "3.4.4"
       PYTHON_ARCH: "64"
 
 cache:
@@ -39,9 +40,8 @@ install:
   # Check that we have the expected version and architecture for Python
   - "python --version"
   - "python -c \"import struct; print(struct.calcsize('P') * 8)\""
-
-  - "%CMD_IN_ENV% python -m pip install --cache-dir=C:\\pip_cache \
-     -r requirements.txt -r test-requirements.txt"
+  - "%CMD_IN_ENV% python -m pip install -r requirements.txt \
+    -r test-requirements.txt"
   - ps: "Install-Product node ''"  # Use latest node v5.x.x
   - "npm config set loglevel warn"
   - "npm install"

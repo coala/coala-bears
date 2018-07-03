@@ -6,7 +6,7 @@ build_version: 0.12.0.dev99999999999999
 current_version: 0.12.0.dev
 version: 0.12.0.dev
 release: 0.12.0.dev
-test_pyversion: 3.4
+test_py36: false
 branch: master
 package_module: bears
 docs_source_dir: API
