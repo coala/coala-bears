@@ -120,9 +120,8 @@ def get_all_requirements(bears):
 
 
 def _to_entry(requirement, default_operator):
+    assert requirement.version, '%s has no version' % requirement.package
     entry = {}
-    if not requirement.version:
-        return True
 
     if requirement.version[0].isdigit():
         entry['version'] = default_operator + requirement.version
