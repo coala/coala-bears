@@ -2,8 +2,10 @@ import os
 import shutil
 import sys
 import unittest
+from pathlib import Path
 from unittest.mock import patch
-from bears.generate_package import (VERSION, touch, create_file_from_template,
+
+from bears.generate_package import (VERSION, create_file_from_template,
                                     create_file_structure_for_packages,
                                     perform_register, perform_upload, main,
                                     create_upload_parser)
@@ -17,7 +19,7 @@ class TouchTest(unittest.TestCase):
 
     def test_file_doesnt_exist(self):
         self.assertFalse(os.path.exists('TestFile.py'))
-        touch('TestFile.py')
+        Path('TestFile.py').touch()
         self.assertTrue(os.path.exists('TestFile.py'))
 
     def tearDown(self):
@@ -52,7 +54,7 @@ class CreateFileStructureForPackagesTest(unittest.TestCase):
     BEAR_FILE_PATH = os.path.join('folder', 'Test', 'coalaTest', 'Test.py')
 
     def test_structure(self):
-        touch('TestFile.py')
+        Path('TestFile.py').touch()
         create_file_structure_for_packages('folder', 'TestFile.py', 'Test')
         self.assertTrue(os.path.exists(self.INIT_FILE_PATH))
         self.assertTrue(os.path.exists(self.BEAR_FILE_PATH))
@@ -147,7 +149,7 @@ class MainTest(unittest.TestCase):
     def test_no_bear_object(self):
         if not os.path.exists(self.NO_BEAR_PATH):
             os.makedirs(os.path.join(self.BEARS_PATH, 'BadBear'))
-            touch(self.NO_BEAR_PATH)
+            Path(self.NO_BEAR_PATH).touch()
         main()
         self.assertFalse(os.path.exists(os.path.join(
             self.BEARS_UPLOAD_PATH, 'BadBear')))

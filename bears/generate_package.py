@@ -2,6 +2,7 @@ import argparse
 import glob
 import os
 import shutil
+from pathlib import Path
 from string import Template
 import subprocess
 import sys
@@ -11,15 +12,6 @@ from bears import VERSION
 from dependency_management.requirements.PipRequirement import PipRequirement
 from coalib.collecting.Importers import iimport_objects
 from coalib.parsing.Globbing import glob
-
-
-def touch(file_name):
-    """
-    Creates an empty file. An existing file remains untouched.
-
-    :param file_name: Name of the file.
-    """
-    open(file_name, 'a').close()
 
 
 def create_file_from_template(template_file, output_file, substitution_dict):
@@ -55,7 +47,7 @@ def create_file_structure_for_packages(root_folder, file_to_copy, object_name):
     upload_package_folder = os.path.join(
         root_folder, object_name, 'coala' + object_name)
     os.makedirs(upload_package_folder, exist_ok=True)
-    touch(os.path.join(upload_package_folder, '__init__.py'))
+    Path(os.path.join(upload_package_folder, '__init__.py')).touch()
     shutil.copyfile(file_to_copy, os.path.join(upload_package_folder,
                                                object_name + '.py'))
 
