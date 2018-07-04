@@ -6,6 +6,7 @@ from dependency_management.requirements.GemRequirement import GemRequirement
 
 
 @linter(executable='haml-lint',
+        normalize_line_numbers=True,
         output_format='regex',
         output_regex=r'(?P<line>\d+) \[(?P<severity>W|E)\] '
                      r'(?P<message>.*)')
