@@ -112,12 +112,13 @@ class FilenameBear(LocalBear):
             return
 
         if messages:
-            diff = Diff(file, rename=os.path.join(head, new_name + extension))
             message = ('\n'.join('- ' + mes for mes in messages)
                        if len(messages) > 1 else messages[0])
+            result_kwargs = dict(message=message, file=filename)
 
-            yield Result(
-                self,
-                message,
-                diff.affected_code(filename),
-                diffs={filename: diff})
+            if new_name != filename_without_extension:
+                diff = Diff(file,
+                            rename=os.path.join(head, new_name + extension))
+                result_kwargs['diffs'] = {filename: diff}
+
+            yield Result.from_values(self, **result_kwargs)
