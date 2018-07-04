@@ -6,6 +6,7 @@ from coalib.settings.Setting import typed_list
 
 
 @linter(executable='cpplint',
+        normalize_line_numbers=True,
         use_stdout=False,
         use_stderr=True,
         output_format='regex',
