@@ -9,9 +9,11 @@ import unittest.mock
 from bears.general.InvalidLinkBear import InvalidLinkBear
 from bears.general.URLHeadBear import URLHeadBear
 from coalib.testing.LocalBearTestHelper import LocalBearTestHelper
+from coalib.results.Diff import Diff
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.results.Result import Result
 from coalib.settings.Section import Section
+from coala_utils.ContextManagers import prepare_file
 
 
 def custom_matcher(request):
@@ -253,6 +255,12 @@ class InvalidLinkBearTest(LocalBearTestHelper):
             self.check_validity(self.uut, long_url_redirect,
                                 settings={'follow_redirects': 'true'})
 
+            with prepare_file(short_url_redirect, None,
+                              create_tempfile=False) as (lines, _):
+                diff = Diff(lines)
+                diff.modify_line(2,
+                                 '        http://httpbin.org/get\n')
+
             self.check_results(
                 self.uut,
                 short_url_redirect,
@@ -261,7 +269,8 @@ class InvalidLinkBearTest(LocalBearTestHelper):
                     'This link redirects to http://httpbin.org/get',
                     severity=RESULT_SEVERITY.NORMAL,
                     line=2,
-                    file='short_url_redirect_text'
+                    file='short_url_redirect_text',
+                    diffs={'short_url_redirect_text': diff},
                 )],
                 settings={'follow_redirects': 'true'},
                 filename='short_url_redirect_text')
