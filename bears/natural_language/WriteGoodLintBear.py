@@ -5,6 +5,7 @@ from coala_utils.param_conversion import negate
 
 
 @linter(executable='write-good',
+        normalize_column_numbers=True,
         output_format='regex',
         output_regex=r'(?P<message>.*)\s*on\s*line\s*(?P<line>\d+)\s*at\s'
                      r'column\s*(?P<column>\d+)'
