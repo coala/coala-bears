@@ -37,7 +37,7 @@ class StylintBearTest(LocalBearTestHelper):
                                         'and value',
                                 file=get_testfile_path(filename),
                                 line=2,
-                                column=6,
+                                column=7,
                                 severity=RESULT_SEVERITY.NORMAL)],
             filename=get_testfile_path(filename))
 
@@ -65,7 +65,7 @@ class StylintBearTest(LocalBearTestHelper):
                                 message='!important is disallowed',
                                 file=get_testfile_path(filename),
                                 line=2,
-                                column=9,
+                                column=10,
                                 severity=RESULT_SEVERITY.NORMAL)],
             filename=get_testfile_path(filename))
 
@@ -79,7 +79,7 @@ class StylintBearTest(LocalBearTestHelper):
                                 message='unnecessary bracket',
                                 file=get_testfile_path(filename),
                                 line=1,
-                                column=13,
+                                column=14,
                                 severity=RESULT_SEVERITY.NORMAL),
              Result.from_values('StylintBear',
                                 message='unnecessary bracket',
@@ -98,7 +98,7 @@ class StylintBearTest(LocalBearTestHelper):
                                 message='unnecessary semicolon found',
                                 file=get_testfile_path(filename),
                                 line=2,
-                                column=19,
+                                column=20,
                                 severity=RESULT_SEVERITY.NORMAL)],
             filename=get_testfile_path(filename))
 
@@ -126,7 +126,7 @@ class StylintBearTest(LocalBearTestHelper):
                                 message='trailing whitespace',
                                 file=get_testfile_path(filename),
                                 line=3,
-                                column=22,
+                                column=23,
                                 severity=RESULT_SEVERITY.NORMAL)],
             filename=get_testfile_path(filename))
 
@@ -140,7 +140,7 @@ class StylintBearTest(LocalBearTestHelper):
                                 message='mixed spaces and tabs',
                                 file=get_testfile_path(filename),
                                 line=3,
-                                column=0,
+                                column=1,
                                 severity=RESULT_SEVERITY.NORMAL)],
             filename=get_testfile_path(filename),
             settings={'stylint_config': get_testfile_path('.stylintrc')})
@@ -162,21 +162,21 @@ class StylintBearTest(LocalBearTestHelper):
                                         'be a variable',
                                 file=get_testfile_path(filename),
                                 line=6,
-                                column=8,
+                                column=9,
                                 severity=RESULT_SEVERITY.NORMAL),
              Result.from_values('StylintBear',
                                 message='line comments require a space '
                                         'after //',
                                 file=get_testfile_path(filename),
                                 line=8,
-                                column=2,
+                                column=3,
                                 severity=RESULT_SEVERITY.NORMAL),
              Result.from_values('StylintBear',
                                 message='commas must be followed '
                                         'by a space for readability',
                                 file=get_testfile_path(filename),
                                 line=9,
-                                column=6,
+                                column=7,
                                 severity=RESULT_SEVERITY.NORMAL),
              ],
             filename=get_testfile_path(filename))

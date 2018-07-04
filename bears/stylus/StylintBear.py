@@ -9,6 +9,7 @@ _setting_map = {True: 'always',
 
 
 @linter(executable='stylint',
+        normalize_column_numbers=True,
         output_format='regex',
         output_regex=r'(?P<line>\d+):?(?P<column>\d+)?\s+.*?'
                      r'(?P<severity>error|warning)\s+(?P<message>.+?)'
