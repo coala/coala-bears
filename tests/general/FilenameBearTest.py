@@ -2,6 +2,7 @@ from queue import Queue
 
 from bears.general.FilenameBear import FilenameBear
 from coalib.testing.LocalBearTestHelper import LocalBearTestHelper
+from coalib.results.Diff import Diff
 from coalib.results.Result import RESULT_SEVERITY, Result
 from coalib.output.printers.LOG_LEVEL import LOG_LEVEL
 from coalib.settings.Section import Section
@@ -115,13 +116,16 @@ class FilenameBearTest(LocalBearTestHelper):
             self.uut, [''], filename='filename.xyz')
         self.check_validity(
             self.uut, [''], filename='prefilename.xyz')
+
+        expected_diff = Diff(['\n'], rename='prefilename.xyz')
         self.check_results(
             self.uut,
             [''],
             [Result.from_values('FilenameBear',
                                 "Filename does not use the prefix 'pre'.",
                                 severity=RESULT_SEVERITY.NORMAL,
-                                file='filename.xyz')],
+                                file='filename.xyz',
+                                diffs={'filename.xyz': expected_diff})],
             filename='filename.xyz')
 
     def test_file_suffix(self):
@@ -130,18 +134,23 @@ class FilenameBearTest(LocalBearTestHelper):
             self.uut, [''], filename='filename.xyz')
         self.check_validity(
             self.uut, [''], filename='filenamesuffix.xyz')
+
+        expected_diff = Diff(['\n'], rename='filenamefix.xyz')
         self.check_results(
             self.uut,
             [''],
             [Result.from_values('FilenameBear',
                                 "Filename does not use the suffix 'fix'.",
                                 severity=RESULT_SEVERITY.NORMAL,
-                                file='filename.xyz')],
+                                file='filename.xyz',
+                                diffs={'filename.xyz': expected_diff})],
             filename='filename.xyz')
 
     def test_file_prefix_suffix(self):
         self.section['filename_prefix'] = 'pre'
         self.section['filename_suffix'] = 'fix'
+
+        expected_diff = Diff(['\n'], rename='prefilenamefix.xyz')
         self.check_results(
             self.uut,
             [''],
@@ -149,7 +158,8 @@ class FilenameBearTest(LocalBearTestHelper):
                                 "- Filename does not use the prefix 'pre'.\n"
                                 "- Filename does not use the suffix 'fix'.",
                                 severity=RESULT_SEVERITY.NORMAL,
-                                file='filename.xyz')],
+                                file='filename.xyz',
+                                diffs={'filename.xyz': expected_diff})],
             filename='filename.xyz')
 
     def test_file_with_too_long_filename(self):
@@ -181,6 +191,8 @@ class FilenameBearTest(LocalBearTestHelper):
         msg = ("- Filename does not use the prefix 'pre'.\n"
                '- Filename is too long ({} > {}).'
                )
+
+        expected_diff = Diff(['\n'], rename=('pre' + filename_test1))
         self.check_results(
             self.uut,
             [''],
@@ -188,5 +200,6 @@ class FilenameBearTest(LocalBearTestHelper):
                                 msg.format(len(filename_test1),
                                            max_filename_length),
                                 severity=RESULT_SEVERITY.NORMAL,
-                                file=filename_test1)],
+                                file=filename_test1,
+                                diffs={filename_test1: expected_diff})],
             filename=filename_test1)
