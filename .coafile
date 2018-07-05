@@ -1,29 +1,34 @@
 [all]
-files = *.py, bears/**/*.py, tests/**/*.py, bears/*.py.in
-ignore = tests/python/test_files/pylint_test.py, tests/python/bandit_test_files/*,
-         tests/python/vulture_test_files/*
-
+ignore = .git/**, vendor/**
 max_line_length = 79
 use_spaces = True
 
 [all.python]
+files = **.py, bears/*.py.in
+ignore += tests/python/test_files/pylint_test.py,
+  tests/python/bandit_test_files/*,
+  tests/python/vulture_test_files/*,
+  docs/conf.py
+
+[all.python.general]
 # Patches may conflict with autopep8 so putting them in own section so they
 # will be executed sequentially; also we need the LineLengthBear to double
 # check the line length because PEP8Bear sometimes isn't able to correct the
 # linelength.
 bears = SpaceConsistencyBear, QuotesBear
+ignore += .ci/adjust_version_number.py
 language = python
 default_actions = *: ApplyPatchAction
 preferred_quotation = '
 
-[all.flakes]
+[all.python.flakes]
 # Do not set default_action to ApplyPatchAction as it may lead to some
 # required imports being removed which might result in coala behaving weirdly.
 default_action: *: ShowPatchAction
 bears = PyUnusedCodeBear
 language = Python
 
-[all.autopep8]
+[all.python.autopep8]
 bears = PEP8Bear, PycodestyleBear
 default_actions = PEP8Bear: ApplyPatchAction
 
@@ -53,7 +58,7 @@ max_lines_per_file = 1000
 bear = reSTLintBear
 files = **.rst
 
-[all.TODOS]
+[all.python.TODOS]
 enabled = False
 bears = KeywordBear
 language = python3
@@ -65,7 +70,7 @@ cs_keywords =
 
 [all.PythonPackageInit]
 bears = PythonPackageInitBear
-ignore = *.py
+ignore += *.py
 
 [all.yml]
 bears = YAMLLintBear
@@ -74,7 +79,7 @@ files = *.yml, *.yaml, .ci/*.yml, tests/**/*.yml
 [bash]
 bears = ShellCheckBear
 files = .ci/*.sh
-ignore = .ci/deps.pip.sh
+ignore += .ci/deps.pip.sh
 shell = bash
 shellcheck_ignore = SC2046, SC2154, SC2155
 
@@ -82,4 +87,4 @@ shellcheck_ignore = SC2046, SC2154, SC2155
 bears = Jinja2Bear
 files = **.jj2
 # Bug in handling of ".. list | sort"
-ignore = .moban.dt/Gemfile.jj2, .moban.dt/bear-requirements.txt.jj2, .moban.dt/package.json.jj2
+ignore += .moban.dt/Gemfile.jj2, .moban.dt/bear-requirements.txt.jj2, .moban.dt/package.json.jj2
