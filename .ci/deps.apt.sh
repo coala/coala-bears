@@ -1,6 +1,9 @@
 set -e
 set -x
 
+# This script is no longer used by Travis CI.
+# Any related aspects can be removed if beneficial.
+
 # apt-get commands
 export DEBIAN_FRONTEND=noninteractive
 

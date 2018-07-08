@@ -82,14 +82,33 @@ jobs:
 
 dist: trusty
 
+.apt_sources: &apt_sources
+  - ubuntu-toolchain-r-test
+  - avsm  # OPAM stable
+  - hvr-ghc  # Haskell
+  - sourceline:  # R
+      deb https://cloud.r-project.org/bin/linux/ubuntu trusty-cran35/
+    key_url:
+      https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x51716619E084DAB9
+  - sourceline:  # Julia
+      deb http://ppa.launchpad.net/staticfloat/juliareleases/ubuntu trusty main
+    key_url:
+      https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xCF979FFA3D3D3ACC
+  - sourceline:  # Go
+      deb http://ppa.launchpad.net/ondrej/golang/ubuntu trusty main
+    key_url:
+      https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x4F4EA0AAE5267A6C
+  - sourceline:  # astyle
+      deb http://ppa.launchpad.net/cs50/ppa/ubuntu trusty main
+    key_url:
+      https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x5BDA2E974A0E822C
+
 addons:
   apt:
-    sources:
-      - ubuntu-toolchain-r-test
-      - avsm  # OPAM stable
-      - hvr-ghc  # Haskell
+    sources: *apt_sources
     packages:
       - aspcud
+      - astyle
       - cabal-install-1.24
       - chktex
       - clang-3.4
@@ -98,8 +117,10 @@ addons:
       - flawfinder
       - gfortran
       - ghc
+      - golang-go
       - happy
       - indent
+      - julia
       - libarpack2
       - libblas-dev
       - libcolamd2.8.0
@@ -117,6 +138,7 @@ addons:
       - ocaml
       - opam
       - php-codesniffer
+      - r-base
       - verilator
 
 cache:
@@ -149,7 +171,6 @@ env:
   global:
     - TERM=dumb
     - CIRCLE_NODE_INDEX=-1  # Avoid accidentially being a CircleCI worker
-    - USE_PPAS="marutter/rdev staticfloat/juliareleases ondrej/golang cs50/ppa"
     - R_LIB_USER=~/R/Library
     - LINTR_COMMENT_BOT=false
     - PATH="$HOME/.local/bin:/opt/cabal/1.24/bin:$PATH:$TRAVIS_BUILD_DIR/node_modules/.bin:$TRAVIS_BUILD_DIR/vendor/bin:$HOME/dart-sdk/bin:$HOME/.cabal/bin:$HOME/infer-linux64-v0.7.0/infer/bin:$HOME/pmd-bin-5.4.1/bin:$HOME/bakalint-0.4.0:$HOME/elm-format-0.18:$HOME/.local/tailor/tailor-latest/bin:$HOME/.luarocks/bin"
@@ -158,7 +179,6 @@ before_install:
   - nvm install 6.10.2
   # Remove Ruby directive from Gemfile as this image has 2.2.5
   - sed -i '/^ruby/d' Gemfile
-  - if [[ "$UNSUPPORTED" != true ]]; then bash .ci/deps.apt.sh; fi
   - if [[ "$UNSUPPORTED" != true ]]; then bash .ci/deps.sh; fi
   - if [[ "$UNSUPPORTED" != true ]]; then bash .ci/deps.go.sh; fi
   - if [[ "$UNSUPPORTED" != true ]]; then bash .ci/deps.cabal.sh; fi
