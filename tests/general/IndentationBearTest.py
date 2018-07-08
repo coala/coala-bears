@@ -14,7 +14,7 @@ class TestLanguage:
     string_delimiters = {'"': '"', "'": "'"}
     multiline_string_delimiters = {'"""': '"""', 'R("': '")'}
     multiline_comment_delimiters = {'/*': '*/'}
-    comment_delimiter = '/', '#'
+    comment_delimiters = '/', '#'
     indent_types = {'{': '}', '<': '>', ':': ''}
     encapsulators = {'(': ')', '[': ']'}
 

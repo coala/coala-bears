@@ -87,7 +87,7 @@ class IndentationBear(LocalBear):
                 annotation_dict)
         encaps_pos = tuple(sorted(encaps_pos, key=lambda x: x.start.line))
 
-        comments = dict(lang_settings_dict['comment_delimiter'])
+        comments = dict(lang_settings_dict['comment_delimiters'])
         comments.update(
             dict(lang_settings_dict['multiline_comment_delimiters']))
 
