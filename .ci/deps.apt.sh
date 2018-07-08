@@ -4,7 +4,7 @@ set -x
 # apt-get commands
 export DEBIAN_FRONTEND=noninteractive
 
-deps="libclang1-3.4 indent mono-mcs chktex r-base julia golang-go luarocks verilator cppcheck flawfinder devscripts mercurial"
+deps="libclang1-3.4 astyle indent mono-mcs chktex r-base julia golang-go luarocks verilator cppcheck flawfinder devscripts mercurial"
 deps_infer="m4 opam"
 
 case $CIRCLE_BUILD_IMAGE in
@@ -43,6 +43,7 @@ if [ -n "$ADD_APT_UBUNTU_RELEASE" ]; then
 fi
 
 if [ "$USE_PPAS" = "true" ]; then
+  sudo add-apt-repository -y ppa:cs50/ppa
   sudo add-apt-repository -y ppa:marutter/rdev
   sudo add-apt-repository -y ppa:staticfloat/juliareleases
   sudo add-apt-repository -y ppa:staticfloat/julia-deps
