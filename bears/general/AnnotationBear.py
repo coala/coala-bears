@@ -43,7 +43,7 @@ class AnnotationBear(LocalBear):
             lang_dict['multiline_string_delimiters'])
         multiline_comment_delimiters = dict(
             lang_dict['multiline_comment_delimiters'])
-        comment_delimiter = dict(lang_dict['comment_delimiter'])
+        comment_delimiter = dict(lang_dict['comment_delimiters'])
         string_ranges = comment_ranges = ()
         try:
             string_ranges, comment_ranges = self.find_annotation_ranges(
