@@ -1,6 +1,9 @@
 set -e
 set -x
 
+# This script is no longer used by Travis CI.
+# Any related aspects can be removed if beneficial.
+
 # apt-get commands
 export DEBIAN_FRONTEND=noninteractive
 
@@ -67,6 +70,3 @@ if [[ "$CIRCLE_BUILD_IMAGE" == "ubuntu-14.04" ]]; then
   sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 20
   sudo update-alternatives --install /usr/bin/gfortran gfortran /usr/bin/gfortran-4.9 20
 fi
-
-# Change environment for flawfinder from python to python2
-sudo sed -i '1s/.*/#!\/usr\/bin\/env python2/' /usr/bin/flawfinder

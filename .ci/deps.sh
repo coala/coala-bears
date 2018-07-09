@@ -46,12 +46,19 @@ fi
 julia -e "Pkg.add(\"Lint\")"
 
 # Lua commands
-sudo luarocks install luacheck --deps-mode=none
+luarocks install --local --deps-mode=none luacheck
 
 # PHPMD installation
-if [ ! -e ~/phpmd/phpmd ]; then
-  mkdir -p ~/phpmd
-  curl -fsSL -o phpmd.phar http://static.phpmd.org/php/latest/phpmd.phar
-  sudo chmod +x phpmd.phar
-  sudo mv phpmd.phar ~/phpmd/phpmd
+if [ ! -e ~/.local/bin/phpmd ]; then
+  PHPMD='http://static.phpmd.org/php/latest/phpmd.phar'
+  mkdir -p ~/.local/bin
+  curl -fsSL -o  ~/.local/bin/phpmd "$PHPMD"
+  chmod +x ~/.local/bin/phpmd
+fi
+
+# Change environment for flawfinder from python to python2
+if [ ! -e ~/.local/bin/flawfinder ]; then
+  cp /usr/bin/flawfinder ~/.local/bin/flawfinder
+  sed -i '1s/.*/#!\/usr\/bin\/env python2/' ~/.local/bin/flawfinder
+  chmod +x ~/.local/bin/flawfinder
 fi
