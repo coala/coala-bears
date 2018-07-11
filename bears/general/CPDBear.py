@@ -58,7 +58,7 @@ class CPDBear(GlobalBear):
         redundancy.
 
         For more details see:
-        <https://pmd.github.io/pmd-5.4.1/usage/cpd-usage.html>
+        <https://pmd.github.io/pmd-6.4.0/pmd_userdocs_cpd.html>
 
         :param language:
             One of the supported languages of this bear.
