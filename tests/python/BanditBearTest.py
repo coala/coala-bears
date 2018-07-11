@@ -24,7 +24,7 @@ def load_testfile(name, splitlines=False):
     return contents
 
 
-def test(testfilename, expected_results):
+def gen_check(testfilename, expected_results):
     def test_function(self):
         bear = BanditBear(Section(''), Queue())
         self.check_results(bear, load_testfile(testfilename, True),
@@ -34,7 +34,7 @@ def test(testfilename, expected_results):
 
 
 class BanditBearTest(LocalBearTestHelper):
-    test_assert = test(
+    test_assert = gen_check(
         'assert.py',
         [Result.from_values('B101', 'Use of assert detected. The enclosed '
                             'code will be removed when compiling to optimised '
@@ -42,13 +42,13 @@ class BanditBearTest(LocalBearTestHelper):
                             end_line=1, severity=RESULT_SEVERITY.INFO,
                             confidence=90)])
 
-    test_exec_py2_py = test(
+    test_exec_py2_py = gen_check(
         'exec-py2.py',
         [Result.from_values('BanditBear', 'syntax error while parsing AST '
                             'from file', get_testfile_path('exec-py2.py'),
                             severity=RESULT_SEVERITY.MAJOR)])
 
-    test_jinja2_templating = test(
+    test_jinja2_templating = gen_check(
         'jinja2_templating.py',
         [Result.from_values('B701', 'Using jinja2 templates with '
                             'autoescape=False is dangerous and can lead to '

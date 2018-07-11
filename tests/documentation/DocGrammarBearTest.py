@@ -41,7 +41,7 @@ def make_docstring(main_desc: str = '',
                             return_desc).splitlines(True)
 
 
-def test(test_data, expected_data, optional_setting=None):
+def gen_check(test_data, expected_data, optional_setting=None):
     def test_function(self):
         arguments = {'language': 'python', 'docstyle': 'default'}
         if optional_setting:
@@ -83,19 +83,19 @@ class DocGrammarBearTest(unittest.TestCase):
         finally:
             shutil.which = _shutil_which
 
-    test_spelling = test(
+    test_spelling = gen_check(
         make_docstring(main_desc='Thiss is main descrpton.\n'),
         make_docstring(main_desc='This is main description.\n'))
 
-    test_capitalize_sentence_start = test(
+    test_capitalize_sentence_start = gen_check(
         make_docstring(main_desc='this sentence starts with small letter\n'),
         make_docstring(main_desc='This sentence starts with small letter\n'))
 
-    test_extra_whitespace = test(
+    test_extra_whitespace = gen_check(
         make_docstring(main_desc='This sentence    has extra  white spaces\n'),
         make_docstring(main_desc='This sentence has extra white spaces\n'))
 
-    test_apostrophe_comma = test(
+    test_apostrophe_comma = gen_check(
         make_docstring(main_desc='This sentence doesnt have an apostrophe\n'),
         make_docstring(main_desc='This sentence doesn\'t have an '
                                  'apostrophe\n'))
@@ -105,9 +105,9 @@ class DocGrammarBearTest(unittest.TestCase):
         param_desc='Dummy description.\n',
         return_desc='Return Nothing.\n')
 
-    test_correct_grammar = test(correct_docstring, correct_docstring)
+    test_correct_grammar = gen_check(correct_docstring, correct_docstring)
 
-    test_disable_setting_UPPERCASE_SENTENCE_START = test(
+    test_disable_setting_UPPERCASE_SENTENCE_START = gen_check(
         make_docstring(main_desc='sentence starting with lowercase.\n',
                        param_desc='dummy description.\n',
                        return_desc='Nothing.\n'),
@@ -121,14 +121,14 @@ class DocGrammarBearTest(unittest.TestCase):
     test_language_french = unittest.skipIf(
         platform.system() == 'Windows',
         'language-check fails for different locale on windows')(
-            test(
+            gen_check(
                 make_docstring(main_desc='il monte en haut si il veut.\n'),
                 make_docstring(main_desc='Il monte s’il veut.\n'),
                 {'locale': 'fr',
                  'languagetool_disable_rules': 'FRENCH_WHITESPACE'}))
 
     # explicit language test cases to check the breakage of DocGrammarBear.
-    test_java_explicit = test([
+    test_java_explicit = gen_check([
         'class Square {\n',
         '    /**\n',
         '     * Returnss Area of a square.\n',
@@ -153,7 +153,7 @@ class DocGrammarBearTest(unittest.TestCase):
         '}'],
         {'language': 'java'})
 
-    test_python_explicit = test([
+    test_python_explicit = gen_check([
         'def improper_grammar(param1):\n',
         '    """\n',
         '    Documntation contains gramatical mistakess.DocGrammarBear\n',

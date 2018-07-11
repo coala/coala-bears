@@ -17,7 +17,7 @@ def load_testfile(filename):
         return fl.read()
 
 
-def test(test_file, expected_file, optional_setting=None):
+def gen_check(test_file, expected_file, optional_setting=None):
     def test_function(self):
         test_file_content = load_testfile(test_file).splitlines(True)
 
@@ -48,7 +48,7 @@ def test(test_file, expected_file, optional_setting=None):
     return test_function
 
 
-def test_MalformedComment(test_data, message, optional_setting=None):
+def gen_check_MalformedComment(test_data, message, optional_setting=None):
     def test_MalformedComment_function(self):
         arguments = {'language': 'python', 'docstyle': 'default'}
         if optional_setting:
@@ -75,7 +75,7 @@ def test_MalformedComment(test_data, message, optional_setting=None):
     return test_MalformedComment_function
 
 
-def test_use_spaces(test_data, message, optional_setting=None):
+def gen_check_use_spaces(test_data, message, optional_setting=None):
     def test_use_spaces_function(self):
         arguments = {'language': 'python', 'docstyle': 'default'}
         if optional_setting:
@@ -103,21 +103,22 @@ def test_use_spaces(test_data, message, optional_setting=None):
 
 
 class DocumentationStyleBearTest(unittest.TestCase):
-    test_bad1 = test('bad_file.py.test', 'bad_file.py.test.correct')
-    test_bad2 = test('bad_file2.py.test', 'bad_file2.py.test.correct',
-                     {'expand_one_liners': 'True'})
-    test_bad3 = test('bad_file3.py.test', 'bad_file3.py.test.correct',
-                     {'expand_one_liners': 'True'})
-    test_bad4 = test('bad_file4.py.test', 'bad_file4.py.test.correct')
-    test_bad5 = test('bad_file5.py.test', 'bad_file5.py.test.correct')
-    test_good1 = test('good_file.py.test', 'good_file.py.test')
-    test_good2 = test('good_file2.py.test', 'good_file2.py.test')
-    test_good3 = test('good_file3.py.test', 'good_file3.py.test',
-                      {'allow_missing_func_desc': 'True'})
-    test_bad_java = test('bad_file.java.test', 'bad_file.java.test.correct',
-                         {'language': 'java'})
+    test_bad1 = gen_check('bad_file.py.test', 'bad_file.py.test.correct')
+    test_bad2 = gen_check('bad_file2.py.test', 'bad_file2.py.test.correct',
+                          {'expand_one_liners': 'True'})
+    test_bad3 = gen_check('bad_file3.py.test', 'bad_file3.py.test.correct',
+                          {'expand_one_liners': 'True'})
+    test_bad4 = gen_check('bad_file4.py.test', 'bad_file4.py.test.correct')
+    test_bad5 = gen_check('bad_file5.py.test', 'bad_file5.py.test.correct')
+    test_good1 = gen_check('good_file.py.test', 'good_file.py.test')
+    test_good2 = gen_check('good_file2.py.test', 'good_file2.py.test')
+    test_good3 = gen_check('good_file3.py.test', 'good_file3.py.test',
+                           {'allow_missing_func_desc': 'True'})
+    test_bad_java = gen_check(
+        'bad_file.java.test', 'bad_file.java.test.correct',
+        {'language': 'java'})
 
-    test_malformed_comment_python = test_MalformedComment(
+    test_malformed_comment_python = gen_check_MalformedComment(
         ['"""\n',
          'This will yield MalformedComment'],
         dedent("""\
@@ -125,7 +126,7 @@ class DocumentationStyleBearTest(unittest.TestCase):
              marker has been found, but no instance of DocComment is
              returned."""))
 
-    test_malformed_comment_java = test_MalformedComment(
+    test_malformed_comment_java = gen_check_MalformedComment(
         ['\n',
          '/** This will yield MalformedComment\n'],
         dedent("""\
@@ -134,7 +135,7 @@ class DocumentationStyleBearTest(unittest.TestCase):
              returned."""),
         {'language': 'java'})
 
-    test_use_spaces_comment = test_use_spaces(
+    test_use_spaces_comment = gen_check_use_spaces(
         ['"""\n',
          ':param a:'
          '    Is just a param'
