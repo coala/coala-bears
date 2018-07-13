@@ -1,7 +1,17 @@
 import os
+from pathlib import Path
+from queue import Queue
 
 from bears.js.ESLintBear import ESLintBear
-from coalib.testing.LocalBearTestHelper import verify_local_bear
+
+from coalib.results.Result import RESULT_SEVERITY, Result
+from coalib.settings.Section import Section
+from coalib.settings.Setting import Setting
+from coalib.testing.BearTestHelper import generate_skip_decorator
+from coalib.testing.LocalBearTestHelper import (
+    verify_local_bear,
+    LocalBearTestHelper,
+)
 
 
 test_good = """function addOne(i) {
@@ -67,3 +77,36 @@ ESLintBearImportTest = verify_local_bear(
     create_tempfile=False,
     settings={'eslint_config': os.path.join(test_dir,
                                             'eslintconfig_import.json')})
+
+
+@generate_skip_decorator(ESLintBear)
+class ESLintBearIgnoredFileTest(LocalBearTestHelper):
+
+    def setUp(self):
+        self.section = Section('')
+        self.uut = ESLintBear(self.section, Queue())
+
+    def test_lint_config_file(self):
+
+        self.maxDiff = None
+        config_filename = os.path.join(test_dir, '.eslintrc.js')
+
+        self.section.append(Setting('eslint_config', config_filename))
+
+        expected = Result.from_values(
+            'ESLintBear',
+            'File ignored by default.  Use a negated ignore pattern '
+            '(like "--ignore-pattern \'!<relative/path/to/filename>\'") '
+            'to override.',
+            severity=RESULT_SEVERITY.NORMAL,
+            file=config_filename,
+            )
+
+        Path(config_filename).touch()
+
+        self.check_results(
+            self.uut, ['{}'],
+            [expected],
+            create_tempfile=False,
+            filename=config_filename,
+        )
