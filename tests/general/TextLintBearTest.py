@@ -148,8 +148,8 @@ class TextLintBearTest(LocalBearTestHelper):
                                 severity=RESULT_SEVERITY.MAJOR,
                                 file=get_testfile_path(file_name)),
              Result.from_values('TextLintBear',
-                                message='http://httpstat.us/404 is dead. '
-                                        '(404 Not Found)',
+                                message='https://google.com/teapot is dead. '
+                                        '(301 Moved Permanently)',
                                 line=2,
                                 column=5,
                                 severity=RESULT_SEVERITY.MAJOR,

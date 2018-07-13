@@ -1,2 +1,2 @@
 We've confirmed his identity.
-The http://httpstat.us/404 link should report an error.
+The https://google.com/teapot link should report an error.
