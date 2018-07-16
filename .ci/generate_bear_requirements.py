@@ -16,7 +16,6 @@
 import argparse
 import copy
 import itertools
-import json
 import os
 import sys
 
@@ -35,7 +34,7 @@ yaml = YAML(typ='rt')
 yaml.default_flow_style = False
 yaml.Dumper = RoundTripDumper
 
-BEAR_REQUIREMENTS_YAML = "bear-requirements.yaml"
+BEAR_REQUIREMENTS_YAML = 'bear-requirements.yaml'
 _VERSION_OPERATORS = ('<', '>', '~', '=', '-', '!')
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -103,13 +102,13 @@ def get_all_requirements(bears):
     for bear in bears:
         for requirement in bear.REQUIREMENTS:
             if isinstance(requirement, PipRequirement) and \
-               requirement not in pip_requirements:
+                    requirement not in pip_requirements:
                 pip_requirements.append(requirement)
             elif isinstance(requirement, NpmRequirement) and \
-               requirement not in npm_requirements:
+                    requirement not in npm_requirements:
                 npm_requirements.append(requirement)
             elif isinstance(requirement, GemRequirement) and \
-               requirement not in gem_requirements:
+                    requirement not in gem_requirements:
                 gem_requirements.append(requirement)
 
     return (
