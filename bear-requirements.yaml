@@ -179,7 +179,7 @@ pip_requirements:
   pyroma:
     version: ~=2.2.0
   pyyaml:
-    version: ~=3.12
+    version: ~=4.1.0
   radon:
     version: ==1.4.0
   restructuredtext-lint:
