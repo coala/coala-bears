@@ -16,24 +16,30 @@ echo "" > bear-requirements.txt
 # pbr failing on py33
 pip install 'pytest-runner==2.12' 'pbr~=4.0.0'
 
-python setup.py install | tee setup.log
+python setup.py install 2>&1 | tee setup.log
 
 retval=$?
 
 set +x
 
 # coalib.__init__.py should exit with 4 on unsupported versions of Python
-# And setup.py emits something else.
-if [[ $retval == 0 ]]; then
-  echo "Unexpected error code 0"
-  exit 1
-else
-  echo "setup.py error code $retval ok"
+# But bears setup.py sees retval 1.
+if [[ $retval != 1 ]]; then
+  echo "Unexpected error code $retval"
+
+  # When the exit code is 0, use a non-zero exit code instead
+  if [[ $retval == 0 ]]; then
+    exit 127
+  fi
+  exit $retval
 fi
 
 # error when no lines selected by grep
 set -e
 
+# The following is emitted on stdout
 grep -q 'coala supports only python 3.4.4 or later' setup.log
+# The following is emitted on stderr
+grep -q 'error: Setup script exited with 4' setup.log
 
 echo "Unsupported check completed successfully"
