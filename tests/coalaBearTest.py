@@ -4,6 +4,8 @@ import unittest
 import bears
 import coalib
 
+from bears import assert_supported_version
+
 
 class coalaBearTest(unittest.TestCase):
 
@@ -23,3 +25,20 @@ class coalaBearTest(unittest.TestCase):
             bears.check_coala_version()
             self.assertIn('Version mismatch between coala',
                           cm.output[0])
+
+    @unittest.mock.patch('sys.version_info', tuple((2, 7, 11)))
+    def test_python_version_27(self):
+        with self.assertRaises(SystemExit) as cm:
+            assert_supported_version()
+
+        self.assertEqual(cm.exception.code, 4)
+
+    @unittest.mock.patch('sys.version_info', tuple((3, 3, 6)))
+    def test_python_version_33(self):
+        with self.assertRaises(SystemExit) as cm:
+            assert_supported_version()
+
+        self.assertEqual(cm.exception.code, 4)
+
+    def test_python_version_34(self):
+        assert_supported_version()
