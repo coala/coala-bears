@@ -185,6 +185,7 @@ before_script:
   - .ci/deps.coala-bears.sh
 
 script:
+  - .ci/check_setuptools.py
   - python setup.py bdist_wheel
   - pip install $(ls ./dist/*.whl)"[alldeps]"
   # Ensure bear requirements are in sync with the bear PipRequirement

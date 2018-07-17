@@ -38,7 +38,9 @@ targets:
   - .ci/appveyor.yml: ci/appveyor.yml.jj2
   - .ci/run_with_env.cmd: run_with_env.cmd
   - .ci/check_unsupported.sh: ci/check_unsupported.sh.jj2
-  - .ci/check_moban.sh: ci/check_moban.sh
   - runtime.txt: runtime.txt
   - netlify.toml: docs/netlify.toml
   - coala-bears.cabal: coala-bears.cabal.jj2
+copy:
+  - .ci/check_moban.sh: ci/check_moban.sh
+  - .ci/check_setuptools.py: ci/check_setuptools.py
