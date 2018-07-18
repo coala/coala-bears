@@ -43,17 +43,19 @@ PROJECT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 PROJECT_BEAR_DIR = os.path.abspath(os.path.join(PROJECT_DIR, 'bears'))
 
 SUPPORTED_INSTANCES = (
+    'CabalRequirement',
     'PipRequirement',
     'NpmRequirement',
     'GemRequirement',
-    'CabalRequirement',
+    'RscriptRequirement',
 )
 
 INSTANCE_NAMES = (
+    'cabal_requirements',
     'pip_requirements',
     'npm_requirements',
     'gem_requirements',
-    'cabal_requirements',
+    'r_requirements',
 )
 
 
@@ -158,6 +160,8 @@ def get_pip_requirements(requirements):
     inherited_requirements = get_inherited_requirements()
     return _get_requirements(requirements, '~=', inherited_requirements)
 
+def get_r_requirements(requirements):
+    return _get_requirements(requirements, '>=')
 
 def get_cabal_requirements(requirements):
     return _get_requirements(requirements, '==')
@@ -213,22 +217,23 @@ if __name__ == '__main__':
         bear_dirs.extend(args.bear_dirs)
 
     instance_dict = get_all_requirements(get_all_bears(bear_dirs))
-
     requirements = CommentedMap()
     requirements.yaml_set_start_comment(
         'This is an automatically generated file.\n'
         'And should not be edited by hand.')
 
     requirements['overrides'] = 'coala-build.yaml'
+
     requirements['gem_requirements'] = get_gem_requirements(
                                             instance_dict['GemRequirement'])
     requirements['npm_requirements'] = get_npm_requirements(
                                             instance_dict['NpmRequirement'])
     requirements['pip_requirements'] = get_pip_requirements(
                                             instance_dict['PipRequirement'])
+    requirements['r_requirements'] = get_r_requirements(
+                                            instance_dict['RscriptRequirement'])
     requirements['cabal_requirements'] = get_cabal_requirements(
                                             instance_dict['CabalRequirement'])
-
     if args.update or args.check:
         input_file_path = os.path.join(PROJECT_DIR, BEAR_REQUIREMENTS_YAML)
 
