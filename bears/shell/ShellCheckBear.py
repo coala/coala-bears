@@ -21,7 +21,7 @@ class ShellCheckBear:
 
     LANGUAGES = {'sh', 'bash', 'ksh', 'dash'}
     REQUIREMENTS = {AnyOneOfRequirements(
-            [CabalRequirement('shellcheck', '0.4.1'),
+            [CabalRequirement('ShellCheck', '0.4.1'),
              DistributionRequirement('shellcheck')
              ]
         ),

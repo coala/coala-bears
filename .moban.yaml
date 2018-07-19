@@ -35,3 +35,4 @@ targets:
   - .ci/run_with_env.cmd: run_with_env.cmd
   - runtime.txt: runtime.txt
   - netlify.toml: docs/netlify.toml
+  - coala-bears.cabal: coala-bears.cabal.jj2

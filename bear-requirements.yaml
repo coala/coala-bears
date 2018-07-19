@@ -200,3 +200,10 @@ pip_requirements:
     version: ~=1.6.1
   yapf:
     version: ~=0.21.0
+cabal_requirements:
+  ShellCheck:
+    version: ==0.4.1
+  ghc-mod:
+    version: ==5.6.0.0
+  hlint:
+    version: ==1.9.27

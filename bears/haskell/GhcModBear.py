@@ -21,7 +21,7 @@ class GhcModBear:
     LANGUAGES = {'Haskell'}
     REQUIREMENTS = {
         AnyOneOfRequirements(
-            [CabalRequirement('ghc-mod', '5.6.0'),
+            [CabalRequirement('ghc-mod', '5.6.0.0'),
              DistributionRequirement('ghc-mod')
              ]
         ),

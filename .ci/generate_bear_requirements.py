@@ -14,28 +14,26 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import argparse
+import collections
 import copy
 import itertools
-import json
 import os
 import sys
 
 from ruamel.yaml import YAML, RoundTripDumper
 from ruamel.yaml.comments import CommentedMap
-from pyprint.NullPrinter import NullPrinter
 
 from coalib.bears.BEAR_KIND import BEAR_KIND
 from coalib.collecting.Collectors import collect_bears
 
-from dependency_management.requirements.GemRequirement import GemRequirement
-from dependency_management.requirements.NpmRequirement import NpmRequirement
-from dependency_management.requirements.PipRequirement import PipRequirement
+from dependency_management.requirements.AnyOneOfRequirements import (
+    AnyOneOfRequirements)
 
 yaml = YAML(typ='rt')
 yaml.default_flow_style = False
 yaml.Dumper = RoundTripDumper
 
-BEAR_REQUIREMENTS_YAML = "bear-requirements.yaml"
+BEAR_REQUIREMENTS_YAML = 'bear-requirements.yaml'
 _VERSION_OPERATORS = ('<', '>', '~', '=', '-', '!')
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -43,6 +41,20 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 PROJECT_BEAR_DIR = os.path.abspath(os.path.join(PROJECT_DIR, 'bears'))
+
+SUPPORTED_INSTANCES = (
+    'PipRequirement',
+    'NpmRequirement',
+    'GemRequirement',
+    'CabalRequirement',
+)
+
+INSTANCE_NAMES = (
+    'pip_requirements',
+    'npm_requirements',
+    'gem_requirements',
+    'cabal_requirements',
+)
 
 
 def get_args():
@@ -95,28 +107,22 @@ def get_inherited_requirements():
     return inherited_requirements
 
 
+def helper(requirements, instance_dict):
+    for requirement in requirements:
+        if isinstance(requirement, AnyOneOfRequirements):
+            helper(requirement.requirements, instance_dict)
+        elif any(type(requirement).__name__ == instance
+                 for instance in SUPPORTED_INSTANCES):
+            instance_dict[type(requirement).__name__].add(requirement)
+
+
 def get_all_requirements(bears):
-    pip_requirements = []
-    npm_requirements = []
-    gem_requirements = []
+    instance_dict = collections.defaultdict(set)
 
     for bear in bears:
-        for requirement in bear.REQUIREMENTS:
-            if isinstance(requirement, PipRequirement) and \
-               requirement not in pip_requirements:
-                pip_requirements.append(requirement)
-            elif isinstance(requirement, NpmRequirement) and \
-               requirement not in npm_requirements:
-                npm_requirements.append(requirement)
-            elif isinstance(requirement, GemRequirement) and \
-               requirement not in gem_requirements:
-                gem_requirements.append(requirement)
+        helper(bear.REQUIREMENTS, instance_dict)
 
-    return (
-        sorted(pip_requirements, key=lambda requirement: requirement.package),
-        sorted(npm_requirements, key=lambda requirement: requirement.package),
-        sorted(gem_requirements, key=lambda requirement: requirement.package)
-        )
+    return instance_dict
 
 
 def _to_entry(requirement, default_operator):
@@ -151,6 +157,10 @@ def get_npm_requirements(requirements):
 def get_pip_requirements(requirements):
     inherited_requirements = get_inherited_requirements()
     return _get_requirements(requirements, '~=', inherited_requirements)
+
+
+def get_cabal_requirements(requirements):
+    return _get_requirements(requirements, '==')
 
 
 def deep_update(target, src):
@@ -189,7 +199,7 @@ def deep_diff(target, src):
 
 
 def sort_requirements(req_dict):
-    for key in ['pip_requirements', 'npm_requirements', 'gem_requirements']:
+    for key in INSTANCE_NAMES:
         req_dict[key] = CommentedMap(sorted(req_dict[key].items(),
                                             key=lambda t: t[0]))
 
@@ -202,8 +212,7 @@ if __name__ == '__main__':
     if args.bear_dirs is not None:
         bear_dirs.extend(args.bear_dirs)
 
-    pip_reqs, npm_reqs, gem_reqs = (
-        get_all_requirements(get_all_bears(bear_dirs)))
+    instance_dict = get_all_requirements(get_all_bears(bear_dirs))
 
     requirements = CommentedMap()
     requirements.yaml_set_start_comment(
@@ -211,9 +220,14 @@ if __name__ == '__main__':
         'And should not be edited by hand.')
 
     requirements['overrides'] = 'coala-build.yaml'
-    requirements['gem_requirements'] = get_gem_requirements(gem_reqs)
-    requirements['npm_requirements'] = get_npm_requirements(npm_reqs)
-    requirements['pip_requirements'] = get_pip_requirements(pip_reqs)
+    requirements['gem_requirements'] = get_gem_requirements(
+                                            instance_dict['GemRequirement'])
+    requirements['npm_requirements'] = get_npm_requirements(
+                                            instance_dict['NpmRequirement'])
+    requirements['pip_requirements'] = get_pip_requirements(
+                                            instance_dict['PipRequirement'])
+    requirements['cabal_requirements'] = get_cabal_requirements(
+                                            instance_dict['CabalRequirement'])
 
     if args.update or args.check:
         input_file_path = os.path.join(PROJECT_DIR, BEAR_REQUIREMENTS_YAML)
