@@ -7,19 +7,14 @@ dependencies:
     - ~/coala-bears/.bundle
     - ~/coala-bears/vendor
     - ~/.RLibrary
-    - ~/dart-sdk/bin
     - ~/.luarocks/
     - ~/.cabal
     - ~/.ghc
     - ~/.ghc-mod
     - ~/infer-linux64-v0.7.0
     - ~/nltk_data
-    - ~/pmd-bin-5.4.1
-    - ~/.local/share/coala-bears
-    - ~/bakalint-0.4.0
     - ~/.julia
-    - ~/.local/bin/
-    - ~/.local/tailor/
+    - ~/.local/
   pre:
     - sudo rm -rf /var/cache/apt/archives
     - sudo ln -s ~/.apt-cache /var/cache/apt/archives
@@ -28,14 +23,10 @@ dependencies:
     - echo 'export PATH=$PATH:~/coala-bears/node_modules/.bin' >> ~/.circlerc
     - echo 'export PATH=$PATH:~/coala-bears/vendor/bin' >> ~/.circlerc
     - echo 'export LINTR_COMMENT_BOT=false' >> ~/.circlerc
-    - echo 'export PATH=$PATH:~/dart-sdk/bin' >> ~/.circlerc
     - echo 'export PATH=$PATH:~/.cabal/bin' >> ~/.circlerc
     - echo 'export PATH=$PATH:~/.luarocks/bin' >> ~/.circlerc
     - echo 'export PATH=$PATH:~/infer-linux64-v0.7.0/infer/bin' >> ~/.circlerc
-    - echo 'export PATH=$PATH:~/pmd-bin-5.4.1/bin' >> ~/.circlerc
-    - echo 'export PATH=$PATH:~/bakalint-0.4.0' >> ~/.circlerc
     - echo 'export PATH=$PATH:~/.local/tailor/tailor-latest/bin' >> ~/.circlerc
-    - echo 'export PATH=$PATH:~/elm-format-0.18' >> ~/.circlerc
     - echo 'export R_LIB_USER=~/.RLibrary' >> ~/.circlerc
     - sed -i '/source \/home\/ubuntu\/virtualenvs\//d' ~/.circlerc
     - mkdir -p ~/.RLibrary

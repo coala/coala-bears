@@ -151,15 +151,9 @@ cache:
     - $TRAVIS_BUILD_DIR/vendor
     # coala managed data
     - ~/nltk_data
-    - ~/.local/share/coala-bears
     # Installed linters
-    - ~/infer-linux64-v0.7.0
-    - ~/pmd-bin-5.4.1
-    - ~/bakalint-0.4.0
-    - ~/elm-format-0.18
-    - ~/dart-sdk/bin
-    - ~/.local/tailor/
-    - ~/.local/bin/
+    - ~/infer-linux64-v$INFER_VERSION
+    - ~/.local/
 
 env:
   global:
@@ -167,7 +161,9 @@ env:
     - CIRCLE_NODE_INDEX=-1  # Avoid accidentially being a CircleCI worker
     - R_LIB_USER=~/R/Library
     - LINTR_COMMENT_BOT=false
-    - PATH="$HOME/.local/bin:/opt/cabal/1.24/bin:$PATH:$TRAVIS_BUILD_DIR/node_modules/.bin:$TRAVIS_BUILD_DIR/vendor/bin:$HOME/dart-sdk/bin:$HOME/.cabal/bin:$HOME/infer-linux64-v0.7.0/infer/bin:$HOME/pmd-bin-5.4.1/bin:$HOME/bakalint-0.4.0:$HOME/elm-format-0.18:$HOME/.local/tailor/tailor-latest/bin:$HOME/.luarocks/bin"
+    - CABAL_VERSION=1.24
+    - INFER_VERSION=0.7.0
+    - PATH="$HOME/.local/bin:/opt/cabal/$CABAL_VERSION/bin:$PATH:$TRAVIS_BUILD_DIR/node_modules/.bin:$TRAVIS_BUILD_DIR/vendor/bin:$HOME/.cabal/bin:$HOME/infer-linux64-v$INFER_VERSION/infer/bin:$HOME/.local/tailor/tailor-latest/bin:$HOME/.luarocks/bin"
 
 before_install:
   - nvm install 6.10.2
