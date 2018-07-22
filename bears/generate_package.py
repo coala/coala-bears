@@ -1,5 +1,4 @@
 import argparse
-import glob
 import os
 import shutil
 from pathlib import Path
