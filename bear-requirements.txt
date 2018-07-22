@@ -32,7 +32,7 @@ pyyaml~=3.12
 radon==1.4.0
 restructuredtext-lint~=1.0.0
 rstcheck~=3.1
-safety~=0.5.1
+safety~=1.8.2
 scspell3k~=2.0
 vim-vint~=0.3.12,!=0.3.19
 vulture~=0.25.0

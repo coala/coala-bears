@@ -1,3 +1,4 @@
+import os
 from collections import namedtuple
 import pkg_resources
 import re
@@ -7,11 +8,13 @@ from safety import safety
 from coalib.bears.LocalBear import LocalBear
 from dependency_management.requirements.PipRequirement import PipRequirement
 from coalib.results.Result import Result
+from coalib.settings.Setting import path
 from coalib.results.SourceRange import SourceRange
 from coalib.settings.Setting import typed_list
 
 
-def cve_key_checker(vulnerability):
+# It was for old versions of safety and those versions will be allow in future.
+def cve_key_checker(vulnerability):  # pragma: no cover
     if 'cve' in vulnerability.data:
         if vulnerability.data['cve'] is None:
             return None
@@ -24,6 +27,23 @@ def cve_key_checker(vulnerability):
 # the safety module expects an object that looks like this
 # (not importing it from there because it's in a private-ish location)
 Package = namedtuple('Package', ('key', 'version'))
+
+safety_get_vulnerabilities = safety.get_vulnerabilities
+_insecure_full_json_url = ('https://raw.githubusercontent.com/pyupio/'
+                           'safety-db/master/data/insecure_full.json')
+
+_insecure_json_url = ('https://raw.githubusercontent.com/'
+                      'pyupio/safety-db/master/data/insecure.json')
+
+
+def _get_vulnerabilities(pkg, spec, db):
+    for entry in safety_get_vulnerabilities(pkg, spec, db):
+        entry['cve'] = entry['id'] if entry['cve'] is None else entry['cve']
+        entry['id'] = entry['cve']
+        yield entry
+
+
+safety.get_vulnerabilities = _get_vulnerabilities
 
 
 class PySafetyBear(LocalBear):
@@ -40,15 +60,28 @@ class PySafetyBear(LocalBear):
         'Python 3 Requirements',
     }
     AUTHORS = {'Bence Nagy'}
-    REQUIREMENTS = {PipRequirement('safety', '0.5.1')}
+    REQUIREMENTS = {PipRequirement('safety', '1.8.2')}
     AUTHORS_EMAILS = {'bence@underyx.me'}
     LICENSE = 'AGPL'
     CAN_DETECT = {'Security'}
 
-    def run(self, filename, file):
+    def setup_dependencies(self):
+        file = self.download_cached_file(_insecure_full_json_url,
+                                         'insecure_full.json')
+        self.download_cached_file(_insecure_json_url,
+                                  'insecure.json')
+        type(self).db_path = os.path.dirname(file)
+
+    def run(self, filename, file,
+            db_path: path = '',
+            cve_ignore: typed_list(str) = []):
         """
         Checks for vulnerable package versions in requirements files.
+
+        :param db_path:           Path to a local vulnerability database.
+        :param cve_ignore:        A list of CVE number to be ignore.
         """
+        db_path = self.db_path if not db_path else db_path
         packages = list(
             Package(key=req.key, version=req.specs[0][1])
             for req in self.try_parse_requirements(file)
@@ -58,16 +91,19 @@ class PySafetyBear(LocalBear):
         if not packages:
             return
 
-        for vulnerability in safety.check(packages=packages):
-            if cve_key_checker(vulnerability):
+        for vulnerability in safety.check(packages, key=None,
+                                          db_mirror=db_path, cached=False,
+                                          ignore_ids=cve_ignore):
+            if 'cve' in vulnerability.vuln_id.strip().lower():
                 message_template = (
-                    '{vuln.name}{vuln.spec} is vulnerable to {vuln.cve_id} '
+                    '{vuln.name}{vuln.spec} is vulnerable to {vuln.vuln_id} '
                     'and your project is using {vuln.version}.'
                 )
             else:
                 message_template = (
-                    '{vuln.name}{vuln.spec} is vulnerable and your project is '
-                    'using {vuln.version}.'
+                    '{vuln.name}{vuln.spec} is vulnerable to '
+                    'pyup.io-{vuln.vuln_id} and your project is using '
+                    '{vuln.version}.'
                 )
 
             # StopIteration should not ever happen so skipping its branch
@@ -87,7 +123,7 @@ class PySafetyBear(LocalBear):
             yield Result(
                 self,
                 message_template.format(vuln=vulnerability),
-                additional_info=vulnerability.data['advisory'],
+                additional_info=vulnerability.advisory,
                 affected_code=(source_range, ),
             )
 

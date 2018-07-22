@@ -3,6 +3,7 @@ import os
 from queue import Queue
 from bears.python.requirements.PySafetyBear import PySafetyBear
 from coalib.settings.Section import Section
+from coalib.settings.Setting import Setting
 from coalib.testing.LocalBearTestHelper import LocalBearTestHelper
 from coalib.results.Result import Result
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
@@ -23,7 +24,8 @@ def load_testfile(name):
 class PySafetyBearTest(LocalBearTestHelper):
 
     def setUp(self):
-        self.uut = PySafetyBear(Section('name'), Queue())
+        self.section = Section('name')
+        self.uut = PySafetyBear(self.section, Queue())
 
     def test_without_vulnerability(self):
         self.check_validity(self.uut, ['lxml==3.6.0'])
@@ -53,8 +55,26 @@ class PySafetyBearTest(LocalBearTestHelper):
                                 'a "\\r\\n" sequence, which leads '
                                 'to a CRLF attack, as demonstrated '
                                 'by a redirect("233\\r\\nSet-Cookie: '
-                                'name=salt") call.',
-                                )],
+                                'name=salt") call.'),
+             Result.from_values('PySafetyBear',
+                                'bottle>=0.10,<0.10.12 is vulnerable to '
+                                'CVE-2014-3137 and your project is '
+                                'using 0.10.0.',
+                                file=get_testfile_path(file_name),
+                                line=1,
+                                column=9,
+                                end_line=1,
+                                end_column=15,
+                                severity=RESULT_SEVERITY.NORMAL,
+                                additional_info='Bottle 0.10.x before 0.10.12,'
+                                ' 0.11.x before 0.11.7, and 0.12.x before'
+                                ' 0.12.6 does not properly limit content'
+                                ' types, which allows remote attackers to'
+                                ' bypass intended access restrictions via an'
+                                ' accepted Content-Type followed by a ;'
+                                ' (semi-colon) and a Content-Type that'
+                                ' would not be accepted, as demonstrated in'
+                                ' YouCompleteMe to execute arbitrary code.')],
             filename=get_testfile_path(file_name))
 
     def test_without_cve_vulnerability(self):
@@ -65,12 +85,35 @@ class PySafetyBearTest(LocalBearTestHelper):
             self.uut,
             file_contents,
             [Result.from_values('PySafetyBear',
-                                'locustio<0.7 is vulnerable and '
-                                'your project is using 0.5.1.',
+                                'locustio<0.7 is vulnerable to pyup.io-25878 '
+                                'and your project is using 0.5.1.',
                                 file=get_testfile_path(file_name),
                                 line=1,
                                 column=11,
                                 end_line=1,
+                                end_column=16,
+                                severity=RESULT_SEVERITY.NORMAL,
+                                additional_info='locustio before '
+                                '0.7 uses pickle.',
+                                )],
+            filename=get_testfile_path(file_name))
+
+    def test_with_cve_ignore(self):
+        self.section.append(Setting('cve_ignore', 'CVE-2016-9964, '
+                                    'CVE-2014-3137'))
+        file_name = 'requirement.txt'
+        file_contents = load_testfile(file_name)
+        # file_contents = [file_contents[0]]
+        self.check_results(
+            self.uut,
+            file_contents,
+            [Result.from_values('PySafetyBear',
+                                'locustio<0.7 is vulnerable to pyup.io-25878 '
+                                'and your project is using 0.5.1.',
+                                file=get_testfile_path(file_name),
+                                line=2,
+                                column=11,
+                                end_line=2,
                                 end_column=16,
                                 severity=RESULT_SEVERITY.NORMAL,
                                 additional_info='locustio before '
