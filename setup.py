@@ -123,7 +123,7 @@ def read_requirements(filename):
                     raise ValueError('Unknown requirement: {0}'
                                      .format(line))
 
-                DEPENDENCY_LINKS.append(repo_link)
+                DEPENDENCY_LINKS.append(line)
 
                 line = egg_name.replace('-', '==')
 

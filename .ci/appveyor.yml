@@ -40,8 +40,9 @@ install:
   # Check that we have the expected version and architecture for Python
   - "python --version"
   - "python -c \"import struct; print(struct.calcsize('P') * 8)\""
+  - "%CMD_IN_ENV% python -m pip install --upgrade setuptools==21"
   - "%CMD_IN_ENV% python -m pip install -r requirements.txt \
-    -r test-requirements.txt"
+    -r test-requirements.txt -r docs-requirements.txt"
   - ps: "Install-Product node ''"  # Use latest node v5.x.x
   - "npm config set loglevel warn"
   - "npm install"
@@ -62,6 +63,10 @@ test_script:
     not ClangComplexityBear and not ClangCountVectorCreator and
     not ClangCountingConditions"
   - "%CMD_IN_ENV% python setup.py install"
+  - "%CMD_IN_ENV% python -m pip install \
+    git+https://github.com/coala/coala"
+  - sed -i '/ShellCheckBear/d' .coafile
+  - "%CMD_IN_ENV% coala --ci"
 
 on_success:
   - codecov
