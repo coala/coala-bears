@@ -1,3 +1,5 @@
+__all__ = ['VERSION']
+
 import os
 
 # Start ignoring PyUnusedCodeBear
