@@ -130,7 +130,7 @@ class PySafetyBear(LocalBear):
     @staticmethod
     def try_parse_requirements(lines: typed_list(str)):
         """
-        Yields all package requirements parseable from the given lines.
+        Yields all package requirements parse from the given lines.
 
         :param lines: An iterable of lines from a requirements file.
         """
