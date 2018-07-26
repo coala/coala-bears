@@ -191,7 +191,6 @@ script:
   - pytest
   # Ensure bear requirements are in sync with the bear PipRequirement
   - .ci/generate_bear_requirements.py --check --update
-  - git diff --exit-code
   - coala --non-interactive
   - codecov
   - python setup.py docs
