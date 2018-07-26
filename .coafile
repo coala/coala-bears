@@ -1,7 +1,7 @@
 [all]
 files = *.py, bears/**/*.py, tests/**/*.py, bears/*.py.in
 ignore = tests/python/test_files/pylint_test.py, tests/python/bandit_test_files/*,
-         tests/python/vulture_test_files/*
+         tests/python/vulture_test_files/*, **.orig
 
 max_line_length = 79
 use_spaces = True
