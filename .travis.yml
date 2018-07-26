@@ -175,6 +175,7 @@ before_install:
   - .ci/deps.java.sh
   # https://github.com/coala/coala/issues/3183
   - cp requirements.txt requirements.orig
+  - sed -i.bak '/^packaging/d' test-requirements.txt
   - printf '%s\n%s\n%s\n'
            "$(cat test-requirements.txt)"
            "$(grep -v '^-r' docs-requirements.txt)"
@@ -191,7 +192,6 @@ script:
   - bash .ci/tests.sh
   # Ensure bear requirements are in sync with the bear PipRequirement
   - .ci/generate_bear_requirements.py --check --update
-  - git diff --exit-code
   - coala --non-interactive
   - codecov
   - python setup.py docs
