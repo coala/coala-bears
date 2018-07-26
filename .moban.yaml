@@ -11,6 +11,9 @@ branch: master
 package_module: bears
 docs_source_dir: API
 docs_dir: docs
+allow_generic_no_cover: true
+test_prevent_skips: false
+
 entry_points:
   coalabears:
     - coala_official_bears = bears
@@ -25,8 +28,10 @@ configuration:
   configuration_dir: ../coala-mobans/
 targets:
   - setup.py: bears-setup.py.jj2
+  - setup.cfg: bears-setup.cfg.jj2
   - requirements.txt: requirements.txt.jj2
   - test-requirements.txt: bears-test-requirements.txt.jj2
+  - tests/conftest.py: bears-conftest.py.jj2
   - bears/VERSION: VERSION.jj2
   - Gemfile: Gemfile.jj2
   - DESCRIPTION: DESCRIPTION.jj2
