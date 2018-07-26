@@ -1,4 +1,6 @@
-set -e
+#!/bin/sh
+
+set -e -x
 
 # cabal-install 1.22 is the minimum tested version
 cabal --version

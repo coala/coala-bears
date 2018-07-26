@@ -1,3 +1,8 @@
+#!/bin/bash
+
+# This script is no longer used by Travis CI.
+# Any related aspects can be removed if beneficial.
+
 set -e
 set -x
 
