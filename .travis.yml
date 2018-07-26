@@ -96,6 +96,10 @@ dist: trusty
       deb http://ppa.launchpad.net/cs50/ppa/ubuntu trusty main
     key_url:
       https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x5BDA2E974A0E822C
+  - sourceline:  # Crystal
+      deb https://dist.crystal-lang.org/apt crystal main
+    key_url:
+      https://keybase.io/crystal/pgp_keys.asc
 
 addons:
   apt:
@@ -107,6 +111,7 @@ addons:
       - chktex
       - clang-3.4
       - cppcheck
+      - crystal
       - devscripts
       - flawfinder
       - gfortran

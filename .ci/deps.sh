@@ -58,3 +58,10 @@ if [ ! -e ~/.local/bin/flawfinder ]; then
   sed -i '1s/.*/#!\/usr\/bin\/env python2/' ~/.local/bin/flawfinder
   chmod +x ~/.local/bin/flawfinder
 fi
+
+# Shards commands
+if [ ! -e ~/.local/bin/ameba ]; then
+  shards install
+  cp bin/ameba ~/.local/bin/ameba
+  chmod +x ~/.local/bin/ameba
+fi

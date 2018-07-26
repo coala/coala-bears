@@ -1,0 +1,15 @@
+name: coala-bears
+version: 0.1.0
+
+authors:
+  - The coala developers <coala-devel@googlegroups.com>
+
+description: |
+  Bears for coala (Code Analysis Application)
+
+dependencies:
+  ameba:
+    github: veelenga/ameba
+    version: "~>0.7.0"
+
+license: MIT
