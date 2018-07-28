@@ -96,7 +96,7 @@ class MypyBear:
 
     LANGUAGES = {'Python', 'Python 2', 'Python 3'}
     AUTHORS = {'Petr Viktorin'}
-    REQUIREMENTS = {PipRequirement('mypy-lang', '0.4.6')}
+    REQUIREMENTS = {PipRequirement('mypy', '==0.590')}
     AUTHORS_EMAILS = {'encukou@gmail.com'}
     LICENSE = 'AGPL-3.0'
     ASCIINEMA_URL = 'https://asciinema.org/a/90736'

@@ -19,7 +19,7 @@ libclang-py3~=3.4.0
 lxml==3.6.0
 memento_client~=0.6.1
 munkres3~=1.0
-mypy-lang~=0.4.6
+mypy==0.590
 nbformat~=4.1
 nltk~=3.2
 proselint~=0.7.0

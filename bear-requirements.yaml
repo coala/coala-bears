@@ -164,8 +164,8 @@ pip_requirements:
     version: ~=0.6.1
   munkres3:
     version: ~=1.0
-  mypy-lang:
-    version: ~=0.4.6
+  mypy:
+    version: ==0.590
   nbformat:
     version: ~=4.1
   nltk:
