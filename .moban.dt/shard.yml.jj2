@@ -1,0 +1,17 @@
+name: coala-bears
+version: 0.1.0
+
+authors:
+  - The coala developers <coala-devel@googlegroups.com>
+
+description: |
+  Bears for coala (Code Analysis Application)
+
+dependencies:
+{% for name, data in shard_requirements.items() | sort %}
+  {% name %}:
+    {% data.repo[0] %}: {% data.repo[1] %}
+    version: "{% data.version %}"
+{% endfor %}{# for name, data in shard_requirements.items() | sort #}
+
+license: MIT

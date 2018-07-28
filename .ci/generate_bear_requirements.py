@@ -47,6 +47,7 @@ SUPPORTED_INSTANCES = (
     'NpmRequirement',
     'GemRequirement',
     'CabalRequirement',
+    'ShardRequirement',
 )
 
 INSTANCE_NAMES = (
@@ -54,6 +55,7 @@ INSTANCE_NAMES = (
     'npm_requirements',
     'gem_requirements',
     'cabal_requirements',
+    'shard_requirements',
 )
 
 
@@ -129,6 +131,9 @@ def _to_entry(requirement, default_operator):
     assert requirement.version, '%s has no version' % requirement.package
     entry = {}
 
+    if requirement.repo:
+        entry['repo'] = requirement.repo
+
     if requirement.version[0].isdigit():
         entry['version'] = default_operator + requirement.version
     else:
@@ -161,6 +166,10 @@ def get_pip_requirements(requirements):
 
 def get_cabal_requirements(requirements):
     return _get_requirements(requirements, '==')
+
+
+def get_shard_requirements(requirements):
+    return _get_requirements(requirements, '~>')
 
 
 def deep_update(target, src):
@@ -228,6 +237,8 @@ if __name__ == '__main__':
                                             instance_dict['PipRequirement'])
     requirements['cabal_requirements'] = get_cabal_requirements(
                                             instance_dict['CabalRequirement'])
+    requirements['shard_requirements'] = get_shard_requirements(
+                                            instance_dict['ShardRequirement'])
 
     if args.update or args.check:
         input_file_path = os.path.join(PROJECT_DIR, BEAR_REQUIREMENTS_YAML)

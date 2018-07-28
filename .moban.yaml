@@ -36,3 +36,4 @@ targets:
   - runtime.txt: runtime.txt
   - netlify.toml: docs/netlify.toml
   - coala-bears.cabal: coala-bears.cabal.jj2
+  - shard.yml: shard.yml.jj2

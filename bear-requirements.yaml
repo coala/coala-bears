@@ -209,3 +209,9 @@ cabal_requirements:
     version: ==5.6.0.0
   hlint:
     version: ==1.9.27
+shard_requirements:
+  ameba:
+    repo:
+    - github
+    - veelenga/ameba
+    version: ~>0.7.0
