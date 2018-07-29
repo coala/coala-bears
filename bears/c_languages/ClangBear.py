@@ -52,17 +52,17 @@ def diff_from_clang_fixit(fixit, file):
     return Diff.from_string_arrays(file, new_file)
 
 
-def sourcerange_from_clang_range(range):
+def sourcerange_from_clang_range(clang_range):
     """
     Creates a ``SourceRange`` from a clang ``SourceRange`` object.
 
-    :param range: A ``cindex.SourceRange`` object.
+    :param clang_range: A ``cindex.SourceRange`` object.
     """
-    return SourceRange.from_values(range.start.file.name,
-                                   range.start.line,
-                                   range.start.column,
-                                   range.end.line,
-                                   range.end.column)
+    return SourceRange.from_values(clang_range.start.file.name,
+                                   clang_range.start.line,
+                                   clang_range.start.column,
+                                   clang_range.end.line,
+                                   clang_range.end.column)
 
 
 class ClangBear(LocalBear):
@@ -99,8 +99,8 @@ class ClangBear(LocalBear):
                         2: RESULT_SEVERITY.NORMAL,
                         3: RESULT_SEVERITY.MAJOR,
                         4: RESULT_SEVERITY.MAJOR}.get(diag.severity)
-            affected_code = tuple(sourcerange_from_clang_range(range)
-                                  for range in diag.ranges)
+            affected_code = tuple(sourcerange_from_clang_range(clang_range)
+                                  for clang_range in diag.ranges)
 
             diffs = None
             fixits = list(diag.fixits)
