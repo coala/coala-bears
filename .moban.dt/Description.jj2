@@ -1,0 +1,16 @@
+Package: {{ name }}
+Version: {{ build_version }}
+Title: R dependencies of Coala package
+Author: {{ author }}
+Maintainer: {{ maintainers }}
+Description: {{ description }}
+Depends: R (>=3.1.0),
+{% for package, data in r_requirements.items() | sort %}
+{% if not loop.last %}
+	{{ package }} ({{ data.version }}),
+{% else %}
+	{{ package }} ({{ data.version }})
+{% endif %}{# if not loop.last #}
+{% endfor %}{# for package, data in r_requirements.items() | sort #}
+
+License: {{ license }}

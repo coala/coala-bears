@@ -31,6 +31,7 @@ targets:
   - Gemfile: Gemfile.jj2
   - package.json: package.json.jj2
   - bear-requirements.txt: bear-requirements.txt.jj2
+  - Description: Description.jj2
   - .ci/appveyor.yml: ci/appveyor.yml.jj2
   - .ci/run_with_env.cmd: run_with_env.cmd
   - runtime.txt: runtime.txt
