@@ -1,15 +1,21 @@
 import sys
+import re
 
 from coalib.bearlib.abstractions.Linter import linter
 from coalib.settings.Setting import typed_list
+from coalib.results.Result import Result
+from coalib.bearlib.aspects import map_setting_to_aspect
+from coalib.bearlib.aspects.Formatting import LineLength
 
 from dependency_management.requirements.PipRequirement import PipRequirement
 
 
+OUTPUT_REGEX = (r'(?P<line>\d+) (?P<column>\d+) '
+                r'(?P<message>(?P<origin>\S+).*)')
+
+
 @linter(executable='pycodestyle',
-        output_format='regex',
-        output_regex=r'(?P<line>\d+) (?P<column>\d+) '
-                     r'(?P<message>(?P<origin>\S+).*)')
+        )
 class PycodestyleBear:
     """
     A wrapper for the tool ``pycodestyle`` formerly known as ``pep8``.
@@ -21,8 +27,11 @@ class PycodestyleBear:
     LICENSE = 'AGPL-3.0'
     CAN_DETECT = {'Formatting'}
 
-    @staticmethod
+    @map_setting_to_aspect(
+        max_line_length=LineLength.max_line_length,
+    )
     def create_arguments(
+            self,
             filename, file, config_file,
             pycodestyle_ignore: typed_list(str) = (
                 'E121', 'E123', 'E126', 'E133', 'E226',
@@ -61,3 +70,21 @@ class PycodestyleBear:
         arguments.append(filename)
 
         return arguments
+
+    def process_output(self, output, filename, file):
+        result = re.match(OUTPUT_REGEX, output)
+        if not result:
+            return
+        line, column, message, rule = result.groups()
+        if rule == 'E501':
+            aspect = LineLength('py')
+        else:
+            aspect = None
+        yield Result.from_values(
+            origin='{} ({})'.format(self.name, rule),
+            message=message,
+            file=filename,
+            line=int(line),
+            column=int(column),
+            aspect=aspect,
+            )

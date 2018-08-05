@@ -1,5 +1,15 @@
+import unittest
+
 from bears.python.PycodestyleBear import PycodestyleBear
-from coalib.testing.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear, execute_bear
+from coalib.settings.Section import Section
+from coala_utils.ContextManagers import prepare_file
+from queue import Queue
+from coalib.bearlib.aspects.Formatting import LineLength
+from coalib.bearlib.aspects import (
+    AspectList,
+    get as get_aspect,
+)
 
 
 good_file = '''
@@ -45,6 +55,8 @@ PycodestyleBearConfigSelectTest = verify_local_bear(
 
 long_line = 'a = "{0}"'.format('a' * 100)
 
+small_line = 'Small line.'
+
 PycodestyleBearLineLengthTest = verify_local_bear(
     PycodestyleBear,
     valid_files=(),
@@ -63,3 +75,42 @@ PycodestyleBearInfiniteLineLengthTest = verify_local_bear(
     valid_files=(file_with_very_long_line,),
     invalid_files=(),
     settings={'max_line_length': 0})
+
+PycodestyleBearAspectsTest = verify_local_bear(
+    PycodestyleBear,
+    valid_files=(small_line,),
+    invalid_files=(long_line,),
+    aspects=AspectList([
+        get_aspect('LineLength')('Python', max_line_length=30),
+    ]),
+)
+
+PycodestyleBearSettingsOverAspectsTest = verify_local_bear(
+    PycodestyleBear,
+    valid_files=(small_line,),
+    invalid_files=(long_line,),
+    aspects=AspectList([
+        get_aspect('LineLength')('Python', max_line_length=2),
+    ]),
+    settings={'max_line_length': 30},
+)
+
+
+class PycodestyleBearTest(unittest.TestCase):
+
+    def setUp(self):
+        self.section = Section('')
+        self.section.aspects = AspectList([
+            get_aspect('LineLength')('Python', max_line_length=30),
+        ])
+        self.uut = PycodestyleBear(self.section, Queue())
+
+    def test_line_length(self):
+        content = long_line.splitlines()
+        with prepare_file(content, None) as (file, fname):
+            with execute_bear(self.uut, fname, file) as results:
+                result = results[0]
+                self.assertEqual(result.message,
+                                 'E501 line too long (106 > 30 characters)')
+                self.assertEqual(result.origin, 'PycodestyleBear (E501)')
+                self.assertEqual(result.aspect, LineLength('py'))
