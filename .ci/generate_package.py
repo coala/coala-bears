@@ -89,13 +89,17 @@ def create_upload_parser():
                         action='store_true')
     parser.add_argument('-u', '--upload', help='Upload the packages on PyPi',
                         action='store_true')
+    parser.add_argument('bears',
+                        help='Path to bears directory')
+    parser.add_argument('template', metavar='setup.py.in',
+                        help='Path to setup.py.in template file')
     return parser
 
 
 def main():
     args = create_upload_parser().parse_args()
 
-    os.chdir(os.path.join(os.path.dirname(__file__), '..'))
+    os.chdir(os.path.join(args.bears, '..'))
     os.makedirs(os.path.join('bears', 'upload'), exist_ok=True)
 
     bear_version = VERSION
@@ -145,7 +149,7 @@ def main():
                                  'BEAR_NAME': bear_name,
                                  'ENTRY': 'coala' + bear_name}
 
-            create_file_from_template(os.path.join('bears', 'setup.py.in'),
+            create_file_from_template(args.template,
                                       os.path.join('bears', 'upload',
                                                    bear_name, 'setup.py'),
                                       substitution_dict)

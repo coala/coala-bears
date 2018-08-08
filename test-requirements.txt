@@ -19,3 +19,5 @@ requests-mock~=1.2
 pip!=9.0.2, !=10.0.*, !=18.0
 wheel~=0.29
 ruamel.yaml~=0.15.42
+pytest-pythonpath~=0.7.0
+twine~=1.7.4

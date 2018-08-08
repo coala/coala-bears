@@ -5,10 +5,10 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from bears.generate_package import (VERSION, create_file_from_template,
-                                    create_file_structure_for_packages,
-                                    perform_register, perform_upload, main,
-                                    create_upload_parser)
+from generate_package import (VERSION, create_file_from_template,
+                              create_file_structure_for_packages,
+                              perform_register, perform_upload, main,
+                              create_upload_parser)
 
 
 class TouchTest(unittest.TestCase):
@@ -67,7 +67,8 @@ class CreateFileStructureForPackagesTest(unittest.TestCase):
 class CreateUploadParserTest(unittest.TestCase):
 
     def test_parser(self):
-        self.assertTrue(create_upload_parser().parse_args(['--upload']).upload)
+        self.assertTrue(create_upload_parser().parse_args(
+            ['a', 'b', '--upload']).upload)
 
 
 class PerformRegisterTest(unittest.TestCase):
@@ -91,6 +92,8 @@ class PerformUploadTest(unittest.TestCase):
 
 class MainTest(unittest.TestCase):
 
+    TEMPLATE_FILE_PATH = os.path.abspath(os.path.join(
+        os.path.dirname(__file__), '..', '.moban.dt', 'setup.py.in'))
     BEARS_PATH = os.path.abspath(os.path.join(
         os.path.dirname(__file__), '..', 'bears'))
     BEARS_UPLOAD_PATH = os.path.join(BEARS_PATH, 'upload')
@@ -102,7 +105,9 @@ class MainTest(unittest.TestCase):
     def setUp(self):
         self.orig_dir = os.getcwd()
 
-        self.argv = ['generate_package.py']
+        self.argv = ['generate_package.py',
+                     self.BEARS_PATH,
+                     self.TEMPLATE_FILE_PATH]
         argv_patcher = patch.object(sys, 'argv', self.argv)
         self.addCleanup(argv_patcher.stop)
         self.argv_mock = argv_patcher.start()
@@ -116,7 +121,7 @@ class MainTest(unittest.TestCase):
 
     def test_main_bear_version_prod(self):
         fake_prod_version = '99.99.99'
-        with patch('bears.generate_package.VERSION', fake_prod_version):
+        with patch('generate_package.VERSION', fake_prod_version):
             main()
         with open(self.CSS_BEAR_SETUP_PATH) as fl:
             setup_py = fl.read()
@@ -125,21 +130,21 @@ class MainTest(unittest.TestCase):
 
     def test_main_bear_version_dev(self):
         fake_dev_version = '13.37.0.dev133713371337'
-        with patch('bears.generate_package.VERSION', fake_dev_version):
+        with patch('generate_package.VERSION', fake_dev_version):
             main()
         with open(self.CSS_BEAR_SETUP_PATH) as fl:
             setup_py = fl.read()
         self.assertNotIn(fake_dev_version, setup_py)
         self.assertIn('13.37.0', setup_py)
 
-    @patch('bears.generate_package.perform_upload')
+    @patch('generate_package.perform_upload')
     def test_upload(self, call_mock):
         self.argv.append('--upload')
         main()
         for call_object in call_mock.call_args_list:
             self.assertRegex(call_object[0][0], r'.+Bear')
 
-    @patch('bears.generate_package.perform_register')
+    @patch('generate_package.perform_register')
     def test_register(self, call_mock):
         self.argv.append('--register')
         main()

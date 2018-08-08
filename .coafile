@@ -1,5 +1,5 @@
 [all]
-files = *.py, bears/**/*.py, tests/**/*.py, bears/*.py.in
+files = *.py, bears/**/*.py, tests/**/*.py, .moban.dt/*.py.in
 ignore = tests/python/test_files/pylint_test.py, tests/python/bandit_test_files/*,
          tests/python/vulture_test_files/*
 
