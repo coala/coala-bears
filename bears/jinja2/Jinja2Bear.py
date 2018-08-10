@@ -267,7 +267,8 @@ class Jinja2Bear(LocalBear):
                                filename,
                                line,
                                line_number,
-                               control_spacing):
+                               control_spacing,
+                               check_end_labels):
         """
         Checks any control end tag in the given line for spacing issues,
         missing/wrong labels or missing corresponding opening tag.
@@ -307,6 +308,9 @@ class Jinja2Bear(LocalBear):
             if not has_required_spacing(m.group('content'), control_spacing):
                 yield self.handle_control_spacing_issue(
                     file, filename, line, line_number, control_spacing, m)
+
+            if not check_end_labels:
+                return
 
             # yield results for incorrect or missing end labels
             if label is None and line_number != start_in_line:
@@ -356,6 +360,7 @@ class Jinja2Bear(LocalBear):
             variable_spacing: int = 1,
             statement_spacing: int = 1,
             control_spacing: int = 1,
+            check_end_labels: bool = True,
             ):
         """
         Check `Jinja2 templates <http://jinja.pocoo.org>`_ for syntax,
@@ -420,7 +425,9 @@ class Jinja2Bear(LocalBear):
                 file, filename, line, line_number, control_spacing)
 
             yield from self.check_control_end_tags(
-                file, filename, line, line_number, control_spacing)
+                file, filename, line, line_number, control_spacing,
+                check_end_labels,
+            )
 
         # We've reached the end of the file.
         # Check if all control blocks have been closed

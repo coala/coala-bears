@@ -164,6 +164,26 @@ Jinja2BearForLoopLabelTest = verify_local_bear(
     valid_files=(good_file1, good_file2, good_file3),
     invalid_files=(bad_file1, bad_file2))
 
+valid_file_without_end_comments = """
+foo
+{% for x in something %}
+render stuff
+{% endfor %}
+"""
+
+valid_file_with_end_comments = """
+foo
+{% for x in something %}
+render stuff
+{% endfor %}{# for x in something #}
+"""
+
+Jinja2BearForLoopLabelDisableTest = verify_local_bear(
+    Jinja2Bear,
+    valid_files=(valid_file_without_end_comments, valid_file_with_end_comments),
+    invalid_files=(),
+    settings={'check_end_labels': 'False'})
+
 
 class Jinja2BearLabelDiffTest(unittest.TestCase):
 
