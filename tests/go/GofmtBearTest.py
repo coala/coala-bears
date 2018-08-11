@@ -3,6 +3,7 @@ from queue import Queue
 from bears.go.GofmtBear import GofmtBear
 from coalib.testing.LocalBearTestHelper import LocalBearTestHelper, \
     execute_bear
+from coalib.testing.BearTestHelper import generate_skip_decorator
 
 from coalib.settings.Section import Section
 from coala_utils.ContextManagers import prepare_file
@@ -44,6 +45,7 @@ simplify_in_file1 = simplify_in_file1.replace(' ' * 4, '\t')
 simplify_out_file1 = simplify_out_file1.replace(' ' * 4, '\t')
 
 
+@generate_skip_decorator(GofmtBear)
 class GofmtBearTest(LocalBearTestHelper):
 
     def setUp(self):
