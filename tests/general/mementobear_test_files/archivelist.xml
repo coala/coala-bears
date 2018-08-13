@@ -1,0 +1,415 @@
+<?xml version="1.0"?>
+<!--
+<link id="Internal short name used by the aggregator" longname="The actual full name of the archive">
+
+    <timegate   uri="the base uri of the timegate to which the original uri must be appended"
+                redirect="yes/no; should the aggregator redirect to this timegate (in case of a spl proxy timegate or a slow timegate), or retrieve the memento from the timegate response and redirect to the memento directly" />
+    
+    <timemap    uri="the base uri of the timemap to which the original uri must be appended"
+                paging-status="3/2/1/0/-1; 3=timemaps are paged chronologically backwards, 2=timemaps are paged chronologically forward, 1=index timemap, 0=no paging/indexing, -1=unknown"
+                redirect="yes/no; similar to the timegate redirect" />
+
+    <icon uri="the uri of the archive logo" />
+
+    <calendar uri="uri of the calendar page or * page of an original uri. typically found in wayback instances." />
+
+    <memento uri="the base uri of a typical memento" />
+
+    <archive    type="snapshot/cms; snapshot=a typical web archive that takes periodic snapshots of a resource like IA, cms=content management systems like wikipedia"
+                rewritten-urls="yes/no; does the mementos have rewritten-urls of embedded resources and links pointing back to the archive itself"
+                un-rewritten-api-url="uri/uri-pattern where an un-rewritten version of the memento could be obtained."
+                access-policy="public/private; if the archive is accessible to the public or not"
+                memento-status="yes/no; does the archive natively support memento or not" />
+                
+</link>
+-->
+
+<!--  possible new archives http://webternity.eu/
+
+     https://weblock.io --> 
+
+<links>
+    <!--  Internet Archive  -->     
+    <link id="ia" longname="Internet Archive">
+        <timegate uri="https://web.archive.org/web/" redirect="no" />
+        <timemap  uri="https://web.archive.org/web/timemap/link/" paging-status="2"  redirect="no" /> 
+        <icon uri="https://archive.org/images/glogo.jpg"/>
+        <calendar uri="https://web.archive.org/web/*/"/>
+        <memento uri="https://web.archive.org/web/" />
+        <archive type="snapshot" rewritten-urls="yes" 
+            un-rewritten-api-url="https://web.archive.org/web/{timestamp}id_/{url}" 
+            access-policy="public" memento-status="yes" />
+    </link>
+    <!--  Proni Web Archive -->     
+    <link id="proni" longname="PRONI Web Archive">
+        <timegate uri="http://webarchive.proni.gov.uk/timegate/" redirect="no" />
+        <timemap  uri="http://webarchive.proni.gov.uk/timemap/" paging-status="2" redirect="no" /> 
+        <icon uri=""/>
+        <calendar uri="http://webarchive.proni.gov.uk/*/"/>
+        <memento uri="http://webarchive.proni.gov.uk/" />
+        <archive type="snapshot" rewritten-urls="yes"
+            un-rewritten-api-url="" access-policy="public" memento-status="yes" />
+    </link>
+    <!--  PastPages Web Archive -->
+    <!--<link id="pastpages" longname="PastPages Web Archive">
+        <timegate uri="http://www.pastpages.org/timegate/" redirect="no" />
+        <timemap  uri="http://www.pastpages.org/timemap/link/" paging-status="1" redirect="no" />
+        <icon uri=""/>
+        <calendar uri=""/>
+        <memento uri="" />
+        <archive type="snapshot" rewritten-urls=""
+        un-rewritten-api-url="" access-policy="public" memento-status="yes" />
+    </link>  --> 
+    
+    <!--  Egypt Library Archive  -->
+    <link id="ba" longname="Bibliotheca Alexandrina Web Archive">
+        <timegate uri="http://web.archive.bibalex.org/web/" redirect="no" />
+        <timemap  uri="http://web.archive.bibalex.org/web/timemap/link/" paging-status="2" redirect="no"/>
+        <icon uri="http://www.bibalex.org/isis/images/title.png"/>
+        <calendar uri="http://web.archive.bibalex.org/web/*/"/>
+        <memento uri="http://web.archive.bibalex.org/web/*/" />
+        <archive type="snapshot" rewritten-urls="yes" un-rewritten-api-url="http://web.archive.bibalex.org/web/{timestamp}id_/{url}" access-policy="public" memento-status="yes" />
+    </link> 
+    <!--  British Library Archive  -->
+    <link id="blarchive" longname="UK Web Archive">
+        <timegate uri="http://www.webarchive.org.uk/wayback/archive/" redirect="no" />
+        <timemap  uri="http://www.webarchive.org.uk/wayback/archive/timemap/link/" paging-status="2" redirect="no"/>
+        <icon uri="http://www.webarchive.org.uk/ukwa/static/images/ukwa-icon-16.png"/>
+        <calendar uri="http://webarchive.org.uk/wayback/archive/*/"/>
+        <memento uri="http://webarchive.org.uk/wayback/memento/*/" />
+        <archive type="snapshot" rewritten-urls="yes" 
+            un-rewritten-api-url="http://www.webarchive.org.uk/wayback/archive/{timestamp}id_/{url}"
+            access-policy="public" memento-status="yes" />
+    </link> 
+     <!--  Bavarian Library Archive  -->
+    <link id="bsb" longname="Bayerische Staatsbibliothek">
+        <timegate uri="http://langzeitarchivierung.bib-bvb.de/wayback/" redirect="no" />
+        <timemap  uri="http://langzeitarchivierung.bib-bvb.de/wayback/timemap/link/" paging-status="2" redirect="no"/>
+        <icon uri="http://langzeitarchivierung.bib-bvb.de/wayback/images/bsblogo.png"/>
+        <calendar uri="http://langzeitarchivierung.bib-bvb.de/wayback/*/"/>
+        <memento uri="http://langzeitarchivierung.bib-bvb.de/wayback/*/" />
+        <archive type="snapshot" rewritten-urls="yes" 
+            un-rewritten-api-url="http://langzeitarchivierung.bib-bvb.de/wayback/{timestamp}id_/{url}"
+            access-policy="public" memento-status="yes" />
+    </link> 
+     <!--  webcitation.org  -->
+    <link id="webcite" longname="Web Citation">
+        <timegate uri="http://timetravel.mementoweb.org/webcite/timegate/" redirect="no" />
+        <timegate uri="http://delorean.lanl.gov/tg/webcite/timegate/" redirect="no" />
+        <timegate uri="http://labs.mementoweb.org/webcite/timegate/" redirect="no" />
+        <timemap  uri="http://timetravel.mementoweb.org/webcite/timemap/link/" paging-status="0" redirect="no" />
+        <timemap  uri="http://labs.mementoweb.org/webcite/timemap/link/" paging-status="0" redirect="no" />
+        <timemap  uri="http://delorean.lanl.gov/tg/webcite/timemap/link/" paging-status="0" redirect="no" />
+        <icon uri="http://www.webcitation.org/favicon.ico"/>
+        <calendar uri=""/>
+        <memento uri="n/a" />
+        <archive type="snapshot" rewritten-urls="yes" 
+            un-rewritten-api-url="" memento-status="no" access-policy="public" />
+    </link>
+     <!--
+    <link id="sg" longname="Web Archive Singapore">
+        <timegate uri="http://timetravel.mementoweb.org/sg/timegate/" redirect="no" />
+        <timegate uri="http://delorean.lanl.gov/tg/sg/timegate/" redirect="no" />
+        <timegate uri="http://labs.mementoweb.org/sg/timegate/" redirect="no" />
+        <timemap  uri="http://timetravel.mementoweb.org/sg/timemap/link/" paging-status="0" redirect="no" />
+        <timemap  uri="http://labs.mementoweb.org/sg/timemap/link/" paging-status="0" redirect="no" />
+        <timemap  uri="http://delorean.lanl.gov/tg/sg/timemap/link/" paging-status="0" redirect="no" />
+        <icon uri="http://eresources.nlb.gov.sg/webarchives/images/was_logo.png"/>
+        <calendar uri="http://eresources.nlb.gov.sg/webarchives/wayback/*/"/>
+        <memento uri="n/a" />
+        <archive type="snapshot" rewritten-urls="yes" 
+            un-rewritten-api-url="" memento-status="no" access-policy="public" />
+    </link>
+      -->
+    <link id="loc" longname="Library of Congress">
+        <timegate uri="http://webarchive.loc.gov/all/" redirect="no" />
+        <timemap  uri="http://webarchive.loc.gov/all/timemap/link/" paging-status="2" redirect="no"/>
+        <icon uri="http://loc.gov/favicon.ico"/>
+        <calendar uri="http://webarchive.loc.gov/all/*/"/>
+        <memento uri="http://webarchive.loc.gov/all/" />
+        <archive type="snapshot" rewritten-urls="yes" 
+            un-rewritten-api-url="http://webarchive.loc.gov/all/{timestamp}id_/{url}"
+            access-policy="public" memento-status="yes" />
+    </link> 
+    <link id="archiveit" longname="Archive-It">
+        <timegate uri="http://wayback.archive-it.org/all/" redirect="no" />
+        <timemap  uri="http://wayback.archive-it.org/all/timemap/link/" paging-status="2" redirect="no" />
+        <icon uri="http://wayback.archive-it.org/favicon.ico"/>
+        <calendar uri="http://wayback.archive-it.org/all/*/"/>
+        <memento uri="http://wayback.archive-it.org/all/*/" />
+        <archive type="snapshot" rewritten-urls="yes" 
+            un-rewritten-api-url="http://wayback.archive-it.org/all/{timestamp}id_/{url}" 
+            access-policy="public" memento-status="yes" />
+    </link>
+    <link id="ukparliament" longname="UK Parliament Web Archive"  > 
+        <!-- <timegate uri="http://webarchive.parliament.uk/timegate/" redirect="no" /> -->
+        <timegate uri="http://pywb-elb-1700828309.eu-west-2.elb.amazonaws.com/" redirect="no" />
+        <!--<timemap  uri="http://webarchive.parliament.uk/timemap/" paging-status="0" redirect="no"  /> -->
+         <timemap  uri="http://pywb-elb-1700828309.eu-west-2.elb.amazonaws.com/timemap/*/" paging-status="0" redirect="no"  />
+        <icon uri="http://www.parliament.uk/favicon.ico"/>
+        <calendar uri="http://webarchive.parliament.uk/*/" />
+        <memento uri="http://webarchive.parliament.uk/*/" />
+        <archive type="snapshot" rewritten-urls="yes" 
+            un-rewritten-api-url="" memento-status="yes" access-policy="public" />
+    </link>
+    <link id="uknationalarchives" longname="UK National Archives Web Archive"  > 
+        <timegate uri="http://webarchive.nationalarchives.gov.uk/timegate/" redirect="no" />
+        <timemap  uri="http://webarchive.nationalarchives.gov.uk/timemap/" paging-status="0" redirect="no"  />
+        <icon uri="http://webarchive.nationalarchives.gov.uk/media/interface/favicon.ico"/>
+        <calendar uri="http://webarchive.nationalarchives.gov.uk/*/" />
+        <memento uri="http://webarchive.nationalarchives.gov.uk/*/" />
+        <archive type="snapshot" rewritten-urls="yes" 
+            un-rewritten-api-url="" memento-status="yes" access-policy="public" />
+    </link>
+    <!--  orain.org -->
+    <link id="orain" longname="Orain">
+        <timegate uri="http://timetravel.mementoweb.org/orain/timegate/" redirect="yes" />
+        <timegate uri="http://labs.mementoweb.org/orain/timegate/" redirect="yes" />
+        <timemap  uri="http://timetravel.mementoweb.org/orain/timemap/link/" paging-status="0" redirect="no" />
+        <timemap  uri="http://labs.mementoweb.org/orain/timemap/link/" paging-status="0" redirect="no" />
+        <icon uri="http://static.orain.org/common/default.ico"/>
+        <calendar uri=""/>
+        <archive type="cms" rewritten-urls="no" 
+            un-rewritten-api-url="" access-policy="public" memento-status="no" />
+        <memento uri="n/a" />
+    </link>  
+    <!--  en.wikipedia.org  -->
+    <link id="wiki" longname="Wikipedia">
+        <timegate uri="http://timetravel.mementoweb.org/wikipedia/timegate/" redirect="yes" />
+        <timegate uri="http://labs.mementoweb.org/wikipedia/timegate/" redirect="yes" />
+        <timegate uri="http://delorean.lanl.gov/tg/wikipedia/timegate/" redirect="yes" />
+        <timemap  uri="http://timetravel.mementoweb.org/wikipedia/timemap/link/" paging-status="0" redirect="no" />
+        <timemap  uri="http://labs.mementoweb.org/wikipedia/timemap/link/" paging-status="0" redirect="no" />
+        <timemap  uri="http://delorean.lanl.gov/tg/wikipedia/timemap/link/" paging-status="0" redirect="no" />
+        <icon uri="http://bits.wikimedia.org/favicon/wikipedia.ico"/>
+        <calendar uri=""/>
+        <archive type="cms" rewritten-urls="no" 
+            un-rewritten-api-url="" access-policy="public" memento-status="no" />
+        <memento uri="n/a" />
+    </link>  
+    <!--  Wikia proxies -->
+    <link id="wikia" longname="Wikia" >
+        <timegate uri="http://timetravel.mementoweb.org/wikia/timegate/" redirect="yes" />
+        <timegate uri="http://labs.mementoweb.org/wikia/timegate/" redirect="yes" />
+        <timegate uri="http://delorean.lanl.gov/tg/wikia/timegate/" redirect="yes" />
+        <timemap  uri="http://timetravel.mementoweb.org/wikia/timemap/link/" paging-status="0" redirect="no" />
+        <timemap  uri="http://delorean.lanl.gov/tg/wikia/timemap/link/" paging-status="0" redirect="no" />
+        <timemap  uri="http://labs.mementoweb.org/wikia/timemap/link/" paging-status="0" redirect="no" />
+        <icon uri=""/>
+        <calendar uri=""/>
+        <archive type="cms" rewritten-urls="no" 
+            un-rewritten-api-url="" access-policy="public" memento-status="no" />
+        <memento uri="n/a" />
+    </link> 
+    <!-- Canadian Archive aka http://www.canada.gc.ca/  -->
+    <link id="gcwa" longname="Canadian Archive">
+        <timegate uri="http://timetravel.mementoweb.org/can/timegate/" redirect="no" />
+        <timegate uri="http://labs.mementoweb.org/can/timegate/" redirect="no" />
+        <timegate uri="http://delorean.lanl.gov/tg/can/timegate/" redirect="no" />
+        <timemap  uri="http://timetravel.mementoweb.org/can/timemap/link/" paging-status="0" redirect="no"  />
+        <timemap  uri="http://labs.mementoweb.org/can/timemap/link/" paging-status="0" redirect="no"  />
+        <timemap  uri="http://delorean.lanl.gov/tg/can/timemap/link/" paging-status="0" redirect="no"  />
+        <icon uri="http://www.bac-lac.gc.ca/_layouts/SPCLF3/WET-BOEW/theme-gcwu-fegc/images/favicon.ico"/>
+        <calendar uri=""/>
+        <memento uri="http://collectionscanada.gc.ca/webarchives/*/"/>
+        <archive type="snapshot" rewritten-urls="yes" 
+            un-rewritten-api-url="" access-policy="public" memento-status="no" />
+    </link>
+    <link id="archive.is" longname="archive.is">
+        <timegate uri="http://archive.is/timegate/" redirect="no" />
+        <timemap  uri="http://archive.is/timemap/" paging-status="0" redirect="no" />
+        <icon uri="http://archive.is/favicon.ico"/>
+        <calendar uri="http://archive.is/"/>
+        <memento uri="http://archive.is/*/" />
+        <archive type="snapshot" rewritten-urls="yes" 
+            un-rewritten-api-url="" access-policy="public" memento-status="yes" />
+    </link>   
+    <!--  Croatian http://haw.nsk.hr/json.php? -->
+    <link id="hr" longname="Croatian Archive">
+        <timegate uri="http://timetravel.mementoweb.org/cr/timegate/" redirect="no"  />
+        <timegate uri="http://labs.mementoweb.org/cr/timegate/" redirect="no"  />
+        <timegate uri="http://delorean.lanl.gov/tg/cr/timegate/" redirect="no"  />
+        <timemap  uri="http://timetravel.mementoweb.org/cr/timemap/link/" paging-status="0" redirect="no" /> 
+        <timemap  uri="http://delorean.lanl.gov/tg/cr/timemap/link/" paging-status="0" redirect="no" />
+        <timemap  uri="http://labs.mementoweb.org/cr/timemap/link/" paging-status="0" redirect="no" />
+        <icon uri="http://haw.nsk.hr/favicon.ico"/>
+        <calendar uri=""/>
+        <memento uri="n/a" />
+        <archive type="snapshot" rewritten-urls="yes" 
+            un-rewritten-api-url="" access-policy="public" memento-status="no" />
+    </link>
+    <!--  Icelandic native, was http://wayback.vefsafn.is/wayback/xmlquery?type=urlquery&url= -->
+    <link id="is" longname="Icelandic Web Archive">
+        <timegate uri="http://wayback.vefsafn.is/wayback/" redirect="no" />
+        <timemap  uri="http://wayback.vefsafn.is/wayback/timemap/link/" paging-status="2" redirect="no"  />
+        <icon uri="http://vefsafn.is/favicon.ico"/>
+        <calendar uri="http://wayback.vefsafn.is/wayback/*/"/>
+        <memento uri="http://wayback.vefsafn.is/wayback/*/" />
+        <archive type="snapshot" rewritten-urls="yes" 
+            un-rewritten-api-url="http://wayback.vefsafn.is/wayback/{timestamp}id_/{url}"
+            access-policy="public" memento-status="yes" />
+    </link>
+    <!-- Portuguese Archive uses PyWb, natively supports memento. -->
+    <link id="pt" longname="Portuguese Archive">
+        <timegate uri="http://arquivo.pt/wayback/" redirect="no" />
+        <timemap  uri="http://arquivo.pt/wayback/timemap/*/" paging-status="0" redirect="no" />
+        <icon uri="http://arquivo.pt/img/logo-16.jpg"/>
+        <calendar uri="http://arquivo.pt/wayback/*/"/>
+        <memento uri="http://arquivo.pt/wayback/*/" />
+        <archive type="snapshot" rewritten-urls="yes" 
+            un-rewritten-api-url="http://arquivo.pt/wayback/{timestamp}id_/{url}" access-policy="public" memento-status="yes" />
+    </link>
+     <!-- perma.cc uses PyWb, natively supports memento. -->
+    <link id="perma" longname="perma.cc">
+        <timegate uri="http://perma-archives.org/warc/timegate/" redirect="no" />
+        <timemap  uri="http://perma-archives.org/warc/timemap/*/" paging-status="0" redirect="no" />
+        <icon uri="http://user-content.perma-stage.org/static/img/perma-logo-orange.svg"/>
+        <calendar uri="http://perma-archives.org/warc/*/"/>
+        <memento uri="http://perma-archives.org/warc/*/" />
+        <archive type="snapshot" rewritten-urls="yes" 
+            un-rewritten-api-url="http://perma-archives.org/warc/{timestamp}id_/{url}" access-policy="public" memento-status="yes" />
+    </link>
+    <!--
+    <link id="pt" longname="Portuguese Archive">
+        <timegate uri="http://timetravel.mementoweb.org/po/timegate/" redirect="no" />
+        <timegate uri="http://delorean.lanl.gov/tg/po/timegate/" redirect="no" />
+        <timegate uri="http://labs.mementoweb.org/po/timegate/" redirect="no" />
+        <timemap  uri="http://timetravel.mementoweb.org/po/timemap/link/" paging-status="0" redirect="no" />
+        <timemap  uri="http://delorean.lanl.gov/tg/po/timemap/link/" paging-status="0" redirect="no" />
+        <timemap  uri="http://labs.mementoweb.org/po/timemap/link/" paging-status="0" redirect="no" />
+        <icon uri="http://arquivo.pt/img/logo-16.jpg"/>
+        <calendar uri="http://arquivo.pt/wayback/wayback/*/"/>
+        <memento uri="http://arquivo.pt/wayback/wayback/*/" />
+        <archive type="snapshot" rewritten-urls="yes" 
+            un-rewritten-api-url="" access-policy="public" memento-status="no" />
+    </link>
+    -->
+      <!--  Catalonia http://www.padi.cat:8080/wayback/*/ -->
+    <link id="cat" longname="Catalonia Archive">
+        <timegate uri="http://timetravel.mementoweb.org/cat/timegate/" redirect="no" />
+        <timegate uri="http://delorean.lanl.gov/tg/cat/timegate/" redirect="no" />
+        <timegate uri="http://labs.mementoweb.org/cat/timegate/" redirect="no" />
+        <timemap  uri="http://timetravel.mementoweb.org/cat/timemap/link/" paging-status="0" redirect="no" />
+        <timemap  uri="http://delorean.lanl.gov/tg/cat/timemap/link/" paging-status="0" redirect="no" />
+        <timemap  uri="http://labs.mementoweb.org/cat/timemap/link/" paging-status="0" redirect="no" />
+        <icon uri="http://www.padicat.cat/sites/default/files/logo-padicat_0.png"/>
+        <calendar uri="http://www.padi.cat:8080/wayback/*/"/>
+        <memento uri="http://www.padi.cat:8080/wayback/*/" />
+        <archive type="snapshot" rewritten-urls="yes" 
+            un-rewritten-api-url="" access-policy="public" memento-status="no" />
+    </link>
+       <!--  Athens University of Economics and Business (AUEB)  -->
+    <link id="aueb" longname="Athens University Archive">
+        <timegate uri="http://timetravel.mementoweb.org/aueb/timegate/" redirect="no" />
+        <timegate uri="http://delorean.lanl.gov/tg/aueb/timegate/" redirect="no" />
+        <timegate uri="http://labs.mementoweb.org/aueb/timegate/" redirect="no" />
+        <timemap  uri="http://timetravel.mementoweb.org/aueb/timemap/link/" paging-status="0" redirect="no" />
+        <timemap  uri="http://delorean.lanl.gov/tg/aueb/timemap/link/" paging-status="0" redirect="no" />
+        <timemap  uri="http://labs.mementoweb.org/aueb/timemap/link/" paging-status="0" redirect="no" />
+        <icon uri="http://83.212.204.92:8080/images/archivelogo.png"/>
+        <calendar uri="http://83.212.204.92:8080/*/"/>
+        <memento uri="http://83.212.204.92:8080/*/" />
+        <archive type="snapshot" rewritten-urls="yes" 
+            un-rewritten-api-url="" access-policy="public" memento-status="no" />
+    </link>
+        <!--  York University Libraries  http://yfile.news.yorku.ca -->
+    <link id="yorku" longname="York University Archive">
+        <timegate uri="https://digital.library.yorku.ca/wayback/" redirect="no" />
+        <timemap  uri="https://digital.library.yorku.ca/wayback/timemap/link/" paging-status="0" redirect="no" />
+        <icon uri="https://digital.library.yorku.ca/wayback/images/YorkULogo_Hor_rgb-bootstrap_transparent.png"/>
+        <calendar uri="http://digital.library.yorku.ca/wayback/*/"/>
+        <memento uri="https://digital.library.yorku.ca/wayback/*/" />
+        <archive type="snapshot" rewritten-urls="yes" 
+            un-rewritten-api-url="" access-policy="public" memento-status="yes" />
+    </link>
+    <!--  Estonian archive  -->
+    <link id="es" longname="Estonian Archive">
+        <timegate uri="http://timetravel.mementoweb.org/es/timegate/" redirect="no" />
+        <timegate uri="http://delorean.lanl.gov/tg/es/timegate/" redirect="no" />
+        <timegate uri="http://labs.mementoweb.org/es/timegate/" redirect="no" />
+        <timemap  uri="http://timetravel.mementoweb.org/es/timemap/link/" paging-status="0" redirect="no" />
+        <timemap  uri="http://labs.mementoweb.org/es/timemap/link/" paging-status="0" redirect="no" />
+        <timemap  uri="http://delorean.lanl.gov/tg/es/timemap/link/" paging-status="0" redirect="no" />
+        <icon uri="http://veebiarhiiv.digar.ee/images/logo.png"/>
+        <calendar uri="http://veebiarhiiv.nlib.ee/a/*/"/>
+        <memento uri="http://veebiarhiiv.nlib.ee/a/*/" />
+        <archive type="snapshot" rewritten-urls="yes" 
+            un-rewritten-api-url="http://veebiarhiiv.nlib.ee/a/{timestamp}id_/{url}" 
+            access-policy="public" memento-status="no" />
+    </link>
+         <!--  National Library of Ireland   http://collection.europarchive.org/nli/ -->
+    <link id="nli" longname="National Library of Ireland">
+        <timegate uri="http://collection.europarchive.org/nli/timegate/" redirect="no" />
+        <timemap  uri="http://collection.europarchive.org/nli/timemap/" paging-status="0" redirect="no" />
+        <icon uri="http://collection.europarchive.org/nli/media_sel/images/favicon.png"/>
+        <calendar uri="http://collection.europarchive.org/nli/*/"/>
+        <memento uri=" http://collection.europarchive.org/nli/*/" />
+        <archive type="snapshot" rewritten-urls="yes" 
+            un-rewritten-api-url="" access-policy="public" memento-status="yes" />
+    </link>
+   
+    <!--  Slovenian archive  -->
+    <link id="si" longname="Slovenian Archive">
+        <timegate uri="http://timetravel.mementoweb.org/si/timegate/" redirect="no" />
+        <timegate uri="http://labs.mementoweb.org/si/timegate/" redirect="no" />
+        <timegate uri="http://delorean.lanl.gov/tg/si/timegate/" redirect="no" />
+        <timemap  uri="http://timetravel.mementoweb.org/si/timemap/link/" paging-status="0" redirect="no" />
+        <timemap  uri="http://delorean.lanl.gov/tg/si/timemap/link/" paging-status="0" redirect="no" />
+        <timemap  uri="http://labs.mementoweb.org/si/timemap/link/" paging-status="0" redirect="no" />
+        <icon uri="http://arhiv.nuk.uni-lj.si/Images/logo_arhiv_nuk.png"/>
+        <calendar uri="http://nukrobi2.nuk.uni-lj.si:8080/wayback/*/"/>
+        <memento uri="http://nukrobi2.nuk.uni-lj.si:8080/wayback/*/" />
+        <archive type="snapshot" rewritten-urls="yes" 
+            un-rewritten-api-url="" access-policy="public" memento-status="no" />
+    </link>
+    <link id="swa" longname="Stanford Web Archive">
+        <timegate uri="https://swap.stanford.edu/" redirect="no" />
+        <timemap  uri="https://swap.stanford.edu/timemap/link/" paging-status="0" redirect="no" />
+        <icon uri="https://swap.stanford.edu/images/SUL-Logo-white-text-h25.png"/>
+        <calendar uri="https://wayback.stanford.edu/*/"/>
+        <memento uri="https://swap.stanford.edu/*/" />
+        <archive type="snapshot" rewritten-urls="yes" 
+            un-rewritten-api-url="https://swap.stanford.edu/{timestamp}id_/{url}" 
+            access-policy="public" memento-status="yes" />
+    </link>
+    <link id="nara" longname="The National Archives and Records Administration">
+        <timegate uri="http://timetravel.mementoweb.org/nara/timegate/" redirect="no" />
+        <timegate uri="http://labs.mementoweb.org/nara/timegate/" redirect="no" />
+        <timegate uri="http://delorean.lanl.gov/tg/nara/timegate/" redirect="no" />
+        <timemap  uri="http://timetravel.mementoweb.org/nara/timemap/link/" paging-status="0" redirect="no" />
+        <timemap  uri="http://delorean.lanl.gov/tg/nara/timemap/link/" paging-status="0" redirect="no" />
+        <timemap  uri="http://labs.mementoweb.org/nara/timemap/link/" paging-status="0" redirect="no" />
+        <icon uri="http://www.loc.gov/images/fav.ico"/>
+        <calendar uri=""/>
+        <memento uri="" />
+        <archive type="snapshot" rewritten-urls="yes" 
+            un-rewritten-api-url="{archivehost}/{timestamp}id_/{url}" 
+            access-policy="public" memento-status="no" />
+    </link>
+    <link id="git" longname="GitHub">
+        <timegate uri="http://timetravel.mementoweb.org/github/timegate/" redirect="yes"/>
+        <timegate uri="http://delorean.lanl.gov/tg/github/timegate/" redirect="yes"/>
+        <timegate uri="http://labs.mementoweb.org/github/timegate/" redirect="yes"/>
+        <timemap  uri="http://timetravel.mementoweb.org/github/timemap/link/" paging-status="0" redirect="yes" />
+        <timemap  uri="http://labs.mementoweb.org/github/timemap/link/" paging-status="0" redirect="yes" />
+        <timemap  uri="http://delorean.lanl.gov/tg/github/timemap/link/" paging-status="0" redirect="yes" />
+        <icon uri="https://github.com/favicon.ico"/>
+        <calendar uri=""/>
+        <archive type="cms" rewritten-urls="no" 
+            un-rewritten-api-url="" access-policy="public" memento-status="no" />
+        <memento uri="n/a" />
+    </link>  
+    <link id="arxiv" longname="arXiv">
+        <timegate uri="http://timetravel.mementoweb.org/arxiv/timegate/" redirect="yes"/>
+        <timegate uri="http://delorean.lanl.gov/tg/arxiv/timegate/" redirect="yes"/>
+        <timegate uri="http://labs.mementoweb.org/arxiv/timegate/" redirect="yes"/>
+        <timemap  uri="http://timetravel.mementoweb.org/arxiv/timemap/link/" paging-status="0" redirect="yes" />
+        <timemap  uri="http://labs.mementoweb.org/arxiv/timemap/link/" paging-status="0" redirect="yes" />
+        <timemap  uri="http://delorean.lanl.gov/tg/arxiv/timemap/link/" paging-status="0" redirect="yes" />
+        <icon uri="http://arxiv.org/favicon.ico"/>
+        <calendar uri=""/>
+        <archive type="cms" rewritten-urls="no" 
+            un-rewritten-api-url="" access-policy="public" memento-status="no" />
+        <memento uri="n/a" />
+    </link>  
+</links>

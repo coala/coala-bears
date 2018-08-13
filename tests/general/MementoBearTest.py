@@ -5,7 +5,7 @@ import requests
 import requests_mock
 import unittest
 
-from bears.general.MementoBear import MementoBear
+from bears.general.MementoBear import MementoBear, get_archive_timegate_tuple
 from bears.general.URLHeadBear import URLHeadBear
 
 from coalib.results.Result import Result
@@ -13,6 +13,8 @@ from coalib.settings.Section import Section
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.testing.LocalBearTestHelper import LocalBearTestHelper
 
+from io import BytesIO
+from requests.packages.urllib3.response import HTTPResponse
 from queue import Queue
 
 
@@ -31,6 +33,11 @@ with open(get_testfile_path('google_memento_redirect_response.json')) as \
                            json.load(headers2)]
 
 
+# Load memento archivelist.xml file
+with open(get_testfile_path('archivelist.xml')) as f:
+    archive_list_binary = bytes(f.read(), 'utf-8')
+
+
 def custom_matcher(request):
     """
     Mock the status codes for every request by taking the last three characters
@@ -43,11 +50,14 @@ def custom_matcher(request):
     :param request: The ``request`` that the mocker recieves.
     :return:        A mocked ``Response`` object.
     """
-
+    body = None
     # the connection check url needs to be explicitly
     # set to 200
     if request.url == URLHeadBear.check_connection_url:
         status_code = 200
+    elif request.url == MementoBear.DEFAULT_ARCHIVE_REGISTRY:
+        status_code = 200
+        body = BytesIO(archive_list_binary)
     elif request.url.startswith('http://timetravel.mementoweb.org/timegate/'):
         # All memento timegate urls return 200
         status_code = 200
@@ -60,7 +70,15 @@ def custom_matcher(request):
                                                        'integer')
 
     resp = requests.Response()
-    resp.raw = io.BytesIO()
+    if body:
+        resp.body = body
+        resp.raw = HTTPResponse(status=status_code,
+                                headers={},
+                                body=body,
+                                decode_content=False,
+                                preload_content=False)
+    else:
+        resp.raw = io.BytesIO()
     resp.request = request
     resp.status_code = status_code
     return resp
@@ -284,6 +302,9 @@ class MementoBearTest(LocalBearTestHelper):
 
     def test_links_to_ignore(self):
         valid_file = """
+        # Timegate URLs should be ignored
+        https://web.archive.org/web/*/spiegel.com/200
+
         http://coalaisthebest.compile
         http://facebook.com/coala
 
@@ -306,3 +327,67 @@ class MementoBearTest(LocalBearTestHelper):
             self.check_validity(
                 self.uut, valid_file,
                 settings={'link_ignore_list': link_ignore_list})
+
+    def test_get_archive_timegate_tuple(self):
+        with requests_mock.Mocker() as m:
+            m.add_matcher(custom_matcher)
+            expected_result = (
+                'https://web.archive.org/web/',
+                'http://webarchive.proni.gov.uk/timegate/',
+                'http://web.archive.bibalex.org/web/',
+                'http://www.webarchive.org.uk/wayback/archive/',
+                'http://langzeitarchivierung.bib-bvb.de/wayback/',
+                'http://timetravel.mementoweb.org/webcite/timegate/',
+                'http://delorean.lanl.gov/tg/webcite/timegate/',
+                'http://labs.mementoweb.org/webcite/timegate/',
+                'http://webarchive.loc.gov/all/',
+                'http://wayback.archive-it.org/all/',
+                'http://pywb-elb-1700828309.eu-west-2.elb.amazonaws.com/',
+                'http://webarchive.nationalarchives.gov.uk/timegate/',
+                'http://timetravel.mementoweb.org/orain/timegate/',
+                'http://labs.mementoweb.org/orain/timegate/',
+                'http://timetravel.mementoweb.org/wikipedia/timegate/',
+                'http://labs.mementoweb.org/wikipedia/timegate/',
+                'http://delorean.lanl.gov/tg/wikipedia/timegate/',
+                'http://timetravel.mementoweb.org/wikia/timegate/',
+                'http://labs.mementoweb.org/wikia/timegate/',
+                'http://delorean.lanl.gov/tg/wikia/timegate/',
+                'http://timetravel.mementoweb.org/can/timegate/',
+                'http://labs.mementoweb.org/can/timegate/',
+                'http://delorean.lanl.gov/tg/can/timegate/',
+                'http://archive.is/timegate/',
+                'http://timetravel.mementoweb.org/cr/timegate/',
+                'http://labs.mementoweb.org/cr/timegate/',
+                'http://delorean.lanl.gov/tg/cr/timegate/',
+                'http://wayback.vefsafn.is/wayback/',
+                'http://arquivo.pt/wayback/',
+                'http://perma-archives.org/warc/timegate/',
+                'http://timetravel.mementoweb.org/cat/timegate/',
+                'http://delorean.lanl.gov/tg/cat/timegate/',
+                'http://labs.mementoweb.org/cat/timegate/',
+                'http://timetravel.mementoweb.org/aueb/timegate/',
+                'http://delorean.lanl.gov/tg/aueb/timegate/',
+                'http://labs.mementoweb.org/aueb/timegate/',
+                'https://digital.library.yorku.ca/wayback/',
+                'http://timetravel.mementoweb.org/es/timegate/',
+                'http://delorean.lanl.gov/tg/es/timegate/',
+                'http://labs.mementoweb.org/es/timegate/',
+                'http://collection.europarchive.org/nli/timegate/',
+                'http://timetravel.mementoweb.org/si/timegate/',
+                'http://labs.mementoweb.org/si/timegate/',
+                'http://delorean.lanl.gov/tg/si/timegate/',
+                'https://swap.stanford.edu/',
+                'http://timetravel.mementoweb.org/nara/timegate/',
+                'http://labs.mementoweb.org/nara/timegate/',
+                'http://delorean.lanl.gov/tg/nara/timegate/',
+                'http://timetravel.mementoweb.org/github/timegate/',
+                'http://delorean.lanl.gov/tg/github/timegate/',
+                'http://labs.mementoweb.org/github/timegate/',
+                'http://timetravel.mementoweb.org/arxiv/timegate/',
+                'http://delorean.lanl.gov/tg/arxiv/timegate/',
+                'http://labs.mementoweb.org/arxiv/timegate/'
+            )
+            self.assertEqual(
+                get_archive_timegate_tuple(
+                    MementoBear.DEFAULT_ARCHIVE_REGISTRY),
+                expected_result)

@@ -1,5 +1,7 @@
 import requests
 
+from lxml import etree
+
 from bears.general.URLHeadBear import URLHeadBear
 
 from coalib.bears.LocalBear import LocalBear
@@ -7,19 +9,33 @@ from coalib.results.Result import Result
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 from dependency_management.requirements.PipRequirement import PipRequirement
+from dependency_management.requirements.PythonImportRequirement import (
+    PythonImportRequirement)
 
 from memento_client import MementoClient
+
+
+def get_archive_timegate_tuple(archive_registry_url):
+    resp = requests.get(archive_registry_url)
+    # Parse the xml file
+    data = etree.fromstring(resp.content)
+    timegate_list = [link for link in data.xpath('./link/timegate/@uri')]
+
+    return tuple(timegate_list)
 
 
 class MementoBear(LocalBear):
     DEFAULT_TIMEOUT = 15
     LANGUAGES = {'All'}
-    REQUIREMENTS = {PipRequirement('memento_client', '0.6.1')}
+    REQUIREMENTS = {PipRequirement('memento_client', '0.6.1'),
+                    PythonImportRequirement('lxml', '3.6.0')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
     CAN_DETECT = {'Documentation'}
     BEAR_DEPS = {URLHeadBear}
+    DEFAULT_ARCHIVE_REGISTRY = \
+        'http://labs.mementoweb.org/aggregator_config/archivelist.xml'
 
     @staticmethod
     def check_archive(mc, link):
@@ -55,6 +71,8 @@ class MementoBear(LocalBear):
         Link is considered valid if the link has been archived by any services
         in memento_client.
 
+        All timegate URIs are automatically ignored.
+
         This bear can automatically fix redirects.
 
         Warning: This bear will make HEAD requests to all URLs mentioned in
@@ -66,10 +84,15 @@ class MementoBear(LocalBear):
         :param dependency_results: Results given by URLHeadBear.
         :param follow_redirects:   Set to true to check all redirect urls.
         """
+        self._timegate_uris = \
+            get_archive_timegate_tuple(self.DEFAULT_ARCHIVE_REGISTRY)
         self._mc = MementoClient()
 
         for result in dependency_results.get(URLHeadBear.name, []):
             line_number, link, code, context = result.contents
+
+            if link.startswith(self._timegate_uris):
+                continue
 
             if not (code and 200 <= code < 400):
                 continue
