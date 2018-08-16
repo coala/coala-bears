@@ -2,5 +2,5 @@
 {% set packages = ['bears', '.ci'] %}
 
 {% block extra_pytest_addopts %}
-  --ignore=tests/python/bandit_test_files/
+  --ignore=tests/python/bandit_test_files/,.ci/adjust_version_number.py
 {% endblock %}
