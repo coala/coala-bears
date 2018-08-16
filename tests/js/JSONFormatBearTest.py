@@ -6,6 +6,9 @@ from coalib.testing.LocalBearTestHelper import (verify_local_bear,
 from coalib.results.Result import Result
 from coalib.settings.Section import Section
 
+test_file = """{
+}"""
+
 
 test_file1 = """{
     "a": 5,
@@ -33,6 +36,34 @@ unicode_file = """{
 test_file4 = """{
     a: 5
 }"""
+
+
+test_file5 = """{
+    "expansion-coefficient": 23.4e-06,
+    "length": 3.2e-3
+}"""
+
+
+test_file6 = """{
+    "expansion-coefficient": 2.34e-05,
+    "length": 0.0032
+}"""
+
+
+test_file7 = """[
+    {
+        "quantity": 261,
+        "something": 23.4e-06,
+    },
+    {
+        "quantity": 292,
+        "something": 3.2e-3,
+    },
+    {
+        "quantity": 211,
+        "something": 23.4e-03,
+    }
+]"""
 
 
 class JSONTest(LocalBearTestHelper):
@@ -91,3 +122,11 @@ JSONFormatBearUnicodeTest = verify_local_bear(JSONFormatBear,
                                               invalid_files=(),
                                               settings={'escape_unicode':
                                                         'false'})
+
+JSONFormatBearFloatsTest = verify_local_bear(JSONFormatBear,
+                                             valid_files=(test_file5,
+                                                          test_file6,
+                                                          test_file7),
+                                             invalid_files=(),
+                                             settings={'escape_unicode':
+                                                       'false'})
