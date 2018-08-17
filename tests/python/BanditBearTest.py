@@ -1,3 +1,4 @@
+from distutils.version import LooseVersion
 from queue import Queue
 import os.path
 
@@ -8,6 +9,21 @@ from coalib.testing.LocalBearTestHelper import (
     LocalBearTestHelper, verify_local_bear)
 
 from bears.python.BanditBear import BanditBear
+
+import bandit
+
+BANDIT_VERSION = LooseVersion(bandit.__version__).version
+
+B701_MESSAGE = (
+    'Using jinja2 templates with autoescape=False is dangerous and can lead '
+    'to XSS. %s autoescape=True')
+B701_MESSAGE_1_4_0_TAIL = ' to mitigate XSS vulnerabilities.'
+B701_MESSAGE_1_5_0_TAIL = (
+    ' or use the select_autoescape function to mitigate XSS vulnerabilities.')
+if BANDIT_VERSION >= [1, 5, 0]:
+    B701_MESSAGE_TAIL = B701_MESSAGE_1_5_0_TAIL
+else:
+    B701_MESSAGE_TAIL = B701_MESSAGE_1_4_0_TAIL
 
 
 def get_testfile_path(name):
@@ -50,30 +66,24 @@ class BanditBearTest(LocalBearTestHelper):
 
     test_jinja2_templating = gen_check(
         'jinja2_templating.py',
-        [Result.from_values('B701', 'Using jinja2 templates with '
-                            'autoescape=False is dangerous and can lead to '
-                            'XSS. Ensure autoescape=True to mitigate XSS '
-                            'vulnerabilities.',
+        [Result.from_values('B701',
+                            (B701_MESSAGE % 'Ensure') + B701_MESSAGE_TAIL,
                             get_testfile_path('jinja2_templating.py'), 9,
                             end_line=9, severity=RESULT_SEVERITY.MAJOR,
                             confidence=70),
-         Result.from_values('B701', 'Using jinja2 templates with '
-                            'autoescape=False is dangerous and can lead to '
-                            'XSS. Use autoescape=True to mitigate XSS '
-                            'vulnerabilities.',
+         Result.from_values('B701',
+                            (B701_MESSAGE % 'Use') + B701_MESSAGE_TAIL,
                             get_testfile_path('jinja2_templating.py'), 10,
                             end_line=10, severity=RESULT_SEVERITY.MAJOR,
                             confidence=90),
-         Result.from_values('B701', 'Using jinja2 templates with '
-                            'autoescape=False is dangerous and can lead to '
-                            'XSS. Use autoescape=True to mitigate XSS '
-                            'vulnerabilities.',
+         Result.from_values('B701',
+                            (B701_MESSAGE % 'Use') + B701_MESSAGE_TAIL,
                             get_testfile_path('jinja2_templating.py'), 11,
                             end_line=13, severity=RESULT_SEVERITY.MAJOR,
                             confidence=90),
          Result.from_values('B701', 'By default, jinja2 sets autoescape to '
-                            'False. Consider using autoescape=True to '
-                            'mitigate XSS vulnerabilities.',
+                            'False. Consider using autoescape=True' +
+                            B701_MESSAGE_TAIL,
                             get_testfile_path('jinja2_templating.py'), 15,
                             end_line=16, severity=RESULT_SEVERITY.MAJOR,
                             confidence=90)])
