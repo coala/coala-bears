@@ -14,4 +14,4 @@ JuliaLintBearTest = verify_local_bear(JuliaLintBear,
                                       valid_files=(good_file,),
                                       invalid_files=(bad_file,),
                                       tempfile_kwargs={'suffix': '.jl'},
-                                      timeout=45)
+                                      )
