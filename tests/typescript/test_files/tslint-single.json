@@ -2,7 +2,7 @@
     "rules": {
         "quotemark": [
             true,
-            "double",
+            "single",
             "avoid-escape",
             "avoid-template"
         ]
