@@ -7,7 +7,6 @@ from dependency_management.requirements.NpmRequirement import NpmRequirement
 
 @linter(executable='csscomb',
         output_format='corrected',
-        use_stdin=True,
         result_message='The text does not comply to the set style.')
 class CSSCombBear:
     """
@@ -15,7 +14,7 @@ class CSSCombBear:
     configuration to make your style sheets beautiful and consistent.
     """
 
-    LANGUAGES = {'CSS'}
+    LANGUAGES = {'CSS', 'SCSS', 'SASS'}
     REQUIREMENTS = {NpmRequirement('csscomb', '4.2.0')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
@@ -285,5 +284,5 @@ class CSSCombBear:
         :param csscomb_config:
             The location of the ``.csscomb.json`` config file.
         """
-        return ('--config',
+        return (filename, '--config',
                 csscomb_config if csscomb_config else config_file)
