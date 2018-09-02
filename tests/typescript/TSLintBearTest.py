@@ -35,10 +35,3 @@ TSLintBearWithConfigTest = verify_local_bear(
     invalid_files=(good_file,),
     settings={'tslint_config': tslintconfig},
     tempfile_kwargs={'suffix': '.ts'})
-
-TSLintBearOtherOptionsTest = verify_local_bear(
-    TSLintBear,
-    valid_files=(good_file,),
-    invalid_files=(bad_file,),
-    settings={'rules_dir': '/'},
-    tempfile_kwargs={'suffix': '.ts'})

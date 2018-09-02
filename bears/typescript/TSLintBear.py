@@ -37,7 +37,7 @@ class TSLintBear:
         args = ('--format', 'json')
         if tslint_config:
             args += ('--config', tslint_config)
-        if rules_dir:
+        if rules_dir:  # pragma: no cover
             args += ('--rules-dir', rules_dir)
         return args + (filename,)
 
