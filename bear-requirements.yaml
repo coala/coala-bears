@@ -129,7 +129,7 @@ npm_requirements:
   textlint-rule-write-good:
     version: ~1.6.0
   tslint:
-    version: ~3
+    version: '>=3.0 <6.0'
   typescript:
     version: '>=1.7.3'
   typescript-eslint-parser:

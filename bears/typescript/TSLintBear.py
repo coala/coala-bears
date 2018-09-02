@@ -17,7 +17,7 @@ class TSLintBear:
     """
 
     LANGUAGES = {'TypeScript'}
-    REQUIREMENTS = {NpmRequirement('tslint', '3'),
+    REQUIREMENTS = {NpmRequirement('tslint', '>=3.0 <6.0'),
                     NpmRequirement('typescript', '>=1.7.3')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
