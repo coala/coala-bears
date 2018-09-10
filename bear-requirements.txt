@@ -28,6 +28,7 @@ pycodestyle~=2.2
 pydocstyle~=2.0
 pyflakes~=2.0.0
 pylint~=1.7.2
+pyre-check~=0.0.12
 pyroma~=2.2.0
 pyyaml~=3.12
 radon==1.4.0

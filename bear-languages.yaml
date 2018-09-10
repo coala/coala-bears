@@ -309,6 +309,9 @@ PycodestyleBear:
   - Python
   - Python 2
   - Python 3
+PyreBear:
+  - Python
+  - Python 3
 PyromaBear:
   - Python
   - Python 3
