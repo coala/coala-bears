@@ -32,18 +32,18 @@ class PEP8Bear(LocalBear):
 
 
         :param max_line_length:   
-                            Maximum number of characters for a line.
-                            When set to 0 allows infinite line length.
+                                Maximum number of characters for a line.
+                                When set to 0 allows infinite line length.
         :param indent_size:       
-                            Number of spaces per indentation level.
+                                Number of spaces per indentation level.
         :param pep_ignore:       
-                            A list of errors/warnings to ignore.
+                                A list of errors/warnings to ignore.
         :param pep_select:         
-                            A list of errors/warnings to exclusively
-                            apply.
+                                A list of errors/warnings to exclusively
+                                apply.
         :param local_pep8_config: 
-                            Set to true if autopep8 should use a config
-                            file as if run normally from this directory.
+                                Set to true if autopep8 should use a config
+                                file as if run normally from this directory.
                             
         """
         if not max_line_length:
