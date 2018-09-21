@@ -28,15 +28,15 @@ class PEP8Bear(LocalBear):
             local_pep8_config: bool = False,
             ):
         """
-        Detects and fixes PEP8 incompliant code. This bear will not change
+        Detects and fixes PEP8 incompliant code.This bear will not change
         functionality of the code in any way.
-
-        :param max_line_length:   Maximum number of characters for a line.
-                                  When set to 0 allows infinite line length.
-        :param indent_size:       Number of spaces per indentation level.
-        :param pep_ignore:        A list of errors/warnings to ignore.
-        :param pep_select:        A list of errors/warnings to exclusively
-                                  apply.
+        
+        :param max_line_length: Maximum number of characters for a line.
+                                When set to 0 allows infinite line length.
+        :param indent_size: Number of spaces per indentation level.
+        :param pep_ignore:  A list of errors/warnings to ignore.
+        :param pep_select:  A list of errors/warnings to exclusively
+                            apply.
         :param local_pep8_config: Set to true if autopep8 should use a config
                                   file as if run normally from this directory.
         """
@@ -49,13 +49,13 @@ class PEP8Bear(LocalBear):
                    'indent_size': indent_size}
 
         corrected = autopep8.fix_code(''.join(file),
-                                      apply_config=local_pep8_config,
-                                      options=options).splitlines(True)
+                                apply_config=local_pep8_config,
+                                options=options).splitlines(True)
 
         diffs = Diff.from_string_arrays(file, corrected).split_diff()
 
         for diff in diffs:
             yield Result(self,
-                         'The code does not comply to PEP8.',
-                         affected_code=(diff.range(filename),),
-                         diffs={filename: diff})
+                        'The code does not comply to PEP8.',
+                        affected_code=(diff.range(filename),),
+                        diffs={filename: diff})
