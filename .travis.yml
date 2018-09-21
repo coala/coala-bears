@@ -157,7 +157,6 @@ cache:
 env:
   global:
     - TERM=dumb
-    - CIRCLE_NODE_INDEX=-1  # Avoid accidentially being a CircleCI worker
     - R_LIB_USER=~/R/Library
     - LINTR_COMMENT_BOT=false
     - CABAL_VERSION=1.24
