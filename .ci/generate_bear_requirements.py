@@ -46,6 +46,7 @@ SUPPORTED_INSTANCES = (
     'PipRequirement',
     'NpmRequirement',
     'GemRequirement',
+    'ComposerRequirement',
     'CabalRequirement',
 )
 
@@ -53,6 +54,7 @@ INSTANCE_NAMES = (
     'pip_requirements',
     'npm_requirements',
     'gem_requirements',
+    'composer_requirements',
     'cabal_requirements',
 )
 
@@ -154,6 +156,10 @@ def get_npm_requirements(requirements):
     return _get_requirements(requirements, '~')
 
 
+def get_composer_requirements(requirements):
+    return _get_requirements(requirements, '~')
+
+
 def get_pip_requirements(requirements):
     inherited_requirements = get_inherited_requirements()
     return _get_requirements(requirements, '~=', inherited_requirements)
@@ -226,6 +232,8 @@ if __name__ == '__main__':
                                             instance_dict['NpmRequirement'])
     requirements['pip_requirements'] = get_pip_requirements(
                                             instance_dict['PipRequirement'])
+    requirements['composer_requirements'] = get_composer_requirements(
+                                            instance_dict['ComposerRequirement'])
     requirements['cabal_requirements'] = get_cabal_requirements(
                                             instance_dict['CabalRequirement'])
 
