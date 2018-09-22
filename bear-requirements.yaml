@@ -214,6 +214,11 @@ pip_requirements:
     version: ~=1.6.1
   yapf:
     version: ~=0.21.0
+composer_requirements:
+  phpmd/phpmd:
+    version: ~2.6.0
+  squizlabs/php_codesniffer:
+    version: ~3.3.2
 cabal_requirements:
   ShellCheck:
     version: ==0.4.1

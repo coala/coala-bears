@@ -28,7 +28,7 @@ class PHPMessDetectorBear:
             [DistributionRequirement(apt_get='phpmd',
                                      dnf='php-phpmd-PHP-PMD',
                                      ),
-             ComposerRequirement('phpmd/phpmd'),
+             ComposerRequirement('phpmd/phpmd', '2.6.0'),
              ],
         ),
     }
