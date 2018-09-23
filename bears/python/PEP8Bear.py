@@ -30,7 +30,6 @@ class PEP8Bear(LocalBear):
         """
         Detects and fixes PEP8 incompliant code. This bear will not change
         functionality of the code in any way.
-
         :param max_line_length:   Maximum number of characters for a line.
                                   When set to 0 allows infinite line length.
         :param indent_size:       Number of spaces per indentation level.
