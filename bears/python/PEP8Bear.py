@@ -28,6 +28,7 @@ class PEP8Bear(LocalBear):
             local_pep8_config: bool = False,
             ):
         """
+        
         Detects and fixes PEP8 incompliant code. This bear will not change
         functionality of the code in any way.
 
