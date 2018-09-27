@@ -22,6 +22,20 @@ good_file = r"""{
    "source": [
     "a markdown cell is not a code cell"
    ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {
+    "collapsed": true
+   },
+   "options": {
+    "max_line_length": 0
+   },
+   "outputs": [],
+   "source": [
+    "'x =' + ' 1 +' * 100 + ' 1'"
+   ]
   }
  ],
  "metadata": {},
