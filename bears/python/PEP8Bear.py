@@ -1,10 +1,10 @@
-import autopep8
 import sys
 
 from coalib.bearlib import deprecate_settings
 from coalib.bearlib.spacing.SpacingHelper import SpacingHelper
 from coalib.bears.LocalBear import LocalBear
-from dependency_management.requirements.PipRequirement import PipRequirement
+from dependency_management.requirements.PythonImportRequirement import (
+                PythonImportRequirement)
 from coalib.results.Diff import Diff
 from coalib.results.Result import Result
 from coalib.settings.Setting import typed_list
@@ -12,7 +12,9 @@ from coalib.settings.Setting import typed_list
 
 class PEP8Bear(LocalBear):
     LANGUAGES = {'Python', 'Python 2', 'Python 3'}
-    REQUIREMENTS = {PipRequirement('autopep8', '1.2')}
+    REQUIREMENTS = {PythonImportRequirement('autopep8',
+                                            '1.2',
+                                            ['autopep8.fix_code'])}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
@@ -43,6 +45,8 @@ class PEP8Bear(LocalBear):
         if not max_line_length:
             max_line_length = sys.maxsize
 
+        autopep8 = list(self.__class__.REQUIREMENTS)[0]
+        autopep8.is_importable()
         options = {'ignore': pep_ignore,
                    'select': pep_select,
                    'max_line_length': max_line_length,

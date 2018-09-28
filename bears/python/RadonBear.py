@@ -1,9 +1,8 @@
 import logging
-import radon.complexity
-import radon.visitors
 
 from coalib.bears.LocalBear import LocalBear
-from dependency_management.requirements.PipRequirement import PipRequirement
+from dependency_management.requirements.PythonImportRequirement import (
+                PythonImportRequirement)
 from coalib.results.Result import Result
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.results.SourceRange import SourceRange
@@ -12,7 +11,10 @@ from coalib.settings.Setting import typed_list
 
 class RadonBear(LocalBear):
     LANGUAGES = {'Python', 'Python 2', 'Python 3'}
-    REQUIREMENTS = {PipRequirement('radon', '==1.4.0')}
+    REQUIREMENTS = {PythonImportRequirement('radon',
+                                            '==1.4.0',
+                                            ['radon.complexity',
+                                             'radon.visitors'])}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
@@ -36,6 +38,8 @@ class RadonBear(LocalBear):
         :param radon_ranks_major:     The ranks (given by radon) to
                                       treat as severity MAJOR.
         """
+        radon = list(self.__class__.REQUIREMENTS)[0]
+        radon.is_importable()
         severity_map = {
             RESULT_SEVERITY.INFO: radon_ranks_info,
             RESULT_SEVERITY.NORMAL: radon_ranks_normal,

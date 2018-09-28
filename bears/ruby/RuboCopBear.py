@@ -1,10 +1,10 @@
 import json
-import yaml
 
 from coalib.bearlib import deprecate_settings
 from coalib.bearlib.abstractions.Linter import linter
 from dependency_management.requirements.GemRequirement import GemRequirement
-from dependency_management.requirements.PipRequirement import PipRequirement
+from dependency_management.requirements.PythonImportRequirement import (
+        PythonImportRequirement)
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.results.Result import Result
 
@@ -20,7 +20,9 @@ class RuboCopBear:
 
     LANGUAGES = {'Ruby'}
     REQUIREMENTS = {GemRequirement('rubocop', '0.51.0'),
-                    PipRequirement('pyyaml', '3.12')}
+                    PythonImportRequirement('pyyaml',
+                                            '3.12',
+                                            ['yaml.dump'])}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
@@ -183,6 +185,10 @@ class RuboCopBear:
         if rubocop_config:
             return None
 
+        for requirement in list(__class__.REQUIREMENTS):
+            if isinstance(requirement, PythonImportRequirement):
+                yaml = requirement
+        yaml.is_importable()
         naming_convention = {'camel': 'camelCase', 'snake': 'snake_case'}
         options = {
             'Style/AccessModifierIndentation': {

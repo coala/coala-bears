@@ -1,9 +1,8 @@
-import yaml
-
 from coalib.bearlib import deprecate_settings
 from coalib.bearlib.abstractions.Linter import linter
 from dependency_management.requirements.GemRequirement import GemRequirement
-from dependency_management.requirements.PipRequirement import PipRequirement
+from dependency_management.requirements.PythonImportRequirement import (
+        PythonImportRequirement)
 
 
 @linter(executable='scss-lint', output_format='regex',
@@ -21,7 +20,9 @@ class SCSSLintBear:
     # require flag is necessary for 'scss_lint'
     # https://github.com/brigade/scss-lint#installation
     REQUIREMENTS = {GemRequirement('scss_lint', '0.56.0', 'false'),
-                    PipRequirement('pyyaml', '3.12')}
+                    PythonImportRequirement('pyyaml',
+                                            '3.12',
+                                            ['yaml.dump'])}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
@@ -229,6 +230,10 @@ class SCSSLintBear:
             an infix operator. The different value for this setting are ``1``,
             ``0`` or a number greater that ``1``.
         """
+        for requirement in list(__class__.REQUIREMENTS):
+            if isinstance(requirement, PythonImportRequirement):
+                yaml = requirement
+        yaml.is_importable()
         naming_convention_map = {
             'camel': 'camel_case',
             'snake': 'snake_case',

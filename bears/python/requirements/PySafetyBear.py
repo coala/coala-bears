@@ -6,7 +6,8 @@ import re
 from safety import safety
 
 from coalib.bears.LocalBear import LocalBear
-from dependency_management.requirements.PipRequirement import PipRequirement
+from dependency_management.requirements.PythonImportRequirement import (
+        PythonImportRequirement)
 from coalib.results.Result import Result
 from coalib.settings.Setting import path
 from coalib.results.SourceRange import SourceRange
@@ -60,7 +61,7 @@ class PySafetyBear(LocalBear):
         'Python 3 Requirements',
     }
     AUTHORS = {'Bence Nagy'}
-    REQUIREMENTS = {PipRequirement('safety', '1.8.2')}
+    REQUIREMENTS = {PythonImportRequirement('safety', '1.8.2')}
     AUTHORS_EMAILS = {'bence@underyx.me'}
     LICENSE = 'AGPL'
     CAN_DETECT = {'Security'}

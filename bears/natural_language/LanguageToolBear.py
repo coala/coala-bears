@@ -1,11 +1,11 @@
 import shutil
 import logging
 
-from guess_language import guess_language
-
 from coalib.bearlib import deprecate_settings
 from coalib.bears.LocalBear import LocalBear
 from dependency_management.requirements.PipRequirement import PipRequirement
+from dependency_management.requirements.PythonImportRequirement import (
+        PythonImportRequirement)
 from coalib.results.Diff import Diff
 from coalib.results.Result import Result
 from coalib.results.SourceRange import SourceRange
@@ -14,7 +14,9 @@ from coalib.settings.Setting import typed_list
 
 class LanguageToolBear(LocalBear):
     LANGUAGES = {'Natural Language'}
-    REQUIREMENTS = {PipRequirement('guess-language-spirit', '0.5.2'),
+    REQUIREMENTS = {PythonImportRequirement('guess-language-spirit',
+                                            '0.5.2',
+                                            ['guess_language.guess_language']),
                     PipRequirement('language-check', '1.0')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
@@ -56,8 +58,12 @@ class LanguageToolBear(LocalBear):
         # language_check being there.
         from language_check import LanguageTool, correct
 
+        for requirement in list(self.__class__.REQUIREMENTS):
+            if isinstance(requirement, PythonImportRequirement):
+                guess_language = requirement
+        guess_language.is_importable()
         joined_text = ''.join(file)
-        natural_language = (guess_language(joined_text)
+        natural_language = (guess_language.guess_language(joined_text)
                             if natural_language == 'auto'
                             else natural_language)
 

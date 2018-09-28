@@ -1,11 +1,9 @@
 
 import abc
 import logging
-import nltk
 import re
 from contextlib import redirect_stdout
 
-from giturlparse import parse
 
 from coalib.bears.GlobalBear import GlobalBear
 from coalib.results.Result import Result
@@ -16,8 +14,15 @@ from dependency_management.requirements.PipRequirement import PipRequirement
 
 class _CommitBear(GlobalBear):
     __metaclass__ = abc.ABCMeta
-    REQUIREMENTS = {PipRequirement('nltk', '3.2'),
-                    PipRequirement('git-url-parse', '1.1.0')}
+    REQUIREMENTS = [
+        PythonImportRequirement('nltk',
+                                '3.2',
+                                ['nltk.download',
+                                 'nltk.pos_tag',
+                                 'nltk.sent_tokenize',
+                                 'nltk.word_tokenize']),
+        PipRequirement('git-url-parse', '1.1.0', ['parse']),
+    ]
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
@@ -65,13 +70,18 @@ class _CommitBear(GlobalBear):
         """
 
     def setup_dependencies(self):
+        self.nltk = list(self.__class__.REQUIREMENTS)[0]
+        self.nltk.is_importable()
+        self.git_url_parse = list(self.__class__.REQUIREMENTS)[1]
+        self.git_url_parse.is_importable()
+
         if not self._nltk_data_downloaded and bool(
                 self.section.get('shortlog_imperative_check', True)):
             logger = logging.getLogger()
             logger.write = lambda msg: logger.debug(
                 msg) if msg != '\n' else None
             with redirect_stdout(logger):
-                nltk.download([
+                self.nltk.download([
                     'punkt',
                     'averaged_perceptron_tagger'
                 ])
@@ -116,7 +126,7 @@ class _CommitBear(GlobalBear):
             return None
 
         url = remotes[0]
-        parsed_url = parse(url)
+        parsed_url = self.git_url_parse(url)
 
         netloc = parsed_url.resource
         return netloc.split('.')[0]
@@ -231,12 +241,12 @@ class _CommitBear(GlobalBear):
             A list of tuples having 2 elements (invalid word, parts of speech)
             or an empty list if no invalid words are found.
         """
-        words = nltk.word_tokenize(nltk.sent_tokenize(paragraph)[0])
+        words = self.nltk.word_tokenize(self.nltk.sent_tokenize(paragraph)[0])
         # VBZ : Verb, 3rd person singular present, like 'adds', 'writes'
         #       etc
         # VBD : Verb, Past tense , like 'added', 'wrote' etc
         # VBG : Verb, Present participle, like 'adding', 'writing'
-        word, tag = nltk.pos_tag(['I'] + words)[1:2][0]
+        word, tag = self.nltk.pos_tag(['I'] + words)[1:2][0]
         if(tag.startswith('VBZ') or
            tag.startswith('VBD') or
            tag.startswith('VBG') or

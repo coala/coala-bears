@@ -1,7 +1,6 @@
-import autoflake
-
 from coalib.bears.LocalBear import LocalBear
-from dependency_management.requirements.PipRequirement import PipRequirement
+from dependency_management.requirements.PythonImportRequirement import (
+                PythonImportRequirement)
 from coalib.results.Diff import Diff
 from coalib.results.Result import Result
 from coalib.bearlib.aspects import map_setting_to_aspect
@@ -22,7 +21,9 @@ class PyUnusedCodeBear(
         languages=['Python'],
         ):
     LANGUAGES = {'Python', 'Python 2', 'Python 3'}
-    REQUIREMENTS = {PipRequirement('autoflake', '0.7')}
+    REQUIREMENTS = {PythonImportRequirement('autoflake',
+                                            '0.7',
+                                            ['autoflake.fix_code'])}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
@@ -47,6 +48,8 @@ class PyUnusedCodeBear(
         :param remove_unused_variables:
             ``False`` keeps unused variables
         """
+        autoflake = list(self.__class__.REQUIREMENTS)[0]
+        autoflake.is_importable()
         corrected = autoflake.fix_code(
                        ''.join(file),
                        additional_imports=None,
