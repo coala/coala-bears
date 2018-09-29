@@ -8,7 +8,7 @@ from coalib.results.Diff import Diff
 from coalib.results.Result import Result
 from coalib.settings.Setting import typed_list
 
-# Comments regarind Jupyter Notebooks:
+# Comments regarding Jupyter Notebooks:
 # The `nbformat` module contains the reference implementation of the Jupyter
 # Notebook format, and Python APIs for working with notebooks.
 # On the file level, a notebook is a JSON file, i.e. dictionary with a few
