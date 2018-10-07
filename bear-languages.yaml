@@ -1,0 +1,395 @@
+AlexBear:
+  - Natural Language
+AnnotationBear: []
+ApertiumLintBear:
+  - Apertium
+ArtisticStyleBear:
+  - C
+  - C#
+  - CPP
+  - Java
+  - Objective-C
+BanditBear:
+  - Python
+  - Python 2
+  - Python 3
+BashateBear:
+  - bash
+BootLintBear:
+  - HTML
+CISkipInspectBear:
+  - Git
+CMakeLintBear:
+  - CMake
+CPDBear:
+  - C#
+  - CPP
+  - Fortran
+  - Go
+  - JSP
+  - Java
+  - JavaScript
+  - Matlab
+  - Objective-C
+  - Octave
+  - PHP
+  - PLSQL
+  - Python
+  - Python 2
+  - Python 3
+  - Ruby
+  - Scala
+  - Swift
+CPPCheckBear:
+  - C
+  - CPP
+CPPCleanBear:
+  - CPP
+CPPLintBear:
+  - CPP
+CSSAutoPrefixBear:
+  - CSS
+CSSCombBear:
+  - CSS
+CSSLintBear:
+  - CSS
+CSVLintBear:
+  - CSV
+CSecurityBear:
+  - C
+  - CPP
+CSharpLintBear:
+  - C#
+CheckstyleBear:
+  - Java
+ClangASTPrintBear:
+  - C
+  - CPP
+  - CUDA
+  - Objective-C
+  - Objective-CPP
+  - OpenCL
+  - OpenMP
+ClangBear:
+  - C
+  - CPP
+  - CUDA
+  - Objective-C
+  - Objective-CPP
+  - OpenCL
+  - OpenMP
+ClangCloneDetectionBear:
+  - C
+  - CPP
+  - CUDA
+  - Objective-C
+  - Objective-CPP
+  - OpenCL
+  - OpenMP
+ClangComplexityBear:
+  - C
+  - CPP
+  - CUDA
+  - Objective-C
+  - Objective-CPP
+  - OpenCL
+  - OpenMP
+ClangFunctionDifferenceBear:
+  - C
+  - CPP
+  - CUDA
+  - Objective-C
+  - Objective-CPP
+  - OpenCL
+  - OpenMP
+CoffeeLintBear:
+  - CoffeeScript
+DartLintBear:
+  - Dart
+DennisBear:
+  - po
+  - pot
+DocGrammarBear:
+  - c
+  - cpp
+  - cs
+  - fortran
+  - golang
+  - java
+  - objective-c
+  - php
+  - python
+  - python3
+  - tcl
+  - vhdl
+DockerfileLintBear:
+  - Dockerfile
+DocumentationStyleBear:
+  - c
+  - cpp
+  - cs
+  - fortran
+  - golang
+  - java
+  - objective-c
+  - php
+  - python
+  - python3
+  - tcl
+  - vhdl
+DuplicateFileBear: []
+ESLintBear:
+  - HTML
+  - JSX
+  - JavaScript
+  - Markdown
+  - Typescript
+ElmLintBear:
+  - Elm
+FilenameBear: []
+FormatRBear:
+  - R
+GNUIndentBear:
+  - C
+  - CPP
+GhcModBear:
+  - Haskell
+GherkinLintBear:
+  - Gherkin
+GitCommitBear:
+  - Git
+GitCommitMetadataBear:
+  - Git
+GitLinearCommitBear:
+  - Git
+GitRevertInspectBear:
+  - Git
+GoErrCheckBear:
+  - Go
+GoImportsBear:
+  - Go
+GoLintBear:
+  - Go
+GoReturnsBear:
+  - Go
+GoTypeBear:
+  - Go
+GoVetBear:
+  - Go
+GofmtBear:
+  - Go
+HAMLLintBear:
+  - Haml
+HTMLHintBear:
+  - HTML
+HTMLLintBear:
+  - HTML
+  - Jinja2
+  - PHP
+HTTPSBear: []
+HTTPoliceLintBear:
+  - HAR
+HappinessLintBear:
+  - JavaScript
+HaskellLintBear:
+  - Haskell
+HgCommitBear:
+  - Hg
+IndentationBear: []
+InferBear:
+  - Java
+InvalidLinkBear: []
+JSComplexityBear:
+  - JavaScript
+JSHintBear:
+  - JavaScript
+JSONFormatBear:
+  - JSON
+JSStandardBear:
+  - JSX
+  - JavaScript
+JavaPMDBear:
+  - Java
+Jinja2Bear:
+  - Jinja2
+JuliaLintBear:
+  - Julia
+KeywordBear: []
+LanguageToolBear:
+  - Natural Language
+LatexLintBear:
+  - Tex
+LicenseCheckBear: []
+LicenseHeaderBear: []
+LineCountBear: []
+LineLengthBear: []
+LuaLintBear:
+  - Lua
+MarkdownBear:
+  - Markdown
+MatlabIndentationBear:
+  - Matlab
+  - Octave
+MementoBear: []
+MypyBear:
+  - Python
+  - Python 2
+  - Python 3
+PEP8Bear:
+  - Python
+  - Python 2
+  - Python 3
+PEP8NotebookBear:
+  - Python
+  - Python 2
+  - Python 3
+PHPCodeSnifferBear:
+  - CSS
+  - JavaScript
+  - PHP
+PHPLintBear:
+  - PHP
+PHPMessDetectorBear:
+  - PHP
+PerlCriticBear:
+  - Perl
+PinRequirementsBear:
+  - Python 2 Requirements
+  - Python 3 Requirements
+  - Python Requirements
+PrettierLintBear:
+  - CSS
+  - GraphQL
+  - JSON
+  - JavaScript
+  - Less
+  - Markdown
+  - SCSS
+  - TypeScript
+  - Vue
+ProseLintBear:
+  - Natural Language
+PugLintBear:
+  - Pug
+PuppetLintBear:
+  - Puppet
+PyCommentedCodeBear:
+  - Python
+  - Python 2
+  - Python 3
+PyDocStyleBear:
+  - Python
+  - Python 2
+  - Python 3
+PyFlakesBear:
+  - Python
+  - Python 3
+PyImportSortBear:
+  - Python
+  - Python 2
+  - Python 3
+PyLintBear:
+  - Python
+  - Python 2
+  - Python 3
+PySafetyBear:
+  - Python 2 Requirements
+  - Python 3 Requirements
+  - Python Requirements
+PyUnusedCodeBear:
+  - Python
+  - Python 2
+  - Python 3
+PycodestyleBear:
+  - Python
+  - Python 2
+  - Python 3
+PyromaBear:
+  - Python
+  - Python 3
+PythonPackageInitBear:
+  - Python
+  - Python 2
+  - Python 3
+QuotesBear: []
+RAMLLintBear:
+  - RAML
+RLintBear:
+  - R
+RSTcheckBear:
+  - reStructuredText
+RadonBear:
+  - Python
+  - Python 2
+  - Python 3
+RuboCopBear:
+  - Ruby
+RubyFastererBear:
+  - Ruby
+RubySecurityBear:
+  - Ruby
+RubySmellBear:
+  - Ruby
+RubySyntaxBear:
+  - Ruby
+SASSLintBear:
+  - SASS
+  - SCSS
+SCSSLintBear:
+  - SCSS
+SQLintBear:
+  - SQL
+ScalaLintBear:
+  - Scala
+ShellCheckBear:
+  - bash
+  - dash
+  - ksh
+  - sh
+SpaceConsistencyBear: []
+SpellCheckBear:
+  - Natural Language
+StyleLintBear:
+  - CSS
+  - SCSS
+StylintBear:
+  - Stylus
+TOMLBear:
+  - TOML
+TSLintBear:
+  - TypeScript
+TailorBear:
+  - Swift
+TextLintBear:
+  - HTML
+  - Markdown
+  - reStructuredText
+TravisLintBear:
+  - YAML
+URLBear: []
+URLHeadBear: []
+VCSCommitMetadataBear:
+  - Git
+VHDLLintBear:
+  - VHDL
+VerilogLintBear:
+  - Verilog
+VintBear:
+  - VimScript
+VultureBear:
+  - Python
+  - Python 3
+WriteGoodLintBear:
+  - Natural Language
+XMLBear:
+  - XML
+YAMLLintBear:
+  - YAML
+YapfBear:
+  - Python
+  - Python 2
+  - Python 3
+_CommitBear: []
+coalaBear: []
+reSTLintBear:
+  - reStructuredText
