@@ -22,6 +22,11 @@ gem_requirements:
     version: ~>0.1.5
   travis:
     version: ~>1.8.8
+r_script_requirements:
+  formatR:
+    version: '>1.5'
+  lintr:
+    version: '>=1.0.2'
 npm_requirements:
   alex:
     version: ~3
@@ -226,8 +231,3 @@ cabal_requirements:
     version: ==5.6.0.0
   hlint:
     version: ==1.9.27
-r_script_requirements:
-  formatR:
-    version: '>1.5'
-  lintr:
-    version: '>=1.0.2'
