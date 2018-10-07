@@ -19,6 +19,7 @@ import copy
 import itertools
 import os
 import sys
+import operator
 
 from ruamel.yaml import YAML, RoundTripDumper
 from ruamel.yaml.comments import CommentedMap
@@ -34,6 +35,8 @@ yaml.default_flow_style = False
 yaml.Dumper = RoundTripDumper
 
 BEAR_REQUIREMENTS_YAML = 'bear-requirements.yaml'
+BEAR_LANGUAGES_YAML = 'bear-languages.yaml'
+
 _VERSION_OPERATORS = ('<', '>', '~', '=', '-', '!')
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -172,6 +175,17 @@ def get_pip_requirements(requirements):
 def get_cabal_requirements(requirements):
     return _get_requirements(requirements, '==')
 
+def get_languages(bears):
+    language_dict = {}
+    for bear in bears:
+        language_dict[str(bear.name)] = list(sorted(bear.LANGUAGES))
+    for value in language_dict.values():
+        if 'All' in value:
+            value.remove('All')
+        if 'default' in value:
+            value.remove('default')
+    return language_dict
+
 
 def deep_update(target, src):
     for key, value in src.items():
@@ -222,7 +236,9 @@ if __name__ == '__main__':
     if args.bear_dirs is not None:
         bear_dirs.extend(args.bear_dirs)
 
-    instance_dict = get_all_requirements(get_all_bears(bear_dirs))
+    all_bears = get_all_bears(bear_dirs)
+
+    instance_dict = get_all_requirements(all_bears)
 
     requirements = CommentedMap()
     requirements.yaml_set_start_comment(
@@ -271,6 +287,13 @@ if __name__ == '__main__':
         output = sys.stdout
     else:
         output = open(args.output, 'w')
+
+    all_bears.sort(key = operator.attrgetter('name'))
+    language_requirements = get_languages(all_bears)
+    file_path = os.path.join(PROJECT_DIR, BEAR_LANGUAGES_YAML)
+    with open(file_path, 'w') as outfile:
+        yaml.indent(mapping=2, sequence=4, offset=2)
+        yaml.dump(language_requirements, outfile)
 
     sort_requirements(requirements)
     yaml.dump(requirements, output)
