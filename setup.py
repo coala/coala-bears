@@ -19,6 +19,9 @@ except (ValueError, UnicodeError, locale.Error):
     locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
 VERSION = '0.12.0.dev99999999999999'
+DESCRIPTION = (
+    'Bears for coala (Code Analysis Application)'
+)
 DEPENDENCY_LINKS = []
 
 SETUP_COMMANDS = {}
@@ -382,7 +385,7 @@ SETUP_COMMANDS.update({
 if __name__ == '__main__':
     setup(name='coala-bears',
           version=VERSION,
-          description='Bears for coala (Code Analysis Application)',
+          description=DESCRIPTION,
           author='The coala developers',
           author_email='coala-devel@googlegroups.com',
           maintainer='Lasse Schuirmann, Fabian Neuschmidt, Mischa Kr\xfcger',
