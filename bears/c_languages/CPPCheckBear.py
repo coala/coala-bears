@@ -1,8 +1,11 @@
+import logging
+
 from coalib.bearlib.abstractions.Linter import linter
 from dependency_management.requirements.DistributionRequirement import (
     DistributionRequirement)
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.settings.Setting import typed_list
+from coalib.bearlib.languages.Language import Language
 
 
 @linter(executable='cppcheck',
@@ -30,6 +33,7 @@ class CPPCheckBear:
 
     def create_arguments(self, config_file,
                          enable: typed_list(str) = [],
+                         language: str = None,
                          ):
         """
         :param enable:
@@ -37,6 +41,10 @@ class CPPCheckBear:
             reported are: all, warning, style, performance,
             portability, information, unusedFunction,
             missingInclude
+
+        :param language:
+            Choose specific language for linting. Language can be
+            either c or c++
         """
         args = ('--template={line}:{severity}:{id}:{message}',)
         files = tuple(self.file_dict.keys())
@@ -44,4 +52,17 @@ class CPPCheckBear:
         if enable:
             args += ('--enable=' + ','.join(enable),)
 
+        if language is not None:
+            try:
+                lang = Language[language]
+                if isinstance(lang, Language.CPP):
+                    args += ('--language=c++',)
+                elif isinstance(lang, Language.C):
+                    args += ('--language=c',)
+                else:
+                    logging.error('Language can be either c or c++')
+                    return
+            except Exception:
+                logging.error('Language can be either c or c++')
+                return
         return args + files
