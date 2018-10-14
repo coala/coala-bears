@@ -2,12 +2,13 @@ import os
 import shlex
 
 from coalib.bearlib.abstractions.Linter import linter
-from coalib.bears.requirements.PipRequirement import PipRequirement
+from dependency_management.requirements.PipRequirement import PipRequirement
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.settings.Setting import typed_list
 
 
 @linter(executable='pylint',
+        normalize_column_numbers=True,
         output_format='regex',
         output_regex=r'L(?P<line>\d+)C(?P<column>\d+): (?P<message>'
                      r'(?P<origin>(?P<severity>[WFECRI])\d+) - .*)',
@@ -22,8 +23,8 @@ class PyLintBear:
     Checks the code with pylint. This will run pylint over each file
     separately.
     """
-    LANGUAGES = {"Python", "Python 2", "Python 3"}
-    REQUIREMENTS = {PipRequirement('pylint', '1.*')}
+    LANGUAGES = {'Python', 'Python 2', 'Python 3'}
+    REQUIREMENTS = {PipRequirement('pylint', '1.7.2')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
@@ -32,10 +33,11 @@ class PyLintBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file,
-                         pylint_disable: typed_list(str)=None,
-                         pylint_enable: typed_list(str)=None,
-                         pylint_cli_options: str="",
-                         pylint_rcfile: str=""):
+                         pylint_disable: typed_list(str) = None,
+                         pylint_enable: typed_list(str) = None,
+                         pylint_cli_options: str = '',
+                         pylint_rcfile: str = '',
+                         ):
         """
         :param pylint_disable:     Disable the message, report, category or
                                    checker with the given id(s).

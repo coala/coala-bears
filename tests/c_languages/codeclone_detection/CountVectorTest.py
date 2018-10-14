@@ -7,25 +7,25 @@ from bears.c_languages.codeclone_detection.CountVector import CountVector
 class CountVectorTest(unittest.TestCase):
 
     def test_simple_creation(self):
-        uut = CountVector("varname")
+        uut = CountVector('varname')
         self.assertEqual(uut.count_vector, [])
-        uut = CountVector("varname", [])
+        uut = CountVector('varname', [])
         self.assertEqual(uut.count_vector, [])
         self.assertRaises(AssertionError,
                           CountVector,
-                          "varname",
+                          'varname',
                           conditions=[],
                           weightings=[2])
 
     def test_len(self):
-        uut = CountVector("varname")
+        uut = CountVector('varname')
         self.assertEqual(len(uut), 0)
 
-        uut = CountVector("varname", conditions=[lambda x: x])
+        uut = CountVector('varname', conditions=[lambda x: x])
         self.assertEqual(len(uut), 1)
 
     def test_counting(self):
-        uut = CountVector("varname",
+        uut = CountVector('varname',
                           conditions=[lambda cursor, stack: cursor and stack])
         self.assertEqual(uut.count_vector, [0])
         uut.count_reference(True, True)
@@ -35,7 +35,7 @@ class CountVectorTest(unittest.TestCase):
         self.assertEqual(uut.unweighted, [1])
 
     def test_weighting(self):
-        uut = CountVector("varname",
+        uut = CountVector('varname',
                           conditions=[lambda cursor, stack: cursor and stack,
                                       lambda cursor, stack: cursor],
                           weightings=[2, 1])
@@ -47,26 +47,26 @@ class CountVectorTest(unittest.TestCase):
         self.assertEqual(uut.unweighted, [1, 2])
 
     def test_conversions(self):
-        uut = CountVector("varname",
+        uut = CountVector('varname',
                           conditions=[lambda cursor, stack: cursor and stack],
                           weightings=[2])
         uut.count_reference(True, True)
-        self.assertEqual(str(uut), "[2]")
+        self.assertEqual(str(uut), '[2]')
         self.assertEqual(list(uut), [2])
 
     def test_cloning(self):
-        uut = CountVector("varname",
+        uut = CountVector('varname',
                           conditions=[lambda cursor, stack: cursor and stack],
                           weightings=[2])
         uut.count_reference(True, True)
-        clone = uut.create_null_vector("test")
-        self.assertEqual(clone.name, "test")
+        clone = uut.create_null_vector('test')
+        self.assertEqual(clone.name, 'test')
         self.assertEqual(clone.weightings, uut.weightings)
         self.assertEqual(clone.conditions, uut.conditions)
         self.assertEqual(clone.count_vector, [0])
 
     def test_abs(self):
-        uut = CountVector("varname",
+        uut = CountVector('varname',
                           conditions=[lambda x: True, lambda x: x])
         self.assertEqual(abs(uut), 0)
         uut.count_reference(True)
@@ -90,9 +90,9 @@ class CountVectorTest(unittest.TestCase):
                                     (string).
         """
         # Create empty CountVector objects
-        count_vector1 = CountVector("",
+        count_vector1 = CountVector('',
                                     conditions=[lambda: False for i in cv1])
-        count_vector2 = CountVector("",
+        count_vector2 = CountVector('',
                                     conditions=[lambda: False for i in cv2])
         # Manually hack in the test values
         count_vector1.count_vector = cv1
@@ -100,11 +100,11 @@ class CountVectorTest(unittest.TestCase):
 
         self.assertEqual(getattr(count_vector1, diff_function)(count_vector2),
                          expected_difference,
-                         "Difference value for vectors {} and {} doesnt match"
-                         ".".format(cv1, cv2))
+                         'Difference value for vectors {} and {} doesnt match'
+                         '.'.format(cv1, cv2))
         self.assertEqual(getattr(count_vector2, diff_function)(count_vector1),
                          expected_difference,
-                         "The difference operation is not symmetric.")
+                         'The difference operation is not symmetric.')
 
     def test_difference(self):
         # For each tuple first two items are CVs to compare, third is dif value
@@ -124,7 +124,7 @@ class CountVectorTest(unittest.TestCase):
             ([0, 4], [0, 3], 1)]  # Zeros don't matter
 
         for elem in count_vector_difference_matrix:
-            self.check_difference(*elem, diff_function="difference")
+            self.check_difference(*elem, diff_function='difference')
 
     def test_maxabs(self):
         # For each tuple first two items are CVs to compare, third is dif value
@@ -139,4 +139,4 @@ class CountVectorTest(unittest.TestCase):
             ([0, 1], [1, 0], sqrt(2))]
 
         for elem in count_vector_difference_matrix:
-            self.check_difference(*elem, diff_function="maxabs")
+            self.check_difference(*elem, diff_function='maxabs')

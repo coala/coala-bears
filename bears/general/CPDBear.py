@@ -5,31 +5,29 @@ from coalib.bears.GlobalBear import GlobalBear
 from coalib.misc.Shell import run_shell_command
 from coalib.results.Result import Result
 from coalib.results.SourceRange import SourceRange
+from coalib.settings.Setting import language
 
 
 class CPDBear(GlobalBear):
 
-    language_dict = {"C#": "cs",
-                     "C++": "cpp",
-                     "JavaScript": "ecmascript",
-                     "Fortran": "fortran",
-                     "Go": "go",
-                     "Java": "java",
-                     "JSP": "jsp",
-                     "Matlab": "matlab",
-                     "Octave": "matlab",
-                     "Objective-C": "objectivec",
-                     "PHP": "php",
-                     "PL/SQL": "plsql",
-                     "Python": "python",
-                     "Python 2": "python",
-                     "Python 3": "python",
-                     "Ruby": "ruby",
-                     "Scala": "scala",
-                     "Swift": "swift"}
-
-    lowered_lang_dict = {key.lower(): value
-                         for key, value in language_dict.items()}
+    language_dict = {'C#': 'cs',
+                     'CPP': 'cpp',
+                     'JavaScript': 'ecmascript',
+                     'Fortran': 'fortran',
+                     'Go': 'go',
+                     'Java': 'java',
+                     'JSP': 'jsp',
+                     'Matlab': 'matlab',
+                     'Octave': 'matlab',
+                     'Objective-C': 'objectivec',
+                     'PHP': 'php',
+                     'PLSQL': 'plsql',
+                     'Python': 'python',
+                     'Python 2': 'python',
+                     'Python 3': 'python',
+                     'Ruby': 'ruby',
+                     'Scala': 'scala',
+                     'Swift': 'swift'}
 
     LANGUAGES = set(language_dict.keys())
     AUTHORS = {'The coala developers'}
@@ -39,24 +37,28 @@ class CPDBear(GlobalBear):
 
     @classmethod
     def check_prerequisites(cls):  # pragma: no cover
-        if which("bash") is None:
-            return "bash is not installed."
-        elif which("run.sh") is None:
-            return ("CPD is missing. Make sure to install it from "
-                    "<https://pmd.github.io/>")
+        if which('bash') is None:
+            return 'bash is not installed.'
+        if which('pmd') is None and which('run.sh') is None:
+            return ('PMD is missing. Make sure to install it from '
+                    '<https://pmd.github.io/>.')
         else:
             return True
 
-    def run(self, language: str, minimum_tokens: int=20,
-            ignore_annotations: bool=False, ignore_identifiers: bool=True,
-            ignore_literals: bool=False, ignore_usings: bool=False,
-            skip_duplicate_files: bool=True):
+    def run(self, language: language,
+            minimum_tokens: int = 20,
+            ignore_annotations: bool = False,
+            ignore_identifiers: bool = True,
+            ignore_literals: bool = False,
+            ignore_usings: bool = False,
+            skip_duplicate_files: bool = True,
+            ):
         """
         Checks for similar code that looks as it could be replaced to reduce
         redundancy.
 
         For more details see:
-        <https://pmd.github.io/pmd-5.4.1/usage/cpd-usage.html>
+        <https://pmd.github.io/pmd-6.4.0/pmd_userdocs_cpd.html>
 
         :param language:
             One of the supported languages of this bear.
@@ -72,28 +74,31 @@ class CPDBear(GlobalBear):
             Ignore ``using`` directives in C#.
         :param skip_duplicate_files:
             Ignore multiple copies of files of the same name and length in
-            omparison.
+            comparison.
         """
-        language = language.lower()
-
-        if language not in self.lowered_lang_dict:  # pragma: no cover
-            self.err("This bear does not support files with the extension "
+        for supported_lang in self.language_dict:
+            if supported_lang in language:
+                cpd_language = self.language_dict[supported_lang]
+                break
+        else:
+            self.err('This bear does not support files with the extension '
                      "'{}'.".format(language))
             return
 
         options = {
-            "--ignore-annotations": ignore_annotations,
-            "--ignore-identifiers": ignore_identifiers,
-            "--ignore-literals": ignore_literals,
-            "--ignore-usings": ignore_usings,
-            "--skip-duplicate-files": skip_duplicate_files}
+            '--ignore-annotations': ignore_annotations,
+            '--ignore-identifiers': ignore_identifiers,
+            '--ignore-literals': ignore_literals,
+            '--ignore-usings': ignore_usings,
+            '--skip-duplicate-files': skip_duplicate_files}
 
-        files = ",".join(self.file_dict.keys())
-        arguments = ("bash", which("run.sh"), "cpd", "--skip-lexical-errors",
-                     "--minimum-tokens", str(minimum_tokens),
-                     "--language", self.lowered_lang_dict[language],
-                     "--files", files,
-                     "--format", "xml")
+        files = ','.join(self.file_dict.keys())
+        executable = which('pmd') or which('run.sh')
+        arguments = ('bash', executable, 'cpd', '--skip-lexical-errors',
+                     '--minimum-tokens', str(minimum_tokens),
+                     '--language', cpd_language,
+                     '--files', files,
+                     '--format', 'xml')
 
         arguments += tuple(option
                            for option, enable in options.items()
@@ -108,10 +113,11 @@ class CPDBear(GlobalBear):
                 length = int(duplication.attrib['lines'])
                 affected_code = list()
 
-                for file in duplication.findall('file'):
-                    filename = file.attrib['path']
-                    start_line = int(file.attrib['line'])
-                    end_line = min(start_line + length - 1, len(file))
+                for xml_file in duplication.findall('file'):
+                    filename = xml_file.attrib['path']
+                    start_line = int(xml_file.attrib['line'])
+                    end_line = min(start_line + length - 1,
+                                   len(self.file_dict[filename]))
 
                     affected_code.append(
                         SourceRange.from_values(filename,
@@ -119,10 +125,10 @@ class CPDBear(GlobalBear):
                                                 end_line=end_line))
 
                 yield Result(
-                    self, "Duplicate code found.", affected_code,
+                    self, 'Duplicate code found.', affected_code,
                     additional_info=(
-                        "Duplicate code is an indicator "
-                        "that you have more code than you need. Consider"
-                        " refactor your code to remove one of the"
-                        " occurrences. For more information go here:"
-                        "http://tinyurl.com/coala-clone"))
+                        'Duplicate code is an indicator '
+                        'that you have more code than you need. Consider'
+                        ' refactor your code to remove one of the'
+                        ' occurrences. For more information go here:'
+                        'http://tinyurl.com/coala-clone'))

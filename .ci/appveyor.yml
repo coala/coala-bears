@@ -4,24 +4,26 @@ environment:
     # /E:ON and /V:ON options are not enabled in the batch script intepreter
     # See: http://stackoverflow.com/a/13751649/163740
     CMD_IN_ENV: "cmd /E:ON /V:ON /C .\\.ci\\run_with_env.cmd"
+    PIP_CACHE_DIR: C:\pip_cache
 
   matrix:
     - PYTHON: "C:\\Python34"
-      PYTHON_VERSION: "3.4"
+      PYTHON_VERSION: "3.4.4"
       PYTHON_ARCH: "32"
 
     - PYTHON: "C:\\Python34-x64"
-      PYTHON_VERSION: "3.4"
+      PYTHON_VERSION: "3.4.4"
       PYTHON_ARCH: "64"
 
 cache:
-  - "C:\\wheels"
+  - "C:\\pip_cache"
   - "node_modules"
+  - "C:\\Users\\appveyor\\AppData\\Local\\coala-bears\\coala-bears"
+  - "C:\\Users\\appveyor\\AppData\\Roaming\\nltk_data"
 
-branches:  # Only build official branches, PRs are built anyway.
-  only:
-    - master
-    - /release.*/
+branches:
+  except:
+    - /^sils\/.*/
 
 install:
   # Prepend newly installed Python to the PATH of this build (this cannot be
@@ -38,24 +40,9 @@ install:
   # Check that we have the expected version and architecture for Python
   - "python --version"
   - "python -c \"import struct; print(struct.calcsize('P') * 8)\""
-
-  - "%CMD_IN_ENV% pip install wheel"
-  # Create c:/wheels if it does not exist.
-  - ps: If ( -not (Test-Path C:\\wheels) )  { mkdir C:\\wheels }
-  - ECHO "Cached wheels:"
-  - ps: "ls \"C:\\wheels\""
-  - "%CMD_IN_ENV% pip wheel --use-wheel --wheel-dir C:\\wheels --find-links C:\\wheels -r test-requirements.txt"
-  - "%CMD_IN_ENV% pip wheel --use-wheel --wheel-dir C:\\wheels --find-links C:\\wheels -r requirements.txt"
-  - "%CMD_IN_ENV% pip install --find-links=C:\\wheels -r test-requirements.txt"
-  - "%CMD_IN_ENV% pip install --find-links=C:\\wheels -r requirements.txt"
-  - "%CMD_IN_ENV% pip install --upgrade astroid"
-  # Download required nltk data
-  - "python -m nltk.downloader punkt"
-  - "python -m nltk.downloader maxent_treebank_pos_tagger"
-  - "python -m nltk.downloader averaged_perceptron_tagger"
-  # Calling setup.py will download checkstyle automatically so tests may succeed
-  - "%CMD_IN_ENV% python setup.py --help"
-
+  - "%CMD_IN_ENV% python -m pip install --upgrade setuptools==21 pip==9"
+  - "%CMD_IN_ENV% python -m pip install -r test-requirements.txt \
+    -r requirements.txt -r docs-requirements.txt"
   - ps: "Install-Product node ''"  # Use latest node v5.x.x
   - "npm config set loglevel warn"
   - "npm install"
@@ -63,8 +50,29 @@ install:
 build: false  # Not a C# project, build stuff at the test step instead.
 
 test_script:
+  # Force DOS format, as Checkstyle configs enable NewlineAtEndOfFile,
+  # which defaults to CRLF on Windows, and Appveyor CI ignores .gitattributes
+  # http://help.appveyor.com/discussions/problems/5687-gitattributes-changes-dont-have-any-effect
+  - unix2dos tests/java/test_files/CheckstyleGood.java
   # Clang DLLs x64 were nowadays installed, but the x64 version hangs, so we
   # exclude according tests. See https://github.com/appveyor/ci/issues/495 and
   # https://github.com/appveyor/ci/issues/688
-  - "%CMD_IN_ENV% python -m pytest --cov -k \"not ClangASTPrintBear and not ClangCloneDetectionBear and not ClangComplexityBear and not ClangCountVectorCreator and not ClangCountingConditions\""
+  - >
+    "%CMD_IN_ENV% python -m pytest
+    --cov -k "not ClangASTPrintBear and not ClangCloneDetectionBear and
+    not ClangComplexityBear and not ClangCountVectorCreator and
+    not ClangCountingConditions"
   - "%CMD_IN_ENV% python setup.py install"
+  - "%CMD_IN_ENV% python -m pip install \
+    git+https://github.com/coala/coala"
+  - sed -i '/ShellCheckBear/d' .coafile
+  - "%CMD_IN_ENV% coala --ci"
+
+on_success:
+  - codecov
+
+on_failure:
+  - codecov
+
+matrix:
+  fast_finish: true

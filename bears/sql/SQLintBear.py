@@ -1,8 +1,8 @@
 from coalib.bearlib.abstractions.Linter import linter
-from coalib.bears.requirements.GemRequirement import GemRequirement
+from dependency_management.requirements.GemRequirement import GemRequirement
 
 
-@linter(executable='sqlint', use_stdin=True, output_format="regex",
+@linter(executable='sqlint', use_stdin=True, output_format='regex',
         output_regex=r'.+:(?P<line>\d+):(?P<column>\d+):'
                      r'(?P<severity>ERROR|WARNING) (?P<message>(?:\s*.+)*)')
 class SQLintBear:
@@ -13,8 +13,8 @@ class SQLintBear:
     <https://github.com/purcell/sqlint> for more detailed information.
     """
 
-    LANGUAGES = {"SQL"}
-    REQUIREMENTS = {GemRequirement('sqlint')}
+    LANGUAGES = {'SQL'}
+    REQUIREMENTS = {GemRequirement('sqlint', '0.1.5')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

@@ -1,0 +1,51 @@
+def docstring_missing_description(dummy):
+    """
+    :param dummy:dummy description
+    :return:nothing"""
+    return None
+
+
+class docstring_class_testcase(dummy):
+    """
+    Example docstring class.
+    :param dummy:dummy description
+    :return:nothing
+    """
+
+    def docstring_memberfunction(self, dummy):
+        """
+        This is a member function.
+        :param dummy:dummy description
+        :return:nothing
+        """
+        return None
+    return None
+
+
+class docstring_if_indented():
+    """This is if indented function example."""
+
+    if 1 != 0:
+        def hello_planet(self):
+            """
+            This is `if` indented block function.
+            """
+            return None
+    else:
+        def hello_venus(self):
+            """This is `if` indented block function."""
+            return None
+
+
+def docstring_inner_function(dummy):
+    """
+    This is docstring inner function example.
+    :param dummy: dummy description
+    """
+    def check_directory(dummy):
+        """
+        This is the inner function.
+        :param dummy: dummy description
+        :return: nothing
+        """
+        return None

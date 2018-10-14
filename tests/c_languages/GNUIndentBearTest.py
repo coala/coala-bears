@@ -1,12 +1,12 @@
 from bears.c_languages.GNUIndentBear import GNUIndentBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 test_file1 = """
 int
 main ()
 {
     return 0;
-}""".splitlines(keepends=True)
+}"""
 
 
 test_file2 = """
@@ -14,7 +14,7 @@ int
 main ()
 {
   return 0;
-}""".splitlines(keepends=True)
+}"""
 
 
 test_file3 = """
@@ -22,13 +22,13 @@ int
 main ()
 {
 \treturn 0;
-}""".splitlines(keepends=True)
+}"""
 
 
 test_file4 = """
 int main() {
   return 0;
-}""".splitlines(keepends=True)
+}"""
 
 
 test_file5 = """
@@ -38,7 +38,7 @@ main ()
 
   int a;
   return 0;
-}""".splitlines(keepends=True)
+}"""
 
 
 test_file6 = """
@@ -49,7 +49,7 @@ main ()
     int a;
 
     return 0;
-}""".splitlines(keepends=True)
+}"""
 
 
 test_file7 = """
@@ -59,7 +59,7 @@ main ()
     int a;
 
     return 0;
-}""".splitlines(keepends=True)
+}"""
 
 
 test_file8 = """
@@ -69,74 +69,87 @@ if (bool)
 }
 else
 {
-}""".splitlines(keepends=True)
+}"""
 
 
 test_file9 = """
 if (bool) {
     return a;
 } else {
-}""".splitlines(keepends=True)
+}"""
 
 
 test_file10 = """
 int main()
 {
     return 0;
-}""".splitlines(keepends=True)
+}"""
 
+
+test_file11 = ('int\nmain ()\n' +
+               '{\n' +
+               ' ' * 1000 + 'return 0;\n' +
+               '}')
 
 GNUIndentBearTest = verify_local_bear(
     GNUIndentBear,
     valid_files=(test_file1,),
     invalid_files=(test_file2, test_file3, test_file4),
-    settings={"use_spaces": "true", "max_line_length": "80"})
+    settings={'use_spaces': 'true', 'max_line_length': '79'})
 
 
 GNUIndentBearWithTabTest = verify_local_bear(
     GNUIndentBear,
     valid_files=(test_file3,),
     invalid_files=(test_file1, test_file2, test_file4),
-    settings={"use_spaces": "nope", "max_line_length": "80"})
+    settings={'use_spaces': 'nope', 'max_line_length': '79'})
 
 
 GNUIndentBearWidthTest = verify_local_bear(
     GNUIndentBear,
     valid_files=(test_file2,),
     invalid_files=(test_file1, test_file3, test_file4),
-    settings={"use_spaces": "true", "max_line_length": "80", "tab_width": "2"})
+    settings={'use_spaces': 'true', 'max_line_length': '79',
+              'indent_size': '2'})
 
 
 GNUIndentBearBlankLineAfterDeclarationsTest = verify_local_bear(
     GNUIndentBear,
     valid_files=(test_file6,),
     invalid_files=(test_file5,),
-    settings={"blank_lines_after_declarations": "true"})
+    settings={'blank_lines_after_declarations': 'true'})
 
 
 GNUIndentBearBraceOnIfLineAndCuddlElseTest = verify_local_bear(
     GNUIndentBear,
     valid_files=(test_file9,),
     invalid_files=(test_file8,),
-    settings={"braces_on_if_line": "true", "cuddle_else": "true"})
+    settings={'braces_on_if_line': 'true', 'cuddle_else': 'true'})
 
 
 GNUIndentBearDeleteOptionalBlankLinesTest = verify_local_bear(
     GNUIndentBear,
     valid_files=(test_file7,),
     invalid_files=(test_file5,),
-    settings={"delete_optional_blank_lines": "false"})
+    settings={'delete_optional_blank_lines': 'false'})
 
 
 GNUIndentBearGNUStyleTest = verify_local_bear(
     GNUIndentBear,
     valid_files=(test_file2,),
     invalid_files=(test_file4,),
-    settings={"gnu_style": "true"})
+    settings={'gnu_style': 'true'})
 
 
 GNUIndentBearKandRStyleTest = verify_local_bear(
     GNUIndentBear,
     valid_files=(test_file10,),
     invalid_files=(test_file1,),
-    settings={"k_and_r_style": "true"})
+    settings={'k_and_r_style': 'true'})
+
+GNUIndentBearInfiniteLineLengthTest = verify_local_bear(
+    GNUIndentBear,
+    valid_files=(test_file11,),
+    invalid_files=(),
+    settings={'use_spaces': 'true', 'indent_size': '1000',
+              'max_line_length': '0'})

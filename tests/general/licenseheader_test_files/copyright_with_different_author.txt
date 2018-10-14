@@ -1,0 +1,2 @@
+This file contains copyright notice but without the specified author.
+Copyright 2016 abc - The specified author was 'The coala developers'.

@@ -7,8 +7,9 @@ from coalib.bears.GlobalBear import GlobalBear
 class ClangASTPrintBear(GlobalBear):
     check_prerequisites = classmethod(clang_available)
     LANGUAGES = ClangBear.LANGUAGES
+    REQUIREMENTS = ClangBear.REQUIREMENTS
 
-    def print_node(self, cursor, filename, before="", spec_before=""):
+    def print_node(self, cursor, filename, before='', spec_before=''):
         '''
         Prints this node and all child nodes recursively in the style of:
 
@@ -29,13 +30,13 @@ class ClangASTPrintBear(GlobalBear):
 
         if file is not None and file.name == filename:
             self.debug(
-                before + spec_before + "-" + str(cursor.displayname),
+                before + spec_before + '-' + str(cursor.displayname),
                 str(cursor.kind),
-                "Lines",
-                str(cursor.extent.start.line) + "-" +
+                'Lines',
+                str(cursor.extent.start.line) + '-' +
                 str(cursor.extent.end.line),
-                "(" + " ".join(str(token.spelling)
-                               for token in cursor.get_tokens()) + ")")
+                '(' + ' '.join(str(token.spelling)
+                               for token in cursor.get_tokens()) + ')')
 
         children = list(cursor.get_children())
 
@@ -43,12 +44,12 @@ class ClangASTPrintBear(GlobalBear):
             for child in children[:-1]:
                 self.print_node(child,
                                 filename,
-                                before + len(spec_before)*" " + "|")
+                                before + len(spec_before)*' ' + '|')
 
             self.print_node(children[-1],
                             filename,
-                            before + len(spec_before)*" ",
-                            "`")
+                            before + len(spec_before)*' ',
+                            '`')
 
     def run(self):
         """
@@ -58,6 +59,7 @@ class ClangASTPrintBear(GlobalBear):
         for filename, file in sorted(self.file_dict.items()):
             root = Index.create().parse(
                 filename,
-                options=TranslationUnit.PARSE_DETAILED_PROCESSING_RECORD).cursor
+                options=TranslationUnit.PARSE_DETAILED_PROCESSING_RECORD
+                ).cursor
 
             self.print_node(root, filename)

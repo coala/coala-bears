@@ -1,5 +1,5 @@
 from bears.java.JavaPMDBear import JavaPMDBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 
 good_file = """
@@ -16,7 +16,7 @@ class Hello {
     return myString.length();
   }
 }
-""".splitlines(keepends=True)
+"""
 
 bad_file = """
 // Hello.java
@@ -26,9 +26,9 @@ class Hello {
     return s.length();
   }
 }
-""".splitlines(keepends=True)
+"""
 
 
 JavaPMDBearTest = verify_local_bear(
     JavaPMDBear, valid_files=(good_file,), invalid_files=(bad_file,),
-    tempfile_kwargs={"suffix": ".java"})
+    tempfile_kwargs={'suffix': '.java'})

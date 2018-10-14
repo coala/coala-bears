@@ -1,0 +1,22 @@
+def docstring_missing():
+    return None
+
+
+def docstring_testcase(dummy):
+    """
+       Improper 3 indents.
+
+    :param dummy:
+        dummy description
+    :return:nothing""" return None
+
+
+def docstring_singleliner():
+    """ This is singleliner docstring. """
+
+    return None
+
+def docstring_inline():
+    """
+    Docstring followed by an inline docstring.
+    """  # This is inline docstring

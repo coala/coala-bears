@@ -1,0 +1,40 @@
+overrides: bear-requirements.yaml
+
+name: coala-bears
+description: "Bears for coala (Code Analysis Application)"
+build_version: 0.12.0.dev99999999999999
+current_version: 0.12.0.dev
+version: 0.12.0.dev
+release: 0.12.0.dev
+test_py36: false
+branch: master
+package_module: bears
+docs_source_dir: API
+docs_dir: docs
+entry_points:
+  coalabears:
+    - coala_official_bears = bears
+
+configuration:
+  template_dir:
+    - .moban.dt/
+    - .ci/
+    - ../coala-mobans/templates/
+    - ../coala-mobans/assets/
+  configuration: .moban.yaml
+  configuration_dir: ../coala-mobans/
+targets:
+  - setup.py: bears-setup.py.jj2
+  - requirements.txt: requirements.txt.jj2
+  - test-requirements.txt: bears-test-requirements.txt.jj2
+  - bears/VERSION: VERSION.jj2
+  - Gemfile: Gemfile.jj2
+  - package.json: package.json.jj2
+  - bear-requirements.txt: bear-requirements.txt.jj2
+  - .ci/appveyor.yml: ci/appveyor.yml.jj2
+  - .ci/run_with_env.cmd: run_with_env.cmd
+  - .ci/check_unsupported.sh: ci/check_unsupported.sh.jj2
+  - .ci/check_moban.sh: ci/check_moban.sh
+  - runtime.txt: runtime.txt
+  - netlify.toml: docs/netlify.toml
+  - coala-bears.cabal: coala-bears.cabal.jj2

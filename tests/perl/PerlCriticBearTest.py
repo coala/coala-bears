@@ -1,7 +1,7 @@
 import os
 
 from bears.perl.PerlCriticBear import PerlCriticBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 
 good_file = """
@@ -18,19 +18,19 @@ use vars qw/ $VERSION /;
 $VERSION = '1.00';
 
 exit 1 if !print "Hello, world!\n";
-""".splitlines(keepends=True)
+"""
 
 
 bad_file = """
 #!/usr/bin/perl
 
 print "Hello World\n";
-""".splitlines(keepends=True)
+"""
 
 
 conf_file = os.path.abspath(os.path.join(
     os.path.dirname(os.path.realpath(__file__)),
-    "testfiles", ".perlcriticrc"))
+    'testfiles', '.perlcriticrc'))
 
 PerlCriticBearTest = verify_local_bear(PerlCriticBear,
                                        valid_files=(good_file,),
@@ -40,4 +40,4 @@ PerlCriticBearConfigTest = verify_local_bear(
     PerlCriticBear,
     valid_files=(good_file, bad_file),
     invalid_files=(),
-    settings={"perlcritic_profile": conf_file})
+    settings={'perlcritic_profile': conf_file})

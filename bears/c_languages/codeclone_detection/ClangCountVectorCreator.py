@@ -118,7 +118,7 @@ class ClangCountVectorCreator:
         :return:         The dictionary holding CountVectors for all variables
                          in all functions.
         """
-        args = ["-I"+path for path in include_paths]
+        args = ['-I'+path for path in include_paths]
         root = Index.create().parse(filename, args=args).cursor
 
         return self._get_vectors_for_cursor(root, filename)

@@ -1,20 +1,20 @@
 from bears.css.CSSLintBear import CSSLintBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 good_file = """
 .class {
-  font-weight: 400;
   font-size: 5px;
+  font-weight: 400;
 }
-""".splitlines(keepends=True)
+"""
 
 
 bad_file = """
 .class {
-  font-weight: 400
-  font-size: 5px;
+  font-size: 5px
+  font-weight: 400;
 }
-""".splitlines(keepends=True)
+"""
 
 
 CSSLintBearTest = verify_local_bear(CSSLintBear,

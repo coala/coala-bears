@@ -112,7 +112,7 @@ def is_function(stack):
     return _is_nth_child_of_kind(stack, [0], CursorKind.CALL_EXPR) != 0
 
 
-FOR_POSITION = enum("UNKNOWN", "INIT", "COND", "INC", "BODY")
+FOR_POSITION = enum('UNKNOWN', 'INIT', 'COND', 'INC', 'BODY')
 
 
 def _get_position_in_for_tokens(tokens, position):
@@ -131,11 +131,11 @@ def _get_position_in_for_tokens(tokens, position):
     next_state = state
     opened_brackets = 0
     for token in tokens:
-        if token.spelling == ";":
+        if token.spelling == ';':
             next_state = state + 1
-        elif token.spelling == "(":
+        elif token.spelling == '(':
             opened_brackets += 1
-        elif token.spelling == ")":
+        elif token.spelling == ')':
             opened_brackets -= 1
             # Closed bracket for for condition, otherwise syntax error by clang
             if opened_brackets == 0:
@@ -228,9 +228,9 @@ def _stack_contains_operators(stack, operators):
 
 
 ARITH_BINARY_OPERATORS = ['+', '-', '*', '/', '%', '&', '|']
-COMPARISION_OPERATORS = ["==", "<=", ">=", "<", ">", "!=", "&&", "||"]
-ADV_ASSIGNMENT_OPERATORS = [op + "=" for op in ARITH_BINARY_OPERATORS]
-ASSIGNMENT_OPERATORS = ["="] + ADV_ASSIGNMENT_OPERATORS
+COMPARISION_OPERATORS = ['==', '<=', '>=', '<', '>', '!=', '&&', '||']
+ADV_ASSIGNMENT_OPERATORS = [op + '=' for op in ARITH_BINARY_OPERATORS]
+ASSIGNMENT_OPERATORS = ['='] + ADV_ASSIGNMENT_OPERATORS
 
 
 def in_sum(stack):
@@ -290,7 +290,7 @@ def is_inc_or_dec(stack):
     for elem, _ in stack:
         if elem.kind == CursorKind.UNARY_OPERATOR:
             for token in elem.get_tokens():
-                if token.spelling in ["--", "++"]:
+                if token.spelling in ['--', '++']:
                     return True
 
     return False
@@ -371,7 +371,7 @@ def is_assigner(stack):
                 # it is because += reads on both sides
                 if (token.spelling in ASSIGNMENT_OPERATORS and (
                         token_pos <= cursor_pos or
-                        token.spelling != "=")):
+                        token.spelling != '=')):
                     return True
 
     return is_inc_or_dec(stack)
@@ -435,24 +435,24 @@ def is_call_param(stack):
             not is_function(stack))
 
 
-condition_dict = {"used": used,
-                  "returned": returned,
-                  "is_condition": is_condition,
-                  "in_condition": in_condition,
-                  "in_second_level_condition": in_second_level_condition,
-                  "in_third_level_condition": in_third_level_condition,
-                  "is_assignee": is_assignee,
-                  "is_assigner": is_assigner,
-                  "loop_content": loop_content,
-                  "second_level_loop_content": second_level_loop_content,
-                  "third_level_loop_content": third_level_loop_content,
-                  "is_param": is_param,
-                  "is_called": is_called,
-                  "is_call_param": is_call_param,
-                  "in_sum": in_sum,
-                  "in_product": in_product,
-                  "in_binary_operation": in_binary_operation,
-                  "member_accessed": member_accessed}
+condition_dict = {'used': used,
+                  'returned': returned,
+                  'is_condition': is_condition,
+                  'in_condition': in_condition,
+                  'in_second_level_condition': in_second_level_condition,
+                  'in_third_level_condition': in_third_level_condition,
+                  'is_assignee': is_assignee,
+                  'is_assigner': is_assigner,
+                  'loop_content': loop_content,
+                  'second_level_loop_content': second_level_loop_content,
+                  'third_level_loop_content': third_level_loop_content,
+                  'is_param': is_param,
+                  'is_called': is_called,
+                  'is_call_param': is_call_param,
+                  'in_sum': in_sum,
+                  'in_product': in_product,
+                  'in_binary_operation': in_binary_operation,
+                  'member_accessed': member_accessed}
 
 
 def counting_condition(value):

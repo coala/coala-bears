@@ -1,39 +1,85 @@
-[Default]
-files = *.py, bears/**/*.py, tests/**/*.py
-ignore = tests/python/test_files/pylint_test.py
+[all]
+files = *.py, bears/**/*.py, tests/**/*.py, .moban.dt/*.py.in
+ignore = tests/python/test_files/pylint_test.py, tests/python/bandit_test_files/*,
+         tests/python/vulture_test_files/*
 
 max_line_length = 80
 use_spaces = True
 
-[python]
+[all.python]
 # Patches may conflict with autopep8 so putting them in own section so they
 # will be executed sequentially; also we need the LineLengthBear to double
 # check the line length because PEP8Bear sometimes isn't able to correct the
 # linelength.
-bears = SpaceConsistencyBear, PyUnusedCodeBear
-default_actions =
-    SpaceConsistencyBear: ApplyPatchAction,
-    PyUnusedCodeBear: ApplyPatchAction
+bears = SpaceConsistencyBear, QuotesBear
+language = python
+default_actions = *: ApplyPatchAction
+preferred_quotation = '
 
-[autopep8]
-bears = PEP8Bear
+[all.flakes]
+# Do not set default_action to ApplyPatchAction as it may lead to some
+# required imports being removed which might result in coala behaving weirdly.
+default_action: *: ShowPatchAction
+bears = PyUnusedCodeBear
+language = Python
+
+[all.autopep8]
+bears = PEP8Bear, PycodestyleBear
 default_actions = PEP8Bear: ApplyPatchAction
 
-[linelength]  # Sometimes autopep8 makes too long lines, need to check after!
+[all.linelength]  # Sometimes autopep8 makes too long lines, need to check after!
 bears = LineLengthBear
 ignore_length_regex = ^.*https?://
 
-[commit]
-bears = GitCommitBear
+[all.CI]
+files = .ci/*
+bears = SpaceConsistencyBear
 
-[LineCounting]
+[all.commit]
+bears = GitCommitBear
+shortlog_trailing_period = False
+shortlog_regex = ([^:]*|[^:]+: [A-Z0-9*].*)
+body_close_issue = True
+body_close_issue_full_url = True
+body_close_issue_on_last_line = True
+body_enforce_issue_reference = False
+
+[all.LineCounting]
 enabled = False
 bears = LineCountBear
 max_lines_per_file = 1000
 
-[TODOS]
+[rst]
+bear = reSTLintBear
+files = **.rst
+
+[all.TODOS]
 enabled = False
 bears = KeywordBear
+language = python3
 
-ci_keywords = \#TODO, \# TODO, \#FIXME, \# FIXME
+# Note that the ci_keywords and cs_keywords are only used here because coala
+# 0.8.x (current stable release) needs them.
+ci_keywords, keywords = \#TODO, \# TODO, \#FIXME, \# FIXME
 cs_keywords =
+
+[all.PythonPackageInit]
+bears = PythonPackageInitBear
+ignore = *.py
+
+[all.yml]
+bears = YAMLLintBear
+files = *.yml, *.yaml, .ci/*.yml, tests/**/*.yml
+
+[bash]
+bears = ShellCheckBear
+files = .ci/*.sh
+ignore = .ci/deps.pip.sh
+shell = bash
+shellcheck_ignore = SC2046, SC2154, SC2155
+
+[jinja2]
+bears = Jinja2Bear
+files = **.jj2
+# Bug in handling of ".. list | sort"
+ignore = .moban.dt/Gemfile.jj2, .moban.dt/bear-requirements.txt.jj2, .moban.dt/package.json.jj2

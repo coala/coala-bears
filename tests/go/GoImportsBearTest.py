@@ -1,10 +1,23 @@
 
 from bears.go.GoImportsBear import GoImportsBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
+
+good_file = """package main
+
+import "os"
+
+func main() {
+\tf, _ := os.Open("foo")
+}"""
+
+bad_file = """package main
+
+
+func main() {
+\tf, _ := os.Open("foo")
+}"""
 
 GoImportsBearTest = verify_local_bear(
     GoImportsBear,
-    (['package main', '', 'import "os"', '',
-      'func main() {', '\tf, _ := os.Open("foo")', '}'],),
-    (['package main', '', '',
-      'func main() {', '\tf, _ := os.Open("foo")', '}'],))
+    (good_file,),
+    (bad_file,))

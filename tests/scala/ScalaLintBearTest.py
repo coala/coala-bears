@@ -1,8 +1,7 @@
 import os
 
 from bears.scala.ScalaLintBear import ScalaLintBear
-from tests.LocalBearTestHelper import verify_local_bear
-from coalib.misc.ContextManagers import prepare_file
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 good_file = """
 object HelloWorld {
@@ -10,7 +9,7 @@ object HelloWorld {
     println("Hello, world!")
   }
 }
-""".splitlines(keepends=True)
+"""
 
 bad_file = """
 object HelloWorld {
@@ -19,18 +18,18 @@ object HelloWorld {
     var x = 10
   }
 }
-""".splitlines(keepends=True)
+"""
 
 conf_file = os.path.join(os.path.dirname(__file__),
-                         "test_files",
-                         "scala_config.xml")
+                         'test_files',
+                         'scala_config.xml')
 
 
 ScalaLintBearTest = verify_local_bear(
                         ScalaLintBear,
                         valid_files=(good_file,),
                         invalid_files=(bad_file,),
-                        tempfile_kwargs={"suffix": ".scala"}
+                        tempfile_kwargs={'suffix': '.scala'}
                         )
 
 
@@ -38,6 +37,6 @@ ScalaLintBearConfigTest = verify_local_bear(
                               ScalaLintBear,
                               valid_files=(good_file, bad_file),
                               invalid_files=(),
-                              settings={"scalalint_config": conf_file},
-                              tempfile_kwargs={"suffix": ".scala"}
+                              settings={'scalalint_config': conf_file},
+                              tempfile_kwargs={'suffix': '.scala'}
                               )

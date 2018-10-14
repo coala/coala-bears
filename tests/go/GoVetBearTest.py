@@ -4,7 +4,7 @@ from shutil import which
 from unittest.case import skipIf
 
 from bears.go.GoVetBear import GoVetBear
-from tests.LocalBearTestHelper import LocalBearTestHelper
+from coalib.testing.LocalBearTestHelper import LocalBearTestHelper
 from coalib.settings.Section import Section
 
 
@@ -12,15 +12,21 @@ from coalib.settings.Section import Section
 class GoVetBearTest(LocalBearTestHelper):
 
     def setUp(self):
-        self.section = Section("test section")
+        self.section = Section('test section')
         self.uut = GoVetBear(self.section, Queue())
-        self.good_file = os.path.join(os.path.dirname(__file__),
-                                      "test_files",
-                                      "vet_good.go")
-        self.bad_file = os.path.join(os.path.dirname(__file__),
-                                     "test_files",
-                                     "vet_bad.go")
 
-    def test_run(self):
-        self.check_validity(self.uut, [], self.good_file)
-        self.check_validity(self.uut, [], self.bad_file, valid=False)
+    def test_syntax_error(self):
+        good_file = os.path.join(os.path.dirname(__file__),
+                                 'test_files',
+                                 'vet_good.go')
+        bad_file = os.path.join(os.path.dirname(__file__),
+                                'test_files',
+                                'vet_bad_semantics.go')
+        self.check_validity(self.uut, [], good_file)
+        self.check_invalidity(self.uut, [], bad_file)
+
+    def test_semantic_error(self):
+        bad_file = os.path.join(os.path.dirname(__file__),
+                                'test_files',
+                                'vet_bad_syntax.go')
+        self.check_invalidity(self.uut, [], bad_file)

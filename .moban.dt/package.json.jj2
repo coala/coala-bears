@@ -1,0 +1,13 @@
+{
+  "name": "coala-bears",
+  "version": "0.8.0",
+  "dependencies": {
+{% for package, data in npm_requirements.items() | sort %}
+{% if not loop.last %}
+    "{{ package }}": "{{ data.version }}",
+{% else %}
+    "{{ package }}": "{{ data.version }}"
+{% endif %}{# if not loop.last #}
+{% endfor %}{# for package, data in npm_requirements.items() #}
+  }
+}

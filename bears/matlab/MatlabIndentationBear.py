@@ -1,5 +1,6 @@
 import re
 
+from coalib.bearlib import deprecate_settings
 from coalib.bears.LocalBear import LocalBear
 from coalib.results.Diff import Diff
 from coalib.results.Result import Result
@@ -7,21 +8,24 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
 class MatlabIndentationBear(LocalBear):
-    LANGUAGES = {"Matlab", "Octave"}
+    LANGUAGES = {'Matlab', 'Octave'}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
     CAN_DETECT = {'Formatting'}
 
-    def run(self, filename, file, tab_width: int=2):
+    @deprecate_settings(indent_size='tab_width')
+    def run(self, filename, file,
+            indent_size: int = 2,
+            ):
         """
         This bear features a simple algorithm to calculate the right
         indentation for Matlab/Octave code. However, it will not handle hanging
         indentation or conditions ranging over several lines yet.
 
-        :param tab_width: Number of spaces per indentation level.
+        :param indent_size: Number of spaces per indentation level.
         """
-        new_file = tuple(self.reindent(file, tab_width))
+        new_file = tuple(self.reindent(file, indent_size))
 
         if new_file != tuple(file):
             wholediff = Diff.from_string_arrays(file, new_file)

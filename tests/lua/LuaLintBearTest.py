@@ -1,10 +1,10 @@
 from bears.lua.LuaLintBear import LuaLintBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 
 good_file = """
 print("Hello World!")
-""".splitlines(keepends=True)
+"""
 
 
 bad_file = """
@@ -15,7 +15,7 @@ function factorial(n)
   end
   return x
 end
-""".splitlines(keepends=True)
+"""
 
 
 LuaLintBearTest = verify_local_bear(LuaLintBear,

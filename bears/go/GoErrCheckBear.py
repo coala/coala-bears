@@ -1,32 +1,38 @@
 from coalib.bearlib.abstractions.Linter import linter
+from dependency_management.requirements.GoRequirement import GoRequirement
 from coalib.settings.Setting import typed_list
 
 
 @linter(executable='errcheck',
         output_format='regex',
-        output_regex=r'(?P<filename>[^:]+):(?P<line>\d+):'
-                     r'(?P<col>\d+)\s*(?P<message>.*)',
-        result_message="This function call has an unchecked error.")
+        output_regex=r'[^:]+:(?P<line>\d+):'
+                     r'(?P<column>\d+)\s*(?P<message>.*)',
+        result_message='This function call has an unchecked error.')
 class GoErrCheckBear:
 
     """
     Checks the code for all function calls that have unchecked errors.
     GoErrCheckBear runs ``errcheck`` over each file to find such functions.
 
-    For more information on the analysis visit <https://github.com/kisielk/errcheck>.
+    For more information on the analysis visit
+    <https://github.com/kisielk/errcheck>.
     """
-    LANGUAGES = {"Go"}
+    LANGUAGES = {'Go'}
+    REQUIREMENTS = {GoRequirement(
+        package='github.com/kisielk/errcheck', flag='-u')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
+    ASCIINEMA_URL = 'https://asciinema.org/a/46834'
     CAN_DETECT = {'Syntax'}
 
     @staticmethod
     def create_arguments(filename, file, config_file,
-                         ignore: typed_list(str)=[],
-                         ignorepkg: typed_list(str)=[],
-                         asserts: bool=False,
-                         blank: bool=False):
+                         ignore: typed_list(str) = [],
+                         ignorepkg: typed_list(str) = [],
+                         asserts: bool = False,
+                         blank: bool = False,
+                         ):
         """
         Bear configuration arguments.
 
@@ -37,7 +43,8 @@ class GoErrCheckBear:
                              regex apply to all packages.
         :param ignorepkg:    Takes a comma-separated list of package
                              import paths to ignore.
-        :param asserts:      Enables checking for ignored type assertion results
+        :param asserts:      Enables checking for ignored type assertion
+                             results.
         :param blank:        Enables checking for assignments of errors to
                              the blank identifier.
 
@@ -46,9 +53,10 @@ class GoErrCheckBear:
         if ignore:
             args += ('-ignore', ','.join(part.strip() for part in ignore))
         if ignorepkg:
-            args += ('-ignorepkg', ','.join(part.strip() for part in ignorepkg))
+            args += ('-ignorepkg', ','.join(part.strip()
+                                            for part in ignorepkg))
         if blank:
-            args += ("-blank",)
+            args += ('-blank',)
         if asserts:
-            args += ("-asserts",)
+            args += ('-asserts',)
         return args + (filename,)

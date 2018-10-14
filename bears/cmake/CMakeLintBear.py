@@ -1,5 +1,5 @@
 from coalib.bearlib.abstractions.Linter import linter
-from coalib.bears.requirements.PipRequirement import PipRequirement
+from dependency_management.requirements.PipRequirement import PipRequirement
 from coalib.settings.Setting import path
 
 
@@ -13,7 +13,7 @@ class CMakeLintBear:
     For more information consult <https://github.com/richq/cmake-lint>.
     """
     LANGUAGES = {'CMake'}
-    REQUIREMENTS = {PipRequirement('cmakelint', '1.*')}
+    REQUIREMENTS = {PipRequirement('cmakelint', '1.3')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
@@ -21,7 +21,8 @@ class CMakeLintBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file,
-                         cmakelint_config: path=""):
+                         cmakelint_config: path = '',
+                         ):
         """
         :param cmakelint_config: The location of the cmakelintrc config file.
         """

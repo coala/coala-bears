@@ -2,7 +2,7 @@ from shutil import which
 import sys
 
 from coalib.bearlib.abstractions.Linter import linter
-from coalib.bears.requirements.PipRequirement import PipRequirement
+from dependency_management.requirements.PipRequirement import PipRequirement
 from coalib.settings.Setting import typed_list
 
 
@@ -19,18 +19,26 @@ class HTMLLintBear:
 
     _html_lint = which('html_lint.py')
 
-    LANGUAGES = {"HTML"}
-    REQUIREMENTS = {PipRequirement('html-linter', '0.3.*')}
+    LANGUAGES = {'HTML', 'Jinja2', 'PHP'}
+    REQUIREMENTS = {PipRequirement('html-linter', '0.4.0')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
     CAN_DETECT = {'Syntax', 'Formatting'}
 
     @staticmethod
-    def create_arguments(filename, file, config_file,
-                         htmllint_ignore: typed_list(str)=()):
+    def create_arguments(filename, file, config_file, use_spaces: bool,
+                         htmllint_ignore: typed_list(str) = [],
+                         ):
         """
         :param htmllint_ignore: List of checkers to ignore.
+        :param use_spaces: True if spaces are to be used instead of tabs.
         """
-        ignore = ','.join(part.strip() for part in htmllint_ignore)
+        additional_ignore = []
+        if not use_spaces:
+            additional_ignore.append('tabs')
+
+        ignore = ','.join(part.strip()
+                          for part in htmllint_ignore + additional_ignore)
+
         return HTMLLintBear._html_lint, '--disable=' + ignore, filename

@@ -1,5 +1,5 @@
 from bears.verilog.VerilogLintBear import VerilogLintBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 good_file = """
 module mux2to1 (w0, w1, s, f);
@@ -7,7 +7,7 @@ module mux2to1 (w0, w1, s, f);
   output f;
   assign f = s ? w1 : w0;
 endmodule
-""".splitlines(keepends=True)
+"""
 
 
 bad_file = """
@@ -30,7 +30,7 @@ module updowncount(R, Clock, L, E, up_down, Q);
       Q <= Q + direction;
     end
 endmodule
-""".splitlines(keepends=True)
+"""
 
 
 VerilogLintBearTest = verify_local_bear(VerilogLintBear,

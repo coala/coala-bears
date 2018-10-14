@@ -1,6 +1,7 @@
-from coalib.parsing.StringProcessing import escape
-
+from coala_utils.string_processing.Core import escape
 from coalib.bearlib.abstractions.Linter import linter
+from dependency_management.requirements.JuliaRequirement import (
+    JuliaRequirement)
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
@@ -23,15 +24,16 @@ class JuliaLintBear:
     See <https://lintjl.readthedocs.org/en/stable/> for more information
     on the analysis provided.
     """
-    LANGUAGES = {"Julia"}
+    LANGUAGES = {'Julia'}
+    REQUIREMENTS = {JuliaRequirement('Lint')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
-    CAN_DETECT = {'Unused Code', 'Syntax', 'Simplification', 'Code Duplication',
+    CAN_DETECT = {'Unused Code', 'Syntax', 'Redundancy', 'Duplication',
                   'Unreachable Code', 'Security', 'Formatting'}
 
     @staticmethod
     def create_arguments(filename, file, config_file):
-        lintcode = ('import Lint.lintfile; lintfile("' +
-                    escape(filename, '"\\') + '")')
+        lintcode = ('import Lint.lintfile; display(lintfile("' +
+                    escape(filename, '"\\') + '"))')
         return '-e', lintcode

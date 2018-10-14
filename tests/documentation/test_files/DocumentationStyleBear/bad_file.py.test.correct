@@ -1,0 +1,12 @@
+def improper_indents(indents):
+    """
+    Contains improper indents and no following empty line below.
+
+    :param indents:
+        5 space indent
+        4 space indent
+    :return:
+        3 space indent
+        4 space indent
+    """
+    return None

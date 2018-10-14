@@ -1,5 +1,5 @@
-from bears.js.JSComplexityBear import JSComplexityBear
-from tests.LocalBearTestHelper import verify_local_bear
+from bears.js import JSComplexityBear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 complexity_12 = """(function () {
   var foo = 1 && 1 || 0;
@@ -26,7 +26,7 @@ complexity_12 = """(function () {
     }
   }
 })()
-""".splitlines(True)
+"""
 
 complexity_4 = """(function () {
   var foo = 1 && 1 || 0;
@@ -34,23 +34,26 @@ complexity_4 = """(function () {
     return;
   }
 })()
-""".splitlines(True)
+"""
 
-JSComplexityBearTest = verify_local_bear(JSComplexityBear,
-                                         valid_files=(complexity_4,),
-                                         invalid_files=(complexity_12,),
-                                         tempfile_kwargs={"suffix": ".js"})
+test_syntax_error = '{<!@3@^ yeah!/\n'
 
-JSComplexityBearThresholdTest = verify_local_bear(JSComplexityBear,
-                                                  valid_files=(),
-                                                  invalid_files=(complexity_4,
-                                                                 complexity_12),
-                                                  settings={"cc_threshold": 2},
-                                                  tempfile_kwargs={"suffix":
-                                                                   ".js"})
+JSComplexityBearTest = verify_local_bear(
+    JSComplexityBear.JSComplexityBear,
+    valid_files=(complexity_4,),
+    invalid_files=(complexity_12, test_syntax_error),
+    tempfile_kwargs={'suffix': '.js'})
+
+JSComplexityBearThresholdTest = verify_local_bear(
+    JSComplexityBear.JSComplexityBear,
+    valid_files=(),
+    invalid_files=(complexity_4, complexity_12),
+    settings={'cc_threshold': 2},
+    tempfile_kwargs={'suffix': '.js'})
 
 # No output for non-js files
-JSComplexityBearInvalidFileTest = verify_local_bear(JSComplexityBear,
-                                                    valid_files=(complexity_4,
-                                                                 complexity_12),
-                                                    invalid_files=())
+JSComplexityBearInvalidFileTest = verify_local_bear(
+    JSComplexityBear.JSComplexityBear,
+    valid_files=(complexity_4, complexity_12),
+    invalid_files=(),
+    tempfile_kwargs={'suffix': '.not_js'})

@@ -1,4 +1,10 @@
 from coalib.bearlib.abstractions.Linter import linter
+from dependency_management.requirements.AnyOneOfRequirements import (
+    AnyOneOfRequirements)
+from dependency_management.requirements.CondaRequirement import (
+    CondaRequirement)
+from dependency_management.requirements.DistributionRequirement import (
+    DistributionRequirement)
 
 
 @linter(executable='ruby',
@@ -12,7 +18,14 @@ class RubySyntaxBear:
     """
     Checks the code with ``ruby -wc`` on each file separately.
     """
-    LANGUAGES = {"Ruby"}
+    LANGUAGES = {'Ruby'}
+    REQUIREMENTS = {
+        AnyOneOfRequirements(
+            [DistributionRequirement('ruby'),
+             CondaRequirement('ruby', '2.2.3', 'bioconda'),
+             ],
+        ),
+    }
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

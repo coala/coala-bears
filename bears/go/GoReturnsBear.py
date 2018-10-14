@@ -1,4 +1,5 @@
 from coalib.bearlib.abstractions.Linter import linter
+from dependency_management.requirements.GoRequirement import GoRequirement
 
 
 @linter(executable='goreturns',
@@ -9,7 +10,9 @@ class GoReturnsBear:
     """
     Proposes corrections of Go code using ``goreturns``.
     """
-    LANGUAGES = {"Go"}
+    LANGUAGES = {'Go'}
+    REQUIREMENTS = {GoRequirement(
+        package='sourcegraph.com/sqs/goreturns', flag='-u')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

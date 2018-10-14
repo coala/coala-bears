@@ -1,0 +1,12 @@
+def docstring_accepted(dummy):
+    """
+    This is the accepted standard of a docstring.
+
+    :param dummy:
+        first line description
+        second line description
+    :return:
+        first line description
+        second line description
+    """
+    return None

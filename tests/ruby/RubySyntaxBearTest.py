@@ -1,5 +1,5 @@
 from bears.ruby.RubySyntaxBear import RubySyntaxBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 good_file = """
 class HelloWorld
@@ -10,7 +10,7 @@ class HelloWorld
         puts "Hello #{@name}!"
     end
 end
-""".splitlines(keepends=True)
+"""
 
 
 bad_file = """
@@ -22,7 +22,7 @@ class HelloWorld
         x = 1 # unused variables invoke a warning
         puts "Hello #{@name}!"
     end
-""".splitlines(keepends=True)
+"""
 
 
 RubySyntaxBearTest = verify_local_bear(RubySyntaxBear,

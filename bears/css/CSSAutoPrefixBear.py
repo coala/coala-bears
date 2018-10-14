@@ -1,5 +1,5 @@
 from coalib.bearlib.abstractions.Linter import linter
-from coalib.bears.requirements.NpmRequirement import NpmRequirement
+from dependency_management.requirements.NpmRequirement import NpmRequirement
 
 
 @linter(executable='postcss',
@@ -11,12 +11,13 @@ class CSSAutoPrefixBear:
     """
     This bear adds vendor prefixes to CSS rules using ``autoprefixer`` utility.
     """
-    LANGUAGES = {"CSS"}
+    LANGUAGES = {'CSS'}
     REQUIREMENTS = {NpmRequirement('postcss-cli', '2'),
-                    NpmRequirement('autoprefixer', '6')}
+                    NpmRequirement('autoprefixer', '7.2.0')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
+    ASCIINEMA_URL = 'https://asciinema.org/a/40093'
     CAN_FIX = {'Syntax', 'Formatting'}
 
     @staticmethod

@@ -1,5 +1,7 @@
 from coalib.bearlib.abstractions.Linter import linter
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
+from dependency_management.requirements.DistributionRequirement import (
+    DistributionRequirement)
 
 
 @linter(executable='php',
@@ -12,7 +14,8 @@ class PHPLintBear:
     """
     Checks the code with ``php -l``. This runs it on each file separately.
     """
-    LANGUAGES = {"PHP"}
+    LANGUAGES = {'PHP'}
+    REQUIREMENTS = {DistributionRequirement(apt_get='php-cli')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

@@ -1,5 +1,5 @@
 from bears.hypertext.BootLintBear import BootLintBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 
 good_file = """
@@ -35,7 +35,7 @@ good_file = """
         <ol id="bootlint"></ol>
     </body>
 </html>
-""".splitlines(keepends=True)
+"""
 
 bad_file = """
 <html lang="en">
@@ -72,7 +72,7 @@ bad_file = """
         </ol>
     </body>
 </html>
-""".splitlines(keepends=True)
+"""
 # There's a missing type in <button> tag, missing DOCTYPE
 # and panel has no body.
 

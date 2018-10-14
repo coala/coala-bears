@@ -1,8 +1,9 @@
 from isort import SortImports
 
+from coalib.bearlib import deprecate_settings
 from coalib.bearlib.spacing.SpacingHelper import SpacingHelper
 from coalib.bears.LocalBear import LocalBear
-from coalib.bears.requirements.PipRequirement import PipRequirement
+from dependency_management.requirements.PipRequirement import PipRequirement
 from coalib.results.Diff import Diff
 from coalib.results.Result import Result
 from coalib.settings.Setting import typed_list
@@ -10,42 +11,103 @@ from coalib.settings.Setting import typed_list
 
 class PyImportSortBear(LocalBear):
 
-    LANGUAGES = {"Python", "Python 3", "Python 2"}
-    REQUIREMENTS = {PipRequirement('isort', '4.*')}
+    LANGUAGES = {'Python', 'Python 3', 'Python 2'}
+    REQUIREMENTS = {PipRequirement('isort', '4.2')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
-    CAN_FIX = {'Formatting', 'Simplification'}
+    CAN_FIX = {'Formatting'}
 
+    @staticmethod
+    def _seperate_imports(file):
+        import_stmts = []
+        tmp = []
+        paren = False
+        for lineno, lines in enumerate(file, start=1):
+            if 'import' in lines.split() or paren:
+                # To ensure that
+                # from x import ( y,
+                #                 z) type of imports are not treated as
+                # different sections
+                if '(' in lines and ')' not in lines:
+                    paren = True
+                if ')' in lines:
+                    paren = False
+                tmp.append((lineno, lines))
+            else:
+                if tmp:
+                    import_stmts.append(tmp)
+                tmp = []
+        # To ensure that if the last line of a file is an import statement
+        # it doesn't get ignored
+        if tmp:
+            import_stmts.append(tmp)
+            tmp = []
+        return import_stmts
+
+    def _get_diff(self):
+        if self.treat_seperated_imports_independently:
+            import_stmts = PyImportSortBear._seperate_imports(self.file)
+            sorted_imps = []
+            for units in import_stmts:
+                sort_imports = SortImports(file_contents=''.
+                                           join([x[1] for x in units]),
+                                           **self.isort_settings)
+                sort_imports = sort_imports.output.splitlines(True)
+                sorted_imps.append((units, sort_imports))
+
+            diff = Diff(self.file)
+            for old, new in sorted_imps:
+                start = old[0][0]
+                end = start + len(old) - 1
+                diff.delete_lines(start, end)
+                assert isinstance(new, list)
+                diff.add_lines(start, list(new))
+
+            if diff.modified != diff._file:
+                return diff
+        else:
+            sort_imports = SortImports(file_contents=''.join(self.file),
+                                       **self.isort_settings)
+
+            new_file = tuple(sort_imports.output.splitlines(True))
+            if new_file != tuple(self.file):
+                diff = Diff.from_string_arrays(self.file, new_file)
+                return diff
+        return None
+
+    @deprecate_settings(indent_size='tab_width')
     def run(self, filename, file,
-            use_parentheses_in_import: bool=True,
-            force_alphabetical_sort_in_import: bool=False,
-            force_sort_within_import_sections: bool=True,
-            from_first_in_import: bool=False,
-            include_trailing_comma_in_import: bool=False,
-            combine_star_imports: bool=True,
-            combine_as_imports: bool=True,
-            lines_after_imports: int=-1,
-            order_imports_by_type: bool=False,
-            balanced_wrapping_in_imports: bool=False,
-            import_heading_localfolder: str="",
-            import_heading_firstparty: str="",
-            import_heading_thirdparty: str="",
-            import_heading_stdlib: str="",
-            import_heading_future: str="",
-            default_import_section: str="FIRSTPARTY",
-            force_grid_wrap_imports: bool=False,
-            force_single_line_imports: bool=True,
-            sort_imports_by_length: bool=False,
-            use_spaces: bool=True,
-            tab_width: int=SpacingHelper.DEFAULT_TAB_WIDTH,
-            forced_separate_imports: typed_list(str)=(),
-            isort_multi_line_output: int=4,
-            known_first_party_imports: typed_list(str)=(),
-            known_third_party_imports: typed_list(str)=(),
-            known_standard_library_imports: typed_list(str)=None,
-            max_line_length: int=80,
-            imports_forced_to_top: typed_list(str)=()):
+            use_parentheses_in_import: bool = True,
+            force_alphabetical_sort_in_import: bool = False,
+            force_sort_within_import_sections: bool = True,
+            from_first_in_import: bool = False,
+            include_trailing_comma_in_import: bool = False,
+            combine_star_imports: bool = True,
+            combine_as_imports: bool = True,
+            lines_after_imports: int = -1,
+            order_imports_by_type: bool = False,
+            balanced_wrapping_in_imports: bool = False,
+            import_heading_localfolder: str = '',
+            import_heading_firstparty: str = '',
+            import_heading_thirdparty: str = '',
+            import_heading_stdlib: str = '',
+            import_heading_future: str = '',
+            default_import_section: str = 'FIRSTPARTY',
+            force_grid_wrap_imports: bool = False,
+            force_single_line_imports: bool = True,
+            sort_imports_by_length: bool = False,
+            use_spaces: bool = True,
+            indent_size: int = SpacingHelper.DEFAULT_TAB_WIDTH,
+            forced_separate_imports: typed_list(str) = (),
+            isort_multi_line_output: int = 4,
+            known_first_party_imports: typed_list(str) = (),
+            known_third_party_imports: typed_list(str) = (),
+            known_standard_library_imports: typed_list(str) = None,
+            max_line_length: int = 79,
+            imports_forced_to_top: typed_list(str) = (),
+            treat_seperated_imports_independently: bool = False,
+            ):
         """
         Raise issues related to sorting imports, segregating imports into
         various sections, and also adding comments on top of each import
@@ -112,8 +174,8 @@ class PyImportSortBear(LocalBear):
             Set to true to sort imports by length instead of alphabetically.
         :param use_spaces:
             True if spaces are to be used instead of tabs.
-        :param tab_width:
-            Number of spaces per indent level.
+        :param indent_size:
+            Number of spaces per indentation level.
         :param forced_separate_imports:
             A list of modules that you want to appear in their own separate
             section.
@@ -143,6 +205,9 @@ class PyImportSortBear(LocalBear):
             dependencies that occur in many projects.
         :param max_line_length:
             Maximum number of characters for a line.
+        :param treat_seperated_imports_independently:
+            Treat import statements seperated by one or more blank line or any
+            statement other than an import statement as an independent bunch.
         """
         isort_settings = dict(
             use_parentheses=use_parentheses_in_import,
@@ -163,24 +228,28 @@ class PyImportSortBear(LocalBear):
             force_grid_wrap=force_grid_wrap_imports,
             force_single_line=force_single_line_imports,
             length_sort=sort_imports_by_length,
-            indent="Tab" if use_spaces == False else tab_width,
+            indent='Tab' if not use_spaces else indent_size,
             forced_separate=forced_separate_imports,
             multi_line_output=isort_multi_line_output,
             known_first_party=known_first_party_imports,
+            known_third_party=known_third_party_imports,
             line_length=max_line_length,
             force_to_top=imports_forced_to_top)
 
         if known_standard_library_imports is not None:
-            isort_settings["known_standard_library"] = (
+            isort_settings['known_standard_library'] = (
                 known_standard_library_imports)
 
-        sort_imports = SortImports(file_contents=''.join(file),
-                                   **isort_settings)
-        new_file = tuple(sort_imports.output.splitlines(True))
+        self.isort_settings = isort_settings
+        self.file = file
+        self.filename = filename
+        self.treat_seperated_imports_independently = \
+            treat_seperated_imports_independently
 
-        if new_file != tuple(file):
-            diff = Diff.from_string_arrays(file, new_file)
+        diff = self._get_diff()
+
+        if diff:
             yield Result(self,
-                         "Imports can be sorted.",
+                         'Imports can be sorted.',
                          affected_code=diff.affected_code(filename),
                          diffs={filename: diff})

@@ -1,7 +1,7 @@
 from queue import Queue
 
 from bears.python.PyCommentedCodeBear import PyCommentedCodeBear
-from tests.LocalBearTestHelper import LocalBearTestHelper
+from coalib.testing.LocalBearTestHelper import LocalBearTestHelper
 from coalib.settings.Section import Section
 
 
@@ -11,9 +11,9 @@ class PyCommentedCodeBearTest(LocalBearTestHelper):
         self.uut = PyCommentedCodeBear(Section('name'), Queue())
 
     def test_valid(self):
-        self.check_validity(self.uut, ["import sys"])
-        self.check_validity(self.uut, ["a = 1 + 1"])
-        self.check_validity(self.uut, ["# hey man!"])
+        self.check_validity(self.uut, ['import sys'])
+        self.check_validity(self.uut, ['a = 1 + 1'])
+        self.check_validity(self.uut, ['# hey man!'])
         self.check_validity(self.uut, ['"""',
                                        'Hey, this is a code sample:',
                                        '>>> import os',
@@ -23,5 +23,5 @@ class PyCommentedCodeBearTest(LocalBearTestHelper):
                                        '"""'])
 
     def test_invalid(self):
-        self.check_validity(self.uut, ["# import os"], valid=False)
-        self.check_validity(self.uut, ["# print('comment')"], valid=False)
+        self.check_invalidity(self.uut, ['# import os'])
+        self.check_invalidity(self.uut, ["# print('comment')"])

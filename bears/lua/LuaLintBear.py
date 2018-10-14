@@ -1,4 +1,6 @@
 from coalib.bearlib.abstractions.Linter import linter
+from dependency_management.requirements.LuarocksRequirement import (
+    LuarocksRequirement)
 
 
 @linter(executable='luacheck',
@@ -14,7 +16,8 @@ class LuaLintBear:
     Read more at <https://github.com/mpeterv/luacheck>.
     """
 
-    LANGUAGES = {"Lua"}
+    LANGUAGES = {'Lua'}
+    REQUIREMENTS = {LuarocksRequirement('luacheck')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
@@ -22,4 +25,4 @@ class LuaLintBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file):
-        return "-", "--formatter=plain", "--ranges", "--codes"
+        return '-', '--formatter=plain', '--ranges', '--codes'

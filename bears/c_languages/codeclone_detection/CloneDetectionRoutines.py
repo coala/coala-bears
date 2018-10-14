@@ -59,7 +59,7 @@ def get_count_matrices(count_vector_creator,
     """
     result = {}
     maxlen = len(filenames)
-    include_paths = collect_dirs([os.path.dirname(base_path) + "/**"])
+    include_paths = collect_dirs([os.path.dirname(base_path) + '/**'])
     include_paths += extra_include_paths
 
     for i, filename in enumerate(filenames):

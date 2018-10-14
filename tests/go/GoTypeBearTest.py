@@ -1,5 +1,5 @@
 from bears.go.GoTypeBear import GoTypeBear
-from tests.LocalBearTestHelper import verify_local_bear
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 
 good_file = """
@@ -8,7 +8,7 @@ import "fmt"
 func main() {
     fmt.Println("Hello World!")
 }
-""".splitlines(keepends=True)
+"""
 
 
 bad_file = """
@@ -34,7 +34,7 @@ func main() {
         Print(B{})
     }
 }
-""".splitlines(keepends=True)
+"""
 
 
 GoTypeBearTest = verify_local_bear(GoTypeBear,

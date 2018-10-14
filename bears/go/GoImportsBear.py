@@ -1,4 +1,5 @@
 from coalib.bearlib.abstractions.Linter import linter
+from dependency_management.requirements.GoRequirement import GoRequirement
 
 
 @linter(executable='goimports',
@@ -9,7 +10,9 @@ class GoImportsBear:
     """
     Adds/Removes imports to Go code for missing imports.
     """
-    LANGUAGES = {"Go"}
+    LANGUAGES = {'Go'}
+    REQUIREMENTS = {GoRequirement(
+        package='golang.org/x/tools/cmd/goimports', flag='-u')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

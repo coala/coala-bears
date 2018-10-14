@@ -1,20 +1,22 @@
 import json
 
+from coalib.bearlib import deprecate_settings
 from coalib.bearlib.abstractions.Linter import linter
-from coalib.bears.requirements.NpmRequirement import NpmRequirement
+from dependency_management.requirements.NpmRequirement import NpmRequirement
+from coala_utils.param_conversion import negate
 
 
 def bool_or_str(value):
     try:
         return bool(value)
-    except:
+    except ValueError:
         return str(value)
 
 
 def bool_or_int(value):
     try:
         return bool(value)
-    except:
+    except ValueError:
         return int(value)
 
 
@@ -32,125 +34,152 @@ class JSHintBear:
     For more information on the analysis visit <http://jshint.com/>
     """
 
-    LANGUAGES = {"JavaScript"}
-    REQUIREMENTS = {NpmRequirement('jshint', '2')}
+    LANGUAGES = {'JavaScript'}
+    REQUIREMENTS = {NpmRequirement('jshint', '2.9.5')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
     CAN_DETECT = {'Formatting', 'Syntax', 'Complexity', 'Unused Code'}
 
     @staticmethod
+    @deprecate_settings(es_version='use_es6_syntax',
+                        javascript_strictness=(
+                            'allow_global_strict',
+                            lambda x: 'global' if x else True),
+                        cyclomatic_complexity='maxcomplexity',
+                        allow_unused_variables=('prohibit_unused', negate),
+                        max_parameters='maxparams',
+                        allow_missing_semicolon='allow_missing_semicol',
+                        allow_this_statements='allow_this_stmt',
+                        allow_with_statements='allow_with_stmt',
+                        allow_bitwise_operators=('prohibit_bitwise', negate),
+                        max_statements='maxstatements',
+                        max_depth='maxdepth',
+                        allow_comma_operator=('prohibit_comma', negate),
+                        allow_non_breaking_whitespace=(
+                            'prohibit_non_breaking_whitespace', negate),
+                        allow_prototype_overwrite=(
+                            'prohibit_prototype_overwrite', negate),
+                        allow_type_coercion=('prohibit_type_coercion', negate),
+                        allow_future_identifiers=('future_hostile', negate),
+                        allow_typeof=('prohibit_typeof', negate),
+                        allow_var_statement=(
+                            'prohibit_variable_statements', negate),
+                        allow_grouping_operator=('prohibit_groups', negate),
+                        allow_variable_shadowing='shadow',
+                        use_mozilla_extension='using_mozilla',
+                        allow_constructor_functions=('prohibit_new', negate),
+                        allow_argument_caller_and_callee=(
+                            'prohibit_arg', negate),
+                        allow_iterator_property=('iterator', negate),
+                        allow_filter_in_forin='force_filter_forin')
     def generate_config(filename, file,
-                        prohibit_bitwise: bool=True,
-                        prohibit_prototype_overwrite: bool=True,
-                        force_braces: bool=True,
-                        prohibit_type_coercion: bool=True,
-                        future_hostile: bool=False,
-                        prohibit_typeof: bool=False,
-                        force_filter_forin: bool=True,
-                        allow_funcscope: bool=False,
-                        iterator: bool=False,
-                        prohibit_arg: bool=True,
-                        prohibit_comma: bool=False,
-                        prohibit_non_breaking_whitespace: bool=True,
-                        prohibit_new: bool=False,
-                        prohibit_undefined: bool=True,
-                        prohibit_groups: bool=False,
-                        prohibit_variable_statements: bool=False,
-                        allow_missing_semicol: bool=False,
-                        allow_debugger: bool=False,
-                        allow_assignment_comparisions: bool=False,
-                        allow_eval: bool=False,
-                        allow_global_strict: bool=False,
-                        allow_increment: bool=False,
-                        allow_proto: bool=False,
-                        allow_scripturls: bool=False,
-                        allow_singleton: bool=False,
-                        allow_this_stmt: bool=False,
-                        allow_with_stmt: bool=False,
-                        using_mozilla: bool=False,
-                        allow_noyield: bool=False,
-                        allow_eqnull: bool=False,
-                        allow_last_semicolon: bool=False,
-                        allow_func_in_loop: bool=False,
-                        allow_expr_in_assignments: bool=False,
-                        use_es6_syntax: bool=False,
-                        use_es3_array: bool=False,
-                        environment_mootools: bool=False,
-                        environment_couch: bool=False,
-                        environment_jasmine: bool=False,
-                        environment_jquery: bool=False,
-                        environment_node: bool=False,
-                        environment_qunit: bool=False,
-                        environment_rhino: bool=False,
-                        environment_shelljs: bool=False,
-                        environment_prototypejs: bool=False,
-                        environment_yui: bool=False,
-                        environment_mocha: bool=True,
-                        environment_module: bool=False,
-                        environment_wsh: bool=False,
-                        environment_worker: bool=False,
-                        environment_nonstandard: bool=False,
-                        environment_browser: bool=True,
-                        environment_browserify: bool=False,
-                        environment_devel: bool=True,
-                        environment_dojo: bool=False,
-                        environment_typed: bool=False,
-                        environment_phantom: bool=False,
-                        maxerr: int=50,
-                        maxstatements: bool_or_int=False,
-                        maxdepth: bool_or_int=False,
-                        maxparams: bool_or_int=False,
-                        maxcomplexity: bool_or_int=False,
-                        shadow: bool_or_str=False,
-                        prohibit_unused: bool_or_str=True,
-                        allow_latedef: bool_or_str=False,
-                        es_version: int=5,
-                        jshint_config: str=""):
+                        allow_bitwise_operators: bool = False,
+                        allow_prototype_overwrite: bool = False,
+                        force_braces: bool = True,
+                        allow_type_coercion: bool = False,
+                        allow_future_identifiers: bool = True,
+                        allow_typeof: bool = True,
+                        allow_filter_in_forin: bool = True,
+                        allow_funcscope: bool = False,
+                        allow_iterator_property: bool = True,
+                        allow_argument_caller_and_callee: bool = False,
+                        allow_comma_operator: bool = True,
+                        allow_non_breaking_whitespace: bool = False,
+                        allow_constructor_functions: bool = True,
+                        allow_grouping_operator: bool = True,
+                        allow_var_statement: bool = True,
+                        allow_missing_semicolon: bool = False,
+                        allow_debugger: bool = False,
+                        allow_assignment_comparisions: bool = False,
+                        allow_eval: bool = False,
+                        allow_increment: bool = False,
+                        allow_proto: bool = False,
+                        allow_scripturls: bool = False,
+                        allow_singleton: bool = False,
+                        allow_this_statements: bool = False,
+                        allow_with_statements: bool = False,
+                        use_mozilla_extension: bool = False,
+                        javascript_strictness: bool_or_str = True,
+                        allow_noyield: bool = False,
+                        allow_eqnull: bool = False,
+                        allow_last_semicolon: bool = False,
+                        allow_func_in_loop: bool = False,
+                        allow_expr_in_assignments: bool = False,
+                        use_es3_array: bool = False,
+                        environment_mootools: bool = False,
+                        environment_couch: bool = False,
+                        environment_jasmine: bool = False,
+                        environment_jquery: bool = False,
+                        environment_node: bool = False,
+                        environment_qunit: bool = False,
+                        environment_rhino: bool = False,
+                        environment_shelljs: bool = False,
+                        environment_prototypejs: bool = False,
+                        environment_yui: bool = False,
+                        environment_mocha: bool = True,
+                        environment_module: bool = False,
+                        environment_wsh: bool = False,
+                        environment_worker: bool = False,
+                        environment_nonstandard: bool = False,
+                        environment_browser: bool = True,
+                        environment_browserify: bool = False,
+                        environment_devel: bool = True,
+                        environment_dojo: bool = False,
+                        environment_typed: bool = False,
+                        environment_phantom: bool = False,
+                        max_statements: bool_or_int = False,
+                        max_depth: bool_or_int = False,
+                        max_parameters: bool_or_int = False,
+                        cyclomatic_complexity: bool_or_int = False,
+                        allow_variable_shadowing: bool_or_str = False,
+                        allow_unused_variables: bool_or_str = False,
+                        allow_latedef: bool_or_str = False,
+                        enforce_trailing_comma: bool = False,
+                        es_version: bool_or_int = 5,
+                        jshint_config: str = '',
+                        ):
         """
-        :param prohibit_bitwise:
-            This option prohibits the use of bitwise operators.
-        :param prohibit_prototype_overwrite:
-            This options prohibits overwriting prototypes of native objects
-            such as ``Array``.
+        :param allow_bitwise_operators:
+            Allows the use of bitwise operators.
+        :param allow_prototype_overwrite:
+            This options allows overwriting prototypes of native objects such
+            as ``Array``.
         :param force_braces:
             This option requires you to always put curly braces around blocks
             in loops and conditionals.
-        :param prohibit_type_coercion:
-            This options prohibits the use of ``==`` and ``!=`` in favor of
-            ``===`` and ``!==``.
-        :param future_hostile:
-            This option enables warnings about the use of identifiers which are
-            defined in future versions of JavaScript.
-        :param prohibit_typeof:
-            This option suppresses warnings about invalid ``typeof`` operator
+        :param allow_type_coercion:
+            This options allows the use of ``==`` and ``!=``.
+        :param allow_future_identifiers:
+            This option allows the use of identifiers which are defined in
+            future versions of JavaScript.
+        :param allow_typeof:
+            This option enables warnings about invalid ``typeof`` operator
             values.
-        :param force_filter_forin:
+        :param allow_filter_in_forin:
             This option requires all ``for in`` loops to filter object's items.
-        :param iterator:
+        :param allow_iterator_property:
             This option suppresses warnings about the ``__iterator__``
             property.
         :param allow_funcscope:
             This option suppresses warnings about declaring variables inside of
             control structures while accessing them later from outside.
-        :param prohibit_arg:
-            This option prohibits the use of ``arguments.caller`` and
+        :param allow_argument_caller_and_callee:
+            This option allows the use of ``arguments.caller`` and
             ``arguments.callee``.
-        :param prohibit_comma:
-            This option prohibits the use of the comma operator.
-        :param prohibit_non_breaking_whitespace:
-            This option warns about "non-breaking whitespace characters".
-        :param prohibit_new:
-            This option prohibits the use of constructor functions for
-            side-effects.
-        :param prohibit_undefined:
-            This option prohibits the use of explicitly undeclared variables.
-        :param prohibit_groups:
-            This option prohibits the use of the grouping operator when it is
+        :param allow_comma_operator:
+            This option allows the use of the comma operator.
+        :param allow_non_breaking_whitespace:
+            Allows "non-breaking whitespace characters".
+        :param allow_constructor_functions:
+            Allows the use of constructor functions.
+        :param allow_grouping_operator:
+            This option allows the use of the grouping operator when it is
             not strictly required.
-        :param prohibit_variable_statements:
-            This option forbids the use of VariableStatements.
-        :param allow_missing_semicol:
+        :param allow_var_statement:
+            Allows the use of the ``var`` statement while declaring a variable.
+            Should use ``let`` or ``const`` while it is set to ``False``.
+        :param allow_missing_semicolon:
             This option suppresses warnings about missing semicolons.
         :param allow_debugger:
             This option suppresses warnings about the ``debugger`` statements.
@@ -160,9 +189,6 @@ class JSHintBear:
         :param allow_eval:
             This options suppresses warnings about the use of ``eval``
             function.
-        :param allow_global_strict:
-            This option suppresses warnings about the use of global strict
-            mode.
         :param allow_increment:
             This option suppresses warnings about the use of unary increment
             and decrement operators.
@@ -175,16 +201,24 @@ class JSHintBear:
             This option suppresses warnings about constructions like
             ``new function () { ... }`` and ``new Object;`` sometimes used to
             produce singletons.
-        :param allow_this_stmt:
+        :param allow_this_statements:
             This option suppresses warnings about possible strict violations
             when the code is running in strict mode and ``this`` is used in a
             non-constructor function.
-        :param allow_with_stmt:
+        :param allow_with_statements:
             This option suppresses warnings about the use of the ``with``
             statement.
-        :param using_mozilla:
+        :param use_mozilla_extension:
             This options tells JSHint that your code uses Mozilla JavaScript
             extensions.
+        :param javascript_strictness:
+            Determines what sort of strictness to use in the JavaScript code.
+            The possible options are:
+
+            - "global" - there must be a ``"use strict";`` at global level
+            - "implied" - lint the code as if there is a ``"use strict";``
+            - "False" - disable warnings about strict mode
+            - "True" - there must be a ``"use strict";`` at function level
         :param allow_noyield:
             This option suppresses warnings about generator functions with no
             ``yield`` statement in them.
@@ -201,8 +235,6 @@ class JSHintBear:
         :param use_es3_array:
             This option tells JSHintBear ES3 array elision elements, or empty
             elements are used.
-        :param use_es3_array:
-            This option tells JSHint ECMAScript 6 specific syntax is used.
         :param environment_mootools:
             This option defines globals exposed by the Mootools.
         :param environment_couch:
@@ -254,19 +286,16 @@ class JSHintBear:
         :param environment_phantom:
             This option defines globals available when your core is running
             inside of the PhantomJS runtime environment.
-        :param maxerr:
-            This options allows you to set the maximum amount of warnings
-            JSHintBear will produce before giving up. Default is 50.
-        :param maxstatements:
+        :param max_statements:
             Maximum number of statements allowed per function.
-        :param maxdepth:
+        :param max_depth:
             This option lets you control how nested do you want your blocks to
             be.
-        :param maxparams:
-            Maximum number of formal parameters allowed per function.
-        :param maxcomplexity:
+        :param max_parameters:
+            Maximum number of parameters allowed per function.
+        :param cyclomatic_complexity:
             Maximum cyclomatic complexity in the code.
-        :param shadow:
+        :param allow_variable_shadowing:
             This option suppresses warnings about variable shadowing i.e.
             declaring a variable that had been already declared somewhere in
             the outer scope.
@@ -275,92 +304,102 @@ class JSHintBear:
             - "outer" - check for variables defined in outer scopes as well
             - False - same as inner
             - True  - allow variable shadowing
-        :param prohibit_unused:
-            This option generates warnings when variables are defined but never
-            used. This can be set to ""vars"" to only check for variables, not
-            function parameters, or ""strict"" to check all variables and
-            parameters.
+        :param allow_unused_variables:
+            Allows when variables are defined but never used. This can be set
+            to ""vars"" to only check for variables, not function parameters,
+            or ""strict"" to check all variables and parameters.
         :param allow_latedef:
-            This option prohibits the use of a variable before it was defined.
+            This option allows the use of a variable before it was defined.
             Setting this option to "nofunc" will allow function declarations to
             be ignored.
+        :param enforce_trailing_comma:
+            This option warns when a comma is not placed after the last element
+            in an array or object literal.
         :param es_version:
             This option is used to specify the ECMAScript version to which the
             code must adhere to.
         """
+        # Assume that when es_version is bool, it is intended for the
+        # deprecated use_es6_version
+        if es_version is True:
+            es_version = 6
+        elif es_version is False:
+            es_version = 5
         if not jshint_config:
-            options = {"bitwise": prohibit_bitwise,
-                       "freeze": prohibit_prototype_overwrite,
-                       "curly": force_braces,
-                       "eqeqeq": prohibit_type_coercion,
-                       "futurehostile": future_hostile,
-                       "notypeof": prohibit_typeof,
-                       "forin": force_filter_forin,
-                       "funcscope": allow_funcscope,
-                       "iterator": iterator,
-                       "noarg": prohibit_arg,
-                       "nocomma": prohibit_comma,
-                       "nonbsp": prohibit_non_breaking_whitespace,
-                       "nonew": prohibit_new,
-                       "undef": prohibit_undefined,
-                       "singleGroups": prohibit_groups,
-                       "varstmt": prohibit_variable_statements,
-                       "asi": allow_missing_semicol,
-                       "debug": allow_debugger,
-                       "boss": allow_assignment_comparisions,
-                       "evil": allow_eval,
-                       "globalstrict": allow_global_strict,
-                       "plusplus": allow_increment,
-                       "proto": allow_proto,
-                       "scripturl": allow_scripturls,
-                       "supernew": allow_singleton,
-                       "validthis": allow_this_stmt,
-                       "withstmt": allow_with_stmt,
-                       "moz": using_mozilla,
-                       "noyield": allow_noyield,
-                       "eqnull": allow_eqnull,
-                       "lastsemic": allow_last_semicolon,
-                       "loopfunc": allow_func_in_loop,
-                       "expr": allow_expr_in_assignments,
-                       "esnext": use_es6_syntax,
-                       "elision": use_es3_array,
-                       "mootools": environment_mootools,
-                       "couch": environment_couch,
-                       "jasmine": environment_jasmine,
-                       "jquery": environment_jquery,
-                       "node": environment_node,
-                       "qunit": environment_qunit,
-                       "rhino": environment_rhino,
-                       "shelljs": environment_shelljs,
-                       "prototypejs": environment_prototypejs,
-                       "yui": environment_yui,
-                       "mocha": environment_mocha,
-                       "module": environment_module,
-                       "wsh": environment_wsh,
-                       "worker": environment_worker,
-                       "nonstandard": environment_nonstandard,
-                       "browser": environment_browser,
-                       "browserify": environment_browserify,
-                       "devel": environment_devel,
-                       "dojo": environment_dojo,
-                       "typed": environment_typed,
-                       "phantom": environment_phantom,
-                       "maxerr": maxerr,
-                       "maxcomplexity": maxcomplexity,
-                       "maxdepth": maxdepth,
-                       "maxparams": maxparams,
-                       "maxstatements": maxstatements,
-                       "shadow": shadow,
-                       "unused": prohibit_unused,
-                       "latedef": allow_latedef,
-                       "esversion": es_version}
+            options = {'bitwise': not allow_bitwise_operators,
+                       'freeze': not allow_prototype_overwrite,
+                       'curly': force_braces,
+                       'eqeqeq': not allow_type_coercion,
+                       'futurehostile': not allow_future_identifiers,
+                       'notypeof': not allow_typeof,
+                       'forin': allow_filter_in_forin,
+                       'funcscope': allow_funcscope,
+                       'iterator': not allow_iterator_property,
+                       'noarg': not allow_argument_caller_and_callee,
+                       'nocomma': not allow_comma_operator,
+                       'nonbsp': not allow_non_breaking_whitespace,
+                       'nonew': not allow_constructor_functions,
+                       'undef': True,
+                       'singleGroups': not allow_grouping_operator,
+                       'varstmt': not allow_var_statement,
+                       'asi': allow_missing_semicolon,
+                       'debug': allow_debugger,
+                       'boss': allow_assignment_comparisions,
+                       'evil': allow_eval,
+                       'strict': javascript_strictness,
+                       'plusplus': allow_increment,
+                       'proto': allow_proto,
+                       'scripturl': allow_scripturls,
+                       'supernew': allow_singleton,
+                       'validthis': allow_this_statements,
+                       'withstmt': allow_with_statements,
+                       'moz': use_mozilla_extension,
+                       'noyield': allow_noyield,
+                       'eqnull': allow_eqnull,
+                       'lastsemic': allow_last_semicolon,
+                       'loopfunc': allow_func_in_loop,
+                       'expr': allow_expr_in_assignments,
+                       'elision': use_es3_array,
+                       'mootools': environment_mootools,
+                       'couch': environment_couch,
+                       'jasmine': environment_jasmine,
+                       'jquery': environment_jquery,
+                       'node': environment_node,
+                       'qunit': environment_qunit,
+                       'rhino': environment_rhino,
+                       'shelljs': environment_shelljs,
+                       'prototypejs': environment_prototypejs,
+                       'yui': environment_yui,
+                       'mocha': environment_mocha,
+                       'module': environment_module,
+                       'wsh': environment_wsh,
+                       'worker': environment_worker,
+                       'nonstandard': environment_nonstandard,
+                       'browser': environment_browser,
+                       'browserify': environment_browserify,
+                       'devel': environment_devel,
+                       'dojo': environment_dojo,
+                       'typed': environment_typed,
+                       'phantom': environment_phantom,
+                       'maxerr': 99999,
+                       'maxcomplexity': cyclomatic_complexity,
+                       'maxdepth': max_depth,
+                       'maxparams': max_parameters,
+                       'maxstatements': max_statements,
+                       'shadow': allow_variable_shadowing,
+                       'unused': not allow_unused_variables,
+                       'latedef': allow_latedef,
+                       'trailingcomma': enforce_trailing_comma,
+                       'esversion': es_version}
 
             return json.dumps(options)
         else:
             return None
 
     @staticmethod
-    def create_arguments(filename, file, config_file, jshint_config: str=""):
+    def create_arguments(filename, file, config_file,
+                         jshint_config: str = '',
+                         ):
         """
         :param jshint_config:
             The location of the jshintrc config file. If this option is present

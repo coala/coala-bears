@@ -1,4 +1,5 @@
 from coalib.bearlib.abstractions.Linter import linter
+from dependency_management.requirements.GoRequirement import GoRequirement
 
 
 @linter(executable='go',
@@ -16,11 +17,12 @@ class GoVetBear:
     This is done using the ``vet`` command. For more information visit
     <https://golang.org/cmd/vet/>.
     """
-    LANGUAGES = {"Go"}
+    LANGUAGES = {'Go'}
+    REQUIREMENTS = {GoRequirement(package='golang.org/cmd/vet', flag='-u')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
-    CAN_DETECT = {'Unused code', 'Smell', 'Unreachable Code'}
+    CAN_DETECT = {'Unused Code', 'Smell', 'Unreachable Code'}
 
     @staticmethod
     def create_arguments(filename, file, config_file):

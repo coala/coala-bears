@@ -1,19 +1,79 @@
-from queue import Queue
-
 from bears.python.PyUnusedCodeBear import PyUnusedCodeBear
-from tests.LocalBearTestHelper import LocalBearTestHelper
-from coalib.settings.Section import Section
+from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 
-class PyUnusedCodeBearTest(LocalBearTestHelper):
+invalid_imports = """
+import sys
+import os
+import mymodule
+print("Hello World")
+"""
 
-    def setUp(self):
-        self.uut = PyUnusedCodeBear(Section('name'), Queue())
+valid_import = """
+import sys
+sys.exit()
+"""
 
-    def test_valid(self):
-        self.check_validity(self.uut, ["import sys; sys.do()"])
-        self.check_validity(self.uut, ["a = 2; print(a)"])
+invalid_from_import = """
+import sys
+from os import name
+sys.exit()
+import re
+"""
+valid_from_import = """
+from sys import exit
+form os import name
 
-    def test_invalid(self):
-        self.check_validity(self.uut, ["import os"], valid=False)
-        self.check_validity(self.uut, ["pass"], valid=False)
+print(name)
+exit()
+"""
+
+valid_non_builtin = """
+import mymodule
+import sys
+sys.exit(0)
+"""
+
+with_unused_variables = """
+def main():
+    x = 10
+    y = 11
+    print(y)
+"""
+
+without_unused_variables = """
+def main():
+    y = 11
+    print(y)
+"""
+
+PyAllUnusedImportTest = verify_local_bear(
+                PyUnusedCodeBear,
+                valid_files=[valid_import,
+                             valid_from_import],
+                invalid_files=[invalid_imports,
+                               invalid_from_import,
+                               valid_non_builtin
+                               ],
+                settings={'remove_all_unused_imports': True})
+
+PyUnusedCodeBearTest = verify_local_bear(
+                PyUnusedCodeBear,
+                valid_files=[valid_non_builtin,
+                             valid_import,
+                             valid_from_import],
+                invalid_files=[invalid_imports,
+                               invalid_from_import],
+                settings={'remove_all_unused_imports': False})
+
+PyUnusedVariablesTest = verify_local_bear(
+                PyUnusedCodeBear,
+                valid_files=[without_unused_variables],
+                invalid_files=[with_unused_variables],
+                settings={'remove_unused_variables': True})
+
+PyUnusedVariablesBearTest = verify_local_bear(
+                PyUnusedCodeBear,
+                valid_files=[with_unused_variables],
+                invalid_files=[],
+                settings={'remove_unused_variables': False})

@@ -1,0 +1,5 @@
+pkg main
+
+func main() {
+
+}

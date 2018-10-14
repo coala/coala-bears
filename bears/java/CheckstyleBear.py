@@ -1,13 +1,29 @@
 from coalib.bearlib.abstractions.Linter import linter
 from coalib.settings.Setting import path
+from dependency_management.requirements.DistributionRequirement import (
+    DistributionRequirement)
 
 
-known_checkstyles = {
-    "google": "https://raw.githubusercontent.com/checkstyle/checkstyle/master/src/main/resources/google_checks.xml",
-    "sun": 'https://raw.githubusercontent.com/checkstyle/checkstyle/master/src/main/resources/sun_checks.xml',
-    "android-check-easy": "https://raw.githubusercontent.com/noveogroup/android-check/master/android-check-plugin/src/main/resources/checkstyle/checkstyle-easy.xml",
-    "android-check-hard": "https://raw.githubusercontent.com/noveogroup/android-check/master/android-check-plugin/src/main/resources/checkstyle/checkstyle-hard.xml",
-    "geosoft": "http://geosoft.no/development/geosoft_checks.xml"}
+_online_styles = {
+    'android-check-easy': 'https://raw.githubusercontent.com/noveogroup/' +
+    'android-check/master/android-check-plugin/src/main/resources/' +
+    'checkstyle/checkstyle-easy.xml',
+    'android-check-hard': 'https://raw.githubusercontent.com/noveogroup/' +
+    'android-check/master/android-check-plugin/src/main/resources/' +
+    'checkstyle/checkstyle-hard.xml',
+}
+
+_checkstyle_version = '6.19'
+
+# To be deprecated
+known_checkstyles = dict(_online_styles, **{'google': None, 'sun': None})
+
+
+def check_invalid_configuration(checkstyle_configs, use_spaces, indent_size):
+    if (checkstyle_configs is 'google' and
+            (not use_spaces or indent_size != 2)):
+        raise ValueError('Google checkstyle config does not support '
+                         'use_spaces=False or indent_size != 2')
 
 
 def known_checkstyle_or_path(setting):
@@ -18,8 +34,10 @@ def known_checkstyle_or_path(setting):
 
 
 @linter(executable='java',
+        normalize_column_numbers=True,
+        remove_zero_numbers=True,
         output_format='regex',
-        output_regex=r'\[(?P<severity>WARN|INFO)\].*?'
+        output_regex=r'\[(?P<severity>ERROR|WARN|INFO)\].*?'
                      r'(?P<line>\d+):?(?P<column>\d+)?. '
                      r'(?P<message>.*?) *\[(?P<origin>[a-zA-Z]+?)\]')
 class CheckstyleBear:
@@ -30,21 +48,26 @@ class CheckstyleBear:
     <http://checkstyle.sourceforge.net/checks.html>.
     """
 
-    LANGUAGES = {"Java"}
+    LANGUAGES = {'Java'}
+    REQUIREMENTS = {DistributionRequirement(apt_get='default-jre')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
     CAN_DETECT = {'Formatting', 'Smell'}
 
     def setup_dependencies(self):
+        version = _checkstyle_version
         type(self).checkstyle_jar_file = self.download_cached_file(
-            'http://sourceforge.net/projects/checkstyle/files/checkstyle/6.15'
-            '/checkstyle-6.15-all.jar',
-            "checkstyle.jar")
+            'https://github.com/checkstyle/checkstyle/releases/download/'
+            'checkstyle-%s/checkstyle-%s-all.jar' % (version, version),
+            'checkstyle-6.19.jar')
 
     def create_arguments(
             self, filename, file, config_file,
-            checkstyle_configs: known_checkstyle_or_path="google"):
+            checkstyle_configs: known_checkstyle_or_path = 'google',
+            use_spaces: bool = True,
+            indent_size: int = 2,
+            ):
         """
         :param checkstyle_configs:
             A file containing configs to use in ``checkstyle``. It can also
@@ -64,10 +87,17 @@ class CheckstyleBear:
             - geosoft - The Java style followed by GeoSoft. More info at
               <http://geosoft.no/development/javastyle.html>
         """
-        if checkstyle_configs in known_checkstyles:
+        check_invalid_configuration(
+            checkstyle_configs, use_spaces, indent_size)
+
+        if checkstyle_configs in ('google', 'sun'):
+            # Checkstyle included these two rulesets since version 6.2
+            # Locate the file as an absolute resource into the checkstyle jar
+            checkstyle_configs = '/%s_checks.xml' % checkstyle_configs
+        elif checkstyle_configs in _online_styles:
             checkstyle_configs = self.download_cached_file(
-                known_checkstyles[checkstyle_configs],
-                checkstyle_configs + ".xml")
+                _online_styles[checkstyle_configs],
+                checkstyle_configs + '.xml')
 
         return ('-jar', self.checkstyle_jar_file, '-c',
                 checkstyle_configs, filename)

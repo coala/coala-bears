@@ -1,29 +1,21 @@
-import re
-
-from coalib.bearlib.abstractions.Lint import Lint
-from coalib.bears.LocalBear import LocalBear
-from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
+from coalib.bearlib.abstractions.Linter import linter
 
 
-class InferBear(LocalBear, Lint):
-    executable = 'infer'
-    arguments = '-npb -- javac {filename}'
-    output_regex = re.compile(
-        r'(?P<file_name>.+):'
-        r'(?P<line>.+): '
-        r'(?P<severity>error|warning): '
-        r'(?P<message>.*)')
-    severity_map = {
-        "error": RESULT_SEVERITY.MAJOR,
-        "warning": RESULT_SEVERITY.NORMAL}
-    LANGUAGES = {"Java"}
+@linter(executable='infer',
+        output_format='regex',
+        output_regex=r'.+:(?P<line>\d+): (?P<severity>error|warning): '
+                     r'(?P<message>.*)')
+class InferBear:
+    """
+    Checks the code with ``infer``.
+    """
+    LANGUAGES = {'Java'}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
+    ASCIINEMA_URL = 'https://asciinema.org/a/1g2k0la7xo5az9t8f1v5zy66q'
     CAN_DETECT = {'Security'}
 
-    def run(self, filename, file):
-        '''
-        Checks the code with ``infer``.
-        '''
-        return self.lint(filename)
+    @staticmethod
+    def create_arguments(filename, file, config_file):
+        return '-npb', '--', 'javac', filename

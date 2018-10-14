@@ -4,7 +4,7 @@ from shutil import which
 from unittest.case import skipIf
 
 from bears.c_languages.CSharpLintBear import CSharpLintBear
-from tests.LocalBearTestHelper import LocalBearTestHelper
+from coalib.testing.LocalBearTestHelper import LocalBearTestHelper
 from coalib.settings.Section import Section
 
 
@@ -12,18 +12,18 @@ from coalib.settings.Section import Section
 class CSharpLintBearTest(LocalBearTestHelper):
 
     def setUp(self):
-        self.section = Section("test section")
+        self.section = Section('test section')
         self.uut = CSharpLintBear(self.section, Queue())
         self.test_file1 = os.path.join(os.path.dirname(__file__),
-                                       "test_files",
-                                       "csharplint_test1.cs")
+                                       'test_files',
+                                       'csharplint_test1.cs')
         self.test_file2 = os.path.join(os.path.dirname(__file__),
-                                       "test_files",
-                                       "csharplint_test2.cs")
+                                       'test_files',
+                                       'csharplint_test2.cs')
 
     def test_run(self):
         # Test a file with no issues
         self.check_validity(self.uut, [], self.test_file1)
 
         # Test a file with issues
-        self.check_validity(self.uut, [], self.test_file2, valid=False)
+        self.check_invalidity(self.uut, [], self.test_file2)

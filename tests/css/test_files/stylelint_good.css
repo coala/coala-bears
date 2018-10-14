@@ -1,0 +1,11 @@
+.no-space-after-colon-corrected {
+  display: block;
+}
+
+.no-semicolon-corrected {
+  position: relative;
+}
+
+.invalid-hex-corrected {
+  color: #fff000;
+}
