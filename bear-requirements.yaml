@@ -211,7 +211,7 @@ pip_requirements:
   vulture:
     version: ~=0.25.0
   yamllint:
-    version: ~=1.6.1
+    version: ~=1.12.0
   yapf:
     version: ~=0.21.0
 composer_requirements:
