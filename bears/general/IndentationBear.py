@@ -166,7 +166,7 @@ class IndentationBear(LocalBear):
 
         :param file:            A tuple of strings.
         :param filename:        Name of file.
-        :param encaps_pos:      A tuple ofSourceRanges of code regions
+        :param encaps_pos:      A tuple of SourceRanges of code regions
                                 trapped in between a matching pair of
                                 encapsulators.
         :param annotation_dict: A dictionary containing sourceranges of all the
