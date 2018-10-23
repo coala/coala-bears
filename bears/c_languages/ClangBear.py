@@ -66,7 +66,7 @@ def sourcerange_from_clang_range(clang_range):
 
 
 class ClangBear(LocalBear):
-    LANGUAGES = {'C', 'C++', 'Objective-C', 'Objective-C++', 'OpenMP',
+    LANGUAGES = {'C', 'CPP', 'Objective-C', 'Objective-C++', 'OpenMP',
                  'OpenCL', 'CUDA'}
     # Depends on libclang-py3, which is a dependency of coala
     REQUIREMENTS = {PipRequirement('libclang-py3', '3.4.0')}

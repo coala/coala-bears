@@ -27,7 +27,7 @@ class CSecurityBear:
     For more information, consult <http://www.dwheeler.com/flawfinder/>.
     """
 
-    LANGUAGES = {'C', 'C++'}
+    LANGUAGES = {'C', 'CPP'}
     REQUIREMENTS = {DistributionRequirement('flawfinder')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}

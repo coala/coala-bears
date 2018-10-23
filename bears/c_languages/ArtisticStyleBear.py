@@ -13,7 +13,7 @@ class ArtisticStyleBear:
     C# and Java programming languages.
     """
 
-    LANGUAGES = {'C', 'C++', 'Objective-C', 'C#', 'Java'}
+    LANGUAGES = {'C', 'CPP', 'Objective-C', 'C#', 'Java'}
     REQUIREMENTS = {
         DistributionRequirement(
             apt_get='astyle',
