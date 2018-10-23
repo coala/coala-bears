@@ -21,7 +21,7 @@ class CPPCheckBear:
     For more information, consult <https://github.com/danmar/cppcheck>.
     """
 
-    LANGUAGES = {'C', 'C++'}
+    LANGUAGES = {'C', 'CPP'}
     REQUIREMENTS = {DistributionRequirement('cppcheck')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}

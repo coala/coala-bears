@@ -18,7 +18,7 @@ class CPPLintBear:
     For more information, consult <https://github.com/theandrewdavis/cpplint>.
     """
 
-    LANGUAGES = {'C++'}
+    LANGUAGES = {'CPP'}
     REQUIREMENTS = {PipRequirement('cpplint', '1.3')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}

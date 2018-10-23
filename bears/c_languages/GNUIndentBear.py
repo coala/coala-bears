@@ -21,7 +21,7 @@ class GNUIndentBear:
     C++ support is considered experimental.
     """
 
-    LANGUAGES = {'C', 'C++'}
+    LANGUAGES = {'C', 'CPP'}
     REQUIREMENTS = {DistributionRequirement('indent')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}

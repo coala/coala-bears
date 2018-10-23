@@ -15,7 +15,7 @@ class CPPCleanBear:
     <https://github.com/myint/cppclean#features>.
     """
 
-    LANGUAGES = {'C++'}
+    LANGUAGES = {'CPP'}
     REQUIREMENTS = {PipRequirement('cppclean', '0.12.0')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
