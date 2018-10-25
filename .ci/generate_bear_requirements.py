@@ -48,6 +48,7 @@ SUPPORTED_INSTANCES = (
     'GemRequirement',
     'ComposerRequirement',
     'CabalRequirement',
+    'RscriptRequirement',
 )
 
 INSTANCE_NAMES = (
@@ -56,6 +57,7 @@ INSTANCE_NAMES = (
     'gem_requirements',
     'composer_requirements',
     'cabal_requirements',
+    'r_script_requirements',
 )
 
 
@@ -151,6 +153,8 @@ def _get_requirements(requirements, default_operator, exclude=[]):
 def get_gem_requirements(requirements):
     return _get_requirements(requirements, '~>')
 
+def get_r_requirements(requirements):
+    return _get_requirements(requirements, '>=')
 
 def get_npm_requirements(requirements):
     return _get_requirements(requirements, '~')
@@ -228,6 +232,8 @@ if __name__ == '__main__':
     requirements['overrides'] = 'coala-build.yaml'
     requirements['gem_requirements'] = get_gem_requirements(
                                             instance_dict['GemRequirement'])
+    requirements['r_script_requirements'] = get_r_requirements(
+                                            instance_dict['RscriptRequirement'])
     requirements['npm_requirements'] = get_npm_requirements(
                                             instance_dict['NpmRequirement'])
     requirements['pip_requirements'] = get_pip_requirements(

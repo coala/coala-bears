@@ -32,7 +32,8 @@ class FormatRBear:
                 apt_get='r-cran-formatr',
                 zypper='R-formatR',
              ),
-             RscriptRequirement('formatR'),
+             RscriptRequirement('formatR',
+                                version='>1.5'),
              ]
         )
     }

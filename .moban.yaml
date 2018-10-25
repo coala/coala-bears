@@ -29,6 +29,7 @@ targets:
   - test-requirements.txt: bears-test-requirements.txt.jj2
   - bears/VERSION: VERSION.jj2
   - Gemfile: Gemfile.jj2
+  - DESCRIPTION: DESCRIPTION.jj2
   - package.json: package.json.jj2
   - bear-requirements.txt: bear-requirements.txt.jj2
   - .ci/appveyor.yml: ci/appveyor.yml.jj2
