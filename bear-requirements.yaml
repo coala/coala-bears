@@ -226,3 +226,8 @@ cabal_requirements:
     version: ==5.6.0.0
   hlint:
     version: ==1.9.27
+r_script_requirements:
+  formatR:
+    version: '>1.5'
+  lintr:
+    version: '>=1.0.2'
