@@ -77,6 +77,36 @@ bad_file = r"""{
 }
 """
 
+# metadata field deleted manually
+# Start ignoring PycodestyleBear, LineLengthBear
+inf_line_file = r"""{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "x = 'This is quite a long string and it should not throw an error if the max_line_length is set to 0.'"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "a markdown cell is not a code cell"
+   ]
+  }
+ ],
+ "metadata": {},
+ "nbformat": 4,
+ "nbformat_minor": 0
+}
+"""
+# Stop ignoring
+
 PEP8NotebookBearTest = \
     verify_local_bear(PEP8NotebookBear,
                       valid_files=(good_file,),
@@ -88,4 +118,11 @@ PEP8NotebookBearWithoutTrailingNewlineTest = \
                       valid_files=(good_file[:-1],),
                       invalid_files=(bad_file[:-1],),
                       force_linebreaks=False,
+                      )
+
+PEP8NotebookBearWithInfLineTest = \
+    verify_local_bear(PEP8NotebookBear,
+                      valid_files=(inf_line_file,),
+                      invalid_files=(),
+                      settings={'max_line_length': '0'}
                       )
