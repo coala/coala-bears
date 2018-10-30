@@ -6,7 +6,7 @@ set -ex
 
 if [ ! -d ../coala-mobans ]; then
   git clone https://gitlab.com/coala/mobans \
-          --branch=${MOBAN_BRANCH} ../coala-mobans
+          --branch=${MOBAN_BRANCH} ../coala-mobans || exit 0
 fi
 
 date

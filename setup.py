@@ -24,6 +24,11 @@ DESCRIPTION = (
 )
 DEPENDENCY_LINKS = []
 
+KEYWORDS = [
+    'code-analysis',
+    'lint',
+]
+
 SETUP_COMMANDS = {}
 
 
@@ -404,6 +409,7 @@ if __name__ == '__main__':
                         'bears.scala': ['scalastyle.jar',
                                         'scalastyle_config.xml']},
           license='AGPL-3.0',
+          keywords=KEYWORDS,
           data_files=data_files,
           long_description=long_description,
           entry_points={
