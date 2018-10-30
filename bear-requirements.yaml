@@ -132,6 +132,8 @@ npm_requirements:
   write-good:
     version: ~0.9.1
 pip_requirements:
+  Gixy:
+    version: ~0.1.20
   HTTPolice:
     version: ~=0.5.2
   aenum:
