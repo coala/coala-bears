@@ -1,6 +1,5 @@
 {% extends 'setup.cfg.jj2' %}
 {% set packages = ['bears', '.ci'] %}
-
 {% block extra_pytest_addopts %}
-  --ignore=tests/python/bandit_test_files/,.ci/adjust_version_number.py
+  --ignore=tests/python/bandit_test_files/
 {% endblock %}

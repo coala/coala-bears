@@ -236,7 +236,7 @@ def sort_requirements(req_dict):
         req_dict[key] = _create_sorted_commented_map(req_dict[key])
 
 
-def main(args):
+def main(args=None):
     args = get_args(args)
 
     bear_dirs = [PROJECT_BEAR_DIR]
