@@ -1,4 +1,4 @@
-overrides: bear-requirements.yaml
+overrides: .nocover.yaml
 
 name: coala-bears
 description: "Bears for coala (Code Analysis Application)"
