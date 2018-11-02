@@ -179,11 +179,16 @@ def get_languages(bears):
     language_dict = {}
     for bear in bears:
         language_dict[str(bear.name)] = list(sorted(bear.LANGUAGES))
-    for value in language_dict.values():
+    for key, value in sorted(language_dict.items()):
         if 'All' in value:
             value.remove('All')
         if 'default' in value:
             value.remove('default')
+        if not value:
+            language_dict[key] = None
+
+    language_dict = CommentedMap(sorted(language_dict.items(),
+                                         key=lambda t: t[0]))
     return language_dict
 
 
