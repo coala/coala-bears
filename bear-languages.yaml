@@ -1,6 +1,6 @@
 AlexBear:
   - Natural Language
-AnnotationBear: []
+AnnotationBear:
 ApertiumLintBear:
   - Apertium
 ArtisticStyleBear:
@@ -137,7 +137,7 @@ DocumentationStyleBear:
   - python3
   - tcl
   - vhdl
-DuplicateFileBear: []
+DuplicateFileBear:
 ESLintBear:
   - HTML
   - JSX
@@ -146,7 +146,7 @@ ESLintBear:
   - Typescript
 ElmLintBear:
   - Elm
-FilenameBear: []
+FilenameBear:
 FormatRBear:
   - R
 GNUIndentBear:
@@ -186,7 +186,7 @@ HTMLLintBear:
   - HTML
   - Jinja2
   - PHP
-HTTPSBear: []
+HTTPSBear:
 HTTPoliceLintBear:
   - HAR
 HappinessLintBear:
@@ -195,10 +195,10 @@ HaskellLintBear:
   - Haskell
 HgCommitBear:
   - Hg
-IndentationBear: []
+IndentationBear:
 InferBear:
   - Java
-InvalidLinkBear: []
+InvalidLinkBear:
 JSComplexityBear:
   - JavaScript
 JSHintBear:
@@ -214,15 +214,15 @@ Jinja2Bear:
   - Jinja2
 JuliaLintBear:
   - Julia
-KeywordBear: []
+KeywordBear:
 LanguageToolBear:
   - Natural Language
 LatexLintBear:
   - Tex
-LicenseCheckBear: []
-LicenseHeaderBear: []
-LineCountBear: []
-LineLengthBear: []
+LicenseCheckBear:
+LicenseHeaderBear:
+LineCountBear:
+LineLengthBear:
 LuaLintBear:
   - Lua
 MarkdownBear:
@@ -230,7 +230,7 @@ MarkdownBear:
 MatlabIndentationBear:
   - Matlab
   - Octave
-MementoBear: []
+MementoBear:
 MypyBear:
   - Python
   - Python 2
@@ -311,7 +311,7 @@ PythonPackageInitBear:
   - Python
   - Python 2
   - Python 3
-QuotesBear: []
+QuotesBear:
 RAMLLintBear:
   - RAML
 RLintBear:
@@ -346,7 +346,7 @@ ShellCheckBear:
   - dash
   - ksh
   - sh
-SpaceConsistencyBear: []
+SpaceConsistencyBear:
 SpellCheckBear:
   - Natural Language
 StyleLintBear:
@@ -366,8 +366,8 @@ TextLintBear:
   - reStructuredText
 TravisLintBear:
   - YAML
-URLBear: []
-URLHeadBear: []
+URLBear:
+URLHeadBear:
 VCSCommitMetadataBear:
   - Git
 VHDLLintBear:
@@ -389,7 +389,7 @@ YapfBear:
   - Python
   - Python 2
   - Python 3
-_CommitBear: []
-coalaBear: []
+_CommitBear:
+coalaBear:
 reSTLintBear:
   - reStructuredText
