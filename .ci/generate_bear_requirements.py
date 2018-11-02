@@ -19,7 +19,6 @@ import copy
 import itertools
 import os
 import sys
-import operator
 
 from ruamel.yaml import YAML, RoundTripDumper
 from ruamel.yaml.comments import CommentedMap
@@ -175,15 +174,24 @@ def get_pip_requirements(requirements):
 def get_cabal_requirements(requirements):
     return _get_requirements(requirements, '==')
 
+
+def _create_sorted_commented_map(input_dict):
+    return CommentedMap(sorted(input_dict.items(),
+                               key=lambda t: t[0]))
+
+
 def get_languages(bears):
     language_dict = {}
     for bear in bears:
         language_dict[str(bear.name)] = list(sorted(bear.LANGUAGES))
-    for value in language_dict.values():
+    for key, value in language_dict.items():
         if 'All' in value:
             value.remove('All')
         if 'default' in value:
             value.remove('default')
+        if not value:
+            language_dict[key] = None
+
     return language_dict
 
 
@@ -222,10 +230,10 @@ def deep_diff(target, src):
     return errors
 
 
+
 def sort_requirements(req_dict):
     for key in INSTANCE_NAMES:
-        req_dict[key] = CommentedMap(sorted(req_dict[key].items(),
-                                            key=lambda t: t[0]))
+        req_dict[key] = _create_sorted_commented_map(req_dict[key])
 
 
 if __name__ == '__main__':
@@ -288,8 +296,8 @@ if __name__ == '__main__':
     else:
         output = open(args.output, 'w')
 
-    all_bears.sort(key = operator.attrgetter('name'))
     language_requirements = get_languages(all_bears)
+    language_requirements = _create_sorted_commented_map(language_requirements)
     file_path = os.path.join(PROJECT_DIR, BEAR_LANGUAGES_YAML)
     with open(file_path, 'w') as outfile:
         yaml.indent(mapping=2, sequence=4, offset=2)
