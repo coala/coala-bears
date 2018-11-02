@@ -4,3 +4,8 @@ allow_generic_no_cover: true
 
 nocover_file_globs:
   - .ci/*
+
+nocover_regexes:
+  - '# backwards compatible no results'
+  # Allows retaining existing indentation
+  - 'if True:'
