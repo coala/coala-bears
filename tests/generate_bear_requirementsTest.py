@@ -7,4 +7,4 @@ class RunTest(unittest.TestCase):
 
     def test_run(self):
         rv = main(['--update', '--check'])
-        self.assertEqual(rv, 0)
+        self.assertEqual(rv, None)
