@@ -35,6 +35,13 @@ test_file4 = """{
 }"""
 
 
+# This will generate a line with 80 characters
+max_line_length_file1 = '{\n    "string": "' + 'a' * 64 + '"\n}'
+
+# This will generate a line with 79 characters
+max_line_length_file2 = '{\n    "string": "' + 'a' * 63 + '"\n}'
+
+
 class JSONTest(LocalBearTestHelper):
 
     def setUp(self):
@@ -91,3 +98,19 @@ JSONFormatBearUnicodeTest = verify_local_bear(JSONFormatBear,
                                               invalid_files=(),
                                               settings={'escape_unicode':
                                                         'false'})
+
+
+JSONFormatBearInfLineLengthTest = verify_local_bear(JSONFormatBear,
+                                                    valid_files=(
+                                                        max_line_length_file1,
+                                                        max_line_length_file2),
+                                                    invalid_files=())
+
+
+JSONFormatBearLineLengthTest = verify_local_bear(JSONFormatBear,
+                                                 valid_files=(
+                                                     max_line_length_file2,),
+                                                 invalid_files=(
+                                                     max_line_length_file1,),
+                                                 settings={'max_line_length':
+                                                           '79'})
