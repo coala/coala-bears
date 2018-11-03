@@ -18,6 +18,7 @@ class BanditBear:
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
+    ASCIINEMA_URL = 'https://asciinema.org/a/209933'
     CAN_DETECT = {'Security'}
 
     @staticmethod
