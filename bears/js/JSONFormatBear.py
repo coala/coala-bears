@@ -1,4 +1,5 @@
 import json
+import sys
 from collections import OrderedDict
 from re import match
 
@@ -23,6 +24,7 @@ class JSONFormatBear(LocalBear):
     @deprecate_settings(indent_size='tab_width',
                         escape_unicode=('keep_unicode', negate))
     def run(self, filename, file,
+            max_line_length: int = 0,
             json_sort: bool = False,
             indent_size: int = SpacingHelper.DEFAULT_TAB_WIDTH,
             escape_unicode: bool = True,
@@ -30,11 +32,16 @@ class JSONFormatBear(LocalBear):
         """
         Raises issues for any deviations from the pretty-printed JSON.
 
-        :param json_sort:      Whether or not keys should be sorted.
-        :param indent_size:    Number of spaces per indentation level.
-        :param escape_unicode: Whether or not to escape unicode values using
-                               ASCII.
+        :param max_line_length: Maximum number of characters for a line.
+                                When set to 0 allows infinite line length.
+        :param json_sort:       Whether or not keys should be sorted.
+        :param indent_size:     Number of spaces per indentation level.
+        :param escape_unicode:  Whether or not to escape unicode values using
+                                ASCII.
         """
+        if not max_line_length:
+            max_line_length = sys.maxsize
+
         # Output a meaningful message if empty file given as input
         if len(file) == 0:
             yield Result.from_values(self,
@@ -55,6 +62,22 @@ class JSONFormatBear(LocalBear):
                 line=int(err_content.group(2)),
                 column=int(err_content.group(3)))
             return
+
+        for line_number, line in enumerate(file):
+            line = line.expandtabs(indent_size)
+            if len(line) > max_line_length + 1:
+                yield Result.from_values(
+                    origin=self,
+                    message='Line is longer than allowed.'
+                            ' ({actual} > {maximum})'.format(
+                                actual=len(line)-1,
+                                maximum=max_line_length),
+                    file=filename,
+                    line=line_number + 1,
+                    column=max_line_length + 1,
+                    end_line=line_number + 1,
+                    end_column=len(line),
+                    )
 
         corrected = json.dumps(json_content,
                                sort_keys=json_sort,
