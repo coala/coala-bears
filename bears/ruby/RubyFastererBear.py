@@ -18,6 +18,7 @@ class RubyFastererBear:
     REQUIREMENTS = {GemRequirement('fasterer', '0.4.1')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
+    ASCIINEMA_URL = 'https://asciinema.org/a/210076'
     LICENSE = 'AGPL-3.0'
     CAN_DETECT = {'Complexity'}
     SEE_MORE = 'https://github.com/DamirSvrtan/fasterer'
