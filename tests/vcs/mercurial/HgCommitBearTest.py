@@ -303,7 +303,7 @@ class HgCommitBearTest(unittest.TestCase):
                        'Closes #01112')
         self.assertEqual(self.run_uut(body_close_issue=True,
                                       body_enforce_issue_reference=True),
-                         ['Invalid issue number: #01112'])
+                         ['Invalid bitbucket issue number: #01112'])
 
         # Adding incompatible remote for testing
         new_config_file = ('[paths]\n'
@@ -338,7 +338,7 @@ class HgCommitBearTest(unittest.TestCase):
                        'Closes #01112')
         self.assertEqual(self.run_uut(body_close_issue=True,
                                       body_enforce_issue_reference=True),
-                         ['Invalid issue number: #01112'])
+                         ['Invalid bitbucket issue number: #01112'])
 
         # No keywords and no issues
         self.hg_commit('Shortlog\n\n'
@@ -384,7 +384,7 @@ class HgCommitBearTest(unittest.TestCase):
                        'Another line, blablablablablabla.\n'
                        'Fix #01112 and #111')
         self.assertEqual(self.run_uut(body_close_issue=True,),
-                         ['Invalid issue number: #01112'])
+                         ['Invalid bitbucket issue number: #01112'])
         self.assert_no_msgs()
 
         # Bitbucket host with no full issue reference
@@ -406,7 +406,7 @@ class HgCommitBearTest(unittest.TestCase):
                        'Fix #1112-3')
         self.assertEqual(self.run_uut(
                              body_close_issue=True),
-                         ['Invalid issue reference: #1112-3'])
+                         ['Invalid bitbucket issue reference: #1112-3'])
         self.assert_no_msgs()
 
         # One of the short references is broken
@@ -415,7 +415,7 @@ class HgCommitBearTest(unittest.TestCase):
                        'Another line, blablablablablabla.\n'
                        'Resolve #11 and closes #notnum')
         self.assertEqual(self.run_uut(body_close_issue=True),
-                         ['Invalid issue reference: #notnum'])
+                         ['Invalid bitbucket issue reference: #notnum'])
         self.assert_no_msgs()
 
         # Incorrect close issue other repo pattern
@@ -424,5 +424,5 @@ class HgCommitBearTest(unittest.TestCase):
                        'Another line, blablablablablabla.\n'
                        'Fix #11 and close bitbucket#32')
         self.assertEqual(self.run_uut(body_close_issue=True),
-                         ['Invalid issue reference: bitbucket#32'])
+                         ['Invalid bitbucket issue reference: bitbucket#32'])
         self.assert_no_msgs()

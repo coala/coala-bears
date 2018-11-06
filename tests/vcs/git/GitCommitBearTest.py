@@ -354,7 +354,7 @@ class GitCommitBearTest(unittest.TestCase):
                         'Resolves https://bitbucket.org/user/repo/issues/1/')
         self.assertEqual(self.run_uut(
                              body_close_issue=True),
-                         ['Invalid issue reference: '
+                         ['Invalid bitbucket issue reference: '
                           'https://bitbucket.org/user/repo/issues/1/'])
 
         self.git_commit('Shortlog\n\n'
@@ -403,7 +403,7 @@ class GitCommitBearTest(unittest.TestCase):
         self.assertEqual(self.run_uut(
                              body_close_issue=True,
                              body_enforce_issue_reference=True),
-                         ['Invalid issue reference: bug#1112'])
+                         ['Invalid bitbucket issue reference: bug#1112'])
 
         self.git_commit('Shortlog\n\n'
                         'First line, blablablablablabla.\n'
@@ -412,7 +412,8 @@ class GitCommitBearTest(unittest.TestCase):
         self.assertEqual(self.run_uut(
                              body_close_issue=True,
                              body_enforce_issue_reference=True),
-                         ['Invalid issue reference: randomkeyword#1112'])
+                         ['Invalid bitbucket issue reference: '
+                          'randomkeyword#1112'])
 
         self.git_commit('Shortlog\n\n'
                         'First line, blablablablablabla.\n'
@@ -431,7 +432,7 @@ class GitCommitBearTest(unittest.TestCase):
         self.assertEqual(self.run_uut(
                              body_close_issue=True,
                              body_enforce_issue_reference=True),
-                         ['Invalid issue reference: bug'])
+                         ['Invalid bitbucket issue reference: bug'])
 
         self.git_commit('Shortlog\n\n'
                         'First line, blablablablablabla.\n'
@@ -449,7 +450,7 @@ class GitCommitBearTest(unittest.TestCase):
                         'Resolves https://bitbucket.org/user/repo/issues/1/')
         self.assertEqual(self.run_uut(
                              body_close_issue=True),
-                         ['Invalid issue reference: '
+                         ['Invalid bitbucket issue reference: '
                           'https://bitbucket.org/user/repo/issues/1/'])
 
         self.git_commit('Shortlog\n\n'
@@ -501,7 +502,7 @@ class GitCommitBearTest(unittest.TestCase):
         self.assertEqual(self.run_uut(
                              body_close_issue=True,
                              body_close_issue_full_url=True),
-                         ['Invalid full issue reference: '
+                         ['Invalid github full issue reference: '
                           'https://github.com/user/repo.git'])
         self.assert_no_msgs()
 
@@ -518,7 +519,7 @@ class GitCommitBearTest(unittest.TestCase):
                         'Another line, blablablablablabla.\n'
                         'Fix #01112 and #111')
         self.assertEqual(self.run_uut(body_close_issue=True,),
-                         ['Invalid issue number: #01112'])
+                         ['Invalid github issue number: #01112'])
         self.assert_no_msgs()
 
         # GitHub host with no full issue reference
@@ -529,7 +530,7 @@ class GitCommitBearTest(unittest.TestCase):
         self.assertEqual(self.run_uut(
                              body_close_issue=True,
                              body_close_issue_full_url=True),
-                         ['Invalid full issue reference: #1112'])
+                         ['Invalid github full issue reference: #1112'])
         self.assert_no_msgs()
 
         # Invalid characters in issue number
@@ -540,7 +541,7 @@ class GitCommitBearTest(unittest.TestCase):
         self.assertEqual(self.run_uut(
                              body_close_issue=True,
                              body_close_issue_full_url=True),
-                         ['Invalid full issue reference: #1112-3'])
+                         ['Invalid github full issue reference: #1112-3'])
         self.assert_no_msgs()
 
         # Adding GitLab remote for testing
@@ -566,7 +567,7 @@ class GitCommitBearTest(unittest.TestCase):
         self.assertEqual(self.run_uut(
                              body_close_issue=True,
                              body_close_issue_full_url=True),
-                         ['Invalid full issue reference: '
+                         ['Invalid gitlab full issue reference: '
                           'https://gitlab.com/user/repo/issues/not_num'])
         self.assert_no_msgs()
 
@@ -578,7 +579,7 @@ class GitCommitBearTest(unittest.TestCase):
         self.assertEqual(self.run_uut(
                              body_close_issue=True,
                              body_close_issue_full_url=True),
-                         ['Invalid full issue reference: '
+                         ['Invalid gitlab full issue reference: '
                           'www.google.com/issues/hehehe'])
         self.assert_no_msgs()
 
@@ -588,7 +589,7 @@ class GitCommitBearTest(unittest.TestCase):
                         'Another line, blablablablablabla.\n'
                         'Resolve #11 and close #notnum')
         self.assertEqual(self.run_uut(body_close_issue=True,),
-                         ['Invalid issue reference: #notnum'])
+                         ['Invalid gitlab issue reference: #notnum'])
         self.assert_no_msgs()
 
         # Close issues in other repos
@@ -605,7 +606,7 @@ class GitCommitBearTest(unittest.TestCase):
                         'Another line, blablablablablabla.\n'
                         'Fix #11 and close github#32')
         self.assertEqual(self.run_uut(body_close_issue=True,),
-                         ['Invalid issue reference: github#32'])
+                         ['Invalid gitlab issue reference: github#32'])
         self.assert_no_msgs()
 
         # Last line enforce full URL
