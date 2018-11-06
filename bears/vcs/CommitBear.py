@@ -1,4 +1,3 @@
-
 import abc
 import logging
 import nltk
@@ -25,11 +24,11 @@ class _CommitBear(GlobalBear):
     ISSUE_INFO = {
         'github': {
             'issue': r'(?:\w+/\w+)?#(\d+)',
-            'full issue': r'https?://github\S+/issues/(\d+)',
+            'full issue': r'https://github\S+/issues/(\d+)',
         },
         'gitlab': {
             'issue': r'(?:\w+/\w+)?#(\d+)',
-            'full issue': r'https?://gitlab\S+/issues/(\d+)',
+            'full issue': r'https://gitlab\S+/issues/(\d+)',
         },
         'bitbucket': {
             'issue': r'#(\d+)',
@@ -386,8 +385,9 @@ class _CommitBear(GlobalBear):
             for issue in re.split(compiled_concat_regex, match):
                 reference = compiled_issue_ref_regex.fullmatch(issue)
                 if not reference:
-                    yield Result(self, 'Invalid {} reference: '
-                                       '{}'.format(self.issue_type, issue))
+                    yield Result(self, 'Invalid {} {} reference: '
+                                       '{}'.format(host, self.issue_type,
+                                                   issue))
                 elif not compiled_issue_no_regex.fullmatch(reference.group(1)):
-                    yield Result(self, 'Invalid issue number: '
-                                       '{}'.format(issue))
+                    yield Result(self, 'Invalid {} issue number: '
+                                       '{}'.format(host, issue))
