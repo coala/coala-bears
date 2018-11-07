@@ -14,6 +14,4 @@ class RunTest(unittest.TestCase):
         self.assertEqual(rv, None)
 
     def tearDown(self):
-        shutil.rmtree(os.path.join(self.BEARS_UPLOAD_PATH))
-
         os.chdir(self.orig_dir)
