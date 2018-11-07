@@ -119,6 +119,9 @@ def main():
         bear_object = next(iimport_objects(
             bear_file_name, attributes='kind', local=True),
             None)
+        if not bear_object:
+            print('Bear {} could not be loaded'.format(bear_file_name))
+            sys.exit(1)
         if bear_object:
             bear_name, _ = os.path.splitext(os.path.basename(bear_file_name))
             create_file_structure_for_packages(
