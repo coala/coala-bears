@@ -1,6 +1,3 @@
-import os
-import sys
-
 # Allow import to fail to avoid annoying developers
 try:
     from pytest_reqs import check_requirements
