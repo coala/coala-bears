@@ -1,3 +1,4 @@
+import os
 import unittest
 
 from generate_bear_requirements import main
