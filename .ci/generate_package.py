@@ -84,6 +84,9 @@ def create_upload_parser():
     """
     parser = argparse.ArgumentParser(
         description='Generates PyPi packages from bears.')
+    parser.add_argument('-V', '--verbose',
+                        help='Verbose information',
+                        action='store_true')
     parser.add_argument('-r', '--register',
                         help='Register the packages on PyPi',
                         action='store_true')
@@ -117,7 +120,8 @@ def main():
 
     for bear_file_name in bear_files:
         bear_object = next(iimport_objects(
-            bear_file_name, attributes='kind', local=True),
+            bear_file_name, attributes='kind', local=True,
+            suppress_output=args.verbose),
             None)
         if not bear_object:
             print('Bear {} could not be loaded'.format(bear_file_name))

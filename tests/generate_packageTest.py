@@ -106,6 +106,7 @@ class MainTest(unittest.TestCase):
         self.orig_dir = os.getcwd()
 
         self.argv = ['generate_package.py',
+                     '--verbose',
                      self.BEARS_PATH,
                      self.TEMPLATE_FILE_PATH]
         argv_patcher = patch.object(sys, 'argv', self.argv)
