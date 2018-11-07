@@ -125,7 +125,7 @@ def main():
             None)
         if not bear_object:
             print('Bear {} could not be loaded'.format(bear_file_name))
-            sys.exit(1)
+            continue
         if bear_object:
             bear_name, _ = os.path.splitext(os.path.basename(bear_file_name))
             create_file_structure_for_packages(
