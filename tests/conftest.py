@@ -11,6 +11,3 @@ except ImportError:
 if check_requirements:
     def pytest_collection_modifyitems(config, session, items):
         check_requirements(config, session, items)
-
-_tests_dir = os.path.abspath(os.path.dirname(__file__))
-sys.path.insert(0, os.path.join(_tests_dir, '..', '.ci'))
