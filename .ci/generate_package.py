@@ -84,6 +84,9 @@ def create_upload_parser():
     """
     parser = argparse.ArgumentParser(
         description='Generates PyPi packages from bears.')
+    parser.add_argument('-V', '--verbose',
+                        help='Verbose information',
+                        action='store_true')
     parser.add_argument('-r', '--register',
                         help='Register the packages on PyPi',
                         action='store_true')
@@ -109,10 +112,21 @@ def main():
     else:
         bear_version = repr(bear_version) + '.' + str(int(time.time()))
 
-    for bear_file_name in sorted(set(glob('bears/**/*Bear.py'))):
+    bear_files = sorted(set(glob('bears/**/*Bear.py')))
+
+    if not bear_files:
+        print('No bears found in {}'.format(args.bears))
+        return 1
+
+    done = []
+    for bear_file_name in bear_files:
         bear_object = next(iimport_objects(
-            bear_file_name, attributes='kind', local=True),
+            bear_file_name, attributes='kind', local=True,
+            suppress_output=args.verbose),
             None)
+        if not bear_object:
+            print('Bear {} could not be loaded'.format(bear_file_name))
+            continue
         if bear_object:
             bear_name, _ = os.path.splitext(os.path.basename(bear_file_name))
             create_file_structure_for_packages(
@@ -160,6 +174,13 @@ def main():
                                  bear_dist_name)
             if args.upload:
                 perform_upload(os.path.join('bears', 'upload', bear_name))
+
+            done.append(bear_file_name)
+
+    if not done:
+        return 1
+
+    return 0
 
 
 if __name__ == '__main__':  # pragma: no cover
