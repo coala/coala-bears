@@ -116,8 +116,9 @@ def main():
 
     if not bear_files:
         print('No bears found in {}'.format(args.bears))
-        sys.exit(1)
+        return 1
 
+    done = []
     for bear_file_name in bear_files:
         bear_object = next(iimport_objects(
             bear_file_name, attributes='kind', local=True,
@@ -174,6 +175,10 @@ def main():
             if args.upload:
                 perform_upload(os.path.join('bears', 'upload', bear_name))
 
+            done.append(bear_file_name)
+
+    if not done:
+        return 1
 
 if __name__ == '__main__':  # pragma: no cover
     sys.exit(main())
