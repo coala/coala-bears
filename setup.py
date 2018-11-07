@@ -298,6 +298,8 @@ class PEP440Version(LooseVersion):
         return previous
 
 
+# This is an unfortunately needed comment
+
 def egg_name_to_requirement(name):
     name = name.strip()
     parts = name.split('-')
