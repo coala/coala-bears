@@ -109,7 +109,13 @@ def main():
     else:
         bear_version = repr(bear_version) + '.' + str(int(time.time()))
 
-    for bear_file_name in sorted(set(glob('bears/**/*Bear.py'))):
+    bear_files = sorted(set(glob('bears/**/*Bear.py')))
+
+    if not bear_files:
+        print('No bears found in {}'.format(args.bears))
+        sys.exit(1)
+
+    for bear_file_name in bear_files:
         bear_object = next(iimport_objects(
             bear_file_name, attributes='kind', local=True),
             None)

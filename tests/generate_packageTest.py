@@ -97,8 +97,8 @@ class MainTest(unittest.TestCase):
     BEARS_PATH = os.path.abspath(os.path.join(
         os.path.dirname(__file__), '..', 'bears'))
     BEARS_UPLOAD_PATH = os.path.join(BEARS_PATH, 'upload')
-    CSS_BEAR_SETUP_PATH = os.path.join(
-        BEARS_UPLOAD_PATH, 'CSSLintBear', 'setup.py')
+    CSS_BEAR_PATH = os.path.join(BEARS_UPLOAD_PATH, 'CSSLintBear')
+    CSS_BEAR_SETUP_PATH = os.path.join(CSS_BEAR_PATH, 'setup.py')
     NO_BEAR_PATH = os.path.join(BEARS_PATH,
                                 'BadBear', 'InvalidBear.py')
 
@@ -115,6 +115,9 @@ class MainTest(unittest.TestCase):
     def test_main(self):
         main()
         self.assertTrue(os.path.exists(self.BEARS_UPLOAD_PATH))
+        self.assertTrue(list(os.listdir(self.BEARS_UPLOAD_PATH)))
+        self.assertTrue(os.path.exists(self.CSS_BEAR_PATH))
+        self.assertTrue(os.path.exists(self.CSS_BEAR_SETUP_PATH))
         with open(self.CSS_BEAR_SETUP_PATH) as fl:
             setup_py = fl.read()
         self.assertIn('Check code for syntactical or semantical', setup_py)
