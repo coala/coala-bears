@@ -177,7 +177,7 @@ pip_requirements:
     version: ~=3.4.0
   lxml:
     version: ==3.6.0
-  memento_client:
+  memento-client:
     version: ~=0.6.1
   munkres3:
     version: ~=1.0
