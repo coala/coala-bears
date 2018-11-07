@@ -18,7 +18,7 @@ isort~=4.2
 language-check~=1.0
 libclang-py3~=3.4.0
 lxml==3.6.0
-memento_client~=0.6.1
+memento-client~=0.6.1
 munkres3~=1.0
 mypy==0.590
 nbformat~=4.1
