@@ -63,7 +63,7 @@ INSTANCE_NAMES = (
 )
 
 
-def get_args():
+def get_args(args=None):
     parser = argparse.ArgumentParser(
         description='This program generates a yaml requirement file for '
                     'installation of linters that are used by the bears.')
@@ -79,7 +79,7 @@ def get_args():
     parser.add_argument('--update', '-u', action='store_true',
                         help='updates "bear-requirements.yaml" '
                              'instead of overwriting')
-    args = parser.parse_args()
+    args = parser.parse_args(args=args)
 
     return args
 
@@ -236,8 +236,8 @@ def sort_requirements(req_dict):
         req_dict[key] = _create_sorted_commented_map(req_dict[key])
 
 
-if __name__ == '__main__':
-    args = get_args()
+def main(args=None):
+    args = get_args(args)
 
     bear_dirs = [PROJECT_BEAR_DIR]
 
@@ -275,7 +275,7 @@ if __name__ == '__main__':
         except FileNotFoundError:
             print('bear-requirements.yaml not found. '
                   'Run without flags to generate it.')
-            exit(1)
+            return 1
 
         input_requirments = yaml.load(input_file)
 
@@ -289,7 +289,7 @@ if __name__ == '__main__':
             changed = deep_diff(input_requirments, new_requirments)
             if changed:
                 yaml.dump(changed, sys.stdout)
-                exit(1)
+                return 1
 
     if args.output == '-':
         output = sys.stdout
@@ -306,3 +306,9 @@ if __name__ == '__main__':
     sort_requirements(requirements)
     yaml.dump(requirements, output)
     output.close()
+
+    return 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())

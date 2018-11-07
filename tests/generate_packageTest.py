@@ -97,8 +97,8 @@ class MainTest(unittest.TestCase):
     BEARS_PATH = os.path.abspath(os.path.join(
         os.path.dirname(__file__), '..', 'bears'))
     BEARS_UPLOAD_PATH = os.path.join(BEARS_PATH, 'upload')
-    CSS_BEAR_SETUP_PATH = os.path.join(
-        BEARS_UPLOAD_PATH, 'CSSLintBear', 'setup.py')
+    CSS_BEAR_PATH = os.path.join(BEARS_UPLOAD_PATH, 'CSSLintBear')
+    CSS_BEAR_SETUP_PATH = os.path.join(CSS_BEAR_PATH, 'setup.py')
     NO_BEAR_PATH = os.path.join(BEARS_PATH,
                                 'BadBear', 'InvalidBear.py')
 
@@ -106,6 +106,7 @@ class MainTest(unittest.TestCase):
         self.orig_dir = os.getcwd()
 
         self.argv = ['generate_package.py',
+                     '--verbose',
                      self.BEARS_PATH,
                      self.TEMPLATE_FILE_PATH]
         argv_patcher = patch.object(sys, 'argv', self.argv)
@@ -113,8 +114,13 @@ class MainTest(unittest.TestCase):
         self.argv_mock = argv_patcher.start()
 
     def test_main(self):
-        main()
+        rv = main()
+        self.assertEqual(rv, 0)
+
         self.assertTrue(os.path.exists(self.BEARS_UPLOAD_PATH))
+        self.assertTrue(list(os.listdir(self.BEARS_UPLOAD_PATH)))
+        self.assertTrue(os.path.exists(self.CSS_BEAR_PATH))
+        self.assertTrue(os.path.exists(self.CSS_BEAR_SETUP_PATH))
         with open(self.CSS_BEAR_SETUP_PATH) as fl:
             setup_py = fl.read()
         self.assertIn('Check code for syntactical or semantical', setup_py)
@@ -122,7 +128,9 @@ class MainTest(unittest.TestCase):
     def test_main_bear_version_prod(self):
         fake_prod_version = '99.99.99'
         with patch('generate_package.VERSION', fake_prod_version):
-            main()
+            rv = main()
+
+        self.assertEqual(rv, 0)
         with open(self.CSS_BEAR_SETUP_PATH) as fl:
             setup_py = fl.read()
         self.assertIn(fake_prod_version, setup_py)
@@ -131,7 +139,9 @@ class MainTest(unittest.TestCase):
     def test_main_bear_version_dev(self):
         fake_dev_version = '13.37.0.dev133713371337'
         with patch('generate_package.VERSION', fake_dev_version):
-            main()
+            rv = main()
+
+        self.assertEqual(rv, 0)
         with open(self.CSS_BEAR_SETUP_PATH) as fl:
             setup_py = fl.read()
         self.assertNotIn(fake_dev_version, setup_py)
@@ -140,14 +150,20 @@ class MainTest(unittest.TestCase):
     @patch('generate_package.perform_upload')
     def test_upload(self, call_mock):
         self.argv.append('--upload')
-        main()
+
+        rv = main()
+        self.assertEqual(rv, 0)
+
         for call_object in call_mock.call_args_list:
             self.assertRegex(call_object[0][0], r'.+Bear')
 
     @patch('generate_package.perform_register')
     def test_register(self, call_mock):
         self.argv.append('--register')
-        main()
+
+        rv = main()
+        self.assertEqual(rv, 0)
+
         for call_object in call_mock.call_args_list:
             self.assertRegex(call_object[0][0], r'.+Bear')
 
@@ -155,7 +171,10 @@ class MainTest(unittest.TestCase):
         if not os.path.exists(self.NO_BEAR_PATH):
             os.makedirs(os.path.join(self.BEARS_PATH, 'BadBear'))
             Path(self.NO_BEAR_PATH).touch()
-        main()
+
+        rv = main()
+        self.assertEqual(rv, 0)
+
         self.assertFalse(os.path.exists(os.path.join(
             self.BEARS_UPLOAD_PATH, 'BadBear')))
         shutil.rmtree(os.path.join(self.BEARS_PATH, 'BadBear'))
