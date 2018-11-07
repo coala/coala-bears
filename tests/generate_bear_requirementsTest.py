@@ -5,7 +5,6 @@ from generate_bear_requirements import main
 
 class RunTest(unittest.TestCase):
 
-
     def setUp(self):
         self.orig_dir = os.getcwd()
 
