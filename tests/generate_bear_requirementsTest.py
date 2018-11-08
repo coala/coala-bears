@@ -11,7 +11,7 @@ class RunTest(unittest.TestCase):
 
     def test_dependency_yaml_check(self):
         rv = main(['--update', '--check'])
-        self.assertEqual(rv, None)
+        self.assertEqual(rv, 0)
 
     def tearDown(self):
         os.chdir(self.orig_dir)
