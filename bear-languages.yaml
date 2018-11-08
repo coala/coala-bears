@@ -221,6 +221,7 @@ LatexLintBear:
   - Tex
 LicenseCheckBear:
 LicenseHeaderBear:
+LineContinuationBear:
 LineCountBear:
 LineLengthBear:
 LuaLintBear:
