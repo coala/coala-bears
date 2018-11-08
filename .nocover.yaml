@@ -4,4 +4,3 @@ allow_generic_no_cover: true
 
 nocover_file_globs:
   - .ci/*
-  - tests/python/bandit_test_files/
