@@ -40,7 +40,7 @@ class SASSLintBear:
         return args
 
     def process_output(self, output, filename, file):
-        if not file or not output:
+        if not output:  # backwards compatible no results
             return
 
         output = json.loads(output)
