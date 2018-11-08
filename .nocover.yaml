@@ -1,0 +1,6 @@
+overrides: bear-requirements.yaml
+
+allow_generic_no_cover: true
+
+nocover_file_globs:
+  - .ci/*
