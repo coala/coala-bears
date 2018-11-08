@@ -188,7 +188,7 @@ before_script:
 script:
   - python setup.py bdist_wheel
   - pip install $(ls ./dist/*.whl)"[alldeps]"
-  - bash .ci/tests.sh
+  - pytest
   # Ensure bear requirements are in sync with the bear PipRequirement
   - .ci/generate_bear_requirements.py --check --update
   - git diff --exit-code
