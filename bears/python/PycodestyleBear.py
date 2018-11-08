@@ -72,8 +72,11 @@ class PycodestyleBear:
         return arguments
 
     def process_output(self, output, filename, file):
+        if not output:  # backwards compatible no results
+            return
         result = re.match(OUTPUT_REGEX, output)
         if not result:
+            self.warn('Unexpected output {}'.format(output))
             return
         line, column, message, rule = result.groups()
         if rule == 'E501':
