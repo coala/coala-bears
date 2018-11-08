@@ -1,0 +1,5 @@
+{% extends 'setup.cfg.jj2' %}
+{% set packages = ['bears', '.ci'] %}
+{% block extra_pytest_addopts %}
+  --ignore=tests/python/bandit_test_files/
+{% endblock %}
