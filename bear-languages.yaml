@@ -297,6 +297,10 @@ PySafetyBear:
   - Python 2 Requirements
   - Python 3 Requirements
   - Python Requirements
+PyStringConcatBear:
+  - Python
+  - Python 2
+  - Python 3
 PyUnusedCodeBear:
   - Python
   - Python 2
