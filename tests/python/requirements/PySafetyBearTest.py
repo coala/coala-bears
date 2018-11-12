@@ -17,6 +17,12 @@ class PySafetyBearTest(LocalBearTestHelper):
     def setUp(self):
         self.uut = PySafetyBear(Section('name'), Queue())
 
+    def test_cve_key_checker(self):
+        # avoid pragma: no cover
+        assert cve_key_checker(mock.Mock(data={'cve': None})) is None
+        assert cve_key_checker(mock.Mock(data={'cve': True}))
+        assert cve_key_checker(mock.Mock(data={})) is None
+
     def test_without_vulnerability(self):
         with mock.patch(
             'bears.python.requirements.PySafetyBear.safety.check',

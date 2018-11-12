@@ -14,7 +14,7 @@ from coalib.settings.Setting import typed_list
 
 
 # It was for old versions of safety and those versions will be allow in future.
-def cve_key_checker(vulnerability):  # pragma: no cover
+def cve_key_checker(vulnerability):
     if 'cve' in vulnerability.data:
         if vulnerability.data['cve'] is None:
             return None
