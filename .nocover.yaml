@@ -8,3 +8,8 @@ nocover_file_globs:
 nocover_regexes:
   # `.` can only be `#`
   - 'if .*:  . backwards compatible no results'
+
+nocover_branch_regexes:
+  # Allows retaining existing indentation
+  # `.` can only be `#`
+  - 'if True:  . no else'

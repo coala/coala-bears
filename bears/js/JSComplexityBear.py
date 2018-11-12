@@ -34,7 +34,10 @@ class JSComplexityBear:
         :param cc_threshold: Threshold value for cyclomatic complexity
         """
         message = '{} has a cyclomatic complexity of {}.'
-        if output:
+        if not output:  # backwards compatible no results
+            return
+
+        if True:  # no else
             try:
                 output = json.loads(output)
             except JSONDecodeError:
