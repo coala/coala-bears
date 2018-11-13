@@ -342,6 +342,8 @@ SASSLintBear:
   - SCSS
 SCSSLintBear:
   - SCSS
+SQLFormatBear:
+  - SQL
 SQLintBear:
   - SQL
 ScalaLintBear:
