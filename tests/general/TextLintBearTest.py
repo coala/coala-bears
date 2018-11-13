@@ -139,14 +139,7 @@ class TextLintBearTest(LocalBearTestHelper):
         self.check_results(
             self.uut,
             file_contents,
-            [Result.from_values('TextLintBear',
-                                message='[her-him] `his` may be insensitive, '
-                                        'use `their`, `theirs`, '
-                                        '`them` instead',
-                                line=1,
-                                column=17,
-                                severity=RESULT_SEVERITY.MAJOR,
-                                file=get_testfile_path(file_name)),
+            [
              Result.from_values('TextLintBear',
                                 message='https://google.com/teapot is dead. '
                                         '(301 Moved Permanently)',
