@@ -19,6 +19,12 @@ AlexBearTest = verify_local_bear(AlexBear,
 @patch('bears.natural_language.AlexBear.subprocess.check_output')
 class AlexBearPrereqTest(unittest.TestCase):
 
+    @patch('%s.super.check_prerequisites' % __name__, create=True)
+    def test_alex_not_installed(self, check_output_mock):
+        check_output_mock.side_effect = OSError
+        self.assertIn('The `alex` package is not installed',
+                      AlexBear.check_prerequisites())
+
     def test_unverified_alex_installed(self, check_output_mock):
         check_output_mock.side_effect = OSError
         self.assertIn('The `alex` package could not be verified',
