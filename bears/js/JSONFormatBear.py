@@ -66,7 +66,7 @@ class JSONFormatBear(LocalBear):
         corrected = tuple(line.rstrip(' \n') + '\n' for line in corrected)
         diff = Diff.from_string_arrays(file, corrected)
 
-        if len(diff) > 0 and json_sort is True:
+        if len(diff) > 0 and json_sort:
             yield Result(self,
                          'This file can be reformatted by sorting keys and '
                          'following indentation.',
@@ -74,7 +74,7 @@ class JSONFormatBear(LocalBear):
                                              for d in diff.split_diff()),
                          diffs={filename: diff})
 
-        elif len(diff) > 0 and json_sort is False:
+        elif len(diff) > 0 and not json_sort:
             yield Result(self,
                          'This file can be reformatted by '
                          'following indentation.',
