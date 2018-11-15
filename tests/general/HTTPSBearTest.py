@@ -107,3 +107,19 @@ class HTTPSBearTest(LocalBearTestHelper):
         with requests_mock.Mocker() as m:
             m.add_matcher(custom_matcher_https)
             self.check_validity(self.uut, test_link)
+
+    def test_request_exception(self):
+        test_link = """
+        http://httpbin.org/status/v200
+        """.splitlines()
+
+        with unittest.mock.patch(
+            'requests.head',
+            side_effect=requests.exceptions.RequestException,
+        ) as check:
+            self.check_validity(self.uut, test_link)
+            check.assert_called_with(
+                'https://httpbin.org/status/v200',
+                allow_redirects=False,
+                timeout=HTTPSBear.DEFAULT_TIMEOUT,
+            )

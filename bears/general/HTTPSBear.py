@@ -66,7 +66,7 @@ class HTTPSBear(LocalBear):
 
             try:
                 https_code = https_response.status_code
-            except AttributeError:  # pragma: no cover
+            except AttributeError:
                 continue
 
             if not https_code or not 200 <= https_code < 300:
