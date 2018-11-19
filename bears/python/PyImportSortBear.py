@@ -17,6 +17,7 @@ class PyImportSortBear(LocalBear):
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
     CAN_FIX = {'Formatting'}
+    ASCIINEMA_URL = 'https://asciinema.org/a/212203'
 
     @staticmethod
     def _seperate_imports(file):
