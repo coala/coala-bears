@@ -35,6 +35,9 @@ class RubySecurityBear:
         return '-f', 'json', app
 
     def process_output(self, output, file, filename):
+        if not output:  # backwards compatible no results
+            return
+
         outputs = json.loads(output)
         for message_type, values in outputs.items():
             if message_type != 'warnings':
