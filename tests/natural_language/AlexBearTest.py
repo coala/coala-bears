@@ -36,3 +36,10 @@ class AlexBearPrereqTest(unittest.TestCase):
             b'  Catch insensitive, inconsiderate writing\n'
             b'Usage instructions and examples here ....')
         self.assertTrue(AlexBear.check_prerequisites())
+
+    def test_check_prerequisites(self, check_output_mock):
+        with patch.object(AlexBear.__bases__[1],
+                          'check_prerequisites') as mock_method:
+            mock_method.return_value = False
+            self.assertEqual(False,
+                             AlexBear.check_prerequisites())

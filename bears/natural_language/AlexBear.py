@@ -27,7 +27,7 @@ class AlexBear:
     @classmethod
     def check_prerequisites(cls):
         parent_prereqs = super().check_prerequisites()
-        if parent_prereqs is not True:  # pragma: no cover
+        if parent_prereqs is not True:
             return parent_prereqs
 
         incorrect_pkg_msg = (
