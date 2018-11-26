@@ -1,5 +1,7 @@
 from queue import Queue
 from textwrap import dedent
+from unittest import mock
+import sys
 import unittest
 import shutil
 import platform
@@ -82,6 +84,12 @@ class DocGrammarBearTest(unittest.TestCase):
             self.assertTrue(DocGrammarBear.check_prerequisites())
         finally:
             shutil.which = _shutil_which
+
+        with mock.patch.dict(sys.modules, {'language_check': None}):
+            assert DocGrammarBear.check_prerequisites() == ('Please '
+                                                            'install the '
+                                                            '`language-check` '
+                                                            'pip package.')
 
     test_spelling = gen_check(
         make_docstring(main_desc='Thiss is main descrpton.\n'),
