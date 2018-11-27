@@ -39,7 +39,7 @@ class VHDLLintBear:
     CAN_DETECT = {'Formatting'}
 
     @classmethod
-    def check_prerequisites(cls):  # pragma: no cover
+    def check_prerequisites(cls):
         if which('perl') is None:
             return 'perl is not installed.'
         elif which('bakalint.pl') is None:
