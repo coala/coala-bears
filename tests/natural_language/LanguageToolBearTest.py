@@ -1,5 +1,7 @@
 import shutil
+import sys
 import unittest
+from unittest import mock
 from unittest.case import SkipTest
 
 from bears.natural_language.LanguageToolBear import LanguageToolBear
@@ -67,3 +69,9 @@ class LanguageToolBearPrerequisitesTest(unittest.TestCase):
             self.assertTrue(LanguageToolBear.check_prerequisites())
         finally:
             shutil.which = _shutil_which
+
+        with mock.patch.dict(sys.modules, {'language_check': None}):
+            assert LanguageToolBear.check_prerequisites() == ('Please '
+                                                              'install the '
+                                                              '`language-check`'
+                                                              ' pip package.')

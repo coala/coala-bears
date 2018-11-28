@@ -31,7 +31,7 @@ class LanguageToolBear(LocalBear):
                 LanguageTool
                 correct
                 return True
-            except ImportError:  # pragma: no cover
+            except ImportError:
                 return 'Please install the `language-check` pip package.'
 
     @deprecate_settings(natural_language=('language', 'locale'))
