@@ -1,5 +1,7 @@
 import abc
 import logging
+import sys
+
 import nltk
 import re
 from contextlib import redirect_stdout
@@ -73,7 +75,7 @@ class _CommitBear(GlobalBear):
                 nltk.download([
                     'punkt',
                     'averaged_perceptron_tagger'
-                ])
+                ], print_error_to=sys.stdout)
                 type(self)._nltk_data_downloaded = True
 
     @classmethod
