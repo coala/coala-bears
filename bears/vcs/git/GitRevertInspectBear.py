@@ -49,7 +49,7 @@ class GitRevertInspectBear(GlobalBear):
                                          'edit' %
                                          reverted_commit_sha)
         _, err = run_shell_command(create_expected_revert_commit)
-        if err:  # pragma: no cover
+        if err:
             self.warn('Cannot compare the modified files.')
             run_shell_command('git revert --abort')
             clean_inspect_revert_branch()

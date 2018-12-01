@@ -2,6 +2,7 @@ import os
 import platform
 import shutil
 import stat
+import sys
 import unittest
 import unittest.mock
 from pathlib import Path
@@ -10,7 +11,7 @@ from tempfile import mkdtemp
 
 from bears.vcs.git.GitCommitMetadataBear import GitCommitMetadataBear
 from bears.vcs.git.GitRevertInspectBear import GitRevertInspectBear
-from coalib.misc.Shell import run_shell_command
+from coalib.misc.Shell import run_shell_command, ShellCommandResult
 from coalib.settings.Section import Section
 from coalib.testing.BearTestHelper import generate_skip_decorator
 from .GitCommitBearTest import GitCommitBearTest
@@ -209,3 +210,35 @@ class GitRevertInspectBearTest(unittest.TestCase):
         run_shell_command('git add testfile6.txt')
         run_shell_command('git commit --amend --allow-empty --no-edit')
         self.assertEqual(self.run_uut(), [])
+
+    @unittest.mock.patch('bears.vcs.git.GitRevertInspectBear.run_shell_command')
+    def test_check_modified_file_similarity_error(self, mock_run_shell_command):
+        mock_run_shell_command.side_effect = [
+            ShellCommandResult(0, 'M\ttestfile7.txt', sys.stderr),
+            ShellCommandResult(0, None, sys.stderr),
+            ShellCommandResult(0, ('', 'errors'), sys.stderr),
+            ShellCommandResult(0, None, sys.stderr),
+            ShellCommandResult(0, None, sys.stderr),
+            ShellCommandResult(0, None, sys.stderr)
+        ]
+
+        Path('testfile7.txt').touch()
+        with open('testfile7.txt', 'w') as f:
+            f.write('Some other text\n')
+        run_shell_command('git add testfile7.txt')
+        run_shell_command('git commit -m "Initial commit"')
+
+        with open('testfile7.txt', 'w') as f:
+            f.write('Changed text\n')
+        run_shell_command('git add testfile7.txt')
+        run_shell_command('git commit -m "modify testfile6"')
+
+        run_shell_command('git revert HEAD --no-edit')
+        with open('testfile7.txt', 'w') as f:
+            f.write('Some more text\n')
+        run_shell_command('git add testfile7.txt')
+        run_shell_command('git commit --amend --allow-empty --no-edit')
+
+        assert self.run_uut() == []
+        mock_run_shell_command.assert_has_calls(
+            [unittest.mock.call('git revert --abort')])
