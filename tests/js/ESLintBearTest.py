@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 from queue import Queue
+from unittest import mock
 
 from bears.js.ESLintBear import ESLintBear
 
@@ -12,6 +13,7 @@ from coalib.testing.BearTestHelper import generate_skip_decorator
 from coalib.testing.LocalBearTestHelper import (
     verify_local_bear,
     LocalBearTestHelper,
+    get_results,
 )
 
 
@@ -230,3 +232,28 @@ class ESLintBearLanguageTest(LocalBearTestHelper):
                 break
         else:
             assert False, 'Message not found'
+
+
+@generate_skip_decorator(ESLintBear)
+class ESLintBearLegacyErrorTest(LocalBearTestHelper):
+
+    def setUp(self):
+        self.section = Section('name')
+        self.queue = Queue()
+        self.uut = ESLintBear(self.section, self.queue)
+
+    @mock.patch('coalib.misc.Shell.Popen')
+    def test_eslint2_error(self, mock_popen):
+        error = 'foo'
+        mock_popen.return_value.communicate.return_value = ('output', error)
+
+        get_results(self.uut, '',
+                    filename=None,
+                    force_linebreaks=True,
+                    create_tempfile=True,
+                    tempfile_kwargs={},
+                    settings={},
+                    aspects=None,
+                    )
+
+        self.assertIn(error, (msg.message for msg in self.queue.queue))

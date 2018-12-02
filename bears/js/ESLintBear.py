@@ -94,7 +94,7 @@ class ESLintBear:
         # Taking output from stderr for ESLint 2 program errors.
         # ESLint 2 is no longer supported, but it is here so that anyone
         # with ESLint 2 will still see any errors that were emitted.
-        if output[1]:  # pragma: no cover
+        if output[1]:
             warn_issue(output[1])
 
         if not file or not output[0]:
