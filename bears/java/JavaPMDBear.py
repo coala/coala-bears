@@ -24,7 +24,7 @@ class JavaPMDBear:
                   'Duplication'}
 
     @classmethod
-    def check_prerequisites(cls):  # pragma: no cover
+    def check_prerequisites(cls):
         if which('bash') is None:
             return 'bash is not installed.'
         elif which('pmd') is None and which('run.sh') is None:
