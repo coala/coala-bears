@@ -9,6 +9,7 @@ from coalib.misc.Shell import run_shell_command
 class HgCommitBear(_CommitBear):
     LANGUAGES = {'Hg'}
     CAN_DETECT = {'Formatting'}
+    ASCIINEMA_URL = 'https://asciinema.org/a/3Kfn2EDjYLmsbPoL7lRuLyhlN'
 
     @classmethod
     def check_prerequisites(cls):
