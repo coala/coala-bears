@@ -204,7 +204,7 @@ pip_requirements:
   radon:
     version: ==1.4.0
   restructuredtext-lint:
-    version: ~=1.0.0
+    version: ~=1.0
   rstcheck:
     version: ~=3.1
   safety:

@@ -31,7 +31,7 @@ pylint~=1.7.2
 pyroma~=2.2.0
 pyyaml~=3.12
 radon==1.4.0
-restructuredtext-lint~=1.0.0
+restructuredtext-lint~=1.0
 rstcheck~=3.1
 safety~=1.8.2
 scspell3k~=2.0
