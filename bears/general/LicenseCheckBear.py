@@ -7,7 +7,7 @@ from dependency_management.requirements.DistributionRequirement import (
         output_format='regex',
         output_regex=r'.*: .*UNKNOWN$',
         result_message='No license found.')
-class LicenseCheckBear:
+class LicenseCheckBear:  # pragma nt: no cover
     """
     Attempts to check the given file for a license, by searching the start
     of the file for text belonging to various licenses.

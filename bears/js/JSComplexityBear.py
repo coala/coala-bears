@@ -9,7 +9,7 @@ from coalib.results.Result import Result
 
 
 @linter(executable='cr')
-class JSComplexityBear:
+class JSComplexityBear:  # pragma nt: no cover
     """
     Calculates cyclomatic complexity using ``cr``, the command line utility
     provided by the NodeJS module ``complexity-report``.

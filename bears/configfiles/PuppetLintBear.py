@@ -6,7 +6,7 @@ from dependency_management.requirements.GemRequirement import GemRequirement
         output_format='regex',
         output_regex=r'(?P<line>\d+):(?P<column>\d+):'
                      r'(?P<severity>warning|error):(?P<message>.+)')
-class PuppetLintBear:
+class PuppetLintBear:  # pragma nt: no cover
     '''
     Check and correct puppet configuration files using ``puppet-lint``.
 

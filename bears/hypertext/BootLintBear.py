@@ -7,7 +7,7 @@ from coalib.settings.Setting import typed_list
         output_format='regex',
         output_regex=r'.+:(?P<line>\d*):(?P<column>\d*) (?P<severity>.)\d+ '
                      r'(?P<message>.+)')
-class BootLintBear:
+class BootLintBear:  # pragma nt: no cover
     """
     Raise several common HTML mistakes in html files that are using
     Bootstrap in a fairly "vanilla" way. Vanilla Bootstrap's components/widgets

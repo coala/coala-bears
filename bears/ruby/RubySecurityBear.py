@@ -10,7 +10,7 @@ from dependency_management.requirements.GemRequirement import GemRequirement
 
 @linter(executable='brakeman',
         global_bear=True)
-class RubySecurityBear:
+class RubySecurityBear:  # pragma nt: no cover
     """
     Checks the Security issues of Ruby Applications.
 

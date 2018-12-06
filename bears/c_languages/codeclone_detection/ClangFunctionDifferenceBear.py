@@ -57,7 +57,7 @@ member_accessed"""))
                    'differences',
                    'count_matrices',
                    'message')
-class ClangFunctionDifferenceResult(HiddenResult):
+class ClangFunctionDifferenceResult(HiddenResult):  # pragma nt: no cover
 
     @enforce_signature
     def __init__(self, origin,
@@ -73,7 +73,7 @@ def get_difference(function_pair,
                    count_matrices,
                    average_calculation,
                    poly_postprocessing,
-                   exp_postprocessing):
+                   exp_postprocessing):  # pragma nt: no cover
     """
     Retrieves the difference between two functions using the munkres algorithm.
 
@@ -104,7 +104,7 @@ def get_difference(function_pair,
                               exp_postprocessing))
 
 
-class ClangFunctionDifferenceBear(GlobalBear):
+class ClangFunctionDifferenceBear(GlobalBear):  # pragma nt: no cover
     check_prerequisites = classmethod(clang_available)
     LANGUAGES = ClangBear.LANGUAGES
     REQUIREMENTS = ClangBear.REQUIREMENTS | {PipRequirement('munkres3', '1.0')}

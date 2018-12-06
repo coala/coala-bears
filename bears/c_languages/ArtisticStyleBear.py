@@ -6,7 +6,7 @@ from dependency_management.requirements.DistributionRequirement import (
 @linter(executable='astyle',
         output_format='corrected',
         use_stdin=True)
-class ArtisticStyleBear:
+class ArtisticStyleBear:  # pragma nt: no cover
     """
     Artistic Style is a source code indenter, formatter,
     and beautifier for the C, C++, C++/CLI, Objective-C,

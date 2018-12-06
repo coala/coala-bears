@@ -8,7 +8,7 @@ from coalib.results.SourceRange import SourceRange
 from coalib.settings.Setting import language
 
 
-class CPDBear(GlobalBear):
+class CPDBear(GlobalBear):  # pragma nt: no cover
 
     language_dict = {'C#': 'cs',
                      'CPP': 'cpp',

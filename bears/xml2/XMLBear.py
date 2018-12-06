@@ -8,7 +8,7 @@ from coalib.settings.Setting import path, url
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
-def path_or_url(xml_dtd):
+def path_or_url(xml_dtd):  # pragma nt: no cover
     """
     Converts the setting value to url or path.
 
@@ -24,7 +24,7 @@ def path_or_url(xml_dtd):
 @linter(executable='xmllint',
         use_stdout=True,
         use_stderr=True)
-class XMLBear:
+class XMLBear:  # pragma nt: no cover
     """
     Checks the code with ``xmllint``.
 

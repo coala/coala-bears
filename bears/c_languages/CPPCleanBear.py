@@ -6,7 +6,7 @@ from coalib.settings.Setting import typed_list
 @linter(executable='cppclean',
         output_format='regex',
         output_regex=r'.+:(?P<line>\d+):(?P<message>.*)')
-class CPPCleanBear:
+class CPPCleanBear:  # pragma nt: no cover
     """
     Find problems in C++ source code that slow down development in large code
     bases. This includes finding unused code, among other features.

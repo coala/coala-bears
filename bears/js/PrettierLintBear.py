@@ -6,7 +6,7 @@ from dependency_management.requirements.NpmRequirement import NpmRequirement
 @linter(executable='prettier',
         use_stdout=True,
         use_stderr=True)
-class PrettierLintBear:
+class PrettierLintBear:  # pragma nt: no cover
     """
     Formats JavaScript, JSX, Flow, TypeScript, CSS, Less, SCSS, JSON, GraphQL,
     Vue, Markdown files according to opinionated code format

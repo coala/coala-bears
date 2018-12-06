@@ -7,7 +7,7 @@ from dependency_management.requirements.NpmRequirement import NpmRequirement
         output_regex=r'.+: *(?:line (?P<line>\d+), '
                      r'col (?P<column>\d+), )?(?P<severity>Error|Warning) - '
                      r'(?P<message>.*)')
-class CSSLintBear:
+class CSSLintBear:  # pragma nt: no cover
     """
     Check code for syntactical or semantical problems that might lead to
     problems or inefficiencies.

@@ -11,7 +11,7 @@ from coalib.results.Result import Result
 
 @linter(executable='rubocop',
         use_stdin=True)
-class RuboCopBear:
+class RuboCopBear:  # pragma nt: no cover
     """
     Check Ruby code for syntactic, formatting as well as semantic problems.
 

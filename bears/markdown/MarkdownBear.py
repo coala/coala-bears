@@ -10,7 +10,7 @@ from coalib.bearlib import deprecate_settings
 @linter(executable='remark',
         use_stdout=True,
         use_stderr=True)
-class MarkdownBear:
+class MarkdownBear:  # pragma nt: no cover
     """
     Check and correct Markdown style violations automatically.
 

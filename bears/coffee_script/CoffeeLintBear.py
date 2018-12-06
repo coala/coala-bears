@@ -10,7 +10,7 @@ from coala_utils.param_conversion import negate
 
 @linter(executable='coffeelint',
         use_stdin=True)
-class CoffeeLintBear:
+class CoffeeLintBear:  # pragma nt: no cover
     """
     Check CoffeeScript code for a clean and consistent style.
 

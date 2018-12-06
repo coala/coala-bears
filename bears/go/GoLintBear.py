@@ -7,7 +7,7 @@ from dependency_management.requirements.GoRequirement import GoRequirement
 @linter(executable='golint',
         output_format='regex',
         output_regex=r'.+:(?P<line>\d+):(?P<column>\d+): (?P<message>.*)')
-class GoLintBear:
+class GoLintBear:  # pragma nt: no cover
     """
     Checks the code using ``golint``. This will run golint over each file
     separately.

@@ -10,7 +10,7 @@ from dependency_management.requirements.DistributionRequirement import (
                      r'.* on line (?P<line>\d+)',
         severity_map={'Parse': RESULT_SEVERITY.MAJOR,
                       'Fatal': RESULT_SEVERITY.MAJOR})
-class PHPLintBear:
+class PHPLintBear:  # pragma nt: no cover
     """
     Checks the code with ``php -l``. This runs it on each file separately.
     """

@@ -9,7 +9,7 @@ from dependency_management.requirements.NpmRequirement import NpmRequirement
         output_format='regex',
         output_regex=r'(?P<filename>.+):(?P<line>\d+):(?P<column>\d+):\s*'
                      r'(?P<message>.+) \[(?P<severity>error|warning).+\]')
-class HTMLHintBear:
+class HTMLHintBear:  # pragma nt: no cover
     """
     Checks HTML code with ``htmlhint`` for possible problems. Attempts to catch
     little mistakes and enforces a code style guide on HTML files.

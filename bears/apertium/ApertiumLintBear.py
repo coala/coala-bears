@@ -11,7 +11,7 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
                      r'(?P<origin>[^\n]+))\n[^:\n]+: (?P<line>\d+)',
         config_suffix='.json',
         severity_map={'Warning': RESULT_SEVERITY.MAJOR})
-class ApertiumLintBear:
+class ApertiumLintBear:  # pragma nt: no cover
     """
     `Apertium lint` is a python module that lints out irregular yet
     acceptable constructs that may creep into files involved in the

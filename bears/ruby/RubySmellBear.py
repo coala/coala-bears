@@ -9,7 +9,7 @@ from coala_utils.param_conversion import negate
 
 
 @linter(executable='reek', use_stdin=True)
-class RubySmellBear:
+class RubySmellBear:  # pragma nt: no cover
     """
     Detect code smells in Ruby source code.
 

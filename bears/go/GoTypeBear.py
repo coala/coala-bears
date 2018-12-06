@@ -7,7 +7,7 @@ from dependency_management.requirements.GoRequirement import GoRequirement
         use_stderr=True,
         output_format='regex',
         output_regex=r'.+:(?P<line>\d+):(?P<column>\d+): *(?P<message>.*)')
-class GoTypeBear:
+class GoTypeBear:  # pragma nt: no cover
     """
     Checks the code using ``gotype``. This will run ``gotype`` over each file
     separately.

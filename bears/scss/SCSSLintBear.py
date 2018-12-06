@@ -10,7 +10,7 @@ from dependency_management.requirements.PipRequirement import PipRequirement
         output_regex=r'.+:(?P<line>\d+):(?P<column>\d+)\s+'
                      r'\[(?P<severity>.)\]\s+'
                      r'(?P<message>.*)')
-class SCSSLintBear:
+class SCSSLintBear:  # pragma nt: no cover
     """
     Check SCSS code to keep it clean and readable.
 
