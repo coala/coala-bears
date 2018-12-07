@@ -353,6 +353,8 @@ ShellCheckBear:
   - dash
   - ksh
   - sh
+SlimLintBear:
+  - slim
 SpaceConsistencyBear:
 SpellCheckBear:
   - Natural Language

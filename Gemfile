@@ -8,5 +8,6 @@ gem "puppet-lint", "~>2.1.1", require: false
 gem "reek", "~>4.6", require: false
 gem "rubocop", "~>0.51.0", require: false
 gem "scss_lint", "~>0.56.0", require: false
+gem "slim_lint", "~>0.16.1", require: false
 gem "sqlint", "~>0.1.5", require: false
 gem "travis", "~>1.8.8", require: false

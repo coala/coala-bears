@@ -18,6 +18,8 @@ gem_requirements:
     version: ~>0.51.0
   scss_lint:
     version: ~>0.56.0
+  slim_lint:
+    version: ~>0.16.1
   sqlint:
     version: ~>0.1.5
   travis:
