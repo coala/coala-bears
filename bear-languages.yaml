@@ -180,6 +180,8 @@ GofmtBear:
   - Go
 HAMLLintBear:
   - Haml
+HTMLFormatBear:
+  - HTML
 HTMLHintBear:
   - HTML
 HTMLLintBear:
