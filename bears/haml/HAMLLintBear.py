@@ -10,7 +10,7 @@ from dependency_management.requirements.GemRequirement import GemRequirement
         output_format='regex',
         output_regex=r'(?P<line>\d+) \[(?P<severity>W|E)\] '
                      r'(?P<message>.*)')
-class HAMLLintBear:  # pragma nt: no cover
+class HAMLLintBear:
     """
     Uses ``haml-lint`` to perform HAML-specific style and lint checks to ensure
     clean and readable HAML code.

@@ -62,7 +62,6 @@ test_script:
   # which defaults to CRLF on Windows, and Appveyor CI ignores .gitattributes
   # http://help.appveyor.com/discussions/problems/5687-gitattributes-changes-dont-have-any-effect
   - unix2dos tests/java/test_files/CheckstyleGood.java
-  - sed -i '/fail_under/d' setup.cfg
   # Clang DLLs x64 were nowadays installed, but the x64 version hangs, so we
   # exclude according tests. See https://github.com/appveyor/ci/issues/495 and
   # https://github.com/appveyor/ci/issues/688

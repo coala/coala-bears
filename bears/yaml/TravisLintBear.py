@@ -8,7 +8,7 @@ from dependency_management.requirements.GemRequirement import GemRequirement
 @linter(executable='travis',
         output_format='regex',
         output_regex=r'\[x\]\s+(?P<message>.+)')
-class TravisLintBear:  # pragma nt: no cover
+class TravisLintBear:
     """
     A validator for your ``.travis.yml`` that attempts to reduce common build
     errors such as:
