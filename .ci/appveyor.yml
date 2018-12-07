@@ -10,12 +10,12 @@ environment:
     - PYTHON: "C:\\Python34"
       PYTHON_VERSION: "3.4.4"
       PYTHON_ARCH: "32"
-      ruby_version: "22"
+      ruby_version: "24"
 
     - PYTHON: "C:\\Python34-x64"
       PYTHON_VERSION: "3.4.4"
       PYTHON_ARCH: "64"
-      ruby_version: "22-x64"
+      ruby_version: "24-x64"
 
 cache:
   - "C:\\pip_cache"
@@ -50,7 +50,6 @@ install:
   - "npm install"
 
   # Commands for Ruby
-  - sed -i '/ruby \'2\.2\.2\'/d' Gemfile
   - "sed -i '/sqlint/d' Gemfile"
   - "SET PATH=C:\\Ruby%ruby_version%\\bin;%PATH%"
   - "bundle install"
