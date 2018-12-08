@@ -6,7 +6,7 @@ from dependency_management.requirements.NpmRequirement import NpmRequirement
         output_format='regex',
         output_regex=r'(?P<severity>error|warning|info).*\n  (?P<message>.+) '
                      r'\[(?P<origin>.+)\]')
-class RAMLLintBear:  # pragma nt: no cover
+class RAMLLintBear:
     """
     RAML Linter is a static analysis, linter-like, utility that will enforce
     rules on a given RAML document, ensuring consistency and quality.

@@ -11,7 +11,7 @@ from dependency_management.requirements.NpmRequirement import NpmRequirement
         output_regex=r'(?P<line>\d+):?(?P<column>\d+)? (?P<message>.+)',
         use_stdout=False,
         use_stderr=True)
-class PugLintBear:  # pragma nt: no cover
+class PugLintBear:
     """
     A configurable linter and style checker for ``Pug`` (formerly ``Jade``)
     that is a clean, whitespace-sensitive template language for writing HTML.

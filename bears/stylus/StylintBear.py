@@ -14,7 +14,7 @@ _setting_map = {True: 'always',
         output_regex=r'(?P<line>\d+):?(?P<column>\d+)?\s+.*?'
                      r'(?P<severity>error|warning)\s+(?P<message>.+?)'
                      r'(?:  .*|\n|$)')
-class StylintBear:  # pragma nt: no cover
+class StylintBear:
     """
     Attempts to catch little mistakes (duplication of rules for instance) and
     enforces a code style guide on Stylus (a dynamic stylesheet language

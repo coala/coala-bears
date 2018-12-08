@@ -5,7 +5,7 @@ from dependency_management.requirements.NpmRequirement import NpmRequirement
 @linter(executable='happiness',
         output_format='regex',
         output_regex=r'\s.+:(?P<line>\d+):(?P<column>\d+):(?P<message>.+)')
-class HappinessLintBear:  # pragma nt: no cover
+class HappinessLintBear:
     """
     Checks JavaScript files for semantic and syntax errors using ``happiness``.
 

@@ -6,7 +6,7 @@ from dependency_management.requirements.NpmRequirement import NpmRequirement
         output_format='regex',
         output_regex=r'\s*[^:]+:(?P<line>\d+):(?P<column>\d+):'
                      r'\s*(?P<message>.+)')
-class JSStandardBear:  # pragma nt: no cover
+class JSStandardBear:
     """
     One JavaScript Style to Rule Them All.
 

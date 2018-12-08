@@ -8,7 +8,7 @@ from dependency_management.requirements.NpmRequirement import NpmRequirement
         output_regex=r'\s*(?P<filename>.+)\s*(?P<line>\d+):(?P<column>\d+)\s*'
                      r'\D\s*(?P<message>.+)',
         config_suffix='.json')
-class StyleLintBear:  # pragma nt: no cover
+class StyleLintBear:
     """
     Checks the code with stylelint. This will run stylelint over each file
     separately.

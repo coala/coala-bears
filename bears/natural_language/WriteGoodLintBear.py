@@ -10,7 +10,7 @@ from coala_utils.param_conversion import negate
         output_regex=r'(?P<message>.*)\s*on\s*line\s*(?P<line>\d+)\s*at\s'
                      r'column\s*(?P<column>\d+)'
         )
-class WriteGoodLintBear:  # pragma nt: no cover
+class WriteGoodLintBear:
     """
     Lints the text files using ``write-good`` for improving proses.
 
