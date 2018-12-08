@@ -47,7 +47,21 @@ install:
     -r requirements.txt -r docs-requirements.txt"
   - ps: "Install-Product node ''"  # Use latest node v5.x.x
   - "npm config set loglevel warn"
+  - "sed -i '/alex/d' package.json"
+  - "sed -i '/coffeelint/d' package.json"
+  - "sed -i '/csscomb/d' package.json"
+  - "sed -i '/docker/d' package.json"
+  - "sed -i '/elm/d' package.json"
+  - "sed -i '/gherkin/d' package.json"
+  - "sed -i '/jshint/d' package.json"
+  - "sed -i '/remark/d' package.json"
+  - "sed -i '/postcss/d' package.json"
+  - "sed -i '/sass/d' package.json"
+  - "sed -i '/textlint/d' package.json"
+  - "sed -i '/tslint/d' package.json"
   - "npm install"
+  - "SET PATH=node_modules\\.bin;%PATH%"
+  - "DEL node_modules\\.bin\\eslint*"
 
   # Commands for Ruby
   - "sed -i '/sqlint/d' Gemfile"
