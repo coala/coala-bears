@@ -1,6 +1,7 @@
 import re
 
 from aenum import Flag
+from urlextract import URLExtract
 
 from coalib.bears.LocalBear import LocalBear
 from dependency_management.requirements.PipRequirement import PipRequirement
@@ -70,43 +71,25 @@ class URLBear(LocalBear):
 
     @staticmethod
     def extract_links_from_file(file, link_ignore_regex, link_ignore_list):
+        xmlns_regex = re.compile(r'xmlns:?\w*="(.*)"')
         link_ignore_regex = re.compile(link_ignore_regex)
         regex = re.compile(
             r"""
-            ((git\+|bzr\+|svn\+|hg\+|)  # For VCS URLs
-            https?://                   # http:// or https:// as only these
-                                        # are supported by the ``requests``
-                                        # library
-            [^.:%\s_/?#[\]@\\]+         # Initial part of domain
-            \.                          # A required dot `.`
-            (
-                ((?:%[A-Fa-f0-9][A-Fa-f0-9])*[^\s()%\'"`<>|\\\[\]]+)
-                                        # Path name
-                                        # This part allows precentage
-                                        # encoding like %3F
-                                        # and does not allow
-                                        # any parenthesis: balanced or
-                                        # unbalanced.
-            |                           # OR
-                \((?:%[A-Fa-f0-9][A-Fa-f0-9])*[^\s()%\'"`<>|\\\[\]]*\)
-                                        # Path name contained within ()
-                                        # This part allows path names that
-                                        # are explicitly enclosed within one
-                                        # set of parenthesis.
-                                        # An example can be:
-                                        # http://wik.org/Hello_(Adele_song)/200
-            )
-            *)
-                                        # Thus, the whole part above
-                                        # prevents matching of
-                                        # Unbalanced parenthesis
-            (?<!\.)(?<!,)               # Exclude trailing `.` or `,` from URL
+            (git\+|bzr\+|svn\+|hg\+|)  # For VCS URLs
+            https?://.*                # http:// or https:// as only these
+                                       # are supported by the ``requests``
+                                       # library
             """, re.VERBOSE)
         file_context = {}
+        extractor = URLExtract()
         for line_number, line in enumerate(file):
-            xmlns_regex = re.compile(r'xmlns:?\w*="(.*)"')
-            for match in re.findall(regex, line):
-                link = match[0]
+            if not re.findall(regex, line):
+                continue
+            urls = set(extractor.find_urls(line) or [])
+            for url in urls:
+                # URLExtract does not remove trailing `.,|\` characters
+                # See https://github.com/lipoja/URLExtract/issues/13
+                link = url.rstrip('.,|\\')
                 link_context = file_context.get(link)
                 if not link_context:
                     link_context = LINK_CONTEXT.no_context

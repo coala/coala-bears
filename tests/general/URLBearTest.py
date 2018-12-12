@@ -37,6 +37,16 @@ class URLBearTest(unittest.TestCase):
                          [3, 'http://www.google.com/404',
                           LINK_CONTEXT.no_context])
 
+    def test_detect_pip_vcs_url_result(self):
+        valid_file = """
+        git+http://www.github.com/foo.git
+        """.splitlines()
+
+        result = get_results(self.uut, valid_file)
+        self.assertEqual(result[0].contents,
+                         [2, 'http://www.github.com/foo.git',
+                          LINK_CONTEXT.pip_vcs_url])
+
     def test_precentage_encoded_url(self):
         valid_file = """
         # A url with a precentage-encoded character in path
@@ -52,6 +62,42 @@ class URLBearTest(unittest.TestCase):
                               ('https://img.shields.io/badge/Maintained%3F-'
                                'yes-green.svg/200'),
                               LINK_CONTEXT.no_context])
+
+    def test_detect_enclosed_parenthesis_url_result(self):
+        valid_file = """
+        http://wik.org/Hello_(Adele_song)/200
+        """.splitlines()
+
+        result = get_results(self.uut, valid_file)
+        self.assertEqual(result[0].contents,
+                         [2, 'http://wik.org/Hello_(Adele_song)/200',
+                          LINK_CONTEXT.no_context])
+
+    def test_detect_trailing_char_url_result(self):
+        valid_file = """
+        http://google.com/trailing.
+        """.splitlines()
+
+        result = get_results(self.uut, valid_file)
+        self.assertEqual(result[0].contents,
+                         [2, 'http://google.com/trailing',
+                          LINK_CONTEXT.no_context])
+
+    def test_detect_example_url_result(self):
+        invalid_file = """
+        http://example.com
+        """.splitlines()
+
+        result = get_results(self.uut, invalid_file)
+        self.assertEqual(result, [])
+
+    def test_detect_no_scheme_url_result(self):
+        invalid_file = """
+        foo.com
+        """.splitlines()
+
+        result = get_results(self.uut, invalid_file)
+        self.assertEqual(result, [])
 
 
 class URLResultTest(unittest.TestCase):
