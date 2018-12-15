@@ -195,9 +195,9 @@ class MarkdownBearTest(unittest.TestCase):
         content = duplicate_heading_file.splitlines()
         with prepare_file(content, None) as (file, fname):
             with execute_bear(self.uut, fname, file) as results:
-                self.assertEqual(results[0].message,
+                self.assertRegex(results[0].message,
                                  'Do not use headings with similar content '
-                                 'per section (3:1)')
+                                 '.*(3:1)')
                 self.assertEqual(results[0].severity, RESULT_SEVERITY.NORMAL)
 
     def test_punctuations_in_heading(self):
