@@ -192,6 +192,7 @@ script:
   - .ci/generate_bear_requirements.py --check --update
   - coala --non-interactive
   - rm bears/java/InferBear.py tests/java/InferBearTest.py
+  - rm bears/go/GoReturnsBear.py tests/go/GoReturnsBearTest.py
   - pytest
   - codecov
   - python setup.py docs
