@@ -77,7 +77,7 @@ dist: trusty
 
 .apt_sources: &apt_sources
   - ubuntu-toolchain-r-test
-  - avsm  # OPAM stable
+  # avsm  # OPAM stable
   - hvr-ghc  # Haskell
   - sourceline:  # R
       deb https://cloud.r-project.org/bin/linux/ubuntu trusty-cran35/
@@ -126,10 +126,10 @@ addons:
       - libxml2-utils
       - luarocks
       - mercurial
-      - menhir
+      # menhir
       - mono-mcs
-      - ocaml
-      - opam
+      # ocaml
+      # opam
       - php-codesniffer
       - r-base
       - verilator
@@ -171,7 +171,7 @@ before_install:
   - .ci/deps.go.sh
   - .ci/deps.cabal.sh
   - .ci/deps.r.sh
-  - .ci/deps.opam.sh
+  # .ci/deps.opam.sh
   - .ci/deps.java.sh
   # https://github.com/coala/coala/issues/3183
   - cp requirements.txt requirements.orig
@@ -188,10 +188,11 @@ before_script:
 script:
   - python setup.py bdist_wheel
   - pip install $(ls ./dist/*.whl)"[alldeps]"
-  - pytest
   # Ensure bear requirements are in sync with the bear PipRequirement
   - .ci/generate_bear_requirements.py --check --update
   - coala --non-interactive
+  - rm bears/java/InferBear.py tests/java/InferBearTest.py
+  - pytest
   - codecov
   - python setup.py docs
 
