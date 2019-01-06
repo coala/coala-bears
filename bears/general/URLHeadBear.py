@@ -69,8 +69,8 @@ class URLHeadBear(LocalBear):
     LICENSE = 'AGPL-3.0'
     CAN_DETECT = {'Documentation'}
 
-    # IP Address of www.google.com
-    check_connection_url = 'http://216.58.218.174'
+    # DNS IP by Cloudfare
+    check_connection_url = 'https://1.1.1.1/'
 
     @classmethod
     def check_prerequisites(cls):

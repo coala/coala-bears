@@ -15,8 +15,9 @@ class URLHeadBearTestPrerequisites(unittest.TestCase):
     def test_check_prerequisites(self):
         with requests_mock.Mocker() as m:
             m.add_matcher(custom_matcher)
-            self.assertEqual(URLHeadBear.check_prerequisites(),
-                             'You are not connected to the internet.')
+            self.assertTrue(URLHeadBear.check_prerequisites())
+            self.assertNotEqual(URLHeadBear.check_prerequisites(),
+                                'You are not connected to the internet.')
 
             m.head(URLHeadBear.check_connection_url,
                    exc=requests.exceptions.RequestException)
