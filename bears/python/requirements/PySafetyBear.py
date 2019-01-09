@@ -64,6 +64,7 @@ class PySafetyBear(LocalBear):
     AUTHORS_EMAILS = {'bence@underyx.me'}
     LICENSE = 'AGPL'
     CAN_DETECT = {'Security'}
+    ASCIINEMA_URL = 'https://asciinema.org/a/221386'
 
     def setup_dependencies(self):
         file = self.download_cached_file(_insecure_full_json_url,
