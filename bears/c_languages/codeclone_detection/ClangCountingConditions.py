@@ -245,8 +245,8 @@ def in_sum(stack):  # pragma nt: no cover
 def in_product(stack):  # pragma nt: no cover
     """
     A counting condition returning true if the variable is used in a product
-    statement, i.e. within the operators \*, /, % and their associated compound
-    operators.
+    statement, i.e. within the operators \\*, /, % and their associated
+    compound operators.
     """
     return _stack_contains_operators(stack, ['*', '/', '%', '*=', '/=', '%='])
 
@@ -254,8 +254,8 @@ def in_product(stack):  # pragma nt: no cover
 def in_binary_operation(stack):  # pragma nt: no cover
     """
     A counting condition returning true if the variable is used in a binary
-    operation, i.e. within the operators \|, & and their associated compound
-    operators.
+    operation, i.e. within the operators \\|, & and their associated
+    compound operators.
     """
     return _stack_contains_operators(stack, ['&', '|', '&=', '|='])
 

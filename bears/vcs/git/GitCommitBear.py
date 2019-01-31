@@ -35,7 +35,7 @@ class GitCommitBear(_CommitBear):
         """
         This function creates a git command to fetch the
         unmerged parent commit shortlog from a commit generated
-        by GitHub in a refs/pull/(\d+)/merge git remote reference.
+        by GitHub in a refs/pull/(\\d+)/merge git remote reference.
         Visit https://github.com/travis-ci/travis-ci/issues/8400
         for more details.
 
