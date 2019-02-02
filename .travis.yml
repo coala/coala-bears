@@ -88,10 +88,6 @@ dist: trusty
       deb http://ppa.launchpad.net/staticfloat/juliareleases/ubuntu trusty main
     key_url:
       https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xCF979FFA3D3D3ACC
-  - sourceline:  # Go
-      deb http://ppa.launchpad.net/ondrej/golang/ubuntu trusty main
-    key_url:
-      https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x4F4EA0AAE5267A6C
   - sourceline:  # astyle
       deb http://ppa.launchpad.net/cs50/ppa/ubuntu trusty main
     key_url:
@@ -111,7 +107,6 @@ addons:
       - flawfinder
       - gfortran
       - ghc
-      - golang-go
       - happy
       - indent
       - julia
@@ -165,6 +160,9 @@ env:
     - PATH="$HOME/.local/bin:/opt/cabal/$CABAL_VERSION/bin:$PATH:$TRAVIS_BUILD_DIR/node_modules/.bin:$TRAVIS_BUILD_DIR/vendor/bin:$HOME/.cabal/bin:$HOME/infer-linux64-v$INFER_VERSION/infer/bin:$HOME/.local/tailor/tailor-latest/bin:$HOME/.luarocks/bin"
 
 before_install:
+  # Install latest stable version of Go using gimme
+  - gimme 1.11.5 > setup_go_root.sh
+  - source setup_go_root.sh
   - nvm install 6.10.2
   # Remove Ruby directive from Gemfile as this image has 2.2.5
   - sed -i '/^ruby/d' Gemfile
