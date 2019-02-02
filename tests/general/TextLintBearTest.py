@@ -105,7 +105,7 @@ class TextLintBearTest(LocalBearTestHelper):
             file_contents,
             [Result.from_values('TextLintBear',
                                 message='"PSF" is unexpanded acronym. What '
-                                        'does "PSF" stands for?',
+                                        'does "PSF" stand for?',
                                 line=1,
                                 column=1,
                                 severity=RESULT_SEVERITY.MAJOR,
@@ -163,7 +163,7 @@ class TextLintBearTest(LocalBearTestHelper):
                                 file=get_testfile_path(file_name)),
              Result.from_values('TextLintBear',
                                 message='"PSF" is unexpanded acronym. '
-                                        'What does "PSF" stands for?',
+                                        'What does "PSF" stand for?',
                                 line=1,
                                 column=1,
                                 severity=RESULT_SEVERITY.MAJOR,
