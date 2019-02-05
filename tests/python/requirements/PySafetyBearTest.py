@@ -31,7 +31,8 @@ class PySafetyBearTest(LocalBearTestHelper):
             self.check_validity(self.uut, ['# whee', 'foo==1.0', '# whee'])
             check.assert_called_once_with([Package('foo', '1.0')], key=None,
                                           db_mirror=self.uut.db_path,
-                                          cached=False, ignore_ids=[])
+                                          cached=False, ignore_ids=[],
+                                          proxy=None)
 
     def test_with_vulnerability(self):
         with mock.patch(
@@ -41,7 +42,8 @@ class PySafetyBearTest(LocalBearTestHelper):
             self.check_invalidity(self.uut, ['foo<2', 'bar==0.1', '**bar'])
             check.assert_called_once_with([Package('bar', '0.1')], key=None,
                                           db_mirror=self.uut.db_path,
-                                          cached=False, ignore_ids=[])
+                                          cached=False, ignore_ids=[],
+                                          proxy=None)
 
     def test_with_no_requirements(self):
         with mock.patch(
