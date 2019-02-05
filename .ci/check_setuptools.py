@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from __future__ import print_function
 
 import subprocess
@@ -31,7 +32,7 @@ def check_setuptools_version(version):
               file=sys.stderr)
         return 3
 
-if __name__ == '__main__':
+def main():
     version = None
     try:
         version = get_setuptools_version()
@@ -44,5 +45,12 @@ if __name__ == '__main__':
     if not version:
         print('Unable to find setuptools in requirements.txt',
               file=sys.stderr)
-        sys.exit(1)
+        if len(sys.argv) > 1:
+            version = sys.argv[1]
+            print('Using {}'.format(version))
+        else:
+            sys.exit(1)
     sys.exit(check_setuptools_version(version))
+
+if __name__ == '__main__':
+    main()
