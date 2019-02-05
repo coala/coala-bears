@@ -388,7 +388,7 @@ Here are the important changes and additions:
 - Settings unification - most bears have seen API changes. Settings' names
   are now consistent across bears. This supports backwards
   compatibility, however (but with a deprecation notice). You can find the
-  whole list `here <http://dpaste.com/3EP5GCV>`__.
+  whole list `here <https://pastebin.com/1QQ8gN1p>`__.
 
 **New Features**
 
