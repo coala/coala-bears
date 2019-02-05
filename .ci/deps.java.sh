@@ -3,6 +3,9 @@
 set -e
 set -x
 
+# Check JAVA_HOME exists
+ls $JAVA_HOME
+
 # PMD commands
 PMD_VERSION=5.4.1
 if [ ! -e ~/.local/bin/pmd ]; then
