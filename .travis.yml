@@ -162,9 +162,6 @@ env:
     - PATH="$HOME/.local/bin:$JAVA_HOME/bin:/opt/cabal/$CABAL_VERSION/bin:$PATH:$TRAVIS_BUILD_DIR/node_modules/.bin:$TRAVIS_BUILD_DIR/vendor/bin:$HOME/.cabal/bin:$HOME/infer-linux64-v$INFER_VERSION/infer/bin:$HOME/.local/tailor/tailor-latest/bin:$HOME/.luarocks/bin"
 
 before_install:
-  # Install latest stable version of Go using gimme
-  - gimme 1.11.5 > setup_go_root.sh
-  - source setup_go_root.sh
   - nvm install 8
   # Remove Ruby directive from Gemfile as this image has 2.2.5
   - sed -i '/^ruby/d' Gemfile
