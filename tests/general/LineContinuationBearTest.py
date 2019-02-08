@@ -15,8 +15,8 @@ a = some_function(
 
 def fun():
     '''
-            >>> from math \
-            ... import pow
+        >>> from math \\
+        ...     import pow
     '''
 """
 
