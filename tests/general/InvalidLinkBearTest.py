@@ -360,7 +360,7 @@ class InvalidLinkBearTest(LocalBearTestHelper):
         """.splitlines()
 
         invalid_file = """
-        <ruleset name="test" xmlns="http://this.isa.namespace/ruleset/7.0.0"
+        <ruleset name="test" xmlns="http://im.a.namespace.com/ruleset/7.0.0"
         xmlns:xsi="http://this.is.another/kindof/namespace"
         xsi:schemaLocation="http://this.namespace.dosent/exists/7.0.0"
         xsi:schemaLocation="http://httpbin.com/404">""".splitlines()
@@ -370,8 +370,11 @@ class InvalidLinkBearTest(LocalBearTestHelper):
 
             self.check_validity(self.uut, valid_file)
 
+            # The 2nd and 3rd URLs are invalid because they have invalid TLD
+            # See function _download_tlds_list(self) in linked file below:
+            # https://github.com/lipoja/URLExtract/blob/master/urlextract.py
             self.check_line_result_count(self.uut, invalid_file,
-                                         [1, 1, 1, 1])
+                                         [1, 0, 0, 1])
 
         info_severity_file = """
         <ruleset name="test" xmlns="http://this.is.a.namespace/ruleset/7.0.0"
@@ -413,7 +416,7 @@ class InvalidLinkBearTest(LocalBearTestHelper):
         http://example.co.in/404""".splitlines()
 
         link_ignore_list = [
-                           'http://coalaisthebest.com/',
+                           'http://coalaisthebest.com',
                            'http://httpbin.org/status/4[0-9][0-9]',
                            'http://httpbin.org/status/410',
                            'http://httpbin.org/status/5[0-9][0-9]',
@@ -463,15 +466,15 @@ class InvalidLinkBearTest(LocalBearTestHelper):
 
             self.check_validity(self.uut, ['https://gitmate.io'])
             mock.assert_has_calls([
-                unittest.mock.call('https://facebook.com/', timeout=2,
+                unittest.mock.call('https://facebook.com', timeout=2,
                                    allow_redirects=False),
-                unittest.mock.call('https://google.com/',
+                unittest.mock.call('https://google.com',
                                    timeout=10, allow_redirects=False),
                 unittest.mock.call('https://coala.io/som/thingg/page/123',
                                    timeout=25, allow_redirects=False),
-                unittest.mock.call('https://facebook.com/', timeout=20,
+                unittest.mock.call('https://facebook.com', timeout=20,
                                    allow_redirects=False),
-                unittest.mock.call('https://google.com/',
+                unittest.mock.call('https://google.com',
                                    timeout=20, allow_redirects=False),
                 unittest.mock.call('https://coala.io/som/thingg/page/123',
                                    timeout=20, allow_redirects=False),
