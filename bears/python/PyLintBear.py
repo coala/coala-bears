@@ -1,4 +1,3 @@
-import os
 import shlex
 
 from coalib.bearlib.abstractions.Linter import linter
@@ -24,7 +23,7 @@ class PyLintBear:
     separately.
     """
     LANGUAGES = {'Python', 'Python 2', 'Python 3'}
-    REQUIREMENTS = {PipRequirement('pylint', '1.7.2')}
+    REQUIREMENTS = {PipRequirement('pylint', '2.2.2')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
@@ -57,7 +56,5 @@ class PyLintBear:
             args += tuple(shlex.split(pylint_cli_options))
         if pylint_rcfile:
             args += ('--rcfile=' + pylint_rcfile,)
-        else:
-            args += ('--rcfile=' + os.devnull,)
 
         return args + (filename,)
