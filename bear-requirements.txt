@@ -39,4 +39,4 @@ sqlparse~=0.2.4
 vim-vint~=0.3.12,!=0.3.19
 vulture~=0.25.0
 yamllint~=1.12.0
-yapf~=0.21.0
+yapf>=0.21.0<0.27.0

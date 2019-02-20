@@ -36,7 +36,7 @@ bear_metadata:
         apertium-lint:
           version: ~=0.29
         lxml:
-          version: ==3.6.0
+          version: '>=1.0'
     languages:
       - Apertium
     tags:
@@ -174,7 +174,6 @@ bear_metadata:
       - Scala
       - Swift
     tags:
-      - cpd
       - general
       - java
   CPPCheckBear:
@@ -189,7 +188,6 @@ bear_metadata:
             brew: cppcheck
             dnf: cppcheck
             pacman: cppcheck
-            pkg: cppcheck
             portage: cppcheck
             xbps: cppcheck
             yum: cppcheck
@@ -208,7 +206,6 @@ bear_metadata:
       - dnf
       - exe
       - pacman
-      - pkg
       - portage
       - xbps
       - yum
@@ -255,10 +252,10 @@ bear_metadata:
       exe:
         postcss:
       npm:
-        postcss-cli:
-          version: ~2
         autoprefixer:
           version: ~7.2.0
+        postcss-cli:
+          version: ~2
     languages:
       - CSS
     tags:
@@ -329,7 +326,6 @@ bear_metadata:
             brew: flawfinder
             dnf: flawfinder
             pacman: flawfinder
-            pkg: flawfinder
             portage: flawfinder
             xbps: flawfinder
             yum: flawfinder
@@ -348,7 +344,6 @@ bear_metadata:
       - exe
       - flawfinder
       - pacman
-      - pkg
       - portage
       - xbps
       - yum
@@ -365,7 +360,6 @@ bear_metadata:
             brew: mono
             dnf: mono
             pacman: mono
-            pkg: mono
             portage: dev-lang/mono
             xbps: mono
             yum: mono
@@ -384,7 +378,6 @@ bear_metadata:
       - mcs
       - mono
       - pacman
-      - pkg
       - portage
       - xbps
       - yum
@@ -643,20 +636,20 @@ bear_metadata:
       exe:
         eslint:
       npm:
+        eslint:
+          version: ~3
+        babel-eslint:
+          version: ~8.0
+        eslint-plugin-import:
+          version: ~2
         typescript-eslint-parser:
           version: ~12.0.0
         eslint-plugin-typescript:
           version: ~0.8.1
         eslint-plugin-markdown:
           version: ~1.0.0-beta.6
-        babel-eslint:
-          version: ~8.0
-        eslint-plugin-import:
-          version: ~2
         eslint-plugin-html:
           version: ~3.2.2
-        eslint:
-          version: ~3
     languages:
       - HTML
       - JSX
@@ -708,6 +701,7 @@ bear_metadata:
         Rscript:
       r_script:
         formatR:
+          version: '>1.5'
     languages:
       - R
     tags:
@@ -731,7 +725,6 @@ bear_metadata:
             brew: indent
             dnf: indent
             pacman: indent
-            pkg: indent
             portage: indent
             xbps: indent
             yum: indent
@@ -750,7 +743,6 @@ bear_metadata:
       - exe
       - indent
       - pacman
-      - pkg
       - portage
       - xbps
       - yum
@@ -770,7 +762,6 @@ bear_metadata:
             brew: ghc-mod
             dnf: ghc-mod
             pacman: ghc-mod
-            pkg: ghc-mod
             portage: ghc-mod
             xbps: ghc-mod
             yum: ghc-mod
@@ -789,7 +780,6 @@ bear_metadata:
       - ghc-mod
       - haskell
       - pacman
-      - pkg
       - portage
       - xbps
       - yum
@@ -817,10 +807,10 @@ bear_metadata:
     filename: GitCommitBear.py
     requirements:
       pip:
-        git-url-parse:
-          version: ~=1.1
         nltk:
           version: ~=3.2
+        git-url-parse:
+          version: ~=1.1
     languages:
       - Git
     tags:
@@ -1010,7 +1000,7 @@ bear_metadata:
     filename: HTMLLintBear.py
     requirements:
       exe:
-        /usr/bin/python3:
+        /home/areebbeigh/virtualenvs/coala-venv/bin/python3:
       pip:
         html-linter:
           version: ~=0.4.0
@@ -1019,7 +1009,7 @@ bear_metadata:
       - Jinja2
       - PHP
     tags:
-      - /usr/bin/python3
+      - /home/areebbeigh/virtualenvs/coala-venv/bin/python3
       - exe
       - hypertext
       - pip
@@ -1095,10 +1085,10 @@ bear_metadata:
     filename: HgCommitBear.py
     requirements:
       pip:
-        git-url-parse:
-          version: ~=1.1
         nltk:
           version: ~=3.2
+        git-url-parse:
+          version: ~=1.1
     languages:
       - Hg
     tags:
@@ -1208,9 +1198,9 @@ bear_metadata:
       - Java
     tags:
       - bash
-      - pmd
       - exe
       - java
+      - pmd
   Jinja2Bear:
     name: Jinja2Bear
     subdir: jinja2
@@ -1250,10 +1240,10 @@ bear_metadata:
     filename: LanguageToolBear.py
     requirements:
       pip:
-        guess-language-spirit:
-          version: ~=0.5.2
         language-check:
           version: ~=1.0
+        guess-language-spirit:
+          version: ~=0.5.2
     languages:
       - Natural Language
     tags:
@@ -1273,7 +1263,6 @@ bear_metadata:
             brew: chktex
             dnf: chktex
             pacman: chktex
-            pkg: chktex
             portage: chktex
             xbps: chktex
             yum: chktex
@@ -1291,7 +1280,6 @@ bear_metadata:
       - exe
       - latex
       - pacman
-      - pkg
       - portage
       - xbps
       - yum
@@ -1423,7 +1411,7 @@ bear_metadata:
     filename: MypyBear.py
     requirements:
       exe:
-        /usr/bin/python3:
+        /home/areebbeigh/virtualenvs/coala-venv/bin/python3:
       pip:
         mypy:
           version: ==0.590
@@ -1432,7 +1420,7 @@ bear_metadata:
       - Python 2
       - Python 3
     tags:
-      - /usr/bin/python3
+      - /home/areebbeigh/virtualenvs/coala-venv/bin/python3
       - exe
       - pip
       - python
@@ -1457,10 +1445,10 @@ bear_metadata:
     filename: PEP8NotebookBear.py
     requirements:
       pip:
-        nbformat:
-          version: ~=4.1
         autopep8:
           version: ~=1.2
+        nbformat:
+          version: ~=4.1
     languages:
       - Python
       - Python 2
@@ -1873,6 +1861,7 @@ bear_metadata:
         Rscript:
       r_script:
         lintr:
+          version: '>=1.0.2'
     languages:
       - R
     tags:
@@ -2001,7 +1990,6 @@ bear_metadata:
             brew: ruby
             dnf: ruby
             pacman: ruby
-            pkg: ruby
             portage: ruby
             xbps: ruby
             yum: ruby
@@ -2018,7 +2006,6 @@ bear_metadata:
       - dnf
       - exe
       - pacman
-      - pkg
       - portage
       - ruby
       - xbps
@@ -2127,7 +2114,6 @@ bear_metadata:
             brew: shellcheck
             dnf: shellcheck
             pacman: shellcheck
-            pkg: shellcheck
             portage: shellcheck
             xbps: shellcheck
             yum: shellcheck
@@ -2147,7 +2133,6 @@ bear_metadata:
       - dnf
       - exe
       - pacman
-      - pkg
       - portage
       - shell
       - shellcheck
@@ -2239,10 +2224,10 @@ bear_metadata:
       exe:
         tslint:
       npm:
-        typescript:
-          version: '>=1.7.3'
         tslint:
           version: '>=3.0 <6.0'
+        typescript:
+          version: '>=1.7.3'
     languages:
       - TypeScript
     tags:
@@ -2272,46 +2257,46 @@ bear_metadata:
       exe:
         textlint:
       npm:
-        textlint-rule-write-good:
-          version: ~1.6.0
+        textlint-rule-ginger:
+          version: '>=2.1.0 <2.1.2'
+        textlint-rule-rousseau:
+          version: ~1.4.5
         textlint:
           version: ~7.3.0
-        textlint-plugin-asciidoc-loose:
-          version: ~1.0.1
+        textlint-rule-max-comma:
+          version: ~1.0.4
+        textlint-rule-unexpanded-acronym:
+          version: ~1.2.1
+        textlint-plugin-asciidoctor:
+          version: ~1.0.3
+        textlint-rule-max-number-of-lines:
+          version: ~1.0.3
+        textlint-rule-write-good:
+          version: ~1.6.0
         textlint-plugin-html:
           version: ~0.1.5
+        textlint-rule-ng-word:
+          version: ~1.0.0
         textlint-plugin-review:
           version: ~0.3.3
+        textlint-rule-no-dead-link:
+          version: ~3.1.1
+        textlint-rule-period-in-list-item:
+          version: ~0.2.0
+        textlint-rule-no-empty-section:
+          version: ~1.1.0
         textlint-plugin-rst:
           version: ~0.1.1
         textlint-rule-alex:
           version: ~1.2.0
-        textlint-rule-common-misspellings:
-          version: ~1.0.1
-        textlint-rule-date-weekday-mismatch:
-          version: ~1.0.5
-        textlint-rule-ginger:
-          version: '>=2.1.0 <2.1.2'
-        textlint-rule-max-comma:
-          version: ~1.0.4
-        textlint-rule-max-number-of-lines:
-          version: ~1.0.3
-        textlint-rule-ng-word:
-          version: ~1.0.0
-        textlint-rule-no-dead-link:
-          version: ~3.1.1
-        textlint-rule-no-empty-section:
-          version: ~1.1.0
         textlint-rule-no-start-duplicated-conjunction:
           version: ~1.1.3
         textlint-rule-no-todo:
           version: ~2.0.0
-        textlint-rule-period-in-list-item:
-          version: ~0.2.0
-        textlint-rule-rousseau:
-          version: ~1.4.5
-        textlint-rule-unexpanded-acronym:
-          version: ~1.2.1
+        textlint-rule-common-misspellings:
+          version: ~1.0.1
+        textlint-rule-date-weekday-mismatch:
+          version: ~1.0.5
       pip:
         docutils-ast-writer:
           version: ~=0.1.2
@@ -2384,7 +2369,6 @@ bear_metadata:
             brew: perl
             dnf: perl
             pacman: perl
-            pkg: perl
             portage: perl
             xbps: perl
             yum: perl
@@ -2402,7 +2386,6 @@ bear_metadata:
       - exe
       - pacman
       - perl
-      - pkg
       - portage
       - vhdl
       - xbps
@@ -2497,7 +2480,6 @@ bear_metadata:
             brew: libxml2
             dnf: libxml2
             pacman: libxml2
-            pkg: libxml2
             portage: dev-libs/libxml2
             xbps: libxml2
             yum: libxml2
@@ -2514,7 +2496,6 @@ bear_metadata:
       - exe
       - libxml2
       - pacman
-      - pkg
       - portage
       - xbps
       - xml2
@@ -2545,7 +2526,7 @@ bear_metadata:
     requirements:
       pip:
         yapf:
-          version: ~=0.21.0
+          version: '>=0.21.0<0.27.0'
     languages:
       - Python
       - Python 2

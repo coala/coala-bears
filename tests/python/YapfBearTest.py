@@ -68,17 +68,40 @@ class YapfBearTest(LocalBearTestHelper):
                                '        return 37 * -+2\n'])
 
     def test_allow_multiline_lambdas(self):
+        import pkg_resources
+        YAPF_VERSION = tuple(
+            map(int, pkg_resources.get_distribution('yapf').version.split('.')))
         self.section.append(Setting('allow_multiline_lambdas', True))
-        self.check_validity(self.uut,
-                            ['func(a, lambda xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-                             'xxxxxxxxxxxxxxxxxx:\n', '     xxxxxxxxxxxxxxxxxx'
-                             'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx + 222222222)\n'
-                             ])
+
+        if YAPF_VERSION > (0, 21, 0):
+            self.check_validity(self.uut,
+                                ['func(\n',
+                                 '    a, lambda xxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+                                 'xxxxxxxxxxxxxxxxxxxxxx:\n',
+                                 '    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+                                 'xxxxxxxxxxxx + 222222222)'])
+        else:
+            self.check_validity(self.uut,
+                                ['func(a, lambda xxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+                                 'xxxxxxxxxxxxxxxxxxxxxxx:\n',
+                                 '     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+                                 'xxxxxxxxxxxxx + 222222222)\n'
+                                 ])
+
         self.section.append(Setting('allow_multiline_lambdas', False))
-        self.check_validity(self.uut,
-                            ['func(\n',
-                             '    a,\n',
-                             '    lambda xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-                             'xxxxxxxxxxxxxx: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-                             'xxxxxxxxxxxxxxxxxxx + 222222222\n',
-                             ')\n'])
+
+        if YAPF_VERSION < (0, 26, 0):
+            self.check_validity(self.uut,
+                                ['func(\n',
+                                 '    a,\n',
+                                 '    lambda xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+                                 'xxxxxxxxxxxxxxxxxxx: xxxxxxxxxxxxxxxxxxxxxx'
+                                 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxx + 222222222\n',
+                                 ')\n'])
+        else:
+            self.check_validity(self.uut,
+                                ['func(\n',
+                                 '    a, lambda xxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+                                 'xxxxxxxxxxxxxxxxxxxxxx:\n', '    xxxxxxxxxx'
+                                 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx +'
+                                 ' 222222222)\n'])
