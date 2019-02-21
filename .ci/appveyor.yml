@@ -83,7 +83,7 @@ test_script:
     --cov -k "not ClangASTPrintBear and not ClangCloneDetectionBear and
     not ClangComplexityBear and not ClangCountVectorCreator and
     not ClangCountingConditions and not RuboCopBearTest and
-    not CSVLintBearTest"
+    not CSVLintBearTest and not SlimLintBearTest"
   - "%CMD_IN_ENV% python setup.py install"
   - "%CMD_IN_ENV% python -m pip install \
     git+https://github.com/coala/coala"
