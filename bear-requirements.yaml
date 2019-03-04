@@ -44,8 +44,8 @@ pip_requirements:
     version: '>=1.0'
   memento-client:
     version: ~=0.6.1
-  munkres3:
-    version: ~=1.0
+  munkres:
+    version: ~=1.1.2
   mypy:
     version: ==0.590
   nbformat:
