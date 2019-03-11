@@ -1,0 +1,2 @@
+This is normal text file. And it is not specific to any programming language.
+So, this has to detected as invalid file by cloc.
