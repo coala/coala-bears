@@ -41,6 +41,7 @@ targets:
   - runtime.txt: runtime.txt
   - netlify.toml: docs/netlify.toml
   - coala-bears.cabal: coala-bears.cabal.jj2
+  - Makefile.PL: Makefile.PL.jj2
 copy:
   - .ci/check_moban.sh: ci/check_moban.sh
   - .ci/check_setuptools.py: ci/check_setuptools.py

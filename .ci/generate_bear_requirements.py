@@ -51,6 +51,7 @@ SUPPORTED_INSTANCES = (
     'ComposerRequirement',
     'CabalRequirement',
     'RscriptRequirement',
+    'PerlRequirement',
 )
 
 INSTANCE_NAMES = (
@@ -60,6 +61,7 @@ INSTANCE_NAMES = (
     'composer_requirements',
     'cabal_requirements',
     'r_script_requirements',
+    'perl_requirements'
 )
 
 
@@ -174,6 +176,8 @@ def get_pip_requirements(requirements):
 def get_cabal_requirements(requirements):
     return _get_requirements(requirements, '==')
 
+def get_perl_requirements(requirements):
+    return _get_requirements(requirements, '==')
 
 def _create_sorted_commented_map(input_dict):
     return CommentedMap(sorted(input_dict.items(),
@@ -266,6 +270,8 @@ if __name__ == '__main__':
                                             instance_dict['ComposerRequirement'])
     requirements['cabal_requirements'] = get_cabal_requirements(
                                             instance_dict['CabalRequirement'])
+    requirements['perl_requirements'] = get_perl_requirements(
+                                            instance_dict['PerlRequirement'])
 
     if args.update or args.check:
         input_file_path = os.path.join(PROJECT_DIR, BEAR_REQUIREMENTS_YAML)
