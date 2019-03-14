@@ -129,6 +129,7 @@ addons:
       - php-codesniffer
       - r-base
       - verilator
+      - pychecker
 
 cache:
   pip: true

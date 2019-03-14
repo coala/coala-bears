@@ -10,6 +10,7 @@ set -x
 export DEBIAN_FRONTEND=noninteractive
 
 deps="libclang1-3.4 astyle indent mono-mcs chktex r-base julia golang-go luarocks verilator cppcheck flawfinder devscripts mercurial"
+deps="libclang1-3.4 indent mono-mcs chktex r-base julia golang-go luarocks verilator cppcheck flawfinder devscripts pychecker"
 deps_infer="m4 opam"
 
 case $CIRCLE_BUILD_IMAGE in
