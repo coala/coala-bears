@@ -17,8 +17,8 @@ from dependency_management.requirements.PipRequirement import PipRequirement
 
 class _CommitBear(GlobalBear):
     __metaclass__ = abc.ABCMeta
-    REQUIREMENTS = {PipRequirement('nltk', '3.2'),
-                    PipRequirement('git-url-parse', '1.1')}
+    REQUIREMENTS = {PipRequirement('nltk', '3.4'),
+                    PipRequirement('git-url-parse', '1.2.0')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

@@ -22,7 +22,7 @@ def _find_unused_code(filenames):
 
 class VultureBear(GlobalBear):
     LANGUAGES = {'Python', 'Python 3'}
-    REQUIREMENTS = {PipRequirement('vulture', '0.25.0')}
+    REQUIREMENTS = {PipRequirement('vulture', '1.0')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

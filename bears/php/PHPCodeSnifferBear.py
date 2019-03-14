@@ -26,7 +26,7 @@ class PHPCodeSnifferBear:
             [DistributionRequirement(apt_get='php-codesniffer',
                                      zypper='php-pear-php_codesniffer',
                                      ),
-             ComposerRequirement('squizlabs/php_codesniffer', '3.3.2'),
+             ComposerRequirement('squizlabs/php_codesniffer', '3.4.0'),
              ],
         ),
     }

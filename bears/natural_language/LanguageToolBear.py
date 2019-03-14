@@ -14,8 +14,8 @@ from coalib.settings.Setting import typed_list
 
 class LanguageToolBear(LocalBear):
     LANGUAGES = {'Natural Language'}
-    REQUIREMENTS = {PipRequirement('guess-language-spirit', '0.5.2'),
-                    PipRequirement('language-check', '1.0')}
+    REQUIREMENTS = {PipRequirement('guess-language-spirit', '0.5.3'),
+                    PipRequirement('language-check', '1.1')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

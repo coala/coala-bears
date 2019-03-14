@@ -22,7 +22,7 @@ class SpellCheckBear:
     See <https://pypi.python.org/pypi/scspell3k> for more information.
     """
     LANGUAGES = {'Natural Language'}
-    REQUIREMENTS = {PipRequirement('scspell3k', '2.0')}
+    REQUIREMENTS = {PipRequirement('scspell3k', '2.2')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

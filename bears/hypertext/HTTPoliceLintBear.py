@@ -17,7 +17,7 @@ class HTTPoliceLintBear:
     conformance to standards and best practices.
     """
     LANGUAGES = {'HAR'}
-    REQUIREMENTS = {PipRequirement('HTTPolice', '0.5.2')}
+    REQUIREMENTS = {PipRequirement('HTTPolice', '0.7.0')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

@@ -12,7 +12,7 @@ from coalib.settings.Setting import typed_list
 class PyImportSortBear(LocalBear):
 
     LANGUAGES = {'Python', 'Python 3', 'Python 2'}
-    REQUIREMENTS = {PipRequirement('isort', '4.2')}
+    REQUIREMENTS = {PipRequirement('isort', '4.3.4')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

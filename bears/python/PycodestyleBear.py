@@ -21,7 +21,7 @@ class PycodestyleBear:
     A wrapper for the tool ``pycodestyle`` formerly known as ``pep8``.
     """
     LANGUAGES = {'Python', 'Python 2', 'Python 3'}
-    REQUIREMENTS = {PipRequirement('pycodestyle', '2.2')}
+    REQUIREMENTS = {PipRequirement('pycodestyle', '2.5.0')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

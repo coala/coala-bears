@@ -13,7 +13,7 @@ class PyDocStyleBear:
     Checks python docstrings.
     """
     LANGUAGES = {'Python', 'Python 2', 'Python 3'}
-    REQUIREMENTS = {PipRequirement('pydocstyle', '2.0')}
+    REQUIREMENTS = {PipRequirement('pydocstyle', '3.0.0')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

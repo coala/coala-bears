@@ -65,8 +65,8 @@ def autopep8_fix_code_cell(source, options=None, apply_config=None):
 
 class PEP8NotebookBear(LocalBear):
     LANGUAGES = {'Python', 'Python 2', 'Python 3'}
-    REQUIREMENTS = {PipRequirement('autopep8', '1.2'),
-                    PipRequirement('nbformat', '4.1')}
+    REQUIREMENTS = {PipRequirement('autopep8', '1.4.3'),
+                    PipRequirement('nbformat', '4.4.0')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
