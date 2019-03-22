@@ -1,6 +1,10 @@
 from coalib.bearlib.abstractions.Linter import linter
 from dependency_management.requirements.DistributionRequirement import (
     DistributionRequirement)
+from dependency_management.requirements.AnyOneOfRequirements import (
+    AnyOneOfRequirements)
+from dependency_managment.requirements.PerlRequirement import (
+    PerlRequirement)
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
@@ -24,15 +28,19 @@ class PerlCriticBear:
 
     LANGUAGES = {'Perl'}
     REQUIREMENTS = {
-        DistributionRequirement(
-            apt_get='libperl-critic-perl',
-            brew=None,
-            dnf='perl-Perl-Critic',
-            portage='dev-perl/Perl-Critic',
-            xbps=None,
-            yum='perl-Perl-Critic',
-            zypper='perl-Perl-Critic',
-        ),
+       AnyOneOfRequirements(
+            [PerlRequirement(package='Critic', version='1.126'),
+             DistributionRequirement(
+                apt_get='libperl-critic-perl',
+                brew=None,
+                dnf='perl-Perl-Critic',
+                portage='dev-perl/Perl-Critic',
+                xbps=None,
+                yum='perl-Perl-Critic',
+                zypper='perl-Perl-Critic',
+                ),
+             ]
+        )
     }
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}

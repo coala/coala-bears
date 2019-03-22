@@ -233,3 +233,4 @@ cabal_requirements:
     version: ==5.6.0.0
   hlint:
     version: ==1.9.27
+perl_requirements: {}
