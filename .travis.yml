@@ -104,6 +104,7 @@ addons:
       - clang-3.4
       - cppcheck
       - devscripts
+      - dos2unix
       - flawfinder
       - gfortran
       - ghc
