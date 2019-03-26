@@ -35,6 +35,10 @@ restructuredtext-lint~=1.0
 rstcheck~=3.1
 safety~=1.8.2
 scspell3k~=2.0
+# six was introduced to fix the version conflict
+# arising due to the jsonschema's six requirement on
+# Python3.4 since it had dropped support for the same.
+six~=1.11.0
 sqlparse~=0.2.4
 vim-vint~=0.3.12,!=0.3.19
 vulture~=0.25.0
