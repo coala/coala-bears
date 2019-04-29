@@ -48,6 +48,8 @@ npm_requirements:
     version: ~0.3.2
   elm:
     version: ~0.18
+  ember-template-lint:
+    version: ~1.1.0
   eslint:
     version: ~3
   eslint-plugin-html:
