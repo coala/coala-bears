@@ -2,7 +2,6 @@ import shutil
 import sys
 import unittest
 from unittest import mock
-from unittest.case import SkipTest
 
 from bears.natural_language.LanguageToolBear import LanguageToolBear
 from coalib.testing.BearTestHelper import generate_skip_decorator
@@ -14,7 +13,7 @@ try:
     language_check
     guess_language
 except ImportError as err:
-    raise SkipTest(str(err))
+    raise unittest.SkipTest(str(err))
 
 LanguageToolBearTest = verify_local_bear(
     LanguageToolBear,

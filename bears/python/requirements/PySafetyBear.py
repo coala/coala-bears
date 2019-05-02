@@ -94,7 +94,7 @@ class PySafetyBear(LocalBear):
 
         for vulnerability in safety.check(packages, key=None,
                                           db_mirror=db_path, cached=False,
-                                          ignore_ids=cve_ignore):
+                                          ignore_ids=cve_ignore, proxy=None):
             if 'cve' in vulnerability.vuln_id.strip().lower():
                 message_template = (
                     '{vuln.name}{vuln.spec} is vulnerable to {vuln.vuln_id} '

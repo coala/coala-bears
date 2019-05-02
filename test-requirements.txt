@@ -10,7 +10,7 @@ coverage==4.4.1
 coverage-env-plugin~=0.1
 coverage-config-reload-plugin~=0.2
 codecov~=2.0.5
-moban~=0.3.3
+moban~=0.3.3 ; python_version > '3.0'
 packaging~=16.8
 pytest~=3.6.1
 pytest-cov~=2.4

@@ -12,6 +12,12 @@ from coalib.settings.Setting import Setting
 good_file = """
 a = some_function(
     '1' + '2')
+
+def fun():
+    '''
+        >>> from math \\
+        ...     import pow
+    '''
 """
 
 

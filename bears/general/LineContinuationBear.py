@@ -38,6 +38,8 @@ class LineContinuationBear(LocalBear):
         for line_number, line in enumerate(file):
             if len(line) > 1:
                 if line[-2] in line_continuation:
+                    if '>>> from ' in line:
+                        continue
                     yield Result.from_values(
                         origin=self,
                         message='Explicit line continuation is not allowed.',
