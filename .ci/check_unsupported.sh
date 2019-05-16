@@ -11,6 +11,8 @@ set -x
 # Many bear dependencies do not install on unsupported versions
 echo "" > bear-requirements.txt
 
+pip install 'pip==9.0.1' 'setuptools==21.2.2'
+
 python setup.py install 2>&1 | tee setup.log
 
 retval=$?
@@ -33,7 +35,7 @@ fi
 set -e
 
 # The following is emitted on stdout
-grep -q 'coala supports only Python 3.4.2 or later' setup.log
+grep -q 'coala supports only Python 3.4.* or later' setup.log
 # The following is emitted on stderr
 grep -q 'error: Setup script exited with 4' setup.log
 

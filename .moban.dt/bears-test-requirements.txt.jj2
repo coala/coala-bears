@@ -1,4 +1,2 @@
 {% include 'test-requirements.txt.jj2' %}
-ruamel.yaml~=0.15.42
-pytest-pythonpath~=0.7.0
 twine~=1.7.4
