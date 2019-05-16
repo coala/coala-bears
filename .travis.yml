@@ -74,7 +74,7 @@ jobs:
   allow_failures:
     - *check_moban
 
-dist: trusty
+dist: xenial
 
 .apt_sources: &apt_sources
   - ubuntu-toolchain-r-test
@@ -100,25 +100,25 @@ addons:
       - aspcud
       - astyle
       - cabal-install-1.24
+      # camlp4-extra
       - chktex
-      - clang-3.4
+      - clang-3.8
       - cppcheck
       - devscripts
       - flawfinder
       - gfortran
       - ghc
+      - golang-go
       - happy
       - indent
       - julia
       - libarpack2
       - libblas-dev
-      - libcolamd2.8.0
       - libfftw3-3
       - liblapack-dev
       - libopenblas-base
       - libpaper-utils
       - libperl-critic-perl
-      - libumfpack5.6.2
       - libxml2-utils
       - luarocks
       - mercurial
@@ -127,7 +127,7 @@ addons:
       # ocaml
       # opam
       - php-codesniffer
-      - r-base
+      - r-base-core
       - verilator
 
 cache:
@@ -157,21 +157,20 @@ env:
     - LINTR_COMMENT_BOT=false
     - CABAL_VERSION=1.24
     - INFER_VERSION=0.7.0
-    - PATH="$HOME/.local/bin:/opt/cabal/$CABAL_VERSION/bin:$PATH:$TRAVIS_BUILD_DIR/node_modules/.bin:$TRAVIS_BUILD_DIR/vendor/bin:$HOME/.cabal/bin:$HOME/infer-linux64-v$INFER_VERSION/infer/bin:$HOME/.local/tailor/tailor-latest/bin:$HOME/.luarocks/bin"
+    - JAVA_VERSION=8
+    - JAVA_HOME=/usr/lib/jvm/java-$JAVA_VERSION-openjdk-amd64/
+    - PATH="$HOME/.local/bin:$JAVA_HOME/bin:/opt/cabal/$CABAL_VERSION/bin:$PATH:$TRAVIS_BUILD_DIR/node_modules/.bin:$TRAVIS_BUILD_DIR/vendor/bin:$HOME/.cabal/bin:$HOME/infer-linux64-v$INFER_VERSION/infer/bin:$HOME/.local/tailor/tailor-latest/bin:$HOME/.luarocks/bin"
 
 before_install:
-  # Install latest stable version of Go using gimme
-  - gimme 1.11.5 > setup_go_root.sh
-  - source setup_go_root.sh
-  - nvm install 6.10.2
+  - nvm install 8
   # Remove Ruby directive from Gemfile as this image has 2.2.5
   - sed -i '/^ruby/d' Gemfile
   - .ci/deps.sh
   - .ci/deps.go.sh
   - .ci/deps.cabal.sh
-  - .ci/deps.r.sh
-  # .ci/deps.opam.sh
   - .ci/deps.java.sh
+  # .ci/deps.opam.sh
+  - .ci/deps.r.sh
   # https://github.com/coala/coala/issues/3183
   - cp requirements.txt requirements.orig
   - printf '%s\n%s\n%s\n'

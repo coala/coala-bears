@@ -12,7 +12,7 @@ if [[ -n "$ALEX" && "${ALEX/node_modules/}" == "${ALEX}" ]]; then
   sudo rm -rf $ALEX
 fi
 npm install
-npm list --depth=0
+npm list --depth=0 || true
 
 # Ruby commands
 bundle install --path=vendor/bundle --binstubs=vendor/bin --jobs=8 --retry=3
