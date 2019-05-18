@@ -12,22 +12,153 @@ package_module: bears
 docs_source_dir: API
 docs_dir: docs
 test_prevent_skips: false
+lint_command: false
+appveyor_global_environment:
+  # Needed for Julia
+  JL_PKG: CoalaBears
+  JULIA_PROJECT: "'@.'"
+
+python_versions:
+  - 3.6
+  - 3.5
+  - 3.4.4
+
+tox:
+  features:
+    - check
+    - noskip
+    - codecov
+  win:
+    selectors:
+      - pip
+      - noreqs
+      - npm
+      - gem
+      - go
+      - perl
+      - php
+      - java8
+      - adhoc
+    extra_bears:
+      - astyle
+      - cppcheck
+      - xmllint
 
 entry_points:
   coalabears:
     - coala_official_bears = bears
 
+choco_requirements:
+  # overrides for package managers not yet used
+  visualstudio2017-workload-vctools: false
+  MinGW: false
+  miniconda3: false
+  R.Project: false  # https://github.com/coala/coala-bears/issues/2919
+  luarocks: false  # https://github.com/coala/coala-bears/issues/2918
+  julia: false  # A bit tricky to get Lint.jl to build
+  ghc: false  # Compiling from source broken on Travis
+  haskell-stack: false
+  rust: false  # https://github.com/coala/coala-bears/issues/50
+  bower: false
+  # extra deps for bears
+  elm-platform: false  # https://github.com/coala/coala-bears/issues/2925
+  astyle: true
+  cppcheck: true
+  xsltproc: true
+  ShellCheck: true  # https://github.com/coala/coala-bears/issues/2920
+
+# The first entry is the most supported
+# Latter entries which are higher versions may have some bears disabled
+supported_versions:
+  # python included from `python_version`
+  apt:
+    # xenial and trusty are manually crafted to balance the job matrix
+    # so that only one of each necessary dependency is done in first batch
+    - precise
+    - bionic
+  mono:
+    - 5.20.1
+  r:
+    - release
+    - devel
+    - oldrel
+  node_js:
+    - 10
+    - 9
+    - 8
+    - 7
+    - 6
+  julia:
+    - 1.1
+    - 1.0
+    - 0.7.0
+  dart:
+    - 1.15.0
+    - 1.14.2
+  perl:
+    - '5.30'
+    - 5.22
+    - 5.18
+    - 5.14
+  go:
+    - 1.11
+    - '1.10'
+  ruby:
+    - 2.4
+    - 2.3
+    - 2.2
+    - 2.1
+    - 2.5
+  php:
+    - 7.2
+    - hhvm-3.18
+    - 5.5
+  scala:
+    - 2.11
+    - 2.12.2
+  java:
+    - 8
+    - 7
+    # openjdk 9, 10 and 12 are broken on Travis
+    # https://github.com/travis-ci/travis-cookbooks/issues/976
+    # Their config is the same as 11
+    - 11
+  lua:
+    - default
+  infer:
+    - 0.7.0
+
+requires:
+  - https://gitlab.com/coala/package_manager/
+  - https://gitlab.com/coala/mobans
+
 configuration:
   template_dir:
     - .moban.dt/
-    - .ci/
-    - ../coala-mobans/templates/
-    - ../coala-mobans/assets/
+    - 'mobans:templates/'
+    - 'mobans:assets/'
+    - 'package_manager:'
   configuration: .moban.yaml
-  configuration_dir: ../coala-mobans/
+  configuration_dir: 'mobans:'
 targets:
   - setup.py: bears-setup.py.jj2
   - setup.cfg: bears-setup.cfg.jj2
+  - Fudgefile: Fudgefile.jj2
+  # Powershell Linting
+  - .ci/PSLint.ps1: ci/PSLint.ps1
+  - .ci/Export-NUnitXml.psm1: ci/Export-NUnitXml.psm1
+  - .ci/PSScriptAnalyzerSettings.psd1: ci/PSScriptAnalyzerSettings.psd1
+  # Fudge
+  - .ci/Fudge.ps1: fudge/Fudge.ps1
+  - .ci/Modules/FudgeTools.psm1: fudge/Modules/FudgeTools.psm1
+  - .ci/FudgeCI.ps1: fudge/FudgeCI.ps1
+  - .ci/PrepareAVVM.ps1: fudge/PrepareAVVM.ps1
+  - .ci/FudgeGenerateFake.ps1: fudge/FudgeGenerateFake.ps1
+  - .ci/FudgePostInstall.ps1: fudge/FudgePostInstall.ps1
+  - .ci/store_env_in_registry.py: ci/store_env_in_registry.py
+  - .ci/refreshenv.sh: ci/refreshenv.sh
+  - .ci/constants.ps1: constants.ps1.jj2
+  - .ci/deps.python-packages.ps1: fudge/deps.python-packages.ps1
   - requirements.txt: requirements.txt.jj2
   - test-requirements.txt: bears-test-requirements.txt.jj2
   - bears/VERSION: VERSION.jj2
@@ -35,8 +166,13 @@ targets:
   - DESCRIPTION: DESCRIPTION.jj2
   - package.json: package.json.jj2
   - bear-requirements.txt: bear-requirements.txt.jj2
-  - .ci/appveyor.yml: ci/appveyor.yml.jj2
-  - .ci/run_with_env.cmd: run_with_env.cmd
+  - .travis.yml: bears-travis.yml.jj2
+  - .ci/appveyor.yml: bears-appveyor.yml.jj2
+  # from package manager
+  - .ci/deps.golang.ps1: .ci/deps.golang.ps1
+  - .ci/deps.ActivePerl.ps1: .ci/deps.ActivePerl.ps1
+  - .ci/deps.php.ps1: .ci/deps.php.ps1
+  # Other
   - .ci/check_unsupported.sh: ci/check_unsupported.sh.jj2
   - runtime.txt: runtime.txt
   - netlify.toml: docs/netlify.toml

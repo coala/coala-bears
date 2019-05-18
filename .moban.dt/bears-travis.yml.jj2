@@ -1,0 +1,267 @@
+{% extends 'ci/travis.yml.jj2' %}
+
+{% block custom_python_versions %}
+python: 3.6.3
+{% endblock %}
+
+{% block stages %}
+stages:
+  - name: sentinel
+  - test-languages
+  - test-other-versions
+
+cache: &global_cache
+  pip: true
+  directories:
+    - $HOME/.local/
+
+{% endblock %}
+
+{% block jobs %}
+{% macro job(language, version, seen, all_apt_packages) -%}
+{%   if language == 'python' and version.startswith('3.5') %}
+{%     set seen = False %}
+{%   endif %}
+{%   if language == 'python' and version.startswith('3.6') %}
+    - stage: sentinel
+{%   elif not seen %}
+    - stage: test-languages
+{%   else %}
+    - stage: test-other-versions
+{%   endif %}
+{%   set env = {} %}
+{%   set version_key = language %}
+{%   set dist = None %}
+{%   set packages = [] %}
+{%   set cacher = False %}
+{%   if language == 'lua' %}
+{%     set env = {'BEARS': language} %}
+{%     set version_key = None %}
+{%     set packages = ['luarocks'] %}
+{%   elif language == 'infer' %}
+{%     set version_key = None %}
+{%     set env = {
+         'BEARS': 'opam',
+         'INFER_VERSION': version,
+         'PATH': '$PATH:$HOME/infer-linux64-v$INFER_VERSION/infer/bin',
+       } %}
+{%     set dist = 'trusty' %}
+{%     set packages = ['camlp4-extra', 'ocaml', 'opam'] %}
+{%   elif language == 'apt' %}
+{%     set version_key = None %}
+{%     set dist = version %}
+{%     if version in ['xenial', 'bionic'] %}
+{%       set _disable_bears = "shellcheck" %}
+{%     endif %}
+{%     set env = {
+         'DIST': version,
+         'BEARS': 'apt_get',
+         'DISABLE_BEARS': _disable_bears,
+       } %}
+{#       https://travis-ci.community/t/apt-addon-broken-on-bionic/4061 #}
+{%     set _unsupported_packages = {
+            'precise': ['astyle', 'hlint', 'php-codesniffer', 'phpmd', 'shellcheck'],
+            'trusty': ['astyle'],
+            'xenial': ['shellcheck'],
+            'bionic': all_apt_packages,
+       } %}
+{%     for package in all_apt_packages %}
+{%       if package not in _unsupported_packages[dist] %}
+{%         set _ = packages.append(package) %}
+{%       endif %}
+{%     endfor %}
+{%     if 'flawfinder' in packages %}
+{%       set _ = packages.append('python') %}
+{%     endif %}
+{%   elif language == 'ruby' %}
+{%     set dist = 'trusty' %}
+{%     set version_key = 'rvm' %}
+{%     set cacher = 'bundler' %}
+{%     if version >= '2.5' %}
+{%       set env = {'DISABLE_BEARS': "csvlint"} %}
+{%     endif %}
+{%   elif language == 'python' %}
+{#     clang-3.4 is not available on xenial #}
+{%     set dist = 'trusty' %}
+{%     set packages = ['clang-3.4'] %}
+{%   elif language == 'perl' %}
+{%     set dist = 'trusty' %}
+{%   elif language == 'php' %}
+{%     set dist = 'trusty' %}
+{%   elif language == 'r' %}
+{%     set cacher = 'packages' %}
+{%   elif language == 'node_js' %}
+{%     set cacher = 'npm' %}
+{%   elif language == 'java' %}
+{%     set version_key = 'jdk' %}
+{%     if version == '7' %}
+{%       set dist = 'trusty' %}
+{%       set env = {'DISABLE_BEARS': "tailor"} %}
+{%     elif version != '8' %}
+{%       set env = {'DISABLE_BEARS': "languagetool tailor"} %}
+{%     endif %}
+{%     set version = 'openjdk' + version %}
+{%   elif language == 'mono' %}
+{%     set language = 'csharp' %}
+{%   endif %}
+{%   if dist %}
+      dist: {{ dist }}
+{%   endif %}
+{%   if language in ['infer', 'apt'] %}
+      language: generic
+{%   else %}
+      language: {{ language }}
+{%   endif %}
+{%   if version_key %}
+{%     if version.endswith('0') and not version.endswith('.0') %}
+      {{ version_key }}: '{{ version }}'
+{%     else %}
+      {{ version_key }}: {{ version }}
+{%     endif %}
+{%   endif %}
+{%   if env %}
+{%     if env | length == 1 %}
+{%       set name = [].__class__(env.keys())[0] %}
+{%       set _value = env[name] %}
+{%     endif %}
+{%     if _value %}
+      env: {{ name }}="{{ _value }}"
+{%     else %}
+      env:
+{%       for name, value in env.items() %}
+{%         if value %}
+        {{ name }}="{{ value }}"
+{%         endif %}
+{%       endfor %}
+{%     endif %}
+{%   endif %}
+{%   if cacher %}
+      cache:
+        <<: *global_cache
+        {{ cacher }}: true
+{%   endif %}
+{%   if packages %}
+      addons:
+        apt:
+{%     if 'opam' in packages %}
+          sources:
+            - avsm
+{%     endif %}
+{%     if packages | length == 1 %}
+          packages: {{ packages[0] }}
+{%     else %}
+          packages:
+{%       for package in packages %}
+            - {{ package }}
+{%       endfor %}
+{%     endif %}
+{%   endif %}
+{%   if language == 'go' %}
+      install: skip
+      cache:
+        <<: *global_cache
+        directories:
+          - $HOME/.local/
+          - $HOME/.cache/go-build/
+          - $HOME/gopath/pkg/mod/
+{%   elif language == 'apt' and version == 'precise' %}
+      cache:
+        <<: *global_cache
+        directories:
+          - $HOME/.local/
+          - $HOME/.pyenv/
+{%   elif language == 'python' %}
+      cache:
+        <<: *global_cache
+        directories:
+          - $HOME/.local/
+          - docs/_build/
+          - $HOME/nltk_data/
+{%   elif language == 'lua' %}
+      cache:
+        <<: *global_cache
+        directories:
+          - $HOME/.local/
+          - $HOME/.luarocks/
+{%   elif language == 'perl' %}
+      cache:
+        <<: *global_cache
+        directories:
+          - $HOME/.local/
+          - $HOME/perl5/
+{%   elif language == 'scala' and version.startswith('2.12') %}
+      jdk: openjdk8
+{%   elif language == 'julia' %}
+{# default language is 0.6.4, and has problems with pre-installed Lint.jl #}
+{# install not provided https://github.com/travis-ci/travis-build/pull/1571 #}
+      env: JL_PKG={{ appveyor_global_environment.JL_PKG }}
+      install:
+        - julia --color=yes .ci/deps.julia.jl
+        # Verify compilation works
+        - julia -e 'import Lint.lintfile'
+      cache:
+        <<: *global_cache
+        directories:
+          - $HOME/.local/
+          - $HOME/.julia/
+{%   endif %}
+{% endmacro %}
+{# reorder so python is first on Python 3.6 #}
+{% set _supported_versions = {'python': python_versions} %}
+{% set _ = _supported_versions.update(supported_versions) %}
+{% set supported_versions = _supported_versions %}
+jobs:
+  include:
+    # Manually added "language" entries should complete test coverage
+{% macro manualmatrix() %}{% include 'travis-manual-matrix.yaml' %}{% endmacro %}
+    {{ manualmatrix() | indent(4) }}
+    # Entries generates from `supported_versions`
+{% set seen_languages = {} %}
+{% set apt_packages = [] %}
+{% for requirement in distro_requirements.values() %}
+{%   for package_type, package_name in requirement.packages.items() %}
+{%     if package_type == 'apt_get' %}
+{%       if not package_name.startswith('r-') and package_name not in ['ghc-mod'] %}
+{%         set package_name = package_name.replace('php-cli', 'php5-cli') %}
+{%         set _ = apt_packages.append(package_name) %}
+{%       endif %}
+{%     endif %}
+{%   endfor %}
+{% endfor %}
+{% for language, versions in supported_versions.items() %}
+{%   for version in versions %}
+{%     set version = ''.__class__(version) %}
+{{ job(language, version, language in seen_languages, apt_packages) }}
+{%     set _ = seen_languages.__setitem__(language, 1) %}
+{%   endfor %}
+{% endfor %}
+    - *moban
+  allow_failures:
+    - *moban
+{% endblock %}
+
+{% block before_install %}
+{% macro beforeinstall() %}{% include 'travis-before-install.yaml' %}{% endmacro %}
+{{ beforeinstall() }}
+{% endblock %}
+
+{% block script %}
+  # Ensure metadata files are in sync with the bear metadata in the source
+  - if [ -n "$TRAVIS_PYTHON_VERSION" ]; then
+      PYTHONPATH=. .ci/generate_bear_metadata.py --debug --update;
+    fi
+  - python -m tox
+  - if [ -n "$TRAVIS_PYTHON_VERSION" ]; then
+      python setup.py docs;
+    fi
+  - if [ -n "$TRAVIS_PYTHON_VERSION" ]; then
+      coala --non-interactive;
+    fi
+{% endblock %}
+
+{% block end %}
+
+branches:
+  exclude:
+    - /^sils\//
+{% endblock %}

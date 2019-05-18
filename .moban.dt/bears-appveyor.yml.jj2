@@ -1,0 +1,10 @@
+{% extends 'ci/appveyor.yml.jj2' %}
+
+{% set _ = appveyor_global_environment.__setitem__(
+     'TOX_FEATURES', '-'.join(tox.features)) %}
+{% set _ = appveyor_global_environment.__setitem__(
+     'BEAR_LIST', ' '.join(tox.win.extra_bears)) %}
+{% set _ = appveyor_global_environment.__setitem__(
+     'TOX_TEST_SELECTORS', '-'.join(tox.win.selectors)) %}
+{% set _ = appveyor_global_environment.__setitem__(
+     'TOXENV', 'py$(PYTHON_MINOR_NODOTS)-$(TOX_TEST_SELECTORS)-$(TOX_FEATURES)-win') %}

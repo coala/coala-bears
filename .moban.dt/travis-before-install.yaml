@@ -1,0 +1,56 @@
+env:
+  global:
+    - TERM=dumb
+    - PATH="$HOME/.local/bin:$PATH"
+    # These are only needed by Windows
+    - NUGET_EXE_NO_PROMPT=true
+    - VIRTUALENV_NO_DOWNLOAD=1
+    # Enable to debug tox
+    # VIRTUALENV_VERBOSE=1
+    # This exceeds the travis maximum log length
+    # PIP_VERBOSE=1
+    - PIP_DISABLE_PIP_VERSION_CHECK=1
+    - PIP_YES=1
+    - FudgeCI=${TRAVIS_BUILD_DIR}/.ci/
+    - TOX_FEATURES="{{ '-'.join(tox.features) }}"
+
+before_install:
+  - printenv
+  - mkdir -p ~/bin ~/.local/bin
+  - source .ci/travis_extra_globals.sh
+
+  - if [ -z "$TRAVIS_PYTHON_VERSION" ]; then
+      .ci/deps.python36.sh;
+    fi
+  - if [ -d "$HOME/.pyenv/bin" ]; then
+      export PATH="$HOME/.pyenv/bin:$PATH";
+    fi
+  - hash -r && pyenv versions --bare && python --version
+  - if [ "${TRAVIS_PYTHON_VERSION/3.4/}" != "$TRAVIS_PYTHON_VERSION" ]; then
+      pip install pip==9.0.3 setuptools==21.2.2;
+    fi
+
+  - if [ -f ".ci/deps.$TRAVIS_LANGUAGE.sh" ]; then
+      bash -e -x ".ci/deps.$TRAVIS_LANGUAGE.sh";
+    fi
+
+  # https://github.com/coala/coala/issues/3183
+  - cp requirements.txt requirements.orig
+  - printf '%s\n%s\n%s\n'
+           "$(cat test-requirements.txt)"
+           "$(grep -v '^-r' docs-requirements.txt)"
+           "$(cat bear-requirements.txt requirements.txt)"
+           > requirements.txt
+
+before_script:
+  - mv requirements.orig requirements.txt
+  - if [ -n "$TRAVIS_PYTHON_VERSION" ]; then
+      python setup.py bdist_wheel &&
+      pip install $(ls ./dist/*.whl)"[alldeps]";
+    fi
+  - if [ -z "$TRAVIS_PYTHON_VERSION" -a "$TRAVIS_OS_NAME" = "linux" ]; then
+      python -m pip install --upgrade --user -r test-requirements.txt;
+    fi
+  - if [ "${TRAVIS_PYTHON_VERSION/3.4/}" != "$TRAVIS_PYTHON_VERSION" ]; then
+      pip install --upgrade setuptools;
+    fi

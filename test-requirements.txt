@@ -28,4 +28,11 @@ ipdb~=0.11
 pip<10
 six>=1.11.0
 wheel~=0.29
+pbr!=2.1.0,>=2.0.0
+pytest-error-for-skips
+git+https://github.com/krkd/pytest-cov-threshold#egg=pytest-cov-threshold ; python_version > '3.4'
 twine~=1.7.4
+tox~=3.12.0
+tox-travis
+tox-backticks
+tox-pyenv

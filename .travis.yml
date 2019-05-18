@@ -1,14 +1,25 @@
 sudo: false
-
+dist: xenial
 language: python
-python:
-  - 3.4
-  - 3.5
-  - 3.6
+notifications:
+  email: false
+python: 3.6.3
+
+stages:
+  - name: sentinel
+  - test-languages
+  - test-other-versions
+
+cache: &global_cache
+  pip: true
+  directories:
+    - $HOME/.local/
 
 .disable_global: &disable_global
   addons: false
-  cache: pip
+  cache: false
+  env: {}
+  python: false
   before_install: false
   install: false
   before_script: false
@@ -18,160 +29,586 @@ python:
   before_deploy: false
   deploy: false
 
-stages:
-  - name: sentinel
-    if: branch != master OR type = pull_request
-  - test
-  - moban
-  - name: unsupported
-    if: branch = master AND type = push
-
-.check_moban: &check_moban
+.moban: &moban
   <<: *disable_global
   python: 3.6
   stage: moban
-  install: pip install moban
-  script: .ci/check_moban.sh
-  if: branch != master OR type = pull_request
+  install: pip install moban>=0.0.4
+  script:
+    - moban
+    - git diff --exit-code
 
 jobs:
   include:
-    - stage: sentinel
-      # All other jobs will be cancelled if the sentinel job fails
-      <<: *disable_global
-      python: 3.6
-      install: pip install -r requirements.txt ".[alldeps]"
-      script: coala --non-interactive -V
+    # Manually added "language" entries should complete test coverage
+    - stage: test-languages
+      dist: xenial
+      # This is in generic image, as language: haskell isnt working yet
+      # https://github.com/coala/coala-bears/issues/1384
+      language: generic
+      env: DIST=xenial BEARS=adhoc BEAR_LIST="ghc-mod"
+      # ghc-mod needs parts of ghc, specifically at least /usr/lib/ghc/settings
+      # ghc-mod needs cabal-install
+      cache:
+        pip: true
+        directories:
+          - $HOME/.local/
+          - $HOME/.cabal/
+          - $HOME/.ghc/
+          - $HOME/.ghc-mod/
+      addons:
+        apt:
+          packages:
+            - cabal-install
+            - ghc
+            - ghc-mod
+
+    - stage: test-languages
+      dist: xenial
+      language: generic
+      env: DIST=xenial BEARS=adhoc BEAR_LIST="apt_get bakalint default-jre"
+           DISABLE_BEARS="astyle flawfinder ghc-mod r_script shellcheck"
+      # astyle and shellcheck are failing in xenial
+      # xenial doesnt have Python 2.7 needed for flawfinder
+      # R bears and ghc_mod use separate jobs
+      addons:
+        apt:
+          packages:
+            - chktex
+            - cppcheck
+            - devscripts
+            - hlint
+            - indent
+            - libperl-critic-perl
+            - libxml2-utils
+            - mono-mcs
+            - php7.0-cli
+            - phpmd
+            - php-codesniffer
+            - verilator
+
+    - stage: test-languages
+      dist: trusty
+      language: generic
+      env: DIST=trusty BEARS=adhoc BEAR_LIST="astyle flawfinder shellcheck"
+      addons:
+        apt:
+          sources:
+            - sourceline:  # astyle
+                deb http://ppa.launchpad.net/cs50/ppa/ubuntu trusty main
+              key_url:
+                https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x5BDA2E974A0E822C
+          packages:
+            - astyle
+            - flawfinder
+            - shellcheck
+
+    - stage: test-other-versions
+      dist: trusty
+      language: generic
+      env: DIST=trusty BEARS=apt_get
+      addons:
+        apt:
+          packages:
+            - chktex
+            - cppcheck
+            - devscripts
+            - indent
+            - libperl-critic-perl
+            - libxml2-utils
+            - mono-mcs
+            - php5-cli
+            - php-codesniffer
+            - verilator
+
+    # Additonal manual entries
+    - stage: test-other-versions
+      os: windows
+      language: bash
+      python: '3.6.8'
+      env:
+        BEAR_LIST="astyle cppcheck xmllint"
+        TOX_TEST_SELECTORS="pip-noreqs-npm-gem-go-perl-php-java8-adhoc"
+      cache:
+        directories:
+          - C:/nuget_http_cache/
+          - C:/choco_cache/
+          - C:/pip_cache/
+      before_install:
+        - bash --version
+        - powershell -c "Set-ExecutionPolicy -ExecutionPolicy Unrestricted
+                                             -Scope LocalMachine"
+        - powershell .ci/travis_init.ps1
+
+        - export NUGET_HTTP_CACHE_PATH=/C/nuget_http_cache
+        - export CHOCO_CACHE_DIR=/C/choco_cache
+        - export PIP_CACHE_DIR=/C/pip_cache
+
+        - source .ci/travis_extra_globals.sh
+
+        - export TOXINI_SITEPACKAGES=true
+        - export VIRTUALENV_NO_PIP=1
+        - export VIRTUALENV_NO_SETUPTOOLS=1
+
+        - export TOXENV="py36-${TOX_TEST_SELECTORS}-${TOX_FEATURES}-win"
+
+        - printenv
+
+        - cp .ci/choco.config $ChocolateyInstall/config/chocolatey.config
+
+        - python .ci/store_env_in_registry.py
+        - source .ci/refreshenv.sh
+
+        # TODO: Add support for disabling pre-installed vctools which is
+        # disabled in choco_requirements.  Uninstalling vctools fails
+      install:
+        - powershell -c ". .ci/Fudge.ps1 install"
+        - refreshenv
+
+        - taskkill -IM "gpg-agent.exe" || true
+
+        - pip uninstall tox-venv || true
+
+        # Avoid verify_gemfile_dependencies_are_found errors due to
+        # Gemfile modifications in .ci/deps.ruby-packages.ps1
+        - cp Gemfile.win Gemfile
+
+        - cp requirements.txt requirements.orig
+        - cp tox.ini tox.orig
+        - "sed -i 's/^envlist.*$/envlist: '$TOXENV/ tox.ini"
+
+      after_script:
+        - cp tox.orig tox.ini
+        - cp Gemfile.orig Gemfile
 
     - python: 2.7
-      stage: unsupported
+      stage: test-other-versions
       env: PIP_NO_COMPILE=1
-      addons: false
       before_install: true
       install: pip install 3to2
       before_script: true
       script: .ci/check_unsupported.sh
+
     - python: 3.3
-      stage: unsupported
+      stage: test-other-versions
+      dist: trusty
       env: PIP_NO_COMPILE=1
-      addons: false
       before_install: true
       install: true
       before_script: true
       script: .ci/check_unsupported.sh
+
     - python: 3.6
-      stage: moban
-      addons: false
-      cache: pip
+      stage: sentinel
       before_install: false
       install: pip install moban
       before_script: false
       script: .ci/check_moban.sh
       after_success: false
       after_failure: false
-      if: branch = master AND type = push
-    - *check_moban
+
+    # Entries generates from `supported_versions`
+    - stage: sentinel
+      dist: trusty
+      language: python
+      python: 3.6
+      addons:
+        apt:
+          packages: clang-3.4
+      cache:
+        <<: *global_cache
+        directories:
+          - $HOME/.local/
+          - docs/_build/
+          - $HOME/nltk_data/
+
+    - stage: test-languages
+      dist: trusty
+      language: python
+      python: 3.5
+      addons:
+        apt:
+          packages: clang-3.4
+      cache:
+        <<: *global_cache
+        directories:
+          - $HOME/.local/
+          - docs/_build/
+          - $HOME/nltk_data/
+
+    - stage: test-other-versions
+      dist: trusty
+      language: python
+      python: 3.4.4
+      addons:
+        apt:
+          packages: clang-3.4
+      cache:
+        <<: *global_cache
+        directories:
+          - $HOME/.local/
+          - docs/_build/
+          - $HOME/nltk_data/
+
+    - stage: test-languages
+      dist: precise
+      language: generic
+      env:
+        DIST="precise"
+        BEARS="apt_get"
+      addons:
+        apt:
+          packages:
+            - chktex
+            - cppcheck
+            - default-jre
+            - devscripts
+            - flawfinder
+            - indent
+            - libperl-critic-perl
+            - libxml2-utils
+            - mono-mcs
+            - perl
+            - php5-cli
+            - ruby
+            - verilator
+            - python
+      cache:
+        <<: *global_cache
+        directories:
+          - $HOME/.local/
+          - $HOME/.pyenv/
+
+    - stage: test-other-versions
+      dist: bionic
+      language: generic
+      env:
+        DIST="bionic"
+        BEARS="apt_get"
+        DISABLE_BEARS="shellcheck"
+
+    - stage: test-languages
+      language: csharp
+      mono: 5.20.1
+
+    - stage: test-languages
+      language: r
+      r: release
+      cache:
+        <<: *global_cache
+        packages: true
+
+    - stage: test-other-versions
+      language: r
+      r: devel
+      cache:
+        <<: *global_cache
+        packages: true
+
+    - stage: test-other-versions
+      language: r
+      r: oldrel
+      cache:
+        <<: *global_cache
+        packages: true
+
+    - stage: test-languages
+      language: node_js
+      node_js: '10'
+      cache:
+        <<: *global_cache
+        npm: true
+
+    - stage: test-other-versions
+      language: node_js
+      node_js: 9
+      cache:
+        <<: *global_cache
+        npm: true
+
+    - stage: test-other-versions
+      language: node_js
+      node_js: 8
+      cache:
+        <<: *global_cache
+        npm: true
+
+    - stage: test-other-versions
+      language: node_js
+      node_js: 7
+      cache:
+        <<: *global_cache
+        npm: true
+
+    - stage: test-other-versions
+      language: node_js
+      node_js: 6
+      cache:
+        <<: *global_cache
+        npm: true
+
+    - stage: test-languages
+      language: julia
+      julia: 1.1
+      env: JL_PKG=CoalaBears
+      install:
+        - julia --color=yes .ci/deps.julia.jl
+        # Verify compilation works
+        - julia -e 'import Lint.lintfile'
+      cache:
+        <<: *global_cache
+        directories:
+          - $HOME/.local/
+          - $HOME/.julia/
+
+    - stage: test-other-versions
+      language: julia
+      julia: 1.0
+      env: JL_PKG=CoalaBears
+      install:
+        - julia --color=yes .ci/deps.julia.jl
+        # Verify compilation works
+        - julia -e 'import Lint.lintfile'
+      cache:
+        <<: *global_cache
+        directories:
+          - $HOME/.local/
+          - $HOME/.julia/
+
+    - stage: test-other-versions
+      language: julia
+      julia: 0.7.0
+      env: JL_PKG=CoalaBears
+      install:
+        - julia --color=yes .ci/deps.julia.jl
+        # Verify compilation works
+        - julia -e 'import Lint.lintfile'
+      cache:
+        <<: *global_cache
+        directories:
+          - $HOME/.local/
+          - $HOME/.julia/
+
+    - stage: test-languages
+      language: dart
+      dart: 1.15.0
+
+    - stage: test-other-versions
+      language: dart
+      dart: 1.14.2
+
+    - stage: test-languages
+      dist: trusty
+      language: perl
+      perl: '5.30'
+      cache:
+        <<: *global_cache
+        directories:
+          - $HOME/.local/
+          - $HOME/perl5/
+
+    - stage: test-other-versions
+      dist: trusty
+      language: perl
+      perl: 5.22
+      cache:
+        <<: *global_cache
+        directories:
+          - $HOME/.local/
+          - $HOME/perl5/
+
+    - stage: test-other-versions
+      dist: trusty
+      language: perl
+      perl: 5.18
+      cache:
+        <<: *global_cache
+        directories:
+          - $HOME/.local/
+          - $HOME/perl5/
+
+    - stage: test-other-versions
+      dist: trusty
+      language: perl
+      perl: 5.14
+      cache:
+        <<: *global_cache
+        directories:
+          - $HOME/.local/
+          - $HOME/perl5/
+
+    - stage: test-languages
+      language: go
+      go: 1.11
+      install: skip
+      cache:
+        <<: *global_cache
+        directories:
+          - $HOME/.local/
+          - $HOME/.cache/go-build/
+          - $HOME/gopath/pkg/mod/
+
+    - stage: test-other-versions
+      language: go
+      go: '1.10'
+      install: skip
+      cache:
+        <<: *global_cache
+        directories:
+          - $HOME/.local/
+          - $HOME/.cache/go-build/
+          - $HOME/gopath/pkg/mod/
+
+    - stage: test-languages
+      dist: trusty
+      language: ruby
+      rvm: 2.4
+      cache:
+        <<: *global_cache
+        bundler: true
+
+    - stage: test-other-versions
+      dist: trusty
+      language: ruby
+      rvm: 2.3
+      cache:
+        <<: *global_cache
+        bundler: true
+
+    - stage: test-other-versions
+      dist: trusty
+      language: ruby
+      rvm: 2.2
+      cache:
+        <<: *global_cache
+        bundler: true
+
+    - stage: test-other-versions
+      dist: trusty
+      language: ruby
+      rvm: 2.1
+      cache:
+        <<: *global_cache
+        bundler: true
+
+    - stage: test-other-versions
+      dist: trusty
+      language: ruby
+      rvm: 2.5
+      env: DISABLE_BEARS="csvlint"
+      cache:
+        <<: *global_cache
+        bundler: true
+
+    - stage: test-languages
+      dist: trusty
+      language: php
+      php: 7.2
+
+    - stage: test-other-versions
+      dist: trusty
+      language: php
+      php: hhvm-3.18
+
+    - stage: test-other-versions
+      dist: trusty
+      language: php
+      php: 5.5
+
+    - stage: test-languages
+      language: scala
+      scala: 2.11
+
+    - stage: test-other-versions
+      language: scala
+      scala: 2.12.2
+      jdk: openjdk8
+
+    - stage: test-languages
+      language: java
+      jdk: openjdk8
+
+    - stage: test-other-versions
+      dist: trusty
+      language: java
+      jdk: openjdk7
+      env: DISABLE_BEARS="tailor"
+
+    - stage: test-other-versions
+      language: java
+      jdk: openjdk11
+      env: DISABLE_BEARS="languagetool tailor"
+
+    - stage: test-languages
+      language: lua
+      env: BEARS="lua"
+      addons:
+        apt:
+          packages: luarocks
+      cache:
+        <<: *global_cache
+        directories:
+          - $HOME/.local/
+          - $HOME/.luarocks/
+
+    - stage: test-languages
+      dist: trusty
+      language: generic
+      env:
+        BEARS="opam"
+        INFER_VERSION="0.7.0"
+        PATH="$PATH:$HOME/infer-linux64-v$INFER_VERSION/infer/bin"
+      addons:
+        apt:
+          sources:
+            - avsm
+          packages:
+            - camlp4-extra
+            - ocaml
+            - opam
+
+    - *moban
   allow_failures:
-    - *check_moban
+    - *moban
 
-dist: trusty
-
-.apt_sources: &apt_sources
-  - ubuntu-toolchain-r-test
-  # avsm  # OPAM stable
-  - hvr-ghc  # Haskell
-  - sourceline:  # R
-      deb https://cloud.r-project.org/bin/linux/ubuntu trusty-cran35/
-    key_url:
-      https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x51716619E084DAB9
-  - sourceline:  # Julia
-      deb http://ppa.launchpad.net/staticfloat/juliareleases/ubuntu trusty main
-    key_url:
-      https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xCF979FFA3D3D3ACC
-  - sourceline:  # astyle
-      deb http://ppa.launchpad.net/cs50/ppa/ubuntu trusty main
-    key_url:
-      https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x5BDA2E974A0E822C
-
-addons:
-  apt:
-    sources: *apt_sources
-    packages:
-      - aspcud
-      - astyle
-      - cabal-install-1.24
-      - chktex
-      - clang-3.4
-      - cppcheck
-      - devscripts
-      - flawfinder
-      - gfortran
-      - ghc
-      - happy
-      - indent
-      - julia
-      - libarpack2
-      - libblas-dev
-      - libcolamd2.8.0
-      - libfftw3-3
-      - liblapack-dev
-      - libopenblas-base
-      - libpaper-utils
-      - libperl-critic-perl
-      - libumfpack5.6.2
-      - libxml2-utils
-      - luarocks
-      - mercurial
-      # menhir
-      - mono-mcs
-      # ocaml
-      # opam
-      - php-codesniffer
-      - r-base
-      - verilator
-
-cache:
-  pip: true
-  directories:
-    - docs/_build
-    # Installed language package caches
-    - ~/.cabal
-    - ~/.ghc
-    - ~/.ghc-mod
-    - ~/R/Library
-    - ~/.julia
-    - ~/.luarocks
-    - $TRAVIS_BUILD_DIR/node_modules
-    - $TRAVIS_BUILD_DIR/.bundle
-    - $TRAVIS_BUILD_DIR/vendor
-    # coala managed data
-    - ~/nltk_data
-    # Installed linters
-    - ~/infer-linux64-v$INFER_VERSION
-    - ~/.local/
+stage: test
 
 env:
   global:
     - TERM=dumb
-    - R_LIB_USER=~/R/Library
-    - LINTR_COMMENT_BOT=false
-    - CABAL_VERSION=1.24
-    - INFER_VERSION=0.7.0
-    - PATH="$HOME/.local/bin:/opt/cabal/$CABAL_VERSION/bin:$PATH:$TRAVIS_BUILD_DIR/node_modules/.bin:$TRAVIS_BUILD_DIR/vendor/bin:$HOME/.cabal/bin:$HOME/infer-linux64-v$INFER_VERSION/infer/bin:$HOME/.local/tailor/tailor-latest/bin:$HOME/.luarocks/bin"
+    - PATH="$HOME/.local/bin:$PATH"
+    # These are only needed by Windows
+    - NUGET_EXE_NO_PROMPT=true
+    - VIRTUALENV_NO_DOWNLOAD=1
+    # Enable to debug tox
+    # VIRTUALENV_VERBOSE=1
+    # This exceeds the travis maximum log length
+    # PIP_VERBOSE=1
+    - PIP_DISABLE_PIP_VERSION_CHECK=1
+    - PIP_YES=1
+    - FudgeCI=${TRAVIS_BUILD_DIR}/.ci/
+    - TOX_FEATURES="check-noskip-codecov"
 
 before_install:
-  # Install latest stable version of Go using gimme
-  - gimme 1.11.5 > setup_go_root.sh
-  - source setup_go_root.sh
-  - nvm install 6.10.2
-  # Remove Ruby directive from Gemfile as this image has 2.2.5
-  - sed -i '/^ruby/d' Gemfile
-  - .ci/deps.sh
-  - .ci/deps.go.sh
-  - .ci/deps.cabal.sh
-  - .ci/deps.r.sh
-  # .ci/deps.opam.sh
-  - .ci/deps.java.sh
+  - printenv
+  - mkdir -p ~/bin ~/.local/bin
+  - source .ci/travis_extra_globals.sh
+
+  - if [ -z "$TRAVIS_PYTHON_VERSION" ]; then
+      .ci/deps.python36.sh;
+    fi
+  - if [ -d "$HOME/.pyenv/bin" ]; then
+      export PATH="$HOME/.pyenv/bin:$PATH";
+    fi
+  - hash -r && pyenv versions --bare && python --version
+  - if [ "${TRAVIS_PYTHON_VERSION/3.4/}" != "$TRAVIS_PYTHON_VERSION" ]; then
+      pip install pip==9.0.3 setuptools==21.2.2;
+    fi
+
+  - if [ -f ".ci/deps.$TRAVIS_LANGUAGE.sh" ]; then
+      bash -e -x ".ci/deps.$TRAVIS_LANGUAGE.sh";
+    fi
+
   # https://github.com/coala/coala/issues/3183
   - cp requirements.txt requirements.orig
   - printf '%s\n%s\n%s\n'
@@ -182,22 +619,29 @@ before_install:
 
 before_script:
   - mv requirements.orig requirements.txt
-  - .ci/deps.coala-bears.sh
+  - if [ -n "$TRAVIS_PYTHON_VERSION" ]; then
+      python setup.py bdist_wheel &&
+      pip install $(ls ./dist/*.whl)"[alldeps]";
+    fi
+  - if [ -z "$TRAVIS_PYTHON_VERSION" -a "$TRAVIS_OS_NAME" = "linux" ]; then
+      python -m pip install --upgrade --user -r test-requirements.txt;
+    fi
+  - if [ "${TRAVIS_PYTHON_VERSION/3.4/}" != "$TRAVIS_PYTHON_VERSION" ]; then
+      pip install --upgrade setuptools;
+    fi
 
 script:
-  - python setup.py bdist_wheel
-  - pip install $(ls ./dist/*.whl)"[alldeps]"
-  # Ensure bear requirements are in sync with the bear PipRequirement
-  - .ci/generate_bear_requirements.py --check --update
-  - coala --non-interactive
-  - rm bears/java/InferBear.py tests/java/InferBearTest.py
-  - rm bears/go/GoReturnsBear.py tests/go/GoReturnsBearTest.py
-  - pytest
-  - codecov
-  - python setup.py docs
-
-notifications:
-  email: false
+  # Ensure metadata files are in sync with the bear metadata in the source
+  - if [ -n "$TRAVIS_PYTHON_VERSION" ]; then
+      PYTHONPATH=. .ci/generate_bear_metadata.py --debug --update;
+    fi
+  - python -m tox
+  - if [ -n "$TRAVIS_PYTHON_VERSION" ]; then
+      python setup.py docs;
+    fi
+  - if [ -n "$TRAVIS_PYTHON_VERSION" ]; then
+      coala --non-interactive;
+    fi
 
 branches:
   exclude:

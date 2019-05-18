@@ -1,100 +1,184 @@
+image: Visual Studio 2015
+
 environment:
   global:
-    # SDK v7.0 MSVC Express 2008's SetEnv.cmd script will fail if the
-    # /E:ON and /V:ON options are not enabled in the batch script intepreter
-    # See: http://stackoverflow.com/a/13751649/163740
-    CMD_IN_ENV: "cmd /E:ON /V:ON /C .\\.ci\\run_with_env.cmd"
     PIP_CACHE_DIR: C:\pip_cache
+    PIP_DISABLE_PIP_VERSION_CHECK: 1
+    # Needed if pip uninstall is used
+    PIP_YES: 1
+    YARN_GPG: 'no'
+    FudgeCI: $(APPVEYOR_BUILD_FOLDER)\.ci
+    NUGET_EXE_NO_PROMPT: 1
+    NUGET_HTTP_CACHE_PATH: C:\nuget_http_cache
+    CHOCO_CACHE_DIR: C:\choco_cache
+    MSYS_ROOT: C:\msys64
+    MSYS_BIN: $(MSYS_ROOT)\usr\bin
+    JAVA_HOME: C:\jdk
+    MSSDK_ROOT: C:\Program Files\Microsoft SDKs
+    VS_ROOT: C:\Program Files (x86)\Microsoft Visual Studio
+    VIRTUALENV_NO_DOWNLOAD: 1
+    VIRTUALENV_NO_PIP: 1
+    VIRTUALENV_NO_SETUPTOOLS: 1
+    # Uncomment to debug tox venv problems
+    # VIRTUALENV_VERBOSE: 1
+    GOPATH: C:\gopath
+    # A problem with store_env_in_registry.py means this needs to be explicit
+    PSModulePath: >-
+      $(PSModulePath);C:\Program Files (x86)\WindowsPowerShell\Modules;
+    PATH: >-
+      C:\python;C:\python\Scripts;$(PATH);$(MSYS_BIN);
+      C:\tools\fudge\tools;
+      C:\ruby\bin;
+      C:\jdk\bin;
+      $(GOPATH)\bin;
+      $(APPVEYOR_BUILD_FOLDER)\node_modules\.bin;
+      $(APPVEYOR_BUILD_FOLDER)\vendor\bin;
+    JL_PKG: CoalaBears
+    JULIA_PROJECT: '@.'
+    TOX_FEATURES: check-noskip-codecov
+    BEAR_LIST: astyle cppcheck xmllint
+    TOX_TEST_SELECTORS: pip-noreqs-npm-gem-go-perl-php-java8-adhoc
+    TOXENV: py$(PYTHON_MINOR_NODOTS)-$(TOX_TEST_SELECTORS)-$(TOX_FEATURES)-win
 
   matrix:
-    - PYTHON: "C:\\Python34"
-      PYTHON_VERSION: "3.4.4"
-      PYTHON_ARCH: "32"
-      ruby_version: "24"
+    - PYTHON_VERSION: 3.6
+      PYTHON_MINOR_NODOTS: 36
+    - PYTHON_VERSION: 3.5
+      PYTHON_MINOR_NODOTS: 35
+    - PYTHON_VERSION: 3.4
+      PYTHON_MINOR_NODOTS: 34
 
-    - PYTHON: "C:\\Python34-x64"
-      PYTHON_VERSION: "3.4.4"
-      PYTHON_ARCH: "64"
-      ruby_version: "24-x64"
+platform:
+  - x86
+  - x64
 
 cache:
+  - C:\nuget_http_cache
+  - C:\choco_cache
   - "C:\\pip_cache"
   - "node_modules"
   - "C:\\Users\\appveyor\\AppData\\Local\\coala-bears\\coala-bears"
   - "C:\\Users\\appveyor\\AppData\\Roaming\\nltk_data"
+  - "%LOCALAPPDATA%\\Composer"
 
 branches:
   except:
     - /^sils\/.*/
 
-install:
-  # Prepend newly installed Python to the PATH of this build (this cannot be
-  # done from inside the powershell script as it would require to restart
-  # the parent CMD process).
-  - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
-  - "SET PATH=C:\\Program\ Files\\Java\\jdk1.7.0\\bin;%PATH%"
+# This forces unix style line endings in the clone, which is necessary to
+# avoid warning regarding EOLs when running git diff on Windows
+init: git config --global core.autocrlf false
 
-  # language-tool needs the registry tweaked here since it determines the java
-  # version wrong (since appveyor has both, 1.7 and 1.8 in x86 and x64).
-  - "SET KEY_NAME=HKLM\\Software\\JavaSoft\\Java Runtime Environment"
-  - "REG add \"%KEY_NAME%\" /v CurrentVersion /t REG_SZ /d 1.7 /f"
+install:
+  # Show initial state
+  - powershell -c "$PSVersionTable"
+  # Uncomment to debug
+  # printenv
+  - python --version
+  - "python -c \"import struct; print(struct.calcsize('P') * 8)\""
+  - python -m pip --version
+  - python -c "import setuptools; print(setuptools.__version__)"
+  - node --version
+  - which npm
+  - npm --version
+  - npm config get prefix
+  - ruby --version
+  - bundler --version
+  - go version
+  - which java
+  - java -version
+  - which javac
+  - javac -version
+  # JAVA_HOME set above is not populated yet
+  - echo %JAVA_HOME%
+  - ls %JAVA_HOME%/bin/java & exit 0
+  - which perl
+  - perl --version
+  - which gcc & exit 0
+  - gcc --version & exit 0
+  - which cl & exit 0
+
+  # Stores environment in registry, with minor tweaks
+  - python .ci/store_env_in_registry.py
+  - refreshenv
+
+  # Set up AppVeyor product versions, and install dummy choco entries for them
+  - ps: . .ci/FudgeCI.ps1; Initialize-AppVeyorVM
+  - refreshenv
+  - echo %PATH%
+  # Avoid tools finding and using MinGW
+  - mv C:\MinGW %TEMP%
+  # TODO: Avoid tools finding and using Visual Studio
+
+  # Show updated SOE; versions should be as defined in top of the Fudgefile
+  - python --version
+  - "python -c \"import struct; print(struct.calcsize('P') * 8)\""
+  - node --version
+  - which npm
+  - npm --version
+  - npm config get prefix
+  - go version
+  - ruby --version
+  - which java
+  - java -version
+  - which javac
+  - javac -version
+  - ls %JAVA_HOME%/bin/java
+  - perl --version
+  - which ppm
+  - ppm --version
+  - which gcc & exit 0
+  - gcc --version & exit 0
+
+  - "%MSYS_BIN%\\date.exe"
+  - cp .ci/choco.config
+      %ChocolateyInstall%\config\chocolatey.config
+  # Install remainer of the Fudgefile with chocolatey using Fudge
+  - ps: . .ci/Fudge.ps1 install
+  - refreshenv
+  - echo %PATH%
+
+  - ps: if ($env:APPVEYOR_JOB_NUMBER -eq 1) { . .ci/PSLint.ps1 }
 
   # Check that we have the expected version and architecture for Python
   - "python --version"
   - "python -c \"import struct; print(struct.calcsize('P') * 8)\""
-  - "%CMD_IN_ENV% python -m pip install --upgrade setuptools==21 pip==9"
-  - "%CMD_IN_ENV% python -m pip install -r test-requirements.txt \
-    -r requirements.txt -r docs-requirements.txt"
-  - ps: "Install-Product node ''"  # Use latest node v5.x.x
-  - "npm config set loglevel warn"
-  - "sed -i '/alex/d' package.json"
-  - "sed -i '/coffeelint/d' package.json"
-  - "sed -i '/csscomb/d' package.json"
-  - "sed -i '/docker/d' package.json"
-  - "sed -i '/elm/d' package.json"
-  - "sed -i '/gherkin/d' package.json"
-  - "sed -i '/jshint/d' package.json"
-  - "sed -i '/remark/d' package.json"
-  - "sed -i '/postcss/d' package.json"
-  - "sed -i '/sass/d' package.json"
-  - "sed -i '/textlint/d' package.json"
-  - "sed -i '/tslint/d' package.json"
-  - "npm install"
-  - "SET PATH=node_modules\\.bin;%PATH%"
-  - "DEL node_modules\\.bin\\eslint*"
+  # Confirm other versions
+  - node --version
+  - which npm
+  - npm --version
+  - npm config get prefix
+  - go version
+  - ruby --version
+  - perl --version
+  - which java
+  - java -version
+  - which javac
+  - javac -version
+  - ls %JAVA_HOME%/bin/java
+  # Newly installed versions
+  - which composer & exit 0
+  - composer --version & exit 0
+  - ppm --version & exit 0
 
-  # Commands for Ruby
-  - "sed -i '/sqlint/d' Gemfile"
-  - "SET PATH=C:\\Ruby%ruby_version%\\bin;%PATH%"
-  - "bundle install"
+
+  - "%MSYS_BIN%\\date.exe"
 
 build: false  # Not a C# project, build stuff at the test step instead.
 
 test_script:
-  # Force DOS format, as Checkstyle configs enable NewlineAtEndOfFile,
-  # which defaults to CRLF on Windows, and Appveyor CI ignores .gitattributes
-  # http://help.appveyor.com/discussions/problems/5687-gitattributes-changes-dont-have-any-effect
-  - unix2dos tests/java/test_files/CheckstyleGood.java
-  # Clang DLLs x64 were nowadays installed, but the x64 version hangs, so we
-  # exclude according tests. See https://github.com/appveyor/ci/issues/495 and
-  # https://github.com/appveyor/ci/issues/688
-  - >
-    "%CMD_IN_ENV% python -m pytest
-    --cov -k "not ClangASTPrintBear and not ClangCloneDetectionBear and
-    not ClangComplexityBear and not ClangCountVectorCreator and
-    not ClangCountingConditions and not RuboCopBearTest and
-    not CSVLintBearTest"
-  - "%CMD_IN_ENV% python setup.py install"
-  - "%CMD_IN_ENV% python -m pip install \
-    git+https://github.com/coala/coala"
-  - sed -i '/ShellCheckBear/d' .coafile
-  - "%CMD_IN_ENV% coala --ci"
+  - python -m pip --version
+  - python -c "import setuptools; print(setuptools.__version__)"
 
-on_success:
-  - codecov
+  - "sed -i 's/^envlist.*$/envlist: %TOXENV%/' tox.ini"
+  - python -m tox --sitepackages
 
-on_failure:
-  - codecov
+  - python setup.py install
+
+
+  - rm -rf .tox
+
+  - coala --ci
 
 matrix:
   fast_finish: true

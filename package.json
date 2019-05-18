@@ -33,7 +33,7 @@
     "stylelint": "~7",
     "stylint": "~1.5.9",
     "textlint": "~7.3.0",
-    "textlint-plugin-asciidoc-loose": "~1.0.1",
+    "textlint-plugin-asciidoctor": "~1.0.3",
     "textlint-plugin-html": "~0.1.5",
     "textlint-plugin-review": "~0.3.3",
     "textlint-plugin-rst": "~0.1.1",

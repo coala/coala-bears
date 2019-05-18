@@ -1,0 +1,166 @@
+{# This file can include Jinja as long as it is valid YAML #}
+- stage: test-languages
+  dist: xenial
+  # This is in generic image, as language: haskell isnt working yet
+  # https://github.com/coala/coala-bears/issues/1384
+  language: generic
+  env: DIST=xenial BEARS=adhoc BEAR_LIST="ghc-mod"
+  # ghc-mod needs parts of ghc, specifically at least /usr/lib/ghc/settings
+  # ghc-mod needs cabal-install
+  cache:
+    pip: true
+    directories:
+      - $HOME/.local/
+      - $HOME/.cabal/
+      - $HOME/.ghc/
+      - $HOME/.ghc-mod/
+  addons:
+    apt:
+      packages:
+        - cabal-install
+        - ghc
+        - ghc-mod
+
+- stage: test-languages
+  dist: xenial
+  language: generic
+  env: DIST=xenial BEARS=adhoc BEAR_LIST="apt_get bakalint default-jre"
+       DISABLE_BEARS="astyle flawfinder ghc-mod r_script shellcheck"
+  # astyle and shellcheck are failing in xenial
+  # xenial doesnt have Python 2.7 needed for flawfinder
+  # R bears and ghc_mod use separate jobs
+  addons:
+    apt:
+      packages:
+        - chktex
+        - cppcheck
+        - devscripts
+        - hlint
+        - indent
+        - libperl-critic-perl
+        - libxml2-utils
+        - mono-mcs
+        - php7.0-cli
+        - phpmd
+        - php-codesniffer
+        - verilator
+
+- stage: test-languages
+  dist: trusty
+  language: generic
+  env: DIST=trusty BEARS=adhoc BEAR_LIST="astyle flawfinder shellcheck"
+  addons:
+    apt:
+      sources:
+        - sourceline:  # astyle
+            deb http://ppa.launchpad.net/cs50/ppa/ubuntu trusty main
+          key_url:
+            https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x5BDA2E974A0E822C
+      packages:
+        - astyle
+        - flawfinder
+        - shellcheck
+
+- stage: test-other-versions
+  dist: trusty
+  language: generic
+  env: DIST=trusty BEARS=apt_get
+  addons:
+    apt:
+      packages:
+        - chktex
+        - cppcheck
+        - devscripts
+        - indent
+        - libperl-critic-perl
+        - libxml2-utils
+        - mono-mcs
+        - php5-cli
+        - php-codesniffer
+        - verilator
+
+# Additonal manual entries
+- stage: test-other-versions
+  os: windows
+  language: bash
+  python: '{{ choco_requirements.python.version }}'
+  env:
+    BEAR_LIST="{{ ' '.join(tox.win.extra_bears) }}"
+    TOX_TEST_SELECTORS="{{ '-'.join(tox.win.selectors) }}"
+  cache:
+    directories:
+      - C:/nuget_http_cache/
+      - C:/choco_cache/
+      - C:/pip_cache/
+  before_install:
+    - bash --version
+    - powershell -c "Set-ExecutionPolicy -ExecutionPolicy Unrestricted
+                                         -Scope LocalMachine"
+    - powershell .ci/travis_init.ps1
+
+    - export NUGET_HTTP_CACHE_PATH=/C/nuget_http_cache
+    - export CHOCO_CACHE_DIR=/C/choco_cache
+    - export PIP_CACHE_DIR=/C/pip_cache
+
+    - source .ci/travis_extra_globals.sh
+
+    - export TOXINI_SITEPACKAGES=true
+    - export VIRTUALENV_NO_PIP=1
+    - export VIRTUALENV_NO_SETUPTOOLS=1
+
+    - export TOXENV="py36-${TOX_TEST_SELECTORS}-${TOX_FEATURES}-win"
+
+    - printenv
+
+    - cp .ci/choco.config $ChocolateyInstall/config/chocolatey.config
+
+    - python .ci/store_env_in_registry.py
+    - source .ci/refreshenv.sh
+
+    # TODO: Add support for disabling pre-installed vctools which is
+    # disabled in choco_requirements.  Uninstalling vctools fails
+  install:
+    - powershell -c ". .ci/Fudge.ps1 install"
+    - refreshenv
+
+    - taskkill -IM "gpg-agent.exe" || true
+
+    - pip uninstall tox-venv || true
+
+    # Avoid verify_gemfile_dependencies_are_found errors due to
+    # Gemfile modifications in .ci/deps.ruby-packages.ps1
+    - cp Gemfile.win Gemfile
+
+    - cp requirements.txt requirements.orig
+    - cp tox.ini tox.orig
+    - "sed -i 's/^envlist.*$/envlist: '$TOXENV/ tox.ini"
+
+  after_script:
+    - cp tox.orig tox.ini
+    - cp Gemfile.orig Gemfile
+
+- python: 2.7
+  stage: test-other-versions
+  env: PIP_NO_COMPILE=1
+  before_install: true
+  install: pip install 3to2
+  before_script: true
+  script: .ci/check_unsupported.sh
+
+- python: 3.3
+  stage: test-other-versions
+  dist: trusty
+  env: PIP_NO_COMPILE=1
+  before_install: true
+  install: true
+  before_script: true
+  script: .ci/check_unsupported.sh
+
+- python: 3.6
+  stage: sentinel
+  before_install: false
+  install: pip install moban
+  before_script: false
+  script: .ci/check_moban.sh
+  after_success: false
+  after_failure: false

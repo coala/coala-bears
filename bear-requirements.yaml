@@ -1,32 +1,91 @@
 # This is an automatically generated file.
 # And should not be edited by hand.
-overrides: coala-build.yaml
-gem_requirements:
-  brakeman:
-    version: ~>4.1.1
-  csvlint:
-    version: ~>0.4.0
-  fasterer:
-    version: ~>0.4.1
-  haml_lint:
-    version: ~>0.27.0
-  puppet-lint:
-    version: ~>2.1.1
-  reek:
-    version: ~>4.6
-  rubocop:
-    version: ~>0.51.0
-  scss_lint:
-    version: ~>0.56.0
-  sqlint:
-    version: ~>0.1.5
-  travis:
-    version: ~>1.8.8
-r_script_requirements:
-  formatR:
-    version: '>1.5'
-  lintr:
-    version: '>=1.0.2'
+overrides: pm-requirements.yaml
+pip_requirements:
+  HTTPolice:
+    version: ~=0.5.2
+  aenum:
+    version: ~=2.0.8
+  apertium-lint:
+    version: ~=0.29
+  autoflake:
+    version: ~=0.7
+  autopep8:
+    version: ~=1.2
+  bandit:
+    version: ~=1.2
+  bashate:
+    version: ~=0.5.1
+  cmakelint:
+    version: ~=1.3
+  cppclean:
+    version: ~=0.12.0
+  cpplint:
+    version: ~=1.3
+  dennis:
+    version: ~=0.9
+  docutils-ast-writer:
+    version: ~=0.1.2
+  eradicate:
+    version: ~=0.1.6
+  git-url-parse:
+    version: ~=1.1
+  guess-language-spirit:
+    version: ~=0.5.2
+  html-linter:
+    version: ~=0.4.0
+  isort:
+    version: ~=4.2
+  language-check:
+    version: ~=1.0
+  libclang-py3:
+    version: ~=3.4.0
+  lxml:
+    version: '>=1.0'
+  memento-client:
+    version: ~=0.6.1
+  munkres3:
+    version: ~=1.0
+  mypy:
+    version: ==0.590
+  nbformat:
+    version: ~=4.1
+  nltk:
+    version: ~=3.2
+  proselint:
+    version: ~=0.7.0
+  pycodestyle:
+    version: ~=2.2
+  pydocstyle:
+    version: ~=2.0
+  pyflakes:
+    version: ~=2.0.0
+  pylint:
+    version: ~=1.7.2
+  pyroma:
+    version: ~=2.2.0
+  pyyaml:
+    version: ~=3.12
+  radon:
+    version: ==1.4.0
+  restructuredtext-lint:
+    version: ~=1.0
+  rstcheck:
+    version: ~=3.1
+  safety:
+    version: ~=1.8.2
+  scspell3k:
+    version: ~=2.0
+  sqlparse:
+    version: ~=0.2.4
+  vim-vint:
+    version: ~=0.3.12,!=0.3.19
+  vulture:
+    version: ~=0.25.0
+  yamllint:
+    version: ~=1.12.0
+  yapf:
+    version: ~=0.21.0
 npm_requirements:
   alex:
     version: ~3
@@ -136,91 +195,27 @@ npm_requirements:
     version: ~12.0.0
   write-good:
     version: ~0.9.1
-pip_requirements:
-  HTTPolice:
-    version: ~=0.5.2
-  aenum:
-    version: ~=2.0.8
-  apertium-lint:
-    version: ~=0.29
-  autoflake:
-    version: ~=0.7
-  autopep8:
-    version: ~=1.2
-  bandit:
-    version: ~=1.2
-  bashate:
-    version: ~=0.5.1
-  cmakelint:
-    version: ~=1.3
-  cppclean:
-    version: ~=0.12.0
-  cpplint:
-    version: ~=1.3
-  dennis:
-    version: ~=0.9
-  docutils-ast-writer:
-    version: ~=0.1.2
-  eradicate:
-    version: ~=0.1.6
-  git-url-parse:
-    version: ~=1.1
-  guess-language-spirit:
-    version: ~=0.5.2
-  html-linter:
-    version: ~=0.4.0
-  isort:
-    version: ~=4.2
-  language-check:
-    version: ~=1.0
-  libclang-py3:
-    version: ~=3.4.0
-  lxml:
-    version: '>=1.0'
-  memento-client:
-    version: ~=0.6.1
-  munkres3:
-    version: ~=1.0
-  mypy:
-    version: ==0.590
-  nbformat:
-    version: ~=4.1
-  nltk:
-    version: ~=3.2
-  proselint:
-    version: ~=0.7.0
-  pycodestyle:
-    version: ~=2.2
-  pydocstyle:
-    version: ~=2.0
-  pyflakes:
-    version: ~=2.0.0
-  pylint:
-    version: ~=1.7.2
-  pyroma:
-    version: ~=2.2.0
-  pyyaml:
-    version: ~=3.12
-  radon:
-    version: ==1.4.0
-  restructuredtext-lint:
-    version: ~=1.0
-  rstcheck:
-    version: ~=3.1
-  safety:
-    version: ~=1.8.2
-  scspell3k:
-    version: ~=2.0
-  sqlparse:
-    version: ~=0.2.4
-  vim-vint:
-    version: ~=0.3.12,!=0.3.19
-  vulture:
-    version: ~=0.25.0
-  yamllint:
-    version: ~=1.12.0
-  yapf:
-    version: ~=0.21.0
+gem_requirements:
+  brakeman:
+    version: ~>4.1.1
+  csvlint:
+    version: ~>0.4.0
+  fasterer:
+    version: ~>0.4.1
+  haml_lint:
+    version: ~>0.27.0
+  puppet-lint:
+    version: ~>2.1.1
+  reek:
+    version: ~>4.6
+  rubocop:
+    version: ~>0.51.0
+  scss_lint:
+    version: ~>0.56.0
+  sqlint:
+    version: ~>0.1.5
+  travis:
+    version: ~>1.8.8
 composer_requirements:
   phpmd/phpmd:
     version: ~2.6.0
@@ -233,3 +228,189 @@ cabal_requirements:
     version: ==5.6.0.0
   hlint:
     version: ==1.9.27
+r_script_requirements:
+  formatR:
+  lintr:
+distro_requirements:
+  astyle:
+    packages:
+      apt_get: astyle
+      dnf: astyle
+  chktex:
+    packages:
+      apt_get: chktex
+      brew: chktex
+      dnf: chktex
+      pacman: chktex
+      pkg: chktex
+      portage: chktex
+      xbps: chktex
+      yum: chktex
+      zypper: texlive-chktex
+  cppcheck:
+    packages:
+      apt_get: cppcheck
+      brew: cppcheck
+      dnf: cppcheck
+      pacman: cppcheck
+      pkg: cppcheck
+      portage: cppcheck
+      xbps: cppcheck
+      yum: cppcheck
+      zypper: cppcheck
+  dart:
+    packages:
+      brew: dart
+  default-jre:
+    packages:
+      apt_get: default-jre
+  devscripts:
+    packages:
+      apt_get: devscripts
+      dnf: licensecheck
+      portage:
+      zypper: devscripts
+  flawfinder:
+    packages:
+      apt_get: flawfinder
+      brew: flawfinder
+      dnf: flawfinder
+      pacman: flawfinder
+      pkg: flawfinder
+      portage: flawfinder
+      xbps: flawfinder
+      yum: flawfinder
+      zypper: flawfinder
+  ghc-mod:
+    packages:
+      apt_get: ghc-mod
+      brew: ghc-mod
+      dnf: ghc-mod
+      pacman: ghc-mod
+      pkg: ghc-mod
+      portage: ghc-mod
+      xbps: ghc-mod
+      yum: ghc-mod
+      zypper: ghc-mod
+  hlint:
+    packages:
+      apt_get: hlint
+  indent:
+    packages:
+      apt_get: indent
+      brew: indent
+      dnf: indent
+      pacman: indent
+      pkg: indent
+      portage: indent
+      xbps: indent
+      yum: indent
+      zypper: indent
+  libperl-critic-perl:
+    packages:
+      apt_get: libperl-critic-perl
+      brew:
+      dnf: perl-Perl-Critic
+      portage: dev-perl/Perl-Critic
+      xbps:
+      yum: perl-Perl-Critic
+      zypper: perl-Perl-Critic
+  libxml2:
+    packages:
+      apt_get: libxml2-utils
+      brew: libxml2
+      dnf: libxml2
+      pacman: libxml2
+      pkg: libxml2
+      portage: dev-libs/libxml2
+      xbps: libxml2
+      yum: libxml2
+      zypper: libxml2
+  mono:
+    packages:
+      apt_get: mono-mcs
+      brew: mono
+      dnf: mono
+      pacman: mono
+      pkg: mono
+      portage: dev-lang/mono
+      xbps: mono
+      yum: mono
+      zypper: mono
+  perl:
+    packages:
+      apt_get: perl
+      brew: perl
+      dnf: perl
+      pacman: perl
+      pkg: perl
+      portage: perl
+      xbps: perl
+      yum: perl
+      zypper: perl
+  php-cli:
+    packages:
+      apt_get: php-cli
+  php-codesniffer:
+    packages:
+      apt_get: php-codesniffer
+      zypper: php-pear-php_codesniffer
+  phpmd:
+    packages:
+      apt_get: phpmd
+      dnf: php-phpmd-PHP-PMD
+  r-base:
+    packages:
+      apt_get: r-base
+    version: '>=3.1.1'
+  r-cran-formatr:
+    packages:
+      apt_get: r-cran-formatr
+      zypper: R-formatR
+  ruby:
+    packages:
+      apt_get: ruby
+      brew: ruby
+      dnf: ruby
+      pacman: ruby
+      pkg: ruby
+      portage: ruby
+      xbps: ruby
+      yum: ruby
+      zypper: ruby
+  shellcheck:
+    packages:
+      apt_get: shellcheck
+      brew: shellcheck
+      dnf: shellcheck
+      pacman: shellcheck
+      pkg: shellcheck
+      portage: shellcheck
+      xbps: shellcheck
+      yum: shellcheck
+      zypper: shellcheck
+  verilator:
+    packages:
+      apt_get: verilator
+      brew:
+      dnf: verilator
+      portage:
+      yum: verilator
+      zypper: verilator
+julia_requirements:
+  Lint:
+go_requirements:
+  github.com/BurntSushi/toml/cmd/tomlv:
+  github.com/golang/lint/golint:
+  github.com/kisielk/errcheck:
+  golang.org/cmd/gofmt:
+  golang.org/cmd/vet:
+  golang.org/x/tools/cmd/goimports:
+  golang.org/x/tools/cmd/gotype:
+  sourcegraph.com/sqs/goreturns:
+luarocks_requirements:
+  luacheck:
+conda_requirements:
+  ruby:
+    version: '>=2.2.3'
+exe_requirements: {}

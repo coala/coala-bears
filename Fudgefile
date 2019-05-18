@@ -1,0 +1,111 @@
+{
+    "pack": {
+        "ActivePerl": ".ci/nuspecs/ActivePerl.nuspec",
+        "adoptopenjdk": ".ci/nuspecs/adoptopenjdk.nuspec",
+        "golang": ".ci/nuspecs/golang.nuspec",
+        "hg": ".ci/nuspecs/hg.nuspec",
+        "maven": ".ci/nuspecs/maven.nuspec",
+        "nodejs": ".ci/nuspecs/nodejs.nuspec",
+        "python": ".ci/nuspecs/python.nuspec",
+        "ruby": ".ci/nuspecs/ruby.nuspec",
+        "ruby2.devkit": ".ci/nuspecs/ruby2.devkit.nuspec"
+    },
+    "packages": [
+        {
+            "name": "msys2",
+            "params": "/InstallDir:C:\\msys64 /NoUpdate",
+            "source": ""
+        },
+        {
+            "appveyor_id": true,
+            "name": "hg",
+            "source": "",
+            "version": "5.0"
+        },
+        {
+            "appveyor_id": "python",
+            "name": "python",
+            "source": "",
+            "version": "3.6.8"
+        },
+        {
+            "appveyor_id": "node",
+            "name": "nodejs",
+            "source": "",
+            "version": "11.13.0"
+        },
+        {
+            "appveyor_id": "ruby",
+            "name": "ruby",
+            "source": "",
+            "version": "2.5.3.1"
+        },
+        {
+            "appveyor_id": true,
+            "name": "ruby2.devkit",
+            "source": "",
+            "version": "4.7.2.2013022403"
+        },
+        {
+            "appveyor_id": "go",
+            "name": "golang",
+            "source": "",
+            "version": "1.9.7"
+        },
+        {
+            "appveyor_id": "jdk",
+            "name": "adoptopenjdk",
+            "source": "",
+            "version": "8.192"
+        },
+        {
+            "appveyor_id": true,
+            "name": "ActivePerl",
+            "source": "",
+            "version": "5.24.3.2404"
+        },
+        {
+            "appveyor_id": true,
+            "name": "maven",
+            "source": "",
+            "version": "3.5.4"
+        },
+        {
+            "name": "php",
+            "source": ""
+        },
+        {
+            "name": "composer",
+            "source": ""
+        },
+        {
+            "name": "PSScriptAnalyzer",
+            "source": ""
+        },
+        {
+            "name": "astyle",
+            "source": ""
+        },
+        {
+            "name": "cppcheck",
+            "source": ""
+        },
+        {
+            "name": "xsltproc",
+            "source": ""
+        },
+        {
+            "name": "ShellCheck",
+            "source": ""
+        }
+    ],
+    "scripts": {
+        "post": {
+            "install": ". $env:FudgeCI/FudgePostInstall.ps1; Invoke-PostInstall"
+        },
+        "pre": {
+            "install": ". $env:FudgeCI/FudgeCI.ps1; Invoke-FudgeCI"
+        }
+    },
+    "source": "https://chocolatey.org/api/v2/"
+}

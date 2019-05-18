@@ -7,6 +7,8 @@ cabal --version
 
 cabal update
 
+cabal install happy
+
 cabal install --only-dependencies --avoid-reinstalls
 
 # Force ghc-mod to resolve its Cabal version
