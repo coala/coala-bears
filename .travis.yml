@@ -129,6 +129,7 @@ addons:
       - php-codesniffer
       - r-base
       - verilator
+      - mp3check
 
 cache:
   pip: true
