@@ -29,9 +29,9 @@ class ElmLintBear:
             return ('elm-format is missing. Download it from '
                     'https://github.com/avh4/elm-format/blob/master/README.md'
                     '#for-elm-018 and put it into your PATH.')
-        else:  # pragma nt: no cover
+        else:
             return True
 
     @staticmethod
-    def create_arguments(filename, file, config_file):  # pragma nt: no cover
+    def create_arguments(filename, file, config_file):
         return filename, '--yes'

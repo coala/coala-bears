@@ -5,7 +5,7 @@ from dependency_management.requirements.GemRequirement import GemRequirement
 @linter(executable='fasterer',
         output_format='regex',
         output_regex=r'(?P<message>.*\.).*:\s(?P<line>\d+)')
-class RubyFastererBear:  # pragma nt: no cover
+class RubyFastererBear:
     """
     The ``RubyFastererBear`` will suggest some speed improvements which you
     can check in details at the <https://github.com/JuanitoFatas/fast-ruby>.

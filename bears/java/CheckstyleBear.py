@@ -94,7 +94,7 @@ class CheckstyleBear:
             # Checkstyle included these two rulesets since version 6.2
             # Locate the file as an absolute resource into the checkstyle jar
             checkstyle_configs = '/%s_checks.xml' % checkstyle_configs
-        elif checkstyle_configs in _online_styles:  # pragma nt: no cover
+        elif checkstyle_configs in _online_styles:
             checkstyle_configs = self.download_cached_file(
                 _online_styles[checkstyle_configs],
                 checkstyle_configs + '.xml')

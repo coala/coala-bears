@@ -12,7 +12,7 @@ from coalib.settings.Setting import language
 @linter(executable='eslint',
         use_stdin=True,
         use_stderr=True)
-class ESLintBear:  # pragma nt: no cover
+class ESLintBear:
     """
     Check JavaScript and JSX code for style issues and semantic errors.
 

@@ -6,7 +6,7 @@ from coalib.settings.Setting import path
 @linter(executable='cmakelint',
         output_format='regex',
         output_regex=r'.+:(?P<line>\d+): (?P<message>.*)')
-class CMakeLintBear:  # pragma nt: no cover
+class CMakeLintBear:
     """
     Check CMake code for syntactical or formatting issues.
 

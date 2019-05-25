@@ -10,7 +10,7 @@ from clang.cindex import CursorKind
 from coalib.misc.Enum import enum
 
 
-def is_function_declaration(cursor):  # pragma nt: no cover
+def is_function_declaration(cursor):
     """
     Checks if the given clang cursor is a function declaration.
 
@@ -20,7 +20,7 @@ def is_function_declaration(cursor):  # pragma nt: no cover
     return cursor.kind == CursorKind.FUNCTION_DECL
 
 
-def get_identifier_name(cursor):  # pragma nt: no cover
+def get_identifier_name(cursor):
     """
     Retrieves the identifier name from the given clang cursor.
 
@@ -30,7 +30,7 @@ def get_identifier_name(cursor):  # pragma nt: no cover
     return cursor.displayname
 
 
-def is_literal(cursor):  # pragma nt: no cover
+def is_literal(cursor):
     """
     :param cursor: A clang cursor from the AST.
     :return:       True if the cursor is a literal of any kind..
@@ -45,7 +45,7 @@ def is_literal(cursor):  # pragma nt: no cover
                            CursorKind.CXX_NULL_PTR_LITERAL_EXPR]
 
 
-def is_reference(cursor):  # pragma nt: no cover
+def is_reference(cursor):
     """
     Determines if the cursor is a reference to something, i.e. an identifier
     of a function or variable.
@@ -58,7 +58,7 @@ def is_reference(cursor):  # pragma nt: no cover
                            CursorKind.DECL_REF_EXPR]
 
 
-def _stack_contains_kind(stack, kind):  # pragma nt: no cover
+def _stack_contains_kind(stack, kind):
     """
     Checks if a cursor with the given kind is within the stack.
 
@@ -74,7 +74,7 @@ def _stack_contains_kind(stack, kind):  # pragma nt: no cover
     return False
 
 
-def _is_nth_child_of_kind(stack, allowed_nums, kind):  # pragma nt: no cover
+def _is_nth_child_of_kind(stack, allowed_nums, kind):
     """
     Checks if the stack contains a cursor which is of the given kind and the
     stack also has a child of this element which number is in the allowed_nums
@@ -100,7 +100,7 @@ def _is_nth_child_of_kind(stack, allowed_nums, kind):  # pragma nt: no cover
     return count
 
 
-def is_function(stack):  # pragma nt: no cover
+def is_function(stack):
     """
     Checks if the cursor on top of the stack is used as a method or as a
     variable.
@@ -115,7 +115,7 @@ def is_function(stack):  # pragma nt: no cover
 FOR_POSITION = enum('UNKNOWN', 'INIT', 'COND', 'INC', 'BODY')
 
 
-def _get_position_in_for_tokens(tokens, position):  # pragma nt: no cover
+def _get_position_in_for_tokens(tokens, position):
     """
     Retrieves the semantic position of the given position in a for loop. It
     operates under the assumptions that the given tokens represent a for loop
@@ -161,7 +161,7 @@ def _get_position_in_for_tokens(tokens, position):  # pragma nt: no cover
     return FOR_POSITION.UNKNOWN  # pragma: no cover
 
 
-def _get_positions_in_for_loop(stack):  # pragma nt: no cover
+def _get_positions_in_for_loop(stack):
     """
     Investigates all FOR_STMT objects in the stack and checks for each in
     what position the given cursor is.
@@ -180,7 +180,7 @@ def _get_positions_in_for_loop(stack):  # pragma nt: no cover
     return results
 
 
-def _get_binop_operator(cursor):  # pragma nt: no cover
+def _get_binop_operator(cursor):
     """
     Returns the operator token of a binary operator cursor.
 
@@ -203,7 +203,7 @@ def _get_binop_operator(cursor):  # pragma nt: no cover
     return None  # pragma: no cover
 
 
-def _stack_contains_operators(stack, operators):  # pragma nt: no cover
+def _stack_contains_operators(stack, operators):
     """
     Checks if one of the given operators is within the stack.
 
@@ -233,7 +233,7 @@ ADV_ASSIGNMENT_OPERATORS = [op + '=' for op in ARITH_BINARY_OPERATORS]
 ASSIGNMENT_OPERATORS = ['='] + ADV_ASSIGNMENT_OPERATORS
 
 
-def in_sum(stack):  # pragma nt: no cover
+def in_sum(stack):
     """
     A counting condition returning true if the variable is used in a sum
     statement, i.e. within the operators +, - and their associated compound
@@ -242,7 +242,7 @@ def in_sum(stack):  # pragma nt: no cover
     return _stack_contains_operators(stack, ['+', '-', '+=', '-='])
 
 
-def in_product(stack):  # pragma nt: no cover
+def in_product(stack):
     """
     A counting condition returning true if the variable is used in a product
     statement, i.e. within the operators \\*, /, % and their associated
@@ -251,7 +251,7 @@ def in_product(stack):  # pragma nt: no cover
     return _stack_contains_operators(stack, ['*', '/', '%', '*=', '/=', '%='])
 
 
-def in_binary_operation(stack):  # pragma nt: no cover
+def in_binary_operation(stack):
     """
     A counting condition returning true if the variable is used in a binary
     operation, i.e. within the operators \\|, & and their associated
@@ -260,7 +260,7 @@ def in_binary_operation(stack):  # pragma nt: no cover
     return _stack_contains_operators(stack, ['&', '|', '&=', '|='])
 
 
-def member_accessed(stack):  # pragma nt: no cover
+def member_accessed(stack):
     """
     Returns true if a member of the cursor is accessed or the cursor is the
     accessed member.
@@ -269,21 +269,21 @@ def member_accessed(stack):  # pragma nt: no cover
 
 
 # pylint: disabled=unused-argument
-def used(stack):  # pragma nt: no cover
+def used(stack):
     """
     Returns true.
     """
     return True
 
 
-def returned(stack):  # pragma nt: no cover
+def returned(stack):
     """
     Returns true if the cursor on top is used in a return statement.
     """
     return _stack_contains_kind(stack, CursorKind.RETURN_STMT)
 
 
-def is_inc_or_dec(stack):  # pragma nt: no cover
+def is_inc_or_dec(stack):
     """
     Returns true if the cursor on top is inc- or decremented.
     """
@@ -296,7 +296,7 @@ def is_inc_or_dec(stack):  # pragma nt: no cover
     return False
 
 
-def is_condition(stack):  # pragma nt: no cover
+def is_condition(stack):
     """
     Returns true if the cursor on top is used as a condition.
     """
@@ -307,7 +307,7 @@ def is_condition(stack):  # pragma nt: no cover
             FOR_POSITION.COND in _get_positions_in_for_loop(stack))
 
 
-def in_condition(stack):  # pragma nt: no cover
+def in_condition(stack):
     """
     Returns true if the cursor on top is in the body of one condition.
     """
@@ -318,14 +318,14 @@ def in_condition(stack):  # pragma nt: no cover
              _is_nth_child_of_kind(stack, [0], CursorKind.CASE_STMT) == 0))
 
 
-def in_second_level_condition(stack):  # pragma nt: no cover
+def in_second_level_condition(stack):
     """
     Returns true if the cursor on top is in the body of two nested conditions.
     """
     return _is_nth_child_of_kind(stack, [1, 2], CursorKind.IF_STMT) == 2
 
 
-def in_third_level_condition(stack):  # pragma nt: no cover
+def in_third_level_condition(stack):
     """
     Returns true if the cursor on top is in the body of three or more nested
     conditions.
@@ -333,7 +333,7 @@ def in_third_level_condition(stack):  # pragma nt: no cover
     return _is_nth_child_of_kind(stack, [1, 2], CursorKind.IF_STMT) > 2
 
 
-def is_assignee(stack):  # pragma nt: no cover
+def is_assignee(stack):
     """
     Returns true if the cursor on top is assigned something.
     """
@@ -354,7 +354,7 @@ def is_assignee(stack):  # pragma nt: no cover
     return is_inc_or_dec(stack)
 
 
-def is_assigner(stack):  # pragma nt: no cover
+def is_assigner(stack):
     """
     Returns true if the cursor on top is used for an assignment on the RHS.
     """
@@ -377,7 +377,7 @@ def is_assigner(stack):  # pragma nt: no cover
     return is_inc_or_dec(stack)
 
 
-def _loop_level(stack):  # pragma nt: no cover
+def _loop_level(stack):
     """
     Investigates the stack to determine the loop level.
 
@@ -390,35 +390,35 @@ def _loop_level(stack):  # pragma nt: no cover
             _is_nth_child_of_kind(stack, [1], CursorKind.WHILE_STMT))
 
 
-def loop_content(stack):  # pragma nt: no cover
+def loop_content(stack):
     """
     Returns true if the cursor on top is within a first level loop.
     """
     return _loop_level(stack) == 1
 
 
-def second_level_loop_content(stack):  # pragma nt: no cover
+def second_level_loop_content(stack):
     """
     Returns true if the cursor on top is within a second level loop.
     """
     return _loop_level(stack) == 2
 
 
-def third_level_loop_content(stack):  # pragma nt: no cover
+def third_level_loop_content(stack):
     """
     Returns true if the cursor on top is within a third (or higher) level loop.
     """
     return _loop_level(stack) > 2
 
 
-def is_param(stack):  # pragma nt: no cover
+def is_param(stack):
     """
     Returns true if the cursor on top is a parameter declaration.
     """
     return stack[-1][0].kind == CursorKind.PARM_DECL
 
 
-def is_called(stack):  # pragma nt: no cover
+def is_called(stack):
     """
     Yields true if the cursor is a function that is called. (Function pointers
     are counted too.)
@@ -427,7 +427,7 @@ def is_called(stack):  # pragma nt: no cover
             is_function(stack))
 
 
-def is_call_param(stack):  # pragma nt: no cover
+def is_call_param(stack):
     """
     Yields true if the cursor is a parameter to another function.
     """
@@ -455,7 +455,7 @@ condition_dict = {'used': used,
                   'member_accessed': member_accessed}
 
 
-def counting_condition(value):  # pragma nt: no cover
+def counting_condition(value):
     """
     This is a custom converter to convert a setting from coala into counting
     condition function objects for this bear only.

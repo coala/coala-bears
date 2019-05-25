@@ -8,7 +8,7 @@ from dependency_management.requirements.GoRequirement import GoRequirement
         output_regex=r"Error in '.*': "
                      r'Near line (?P<line>\d+) '
                      r"\(last key parsed '.*'\): (?P<message>.*)")
-class TOMLBear:  # pragma nt: no cover
+class TOMLBear:
     """
     Checks the code for formatting in ``TOML`` documents and prints
     each key's type. This is done using ``tomlv`` utility.

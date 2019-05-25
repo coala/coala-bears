@@ -8,7 +8,7 @@ from coalib.settings.Setting import typed_list
         output_regex=r'[^:]+:(?P<line>\d+):'
                      r'(?P<column>\d+)\s*(?P<message>.*)',
         result_message='This function call has an unchecked error.')
-class GoErrCheckBear:  # pragma nt: no cover
+class GoErrCheckBear:
 
     """
     Checks the code for all function calls that have unchecked errors.

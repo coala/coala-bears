@@ -8,7 +8,7 @@ from dependency_management.requirements.DistributionRequirement import (
         use_stderr=True,
         output_regex=r'\%(?:(?P<severity>Error|Warning.*?).*?):'
                      r'.+?:(?P<line>.+?): (?P<message>.+)')
-class VerilogLintBear:  # pragma nt: no cover
+class VerilogLintBear:
     """
     Analyze Verilog code using ``verilator`` and checks for all lint
     related and code style related warning messages. It supports the

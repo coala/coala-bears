@@ -17,7 +17,7 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
                       'error': RESULT_SEVERITY.MAJOR},
         prerequisite_check_command=('Rscript', '-e', 'library(lintr)'),
         prerequisite_check_fail_message='R library "lintr" is not installed.')
-class RLintBear:  # pragma nt: no cover
+class RLintBear:
     """
     Checks the code with ``lintr``.
     """

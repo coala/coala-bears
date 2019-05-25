@@ -9,7 +9,7 @@ from dependency_management.requirements.LuarocksRequirement import (
         output_regex=r'stdin:(?P<line>\d+):(?P<column>\d+)-'
                      r'(?P<end_column>\d+): '
                      r'\((?P<severity>[WE])(?P<origin>\d+)\) (?P<message>.+)')
-class LuaLintBear:  # pragma nt: no cover
+class LuaLintBear:
     """
     Check Lua code for possible semantic problems, like unused code.
 

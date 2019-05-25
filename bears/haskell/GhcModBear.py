@@ -11,7 +11,7 @@ from dependency_management.requirements.DistributionRequirement import (
         output_format='regex',
         output_regex=r'.+:(?P<line>\d+):(?P<column>\d+):'
                      r'(?P<message>.+)')
-class GhcModBear:  # pragma nt: no cover
+class GhcModBear:
     """
     Syntax checking with ``ghc`` for Haskell files.
 

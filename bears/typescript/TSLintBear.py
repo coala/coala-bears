@@ -7,7 +7,7 @@ from coalib.settings.Setting import path
 
 
 @linter(executable='tslint')
-class TSLintBear:  # pragma nt: no cover
+class TSLintBear:
     """
     Check TypeScript code for style violations and possible semantical
     problems.

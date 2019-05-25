@@ -6,7 +6,7 @@ from dependency_management.requirements.GoRequirement import GoRequirement
         use_stdin=True,
         output_format='corrected',
         result_message='Imports need to be added/removed.')
-class GoImportsBear:  # pragma nt: no cover
+class GoImportsBear:
     """
     Adds/Removes imports to Go code for missing imports.
     """

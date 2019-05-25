@@ -10,7 +10,7 @@ from dependency_management.requirements.NpmRequirement import NpmRequirement
         output_regex=r'(?P<line>\d+):(?P<column>\d+)-(?P<end_line>\d+):'
                      r'(?P<end_column>\d+)\s+(?P<severity>warning)\s+'
                      r'(?P<message>.+)')
-class AlexBear:  # pragma nt: no cover
+class AlexBear:
     """
     Checks the markdown file with Alex - Catch insensitive, inconsiderate
     writing.

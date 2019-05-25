@@ -10,7 +10,7 @@ from dependency_management.requirements.CabalRequirement import (
 @linter(executable='shellcheck', output_format='regex',
         output_regex=r'.+:(?P<line>\d+):(?P<column>\d+): '
                      r'(?P<severity>error|warning|info): (?P<message>.+)')
-class ShellCheckBear:  # pragma nt: no cover
+class ShellCheckBear:
     """
     Check bash/shell scripts for syntactical problems (with understandable
     messages), semantical problems as well as subtle caveats and pitfalls.

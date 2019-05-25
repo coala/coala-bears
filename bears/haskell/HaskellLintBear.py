@@ -13,7 +13,7 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
 @linter(executable='hlint')
-class HaskellLintBear:  # pragma nt: no cover
+class HaskellLintBear:
     """
     Check Haskell code for possible problems. This bear can propose patches for
     using alternative functions, simplifying code and removing redundancies.

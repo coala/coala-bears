@@ -7,7 +7,7 @@ from dependency_management.requirements.DistributionRequirement import (
         output_format='regex',
         output_regex=r'(?P<severity>Error|Warning) \d+ in .+ line '
                      r'(?P<line>\d+): (?P<message>.*)')
-class LatexLintBear:  # pragma nt: no cover
+class LatexLintBear:
     """
     Checks the code with ``chktex``.
     """

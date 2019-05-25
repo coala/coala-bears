@@ -11,7 +11,7 @@ from dependency_management.requirements.ComposerRequirement import (
 @linter(executable='phpmd',
         output_format='regex',
         output_regex=r':(?P<line>\d+)\s*(?P<message>.*)')
-class PHPMessDetectorBear:  # pragma nt: no cover
+class PHPMessDetectorBear:
     """
     The bear takes a given PHP source code base and looks for several
     potential problems within that source. These problems can be things like:

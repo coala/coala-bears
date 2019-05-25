@@ -5,7 +5,7 @@ from dependency_management.requirements.GemRequirement import GemRequirement
 @linter(executable='sqlint', use_stdin=True, output_format='regex',
         output_regex=r'.+:(?P<line>\d+):(?P<column>\d+):'
                      r'(?P<severity>ERROR|WARNING) (?P<message>(?:\s*.+)*)')
-class SQLintBear:  # pragma nt: no cover
+class SQLintBear:
     """
     Check the given SQL files for syntax errors or warnings.
 

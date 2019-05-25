@@ -7,7 +7,7 @@ from dependency_management.requirements.DistributionRequirement import (
         output_format='regex',
         output_regex=r'\[(?P<severity>error|warning)\] (?P<message>.+)\('
                      r'.+, line (?P<line>\d+), col (?P<column>\d+)\)')
-class DartLintBear:  # pragma nt: no cover
+class DartLintBear:
     """
     Checks the code with ``dart-linter``.
 

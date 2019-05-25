@@ -21,14 +21,14 @@ def clang_available(cls):
     if get_distribution('libclang-py3').version != '3.4.0':
         return ClangBear.name + ' requires clang 3.4.0'
 
-    try:  # pragma nt: no cover
+    try:
         Index.create()
         return True
     except LibclangError as error:  # pragma: no cover
         return str(error)
 
 
-def diff_from_clang_fixit(fixit, file):  # pragma nt: no cover
+def diff_from_clang_fixit(fixit, file):
     """
     Creates a ``Diff`` object from a given clang fixit and the file contents.
 
@@ -65,7 +65,7 @@ def sourcerange_from_clang_range(clang_range):
                                    clang_range.end.column)
 
 
-class ClangBear(LocalBear):  # pragma nt: no cover
+class ClangBear(LocalBear):
     LANGUAGES = {'C', 'CPP', 'Objective-C', 'Objective-CPP', 'OpenMP',
                  'OpenCL', 'CUDA'}
     # Depends on libclang-py3, which is a dependency of coala

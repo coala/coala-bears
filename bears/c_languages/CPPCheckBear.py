@@ -15,7 +15,7 @@ from coalib.settings.Setting import typed_list
         severity_map={'error': RESULT_SEVERITY.MAJOR,
                       'warning': RESULT_SEVERITY.NORMAL,
                       'style': RESULT_SEVERITY.INFO})
-class CPPCheckBear:  # pragma nt: no cover
+class CPPCheckBear:
     """
     Report possible security weaknesses for C/C++.
     For more information, consult <https://github.com/danmar/cppcheck>.

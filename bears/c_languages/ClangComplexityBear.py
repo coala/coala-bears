@@ -8,7 +8,7 @@ from bears.c_languages.ClangBear import (
 )
 
 
-class ClangComplexityBear(LocalBear):  # pragma nt: no cover
+class ClangComplexityBear(LocalBear):
     """
     Calculates cyclomatic complexity of each function and displays it to the
     user.

@@ -10,7 +10,7 @@ import yaml
                      r'\[(?P<severity>error|warning)\] (?P<message>.+)',
         severity_map={'error': RESULT_SEVERITY.MAJOR,
                       'warning': RESULT_SEVERITY.NORMAL})
-class YAMLLintBear:  # pragma nt: no cover
+class YAMLLintBear:
     """
     Check yaml code for errors and possible problems.
 

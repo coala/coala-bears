@@ -13,7 +13,7 @@ from dependency_management.requirements.DistributionRequirement import (
         use_stdin=True,
         output_format='corrected',
         result_message='Indentation can be improved.')
-class GNUIndentBear:  # pragma nt: no cover
+class GNUIndentBear:
     """
     This bear checks and corrects spacing and indentation via the well known
     Indent utility.

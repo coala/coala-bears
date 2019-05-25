@@ -9,7 +9,7 @@ from dependency_management.requirements.NpmRequirement import NpmRequirement
         output_format='corrected',
         use_stdin=True,
         result_message='The text does not comply to the set style.')
-class CSSCombBear:  # pragma nt: no cover
+class CSSCombBear:
     """
     CSScomb is a coding style formatter for CSS. You can easily write your own
     configuration to make your style sheets beautiful and consistent.

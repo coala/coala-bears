@@ -8,7 +8,7 @@ from coalib.results.Result import Result
 
 
 @linter(executable='sass-lint')
-class SASSLintBear:  # pragma nt: no cover
+class SASSLintBear:
     """
     Check SCSS/SASS code to keep it clean and readable.
     """

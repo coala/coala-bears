@@ -11,7 +11,7 @@ _setting_map = {True: 'on',
         use_stderr=True,
         use_stdout=False,
         global_bear=True)
-class GherkinLintBear:  # pragma nt: no cover
+class GherkinLintBear:
     """
     Use Gherkin to run linting on feature files
     """

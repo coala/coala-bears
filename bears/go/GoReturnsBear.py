@@ -6,7 +6,7 @@ from dependency_management.requirements.GoRequirement import GoRequirement
         use_stdin=True,
         output_format='corrected',
         result_message='Imports or returns need to be added/removed.')
-class GoReturnsBear:  # pragma nt: no cover
+class GoReturnsBear:
     """
     Proposes corrections of Go code using ``goreturns``.
     """

@@ -13,7 +13,7 @@ from dependency_management.requirements.ComposerRequirement import (
         config_suffix='.xml',
         output_regex=r'.+:(?P<line>\d+):(?P<column>\d+): '
                      r'\w+ - (?P<message>.+)')
-class PHPCodeSnifferBear:  # pragma nt: no cover
+class PHPCodeSnifferBear:
     """
     Ensures that your PHP, JavaScript or CSS code remains clean and consistent.
 

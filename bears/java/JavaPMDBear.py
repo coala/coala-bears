@@ -48,8 +48,7 @@ class JavaPMDBear:
                          check_optimizations: bool = False,
                          check_strings: bool = False,
                          allow_unnecessary_code: bool = False,
-                         allow_unused_code: bool = False,
-                         ):  # pragma nt: no cover
+                         allow_unused_code: bool = False):
         """
         :param check_best_practices:
             Checks for best practices.

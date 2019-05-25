@@ -6,7 +6,7 @@ from dependency_management.requirements.PipRequirement import PipRequirement
         use_stderr=True,
         output_format='regex',
         output_regex=r'.*:(?P<line>.\d*):\s*(?P<message>.*)')
-class SpellCheckBear:  # pragma nt: no cover
+class SpellCheckBear:
     """
     Lints files to check for incorrect spellings using ``scspell``.
 

@@ -13,7 +13,7 @@ from dependency_management.requirements.DistributionRequirement import (
         prerequisite_check_command=('tailor', '-v'),
         prerequisite_check_fail_message='Tailor is not installed. Refer '
         'https://tailor.sh/ for installation details.')
-class TailorBear:  # pragma nt: no cover
+class TailorBear:
     """
     Analyze Swift code and check for code style related
     warning messages.

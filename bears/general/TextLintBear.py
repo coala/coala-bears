@@ -11,7 +11,7 @@ from dependency_management.requirements.PipRequirement import PipRequirement
         output_regex=r'(?P<line>\d+):(?P<column>\d+)(?:\s|\u2713)*'
                      r'(?P<severity>error|warning)\s+(?P<message>.+?)'
                      r'(?:  .*|\n|$)')
-class TextLintBear:  # pragma nt: no cover
+class TextLintBear:
     """
     The pluggable linting tool for text and Markdown. It is similar to ESLint,
     but covers natural language instead.

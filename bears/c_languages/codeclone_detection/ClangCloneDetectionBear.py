@@ -6,7 +6,7 @@ from coalib.results.Result import Result
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
-class ClangCloneDetectionBear(GlobalBear):  # pragma nt: no cover
+class ClangCloneDetectionBear(GlobalBear):
     check_prerequisites = classmethod(clang_available)
     LANGUAGES = ClangBear.LANGUAGES
     REQUIREMENTS = ClangBear.REQUIREMENTS

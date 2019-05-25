@@ -6,14 +6,14 @@ from dependency_management.requirements.NpmRequirement import NpmRequirement
 from coala_utils.param_conversion import negate
 
 
-def bool_or_str(value):  # pragma nt: no cover
+def bool_or_str(value):
     try:
         return bool(value)
     except ValueError:
         return str(value)
 
 
-def bool_or_int(value):  # pragma nt: no cover
+def bool_or_int(value):
     try:
         return bool(value)
     except ValueError:
@@ -24,7 +24,7 @@ def bool_or_int(value):  # pragma nt: no cover
         output_format='regex',
         output_regex=r'.+?: line (?P<line>\d+), col (?P<column>\d+), '
                      r'(?P<message>.+) \((?P<severity>[EWI])\d+\)')
-class JSHintBear:  # pragma nt: no cover
+class JSHintBear:
     """
     Detect errors and potential problems in JavaScript code and to enforce
     appropriate coding conventions. For example, problems like syntax errors,

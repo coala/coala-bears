@@ -8,7 +8,7 @@ from dependency_management.requirements.DistributionRequirement import (
 @linter(executable='perl',
         output_format='regex',
         output_regex=r'.+:(?P<line>\d+):(?P<severity>.*) - (?P<message>.*)')
-class VHDLLintBear:  # pragma nt: no cover
+class VHDLLintBear:
     """
     Check VHDL code for common codestyle problems.
 

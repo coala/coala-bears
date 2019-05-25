@@ -5,7 +5,7 @@ from bears.c_languages.codeclone_detection.ClangCountingConditions import (
 from bears.c_languages.codeclone_detection.CountVector import CountVector
 
 
-class ClangCountVectorCreator:  # pragma nt: no cover
+class ClangCountVectorCreator:
     """
     This object uses clang to create a count vector for each function for given
     counting conditions. The counting conditions are clang specific and they

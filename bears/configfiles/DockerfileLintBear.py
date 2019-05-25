@@ -7,7 +7,7 @@ from coalib.results.Result import Result
 
 
 @linter(executable='dockerfile_lint')
-class DockerfileLintBear:  # pragma nt: no cover
+class DockerfileLintBear:
     """
     Checks file syntax as well as arbitrary semantics and best practice
     in Dockerfiles. It also checks LABEL rules against docker images.

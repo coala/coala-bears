@@ -15,7 +15,7 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
         prerequisite_check_fail_message='Lint package not installed. Run '
                                         '`Pkg.add("Lint")` from Julia to '
                                         'install Lint.')
-class JuliaLintBear:  # pragma nt: no cover
+class JuliaLintBear:
     """
     Provide analysis related to common bugs and potential issues in Julia like
     dead code, undefined variable usage, duplicate keys in dicts, incorrect

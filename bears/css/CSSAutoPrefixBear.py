@@ -7,7 +7,7 @@ from dependency_management.requirements.NpmRequirement import NpmRequirement
         result_message='Add vendor prefixes to CSS rules.',
         prerequisite_check_command=('postcss', '--use', 'autoprefixer'),
         prerequisite_check_fail_message='Autoprefixer is not installed.')
-class CSSAutoPrefixBear:  # pragma nt: no cover
+class CSSAutoPrefixBear:
     """
     This bear adds vendor prefixes to CSS rules using ``autoprefixer`` utility.
     """

@@ -20,7 +20,7 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
                                          'make sure the first line in the '
                                          'script is '
                                          '"#!/usr/bin/env python2".'))
-class CSecurityBear:  # pragma nt: no cover
+class CSecurityBear:
     """
     Report possible security weaknesses for C/C++.
 

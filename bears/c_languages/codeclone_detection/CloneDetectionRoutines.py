@@ -11,7 +11,7 @@ from bears.c_languages.codeclone_detection.CountVector import CountVector
 munkres = Munkres()
 
 
-def exclude_function(count_matrix):  # pragma nt: no cover
+def exclude_function(count_matrix):
     """
     Determines heuristically whether or not it makes sense for clone
     detection to take this function into account.
@@ -40,7 +40,7 @@ def get_count_matrices(count_vector_creator,
                        filenames,
                        progress_callback,
                        base_path,
-                       extra_include_paths):  # pragma nt: no cover
+                       extra_include_paths):
     """
     Retrieves matrices holding count vectors for all variables for all
     functions in the given file.
@@ -75,7 +75,7 @@ def get_count_matrices(count_vector_creator,
     return result
 
 
-def pad_count_vectors(cm1, cm2):  # pragma nt: no cover
+def pad_count_vectors(cm1, cm2):
     """
     Pads the smaller count matrix with zeroed count vectors.
 
@@ -111,14 +111,14 @@ def relative_difference(difference, maxabs):
     return difference/maxabs
 
 
-def average(lst):  # pragma nt: no cover
+def average(lst):
     return sum(lst)/len(lst)
 
 
 def get_difference(matching_iterator,
                    average_calculation,
                    poly_postprocessing,
-                   exp_postprocessing):  # pragma nt: no cover
+                   exp_postprocessing):
     """
     Retrieves the difference value for the matched function represented by the
     given matches.
@@ -167,7 +167,7 @@ def compare_functions(cm1,
                       cm2,
                       average_calculation=False,
                       poly_postprocessing=True,
-                      exp_postprocessing=False):  # pragma nt: no cover
+                      exp_postprocessing=False):
     """
     Compares the functions represented by the given count matrices.
 

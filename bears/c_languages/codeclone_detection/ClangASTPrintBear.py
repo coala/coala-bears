@@ -4,7 +4,7 @@ from bears.c_languages.ClangBear import clang_available, ClangBear
 from coalib.bears.GlobalBear import GlobalBear
 
 
-class ClangASTPrintBear(GlobalBear):  # pragma nt: no cover
+class ClangASTPrintBear(GlobalBear):
     check_prerequisites = classmethod(clang_available)
     LANGUAGES = ClangBear.LANGUAGES
     REQUIREMENTS = ClangBear.REQUIREMENTS

@@ -6,7 +6,7 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
 @linter(executable='csvlint')
-class CSVLintBear:  # pragma nt: no cover
+class CSVLintBear:
     """
     Verifies using ``csvlint`` if ``.csv`` files are valid CSV or not.
     """

@@ -10,7 +10,7 @@ from dependency_management.requirements.DistributionRequirement import (
     DistributionRequirement)
 
 
-def _map_to_r_bool(py_bool):  # pragma nt: no cover
+def _map_to_r_bool(py_bool):
     return 'TRUE' if py_bool else 'FALSE'
 
 
@@ -19,7 +19,7 @@ def _map_to_r_bool(py_bool):  # pragma nt: no cover
         prerequisite_check_command=('Rscript', '-e', 'library(formatR)'),
         prerequisite_check_fail_message='Please install formatR for this bear '
                                         'to work.')
-class FormatRBear:  # pragma nt: no cover
+class FormatRBear:
     """
     Check and correct formatting of R Code using known formatR utility.
     """
