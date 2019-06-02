@@ -146,6 +146,7 @@ ESLintBear:
   - Typescript
 ElmLintBear:
   - Elm
+FileModeBear:
 FilenameBear:
 FormatRBear:
   - R
