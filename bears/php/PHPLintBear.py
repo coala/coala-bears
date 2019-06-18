@@ -5,9 +5,10 @@ from dependency_management.requirements.DistributionRequirement import (
 
 
 @linter(executable='php',
+        use_stderr=True,
         output_format='regex',
-        output_regex=r'(?P<severity>Parse|Fatal) error: (?P<message>.*) in '
-                     r'.* on line (?P<line>\d+)',
+        output_regex=r'(?P<severity>Parse|Fatal) error: (?P<message>.*)'
+                     r'(?: in .* on line (?P<line>\d+))?',
         severity_map={'Parse': RESULT_SEVERITY.MAJOR,
                       'Fatal': RESULT_SEVERITY.MAJOR})
 class PHPLintBear:
