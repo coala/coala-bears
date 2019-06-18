@@ -160,6 +160,8 @@ GitCommitBear:
   - Git
 GitCommitMetadataBear:
   - Git
+GitIgnoreBear:
+  - Git
 GitLinearCommitBear:
   - Git
 GitRevertInspectBear:
