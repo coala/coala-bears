@@ -24,7 +24,18 @@ if [ ! -e ~/infer-linux64-v0.7.0/infer/bin ]; then
   # See https://github.com/coala/coala-bears/issues/1763
   opam pin add --yes --no-action reason 1.13.5
 
+  # See https://github.com/coala/coala-bears/issues/2664
+  # for javalib and the disable-sandboxing below
+  opam pin add --yes --no-action javalib 2.3.1
+
   opam pin add --yes --no-action infer .
+
+  opam init -y --reinit --disable-sandboxing
+
+  sed -i '/wrap-/d;/sandbox.sh/d' ~/.opam/config
+
+  eval $(opam env)
+
   opam install --deps-only --yes infer
   ./build-infer.sh java
 fi
