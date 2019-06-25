@@ -90,8 +90,8 @@ npm_requirements:
     version: ~1.5.9
   textlint:
     version: ~7.3.0
-  textlint-plugin-asciidoc-loose:
-    version: ~1.0.1
+  textlint-plugin-asciidoctor:
+    version: ~1.0.3
   textlint-plugin-html:
     version: ~0.1.5
   textlint-plugin-review:
