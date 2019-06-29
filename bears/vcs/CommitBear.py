@@ -14,6 +14,7 @@ from coalib.settings.Setting import typed_list
 from coalib.settings.FunctionMetadata import FunctionMetadata
 from dependency_management.requirements.PipRequirement import PipRequirement
 from bears.vcs.actions.EditCommitMessageAction import EditCommitMessageAction
+from bears.vcs.actions.AddNewlineAction import AddNewlineAction
 
 
 class _CommitBear(GlobalBear):
@@ -280,7 +281,8 @@ class _CommitBear(GlobalBear):
             yield Result(self,
                          'No newline found between shortlog and body at '
                          'HEAD commit. Please add one.',
-                         actions=[EditCommitMessageAction()])
+                         actions=[EditCommitMessageAction(),
+                                  AddNewlineAction()])
             return
 
         if body_regex and not re.fullmatch(body_regex, body.strip()):
