@@ -1,4 +1,4 @@
-# NOTE: This file is parsed by .ci/generate_bear_requirements.py
+# NOTE: This file is parsed by .ci/generate_bear_metadata.py
 # Edit coala_dependency in coala-build.yaml
 git+https://github.com/coala/coala#egg=coala
 # Dependencies inherited from coala
