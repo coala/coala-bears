@@ -171,8 +171,6 @@ License
 .. |Stable| image:: https://img.shields.io/badge/latest%20stable-0.11.1-green.svg
 .. |PyPI| image:: https://img.shields.io/pypi/v/coala-bears.svg
    :target: https://pypi.python.org/pypi/coala-bears
-.. |Linux| image:: https://img.shields.io/circleci/project/coala/coala-bears/master.svg?label=linux%20build
-   :target: https://circleci.com/gh/coala/coala-bears
 .. |Windows| image:: https://img.shields.io/appveyor/ci/coala/coala-bears/master.svg?label=windows%20build
    :target: https://ci.appveyor.com/project/coala/coala-bears/branch/master
 .. |Documentation Status| image:: https://readthedocs.org/projects/coala/badge/?version=latest
