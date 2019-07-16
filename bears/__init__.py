@@ -19,8 +19,8 @@ __version__ = VERSION
 
 
 def assert_supported_version():
-    if sys.version_info < (3, 4, 4):
-        print('coala supports only python 3.4.4 or later.')
+    if sys.version_info < (3, 4, 2):
+        print('coala supports only python 3.4.2 or later.')
         exit(4)
 
 
