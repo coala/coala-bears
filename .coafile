@@ -80,5 +80,6 @@ shellcheck_ignore = SC2046, SC2154, SC2155
 [jinja2]
 bears = Jinja2Bear
 files = **.jj2
+check_end_labels = False
 # Bug in handling of ".. list | sort"
-ignore = .moban.dt/Gemfile.jj2, .moban.dt/bear-requirements.txt.jj2, .moban.dt/package.json.jj2
+ignore = .moban.dt/Gemfile.jj2, .moban.dt/bear-requirements.txt.jj2, .moban.dt/package.json.jj2, .moban.dt/bears-travis.yml.jj2
