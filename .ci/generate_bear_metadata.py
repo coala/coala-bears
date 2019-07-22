@@ -458,7 +458,7 @@ if __name__ == '__main__':
         'This is an automatically generated file.\n'
         'And should not be edited by hand.')
 
-    requirements['overrides'] = 'package-manager-requirements.yaml'
+    requirements['overrides'] = 'pm-requirements.yaml'
     get_bear_requirement_metadata(bear_requirement_sets=instance_dict,
                                   storage=requirements, old_labels=True)
 
