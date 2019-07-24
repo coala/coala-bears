@@ -13,7 +13,7 @@ from coalib.results.Result import Result
 class InvalidLinkBear(LocalBear):
     DEFAULT_TIMEOUT = 15
     LANGUAGES = {'All'}
-    REQUIREMENTS = {PipRequirement('requests', '2.12')}
+    REQUIREMENTS = {PipRequirement('requests', '2.21.0')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

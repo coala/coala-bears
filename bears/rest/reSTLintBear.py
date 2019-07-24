@@ -8,7 +8,7 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 class reSTLintBear(LocalBear):
     LANGUAGES = {'reStructuredText'}
-    REQUIREMENTS = {PipRequirement('restructuredtext-lint', '~=1.0')}
+    REQUIREMENTS = {PipRequirement('restructuredtext-lint', '~=1.2.2')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

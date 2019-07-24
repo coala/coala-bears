@@ -56,7 +56,7 @@ class URLResult(HiddenResult):
 
 class URLBear(LocalBear):
     LANGUAGES = {'All'}
-    REQUIREMENTS = {PipRequirement('aenum', '2.0.8')}
+    REQUIREMENTS = {PipRequirement('aenum', '2.1.2')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

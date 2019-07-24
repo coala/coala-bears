@@ -13,7 +13,7 @@ class CMakeLintBear:
     For more information consult <https://github.com/richq/cmake-lint>.
     """
     LANGUAGES = {'CMake'}
-    REQUIREMENTS = {PipRequirement('cmakelint', '1.3')}
+    REQUIREMENTS = {PipRequirement('cmakelint', '1.3.4.1')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

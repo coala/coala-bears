@@ -26,7 +26,7 @@ class ApertiumLintBear:
     """
     LANGUAGES = {'Apertium'}
     REQUIREMENTS = {PipRequirement('apertium-lint', '0.29'),
-                    PipRequirement('lxml', '>=1.0')}
+                    PipRequirement('lxml', '==4.3.1')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

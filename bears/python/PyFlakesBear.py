@@ -18,7 +18,7 @@ class PyFlakesBear:
     See https://github.com/PyCQA/pyflakes for more info.
     """
     LANGUAGES = {'Python', 'Python 3'}
-    REQUIREMENTS = {PipRequirement('pyflakes', '2.0.0')}
+    REQUIREMENTS = {PipRequirement('pyflakes', '2.1.0')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'

@@ -11,7 +11,7 @@ class ProseLintBear:
     Works only with English language text.
     """
     LANGUAGES = {'Natural Language'}
-    REQUIREMENTS = {PipRequirement('proselint', '0.7.0')}
+    REQUIREMENTS = {PipRequirement('proselint', '0.10.2')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
