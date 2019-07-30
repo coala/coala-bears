@@ -41,7 +41,7 @@ pip_requirements:
   libclang-py3:
     version: ~=3.4.0
   lxml:
-    version: '>=1.0'
+    version: '>=1.0,<4.4.0'
   memento-client:
     version: ~=0.6.1
   munkres:
