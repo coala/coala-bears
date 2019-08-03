@@ -1,6 +1,11 @@
 from shutil import which
 from xml.etree import ElementTree
 
+from dependency_management.requirements.AnyOneOfRequirements import (
+    AnyOneOfRequirements)
+from dependency_management.requirements.ExecutableRequirement import (
+    ExecutableRequirement)
+
 from coalib.bears.GlobalBear import GlobalBear
 from coalib.misc.Shell import run_shell_command
 from coalib.results.Result import Result
@@ -30,20 +35,17 @@ class CPDBear(GlobalBear):
                      'Swift': 'swift'}
 
     LANGUAGES = set(language_dict.keys())
+    REQUIREMENTS = {
+        AnyOneOfRequirements(
+            [ExecutableRequirement('cpd'),
+             ExecutableRequirement('run.sh'),
+             ]
+        ),
+    }
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
     CAN_DETECT = {'Duplication'}
-
-    @classmethod
-    def check_prerequisites(cls):
-        if which('bash') is None:
-            return 'bash is not installed.'
-        if which('pmd') is None and which('run.sh') is None:
-            return ('PMD is missing. Make sure to install it from '
-                    '<https://pmd.github.io/>.')
-        else:
-            return True
 
     def run(self, language: language,
             minimum_tokens: int = 20,
@@ -93,8 +95,11 @@ class CPDBear(GlobalBear):
             '--skip-duplicate-files': skip_duplicate_files}
 
         files = ','.join(self.file_dict.keys())
-        executable = which('pmd') or which('run.sh')
-        arguments = ('bash', executable, 'cpd', '--skip-lexical-errors',
+        executable = which('cpd') or which('run.sh')
+        executable = tuple([executable] if not executable.endswith('run.sh')
+                           else [executable, 'cpd'])
+
+        arguments = ('--skip-lexical-errors',
                      '--minimum-tokens', str(minimum_tokens),
                      '--language', cpd_language,
                      '--files', files,
@@ -104,6 +109,7 @@ class CPDBear(GlobalBear):
                            for option, enable in options.items()
                            if enable is True)
 
+        arguments = executable + arguments
         stdout_output, _ = run_shell_command(arguments)
 
         if stdout_output:

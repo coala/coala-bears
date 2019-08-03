@@ -154,6 +154,9 @@ bear_metadata:
     subdir: general
     filename: CPDBear.py
     requirements:
+      exe:
+        cpd:
+        run.sh:
     languages:
       - C#
       - CPP
@@ -174,8 +177,11 @@ bear_metadata:
       - Scala
       - Swift
     tags:
+      - cpd
+      - exe
       - general
       - java
+      - run.sh
   CPPCheckBear:
     name: CPPCheckBear
     subdir: c_languages

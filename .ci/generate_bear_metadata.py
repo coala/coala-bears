@@ -322,11 +322,6 @@ def get_bear_tags(bear, metadata):
             tags.remove('java')
         tags.add('opam')
 
-    elif bear.name == 'CPDBear':
-        # Has no requirements defined yet
-        tags.remove('noreqs')
-        tags.add('java')
-
     elif bear.name == 'LanguageToolBear':
         # Has no requirements defined yet
         tags.add('java')
@@ -337,8 +332,7 @@ def get_bear_tags(bear, metadata):
         tags.add('pmd')
 
     elif bear.name == 'CPDBear':
-        # Has no executable defined
-        tags.add('cpd')
+        tags.add('java')
 
     elif bear.name == 'VHDLLintBear':
         # Has no executable defined

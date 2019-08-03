@@ -24,6 +24,8 @@ def main():
             bear = bear.replace('/', '\\\\')
             if 'CheckstyleBear' in bear or 'CMakeLintBear' in bear:
                 threshold = 90
+            elif 'CPDBear' in bear:
+                threshold = 98
 
         thresholds[bear] = threshold
 

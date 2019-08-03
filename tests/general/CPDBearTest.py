@@ -1,6 +1,5 @@
 import os
 import unittest
-from unittest import mock
 
 from queue import Queue
 import logging
@@ -68,14 +67,3 @@ class CPDBearTest(unittest.TestCase):
             self.uut.message_queue.queue[0].log_level, logging.ERROR)
         self.assertIn('Hypertext Markup Language',
                       self.uut.message_queue.queue[0].message)
-
-    def test_check_prerequisites(self):
-        with mock.patch('bears.general.CPDBear.which') as mock_which:
-            mock_which.side_effect = [None, None, None]
-            self.assertEqual(CPDBear.check_prerequisites(),
-                             'bash is not installed.')
-
-            mock_which.side_effect = ['path/to/bash', None, None]
-            self.assertEqual(CPDBear.check_prerequisites(),
-                             'PMD is missing. Make sure to install it '
-                             'from <https://pmd.github.io/>.')
