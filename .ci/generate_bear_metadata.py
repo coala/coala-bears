@@ -180,6 +180,10 @@ def helper(requirements, instance_dict):
             instance_dict[type(requirement).__name__].add(requirement)
 
 
+def _clean_executable(executable):
+    return executable.rpartition('/')[2].lower().replace('.exe', '')
+
+
 def get_all_requirements(bears):
     bear_requirements = {}
 
@@ -189,7 +193,7 @@ def get_all_requirements(bears):
         if hasattr(bear, 'get_executable'):
             executable = bear.get_executable()
         if executable:
-            requirement = ExecutableRequirement(executable)
+            requirement = ExecutableRequirement(_clean_executable(executable))
             instance_dict['ExecutableRequirement'].add(requirement)
         helper(bear.REQUIREMENTS, instance_dict)
         bear_requirements[str(bear.name)] = instance_dict

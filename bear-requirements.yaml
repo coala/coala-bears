@@ -248,6 +248,7 @@ distro_requirements:
       xbps: chktex
       yum: chktex
       zypper: texlive-chktex
+      pkg: chktex
   cppcheck:
     packages:
       apt_get: cppcheck
@@ -258,6 +259,7 @@ distro_requirements:
       xbps: cppcheck
       yum: cppcheck
       zypper: cppcheck
+      pkg: cppcheck
   dart:
     packages:
       brew: dart
@@ -280,6 +282,7 @@ distro_requirements:
       xbps: flawfinder
       yum: flawfinder
       zypper: flawfinder
+      pkg: flawfinder
   ghc-mod:
     packages:
       apt_get: ghc-mod
@@ -290,6 +293,7 @@ distro_requirements:
       xbps: ghc-mod
       yum: ghc-mod
       zypper: ghc-mod
+      pkg: ghc-mod
   hlint:
     packages:
       apt_get: hlint
@@ -303,6 +307,7 @@ distro_requirements:
       xbps: indent
       yum: indent
       zypper: indent
+      pkg: indent
   libperl-critic-perl:
     packages:
       apt_get: libperl-critic-perl
@@ -322,6 +327,7 @@ distro_requirements:
       xbps: libxml2
       yum: libxml2
       zypper: libxml2
+      pkg: libxml2
   mono:
     packages:
       apt_get: mono-mcs
@@ -332,6 +338,7 @@ distro_requirements:
       xbps: mono
       yum: mono
       zypper: mono
+      pkg: mono
   perl:
     packages:
       apt_get: perl
@@ -342,6 +349,7 @@ distro_requirements:
       xbps: perl
       yum: perl
       zypper: perl
+      pkg: perl
   php-cli:
     packages:
       apt_get: php-cli
@@ -371,6 +379,7 @@ distro_requirements:
       xbps: ruby
       yum: ruby
       zypper: ruby
+      pkg: ruby
   shellcheck:
     packages:
       apt_get: shellcheck
@@ -381,6 +390,7 @@ distro_requirements:
       xbps: shellcheck
       yum: shellcheck
       zypper: shellcheck
+      pkg: shellcheck
   verilator:
     packages:
       apt_get: verilator
