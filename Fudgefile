@@ -90,6 +90,11 @@
         {
             "name": "ShellCheck",
             "source": ""
+        },
+        {
+            "args": "--ignore-dependencies",
+            "name": "pmd",
+            "source": ""
         }
     ],
     "scripts": {
