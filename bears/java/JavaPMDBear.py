@@ -1,11 +1,17 @@
 from shutil import which
+from dependency_management.requirements.AnyOneOfRequirements import (
+    AnyOneOfRequirements)
+from dependency_management.requirements.ExecutableRequirement import (
+    ExecutableRequirement)
 
 from coalib.bearlib.abstractions.Linter import linter
 from coalib.bearlib import deprecate_settings
 from coala_utils.param_conversion import negate
 
+_executable = which('run.sh') or which('pmd')
 
-@linter('bash', output_format='regex',
+
+@linter(_executable or 'pmd', output_format='regex',
         output_regex=r'.+:(?P<line>.+):(?P<message>.*)')
 class JavaPMDBear:
     """
@@ -17,21 +23,18 @@ class JavaPMDBear:
     """
 
     LANGUAGES = {'Java'}
+    REQUIREMENTS = {
+        AnyOneOfRequirements(
+            [ExecutableRequirement('pmd'),
+             ExecutableRequirement('run.sh'),
+             ]
+        ),
+    }
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
     CAN_DETECT = {'Code Simplification', 'Unreachable Code', 'Smell',
                   'Duplication'}
-
-    @classmethod
-    def check_prerequisites(cls):
-        if which('bash') is None:
-            return 'bash is not installed.'
-        elif which('pmd') is None and which('run.sh') is None:
-            return ('PMD is missing. Make sure to install it from '
-                    '<https://pmd.github.io/>')
-        else:
-            return True
 
     @staticmethod
     @deprecate_settings(allow_unnecessary_code=('check_unnecessary', negate),
@@ -94,5 +97,6 @@ class JavaPMDBear:
             'java-unusedcode': not allow_unused_code}
         rules = ','.join(key for key in options if options[key])
 
-        executable = which('pmd') or which('run.sh')  # Mac vs. Unix
-        return executable, 'pmd', '-R', rules, '-d', filename
+        executable = tuple(['pmd'] if _executable.endswith('run.sh') else [])
+        arguments = '-R', rules, '-d', filename, '-f', 'text'
+        return executable + arguments

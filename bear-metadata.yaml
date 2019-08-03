@@ -1209,14 +1209,15 @@ bear_metadata:
     filename: JavaPMDBear.py
     requirements:
       exe:
-        bash:
+        pmd:
+        run.sh:
     languages:
       - Java
     tags:
-      - bash
       - exe
       - java
       - pmd
+      - run.sh
   Jinja2Bear:
     name: Jinja2Bear
     subdir: jinja2
