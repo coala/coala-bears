@@ -21,7 +21,6 @@ IS_WIN = os.name == 'nt'
 WINDOWS_BROKEN = set((
     'bakalint',  # not installed
     'phpcs',  # https://github.com/coala/coala-bears/issues/2916
-    'pmd', 'cpd',  # https://github.com/coala/coala-bears/issues/2908
     'mcs',  # choco mono isnt providing this in the PATH
     'tailor',  # installer fails
     'shellcheck',  # https://github.com/coala/coala-bears/issues/2920
@@ -123,13 +122,33 @@ def get_tests(bears):
     return tests
 
 
+def get_pytest_deselected_tests(args, tests):
+    not_list = []
+
+    # language-check fails for different locale on windows
+    if 'tests/documentation/DocGrammarBearTest.py' in tests:
+        if 'win' in args:
+            not_list.append('test_language_french')
+
+    # async is not available on Python 3.4
+    if 'tests/python/YapfBearTest.py' in tests:
+        if 'py34' in args:
+            not_list.append('test_valid_async')
+
+    return not_list
+
+
 def main():
     args_orig = sys.argv[1:]
     metadata = get_metadata()
 
     include_disabled = False
+    show_deselected = False
     if args_orig[0] == '--disabled':
         include_disabled = True
+        args_orig = args_orig[1:]
+    elif args_orig[0] == '--deselected':
+        show_deselected = True
         args_orig = args_orig[1:]
 
     args = []
@@ -149,7 +168,24 @@ def main():
 
     bears = get_bears(metadata, args, include_disabled)
     tests = get_tests(bears)
-    print(' '.join(sorted(tests)))
+    if show_deselected:
+        not_list = get_pytest_deselected_tests(args, tests)
+        deselect_list = [item for item in not_list if '::' in item]
+        not_list = [item for item in not_list if item not in deselect_list]
+        if len(not_list) > 1:
+            not_list = '-k "not ({})"'.format(' or '.join(not_list))
+        elif len(not_list) == 1:
+            not_list = '-k "not {}"'.format(not_list[0])
+        else:
+            not_list = ''
+        if deselect_list:
+            deselect_list = ' --deselect={}'.format(
+                ' --deselect='.join(deselect_list))
+        else:
+            deselect_list = ''
+        print(not_list + deselect_list)
+    else:
+        print(' '.join(sorted(tests)))
 
 
 if __name__ == '__main__':
