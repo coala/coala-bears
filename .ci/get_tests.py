@@ -135,6 +135,10 @@ def get_pytest_deselected_tests(args, tests):
         if 'py34' in args:
             not_list.append('test_valid_async')
 
+    # https://github.com/coala/coala-bears/issues/2943
+    if 'tests/php/PHPMessDetectorBearTest.py' in tests:
+        not_list.append('test_cleancode_violation')
+
     return not_list
 
 
