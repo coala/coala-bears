@@ -52,6 +52,7 @@ choco_requirements:
   # overrides for package managers not yet used
   visualstudio2017-workload-vctools: false
   MinGW: false
+  maven: false  # MavenRequirement is unused
   miniconda3: false
   R.Project: false  # https://github.com/coala/coala-bears/issues/2919
   luarocks: false  # https://github.com/coala/coala-bears/issues/2918

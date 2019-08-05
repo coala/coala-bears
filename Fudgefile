@@ -4,7 +4,6 @@
         "adoptopenjdk": ".ci/nuspecs/adoptopenjdk.nuspec",
         "golang": ".ci/nuspecs/golang.nuspec",
         "hg": ".ci/nuspecs/hg.nuspec",
-        "maven": ".ci/nuspecs/maven.nuspec",
         "nodejs": ".ci/nuspecs/nodejs.nuspec",
         "python": ".ci/nuspecs/python.nuspec",
         "ruby": ".ci/nuspecs/ruby.nuspec",
@@ -63,12 +62,6 @@
             "name": "ActivePerl",
             "source": "",
             "version": "5.24.3.2404"
-        },
-        {
-            "appveyor_id": true,
-            "name": "maven",
-            "source": "",
-            "version": "3.5.4"
         },
         {
             "name": "php",
