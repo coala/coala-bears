@@ -12,6 +12,6 @@ if [ -z "$jdk_version" ] || [ $jdk_version -eq 8 ]; then
   .ci/deps.tailor.sh
 fi
 
-if [ -z "$(which pmd || true)" ]; then
+if [ -z "$(which run.sh || true)" ]; then
   .ci/deps.pmd.sh
 fi
