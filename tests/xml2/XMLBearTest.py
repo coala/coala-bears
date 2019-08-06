@@ -2,6 +2,9 @@ import os
 import unittest
 
 from queue import Queue
+
+import pytest
+
 from bears.xml2.XMLBear import XMLBear
 from coalib.testing.BearTestHelper import generate_skip_decorator
 from coalib.testing.LocalBearTestHelper import verify_local_bear, execute_bear
@@ -80,6 +83,8 @@ XMLBearDTDUrlTest = verify_local_bear(
     invalid_files=(invalid_xml_url,),
     settings={'xml_dtd': dtd_url},
     tempfile_kwargs={'suffix': '.xml'})
+
+XMLBearDTDUrlTest = pytest.mark.timeout(120, XMLBearDTDUrlTest)
 
 XMLBearRelaxNGTest = verify_local_bear(
     XMLBear,
