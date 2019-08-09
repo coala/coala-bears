@@ -3,6 +3,7 @@ import itertools
 from coalib.bears.GlobalBear import GlobalBear
 from coalib.results.Result import Result
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
+from bears.general.actions.DeleteFileAction import DeleteFileAction
 
 
 class DuplicateFileBear(GlobalBear):
@@ -35,4 +36,6 @@ class DuplicateFileBear(GlobalBear):
                                ' to File ' + second_file_name)
                     yield Result(origin=self,
                                  message=message,
-                                 severity=RESULT_SEVERITY.INFO)
+                                 severity=RESULT_SEVERITY.INFO,
+                                 actions=[DeleteFileAction(first_file_name),
+                                          DeleteFileAction(second_file_name)])
