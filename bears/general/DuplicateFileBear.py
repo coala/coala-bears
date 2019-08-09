@@ -33,6 +33,6 @@ class DuplicateFileBear(GlobalBear):
                     second_file_name = file_pair[1]
                     message = ('File ' + first_file_name + ' is identical'
                                ' to File ' + second_file_name)
-                    yield Result.from_values(origin=self, message=message,
-                                             severity=RESULT_SEVERITY.INFO,
-                                             file=first_file_name)
+                    yield Result(origin=self,
+                                 message=message,
+                                 severity=RESULT_SEVERITY.INFO)
