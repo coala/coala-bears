@@ -291,3 +291,13 @@ class IndentationBearTest(unittest.TestCase):
         valid_file = ('This is a valid specifier: # A comment\n',
                       '\tand so it indents\n')
         self.verify_bear(valid_file)
+
+    def test_ignore_doc_comments(self):
+        test_file = ('"""\n',
+                     ' This is not properly indented\n',
+                     '    but still should be valid.\n',
+                     '"""')
+        self.verify_bear(invalid_file=test_file)
+        self.section.append(Setting('language', 'python'))
+        self.section.append(Setting('docstyle', 'doxygen'))
+        self.verify_bear(valid_file=test_file)

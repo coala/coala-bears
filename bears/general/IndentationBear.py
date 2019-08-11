@@ -2,6 +2,8 @@ from coala_utils.string_processing.Core import unescaped_search_for
 from coalib.bears.LocalBear import LocalBear
 from coalib.bearlib import deprecate_settings
 from coalib.bearlib.languages.LanguageDefinition import LanguageDefinition
+from coalib.bearlib.languages.documentation.DocBaseClass import (
+    DocBaseClass)
 from coalib.bearlib.spacing.SpacingHelper import SpacingHelper
 from coalib.results.SourceRange import SourceRange
 from coalib.results.Result import Result, RESULT_SEVERITY
@@ -11,7 +13,7 @@ from coalib.results.Diff import Diff
 from bears.general.AnnotationBear import AnnotationBear
 
 
-class IndentationBear(LocalBear):
+class IndentationBear(DocBaseClass, LocalBear):
 
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
@@ -25,6 +27,7 @@ class IndentationBear(LocalBear):
             file,
             dependency_results: dict,
             language: str,
+            docstyle: str = None,
             use_spaces: bool = True,
             indent_size: int = SpacingHelper.DEFAULT_TAB_WIDTH,
             coalang_dir: str = None,
@@ -58,6 +61,10 @@ class IndentationBear(LocalBear):
             Results given by the AnnotationBear.
         :param language:
             Language to be used for indentation.
+        :param docstyle:
+            The docstyle to use. For example ``default`` or
+            ``doxygen``. Docstyles are language dependent, meaning
+            not every language is supported by a certain docstyle.
         :param use_spaces:
             Insert spaces instead of tabs for indentation.
         :param indent_size:
@@ -66,6 +73,10 @@ class IndentationBear(LocalBear):
             Full path of external directory containing the coalang
             file for language.
         """
+        doc_comments = []
+        if docstyle:
+            doc_comments = self.extract(file, language, docstyle)
+
         lang_settings_dict = LanguageDefinition(
             language, coalang_dir=coalang_dir)
         annotation_dict = dependency_results[AnnotationBear.name][0].contents
@@ -118,6 +129,10 @@ class IndentationBear(LocalBear):
         if new_file != list(file):
             wholediff = Diff.from_string_arrays(file, new_file)
             for diff in wholediff.split_diff():
+                if any(gt_eq(diff.range(filename).start, string.range.start)
+                       and lt_eq(diff.range(filename).end, string.range.end)
+                       for string in doc_comments):
+                    continue
                 yield Result(
                     self,
                     'The indentation could be changed to improve readability.',
