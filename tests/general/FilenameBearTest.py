@@ -110,6 +110,30 @@ class FilenameBearTest(LocalBearTestHelper):
                          'The file naming convention could not be guessed. '
                          'Using the default "snake" naming convention.')
 
+    def test_multiple_patches(self):
+        self.section['file_naming_convention'] = 'auto'
+
+        filename_test1 = 'FileName.xyz'
+        msg = 'Filename does not follow snake naming-convention.'
+        expected_diffs = {filename_test1: Diff(['\n'], rename='file_name.xyz')}
+
+        alternate_diffs = [{filename_test1: Diff(
+                                ['\n'], rename='fileName.xyz')},
+                           {filename_test1: Diff(
+                                ['\n'], rename='file-name.xyz')},
+                           {filename_test1: Diff(
+                                ['\n'], rename='File Name.xyz')}]
+
+        expected_result = Result.from_values('FilenameBear',
+                                             msg,
+                                             severity=RESULT_SEVERITY.NORMAL,
+                                             file=filename_test1,
+                                             diffs=expected_diffs,
+                                             alternate_diffs=alternate_diffs)
+
+        self.check_results(
+            self.uut, [''], [expected_result], filename=filename_test1)
+
     def test_file_prefix(self):
         self.section['filename_prefix'] = 'pre'
         self.check_invalidity(
