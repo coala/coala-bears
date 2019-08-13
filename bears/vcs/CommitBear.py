@@ -13,6 +13,7 @@ from coalib.results.Result import Result
 from coalib.settings.Setting import typed_list
 from coalib.settings.FunctionMetadata import FunctionMetadata
 from dependency_management.requirements.PipRequirement import PipRequirement
+from bears.vcs.actions.EditCommitMessageAction import EditCommitMessageAction
 
 
 class _CommitBear(GlobalBear):
@@ -188,13 +189,15 @@ class _CommitBear(GlobalBear):
                          'character(s). This is {} character(s) longer than '
                          'the limit ({} > {}).'.format(
                               len(shortlog), diff,
-                              len(shortlog), shortlog_length))
+                              len(shortlog), shortlog_length),
+                         actions=[EditCommitMessageAction()])
 
         if (shortlog[-1] != '.') == shortlog_trailing_period:
             yield Result(self,
                          'Shortlog of HEAD commit contains no period at end.'
                          if shortlog_trailing_period else
-                         'Shortlog of HEAD commit contains a period at end.')
+                         'Shortlog of HEAD commit contains a period at end.',
+                         actions=[EditCommitMessageAction()])
 
         if shortlog_regex:
             match = re.fullmatch(shortlog_regex, shortlog)
@@ -202,7 +205,8 @@ class _CommitBear(GlobalBear):
                 yield Result(
                     self,
                     'Shortlog of HEAD commit does not match given regex:'
-                    ' {regex}'.format(regex=shortlog_regex))
+                    ' {regex}'.format(regex=shortlog_regex),
+                    actions=[EditCommitMessageAction()])
 
         if shortlog_imperative_check:
             colon_pos = shortlog.find(':')
@@ -214,7 +218,8 @@ class _CommitBear(GlobalBear):
                 bad_word = has_flaws[0]
                 yield Result(self,
                              "Shortlog of HEAD commit isn't in imperative "
-                             "mood! Bad words are '{}'".format(bad_word))
+                             "mood! Bad words are '{}'".format(bad_word),
+                             actions=[EditCommitMessageAction()])
         if shortlog_wip_check:
             if 'wip' in shortlog.lower()[:4]:
                 yield Result(
@@ -267,12 +272,15 @@ class _CommitBear(GlobalBear):
         """
         if len(body) == 0:
             if force_body:
-                yield Result(self, 'No commit message body at HEAD.')
+                yield Result(self, 'No commit message body at HEAD.',
+                             actions=[EditCommitMessageAction()])
             return
 
         if body[0] != '\n':
-            yield Result(self, 'No newline found between shortlog and body at '
-                               'HEAD commit. Please add one.')
+            yield Result(self,
+                         'No newline found between shortlog and body at '
+                         'HEAD commit. Please add one.',
+                         actions=[EditCommitMessageAction()])
             return
 
         if body_regex and not re.fullmatch(body_regex, body.strip()):
@@ -284,9 +292,11 @@ class _CommitBear(GlobalBear):
         if any((len(line) > body_line_length and
                 not any(regex.search(line) for regex in ignore_regexes))
                for line in body[1:]):
-            yield Result(self, 'Body of HEAD commit contains too long lines. '
-                               'Commit body lines should not exceed {} '
-                               'characters.'.format(body_line_length))
+            yield Result(self,
+                         'Body of HEAD commit contains too long lines. '
+                         'Commit body lines should not exceed {} '
+                         'characters.'.format(body_line_length),
+                         actions=[EditCommitMessageAction()])
 
     def check_issue_reference(self, body,
                               body_close_issue: bool = False,
