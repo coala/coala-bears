@@ -9,6 +9,12 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 class CSVLintBear:
     """
     Verifies using ``csvlint`` if ``.csv`` files are valid CSV or not.
+    The ``CSVLintBear`` does validation that checks:
+    - structural formatting of a CSV file
+    - delimiter-separated values (DSV) file accessible via URL, File,
+    or an IO-style object (e.g. StringIO)
+    - against CSV dialects
+    - against multiple schema standards and CSV on the Web
     """
 
     LANGUAGES = {'CSV'}
@@ -18,6 +24,7 @@ class CSVLintBear:
     LICENSE = 'AGPL-3.0'
     CAN_DETECT = {'Syntax'}
     ASCIINEMA_URL = 'https://asciinema.org/a/8fmp2pny34kpqw7t1eoy7phhc'
+    SEE_MORE = 'https://github.com/theodi/csvlint.rb/blob/master/README.md'
 
     regex = re.compile(r'\n\d+\.\s(?P<origin>(?P<severity>\w+))\.\s'
                        r'(Row:\s(?P<line>[0-9]+)\.\s)?(?P<message>.*)?')
