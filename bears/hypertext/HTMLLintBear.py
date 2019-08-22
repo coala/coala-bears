@@ -27,7 +27,7 @@ class HTMLLintBear:
     CAN_DETECT = {'Syntax', 'Formatting'}
 
     @staticmethod
-    def create_arguments(filename, file, config_file, use_spaces: bool,
+    def create_arguments(filename, file, config_file, use_spaces: bool = True,
                          htmllint_ignore: typed_list(str) = [],
                          ):
         """
