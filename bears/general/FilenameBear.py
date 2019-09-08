@@ -58,6 +58,7 @@ class FilenameBear(LocalBear):
         """
         head, tail = os.path.split(filename)
         filename_without_extension, extension = os.path.splitext(tail)
+        alternate_conventions = []
 
         if file_naming_convention is None:
             self.warn('Please specify a file naming convention explicitly'
@@ -74,12 +75,20 @@ class FilenameBear(LocalBear):
                 self.warn('The file naming convention could not be guessed. '
                           'Using the default "snake" naming convention.')
                 file_naming_convention = 'snake'
+                alternate_conventions += ['camel', 'kebab', 'pascal', 'space']
 
         messages = []
 
         try:
             new_name = self._naming_convention[file_naming_convention](
                 filename_without_extension)
+            alternate_names = [self._naming_convention[alternate_convention](
+                               filename_without_extension)
+                               for alternate_convention in
+                               alternate_conventions]
+            alternate_names = [alternate_name
+                               for alternate_name in alternate_names
+                               if alternate_name != filename_without_extension]
         except KeyError:
             self.err('Invalid file-naming-convention provided: ' +
                      file_naming_convention)
@@ -92,12 +101,16 @@ class FilenameBear(LocalBear):
 
         if not filename_without_extension.startswith(filename_prefix):
             new_name = filename_prefix + new_name
+            alternate_names = [filename_prefix + alternate_name
+                               for alternate_name in alternate_names]
             messages.append(
                 'Filename does not use the prefix {!r}.'.format(
                     filename_prefix))
 
         if not filename_without_extension.endswith(filename_suffix):
             new_name = new_name + filename_suffix
+            alternate_names = [alternate_name + filename_suffix
+                               for alternate_name in alternate_names]
             messages.append(
                 'Filename does not use the suffix {!r}.'.format(
                     filename_suffix))
@@ -120,5 +133,12 @@ class FilenameBear(LocalBear):
                 diff = Diff(file,
                             rename=os.path.join(head, new_name + extension))
                 result_kwargs['diffs'] = {filename: diff}
+
+                if alternate_names:
+                    alternate_diffs = [{filename: Diff(
+                        file, rename=os.path.join(
+                            head, alternate_name + extension))}
+                                       for alternate_name in alternate_names]
+                    result_kwargs['alternate_diffs'] = alternate_diffs
 
             yield Result.from_values(self, **result_kwargs)

@@ -198,14 +198,14 @@ jobs:
       before_script: true
       script: .ci/check_unsupported.sh
 
-    - python: 3.6
-      stage: sentinel
-      before_install: false
-      install: pip install moban
-      before_script: false
-      script: .ci/check_moban.sh
-      after_success: false
-      after_failure: false
+    # - python: 3.6
+    #   stage: sentinel
+    #   before_install: false
+    #   install: pip install moban
+    #   before_script: false
+    #   script: .ci/check_moban.sh
+    #   after_success: false
+    #   after_failure: false
 
     # Entries generates from `supported_versions`
     - stage: sentinel
