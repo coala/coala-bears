@@ -1,3 +1,10 @@
+with open("aa.py") as f:
+    
+    for line_number, line in enumerate(f):
+                if(len(line) > 1):
+                    
+                    if 'from ' in line:
+                            print("   mil gaya    ",line)
 import logging
 
 from coalib.bears.LocalBear import LocalBear
@@ -40,6 +47,10 @@ class LineContinuationBear(LocalBear):
                 if line[-2] in line_continuation:
                     if '>>> from ' in line:
                         continue
+		    elif '"""\\' in line:
+                        for i in range(len(line):
+                            if line[i:i+3] == '"""\\':
+                                       line = line[:i]+'"""'+line[i+3:]
                     yield Result.from_values(
                         origin=self,
                         message='Explicit line continuation is not allowed.',
