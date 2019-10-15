@@ -10,6 +10,7 @@ that contains information about each bear, such as the languages it supports and
 what fixes it can apply to your code.
 
 Throughput Graph
+-----
 .. image:: https://i.ibb.co/DpWSJ0m/Coala-Demo-Screenshot.png
 
 -----
