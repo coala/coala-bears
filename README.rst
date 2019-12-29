@@ -115,7 +115,7 @@ Usage
 =====
 
 For more information about how to do basic analysis, check out the
-`coala README <https://github.com/coala/coala#usage>`__.
+`coala README <https://docs.coala.io/en/latest/>`__.
 
 -----
 
