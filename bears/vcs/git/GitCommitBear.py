@@ -9,7 +9,7 @@ from coalib.misc.Shell import run_shell_command
 
 class GitCommitBear(_CommitBear):
     LANGUAGES = {'Git'}
-    ASCIINEMA_URL = 'https://asciinema.org/'
+    ASCIINEMA_URL = 'https://asciinema.org/a/0X91Mc3z1SMW4SuRTpfXq8RMN'
 
     @classmethod
     def check_prerequisites(cls):
