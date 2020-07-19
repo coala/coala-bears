@@ -39,7 +39,7 @@ class PySafetyBearTest(LocalBearTestHelper):
             'bears.python.requirements.PySafetyBear.safety.check',
             return_value=[Vulnerability('bar', '<0.2', '0.1', 'foo', '123')],
         ) as check:
-            self.check_invalidity(self.uut, ['foo<2', 'bar==0.1', '**bar'])
+            self.check_invalidity(self.uut, ['foo<2', 'bar==0.1'])
             check.assert_called_once_with([Package('bar', '0.1')], key=None,
                                           db_mirror=self.uut.db_path,
                                           cached=False, ignore_ids=[],

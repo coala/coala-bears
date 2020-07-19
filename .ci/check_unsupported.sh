@@ -35,7 +35,7 @@ fi
 set -e
 
 # The following is emitted on stdout
-grep -q 'coala supports only Python 3.4.* or later' setup.log
+grep -q 'coala supports only Python 3.5.* or later' setup.log
 # The following is emitted on stderr
 grep -q 'error: Setup script exited with 4' setup.log
 
