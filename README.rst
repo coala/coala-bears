@@ -184,3 +184,4 @@ License
 .. |Throughput Graph| image:: https://graphs.waffle.io/coala/coala-bears/throughput.svg
    :target: https://waffle.io/coala/coala-bears/metrics/throughput
    :alt: 'Throughput Graph'
+.. |Linux| image:: https://img.shields.io/badge/platform-Linux-brightgreen.svg
