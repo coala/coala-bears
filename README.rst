@@ -181,6 +181,4 @@ License
    :target: https://gitter.im/coala/coala
 .. |AGPL| image:: https://img.shields.io/github/license/coala/coala-bears.svg
    :target: https://www.gnu.org/licenses/agpl-3.0.html
-.. |Throughput Graph| image:: https://graphs.waffle.io/coala/coala-bears/throughput.svg
-   :target: https://waffle.io/coala/coala-bears/metrics/throughput
-   :alt: 'Throughput Graph'
+   
