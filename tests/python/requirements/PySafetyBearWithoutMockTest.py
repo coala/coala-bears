@@ -28,7 +28,7 @@ class PySafetyBearTest(LocalBearTestHelper):
         self.uut = PySafetyBear(self.section, Queue())
 
     def test_without_vulnerability(self):
-        self.check_validity(self.uut, ['lxml==3.6.0'])
+        self.check_validity(self.uut, ['lxml>4.4.0'])
 
     def test_with_vulnerability(self):
         self.check_invalidity(self.uut, ['bottle==0.10.1'])
@@ -41,6 +41,31 @@ class PySafetyBearTest(LocalBearTestHelper):
             self.uut,
             file_contents,
             [Result.from_values('PySafetyBear',
+                                'bottle<0.12.19 is vulnerable '
+                                'to CVE-2020-28473 and your project '
+                                'is using 0.10.0.',
+                                file=get_testfile_path(file_name),
+                                line=1,
+                                column=9,
+                                end_line=1,
+                                end_column=15,
+                                severity=RESULT_SEVERITY.NORMAL,
+                                additional_info='The package bottle '
+                                'from 0 and before 0.12.19 are vulnerable '
+                                'to Web Cache Poisoning by using a vector '
+                                'called parameter cloaking. When the '
+                                'attacker can separate query parameters '
+                                'using a semicolon (;), they can cause a '
+                                'difference in the interpretation of the '
+                                'request between the proxy (running with '
+                                'default configuration) and the server. '
+                                'This can result in malicious requests '
+                                'being cached as completely safe ones, '
+                                'as the proxy would usually not see the '
+                                'semicolon as a separator, and therefore '
+                                'would not include it in a cache key of '
+                                'an unkeyed parameter. See CVE-2020-28473.'),
+             Result.from_values('PySafetyBear',
                                 'bottle<0.12.10 is vulnerable '
                                 'to CVE-2016-9964 and your project '
                                 'is using 0.10.0.',
@@ -99,8 +124,8 @@ class PySafetyBearTest(LocalBearTestHelper):
             filename=get_testfile_path(file_name))
 
     def test_with_cve_ignore(self):
-        self.section.append(Setting('cve_ignore', 'CVE-2016-9964, '
-                                    'CVE-2014-3137'))
+        self.section.append(Setting('cve_ignore', 'CVE-2020-28473, '
+                                    'CVE-2016-9964, ' 'CVE-2014-3137'))
         file_name = 'requirement.txt'
         file_contents = load_testfile(file_name)
         # file_contents = [file_contents[0]]

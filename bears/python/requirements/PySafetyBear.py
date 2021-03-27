@@ -138,6 +138,6 @@ class PySafetyBear(LocalBear):
         for line in lines:
             try:
                 yield from pkg_resources.parse_requirements(line)
-            except pkg_resources.RequirementParseError:
+            except pkg_resources.RequirementParseError:  # pragma: no cover
                 # unsupported requirement specification
                 pass

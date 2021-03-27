@@ -197,7 +197,7 @@ jobs:
       before_script: true
       script: .ci/check_unsupported.sh
 
-    - python: 3.6
+    - python: 3.6.9
       stage: sentinel
       before_install: []
       install: pip install moban~=0.5.0 gitfs2 pypifs
@@ -600,8 +600,9 @@ before_install:
       export PATH="$HOME/.pyenv/bin:$PATH";
     fi
   - hash -r && pyenv versions --bare && python --version
+  - pip install pip==9.0.3
   - if [ "${TRAVIS_PYTHON_VERSION/3.4/}" != "$TRAVIS_PYTHON_VERSION" ]; then
-      pip install pip==9.0.3 setuptools==21.2.2;
+      pip install setuptools==21.2.2;
     fi
 
   - if [ -f ".ci/deps.$TRAVIS_LANGUAGE.sh" ]; then
