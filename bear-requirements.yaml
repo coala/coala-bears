@@ -47,7 +47,7 @@ pip_requirements:
   munkres:
     version: ~=1.1.2
   mypy:
-    version: ==0.590
+    version: >=0.590
   nbformat:
     version: ~=4.1
   nltk:
