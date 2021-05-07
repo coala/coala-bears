@@ -48,7 +48,7 @@ class GitCommitBearTest(unittest.TestCase):
     def assert_no_msgs(self):
         """
         Assert that there are no messages in the message queue of the bear, and
-        show the messages in the failure messgae if it is not empty.
+        show the messages in the failure message if it is not empty.
         """
         self.assertTrue(
             self.msg_queue.empty(),
