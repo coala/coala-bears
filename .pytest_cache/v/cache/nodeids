@@ -1,0 +1,12 @@
+[
+  "tests/php/PHPCodeSnifferBearTest.py::PHPCodeSnifferBearTest::test_invalid_files",
+  "tests/php/PHPCodeSnifferBearTest.py::PHPCodeSnifferBearTest::test_valid_files",
+  "tests/php/PHPCodeSnifferBearTest.py::PHPCodeSnifferBearLineLengthTest::test_invalid_files",
+  "tests/php/PHPCodeSnifferBearTest.py::PHPCodeSnifferBearLineLengthTest::test_valid_files",
+  "tests/php/PHPLintBearTest.py::PHPLintBearTest::test_run",
+  "tests/php/PHPMessDetectorBearTest.py::PHPMessDetectorBearTest::test_cleancode_violation",
+  "tests/php/PHPMessDetectorBearTest.py::PHPMessDetectorBearTest::test_codesize_violation",
+  "tests/php/PHPMessDetectorBearTest.py::PHPMessDetectorBearTest::test_design_violation",
+  "tests/php/PHPMessDetectorBearTest.py::PHPMessDetectorBearTest::test_naming_violation",
+  "tests/php/PHPMessDetectorBearTest.py::PHPMessDetectorBearTest::test_unusedcode_violation"
+]

@@ -222,34 +222,6 @@ jobs:
           - $HOME/nltk_data/
 
     - stage: test-languages
-      dist: trusty
-      language: python
-      python: 3.5
-      addons:
-        apt:
-          packages: clang-3.4
-      cache:
-        <<: *global_cache
-        directories:
-          - $HOME/.local/
-          - docs/_build/
-          - $HOME/nltk_data/
-
-    - stage: test-other-versions
-      dist: trusty
-      language: python
-      python: 3.4.4
-      addons:
-        apt:
-          packages: clang-3.4
-      cache:
-        <<: *global_cache
-        directories:
-          - $HOME/.local/
-          - docs/_build/
-          - $HOME/nltk_data/
-
-    - stage: test-languages
       dist: precise
       language: generic
       env:

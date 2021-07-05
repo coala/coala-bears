@@ -45,6 +45,7 @@ class PHPMessDetectorBearTest(LocalBearTestHelper):
     def test_codesize_violation(self):
         file_contents = load_testfile('codesize_violation.php')
         self.section.append(Setting('phpmd_rulesets', 'codesize'))
+        self.maxDiff = None
         self.check_results(
             self.uut,
             file_contents,
@@ -60,6 +61,7 @@ class PHPMessDetectorBearTest(LocalBearTestHelper):
     def test_design_violation(self):
         file_contents = load_testfile('design_violation.php')
         self.section.append(Setting('phpmd_rulesets', 'design'))
+        self.maxDiff = None
         self.check_results(
             self.uut,
             file_contents,
@@ -80,6 +82,7 @@ class PHPMessDetectorBearTest(LocalBearTestHelper):
     def test_naming_violation(self):
         file_contents = load_testfile('naming_violation.php')
         self.section.append(Setting('phpmd_rulesets', 'naming'))
+        self.maxDiff = None
         self.check_results(
             self.uut,
             file_contents,
@@ -106,6 +109,7 @@ class PHPMessDetectorBearTest(LocalBearTestHelper):
     def test_unusedcode_violation(self):
         file_contents = load_testfile('unusedcode_violation.php')
         self.section.append(Setting('phpmd_rulesets', 'unusedcode'))
+        self.maxDiff = None
         self.check_results(
             self.uut,
             file_contents,
