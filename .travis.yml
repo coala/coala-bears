@@ -221,35 +221,6 @@ jobs:
     #       - docs/_build/
     #       - $HOME/nltk_data/
 
-    - stage: test-languages
-      dist: precise
-      language: generic
-      env:
-        DIST="precise"
-        BEARS="apt_get"
-      addons:
-        apt:
-          packages:
-            - chktex
-            - cppcheck
-            - default-jre
-            - devscripts
-            - flawfinder
-            - indent
-            - libperl-critic-perl
-            - libxml2-utils
-            - mono-mcs
-            - perl
-            - php5-cli
-            - ruby
-            - verilator
-            - python
-      cache:
-        <<: *global_cache
-        directories:
-          - $HOME/.local/
-          - $HOME/.pyenv/
-
     - stage: test-other-versions
       dist: bionic
       language: generic
