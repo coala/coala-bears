@@ -6,9 +6,9 @@ set -x
 # Tailor (Swift) commands
 # Comment out the hardcoded PREFIX, so we can put it into ~/.local
 if [ ! -e ~/.local/tailor/tailor-latest ]; then
-  curl -fsSL -o install.sh https://tailor.sh/install.sh
-  sed -i 's/read -r CONTINUE < \/dev\/tty/CONTINUE=y/;;s/^PREFIX.*/# PREFIX=""/;' install.sh
-  PREFIX=$HOME/.local bash ./install.sh
+  wget https://github.com/sleekbyte/tailor/releases/download/v0.1.0/tailor.tar -O /tmp/tailor.tar
+  tar -xvf /tmp/tailor.tar
   # Provide a constant path for the executable
-  ln -s ~/.local/tailor/tailor-* ~/.local/tailor/tailor-latest
+  mkdir ~/.local/tailor/tailor-latest
+  ln -s tailor/bin ~/.local/tailor/tailor-latest
 fi
