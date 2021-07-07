@@ -106,7 +106,7 @@ npm_requirements:
   dockerfile_lint:
     version: ~0.3.2
   elm:
-    version: ~0.18
+    version: ~0.19
   eslint:
     version: ~3
   eslint-plugin-html:

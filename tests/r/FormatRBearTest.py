@@ -48,7 +48,7 @@ if (TRUE) {
 }"""
 
 
-good_file_6 = """x = (1 + 1 + 1 + 1 + 1 + 1 +\x20
+good_file_6 = """x = (1 + 1 + 1 + 1 + 1 + 1 +
     1 + 1 + 1)
 if (TRUE) {
     x = 1  # inline comments

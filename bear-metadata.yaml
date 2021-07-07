@@ -682,7 +682,7 @@ bear_metadata:
         elm-format:
       npm:
         elm:
-          version: ~0.18
+          version: ~0.19
     languages:
       - Elm
     tags:

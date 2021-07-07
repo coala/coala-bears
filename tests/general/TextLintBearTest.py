@@ -141,7 +141,7 @@ class TextLintBearTest(LocalBearTestHelper):
             file_contents,
             [
              Result.from_values('TextLintBear',
-                                message='https://google.com/teapot is dead. '
+                                message='https://google.com/teapot is redirected. '
                                         '(301 Moved Permanently)',
                                 line=2,
                                 column=5,

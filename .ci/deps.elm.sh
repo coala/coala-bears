@@ -8,7 +8,7 @@ if [ ! -e ~/.local/bin/elm-format ]; then
   tar -xvzf elm-format.tgz -C ~/.local/bin/
 fi
 
-if [ "$TRAVIS_ELM_VERSION" = "0.18.0" ]; then
+if [ "$TRAVIS_ELM_VERSION" = "0.19" ]; then
   touch elm-package.json
 else
   touch elm.json

@@ -2,4 +2,4 @@
 
 set -e -x
 
-luarocks install --local --deps-mode=none luacheck
+luarocks install --local luacheck

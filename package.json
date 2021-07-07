@@ -11,7 +11,7 @@
     "csscomb": "~4.2.0",
     "csslint": "~1",
     "dockerfile_lint": "~0.3.2",
-    "elm": "~0.18",
+    "elm": "~0.19",
     "eslint": "~3",
     "eslint-plugin-html": "~3.2.2",
     "eslint-plugin-import": "~2",

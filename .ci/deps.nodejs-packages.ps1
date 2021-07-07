@@ -1,4 +1,8 @@
 function Install-Node-Packages {
+    # fix ELIFECYCLCLE error
+    npm cache clean --force
+    rm -rf node_modules && rm ./package-lock.json
+    
     npm config set loglevel warn
 
     # pnpm setting
@@ -19,7 +23,7 @@ function Install-Node-Packages {
     $old_EAP = $ErrorActionPreference
     $ErrorActionPreference = 'Continue'
 
-    npm install
+    npm install --unsafe-perm=true --allow-root
 
     $ErrorActionPreference = $old_EAP
 
