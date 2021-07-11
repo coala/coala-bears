@@ -85,10 +85,10 @@ class DocGrammarBearTest(unittest.TestCase):
         finally:
             shutil.which = _shutil_which
 
-        with mock.patch.dict(sys.modules, {'language_check': None}):
+        with mock.patch.dict(sys.modules, {'language-tool-python': None}):
             assert DocGrammarBear.check_prerequisites() == ('Please '
                                                             'install the '
-                                                            '`language-check` '
+                                                            '`language-tool-python` '
                                                             'pip package.')
 
     test_spelling = gen_check(
@@ -128,7 +128,7 @@ class DocGrammarBearTest(unittest.TestCase):
     # which was breaking this test case.
     test_language_french = unittest.skipIf(
         platform.system() == 'Windows',
-        'language-check fails for different locale on windows')(
+        'language-tool-python fails for different locale on windows')(
             gen_check(
                 make_docstring(main_desc='il monte en haut si il veut.\n'),
                 make_docstring(main_desc='Il monte s’il veut.\n'),

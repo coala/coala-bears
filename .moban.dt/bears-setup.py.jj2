@@ -12,7 +12,7 @@ extras_require = {
 }
 
 # For the average user we leave out some of the more complicated requirements,
-# e.g. language-check (needs java).
+# e.g. language-tool-python (needs java).
 required += [req for req in bear_required
              if not any(req.startswith(ignore)
                         for ignore in ignore_requirements)]

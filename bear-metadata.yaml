@@ -575,8 +575,8 @@ bear_metadata:
     filename: DocGrammarBear.py
     requirements:
       pip:
-        language-check:
-          version: ~=1.0
+        language-tool-python:
+          version: ~=1.1
     languages:
       - c
       - cpp
@@ -1257,8 +1257,8 @@ bear_metadata:
     filename: LanguageToolBear.py
     requirements:
       pip:
-        language-check:
-          version: ~=1.0
+        language-tool-python:
+          version: ~=1.1
         guess-language-spirit:
           version: ~=0.5.2
     languages:

@@ -15,7 +15,7 @@ from coalib.settings.Setting import typed_list
 class LanguageToolBear(LocalBear):
     LANGUAGES = {'Natural Language'}
     REQUIREMENTS = {PipRequirement('guess-language-spirit', '0.5.2'),
-                    PipRequirement('language-check', '1.0')}
+                    PipRequirement('language-tool-python', '1.1')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
@@ -27,12 +27,12 @@ class LanguageToolBear(LocalBear):
             return 'java is not installed.'
         else:
             try:
-                from language_check import LanguageTool, correct
+                from language_tool_python import LanguageTool, correct
                 LanguageTool
                 correct
                 return True
             except ImportError:
-                return 'Please install the `language-check` pip package.'
+                return 'Please install the `language-tool-python` pip package.'
 
     @deprecate_settings(natural_language=('language', 'locale'))
     def run(self,
@@ -54,7 +54,7 @@ class LanguageToolBear(LocalBear):
         """
         # Defer import so the check_prerequisites can be run without
         # language_check being there.
-        from language_check import LanguageTool, correct
+        from language_tool_python import LanguageTool, correct
 
         joined_text = ''.join(file)
         natural_language = (guess_language(joined_text)

@@ -8,9 +8,9 @@ from coalib.testing.BearTestHelper import generate_skip_decorator
 from coalib.testing.LocalBearTestHelper import verify_local_bear
 
 try:
-    import language_check
+    import language_tool_python
     import guess_language
-    language_check
+    language_tool_python
     guess_language
 except ImportError as err:
     raise unittest.SkipTest(str(err))
@@ -69,8 +69,8 @@ class LanguageToolBearPrerequisitesTest(unittest.TestCase):
         finally:
             shutil.which = _shutil_which
 
-        with mock.patch.dict(sys.modules, {'language_check': None}):
+        with mock.patch.dict(sys.modules, {'language-tool-python': None}):
             assert LanguageToolBear.check_prerequisites() == ('Please '
                                                               'install the '
-                                                              '`language-check`'
+                                                              '`language-tool-python`'
                                                               ' pip package.')
