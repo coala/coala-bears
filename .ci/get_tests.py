@@ -125,7 +125,7 @@ def get_tests(bears):
 def get_pytest_deselected_tests(args, tests):
     not_list = []
 
-    # language-check fails for different locale on windows
+    # language-tool-python fails for different locale on windows
     if 'tests/documentation/DocGrammarBearTest.py' in tests:
         if 'win' in args:
             not_list.append('test_language_french')

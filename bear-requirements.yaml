@@ -36,8 +36,8 @@ pip_requirements:
     version: ~=0.4.0
   isort:
     version: ~=4.2
-  language-check:
-    version: ~=1.0
+  language-tool-python:
+    version: ~=2.5.4
   libclang-py3:
     version: ~=3.4.0
   lxml:

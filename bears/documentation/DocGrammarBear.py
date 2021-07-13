@@ -15,7 +15,7 @@ from coalib.settings.Setting import typed_list
 class DocGrammarBear(DocBaseClass, LocalBear):
     LANGUAGES = {language for docstyle, language in
                  DocstyleDefinition.get_available_definitions()}
-    REQUIREMENTS = {PipRequirement('language-check', '1.0')}
+    REQUIREMENTS = {PipRequirement('language-tool-python', '2.5.4')}
     AUTHORS = {'The coala developers'}
     AUTHORS_EMAILS = {'coala-devel@googlegroups.com'}
     LICENSE = 'AGPL-3.0'
@@ -28,12 +28,13 @@ class DocGrammarBear(DocBaseClass, LocalBear):
             return 'java is not installed.'
         else:
             try:
-                from language_check import LanguageTool, correct
+                from language_tool_python import LanguageTool
+                from language_tool_python.utils import correct
                 LanguageTool
                 correct
                 return True
             except ImportError:
-                return 'Please install the `language-check` pip package.'
+                return 'Please install the `language-tool-python` pip package.'
 
     def process_documentation(self,
                               parsed,
@@ -54,8 +55,9 @@ class DocGrammarBear(DocBaseClass, LocalBear):
             A tuple of fixed parsed documentation comment and warning_desc.
         """
         # Defer import so the check_prerequisites can be run without
-        # language_check being there.
-        from language_check import LanguageTool, correct
+        # language_tool_python being there.
+        from language_tool_python import LanguageTool
+        from language_tool_python.utils import correct
 
         tool = LanguageTool(locale)
         tool.disabled.update(languagetool_disable_rules)
