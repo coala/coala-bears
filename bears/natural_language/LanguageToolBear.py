@@ -89,6 +89,8 @@ class LanguageToolBear(LocalBear):
             message = match.message + ' (' + rule_id + ')'
             source_range = SourceRange.from_values(filename,
                                                    match.offset+1,
-                                                   match.errorLength+1)
+                                                   match.errorLength+1,
+                                                   match.errorLength+match.offset+1,
+                                                   len(match.replacements)+1)
             yield Result(self, message, diffs=diffs,
                          affected_code=(source_range,))
