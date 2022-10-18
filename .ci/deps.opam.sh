@@ -6,10 +6,10 @@ set -x
 .ci/deps.python27.sh
 
 # Infer commands
-if [ ! -e ~/infer-linux64-v0.7.0/infer/bin ]; then
-  wget -nc -O ~/infer.tar.xz https://github.com/facebook/infer/releases/download/v0.7.0/infer-linux64-v0.7.0.tar.xz
+if [ ! -e ~/infer-linux64-v1.1.0/infer/bin ]; then
+  wget -nc -O ~/infer.tar.xz https://github.com/facebook/infer/releases/download/v1.1.0/infer-linux64-v1.1.0.tar.xz
   tar xf ~/infer.tar.xz -C ~/
-  cd ~/infer-linux64-v0.7.0
+  cd ~/infer-linux64-v1.1.0
   opam init --y
   opam update
 
