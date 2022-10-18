@@ -555,7 +555,7 @@ jobs:
       language: generic
       env:
         BEARS="opam"
-        INFER_VERSION="0.7.0"
+        INFER_VERSION="1.1.0"
         PATH="$PATH:$HOME/infer-linux64-v$INFER_VERSION/infer/bin"
       addons:
         apt:
